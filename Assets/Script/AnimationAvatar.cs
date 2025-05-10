@@ -3,15 +3,13 @@ using UnityEngine.UI;
 
 public class AnimationAvatar : MonoBehaviour
 {
-    [Header("Tham chiếu")]
-    public RawImage rawImage;
-
-    [Header("Danh sách ảnh (tối đa 6)")]
-    public Texture2D[] images = new Texture2D[6];
-
-    [Header("Giá trị (1 - 6)")]
+   
+    public RawImage rawImage;   
+    public Texture2D[] images = new Texture2D[6];  
     [Range(1, 6)]
     public int currentValue = 1;
+
+
 
     void Update()
     {
@@ -23,5 +21,18 @@ public class AnimationAvatar : MonoBehaviour
         {
             rawImage.texture = images[index];
         }
+    }
+
+    public void TakeValueAvatar(int amount) // trừ value avatar
+    {
+        currentValue -= amount;
+        currentValue = Mathf.Clamp(currentValue, 1, images.Length);
+        rawImage.texture = images[currentValue - 1];
+    }
+    public void AddValueAvatar(int amount) // cộng value avatar
+    {
+        currentValue += amount;
+        currentValue = Mathf.Clamp(currentValue, 1, images.Length);
+        rawImage.texture = images[currentValue - 1];
     }
 }

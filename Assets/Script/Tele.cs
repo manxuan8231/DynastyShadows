@@ -13,13 +13,13 @@ public class Tele : MonoBehaviour
             CharacterController cc = other.GetComponent<CharacterController>();
             if (cc != null)
             {
-                cc.enabled = false; // Tắt CharacterController trước khi dịch chuyển
+                cc.enabled = false; 
                 other.transform.position = targetPosition;
                 cc.enabled = true;  // Bật lại CharacterController
             }
             else
             {
-                other.transform.position = targetPosition; // Nếu không dùng CC thì cứ dịch chuyển bình thường
+                other.transform.position = targetPosition; 
             }
         }
     }
