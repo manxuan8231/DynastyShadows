@@ -11,17 +11,26 @@ public class ComboAttack : MonoBehaviour
 
     private int comboStep = 0;
     private float nextAttackTime = 0f;
-
     public bool isAttack = false;
+
+    [SerializeField] private GameObject effectAttack1;
+    //[SerializeField] private GameObject effectAttack2;
+    [SerializeField] private GameObject effectAttack3;
+
+    [SerializeField] private GameObject hitEffect;
+    [SerializeField] private Transform hitPosition;
     void Start()
     {
         animator = GetComponent<Animator>();
+        effectAttack1.SetActive(false);
+       
+        effectAttack3.SetActive(false);
     }
 
     void Update()
     {
         // Chỉ cho phép tấn công nếu đã hết thời gian cooldown
-        if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime && isAttack)
+        if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime && !isAttack)
         {
             OnAttack();
         }
@@ -40,6 +49,7 @@ public class ComboAttack : MonoBehaviour
         if (comboStep == 1)
         {
             animator.SetTrigger("Attack1");
+           
             nextAttackTime = Time.time + attack1Cooldown;
         }
         else if (comboStep == 2)
@@ -57,5 +67,29 @@ public class ComboAttack : MonoBehaviour
         {
             comboStep = 0;
         }
+    }
+    public void StartEffectAttack1()
+    {
+        effectAttack1.SetActive(true);
+    }
+    public void EndEffectAttack1()
+    {
+        effectAttack1.SetActive(false);
+    }
+   /* public void StartEffectAttack2()
+    {
+        effectAttack2.SetActive(true);
+    }
+    public void EndEffectAttack2()
+    {
+        effectAttack2.SetActive(false);
+    }*/
+    public void StartEffectAttack3()
+    {
+        effectAttack3.SetActive(true);
+    }
+    public void EndEffectAttack3()
+    {
+        effectAttack3.SetActive(false);
     }
 }

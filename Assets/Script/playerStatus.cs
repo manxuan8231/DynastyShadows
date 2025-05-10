@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class playerStatus : MonoBehaviour
+public class PlayerStatus : MonoBehaviour
 {
     //xử lý máu
     public Slider sliderHp;
@@ -17,16 +17,14 @@ public class playerStatus : MonoBehaviour
     public Slider sliderMana;
     public float currentMana;
     public float maxMana = 2000f;
-
-   
     void Start()
     {
         //khởi tạo hp
         currentHp = maxHp;
         sliderHp.maxValue = currentHp;
         //
-        currentMana = maxManaSkill;
-        sliderMana.maxValue = currentManaSkill;
+        currentManaSkill = maxManaSkill;
+        sliderManaSkill.maxValue = currentManaSkill;
         //
         currentMana = maxMana;
         sliderMana.maxValue = currentMana;
@@ -34,10 +32,10 @@ public class playerStatus : MonoBehaviour
       
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        
+        RegenerateMana();
     }
     public void TakeHealth(float amount)
     {
@@ -63,8 +61,25 @@ public class playerStatus : MonoBehaviour
     public void TakeMana(float amount)
     {
         currentMana -= amount;
-        currentMana = Mathf.Clamp(currentMana, 0, maxMana);
         sliderMana.value = currentMana;
-
+        currentMana = Mathf.Clamp(currentMana, 0, maxMana);
+      
+    }
+    public void AddMana(float amount)
+    {
+        currentMana += amount;
+        sliderMana.value = currentMana;
+        currentMana = Mathf.Clamp(currentMana, 0, maxMana);
+    }
+    public void RegenerateMana()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            TakeMana(100 * Time.deltaTime); // trừ dần theo thời gian
+        }
+        else {
+            AddMana(100 * Time.deltaTime); // cộng dần theo thời gian
+           
+        }
     }
 }
