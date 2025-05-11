@@ -140,7 +140,7 @@ public class Enemy1 : MonoBehaviour
             agent.isStopped = true;
 
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
-            Destroy(gameObject, 1.5f);
+            Destroy(gameObject, 3f);
         }
     }
     void BackToChase()
