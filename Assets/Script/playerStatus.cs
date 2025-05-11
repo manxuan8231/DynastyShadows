@@ -17,6 +17,9 @@ public class PlayerStatus : MonoBehaviour
     public Slider sliderMana;
     public float currentMana;
     public float maxMana = 2000f;
+
+   
+
     void Start()
     {
         //khởi tạo hp
@@ -29,7 +32,7 @@ public class PlayerStatus : MonoBehaviour
         currentMana = maxMana;
         sliderMana.maxValue = currentMana;
 
-      
+        
     }
 
     

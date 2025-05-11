@@ -19,19 +19,31 @@ public class ComboAttack : MonoBehaviour
 
     [SerializeField] private GameObject hitEffect;
     [SerializeField] private Transform hitPosition;
+
+    //audio
+    private AudioSource audioSource;
+    public AudioClip slashSound1;
+    public AudioClip slashSound2;
+    public AudioClip slashSound3;
+
+    PlayerStatus playerStatus;
     void Start()
     {
         animator = GetComponent<Animator>();
         effectAttack1.SetActive(false);
        
         effectAttack3.SetActive(false);
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
         // Chỉ cho phép tấn công nếu đã hết thời gian cooldown
-        if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime && !isAttack)
+        if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime && !isAttack && playerStatus.currentMana > 100)
         {
+            playerStatus.TakeMana(100);
             OnAttack();
         }
 
@@ -60,6 +72,7 @@ public class ComboAttack : MonoBehaviour
         else if (comboStep == 3)
         {
             animator.SetTrigger("Attack3");
+           
             nextAttackTime = Time.time + attack3Cooldown;
             comboStep = 0; // Reset combo sau đòn 3
         }
@@ -68,6 +81,8 @@ public class ComboAttack : MonoBehaviour
             comboStep = 0;
         }
     }
+
+    //effect even
     public void StartEffectAttack1()
     {
         effectAttack1.SetActive(true);
@@ -91,5 +106,20 @@ public class ComboAttack : MonoBehaviour
     public void EndEffectAttack3()
     {
         effectAttack3.SetActive(false);
+    }
+
+
+    //sound even
+    public void PlaySlashSound1()
+    {
+        audioSource.PlayOneShot(slashSound1);
+    }
+    public void PlaySlashSound2()
+    {
+        audioSource.PlayOneShot(slashSound2);
+    }
+    public void PlaySlashSound3()
+    {
+        audioSource.PlayOneShot(slashSound3);
     }
 }
