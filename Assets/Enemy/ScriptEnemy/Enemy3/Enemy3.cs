@@ -37,6 +37,7 @@ public class Enemy3 : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         firstPos = transform.position;
+        currentHealth = maxHealth; // Khởi tạo máu
         player = GameObject.FindGameObjectWithTag("Player").transform;
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
     }
@@ -44,6 +45,10 @@ public class Enemy3 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            TakeDamage(20f);
+        }
         switch (currentState)
         {
             case EnemyState.Idle:
@@ -111,6 +116,45 @@ public class Enemy3 : MonoBehaviour
             ChangeState(EnemyState.Run);
         }
     }
+    public void TakeDamage(float damage)
+    {
+        if (currentState == EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
+
+        currentHealth -= damage;
+
+        if (currentHealth > 0)
+        {
+            ChangeState(EnemyState.GetHit);
+
+            // Sau một thời gian nhỏ thì quay lại Run/Attack
+            Invoke(nameof(BackToChase), 0.5f);
+        }
+        else
+        {
+            currentHealth = 0;
+            ChangeState(EnemyState.Death);
+            agent.isStopped = true;
+
+            // Hủy enemy sau 1.5 giây để animation kịp phát xong
+            Destroy(gameObject, 3f);
+        }
+    }
+    void BackToChase()
+    {
+        if (currentState != EnemyState.Death)
+        {
+            float dist = Vector3.Distance(transform.position, player.position);
+            if (dist <= attackRange)
+            {
+                ChangeState(EnemyState.Attack);
+            }
+            else
+            {
+                ChangeState(EnemyState.Run);
+            }
+        }
+    }
+
     public void ChangeState(EnemyState newState)
     {
         if (currentState == newState) return; // Tránh spam trigger nếu không đổi trạng thái
