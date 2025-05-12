@@ -12,6 +12,7 @@ public class ComboAttack : MonoBehaviour
     private int comboStep = 0;
     private float nextAttackTime = 0f;
     public bool isAttack = false;
+    private float coolDownAttackFly = 0f;
 
     [SerializeField] private GameObject effectAttack1;
     //[SerializeField] private GameObject effectAttack2;
@@ -55,9 +56,10 @@ public class ComboAttack : MonoBehaviour
         }
         //tấn công khi ko chạm đất
         if (Input.GetMouseButtonDown(0)
-            && !isAttack && playerStatus.currentMana > 100 && playerController.IsGrounded() == false)
+            && !isAttack && playerStatus.currentMana > 100 && playerController.IsGrounded() == false && Time.time >= coolDownAttackFly + 1f)
         {
             OnAttackFly();
+            coolDownAttackFly = Time.time;
         }
         // Nếu người chơi không nhấn trong 1.2s thì reset combo
         if (Time.time >= nextAttackTime + 1.2f)
