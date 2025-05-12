@@ -12,7 +12,7 @@ public class DameZoneEnemy1 : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerStatus.TakeHealth(20);
+            playerStatus.TakeHealth(50);
             Debug.Log("Player hit by enemy");
         }
     }

@@ -30,10 +30,17 @@ public class Enemy2 : MonoBehaviour
     //goi ham
     EnemyHP2 enemyHP2;
 
+    //box damer
+    public BoxCollider LeftHand;
+    public BoxCollider RightHand;
+    public BoxCollider tailBox;
 
 
     void Start()
     {
+        LeftHand.enabled = false; // Tắt box dame khi bắt đầu
+        RightHand.enabled = false; // Tắt box dame khi bắt đầu
+        tailBox.enabled = false; // Tắt box dame khi bắt đầu
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         firstPos = transform.position;
@@ -45,7 +52,7 @@ public class Enemy2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+
         switch (currentState)
         {
             case EnemyState.Idle:
@@ -112,7 +119,7 @@ public class Enemy2 : MonoBehaviour
             ChangeState(EnemyState.Run);
         }
     }
-   
+
 
     public void ChangeState(EnemyState newState)
     {
@@ -137,7 +144,7 @@ public class Enemy2 : MonoBehaviour
                 currentTrigger = "Attack";
                 break;
             case EnemyState.GetHit:
-               
+
                 animator.SetTrigger("GetHit");
                 currentTrigger = "GetHit";
                 break;
@@ -146,6 +153,29 @@ public class Enemy2 : MonoBehaviour
                 currentTrigger = "Death";
                 break;
         }
+    }
+
+    public void OnLeftHand()
+    {
+        LeftHand.enabled = true;
+
+    }
+    public void OnRightHand()
+    {
+        RightHand.enabled = true;
+    }
+    public void OnTail()
+    {
+        tailBox.enabled = true;
+    }
+    public void OffLeftHand()
+    {
+        LeftHand.enabled = false;
+    }
+
+    public void OffRightHand()
+    {
+        RightHand.enabled = false;
     }
 
     void ResetAllTriggers()
