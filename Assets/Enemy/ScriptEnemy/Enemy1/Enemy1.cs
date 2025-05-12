@@ -135,6 +135,7 @@ public class Enemy1 : MonoBehaviour
                 currentTrigger = "Idle";
                 break;
             case EnemyState.Run:
+               
                 animator.SetTrigger("Run");
                 currentTrigger = "Run";
                 break;
@@ -144,7 +145,8 @@ public class Enemy1 : MonoBehaviour
                 currentTrigger = "Attack";
                 break;
             case EnemyState.GetHit:
-              
+                
+
                 animator.SetTrigger("GetHit");
                 currentTrigger = "GetHit";
                 break;

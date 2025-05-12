@@ -135,7 +135,7 @@ public class Enemy3 : MonoBehaviour
                 currentTrigger = "Attack";
                 break;
             case EnemyState.GetHit:
-                agent.isStopped = false; // Bỏ dừng lại khi bị đánh
+            
                 animator.SetTrigger("GetHit");
                 currentTrigger = "GetHit";
                 break;

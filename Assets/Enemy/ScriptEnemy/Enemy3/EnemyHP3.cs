@@ -36,13 +36,13 @@ public class EnemyHP3 : MonoBehaviour
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         sliderHp.value = currentHealth;
-        enemy3.agent.isStopped = true;
+        
 
 
         if (currentHealth > 0)
         {
             enemy3.ChangeState(Enemy3.EnemyState.GetHit);
-
+        
             // Sau một thời gian nhỏ thì quay lại Run/Attack
             Invoke(nameof(BackToChase), 0.5f);
         }

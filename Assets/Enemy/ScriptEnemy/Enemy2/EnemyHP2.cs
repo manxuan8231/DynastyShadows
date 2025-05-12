@@ -36,7 +36,7 @@ public class EnemyHP2 : MonoBehaviour
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         sliderHp.value = currentHealth;
-        enemy2.agent.isStopped = true;
+       
 
 
         if (currentHealth > 0)
