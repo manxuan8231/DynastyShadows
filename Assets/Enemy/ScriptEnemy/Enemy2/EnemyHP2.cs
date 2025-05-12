@@ -35,7 +35,7 @@ public class EnemyHP2 : MonoBehaviour
 
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        ShowTextDame(damage);
+       
         sliderHp.value = currentHealth;
        
 
@@ -63,7 +63,7 @@ public class EnemyHP2 : MonoBehaviour
 
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        ShowTextDame(damage);
+       
         sliderHp.value = currentHealth;
 
 
@@ -86,23 +86,7 @@ public class EnemyHP2 : MonoBehaviour
         }
     }
 
-    public void ShowTextDame(float damage)
-    {
-        // Random lệch trái/phải: -0.5 đến 0.5
-        float offsetX = Random.Range(-1f, 1f);
-        float offsetY = Random.Range(1,3);
-        float offsetZ = Random.Range(-1f, 1f);
-        Vector3 spawnPos = transform.position + new Vector3(offsetX, offsetY, offsetZ); // Lệch X, cao lên trục Y
-
-        GameObject effectText = Instantiate(textDame, spawnPos, Quaternion.identity);
-        Destroy(effectText, 0.5f);
-        // Truyền dame vào prefab
-        TextDamePopup popup = effectText.GetComponent<TextDamePopup>();
-        if (popup != null)
-        {
-            popup.Setup(damage);
-        }
-    }
+   
 
     void BackToChase()
     {

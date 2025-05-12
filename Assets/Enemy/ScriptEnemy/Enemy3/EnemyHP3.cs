@@ -7,7 +7,7 @@ public class EnemyHP3 : MonoBehaviour
     public Slider sliderHp;
     public float currentHealth;
     public float maxHealth = 2000f;
-
+    public GameObject textDame;
     //gọi hàm
     Enemy3 enemy3;
 
@@ -82,6 +82,7 @@ public class EnemyHP3 : MonoBehaviour
             Destroy(gameObject, 3f);
         }
     }
+   
     void BackToChase()
     {
         if (enemy3.currentState != Enemy3.EnemyState.Death)
