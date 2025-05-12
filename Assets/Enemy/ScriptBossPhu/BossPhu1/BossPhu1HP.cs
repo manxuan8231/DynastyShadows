@@ -26,4 +26,5 @@ public class BossPhu1HP : MonoBehaviour
             TakeDame(10);
         }
     }
+   
 }

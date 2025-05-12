@@ -12,7 +12,6 @@ public enum EnemyState
     BackToPos
 }
 
-
 public class BossPhu1 : MonoBehaviour
 {
     public NavMeshAgent agent;
@@ -22,91 +21,125 @@ public class BossPhu1 : MonoBehaviour
     public EnemyState currentState;
     public string currentTrigger;
 
-
     public float radius = 25f;
     public float attackRange = 4f;
 
-
-    //thời gian cooldown
     public float attackCooldown = 5f;
     public float attackTimer = 0f;
-    public float SkillCooldown = 15f;
+    public float SkillCooldown = 20f;
     public float SkillTimer = 0f;
     public bool hasTakenDamage = false;
 
-    bool utlAttack;
-    bool isAttacking;
-     BossPhu1HP BossPhu1HP;
+   
+    BossPhu1HP BossPhu1HP;
 
     private void Start()
     {
-        
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         firstPos = transform.position;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         ChangeState(EnemyState.Idle);
-
-
     }
+
     void Update()
     {
-      
+        if (currentState == EnemyState.Death) return;
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-       
+
+        // Gọi logic điều khiển tấn công
+        AttackController(distanceToPlayer);
+
         switch (currentState)
         {
             case EnemyState.Idle:
                 HandleIdle(distanceToPlayer);
                 break;
+
             case EnemyState.Walk:
-              if(distanceToPlayer <= attackRange)
+                if (distanceToPlayer <= attackRange)
                 {
                     Attack();
                 }
                 else
+                {
                     HandleWalk(distanceToPlayer);
+                }
                 break;
+
             case EnemyState.BackToPos:
                 HandleBackToPos();
+                break;
 
-                break;
             case EnemyState.Attack1:
-            case EnemyState.Attack2:  
+            case EnemyState.Attack2:
+                FacePlayer();
                 break;
+
+            case EnemyState.GetHit:
+                // Có thể chờ hoạt ảnh kết thúc nếu cần
+                break;
+        }
+    }
+
+    void AttackController(float distance)
+    {
+        if (distance <= attackRange)
+        {
+            agent.isStopped = true;
+            Attack(); // Xử lý logic tấn công
+        }
+        else if (distance <= radius)
+        {
+            ChangeState(EnemyState.Walk);
+        }
+        else
+        {
+            if (hasTakenDamage)
+                ChangeState(EnemyState.BackToPos);
+        }
+    }
+
+    void FacePlayer()
+    {
+        Vector3 direction = (player.position - transform.position).normalized;
+        direction.y = 0;
+        if (direction != Vector3.zero)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
         }
     }
 
     void Attack()
     {
-        SkillTimer += Time.deltaTime; //trigger attack 1
-        attackTimer += Time.deltaTime;//trigger attack 2
+        SkillTimer += Time.deltaTime;
+        attackTimer += Time.deltaTime;
+
         if (attackTimer >= attackCooldown)
         {
-
             if (SkillTimer >= SkillCooldown)
             {
-                SkillTimer = 0;
-                ChangeState(EnemyState.Attack2);
+                SkillTimer = 0f;
+                ChangeState(EnemyState.Attack2); // Skill đặc biệt
             }
             else
             {
-               
-               ChangeState(EnemyState.Attack1 );
+                ChangeState(EnemyState.Attack1); // Đánh thường
             }
-            attackTimer = 0;
+            attackTimer = 0f;
         }
 
-
+        // Nếu player chạy ra xa thì đuổi theo
         float dist = Vector3.Distance(transform.position, player.position);
-        if(dist > attackRange + 1f)
+        if (dist > attackRange + 1f)
         {
             agent.isStopped = false;
-            attackTimer = 0f; //nếu như player đi xa
             ChangeState(EnemyState.Walk);
         }
     }
+
     void HandleIdle(float distance)
     {
         if (distance < radius)
@@ -114,19 +147,15 @@ public class BossPhu1 : MonoBehaviour
             ChangeState(EnemyState.Walk);
         }
     }
+
     void HandleWalk(float distance)
     {
         if (distance >= radius)
         {
             if (hasTakenDamage)
-            {
                 ChangeState(EnemyState.BackToPos);
-            }
             else
-            {
-                ChangeState(EnemyState.Walk);
                 agent.SetDestination(firstPos);
-            }
         }
         else
         {
@@ -134,7 +163,8 @@ public class BossPhu1 : MonoBehaviour
             agent.SetDestination(player.position);
         }
     }
-     void HandleBackToPos()
+
+    void HandleBackToPos()
     {
         float distToPos = Vector3.Distance(transform.position, firstPos);
 
@@ -144,17 +174,16 @@ public class BossPhu1 : MonoBehaviour
         if (distToPos < 0.5f)
         {
             hasTakenDamage = false;
-           
             ChangeState(EnemyState.Idle);
-           
         }
     }
+
     public void ChangeState(EnemyState newState)
     {
-        if (currentState == newState) return; // Tránh spam trigger nếu không đổi trạng thái
+        if (currentState == newState) return;
 
         currentState = newState;
-        ResetAllTriggers(); // Reset hết trigger cũ trước khi set cái mới
+        ResetAllTriggers();
 
         switch (newState)
         {
@@ -162,36 +191,39 @@ public class BossPhu1 : MonoBehaviour
                 animator.SetTrigger("Idle");
                 currentTrigger = "Idle";
                 break;
-            case EnemyState.Walk:
 
+            case EnemyState.Walk:
                 animator.SetTrigger("Walk");
                 currentTrigger = "Walk";
                 break;
+
             case EnemyState.Attack1:
-                agent.stoppingDistance = 3;
-                agent.isStopped = true; // Dừng lại khi tấn công
+                agent.stoppingDistance = 1.5f;
+                agent.isStopped = true;
                 animator.SetTrigger("Attack1");
                 currentTrigger = "Attack1";
                 break;
+
             case EnemyState.Attack2:
-                agent.stoppingDistance = 3;
-                agent.isStopped = true; // Dừng lại khi tấn công
+                agent.stoppingDistance = 4f;
+                agent.isStopped = true;
                 animator.SetTrigger("Attack2");
                 currentTrigger = "Attack2";
                 break;
+
             case EnemyState.GetHit:
-
-
                 animator.SetTrigger("GetHit");
                 currentTrigger = "GetHit";
                 break;
+
             case EnemyState.Death:
+                agent.isStopped = true;
                 animator.SetTrigger("Death");
                 currentTrigger = "Death";
                 break;
+
             case EnemyState.BackToPos:
                 agent.isStopped = false;
-
                 animator.SetTrigger("BackToPos");
                 currentTrigger = "BackToPos";
                 break;
@@ -208,4 +240,5 @@ public class BossPhu1 : MonoBehaviour
         animator.ResetTrigger("Death");
         animator.ResetTrigger("BackToPos");
     }
+
 }
