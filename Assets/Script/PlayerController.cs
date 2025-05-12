@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private CharacterController controller;
     [SerializeField] private Animator animator;
-
+    [SerializeField] private AudioSource audioSource;
+   
     [Header("Leo tường -----------------------------")]
     
     //cham dat
@@ -25,19 +26,34 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private bool wasGroundedLastFrame;
     private bool isRunning = false;
+    public bool isController = true;
 
+    //audio
+    [SerializeField] private AudioClip audioJump;
+    [SerializeField] private AudioClip audioRoll;
+    [SerializeField] private AudioClip audioMovemen;
     //goi ham
     PlayerStatus playerStatus;
 
     private void Start()
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
+        audioSource = GetComponent<AudioSource>();
     }
     void Update()
     {
-        Move();
-        Jump();
-        Roll();
+        if (isController == true)
+        {
+            Move();
+            Jump();
+            Roll();
+        }
+        else
+        {
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isRunning", false);
+
+        }
     }
 
     public void Move()
@@ -86,6 +102,7 @@ public class PlayerController : MonoBehaviour
         {
             playerStatus.TakeMana(100);
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            audioSource.PlayOneShot(audioJump);
             animator.SetTrigger("jump");
         }
         //
@@ -102,6 +119,7 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.LeftControl) && isGrounded && playerStatus.currentMana > 100)
         {
             playerStatus.TakeMana(100);
+            audioSource.PlayOneShot(audioRoll);
             animator.SetTrigger("Roll");
         }
     }
@@ -111,5 +129,11 @@ public class PlayerController : MonoBehaviour
     public bool IsGrounded()
     {
         return isGrounded;
+    }
+
+    //sound even 
+    public void SoundMovemen()
+    {
+        audioSource.PlayOneShot(audioMovemen);
     }
 }

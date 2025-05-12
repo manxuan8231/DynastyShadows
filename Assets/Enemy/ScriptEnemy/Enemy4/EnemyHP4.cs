@@ -37,6 +37,30 @@ public class EnemyHP4 : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         sliderHp.value = currentHealth;
 
+        if (currentHealth > 0)
+        {
+           
+            // Sau một thời gian nhỏ thì quay lại Run/Attack
+            Invoke(nameof(BackToChase), 0.5f);
+        }
+        else
+        {
+            currentHealth = 0;
+            enemy4.ChangeState(Enemy4.EnemyState.Death);
+            enemy4.agent.isStopped = true; // Dừng lại khi chết
+
+            // Hủy enemy sau 1.5 giây để animation kịp phát xong
+            Destroy(gameObject, 3f);
+        }
+    }
+    public void TakeDamageHit(float damage)
+    {
+        if (enemy4.currentState == Enemy4.EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
+
+        currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        sliderHp.value = currentHealth;
+
 
 
         if (currentHealth > 0)

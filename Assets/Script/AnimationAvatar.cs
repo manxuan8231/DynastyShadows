@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class AnimationAvatar : MonoBehaviour
+public class AvatarHealth : MonoBehaviour
 {
    
     public RawImage rawImage;   

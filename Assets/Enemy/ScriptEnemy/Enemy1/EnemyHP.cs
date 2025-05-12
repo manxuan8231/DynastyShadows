@@ -8,6 +8,7 @@ public class EnemyHP : MonoBehaviour
     public float currentHealth;
     public float maxHealth = 2000f;
 
+    
     //gọi hàm
     Enemy1 enemy1;
 
@@ -34,14 +35,13 @@ public class EnemyHP : MonoBehaviour
         if (enemy1.currentState == Enemy1.EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
 
         currentHealth -= damage;
+       
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         sliderHp.value = currentHealth;
 
         if (currentHealth > 0)
         {
-            enemy1.ChangeState(Enemy1.EnemyState.GetHit);
-            
-
+     
             // Sau một thời gian nhỏ thì quay lại Run/Attack
             Invoke(nameof(BackToChase), 0.5f);
         }
@@ -56,6 +56,36 @@ public class EnemyHP : MonoBehaviour
             Destroy(gameObject, 3f);
         }
     }
+    public void TakeDamageHit(float damage)
+    {
+        if (enemy1.currentState == Enemy1.EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
+
+        currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        sliderHp.value = currentHealth;
+
+        if (currentHealth > 0)
+        {
+            enemy1.ChangeState(Enemy1.EnemyState.GetHit);
+
+
+            // Sau một thời gian nhỏ thì quay lại Run/Attack
+            Invoke(nameof(BackToChase), 0.5f);
+        }
+
+        else
+        {
+            currentHealth = 0;
+            enemy1.ChangeState(Enemy1.EnemyState.Death);
+            enemy1.agent.isStopped = true; // Dừng lại khi chết
+
+            // Hủy enemy sau 1.5 giây để animation kịp phát xong
+            Destroy(gameObject, 3f);
+        }
+    }
+
+   
+
     void BackToChase()
     {
         if (enemy1.currentState != Enemy1.EnemyState.Death)
