@@ -16,7 +16,8 @@ public class ComboAttack : MonoBehaviour
     [SerializeField] private GameObject effectAttack1;
     //[SerializeField] private GameObject effectAttack2;
     [SerializeField] private GameObject effectAttack3;
-
+    [SerializeField] private GameObject effectAttackFly3;
+    //
     [SerializeField] private GameObject hitEffect;
     [SerializeField] private Transform hitPosition;
 
@@ -25,28 +26,39 @@ public class ComboAttack : MonoBehaviour
     public AudioClip slashSound1;
     public AudioClip slashSound2;
     public AudioClip slashSound3;
+    public AudioClip slashSoundFly;
 
+    //Goi ham
     PlayerStatus playerStatus;
+    PlayerController playerController;
     void Start()
     {
         animator = GetComponent<Animator>();
         effectAttack1.SetActive(false);
        
         effectAttack3.SetActive(false);
-        playerStatus = FindAnyObjectByType<PlayerStatus>();
-
+        effectAttackFly3.SetActive(false);
         audioSource = GetComponent<AudioSource>();
+
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
+        playerController = FindAnyObjectByType<PlayerController>();
     }
 
     void Update()
     {
         // Chỉ cho phép tấn công nếu đã hết thời gian cooldown
-        if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime && !isAttack && playerStatus.currentMana > 100)
+        if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime 
+            && !isAttack && playerStatus.currentMana > 100 && playerController.IsGrounded())
         {
             playerStatus.TakeMana(100);
             OnAttack();
         }
-
+        //tấn công khi ko chạm đất
+        if (Input.GetMouseButtonDown(0)
+            && !isAttack && playerStatus.currentMana > 100 && playerController.IsGrounded() == false)
+        {
+            OnAttackFly();
+        }
         // Nếu người chơi không nhấn trong 1.2s thì reset combo
         if (Time.time >= nextAttackTime + 1.2f)
         {
@@ -82,6 +94,11 @@ public class ComboAttack : MonoBehaviour
         }
     }
 
+    void OnAttackFly()
+    {
+        animator.SetTrigger("FlyAttack");
+    }
+
     //effect even
     public void StartEffectAttack1()
     {
@@ -91,6 +108,7 @@ public class ComboAttack : MonoBehaviour
     {
         effectAttack1.SetActive(false);
     }
+    //
    /* public void StartEffectAttack2()
     {
         effectAttack2.SetActive(true);
@@ -99,6 +117,7 @@ public class ComboAttack : MonoBehaviour
     {
         effectAttack2.SetActive(false);
     }*/
+   //
     public void StartEffectAttack3()
     {
         effectAttack3.SetActive(true);
@@ -107,7 +126,15 @@ public class ComboAttack : MonoBehaviour
     {
         effectAttack3.SetActive(false);
     }
-
+    //
+    public void StartEffectAttackFly3()
+    {
+        effectAttackFly3.SetActive(true);
+    }
+    public void EndEffectAttackFly3()
+    {
+        effectAttackFly3.SetActive(false);
+    }
 
     //sound even
     public void PlaySlashSound1()
@@ -121,5 +148,9 @@ public class ComboAttack : MonoBehaviour
     public void PlaySlashSound3()
     {
         audioSource.PlayOneShot(slashSound3);
+    }
+    public void PlaySlashSoundFly()
+    {
+        audioSource.PlayOneShot(slashSoundFly);
     }
 }

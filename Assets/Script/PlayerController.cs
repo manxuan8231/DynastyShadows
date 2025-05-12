@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Leo tường -----------------------------")]
     
-
+    //cham dat
     private Vector3 velocity;
     private bool isGrounded;
     private bool wasGroundedLastFrame;
@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         Jump();
+        Roll();
     }
 
     public void Move()
@@ -96,5 +97,19 @@ public class PlayerController : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
     }
 
-  
+    public void Roll()
+    {
+        if(Input.GetKeyDown(KeyCode.LeftControl) && isGrounded && playerStatus.currentMana > 100)
+        {
+            playerStatus.TakeMana(100);
+            animator.SetTrigger("Roll");
+        }
+    }
+
+
+
+    public bool IsGrounded()
+    {
+        return isGrounded;
+    }
 }
