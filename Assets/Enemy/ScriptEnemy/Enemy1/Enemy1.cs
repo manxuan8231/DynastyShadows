@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class Enemy1 : MonoBehaviour
 {
-
+  
     public enum EnemyState
     {
         Idle,
@@ -14,8 +14,8 @@ public class Enemy1 : MonoBehaviour
     }
     public EnemyState currentState;
 
-    [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private Transform player;
+    public NavMeshAgent agent;
+    [SerializeField] public Transform player;
     public Vector3 firstPos;
     public Animator animator;
     private string currentTrigger;
@@ -29,31 +29,28 @@ public class Enemy1 : MonoBehaviour
     public float attackCooldown = 5f;
     private float attackTimer = 0f;
 
-    //máu của quái vật
-    public float maxHealth;
-    private float currentHealth;
-
+  
 
     //box dame
     public BoxCollider damageBox;
+
+    //goi ham
+    EnemyHP enemyHP;
     void Start()
     {
         damageBox.enabled = false; // Tắt box dame khi bắt đầu
-        currentHealth = maxHealth; // Khởi tạo máu
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         firstPos = transform.position;
-        player = GameObject.FindGameObjectWithTag("Player").transform;  
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        enemyHP = FindAnyObjectByType<EnemyHP>();
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K)) 
-        {
-            TakeDamage(20f);
-        }
+     
         switch (currentState)
         {
             case EnemyState.Idle:
@@ -81,7 +78,7 @@ public class Enemy1 : MonoBehaviour
          
         }
     }
-    void Run()
+    public void Run()
     {
         float distToPlayer = Vector3.Distance(transform.position, player.position);
 
@@ -102,7 +99,7 @@ public class Enemy1 : MonoBehaviour
         }
     }
 
-    void Attack()
+   public void Attack()
     {
         attackTimer += Time.deltaTime;
         if (attackTimer >= attackCooldown)
@@ -122,44 +119,7 @@ public class Enemy1 : MonoBehaviour
             ChangeState(EnemyState.Run);
         }
     }
-    public void TakeDamage(float damage)
-    {
-        if (currentState == EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
-
-        currentHealth -= damage;
-
-        if (currentHealth > 0)
-        {
-            ChangeState(EnemyState.GetHit);
-
-            // Sau một thời gian nhỏ thì quay lại Run/Attack
-            Invoke(nameof(BackToChase), 0.5f);
-        }
-        else
-        {
-            currentHealth = 0;
-            ChangeState(EnemyState.Death);
-            agent.isStopped = true;
-
-            // Hủy enemy sau 1.5 giây để animation kịp phát xong
-            Destroy(gameObject, 3f);
-        }
-    }
-    void BackToChase()
-    {
-        if (currentState != EnemyState.Death)
-        {
-            float dist = Vector3.Distance(transform.position, player.position);
-            if (dist <= attackRange)
-            {
-                ChangeState(EnemyState.Attack);
-            }
-            else
-            {
-                ChangeState(EnemyState.Run);
-            }
-        }
-    }
+    
 
     public void ChangeState(EnemyState newState)
     {
@@ -184,6 +144,7 @@ public class Enemy1 : MonoBehaviour
                 currentTrigger = "Attack";
                 break;
             case EnemyState.GetHit:
+              
                 animator.SetTrigger("GetHit");
                 currentTrigger = "GetHit";
                 break;

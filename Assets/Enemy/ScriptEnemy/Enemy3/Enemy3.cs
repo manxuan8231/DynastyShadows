@@ -12,8 +12,8 @@ public class Enemy3 : MonoBehaviour
         Death
     }
     public EnemyState currentState;
-    [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private Transform player;
+    [SerializeField] public NavMeshAgent agent;
+    [SerializeField] public Transform player;
     public Vector3 firstPos;
     public Animator animator;
     private string currentTrigger;
@@ -27,17 +27,15 @@ public class Enemy3 : MonoBehaviour
     public float attackCooldown = 5f;
     public float attackTimer = 0f;
 
-    //máu của quái vật
-    public float maxHealth;
-    private float currentHealth;
-
+    //goi ham
+    EnemyHP3 enemyHP3;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         firstPos = transform.position;
-        currentHealth = maxHealth; // Khởi tạo máu
+       enemyHP3 = FindAnyObjectByType<EnemyHP3>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
     }
@@ -45,10 +43,7 @@ public class Enemy3 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            TakeDamage(20f);
-        }
+        
         switch (currentState)
         {
             case EnemyState.Idle:
@@ -116,44 +111,7 @@ public class Enemy3 : MonoBehaviour
             ChangeState(EnemyState.Run);
         }
     }
-    public void TakeDamage(float damage)
-    {
-        if (currentState == EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
-
-        currentHealth -= damage;
-
-        if (currentHealth > 0)
-        {
-            ChangeState(EnemyState.GetHit);
-
-            // Sau một thời gian nhỏ thì quay lại Run/Attack
-            Invoke(nameof(BackToChase), 0.5f);
-        }
-        else
-        {
-            currentHealth = 0;
-            ChangeState(EnemyState.Death);
-            agent.isStopped = true;
-
-            // Hủy enemy sau 1.5 giây để animation kịp phát xong
-            Destroy(gameObject, 3f);
-        }
-    }
-    void BackToChase()
-    {
-        if (currentState != EnemyState.Death)
-        {
-            float dist = Vector3.Distance(transform.position, player.position);
-            if (dist <= attackRange)
-            {
-                ChangeState(EnemyState.Attack);
-            }
-            else
-            {
-                ChangeState(EnemyState.Run);
-            }
-        }
-    }
+   
 
     public void ChangeState(EnemyState newState)
     {
@@ -177,6 +135,7 @@ public class Enemy3 : MonoBehaviour
                 currentTrigger = "Attack";
                 break;
             case EnemyState.GetHit:
+                agent.isStopped = false; // Bỏ dừng lại khi bị đánh
                 animator.SetTrigger("GetHit");
                 currentTrigger = "GetHit";
                 break;
