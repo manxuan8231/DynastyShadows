@@ -32,6 +32,7 @@ public class BossPhu1 : MonoBehaviour
 
    
     BossPhu1HP BossPhu1HP;
+    internal static readonly object EnemyState;
 
     private void Start()
     {
