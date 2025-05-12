@@ -64,7 +64,8 @@ public class Enemy1 : MonoBehaviour
                 }
                 break;
             case EnemyState.Run:
-               float dist = Vector3.Distance(transform.position, player.position);
+               
+                    float dist = Vector3.Distance(transform.position, player.position);
                 if (dist <= attackRange )
                 {
                     ChangeState(EnemyState.Attack);
@@ -110,8 +111,9 @@ public class Enemy1 : MonoBehaviour
             Debug.Log("Attack");
             animator.SetTrigger("Attack");
             attackTimer = 0f; // Reset thời gian tấn công
+            agent.isStopped = true; // Dừng lại khi tấn công
+
         }
-        agent.isStopped = true; // Dừng lại khi tấn công
         float dist = Vector3.Distance(transform.position, player.position);
         if(dist > attackRange + 1f)
         {
@@ -177,6 +179,7 @@ public class Enemy1 : MonoBehaviour
                 currentTrigger = "Run";
                 break;
             case EnemyState.Attack:
+                agent.isStopped = true; // Dừng lại khi tấn công
                 animator.SetTrigger("Attack");
                 currentTrigger = "Attack";
                 break;
