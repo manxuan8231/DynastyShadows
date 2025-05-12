@@ -30,12 +30,21 @@ public class Enemy4 : MonoBehaviour
 
 
 
-   
+
     //goi ham
     EnemyHP4 enemyHP4;
+
+
+    //box dame
+    public BoxCollider leftSpine;
+    public BoxCollider rightSpine;
+    public BoxCollider RightHand;
+
     void Start()
     {
-       
+        RightHand.enabled = false;
+        leftSpine.enabled = false;
+        rightSpine.enabled = false;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         firstPos = transform.position;
@@ -161,5 +170,30 @@ public class Enemy4 : MonoBehaviour
         animator.ResetTrigger("Attack");
         animator.ResetTrigger("GetHit");
         animator.ResetTrigger("Death");
+    }
+
+    public void OnLeft()
+    {
+        leftSpine.enabled = true;
+    }
+    public void OffLeft()
+    {
+        leftSpine.enabled = false;
+    }
+    public void OnRight()
+    {
+        rightSpine.enabled = true;
+    }
+    public void OffRight()
+    {
+        rightSpine.enabled = false;
+    }
+    public void OnRightHand()
+    {
+        RightHand.enabled = true;
+    }
+    public void OffRightHand()
+    {
+        RightHand.enabled = false;
     }
 }
