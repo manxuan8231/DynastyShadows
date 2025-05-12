@@ -3663,6 +3663,72 @@ Transform:
   - {fileID: 3661744690361054673}
   m_Father: {fileID: 3214487356903879654}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3904803762175543171
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8111542834597457245}
+  - component: {fileID: 557012143509197308}
+  - component: {fileID: 1942898947252844362}
+  m_Layer: 0
+  m_Name: DameZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8111542834597457245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3904803762175543171}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.976, y: 0.582, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3515006912416960593}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &557012143509197308
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3904803762175543171}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.662254, y: 1.32264, z: 0.956129}
+  m_Center: {x: -1.14, y: -0.03422, z: 0.59}
+--- !u!114 &1942898947252844362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3904803762175543171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2953f53a64237d145922d518c0063229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3908346421709976184
 GameObject:
   m_ObjectHideFlags: 0
@@ -5384,8 +5450,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1155197012459029288}
   - component: {fileID: 6559638017083357611}
-  - component: {fileID: 1544444423238448275}
-  - component: {fileID: 3300778261069207403}
   m_Layer: 0
   m_Name: _Weapon1
   m_TagString: Untagged
@@ -5465,39 +5529,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.019603819, y: 0.46381092, z: 0.0675187}
     m_Extent: {x: 0.10212808, y: 0.35759127, z: 0.088040315}
   m_DirtyAABB: 0
---- !u!65 &1544444423238448275
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5682444879518887163}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.7613597, y: 0.39423928, z: 0.40076423}
-  m_Center: {x: 2.2626648, y: 0.14435083, z: -1.2044648}
---- !u!114 &3300778261069207403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5682444879518887163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2953f53a64237d145922d518c0063229, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5710605751714212117
 GameObject:
   m_ObjectHideFlags: 0
@@ -6708,7 +6739,7 @@ Transform:
   m_GameObject: {fileID: 7331802775954158954}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 104.17622, y: 0.0000038146973, z: 123.35555}
+  m_LocalPosition: {x: 104.153, y: 0.091, z: 123.35555}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6725,6 +6756,7 @@ Transform:
   - {fileID: 620690149502496547}
   - {fileID: 6959298683131398121}
   - {fileID: 2746152984014120945}
+  - {fileID: 8111542834597457245}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5070448249085278037
@@ -6791,7 +6823,7 @@ MonoBehaviour:
   radius: 20
   attackRange: 2
   attackCooldown: 4.2
-  damageBox: {fileID: 1544444423238448275}
+  damageBox: {fileID: 557012143509197308}
 --- !u!114 &3528404223503542277
 MonoBehaviour:
   m_ObjectHideFlags: 0

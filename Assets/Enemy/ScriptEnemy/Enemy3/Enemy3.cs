@@ -30,13 +30,17 @@ public class Enemy3 : MonoBehaviour
     //goi ham
     EnemyHP3 enemyHP3;
 
+    //box damage
+    public BoxCollider damageBox;
     void Start()
     {
+      
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         firstPos = transform.position;
        enemyHP3 = FindAnyObjectByType<EnemyHP3>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        damageBox.enabled = false; // Tắt box dame khi bắt đầu
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
     }
 
@@ -154,4 +158,15 @@ public class Enemy3 : MonoBehaviour
         animator.ResetTrigger("GetHit");
         animator.ResetTrigger("Death");
     }
+
+    public void EnableDamageBox()
+    {
+        damageBox.enabled = true; // Bật box dame khi tấn công
+    }
+    public void DisableDamageBox()
+    {
+        damageBox.enabled = false; // Tắt box dame khi không tấn công
+    }
 }
+
+
