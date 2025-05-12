@@ -2,15 +2,21 @@ using UnityEngine;
 
 public class DameZoneEnemy1 : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+  PlayerStatus playerStatus;
+    private void Start()
     {
-        
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Player"))
+        {
+            playerStatus.TakeHealth(20);
+            Debug.Log("Player hit by enemy");
+        }
     }
+
+
+
 }
