@@ -2,16 +2,16 @@
 
 public class OpenTele : MonoBehaviour
 {
-    public GameObject tele;         // Panel Teleport
+    public GameObject imgTele;         // Panel Teleport
     public GameObject buttonF;      // UI nhấn F (ví dụ Text "Nhấn F để mở")
 
     private bool isInRange = false;
-    public Collider collider; // Collider để kiểm tra va chạm
+    public Collider colliderOpen; // Collider để kiểm tra va chạm
     void Start()
     {
-        tele.SetActive(false);
+        imgTele.SetActive(false);
         buttonF.SetActive(false);
-        collider.enabled = true; // Bật collider để nhận va chạm
+        colliderOpen.enabled = true; // Bật collider để nhận va chạm
     }
 
     void Update()
@@ -19,8 +19,8 @@ public class OpenTele : MonoBehaviour
         if (isInRange && Input.GetKeyDown(KeyCode.F))
         {
             buttonF.SetActive(false);
-            collider.enabled = false;
-            tele.SetActive(true);
+            colliderOpen.enabled = false;
+            imgTele.SetActive(false);
         }
     }
 
