@@ -23,7 +23,7 @@ public class ThirdPersonOrbitCamera : MonoBehaviour
     void LateUpdate()
     {
         // Ẩn/hiện chuột khi bấm M
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             cursorVisible = !cursorVisible;
             Cursor.visible = cursorVisible;
