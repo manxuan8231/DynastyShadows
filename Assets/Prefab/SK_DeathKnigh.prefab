@@ -16453,7 +16453,7 @@ GameObject:
   - component: {fileID: 2639173293521381481}
   - component: {fileID: 1176068580013858024}
   m_Layer: 9
-  m_Name: ImageBG
+  m_Name: ImageBG(minimap)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38353,7 +38353,7 @@ GameObject:
   - component: {fileID: 5918614816851605474}
   - component: {fileID: 2739181494152812705}
   m_Layer: 9
-  m_Name: CanvasMinimap
+  m_Name: CanvasMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38400,7 +38400,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!114 &5918614816851605474
 MonoBehaviour:
@@ -44506,6 +44506,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9f7dd89d17254d41b98d99f405e74c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapUI: {fileID: 0}
+  mapAudio: {fileID: 2516279819860882013}
+  mapClip: {fileID: 8300000, guid: 560cd90a01d7d4040bfc37a476b2a7a3, type: 3}
 --- !u!82 &2516279819860882013
 AudioSource:
   m_ObjectHideFlags: 0
