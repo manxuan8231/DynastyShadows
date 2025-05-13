@@ -56,14 +56,15 @@ public class ComboAttack : MonoBehaviour
     {
         // Chỉ cho phép tấn công nếu đã hết thời gian cooldown
         if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime 
-            && isAttack && playerStatus.currentMana > 100 && playerController.IsGrounded())
+            && isAttack && playerStatus.currentMana > 50 && playerController.IsGrounded())
         {
-            playerStatus.TakeMana(100);
+            playerStatus.TakeMana(50);
             OnAttack();
         }
         //tấn công khi ko chạm đất
         if (Input.GetMouseButtonDown(0)
-            && isAttack && playerStatus.currentMana > 100 && playerController.IsGrounded() == false && Time.time >= coolDownAttackFly + 1f)
+            && isAttack && playerStatus.currentMana > 50 && playerController.IsGrounded() == false 
+            && Time.time >= coolDownAttackFly + 1f)
         {
             OnAttackFly();
             coolDownAttackFly = Time.time;

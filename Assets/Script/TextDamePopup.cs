@@ -3,18 +3,28 @@ using UnityEngine;
 
 public class TextDamePopup : MonoBehaviour
 {
-    public TextMeshProUGUI text;
-    public float moveSpeed = 1f;
-    public float lifeTime = 1f;
+    public TextMeshProUGUI text; // Ô hiển thị damage
+    public float moveSpeed = 1f; // Tốc độ bay lên
+    public float lifeTime = 1f; // Thời gian tồn tại
 
     private Camera mainCamera;
-   
+
     public void Setup(float damage)
     {
         text.text = damage.ToString();
+
+        
+        if (damage == 200 || damage == 400 || damage == 600)
+        {
+            text.color = Color.white; 
+        }
+        else
+        {
+            text.color = Color.yellow; 
+        }
+
         Destroy(gameObject, lifeTime);
         mainCamera = Camera.main;
-        
     }
 
     void Update()

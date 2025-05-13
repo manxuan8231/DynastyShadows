@@ -18,8 +18,10 @@ public class PlayerStatus : MonoBehaviour
     public float currentMana;
     public float maxMana = 2000f;
 
-   
-
+   //khoi tao
+    private Animator animator;
+    private AudioSource audioSource;
+    public AudioClip audioHit;
     void Start()
     {
         //khởi tạo hp
@@ -32,7 +34,8 @@ public class PlayerStatus : MonoBehaviour
         currentMana = maxMana;
         sliderMana.maxValue = currentMana;
 
-        
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     
@@ -45,10 +48,11 @@ public class PlayerStatus : MonoBehaviour
         currentHp -= amount;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
         sliderHp.value = currentHp;
-
-        if(currentHp <= 0)
+        animator.SetTrigger("Hit");
+        audioSource.PlayOneShot(audioHit);
+        if (currentHp <= 0)
         {
-            Destroy(gameObject,4f);
+            Destroy(gameObject);
 
         }
     }
