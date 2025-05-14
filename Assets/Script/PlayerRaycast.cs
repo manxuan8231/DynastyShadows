@@ -8,9 +8,6 @@ public class PlayerRaycast : MonoBehaviour
     public LayerMask healthLayer;                 // Chỉ raycast vào Layer "Health"
     //goi ham
     private Animator animator;
-    private PlayerController playerController;
-   
-    private ComboAttack comboAttack;
 
     AudioSource audioSource;
     public AudioClip pickUpSound;
@@ -20,6 +17,8 @@ public class PlayerRaycast : MonoBehaviour
     //ke thua
     private LevelAvatar itemHealth;
     private PlayerStatus playerStatus;
+    private ComboAttack comboAttack;
+    private PlayerController playerController;
     void Start()
     {
         comboAttack = FindAnyObjectByType<ComboAttack>();

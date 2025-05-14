@@ -44497,6 +44497,7 @@ GameObject:
   - component: {fileID: 6612305951951977055}
   - component: {fileID: 4877061233942792573}
   - component: {fileID: 2222235522807271684}
+  - component: {fileID: 7681392975120717764}
   - component: {fileID: 2516279819860882013}
   m_Layer: 9
   m_Name: SK_DeathKnigh
@@ -44683,7 +44684,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5045261743069803646}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 680db3deab3e4da49a699ff2eaf0732b, type: 3}
   m_Name: 
@@ -44710,6 +44711,18 @@ MonoBehaviour:
   mapUIBG: {fileID: 5594393595450536468}
   mapAudio: {fileID: 2516279819860882013}
   mapClip: {fileID: 8300000, guid: df60351d9c281ba4aaa683bb517d7bbb, type: 3}
+--- !u!114 &7681392975120717764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5045261743069803646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2594b5fdba315534fa1cf7f95a1ad1a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &2516279819860882013
 AudioSource:
   m_ObjectHideFlags: 0
@@ -50794,7 +50807,7 @@ Transform:
   m_GameObject: {fileID: 5856964789536236358}
   serializedVersion: 2
   m_LocalRotation: {x: 0.006620339, y: -0.8650459, z: 0.501627, w: -0.004707489}
-  m_LocalPosition: {x: 2.3000207, y: 3.4999862, z: -1.1999745}
+  m_LocalPosition: {x: 2.3000002, y: 3.5, z: -1.2000003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
