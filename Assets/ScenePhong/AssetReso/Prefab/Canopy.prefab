@@ -17,12 +17,13 @@ GameObject:
   - component: {fileID: 6095458415942146507}
   - component: {fileID: 7322206197201687322}
   - component: {fileID: 3710822917108470189}
+  - component: {fileID: -8502109510053004878}
   m_Layer: 0
   m_Name: Canopy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 127
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5979424682696446556
 Transform:
@@ -221,3 +222,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.23811992, y: 2.0041645, z: 0.22414231}
   m_Center: {x: 0.27707416, y: 1.0020818, z: -1.912453}
+--- !u!64 &-8502109510053004878
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4051479325857501897}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8069933795733166304, guid: 08f014feecd3e074f90b55e0e14d8bab, type: 3}
