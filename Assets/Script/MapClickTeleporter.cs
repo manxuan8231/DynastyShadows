@@ -32,7 +32,7 @@ public class MapClickTeleporter : MonoBehaviour, IPointerClickHandler
             Tele tele = hit.collider.GetComponent<Tele>();
             if (tele != null)
             {
-                tele.TeleportPlayer();
+                tele.ShowButtonTele();
             }
         }
     }
