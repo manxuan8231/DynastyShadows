@@ -9,19 +9,24 @@ public class PlayerRaycast : MonoBehaviour
     //goi ham
     private Animator animator;
     private PlayerController playerController;
-    private AvatarHealth itemHealth;
+   
     private ComboAttack comboAttack;
 
     AudioSource audioSource;
     public AudioClip pickUpSound;
 
     public GameObject buttonF;
-   
+
+    //ke thua
+    private LevelAvatar itemHealth;
+    private PlayerStatus playerStatus;
     void Start()
     {
         comboAttack = FindAnyObjectByType<ComboAttack>();
-        itemHealth = FindAnyObjectByType<AvatarHealth>();
+        itemHealth = FindAnyObjectByType<LevelAvatar>();
         playerController = FindAnyObjectByType<PlayerController>();
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
+
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         buttonF.SetActive(false);
@@ -35,7 +40,7 @@ public class PlayerRaycast : MonoBehaviour
         if (Physics.Raycast(origin, direction, out RaycastHit hit, rayDistance, healthLayer))
         {
             buttonF.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKey(KeyCode.F))
             {
                 buttonF.SetActive(false);
                 
@@ -48,9 +53,12 @@ public class PlayerRaycast : MonoBehaviour
                 if (itemHealth != null)
                 {
                     animator.SetTrigger("PickUp");
-
-                    itemHealth.AddValueAvatar(1);
-                    Destroy(hit.collider.gameObject, 1f);
+                    float randomHealth = Random.Range(500, 2000);
+                    int randomValueAT = Random.Range(1, 5);
+                    playerStatus.AddHealth(randomHealth);
+                    itemHealth.AddValueAvatar(randomValueAT);
+                    //destroy vat pham
+                    Destroy(hit.collider.gameObject);
                 }
             }                     
         }
