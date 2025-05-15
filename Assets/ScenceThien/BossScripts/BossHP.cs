@@ -49,7 +49,7 @@ public class BossHP : MonoBehaviour
         if (!hasEnteredPhase2 && currentHealth <= maxHealth / 2f)
         {
             hasEnteredPhase2 = true;
-            bossScript.TransitionToState(bossScript.phaseChangeState);
+            bossScript.TransitionToState(bossScript.phase2State);
             return;
         }
 

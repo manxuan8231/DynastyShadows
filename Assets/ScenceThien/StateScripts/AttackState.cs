@@ -2,34 +2,36 @@ using UnityEngine;
 
 public class AttackState : BaseState
 {
-    private float cooldownTimer;
+    private float attackCooldown = 2f;
+    private float attackTimer = 0f;
+
+    private string[] attackClips = { "Attack 1", "Attack 2", "Attack 3" };
 
     public AttackState(BossScript boss) : base(boss) { }
 
     public override void EnterState()
     {
-        cooldownTimer = 0f;
         boss.agent.isStopped = true;
+        attackTimer = attackCooldown;
     }
 
     public override void UpdateState()
     {
-        cooldownTimer += Time.deltaTime;
-
-        if (cooldownTimer >= boss.attackCooldown)
-        {
-            string atk = boss.GetRandomAttack();
-            boss.anim.SetTrigger(atk);
-            cooldownTimer = 0f;
-            Debug.Log("attack state");
-        }
-
         float dist = Vector3.Distance(boss.transform.position, boss.player.position);
+
         if (dist > boss.attackRange + 1f)
         {
             boss.agent.isStopped = false;
             boss.TransitionToState(boss.chaseState);
-            Debug.Log("Chase state");
+            return;
+        }
+
+        attackTimer += Time.deltaTime;
+        if (attackTimer >= attackCooldown)
+        {
+            string clip = attackClips[Random.Range(0, attackClips.Length)];
+            boss.anim.SetTrigger(clip);
+            attackTimer = 0f;
         }
     }
 }

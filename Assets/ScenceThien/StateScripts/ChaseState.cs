@@ -13,12 +13,11 @@ public class ChaseState : BaseState
     public override void UpdateState()
     {
         boss.agent.SetDestination(boss.player.position);
-
         float dist = Vector3.Distance(boss.transform.position, boss.player.position);
+
         if (dist <= boss.attackRange)
         {
-            boss.TransitionToState(boss.attackState);
-            Debug.Log("attack state");
+            boss.TransitionToState(boss.idleCombatState);
         }
     }
 }
