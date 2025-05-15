@@ -22,6 +22,19 @@ public class PlayerStatus : MonoBehaviour
     public float maxMana = 2000f;
     public TextMeshProUGUI textMana;
 
+    //xu lý dame
+    public int criticalDamage = 600; // +600% damage khi crit
+    public int criticalChance = 20;  // 20% tỉ lệ crit
+    public int baseDamage = 50; // dame aattack mac dinh
+    public TextMeshProUGUI textHitDamage;
+    public TextMeshProUGUI textHitChance;
+    public TextMeshProUGUI textBaseDamage;
+
+    //xu ly toc do chay
+    public float speedRun = 7f;
+    public TextMeshProUGUI textSpeed;
+
+
     //khoi tao
     private Animator animator;
     private AudioSource audioSource;
@@ -43,7 +56,11 @@ public class PlayerStatus : MonoBehaviour
         currentMana = maxMana;
         sliderMana.maxValue = currentMana;
         textMana.text = ((int)currentMana).ToString() + " / " + ((int)maxMana).ToString();
-
+        //
+        textHitDamage.text = $"{criticalDamage}%";
+        textHitChance.text = $"{criticalChance}%";
+        textBaseDamage.text = $"{baseDamage}";
+        //
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
@@ -142,8 +159,8 @@ public class PlayerStatus : MonoBehaviour
 
     }
 
-
-    public void RegenerateMana()//tăng mana dần
+    //tăng mana dần
+    public void RegenerateMana()
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -153,5 +170,42 @@ public class PlayerStatus : MonoBehaviour
         {
             AddMana(100 * Time.deltaTime); // cộng dần theo thời gian   
         }
+    }
+
+    // --- Nâng chỉ số ---
+    public void UpCriticalHitDamage(int amount)
+    {
+        criticalDamage += amount;
+        textHitDamage.text = $"{criticalDamage}%";
+    }
+
+    public void UpCriticalHitChance(int amount)
+    {
+        criticalChance += amount;
+        textHitChance.text = $"{criticalChance}%";
+    }
+
+    public void UpBaseDamage(int amount)
+    {
+        baseDamage += amount;
+        textBaseDamage.text = $"{baseDamage}";
+    }
+
+
+
+
+    // --- Tính damage ---
+    public float CalculateFinalDamage()
+    {
+        bool isCritical = Random.value < (criticalChance / 100f); //có 20 % cơ hội chí mạng.
+        float multiplier = isCritical ? (1f + criticalDamage / 100f) : 1f;//Nếu là đòn chí mạng, nhân sát thương thêm theo phần trăm criticalDamage.
+        float damage = baseDamage * multiplier;//Tính sát thương cuối cùng sau khi xét chí mạng.
+        
+        if (isCritical)
+            Debug.Log("💥 Chí mạng! Gây " + damage + " sát thương.");
+        else
+            Debug.Log("Gây " + damage + " sát thương thường.");
+
+        return damage;
     }
 }

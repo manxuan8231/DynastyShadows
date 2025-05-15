@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DameZone : MonoBehaviour
@@ -6,47 +7,56 @@ public class DameZone : MonoBehaviour
     //effect hit
     [SerializeField] private GameObject effectHit;
     [SerializeField] private Transform tranFormHit;
-    public int maxDame = 200;
-    public int minDame = 100;
+
+   //hien dame effect
     public GameObject textDame;
     public Transform textTransform;
+
+    //ke thua
+    PlayerStatus playerStatus;
+
+    private void Start()
+    {
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy") )
         {
-            float randomDame = Random.Range(minDame,maxDame);
+            float finalDamage = playerStatus.CalculateFinalDamage();
+
             GameObject hitEffect = Instantiate(effectHit, tranFormHit.position, transform.rotation);
             Destroy(hitEffect,1f);
             // Tìm script EnemyHP 
             EnemyHP enemyHP = other.GetComponent<EnemyHP>();
             if (enemyHP != null)
             {
-                ShowTextDame(randomDame);
-                enemyHP.TakeDamage(randomDame);
+                ShowTextDame(finalDamage);
+                enemyHP.TakeDamage(finalDamage);
                 return;
             }
 
             EnemyHP2 enemyHP2 = other.GetComponent<EnemyHP2>();
             if (enemyHP2 != null)
             {
-                ShowTextDame(randomDame);
-                enemyHP2.TakeDamage(randomDame);
+                ShowTextDame(finalDamage);
+                enemyHP2.TakeDamage(finalDamage);
                 return;
             }
 
             EnemyHP3 enemyHP3 = other.GetComponent<EnemyHP3>();
             if (enemyHP3 != null)
             {
-                ShowTextDame(randomDame);
-                enemyHP3.TakeDamage(randomDame);
+                ShowTextDame(finalDamage);
+                enemyHP3.TakeDamage(finalDamage);
                 return;
             }
 
             EnemyHP4 enemyHP4 = other.GetComponent<EnemyHP4>();
             if (enemyHP4 != null)
             {
-                ShowTextDame(randomDame);
-                enemyHP4.TakeDamage(randomDame);
+                ShowTextDame(finalDamage);
+                enemyHP4.TakeDamage(finalDamage);
                 return;
             }
         }
@@ -69,4 +79,5 @@ public class DameZone : MonoBehaviour
             popup.Setup(damage);
         }
     }
+
 }
