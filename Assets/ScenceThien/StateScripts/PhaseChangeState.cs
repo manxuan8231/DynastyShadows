@@ -1,20 +1,20 @@
-using UnityEngine;
 using System.Collections;
-public class PhaseChangeState : BaseState
+using UnityEngine;
+
+public class PhaseChangeState: BaseState
 {
     public PhaseChangeState(BossScript boss) : base(boss) { }
 
     public override void EnterState()
     {
-        boss.anim.SetTrigger("phaseChange"); 
         boss.agent.isStopped = true;
-        boss.StartCoroutine(WaitToChangePhase());
+        boss.anim.SetTrigger("phase2");
+        boss.StartCoroutine(EnterPhase2());
     }
 
-    private IEnumerator WaitToChangePhase()
+    private IEnumerator EnterPhase2()
     {
         yield return new WaitForSeconds(2f);
-        boss.isPhase2 = true;
         boss.TransitionToState(boss.chaseState);
     }
 }

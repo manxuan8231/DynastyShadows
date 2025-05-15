@@ -6,14 +6,9 @@ public class DeathState : BaseState
 
     public override void EnterState()
     {
-        boss.isDead = true;
-        boss.anim.SetTrigger("death");
         boss.agent.isStopped = true;
+        boss.anim.SetTrigger("death");
+        boss.isDead = true;
         GameObject.Destroy(boss.gameObject, 5f);
-    }
-
-    public override void UpdateState()
-    {
-        Debug.Log("death");
     }
 }
