@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 // Trạng thái Drakonit đang rượt đuổi Player
 public class DrakonitChaseState : DrakonitState
@@ -11,6 +12,7 @@ public class DrakonitChaseState : DrakonitState
     {
         enemy.animator.SetBool("Walking", true);  // Phát animation chạy
         enemy.agent.isStopped = false;   // Cho phép agent di chuyển
+        Debug.Log("trang thai ruot duoii");
     }
 
     // Hàm cập nhật liên tục khi đang ở trạng thái Chase
@@ -25,8 +27,14 @@ public class DrakonitChaseState : DrakonitState
             enemy.ChangeState(new DrakonitAttackState(enemy));       
             return;
         }
+        // Nếu đã đến gần trong khoảng cách skill -> chuyển sang trạng thái skill
+        if (distance <= enemy.skillRange && enemy.isSkill)
+        {
+            enemy.ChangeState(new DrakonitSkillState(enemy));
+            return;
+        }
 
-        // Nếu Player đã chạy xa vượt khỏi tầm rượt đuổi -> chuyển sang dung skill
+        // Nếu Player đã chạy xa vượt khỏi tầm rượt đuổi -> chuyển sang idle
         if (distance > enemy.chaseRange)
         {
             enemy.ChangeState(new DrakonitIdleState(enemy));
@@ -40,8 +48,9 @@ public class DrakonitChaseState : DrakonitState
     // Hàm gọi khi rời khỏi trạng thái này
     public override void Exit()
     {
-        enemy.animator.SetBool("Walking", false);  // Phát animation chạy
+        enemy.animator.SetBool("Walking", false); 
         // Ngừng đường di chuyển hiện tại
         enemy.agent.ResetPath();
     }
+
 }

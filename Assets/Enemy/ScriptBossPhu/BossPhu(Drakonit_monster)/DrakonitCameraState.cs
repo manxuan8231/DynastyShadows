@@ -13,6 +13,7 @@ public class DrakonitCameraState : DrakonitState
 
     public override void Enter()
     {
+        Debug.Log("trang thai camera");
         brain = Camera.main.GetComponent<CinemachineBrain>();
         if (brain != null)
         {
@@ -53,5 +54,6 @@ public class DrakonitCameraState : DrakonitState
             brain.DefaultBlend.Style = CinemachineBlendDefinition.Styles.EaseInOut;// chuyển cam lại thành easeinout
         }
         enemy.cutScene3.Priority = 0;
+       
     }
 }
