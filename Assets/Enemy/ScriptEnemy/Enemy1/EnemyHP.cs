@@ -7,11 +7,13 @@ public class EnemyHP : MonoBehaviour
     public Slider sliderHp;
     public float currentHealth;
     public float maxHealth = 2000f;
-
+    //drop exp
+    public GameObject expPrefab;
     
     //gọi hàm
     Enemy1 enemy1;
-
+    //box nhận dame
+    public BoxCollider boxDame;
     void Start()
     {
         currentHealth = maxHealth;
@@ -24,10 +26,7 @@ public class EnemyHP : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            TakeDamage(100); // Gọi hàm giảm máu
-        }
+       
     }
 
     public void TakeDamage(float damage)
@@ -38,23 +37,22 @@ public class EnemyHP : MonoBehaviour
        
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         sliderHp.value = currentHealth;
-
-        if (currentHealth > 0)
+        if (currentHealth <= 0)
         {
-     
-            // Sau một thời gian nhỏ thì quay lại Run/Attack
-            Invoke(nameof(BackToChase), 0.5f);
-        }
-        
-        else
-        {
-            currentHealth = 0;
             enemy1.ChangeState(Enemy1.EnemyState.Death);
             enemy1.agent.isStopped = true; // Dừng lại khi chết
-
-            // Hủy enemy sau 1.5 giây để animation kịp phát xong
+            GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject, 3f);
+            // Tạo expPrefab tại vị trí của enemy
         }
+        if (currentHealth > 0)
+        {
+            enemy1.ChangeState(Enemy1.EnemyState.GetHit);
+            // Sau một thời gian nhỏ thì quay lại Run/Attack
+            Invoke(nameof(BackToChase), 0.2f);
+        }
+        
+   
     }
     public void TakeDamageHit(float damage)
     {
@@ -63,25 +61,25 @@ public class EnemyHP : MonoBehaviour
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         sliderHp.value = currentHealth;
-
+        if (currentHealth <= 0)
+        {
+            enemy1.ChangeState(Enemy1.EnemyState.Death);
+            enemy1.agent.isStopped = true; // Dừng lại khi chết
+            GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
+            Destroy(gameObject, 3f);
+            // Tạo expPrefab tại vị trí của enemy
+          
+        }
         if (currentHealth > 0)
         {
             enemy1.ChangeState(Enemy1.EnemyState.GetHit);
 
 
             // Sau một thời gian nhỏ thì quay lại Run/Attack
-            Invoke(nameof(BackToChase), 0.5f);
+            Invoke(nameof(BackToChase), 0.2f);
         }
 
-        else
-        {
-            currentHealth = 0;
-            enemy1.ChangeState(Enemy1.EnemyState.Death);
-            enemy1.agent.isStopped = true; // Dừng lại khi chết
-
-            // Hủy enemy sau 1.5 giây để animation kịp phát xong
-            Destroy(gameObject, 3f);
-        }
+       
     }
 
    

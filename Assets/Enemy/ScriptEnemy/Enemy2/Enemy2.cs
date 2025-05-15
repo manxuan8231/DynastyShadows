@@ -177,6 +177,10 @@ public class Enemy2 : MonoBehaviour
     {
         RightHand.enabled = false;
     }
+    public void OffTail()
+    {
+        tailBox.enabled = false;
+    }
 
     void ResetAllTriggers()
     {
