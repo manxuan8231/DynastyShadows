@@ -23,7 +23,7 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
     [SerializeField]
     public  GameObject selectPanel;
     public bool thisItemSelected;
-
+    public Sprite defaultImage;
     //item description
     public Image itemDescriptionImage;
     public TMP_Text itemDescriptionNameText;
@@ -40,7 +40,7 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
     {
         openInventory = FindAnyObjectByType<OpenInventory>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
-        itemSO = FindAnyObjectByType<ItemSO>();
+        
     }
     public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription, ItemSO itemSO)
     {
@@ -110,11 +110,11 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
         if (quantity <= 0)
         {
             itemName = "";
-            itemSprite = null;
+           
             itemDescription = "";
             itemSO = null;
             isFull = false;
-            itemImage.sprite = null;
+            itemImage.sprite = defaultImage;
             quantityText.enabled = false;
             selectPanel.SetActive(false);
         }
