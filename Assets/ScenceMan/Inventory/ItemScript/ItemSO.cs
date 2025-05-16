@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu]
 public class ItemSO : ScriptableObject
@@ -8,10 +7,26 @@ public class ItemSO : ScriptableObject
     public Sprite itemIcon;
     public string itemDescription;
     public ItemType itemType;
-    public float value; // Lượng máu hoặc mana hồi
+    public float value;
+
+    // Chỉ số vũ khí
+    public int sharpness;
+    public float critRate;
+    public float critDamage;
+    public Rarity rarity;
 }
+
 public enum ItemType
 {
     Heal,
-    Mana
+    Mana,
+    Weapon
+}
+
+public enum Rarity
+{
+    Common,
+    Rare,
+    Epic,
+    Legendary
 }
