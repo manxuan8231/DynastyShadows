@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 public class DrakonitCameraState : DrakonitState
 {
    
-    CinemachineBrain brain ;
+    CinemachineBrain brain; 
 
     private bool isWaiting = true;
     public DrakonitCameraState(DrakonitController enemy) : base(enemy) { }
@@ -24,8 +24,6 @@ public class DrakonitCameraState : DrakonitState
         {
             brain.DefaultBlend.Style = CinemachineBlendDefinition.Styles.Cut;
         }
-      
-
     }
 
     public override void Update()
@@ -43,12 +41,10 @@ public class DrakonitCameraState : DrakonitState
     }
 
     public IEnumerator PlayCutscene(float seconds)
-    {
-       
+    {  
         characterController.enabled = false; // Vô hiệu hóa CharacterController
         characterController. animator.SetBool("isWalking", false);
         characterController.animator.SetBool("isRunning", false);
-
         //  Hiện chuột
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;
@@ -59,28 +55,27 @@ public class DrakonitCameraState : DrakonitState
         enemy.agent.isStopped = false;// cho di chuyển
         enemy.textConten.enabled = true; // hiện text
         enemy.textConten.text = "Người!";
-       
         yield return new WaitForSeconds(seconds);
-        //qua camera 2
-        enemy.imgBietDanh.SetActive(true);// hiện text biêt danh
+        //qua camera 2   
         enemy.cutScene1.Priority = 0;
         enemy.cutScene2.Priority = 20;
         enemy.textConten.text = "Cúc khỏi đây!";
         yield return new WaitForSeconds(seconds);
         //qua camera 3
+        enemy.imgBietDanh.SetActive(true);// hiện text biêt danh
         enemy.textConten.enabled = false; // ẩn text
         enemy.animator.SetBool("Walking", false); // dung animation đi bộ
         enemy.agent.isStopped = true;//ko cho di chuyen nua
         enemy.animator.SetTrigger("Spell"); // gam
         audioManager.audioSource.PlayOneShot(audioManager.roar); // phát âm thanh gầm
-       
         enemy.cutScene2.Priority = 0;
         enemy.cutScene3.Priority = 20;
         yield return new WaitForSeconds(seconds);
+        //
         enemy.ChangeState(new DrakonitChaseState(enemy)); // chuyển sang trạng thái chase
-        if (brain != null)
+        if (brain != null)// chuyển cam lại thành easeinout
         {
-            brain.DefaultBlend.Style = CinemachineBlendDefinition.Styles.EaseInOut;// chuyển cam lại thành easeinout
+            brain.DefaultBlend.Style = CinemachineBlendDefinition.Styles.EaseInOut;
         }
         enemy.cutScene3.Priority = 0;
         enemy.imgBietDanh.SetActive(false);// ẩn text biêt danh

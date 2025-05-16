@@ -14,10 +14,12 @@ public class DrakonitAttackState : DrakonitState
 
     // Constructor: nhận controller của enemy (DrakonitController)
     public DrakonitAttackState(DrakonitController enemy) : base(enemy) { }
-
+  
     // Khi vào trạng thái tấn công
     public override void Enter()
     {
+       
+
         enemy.isSkill = true; // Bật trạng thái skill
         enemy.agent.isStopped = true; // Dừng di chuyển khi tấn công
         enemy.effectHandR.SetActive(true); // bat hiệu ứng tay phải
@@ -86,4 +88,6 @@ public class DrakonitAttackState : DrakonitState
     {
        enemy.agent.isStopped = false; // Cho phép di chuyển trở lại
     }
+
+   
 }
