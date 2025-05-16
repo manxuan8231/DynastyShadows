@@ -4,21 +4,18 @@ using static UnityEngine.Rendering.PostProcessing.SubpixelMorphologicalAntialias
 public class OpenInventory : MonoBehaviour
 {
     public GameObject inventoryCanvas;
-
     public GameObject panelStatus;
-    public GameObject panelInven;
     public GameObject panelSkill;
-
     public AudioSource audioSource;
     public AudioClip audioClipClick;
-
+    public GameObject inventory;
  
 
     void Start()
     {
         inventoryCanvas.SetActive(false);
         panelStatus.SetActive(true);
-      
+        inventory.SetActive(false);
         panelSkill.SetActive(false);
         audioSource = GetComponent<AudioSource>();
      
@@ -51,7 +48,7 @@ public class OpenInventory : MonoBehaviour
     public void OpenButtonStatus()
     {
         panelStatus.SetActive(true);
-        panelInven.SetActive(false);
+     
         panelSkill.SetActive(false);
         audioSource.PlayOneShot(audioClipClick);
     }
@@ -59,8 +56,14 @@ public class OpenInventory : MonoBehaviour
     public void OpenButtonSkill()
     {
         panelSkill.SetActive(true);
-        panelInven.SetActive(false);
         panelStatus.SetActive(false);
+        audioSource.PlayOneShot(audioClipClick);
+    }
+    public void OpenINV()
+    {
+        inventory.SetActive(true);
+        panelStatus.SetActive(false);
+        panelSkill.SetActive(false);
         audioSource.PlayOneShot(audioClipClick);
     }
    
