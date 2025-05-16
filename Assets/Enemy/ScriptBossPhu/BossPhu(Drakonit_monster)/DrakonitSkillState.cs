@@ -45,6 +45,7 @@ public class DrakonitSkillState : DrakonitState
             {
                 case 0:
                     Debug.Log("skill1");
+                    enemy.transform.LookAt(enemy.player); // Quay mặt về phía người chơi   
                     enemy.auraSkill1.SetActive(true); // Kích hoạt hiệu ứng kỹ năng 1
                     enemy.StartCoroutine(WaitAura()); // tắt hiệu ứng sau 2 giây                
                     enemy.animator.SetTrigger("Skill1");
@@ -57,7 +58,7 @@ public class DrakonitSkillState : DrakonitState
                     break;
                 case 2:
                     Debug.Log("skill3");
-                    enemy.transform.LookAt(enemy.player); // Quay mặt về phía người chơi
+                   
                     enemy.animator.SetTrigger("Skill3");
                     break;
             }
@@ -76,7 +77,7 @@ public class DrakonitSkillState : DrakonitState
         enemy.animator.SetBool("Walking", false); // Dừng animation đi bộ
         enemy.agent.isStopped = true; // ko di chuyển
 
-        yield return new WaitForSeconds(2f); // Chờ 1 giây  để tắt aura 
+        yield return new WaitForSeconds(1.5f); // Chờ 1 giây  để tắt aura 
         enemy.transform.LookAt(enemy.player); // Quay mặt về phía người chơi      
         enemy.auraSkill1.SetActive(false); // Tắt hiệu ứng kỹ năng 1
         enemy.auraSkill2.SetActive(false); // Tắt hiệu ứng kỹ năng 2
