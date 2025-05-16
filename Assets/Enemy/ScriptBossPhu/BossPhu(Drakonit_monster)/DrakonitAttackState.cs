@@ -9,7 +9,7 @@ public class DrakonitAttackState : DrakonitState
     private float lastAttackTime;
     //thoi gian cho
     private float exitAttackTime = -1f;//thời gian cho khi pl ra khỏi tầm đánh
-    private float exitFlipTime = -1f;//thời gian chờ khi xoay mặt
+   
 
     // Constructor: nhận controller của enemy (DrakonitController)
     public DrakonitAttackState(DrakonitController enemy) : base(enemy) { }
@@ -17,8 +17,9 @@ public class DrakonitAttackState : DrakonitState
     // Khi vào trạng thái tấn công
     public override void Enter()
     {
+        enemy.isSkill = true; // Bật trạng thái skill
         enemy.agent.isStopped = true; // Dừng di chuyển khi tấn công
-        
+        Debug.Log("trang thai attack");
     }
 
     // Hàm Update sẽ được gọi mỗi frame
@@ -27,7 +28,7 @@ public class DrakonitAttackState : DrakonitState
         // Tính khoảng cách giữa enemy và người chơi
         float distance = Vector3.Distance(enemy.transform.position, enemy.player.position);
 
-        // Nếu người chơi đi xa hơn tầm đánh, chuyển sang trạng thái đuổi theo
+        // Nếu người chơi đi xa hơn tầm đánh, chuyển sang trạng thái skill
         if (distance > enemy.attackRange)
         {       
             // Nếu chưa bắt đầu đếm thời gian
@@ -35,7 +36,7 @@ public class DrakonitAttackState : DrakonitState
             {
                 exitAttackTime = Time.time;
             }
-            // Nếu đã vượt quá 2 giây kể từ khi ra khỏi tầm đánh
+            // Nếu đã vượt quá 2 giây kể từ khi ra khỏi tầm đánh thì chuyển sang trạng thái skill
             if (Time.time >= exitAttackTime + 2f)
             {
                 enemy.ChangeState(new DrakonitSkillState(enemy));

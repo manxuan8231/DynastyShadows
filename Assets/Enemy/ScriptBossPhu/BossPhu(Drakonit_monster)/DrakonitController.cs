@@ -6,11 +6,11 @@ using UnityEngine.AI;
 public class DrakonitController : MonoBehaviour
 {
     // Các biến điều chỉnh trong Inspector
-    public float chaseRange = 10f;   //khoan cach thay player
+    public float chaseRange = 100f;   //khoan cach thay player
     public float attackRange = 2f;   // Khoảng cách tấn công
-    public float skillRange = 50f;    // Khoảng cách sử dụng kỹ năng
+    public float skillRange = 20;    // Khoảng cách sử dụng kỹ năng
     public int damage = 50;
-
+    public bool isSkill = false; // Kiểm tra trạng skill
     //EffectSkill
     public GameObject skillEffect1; // Hiệu ứng kỹ năng 1
     public GameObject skillEffect2; // Hiệu ứng kỹ năng 2

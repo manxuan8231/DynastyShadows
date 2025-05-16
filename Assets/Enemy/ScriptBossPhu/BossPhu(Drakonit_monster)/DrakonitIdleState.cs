@@ -8,6 +8,7 @@ public class DrakonitIdleState : DrakonitState
     {
         enemy.animator.Play("Idle");
         enemy.agent.ResetPath();
+        Debug.Log("trang thai idle");
     }
 
     public override void Update()
