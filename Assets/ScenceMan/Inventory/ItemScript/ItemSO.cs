@@ -18,8 +18,6 @@ public class ItemSO : ScriptableObject
 
 public enum ItemType
 {
-    Heal,
-    Mana,
     Weapon
 }
 
