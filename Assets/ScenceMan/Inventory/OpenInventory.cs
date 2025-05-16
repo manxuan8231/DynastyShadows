@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static UnityEngine.Rendering.PostProcessing.SubpixelMorphologicalAntialiasing;
 
 public class OpenInventory : MonoBehaviour
 {
@@ -10,13 +11,17 @@ public class OpenInventory : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioClip audioClipClick;
+
+ 
+
     void Start()
     {
         inventoryCanvas.SetActive(false);
         panelStatus.SetActive(true);
-        panelInven.SetActive(false);
+      
         panelSkill.SetActive(false);
         audioSource = GetComponent<AudioSource>();
+     
     }
 
    
@@ -50,18 +55,6 @@ public class OpenInventory : MonoBehaviour
         panelSkill.SetActive(false);
         audioSource.PlayOneShot(audioClipClick);
     }
-    
-
-    //inven
-    public void OpenButtonInven()
-    {
-        panelInven.SetActive(true);
-        panelStatus.SetActive(false);
-        panelSkill.SetActive(false);
-        audioSource.PlayOneShot(audioClipClick);
-    }
-   
-
     //skill
     public void OpenButtonSkill()
     {

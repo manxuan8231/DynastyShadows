@@ -17,6 +17,6 @@ public class DameZoneEnemy1 : MonoBehaviour
         }
     }
 
-
+     
 
 }
