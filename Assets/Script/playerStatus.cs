@@ -81,7 +81,7 @@ public class PlayerStatus : MonoBehaviour
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
         sliderHp.value = currentHp;
         textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
-
+        animator.SetTrigger("Hit");
         // animator.SetTrigger("Hit");
         audioSource.PlayOneShot(audioHit);
         if (currentHp <= 0)

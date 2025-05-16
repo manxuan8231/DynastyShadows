@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
@@ -52,10 +53,15 @@ public class DrakonitController : MonoBehaviour
     //text
     public TextMeshProUGUI textConten; // Text hoi thoai
     public GameObject imgBietDanh; // GameObject chứa text
+
+    public DrakonitDameZone dameZone; // Biến tham chiếu đến DrakonitDameZone
+
     // Trạng thái hiện tại
     private DrakonitState currentState; 
     void Start()
-    {     
+    {
+        // Lấy component DrakonitDameZone từ enemy
+        dameZone = FindAnyObjectByType<DrakonitDameZone>();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform; 
         agent = GetComponent<NavMeshAgent>();
@@ -134,4 +140,13 @@ public class DrakonitController : MonoBehaviour
         Destroy(effect, 4f);
     }
 
+    // Hàm này được gọi từ animator khi tấn công
+    public void beginDame()
+    {
+        dameZone.beginDame();
+    }
+    public void endDame()
+    {
+        dameZone.endDame();
+    }
 }
