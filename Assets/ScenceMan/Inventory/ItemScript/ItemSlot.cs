@@ -40,7 +40,10 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
     {
         openInventory = FindAnyObjectByType<OpenInventory>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
-        
+       
+        itemDescriptionNameText.text = "";
+        itemDescriptionText.text = "";
+
     }
     public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription, ItemSO itemSO)
     {
