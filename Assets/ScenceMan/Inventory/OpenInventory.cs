@@ -19,7 +19,6 @@ public class OpenInventory : MonoBehaviour
         inventory.SetActive(false);
         panelSkill.SetActive(false);
         audioSource = GetComponent<AudioSource>();
-     
     }
 
    
