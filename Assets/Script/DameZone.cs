@@ -59,6 +59,14 @@ public class DameZone : MonoBehaviour
                 enemyHP4.TakeDamage(finalDamage);
                 return;
             }
+
+            DrakonitController drakonitController = other.GetComponent<DrakonitController>();
+            if (drakonitController != null)
+            {
+                ShowTextDame(finalDamage);
+                drakonitController.TakeDame(finalDamage);
+                return;
+            }
         }
     }
     private void OnTriggerExit(Collider other)

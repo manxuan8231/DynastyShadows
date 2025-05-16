@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [Header("Thành phần -------------------------------")]
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private CharacterController controller;
-    [SerializeField] private Animator animator;
+    public Animator animator;
     [SerializeField] private AudioSource audioSource;
    
     [Header("Leo tường -----------------------------")]

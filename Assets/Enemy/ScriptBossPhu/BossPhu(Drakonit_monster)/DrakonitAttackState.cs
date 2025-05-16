@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 // Lớp trạng thái "Tấn công" kế thừa từ DrakonitState
 public class DrakonitAttackState : DrakonitState
@@ -19,6 +20,9 @@ public class DrakonitAttackState : DrakonitState
     {
         enemy.isSkill = true; // Bật trạng thái skill
         enemy.agent.isStopped = true; // Dừng di chuyển khi tấn công
+        enemy.effectHandR.SetActive(true); // bat hiệu ứng tay phải
+        enemy.effectHandL.SetActive(true); // bat hiệu ứng tay trái
+        enemy.animator.SetBool("Walking", false); // Dừng animation đi bộ
         Debug.Log("trang thai attack");
     }
 
@@ -37,7 +41,7 @@ public class DrakonitAttackState : DrakonitState
                 exitAttackTime = Time.time;
             }
             // Nếu đã vượt quá 2 giây kể từ khi ra khỏi tầm đánh thì chuyển sang trạng thái skill
-            if (Time.time >= exitAttackTime + 2f)
+            if (Time.time >= exitAttackTime + 1.5f)
             {
                 enemy.ChangeState(new DrakonitSkillState(enemy));
                 return;
@@ -48,24 +52,27 @@ public class DrakonitAttackState : DrakonitState
         if (Time.time >= lastAttackTime + attackCooldown)
         {
             // Gọi animation tấn công
-            float randomAttack = Random.Range(0, 2);
+            float randomAttack = Random.Range(0, 3);
             if (randomAttack == 0)
             {
                 Debug.Log("Attack1");
+                enemy.transform.LookAt(enemy.player);//xoay mat
                 enemy.animator.SetTrigger("Attack1");
-                enemy.transform.LookAt(enemy.player); // Quay mặt về phía người chơi
+                enemy.animator.SetBool("Walking", false); // Dừng animation đi bộ
             }
             else if (randomAttack == 1) 
             {
-                Debug.Log("Attack2");
-                enemy.animator.SetTrigger("Attack2");
+                Debug.Log("Attack2");            
                 enemy.transform.LookAt(enemy.player);
+                enemy.animator.SetTrigger("Attack2");
+                enemy.animator.SetBool("Walking", false); // Dừng animation đi bộ
             }
             else if(randomAttack == 2)
             {
                 Debug.Log("Attack3");
                 enemy.animator.SetTrigger("Attack3");
                 enemy.transform.LookAt(enemy.player);
+                enemy.animator.SetBool("Walking", false); // Dừng animation đi bộ
             }
             lastAttackTime = Time.time; // Cập nhật lại thời gian tấn công
 
@@ -77,6 +84,6 @@ public class DrakonitAttackState : DrakonitState
     // Khi rời khỏi trạng thái này
     public override void Exit()
     {
-        enemy.agent.isStopped = false; // Cho phép di chuyển trở lại
+       enemy.agent.isStopped = false; // Cho phép di chuyển trở lại
     }
 }

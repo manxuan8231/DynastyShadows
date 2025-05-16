@@ -1,18 +1,11 @@
 fileFormatVersion: 2
-guid: 6b5949c1610d29f4ea41818c7c81343a
-AssetOrigin:
-  serializedVersion: 1
-  productId: 186875
-  packageName: Drakonit_monster
-  packageVersion: 1.0
-  assetPath: Assets/Drakonit_monster/animation/Drakonit_monster@Atak_1.fbx
-  uploadId: 411799
+guid: da93c173668175741a062b191a61a682
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: Atak_1
+    second: Death3
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -41,11 +34,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Atak_1
+      name: Death3
       takeName: Take 001
       internalID: 1827226128182048838
-      firstFrame: 0
-      lastFrame: 40
+      firstFrame: 1
+      lastFrame: 18
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -64,28 +57,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.1279487
-        functionName: SpawnEffectSkill3
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.34645572
-        functionName: SpawnEffectSkill3
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.6197563
-        functionName: SpawnEffectSkill3
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
