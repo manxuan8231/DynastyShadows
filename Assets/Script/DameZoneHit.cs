@@ -1,13 +1,28 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class DameZoneHit : MonoBehaviour
 {
     //effect hit
     [SerializeField] private GameObject effectHit;
     [SerializeField] private Transform tranFormHit;
-    public int maxDame = 600;
+   //show dame  effect
     public GameObject textDame;
     public Transform textTransform;
+
+    //ke thua
+    PlayerStatus playerStatus;
+
+    //dame
+    private float maxDame;
+    private void Start()
+    {
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
+    }
+    private void Update()
+    {
+       // maxDame = playerStatus.criticalHitDamage;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
@@ -58,5 +73,10 @@ public class DameZoneHit : MonoBehaviour
         {
             popup.Setup(damage);
         }
+    }
+
+    public void UpTrueDame(int amount)//up sat thuong chuan
+    {
+        maxDame += amount;
     }
 }

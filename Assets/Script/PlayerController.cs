@@ -4,7 +4,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Tham số ------------------------------")]
     [SerializeField] private float walkSpeed = 5f;
-    [SerializeField] private float runSpeed = 9f;
+                     private float runSpeed;
     [SerializeField] private float jumpHeight = 5f;
     [SerializeField] private float gravity = -9.81f;
 
@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         audioSource = GetComponent<AudioSource>();
+        runSpeed = playerStatus.speedRun;// tốc độ chạy
     }
     void Update()
     {
