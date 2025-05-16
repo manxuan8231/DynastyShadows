@@ -16,11 +16,6 @@ public class UIInventoryPage : MonoBehaviour
     private UIInventoryDescription itemDescription;
 
     List<UIInventoryItem> listOfUIItems = new List<UIInventoryItem>();
-
-   [SerializeField]
-    private OpenInventory openInventory;
-
-
     public Sprite image;
     public int quantity;
     public string title, description;
@@ -85,10 +80,7 @@ public class UIInventoryPage : MonoBehaviour
 
         gameObject.SetActive(true);
         itemDescription.ResetDescription();
-        openInventory.panelInven.SetActive(true);
-        openInventory. panelStatus.SetActive(false);
-        openInventory.panelSkill.SetActive(false);
-        openInventory.audioSource.PlayOneShot(openInventory.audioClipClick);
+        
     }
     public void Hide()
     {

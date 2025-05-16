@@ -12,23 +12,16 @@ public class OpenInventory : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip audioClipClick;
 
-    //gọi hàm
-    [SerializeField]
-    private UIInventoryPage inventoryUI;
-    [SerializeField]
-    private UIInventoryDescription itemDescription;
-    public int inventorySize = 10;
-    [SerializeField]
-    private UIInventoryPage inventoryPage;
+ 
 
     void Start()
     {
         inventoryCanvas.SetActive(false);
         panelStatus.SetActive(true);
-        panelInven.SetActive(false);
+      
         panelSkill.SetActive(false);
         audioSource = GetComponent<AudioSource>();
-        inventoryUI.InitializeInventoryUI( inventorySize);
+     
     }
 
    
@@ -62,16 +55,6 @@ public class OpenInventory : MonoBehaviour
         panelSkill.SetActive(false);
         audioSource.PlayOneShot(audioClipClick);
     }
-    
-
-    //inven
-    public void OpenButtonInven()
-    {
-        inventoryPage.Show();
-        
-    }
-   
-
     //skill
     public void OpenButtonSkill()
     {
