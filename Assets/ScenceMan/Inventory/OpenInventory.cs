@@ -9,8 +9,8 @@ public class OpenInventory : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip audioClipClick;
     public GameObject inventory;
- 
 
+    public ItemSlot[] itemSlot;
     void Start()
     {
         inventoryCanvas.SetActive(false);
@@ -28,6 +28,7 @@ public class OpenInventory : MonoBehaviour
         {
             if (inventoryCanvas.activeSelf) 
             {
+                inventory.SetActive(false);
                 inventoryCanvas.SetActive(false);
                 Time.timeScale = 1.0f;
                 // Ẩn chuột khi tắt map
@@ -48,13 +49,14 @@ public class OpenInventory : MonoBehaviour
     public void OpenButtonStatus()
     {
         panelStatus.SetActive(true);
-     
+        inventory.SetActive(false);
         panelSkill.SetActive(false);
         audioSource.PlayOneShot(audioClipClick);
     }
     //skill
     public void OpenButtonSkill()
     {
+        inventory.SetActive(false);
         panelSkill.SetActive(true);
         panelStatus.SetActive(false);
         audioSource.PlayOneShot(audioClipClick);
@@ -67,4 +69,24 @@ public class OpenInventory : MonoBehaviour
         audioSource.PlayOneShot(audioClipClick);
     }
    
+
+    public void AddItem(string itemName, int quantity, Sprite itemSprite,string itemDescription)
+    {
+       for(int i = 0; i< itemSlot.Length; i++)
+        {
+            if (itemSlot[i].isFull == false)
+            {
+                itemSlot[i].AddItem(itemName, quantity, itemSprite,itemDescription);
+                return;
+            }
+        }
+    }
+    public void DeselectedAllSlots()
+    {
+        for (int i = 0; i < itemSlot.Length; i++)
+        {
+            itemSlot[i].thisItemSelected = false;
+            itemSlot[i].selectPanel.SetActive(false);
+        }
+    }
 }

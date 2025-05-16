@@ -8,9 +8,10 @@ public class Item : MonoBehaviour
     [SerializeField]
     private int quantity;
     [SerializeField]
-    private Image itemImage;
+    private Sprite itemImage;
+    [TextArea]
     [SerializeField]
-    private string description;
+    private string itemDescription;
     public OpenInventory OpenInventory;
     void Start()
     {
@@ -22,7 +23,7 @@ public class Item : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            OpenInventory.AddItem(itemName, quantity, itemImage, description);
+            OpenInventory.AddItem(itemName, quantity, itemImage, itemDescription);
             Destroy(gameObject);
         }
     }
