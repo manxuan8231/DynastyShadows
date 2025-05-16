@@ -12,8 +12,8 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
     public Sprite itemSprite;
     public bool isFull;
     public string itemDescription;
-
-
+    [SerializeField]
+    private int MaxNumberOfItems;
 
     //item slot
     [SerializeField]
@@ -32,21 +32,45 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
 
     //gọi hàm
     private OpenInventory openInventory;
+    public ItemSO itemSO; // <-- thêm dòng này
+    public PlayerStatus playerStatus; // gán qua Inspector hoặc Find
+
+
     private void Start()
     {
         openInventory = FindAnyObjectByType<OpenInventory>();
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
+        itemSO = FindAnyObjectByType<ItemSO>();
     }
-    public void AddItem(string itemName, int quantity, Sprite itemSprite,string itemDescription)
+    public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription, ItemSO itemSO)
     {
-     this.itemName = itemName;
-        this.quantity = quantity;
+        if (isFull)
+            return quantity;
+
+        this.itemName = itemName;
         this.itemSprite = itemSprite;
         this.itemDescription = itemDescription;
-        isFull = true;
-        
-        quantityText.text = quantity.ToString();
-        quantityText.enabled = true;
+        this.itemSO = itemSO; // <-- gán vào đây
         itemImage.sprite = itemSprite;
+        this.quantity += quantity;
+
+        if (this.quantity >= MaxNumberOfItems)
+        {
+            isFull = true;
+
+            int extraItems = this.quantity - MaxNumberOfItems;
+            this.quantity = MaxNumberOfItems;
+
+            quantityText.text = this.quantity.ToString();
+            quantityText.enabled = true;
+
+            return extraItems;
+        }
+
+        quantityText.text = this.quantity.ToString();
+        quantityText.enabled = true;
+
+        return 0;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -61,13 +85,49 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
         }
     }
 
-    public void OnRightClick()
+  
+        public void OnRightClick()
     {
-        
-    }
+        if (itemSO == null || playerStatus == null) return;
+
+        switch (itemSO.itemType)
+        {
+            case ItemType.Heal:
+                playerStatus.AddHealth(itemSO.value);
+                Debug.Log("Healing: " + itemSO.value);
+                break;
+            case ItemType.Mana:
+                playerStatus.AddMana(itemSO.value);
+                Debug.Log("Mana: " + itemSO.value);
+                break;
+            default:
+                Debug.Log("Unknown item type");
+                break;
+        }
+
+        quantity--;
+
+        if (quantity <= 0)
+        {
+            itemName = "";
+            itemSprite = null;
+            itemDescription = "";
+            itemSO = null;
+            isFull = false;
+            itemImage.sprite = null;
+            quantityText.enabled = false;
+            selectPanel.SetActive(false);
+        }
+        else
+        {
+            quantityText.text = quantity.ToString();
+        }
+    
+}
 
     public void OnLeftClick()
     {
+      
         openInventory.DeselectedAllSlots();
         selectPanel.SetActive(true);
         thisItemSelected = true;

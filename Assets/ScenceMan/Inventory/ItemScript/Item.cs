@@ -13,18 +13,28 @@ public class Item : MonoBehaviour
     [SerializeField]
     private string itemDescription;
     public OpenInventory OpenInventory;
+    public ItemSO itemSO;
     void Start()
     {
         OpenInventory = FindAnyObjectByType<OpenInventory>();
     }
 
-    // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            OpenInventory.AddItem(itemName, quantity, itemImage, itemDescription);
-            Destroy(gameObject);
+            int leftOverItems = OpenInventory.AddItem(
+                itemSO.itemName,
+                quantity,
+                itemSO.itemIcon,
+                itemSO.itemDescription,
+                itemSO
+            );
+
+            if (leftOverItems <= 0)
+                Destroy(gameObject);
+            else
+                quantity = leftOverItems;
         }
     }
 }
