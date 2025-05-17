@@ -11,7 +11,7 @@ public class OpenInventory : MonoBehaviour
     public GameObject inventory;
 
     public ItemSlot[] itemSlot;
-    
+    public ItemType itemType;
     void Start()
     {
         inventoryCanvas.SetActive(false);
@@ -73,6 +73,8 @@ public class OpenInventory : MonoBehaviour
 
     public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription, ItemSO itemSO)
     {
+        
+       
         for (int i = 0; i < itemSlot.Length; i++)
         {
             if (!itemSlot[i].isFull || itemSlot[i].quantity == 0)

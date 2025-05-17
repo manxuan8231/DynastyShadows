@@ -18,7 +18,14 @@ public class ItemSO : ScriptableObject
 
 public enum ItemType
 {
-    Weapon
+    Weapon,
+    head,
+    body,
+    legs,
+    feet,
+    comsumable,
+    crafting,
+    none
 }
 
 public enum Rarity
