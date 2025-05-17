@@ -3,7 +3,7 @@ using UnityEngine;
 public class ChaseState : BaseState
 {
     public ChaseState(BossScript boss) : base(boss) { }
-    public AudioManager ChaseAudio;
+    private AudioBossManager audioBossManager;
     public override void EnterState()
     {
         boss.anim.SetTrigger("chase");
@@ -18,7 +18,7 @@ public class ChaseState : BaseState
         if (dist <= boss.attackRange)
         {
             boss.TransitionToState(boss.idleCombatState);
-            
+            audioBossManager.instance.PlaySFX("Chase");
         }
     }
 }
