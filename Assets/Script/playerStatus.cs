@@ -32,7 +32,7 @@ public class PlayerStatus : MonoBehaviour
     public TextMeshProUGUI textBaseDamage;
 
     //xu ly toc do chay
-    public float speedRun = 7f;
+    public float speedRun = 15f;
     public TextMeshProUGUI textSpeed;
 
     //khoi tao
@@ -88,8 +88,8 @@ public class PlayerStatus : MonoBehaviour
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
         sliderHp.value = currentHp;
         textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
-        animator.SetTrigger("Hit");
-        audioSource.PlayOneShot(audioHit);// âm thanh bị đánh
+       
+       
         if (currentHp <= 0)
         {
             Destroy(gameObject);

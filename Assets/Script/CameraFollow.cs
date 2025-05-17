@@ -3,7 +3,7 @@
 public class ThirdPersonOrbitCamera : MonoBehaviour
 {
     public Transform target;
-    public Vector3 offset = new Vector3(0, 2, -5);
+    public Vector3 offset = new Vector3(0, 2, -5);// Vị trí camera so với nhân vật
     public float sensitivityX = 4f;
     public float sensitivityY = 2f;
     public float minYAngle = -35f;

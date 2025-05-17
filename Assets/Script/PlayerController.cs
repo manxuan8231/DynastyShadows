@@ -27,7 +27,8 @@ public class PlayerController : MonoBehaviour
     private bool wasGroundedLastFrame;
     private bool isRunning = false;
     public bool isController = true;
-
+    //cooldown roll
+    private float rollColdownTime = 0f;
     //audio
     [SerializeField] private AudioClip audioJump;
     [SerializeField] private AudioClip audioRoll;
@@ -117,15 +118,14 @@ public class PlayerController : MonoBehaviour
 
     public void Roll()
     {
-        if(Input.GetKeyDown(KeyCode.LeftControl) && isGrounded && playerStatus.currentMana > 100)
+        if(Input.GetKeyDown(KeyCode.LeftControl) && isGrounded && playerStatus.currentMana > 100 && Time.time >= rollColdownTime + 2f)
         {
             playerStatus.TakeMana(100);
             audioSource.PlayOneShot(audioRoll);
             animator.SetTrigger("Roll");
+            rollColdownTime = Time.time;
         }
     }
-
-
 
     public bool IsGrounded()
     {

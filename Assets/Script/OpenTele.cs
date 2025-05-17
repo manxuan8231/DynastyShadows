@@ -24,6 +24,7 @@ public class OpenTele : MonoBehaviour
     {
         if (isInRange && Input.GetKeyDown(KeyCode.F))
         {
+            isInRange = false; // Đặt lại trạng thái để không thể nhấn F liên tục
             audioSource.PlayOneShot(soundF);
             buttonF.SetActive(false);
             colliderOpen.enabled = false;

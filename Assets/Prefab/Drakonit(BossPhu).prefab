@@ -541,7 +541,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.0452306, y: 3.11, z: -4.1889777}
-  m_LocalScale: {x: 1.4313, y: 1.4313, z: 1.4313}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1299239185479157281}
@@ -631,7 +631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 5523954637970055876}
-  attackSound: {fileID: 8300000, guid: 063f00a3e3d8d7a48b51cbd3c2cbee71, type: 3}
+  attackSound: {fileID: 8300000, guid: bde9632d4faefa143a1964759b942f7e, type: 3}
   roar: {fileID: 8300000, guid: e68e2e73923f2764ca4343a9ab24b650, type: 3}
   SoundHit: {fileID: 8300000, guid: c00a794ea0d9faf47bc4b73f121d0b2f, type: 3}
   SoundDie: {fileID: 8300000, guid: 6e469aeaa11284f4a8ba001f9086894f, type: 3}
@@ -16600,7 +16600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3589420719993047315
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41812,7 +41812,7 @@ RectTransform:
   m_Father: {fileID: 2265606580201934664}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 46.914673, y: -1.7117004}
   m_SizeDelta: {x: 0.1277, y: -3.4234}
   m_Pivot: {x: 0.5, y: 0.5}
