@@ -24,6 +24,7 @@ public class DrakonitCameraState : DrakonitState
         {
             brain.DefaultBlend.Style = CinemachineBlendDefinition.Styles.Cut;
         }
+            
     }
 
     public override void Update()
@@ -52,7 +53,8 @@ public class DrakonitCameraState : DrakonitState
         audioManager.audioSource.enabled = true; // bật âm thanh
         enemy.cutScene1.Priority = 20;
         enemy.animator.SetBool("Walking", true); // animation đi bộ
-        enemy.agent.isStopped = false;// cho di chuyển
+        enemy.agent.isStopped = false;   // Cho phép agent di chuyển
+        enemy.agent.SetDestination(enemy.player.position);
         enemy.textConten.enabled = true; // hiện text
         enemy.textConten.text = "Người!";
         yield return new WaitForSeconds(seconds);
@@ -65,7 +67,7 @@ public class DrakonitCameraState : DrakonitState
         enemy.imgBietDanh.SetActive(true);// hiện text biêt danh
         enemy.textConten.enabled = false; // ẩn text
         enemy.animator.SetBool("Walking", false); // dung animation đi bộ
-        enemy.agent.isStopped = true;//ko cho di chuyen nua
+        enemy.agent.isStopped = true;  
         enemy.animator.SetTrigger("Spell"); // gam
         audioManager.audioSource.PlayOneShot(audioManager.roar); // phát âm thanh gầm
         enemy.cutScene2.Priority = 0;
