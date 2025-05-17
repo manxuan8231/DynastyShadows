@@ -17,7 +17,7 @@ public class DrakonitDameZoneSkill1 : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerStatus>().TakeHealth(dame);
+            other.GetComponent<PlayerStatus>().TakeHealthStun(dame);
         }
     }
 }

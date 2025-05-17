@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,15 +35,20 @@ public class PlayerStatus : MonoBehaviour
     public float speedRun = 7f;
     public TextMeshProUGUI textSpeed;
 
-
     //khoi tao
     private Animator animator;
     private AudioSource audioSource;
-    public AudioClip audioHit;
+   
 
+    //efffect stun
+    public GameObject effectStun;
+    public AudioClip audioHit;
+    public AudioClip audioStun;
+    //tham chieu 
+    private PlayerController playerController; // Tham chiếu đến PlayerController
+    private ComboAttack comboAttack; // Tham chiếu đến ComboAttack
     void Start()
-    {
-       
+    {     
         //khởi tạo hp
         currentHp = maxHp;
         sliderHp.maxValue = currentHp;
@@ -60,17 +66,18 @@ public class PlayerStatus : MonoBehaviour
         textHitDamage.text = $"{criticalDamage}%";
         textHitChance.text = $"{criticalChance}%";
         textBaseDamage.text = $"{baseDamage}";
-        //
+        //thaam chieu
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-
-       
-    }
-
-    
-    void Update()
-    {
+        playerController = FindAnyObjectByType<PlayerController>();
+        comboAttack = FindAnyObjectByType<ComboAttack>();
+        //tat hieu uung
+        effectStun.SetActive(false);
         
+       
+    }   
+    void Update()
+    {      
         RegenerateMana();//hồi mana dần
     }
 
@@ -82,7 +89,21 @@ public class PlayerStatus : MonoBehaviour
         sliderHp.value = currentHp;
         textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
         animator.SetTrigger("Hit");
-        // animator.SetTrigger("Hit");
+        audioSource.PlayOneShot(audioHit);// âm thanh bị đánh
+        if (currentHp <= 0)
+        {
+            Destroy(gameObject);
+
+        }
+    }
+    public void TakeHealthStun(float amount)//bị lấy hp
+    {
+        currentHp -= amount;
+        currentHp = Mathf.Clamp(currentHp, 0, maxHp);
+        sliderHp.value = currentHp;
+        textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
+        StartCoroutine(WaitStun(4f)); // gọi hàm WaitHit với thời gian 0.5 giây
+
         audioSource.PlayOneShot(audioHit);
         if (currentHp <= 0)
         {
@@ -194,7 +215,7 @@ public class PlayerStatus : MonoBehaviour
 
 
 
-    // --- Tính damage ---
+    // --- Tính damage --------------- và xử lý các logic
     public float CalculateFinalDamage()
     {
         bool isCritical = Random.value < (criticalChance / 100f); //có 20 % cơ hội chí mạng.
@@ -207,5 +228,20 @@ public class PlayerStatus : MonoBehaviour
             Debug.Log("Gây " + damage + " sát thương thường.");
 
         return damage;
+    }
+
+    private IEnumerator WaitStun(float time)
+    {
+        animator.SetBool("Stun", true);
+        effectStun.SetActive(true);
+        playerController.isController = false; // Ngừng điều khiển nhân vật
+        comboAttack.isAttack = false; // Ngừng tấn công
+        audioSource.PlayOneShot(audioStun); // Phát âm thanh bị stun
+        yield return new WaitForSeconds(time);
+
+        comboAttack.isAttack = true; // Bật lại tấn công
+        playerController.isController = true; // Bật lại điều khiển nhân vật
+        animator.SetBool("Stun", false);
+        effectStun.SetActive(false);
     }
 }
