@@ -4,6 +4,7 @@ public class AttackState : BaseState
 {
     private float attackCooldown = 2f;
     private float attackTimer = 0f;
+    private AudioBossManager audioBossManager;
 
     private string[] attackClips = { "Attack 1", "Attack 2", "Attack 3" };
 
@@ -32,6 +33,7 @@ public class AttackState : BaseState
             string clip = attackClips[Random.Range(0, attackClips.Length)];
             boss.anim.SetTrigger(clip);
             attackTimer = 0f;
+            audioBossManager.instance.PlaySFX("Attack");
         }
     }
 }
