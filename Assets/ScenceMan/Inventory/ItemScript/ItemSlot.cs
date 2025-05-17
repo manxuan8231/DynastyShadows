@@ -19,6 +19,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Image itemImage;
     [SerializeField] public GameObject selectPanel;
     public Sprite defaultImage;
+    public Sprite defaultDescriptionImage;
 
     public bool thisItemSelected;
 
@@ -91,13 +92,11 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         openInventory.DeselectedAllSlots(); // tắt select các slot khác
         selectPanel.SetActive(true);
         thisItemSelected = true;
-        if (thisItemSelected)
-        { 
             itemDescriptionNameText.text = itemName;
             itemDescriptionText.text = itemDescription;
             itemDescriptionImage.sprite = itemSprite;
-         
-        }
+      
+        
        
       
       
@@ -147,6 +146,6 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         
         itemDescriptionNameText.text = "";
         itemDescriptionText.text = "";
-        itemDescriptionImage.sprite = defaultImage;
+        itemDescriptionImage.sprite = defaultDescriptionImage;
     }
 }
