@@ -53,8 +53,8 @@ public class DrakonitController : MonoBehaviour
     //text
     public TextMeshProUGUI textConten; // Text hoi thoai
     public GameObject imgBietDanh; // GameObject chứa text
-
-    public DrakonitDameZone dameZone; // Biến tham chiếu đến DrakonitDameZone
+    // Biến tham chiếu đến DrakonitDameZone
+    public DrakonitDameZone dameZone; 
 
     // Trạng thái hiện tại
     private DrakonitState currentState; 

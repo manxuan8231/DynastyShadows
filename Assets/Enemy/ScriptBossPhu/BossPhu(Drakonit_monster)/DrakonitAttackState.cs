@@ -50,6 +50,7 @@ public class DrakonitAttackState : DrakonitState
             }
                 
         }
+       
         // Kiểm tra nếu đủ thời gian để tấn công tiếp
         if (Time.time >= lastAttackTime + attackCooldown)
         {

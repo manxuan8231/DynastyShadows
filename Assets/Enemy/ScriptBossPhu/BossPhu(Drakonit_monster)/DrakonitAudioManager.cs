@@ -3,6 +3,7 @@
 public class DrakonitAudioManager : MonoBehaviour
 {
     public AudioSource audioSource; // Âm thanh của enemy
+    public AudioClip backGroundSound; // Âm thanh nen
     //Am thanh enemy
     public AudioClip attackSound; // Âm thanh tấn công
     public AudioClip roar;// Âm thanh gầm  
@@ -21,4 +22,5 @@ public class DrakonitAudioManager : MonoBehaviour
     {
         audioSource.PlayOneShot(attackSound); // Phát âm thanh tấn công
     }
+    
 }

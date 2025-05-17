@@ -21,14 +21,15 @@ public class DameZoneHit : MonoBehaviour
     }
     private void Update()
     {
-       // maxDame = playerStatus.criticalHitDamage;
+       
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
             GameObject hitEffect = Instantiate(effectHit, tranFormHit.position, transform.rotation);
-            Destroy(hitEffect, 1f);           
+            Destroy(hitEffect, 1f);
+            maxDame = playerStatus.CalculateFinalDamage();
             // Tìm script EnemyHP (hoặc EnemyHP2, 3, 4) trực tiếp trên object bị va chạm
             EnemyHP enemyHP = other.GetComponent<EnemyHP>();
             if (enemyHP != null)

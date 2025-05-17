@@ -10,13 +10,16 @@ public class DrakonitDeathState : DrakonitState
     public DrakonitDeathState(DrakonitController enemy) : base(enemy) { }
 
     private PlayerController characterController;
+    private DrakonitAudioManager audioManager;
     public override void Enter()
     {
+        audioManager = GameObject.FindAnyObjectByType<DrakonitAudioManager>();
         characterController = GameObject.FindAnyObjectByType<PlayerController>();
         characterController.enabled = false; // Vô hiệu hóa CharacterController
         characterController.animator.SetBool("isWalking", false);
         characterController.animator.SetBool("isRunning", false);
 
+        audioManager.audioSource.Stop(); 
         enemy.animator.SetBool("Walking", false);
         enemy.agent.isStopped = true;
         enemy.cutScene3.Priority = 20;

@@ -11,6 +11,7 @@ public class DrakonitCameraState : DrakonitState
 
     private bool isWaiting = true;
     public DrakonitCameraState(DrakonitController enemy) : base(enemy) { }
+    //tham chieu
     public DrakonitAudioManager audioManager;
     private PlayerController characterController;
     public override void Enter()
@@ -46,6 +47,7 @@ public class DrakonitCameraState : DrakonitState
         characterController.enabled = false; // Vô hiệu hóa CharacterController
         characterController. animator.SetBool("isWalking", false);
         characterController.animator.SetBool("isRunning", false);
+        audioManager.audioSource.PlayOneShot(audioManager.backGroundSound); // phát âm thanh nen
         //  Hiện chuột
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;

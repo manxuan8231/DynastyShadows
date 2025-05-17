@@ -25,7 +25,7 @@ public class DrakonitChaseState : DrakonitState
         // Nếu đã đến gần trong khoảng cách tấn công -> chuyển sang trạng thái Attack
         if (distance <= enemy.attackRange)
         {
-            enemy.ChangeState(new DrakonitAttackState(enemy));       
+            enemy.ChangeState(new DrakonitAttackState(enemy));
             return;
         }
         // Nếu đã đến gần trong khoảng cách skill -> chuyển sang trạng thái skill
@@ -49,7 +49,7 @@ public class DrakonitChaseState : DrakonitState
     // Hàm gọi khi rời khỏi trạng thái này
     public override void Exit()
     {
-        enemy.animator.SetBool("Walking", false); 
+        enemy.animator.SetBool("Walking", false);
         // Ngừng đường di chuyển hiện tại
         enemy.agent.ResetPath();
     }
