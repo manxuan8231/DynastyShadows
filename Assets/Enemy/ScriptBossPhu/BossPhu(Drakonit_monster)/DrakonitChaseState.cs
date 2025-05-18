@@ -138,7 +138,12 @@ public class DrakonitChaseState : DrakonitState
     // Hàm gọi khi rời khỏi trạng thái này
     public override void Exit()
     {
-       
+       enemy.agent.isStopped = true; // Dừng agent
+        enemy.animator.SetBool("Walking", false); // Dừng animation đi bộ
+        enemy.animator.SetBool("WalkingLeft", false); // Dừng animation đi bộ
+        enemy.animator.SetBool("WalkingRight", false); // Dừng animation đi bộ
+        enemy.animator.SetBool("Run", false); // Dừng animation đi bộ
+
     }
 
    private IEnumerator WaitRunAndWalk()

@@ -34,7 +34,7 @@ public class DrakonitAttackState : DrakonitState
         // Tính khoảng cách giữa enemy và người chơi
         float distance = Vector3.Distance(enemy.transform.position, enemy.player.position);
 
-        // Nếu người chơi đi xa hơn tầm đánh, chuyển sang trạng thái skill
+        // Nếu người chơi đi xa hơn tầm đánh, chuyển sang trạng thái chase
         if (distance > enemy.attackRange)
         {       
             // Nếu chưa bắt đầu đếm thời gian
@@ -45,7 +45,7 @@ public class DrakonitAttackState : DrakonitState
             // Nếu đã vượt quá 2 giây kể từ khi ra khỏi tầm đánh thì chuyển sang trạng thái skill
             if (Time.time >= exitAttackTime + 1.5f)
             {
-                enemy.ChangeState(new DrakonitSkillState(enemy));
+                enemy.ChangeState(new DrakonitChaseState(enemy));
                 return;
             }
                 
@@ -61,21 +61,24 @@ public class DrakonitAttackState : DrakonitState
                 Debug.Log("Attack1");
                 enemy.transform.LookAt(enemy.player);//xoay mat
                 enemy.animator.SetTrigger("Attack1");
-                enemy.animator.SetBool("Walking", false); // Dừng animation đi bộ
+               
+
             }
             else if (randomAttack == 1) 
             {
                 Debug.Log("Attack2");            
                 enemy.transform.LookAt(enemy.player);
                 enemy.animator.SetTrigger("Attack2");
-                enemy.animator.SetBool("Walking", false); // Dừng animation đi bộ
+              
+
             }
             else if(randomAttack == 2)
             {
                 Debug.Log("Attack3");
                 enemy.animator.SetTrigger("Attack3");
                 enemy.transform.LookAt(enemy.player);
-                enemy.animator.SetBool("Walking", false); // Dừng animation đi bộ
+               
+
             }
             lastAttackTime = Time.time; // Cập nhật lại thời gian tấn công
 
