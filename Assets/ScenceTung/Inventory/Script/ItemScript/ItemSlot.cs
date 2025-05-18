@@ -94,27 +94,33 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
         if (isSelected)
         { 
             Debug.Log("Đã chọn trúng tên item" + itemName);
-            inventoryManager.UseItem(itemName);
-            this.quantity -= 1;
-            quantityText.text = this.quantity.ToString();
-            if (this.quantity <= 0)
-            {
-                EmptySlot();
-            }
             
+            bool usable = inventoryManager.UseItem(itemName);
+            if (usable)
+            {
+                this.quantity -= 1;
+                quantityText.text = this.quantity.ToString();
+                if (this.quantity <= 0)
+                {
+                    EmptySlot();
+                }
+            }           
         }
-
-        inventoryManager.DeselectedAllSLot();
-        selectedItem.SetActive(true);
-        isSelected = true;
-        itemDescriptionNameText.text = itemName;
-        itemDescriptionText.text = itemDescription;
-        itemDescriptionImage.sprite = itemSprite;
-
-        if (itemDescriptionImage.sprite == null)
+        else
         {
-            itemDescriptionImage.sprite = emptySprite;
+            inventoryManager.DeselectedAllSLot();
+            selectedItem.SetActive(true);
+            isSelected = true;
+            itemDescriptionNameText.text = itemName;
+            itemDescriptionText.text = itemDescription;
+            itemDescriptionImage.sprite = itemSprite;
+
+            if (itemDescriptionImage.sprite == null)
+            {
+                itemDescriptionImage.sprite = emptySprite;
+            }
         }
+         
     }
 
     private void EmptySlot()

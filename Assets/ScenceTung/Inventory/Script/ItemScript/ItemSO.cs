@@ -13,14 +13,27 @@ public class ItemSO : ScriptableObject
     public int ammoutToChangeAttackState;
 
 
-    public void UseItem()
+    public bool UseItem()
     {
 
         if(statToChange == StatToChange.health)
         {
-            Debug.Log("đã hồi máu "+ amoutToChangeStat);
-            GameObject.Find("ItemCanUsing").GetComponent<PlayerStatus>().AddHealth(ammoutToChangeAttackState);
+          
+            PlayerStatus playerStatus = GameObject.Find("ItemCanUsing").GetComponent<PlayerStatus>();
+            if(playerStatus.currentHp == playerStatus.maxHp)
+            {
+                Debug.Log("máu đã đầy");
+                return false;
+            }
+            else
+            {
+                playerStatus.AddHealth(ammoutToChangeAttackState);
+                Debug.Log("đã hồi máu " + amoutToChangeStat);
+                return true;
+            }
+              
         }
+        return false;
     }
   
 
