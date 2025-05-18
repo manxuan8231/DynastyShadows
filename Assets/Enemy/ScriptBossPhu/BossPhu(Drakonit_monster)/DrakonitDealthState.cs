@@ -8,18 +8,20 @@ public class DrakonitDeathState : DrakonitState
     private bool hasStartedDeathSequence = false; // Đảm bảo coroutine chỉ chạy một lần
     CinemachineBrain brain;
     public DrakonitDeathState(DrakonitController enemy) : base(enemy) { }
-
+    // tham chiếu
     private PlayerController characterController;
+    private ComboAttack comboAttack;
+
     private DrakonitAudioManager audioManager;
     public override void Enter()
     {
         audioManager = GameObject.FindAnyObjectByType<DrakonitAudioManager>();
         characterController = GameObject.FindAnyObjectByType<PlayerController>();
+        comboAttack = GameObject.FindAnyObjectByType<ComboAttack>();
         characterController.enabled = false; // Vô hiệu hóa CharacterController
         characterController.animator.SetBool("isWalking", false);
         characterController.animator.SetBool("isRunning", false);
-        //
-       
+        //  //  Hiện chuột
         audioManager.audioSource.Stop();    
         enemy.agent.isStopped = true;
         enemy.cutScene3.Priority = 20;
@@ -28,6 +30,19 @@ public class DrakonitDeathState : DrakonitState
         {
             brain.DefaultBlend.Style = CinemachineBlendDefinition.Styles.Cut;
         }
+
+        //tắt các trạng thái 
+        enemy.isSkill = false; // Tắt trạng thái skill
+        enemy.isAttack = false; // Tắt trạng thái tấn công
+        enemy.isRunning = false; // Tắt trạng thái chạy
+        enemy.isWalking = false; // Tắt trạng thái đi bộ
+        enemy.effectHandR.SetActive(false); // tắt hiệu ứng tay phải
+        enemy.effectHandL.SetActive(false); // tắt hiệu ứng tay trái
+        enemy.animator.SetBool("Walking", false); // Dừng animation đi bộ
+        enemy.animator.SetBool("Running", false); // Dừng animation chạy
+        enemy.animator.SetBool("Attack", false); // Dừng animation tấn công
+        enemy.colliderBox.enabled = false; // Vô hiệu hóa collider
+        enemy.agent.isStopped = true; // Dừng di chuyển
 
     }
 
@@ -50,11 +65,12 @@ public class DrakonitDeathState : DrakonitState
         //  Hiện chuột
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;
+        comboAttack.enabled = false; // Vô hiệu hóa ComboAttack
         // 1. Dừng lại và nói câu đầu tiên
         enemy.textConten.enabled = true;
         enemy.textConten.text = "Ah...";
         enemy.animator.SetTrigger("Hit");
-
+        enemy.colliderBox.enabled = false; // Vô hiệu hóa collider
         yield return new WaitForSeconds(4f);
 
         // 2. Câu thứ hai
@@ -71,9 +87,9 @@ public class DrakonitDeathState : DrakonitState
 
         yield return new WaitForSeconds(2f);
         brain.DefaultBlend.Style = CinemachineBlendDefinition.Styles.EaseInOut;// chuyển cam lại thành easeinout
-
+        comboAttack.enabled = true; // Kích hoạt lại ComboAttack cua player
         characterController.enabled = true; // Kích hoạt lại CharacterController
-                                            //  Hiện chuột
+                                            //  Hiện chuột                                    
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         GameObject.Destroy(enemy.gameObject,2f);

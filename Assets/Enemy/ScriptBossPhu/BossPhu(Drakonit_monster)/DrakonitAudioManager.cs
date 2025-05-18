@@ -23,7 +23,7 @@ public class DrakonitAudioManager : MonoBehaviour
     {
         audioSource.PlayOneShot(attackSound); // Phát âm thanh tấn công
     }
-    public void playRunning()
+    public void PlayRunning()
     {
         audioSource.PlayOneShot(SoundRuning); // Phát âm thanh chạy
     }

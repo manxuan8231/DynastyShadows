@@ -25,8 +25,8 @@ public class DrakonitSkillState : DrakonitState
             enemy.ChangeState(new DrakonitAttackState(enemy));
             return;
         }
-
-        if (Time.time >= lastSkillTime + 7)
+        //cooldown skill
+        if (Time.time >= lastSkillTime + 7 && enemy.isSkill)
         {
             int randomSkill = Random.Range(0, 3); // Chọn ngẫu nhiên kỹ năng từ 0 đến 1
             switch (randomSkill)
@@ -59,7 +59,11 @@ public class DrakonitSkillState : DrakonitState
        
     public override void Exit()
     {
-       // enemy.agent.ResetPath(); // Dừng di chuyển nếu thoát khỏi trạng thái
+        enemy.animator.SetBool("Walking", false); // Dừng animation đi bộ
+        enemy.agent.isStopped = true; // Dừng di chuyển
+        //dừng skill
+        enemy.isSkill = false; // Tắt trạng thái skill
+        enemy.agent.ResetPath(); // Dừng di chuyển nếu thoát khỏi trạng thái
     }
    public IEnumerator WaitSkill()
    {

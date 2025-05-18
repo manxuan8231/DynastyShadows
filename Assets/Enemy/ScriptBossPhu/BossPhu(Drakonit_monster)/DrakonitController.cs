@@ -15,8 +15,10 @@ public class DrakonitController : MonoBehaviour
     public int damage = 50;
     public bool isSkill = false; // Kiểm tra trạng skill
     public bool isAttack = false;
-    public bool isRunning = false; // Kiểm tra trạng thái chạy khi ở xa player quá lâu
+    public bool isRunning = false; // Kiểm tra trạng thái chạy
     public bool isWalking = true; // Kiểm tra trạng thái đi bộ khi ở gần player
+    public bool isWalkLeft = false;//dng để cập nhập vị trí liên tục
+    public bool isWalkRight = false;//dng để cập nhập vị trí liên tục
     //EffectSkill
     public GameObject skillEffect1; // Hiệu ứng kỹ năng 1
     public GameObject skillEffect2; // Hiệu ứng kỹ năng 2

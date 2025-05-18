@@ -52,7 +52,7 @@ public class DrakonitAttackState : DrakonitState
         }
        
         // Kiểm tra nếu đủ thời gian để tấn công tiếp
-        if (Time.time >= lastAttackTime + attackCooldown)
+        if (Time.time >= lastAttackTime + attackCooldown  && enemy.isAttack)
         {
             // Gọi animation tấn công
             float randomAttack = Random.Range(0, 3);
@@ -88,6 +88,8 @@ public class DrakonitAttackState : DrakonitState
     public override void Exit()
     {
        enemy.agent.isStopped = false; // Cho phép di chuyển trở lại
+       
+       
     }
 
    

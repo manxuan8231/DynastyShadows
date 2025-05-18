@@ -14,10 +14,11 @@ public class DrakonitCameraState : DrakonitState
     //tham chieu
     public DrakonitAudioManager audioManager;
     private PlayerController characterController;
+    private ComboAttack comboAttack;
     public override void Enter()
     {
         characterController = GameObject.FindAnyObjectByType<PlayerController>();
-       
+        comboAttack = GameObject.FindAnyObjectByType<ComboAttack>();
         audioManager = GameObject.FindAnyObjectByType<DrakonitAudioManager>();
         Debug.Log("trang thai camera");
         brain = Camera.main.GetComponent<CinemachineBrain>();
@@ -44,6 +45,7 @@ public class DrakonitCameraState : DrakonitState
 
     public IEnumerator PlayCutscene(float seconds)
     {  
+        comboAttack.enabled = false; // Vô hiệu hóa ComboAttack
         characterController.enabled = false; // Vô hiệu hóa CharacterController
         characterController. animator.SetBool("isWalking", false);
         characterController.animator.SetBool("isRunning", false);
@@ -76,7 +78,7 @@ public class DrakonitCameraState : DrakonitState
         enemy.cutScene3.Priority = 20;
         yield return new WaitForSeconds(seconds);
         //
-        enemy.ChangeState(new DrakonitChaseState(enemy)); // chuyển sang trạng thái chase
+        enemy.ChangeState(new DrakonitIdleState(enemy)); // chuyển sang trạng thái chase
         if (brain != null)// chuyển cam lại thành easeinout
         {
             brain.DefaultBlend.Style = CinemachineBlendDefinition.Styles.EaseInOut;
@@ -84,10 +86,11 @@ public class DrakonitCameraState : DrakonitState
         enemy.cutScene3.Priority = 0;
         enemy.imgBietDanh.SetActive(false);// ẩn text biêt danh
         characterController.enabled = true; // Bật lại CharacterController
+        comboAttack.enabled = true; // Kích hoạt lại ComboAttack cua player
         // khoa Hiện chuột
         UnityEngine.Cursor.visible = false;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-
-        enemy.isRunning = true; // Đặt trạng thái isRunning thành true
+        enemy.isAttack = true; // bật trạng thái tấn công
+        enemy.isSkill = true;
     }
 }

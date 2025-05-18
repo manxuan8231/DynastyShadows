@@ -595,6 +595,8 @@ MonoBehaviour:
   isAttack: 0
   isRunning: 0
   isWalking: 0
+  isWalkLeft: 0
+  isWalkRight: 0
   skillEffect1: {fileID: 6775754693692576136, guid: d9c74044cc2c08f478cad5873b43082a, type: 3}
   skillEffect2: {fileID: 4611131212927096248, guid: 8f87b9299a434184facd4f5a714f17ab, type: 3}
   skillEffect3: {fileID: 6050052657054569537, guid: c0ee7381a33049246b224a48328171ad, type: 3}
@@ -638,7 +640,7 @@ MonoBehaviour:
   roar: {fileID: 8300000, guid: e68e2e73923f2764ca4343a9ab24b650, type: 3}
   SoundHit: {fileID: 8300000, guid: c00a794ea0d9faf47bc4b73f121d0b2f, type: 3}
   SoundDie: {fileID: 8300000, guid: 6e469aeaa11284f4a8ba001f9086894f, type: 3}
-  SoundRuning: {fileID: 0}
+  SoundRuning: {fileID: 8300000, guid: 36175893da5769441a54a8c7a7c57ee5, type: 3}
 --- !u!195 &8576108427089311443
 NavMeshAgent:
   m_ObjectHideFlags: 0
