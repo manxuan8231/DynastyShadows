@@ -72,7 +72,10 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
         // cập nhật số lượng
         quantityText.text = this.quantity.ToString();
         quantityText.enabled = true;
+        Debug.Log("ItemName " + itemName + "Itemquantity " + quantity);
         return 0;
+
+       
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -88,13 +91,20 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
     }
     private void OnLeftClick()
     {
-        inventoryManager.DeselectedAllSLot();   
+        if (isSelected)
+        { 
+            Debug.Log("Đã chọn trúng tên item" + itemName);
+            inventoryManager.UseItem(itemName);
+        }
+
+        inventoryManager.DeselectedAllSLot();
         selectedItem.SetActive(true);
         isSelected = true;
         itemDescriptionNameText.text = itemName;
         itemDescriptionText.text = itemDescription;
         itemDescriptionImage.sprite = itemSprite;
-        if(itemDescriptionImage.sprite == null)
+
+        if (itemDescriptionImage.sprite == null)
         {
             itemDescriptionImage.sprite = emptySprite;
         }

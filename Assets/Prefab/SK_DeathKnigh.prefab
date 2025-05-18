@@ -48914,6 +48914,73 @@ Transform:
   - {fileID: 2948283058787954558}
   m_Father: {fileID: 6477825282964663279}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4401122142422449617
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 502501673485744864}
+  - component: {fileID: 3599365684620360543}
+  m_Layer: 9
+  m_Name: ItemCanUsing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &502501673485744864
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4401122142422449617}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4147767676504852487}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3599365684620360543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4401122142422449617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1925eff51b4ea54c956cbdc0bd1246a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sliderHp: {fileID: 8168992554226792717}
+  currentHp: 0
+  maxHp: 2000
+  textHealth: {fileID: 3338265950309201438}
+  sliderManaSkill: {fileID: 9047212935039832784}
+  currentManaSkill: 0
+  maxManaSkill: 2000
+  textManaSkill: {fileID: 3507662114628550300}
+  sliderMana: {fileID: 8732129358779751215}
+  currentMana: 0
+  maxMana: 2000
+  textMana: {fileID: 2764574464001080975}
+  criticalDamage: 600
+  criticalChance: 20
+  baseDamage: 50
+  textHitDamage: {fileID: 7941818422517085815}
+  textHitChance: {fileID: 6658923745218820963}
+  textBaseDamage: {fileID: 2905795137257810610}
+  speedRun: 15
+  textSpeed: {fileID: 2905795137257810610}
+  effectStun: {fileID: 388171230543076497}
+  audioHit: {fileID: 8300000, guid: e9f5297da35e59044ac28a31c61d9594, type: 3}
+  audioStun: {fileID: 0}
 --- !u!1 &4456894434925543465
 GameObject:
   m_ObjectHideFlags: 0
@@ -54444,7 +54511,6 @@ GameObject:
   - component: {fileID: 2948652139997718805}
   - component: {fileID: 9065928968903627281}
   - component: {fileID: 8044341883902961810}
-  - component: {fileID: 6612305951951977055}
   - component: {fileID: 2222235522807271684}
   - component: {fileID: 7681392975120717764}
   - component: {fileID: 2516279819860882013}
@@ -54501,6 +54567,7 @@ Transform:
   - {fileID: 7476899936689733018}
   - {fileID: 1246094796956043355}
   - {fileID: 5089509666514194816}
+  - {fileID: 502501673485744864}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4394782127376731178
@@ -54603,41 +54670,6 @@ MonoBehaviour:
   slashSoundFly: {fileID: 8300000, guid: 914611e5687d45d43b7f8f521d45f1ff, type: 3}
   boxColliderDameZone: {fileID: 5508107704242111513}
   boxColliderDameZoneHit: {fileID: 6632733111558744999}
---- !u!114 &6612305951951977055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5045261743069803646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1925eff51b4ea54c956cbdc0bd1246a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sliderHp: {fileID: 8168992554226792717}
-  currentHp: 0
-  maxHp: 2000
-  textHealth: {fileID: 3338265950309201438}
-  sliderManaSkill: {fileID: 9047212935039832784}
-  currentManaSkill: 0
-  maxManaSkill: 2000
-  textManaSkill: {fileID: 3507662114628550300}
-  sliderMana: {fileID: 8732129358779751215}
-  currentMana: 0
-  maxMana: 2000
-  textMana: {fileID: 2764574464001080975}
-  criticalDamage: 600
-  criticalChance: 20
-  baseDamage: 50
-  textHitDamage: {fileID: 7941818422517085815}
-  textHitChance: {fileID: 6658923745218820963}
-  textBaseDamage: {fileID: 2905795137257810610}
-  speedRun: 15
-  textSpeed: {fileID: 2905795137257810610}
-  effectStun: {fileID: 388171230543076497}
-  audioHit: {fileID: 8300000, guid: e9f5297da35e59044ac28a31c61d9594, type: 3}
-  audioStun: {fileID: 0}
 --- !u!114 &2222235522807271684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93444,6 +93476,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -2.5628662
       objectReference: {fileID: 0}
+    - target: {fileID: 5052912492279004162, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
+      propertyPath: itemSOs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5052912492279004162, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
+      propertyPath: 'itemSOs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 53a7b89178adba9488912641ff099cbe, type: 2}
     - target: {fileID: 5093787462366659980, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

@@ -10,6 +10,7 @@ public class InventoryManager : MonoBehaviour
 
     //gọi hàm
     public ItemSlot[] itemSlot; // Array of item slots
+    public ItemSO[] itemSOs;
     void Start()
     {
 
@@ -44,7 +45,7 @@ public class InventoryManager : MonoBehaviour
         Debug.Log("Item added: " + itemName + ", Quantity: " + quantity + "Sprite" + itemSprite);
         for (int i = 0; i < itemSlot.Length; i++)
         {
-            //if (!itemSlot[i].isFull && (itemSlot[i].itemName == itemName || itemSlot[i].quantity == 0))
+            
              if (itemSlot[i].isFull == false && (itemSlot[i].itemName == itemName || itemSlot[i].quantity == 0))
             {
               int leftOverItems =  itemSlot[i].AddItem(itemName, quantity, itemSprite,itemDescription);
@@ -55,6 +56,20 @@ public class InventoryManager : MonoBehaviour
             }
         }
         return quantity;
+
+    }
+
+    public void UseItem(string itemName)
+    {
+        for (int i = 0; i < itemSOs.Length; i++)
+        {
+            if (itemSOs[i].itemName == itemName)
+            {
+                Debug.Log("Check đúng tên item");   
+                itemSOs[i].UseItem();
+              
+            }
+        }
 
     }
 
