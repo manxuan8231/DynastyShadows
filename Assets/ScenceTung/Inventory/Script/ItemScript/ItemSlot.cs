@@ -95,6 +95,13 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
         { 
             Debug.Log("Đã chọn trúng tên item" + itemName);
             inventoryManager.UseItem(itemName);
+            this.quantity -= 1;
+            quantityText.text = this.quantity.ToString();
+            if (this.quantity <= 0)
+            {
+                EmptySlot();
+            }
+            
         }
 
         inventoryManager.DeselectedAllSLot();
@@ -109,6 +116,16 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
             itemDescriptionImage.sprite = emptySprite;
         }
     }
+
+    private void EmptySlot()
+    {
+        quantityText.enabled = false;
+        itemImage.sprite = emptySprite;
+        itemDescriptionNameText.text = "";
+        itemDescriptionText.text = "";
+        itemDescriptionImage.sprite = emptySprite;
+    }
+
     private void OnRightClick()
     {
         
