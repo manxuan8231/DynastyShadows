@@ -9,6 +9,7 @@ public class DrakonitAudioManager : MonoBehaviour
     public AudioClip roar;// Âm thanh gầm  
     public AudioClip SoundHit; // Âm thanh Hit
     public AudioClip SoundDie; // Âm thanh chết
+    public AudioClip SoundRuning; // Âm thanh skill
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -22,5 +23,8 @@ public class DrakonitAudioManager : MonoBehaviour
     {
         audioSource.PlayOneShot(attackSound); // Phát âm thanh tấn công
     }
-    
+    public void playRunning()
+    {
+        audioSource.PlayOneShot(SoundRuning); // Phát âm thanh chạy
+    }
 }

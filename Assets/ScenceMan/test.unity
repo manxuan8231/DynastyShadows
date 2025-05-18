@@ -270,34 +270,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 584111947219063298, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 584111947219063298, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1134346388390077937, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1134346388390077937, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2175567197135798334, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.3400083
-      objectReference: {fileID: 0}
-    - target: {fileID: 2175567197135798334, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.1300044
-      objectReference: {fileID: 0}
-    - target: {fileID: 2175567197135798334, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.5399921
-      objectReference: {fileID: 0}
     - target: {fileID: 4147767676504852487, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.7065215
@@ -338,21 +310,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4770184419169596072, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4770184419169596072, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5045261743069803646, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
       propertyPath: m_Name
       value: SK_DeathKnigh
-      objectReference: {fileID: 0}
-    - target: {fileID: 7588368614230215644, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-      propertyPath: maxYAngle
-      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -476,8 +436,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 383837749568101787, guid: 14beac8210a9684479d546af6497da65, type: 3}
-      propertyPath: attackRange
-      value: 4
+      propertyPath: chaseRange
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 383837749568101787, guid: 14beac8210a9684479d546af6497da65, type: 3}
+      propertyPath: skillRange
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 1081597413212163973, guid: 14beac8210a9684479d546af6497da65, type: 3}
       propertyPath: m_Name
@@ -524,7 +488,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8576108427089311443, guid: 14beac8210a9684479d546af6497da65, type: 3}
-      propertyPath: m_Speed
+      propertyPath: m_StoppingDistance
       value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []

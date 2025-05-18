@@ -87,5 +87,7 @@ public class DrakonitCameraState : DrakonitState
         // khoa Hiện chuột
         UnityEngine.Cursor.visible = false;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+
+        enemy.isRunning = true; // Đặt trạng thái isRunning thành true
     }
 }

@@ -18,9 +18,9 @@ public class DrakonitDeathState : DrakonitState
         characterController.enabled = false; // Vô hiệu hóa CharacterController
         characterController.animator.SetBool("isWalking", false);
         characterController.animator.SetBool("isRunning", false);
-
-        audioManager.audioSource.Stop(); 
-        enemy.animator.SetBool("Walking", false);
+        //
+       
+        audioManager.audioSource.Stop();    
         enemy.agent.isStopped = true;
         enemy.cutScene3.Priority = 20;
         brain = Camera.main.GetComponent<CinemachineBrain>();

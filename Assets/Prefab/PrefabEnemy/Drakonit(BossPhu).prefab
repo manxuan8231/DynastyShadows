@@ -587,12 +587,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 915b4abbba216494a8b690cc1f0b2470, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseRange: 50
+  chaseRange: 70
   attackRange: 4
-  skillRange: 20
+  skillRange: 70
   damage: 50
   isSkill: 0
   isAttack: 0
+  isRunning: 0
+  isWalking: 0
   skillEffect1: {fileID: 6775754693692576136, guid: d9c74044cc2c08f478cad5873b43082a, type: 3}
   skillEffect2: {fileID: 4611131212927096248, guid: 8f87b9299a434184facd4f5a714f17ab, type: 3}
   skillEffect3: {fileID: 6050052657054569537, guid: c0ee7381a33049246b224a48328171ad, type: 3}
@@ -636,6 +638,7 @@ MonoBehaviour:
   roar: {fileID: 8300000, guid: e68e2e73923f2764ca4343a9ab24b650, type: 3}
   SoundHit: {fileID: 8300000, guid: c00a794ea0d9faf47bc4b73f121d0b2f, type: 3}
   SoundDie: {fileID: 8300000, guid: 6e469aeaa11284f4a8ba001f9086894f, type: 3}
+  SoundRuning: {fileID: 0}
 --- !u!195 &8576108427089311443
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -650,7 +653,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1
+  m_StoppingDistance: 4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

@@ -15,7 +15,8 @@ public class DrakonitController : MonoBehaviour
     public int damage = 50;
     public bool isSkill = false; // Kiểm tra trạng skill
     public bool isAttack = false;
-
+    public bool isRunning = false; // Kiểm tra trạng thái chạy khi ở xa player quá lâu
+    public bool isWalking = true; // Kiểm tra trạng thái đi bộ khi ở gần player
     //EffectSkill
     public GameObject skillEffect1; // Hiệu ứng kỹ năng 1
     public GameObject skillEffect2; // Hiệu ứng kỹ năng 2
@@ -54,8 +55,9 @@ public class DrakonitController : MonoBehaviour
     public TextMeshProUGUI textConten; // Text hoi thoai
     public GameObject imgBietDanh; // GameObject chứa text
     // Biến tham chiếu đến DrakonitDameZone
-    public DrakonitDameZone dameZone; 
+    public DrakonitDameZone dameZone;
 
+   
     // Trạng thái hiện tại
     private DrakonitState currentState; 
     void Start()
@@ -134,7 +136,7 @@ public class DrakonitController : MonoBehaviour
         Rigidbody effectRb = effect.GetComponent<Rigidbody>();
         if (effectRb != null)
         {
-            effectRb.AddForce(transform.forward * 20f, ForceMode.Impulse); // Bắn ra phía trước
+            effectRb.AddForce(transform.forward * 30f, ForceMode.Impulse); // Bắn ra phía trước
         }
 
         Destroy(effect, 4f);
