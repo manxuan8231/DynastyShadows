@@ -54448,7 +54448,6 @@ GameObject:
   - component: {fileID: 2222235522807271684}
   - component: {fileID: 7681392975120717764}
   - component: {fileID: 2516279819860882013}
-  - component: {fileID: 5247492080468949461}
   m_Layer: 9
   m_Name: SK_DeathKnigh
   m_TagString: Player
@@ -54764,46 +54763,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5247492080468949461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5045261743069803646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ab172942f0c41a46acc3bfcf48c562a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventoryCanvas: {fileID: 4092201707253879178}
-  panelStatus: {fileID: 6143730850821160950}
-  panelSkill: {fileID: 636227174318756800}
-  audioSource: {fileID: 6193914660110591525}
-  audioClipClick: {fileID: 8300000, guid: acbd01cdf53506541ae5c30df72606a1, type: 3}
-  inventory: {fileID: 6965482258723406827}
-  itemSlot:
-  - {fileID: 1957067567311570152}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &5110695246803793632
 GameObject:
   m_ObjectHideFlags: 0
@@ -92842,9 +92801,9 @@ PrefabInstance:
       value: -633.7367
       objectReference: {fileID: 0}
     - target: {fileID: 2360339545167432967, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 5247492080468949461}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3155332121833395538, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
       propertyPath: m_SizeDelta.y
       value: 394.4734
@@ -92870,13 +92829,13 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6270094811219256558, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 5247492080468949461}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7046134318408783594, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 5247492080468949461}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8065751329638569220, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.99490595
@@ -92949,22 +92908,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &636227174318756800 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2421398608939800388, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
-  m_PrefabInstance: {fileID: 2976558339930129540}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1957067567311570152 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3631654606104707180, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
-  m_PrefabInstance: {fileID: 2976558339930129540}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8665c2f75a8494645a1eebe251872f7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2764574464001080975 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1086319523136895499, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
@@ -93009,24 +92952,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &4092201707253879178 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1262335896848323854, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
-  m_PrefabInstance: {fileID: 2976558339930129540}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5089509666514194816 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8065751329638569220, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
-  m_PrefabInstance: {fileID: 2976558339930129540}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6143730850821160950 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8938579431011564402, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
-  m_PrefabInstance: {fileID: 2976558339930129540}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &6193914660110591525 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 8988033234373370529, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
   m_PrefabInstance: {fileID: 2976558339930129540}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &6658923745218820963 stripped
@@ -93040,11 +92968,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &6965482258723406827 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5324522769201596271, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
-  m_PrefabInstance: {fileID: 2976558339930129540}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7941818422517085815 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5150391522218980083, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}

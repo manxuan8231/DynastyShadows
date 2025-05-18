@@ -86,7 +86,6 @@ GameObject:
   - component: {fileID: 5433290363473943152}
   - component: {fileID: 2411532590718867690}
   - component: {fileID: 3958626588609488927}
-  - component: {fileID: 9173183364288507743}
   m_Layer: 0
   m_Name: ItemSlot
   m_TagString: Untagged
@@ -154,35 +153,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 18.94
---- !u!114 &9173183364288507743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1749825519285739510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8665c2f75a8494645a1eebe251872f7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemName: 
-  quantity: 0
-  itemSprite: {fileID: 0}
-  isFull: 0
-  itemDescription: 
-  MaxNumberOfItems: 8
-  quantityText: {fileID: 4301920919080459736}
-  itemImage: {fileID: 5265010017010609703}
-  selectPanel: {fileID: 464213920219259957}
-  defaultImage: {fileID: 21300000, guid: b464ee8350ce3984aa31ea54d12d9236, type: 3}
-  defaultDescriptionImage: {fileID: 21300000, guid: b464ee8350ce3984aa31ea54d12d9236, type: 3}
-  thisItemSelected: 0
-  itemDescriptionImage: {fileID: 0}
-  itemDescriptionNameText: {fileID: 0}
-  itemDescriptionText: {fileID: 0}
-  itemSO: {fileID: 11400000, guid: 1157880b68361284ca8ee2b8f871a535, type: 2}
-  playerStatus: {fileID: 0}
 --- !u!1 &2131569634371427542
 GameObject:
   m_ObjectHideFlags: 0
