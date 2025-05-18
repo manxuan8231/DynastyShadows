@@ -18,7 +18,7 @@ public class ChaseState : BaseState
         if (dist <= boss.attackRange)
         {
             boss.TransitionToState(boss.idleCombatState);
-            audioBossManager.instance.PlaySFX("Chase");
+            AudioBossManager.instance.PlaySFX("Chase");
         }
     }
 }

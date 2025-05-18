@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 public class AudioBossManager : MonoBehaviour
 {
-    public AudioBossManager instance;
+    public static AudioBossManager instance;
 
     [Header("Audio Sources")]
     public AudioSource sfxSource;

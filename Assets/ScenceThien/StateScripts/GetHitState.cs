@@ -6,6 +6,7 @@ using UnityEngine;
 public class GetHitState : BaseState
 {
     public GetHitState(BossScript boss) : base(boss) { }
+    public AudioBossManager audioBoss;
 
     public override void EnterState()
     {
@@ -16,6 +17,7 @@ public class GetHitState : BaseState
 
     private IEnumerator ReturnToFight()
     {
+        AudioBossManager.instance.PlaySFX("GetHit");
         yield return new WaitForSeconds(0.5f);
 
         if (boss.isDead) yield break;
