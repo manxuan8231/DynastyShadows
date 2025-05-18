@@ -45,11 +45,10 @@ public class BossHP : MonoBehaviour
         if (sliderHp != null)
             sliderHp.value = currentHealth;
 
-        // Chuyển phase nếu máu thấp
         if (!hasEnteredPhase2 && currentHealth <= maxHealth / 2f)
         {
             hasEnteredPhase2 = true;
-            bossScript.TransitionToState(bossScript.phase2State);
+            bossScript.TransitionToState(bossScript.phase2State); // đã đúng
             return;
         }
 

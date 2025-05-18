@@ -4,9 +4,9 @@ public class AttackState : BaseState
 {
     private float attackCooldown = 2f;
     private float attackTimer = 0f;
-    private AudioBossManager audioBossManager;
 
-    private string[] attackClips = { "Attack 1", "Attack 2", "Attack 3" };
+    private string[] phase1Attacks = { "Attack 1", "Attack 2", "Attack 3" };
+    private string[] phase2Attacks = { "Attack 4", "Attack 5" };
 
     public AttackState(BossScript boss) : base(boss) { }
 
@@ -28,12 +28,17 @@ public class AttackState : BaseState
         }
 
         attackTimer += Time.deltaTime;
+
         if (attackTimer >= attackCooldown)
         {
-            string clip = attackClips[Random.Range(0, attackClips.Length)];
+            // Chọn đòn tấn công phù hợp với Phase
+            string[] attackPool = boss.isPhase2 ? phase2Attacks : phase1Attacks;
+            string clip = attackPool[Random.Range(0, attackPool.Length)];
+
             boss.anim.SetTrigger(clip);
             attackTimer = 0f;
-            audioBossManager.instance.PlaySFX("Attack");
+
+            AudioBossManager.instance?.PlaySFX("Attack"); // hoặc dùng clip nếu âm thanh tách riêng
         }
     }
 }

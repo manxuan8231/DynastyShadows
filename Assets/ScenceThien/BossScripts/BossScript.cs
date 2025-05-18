@@ -8,7 +8,7 @@ public class BossScript : MonoBehaviour
     public NavMeshAgent agent;
     public float attackRange = 3f;
     public bool isDead;
-
+    public bool isPhase2;
     [Header("FSM States")]
     public BaseState currentState;
     public IdleState idleState;
@@ -53,4 +53,5 @@ public class BossScript : MonoBehaviour
         currentState = newState;
         currentState?.EnterState();
     }
+    
 }
