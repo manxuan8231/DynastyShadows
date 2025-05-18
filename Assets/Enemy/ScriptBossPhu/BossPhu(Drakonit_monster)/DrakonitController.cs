@@ -19,6 +19,7 @@ public class DrakonitController : MonoBehaviour
     public bool isWalking = true; // Kiểm tra trạng thái đi bộ khi ở gần player
     public bool isWalkLeft = false;//dng để cập nhập vị trí liên tục
     public bool isWalkRight = false;//dng để cập nhập vị trí liên tục
+ 
     //EffectSkill
     public GameObject skillEffect1; // Hiệu ứng kỹ năng 1
     public GameObject skillEffect2; // Hiệu ứng kỹ năng 2
@@ -51,6 +52,7 @@ public class DrakonitController : MonoBehaviour
     public Slider sliderHp; // Thanh máu
     public float maxHp = 1000; // Máu tối đa
     public float currentHp; // Máu hiện tại
+    public TextMeshProUGUI textHp; // Text hiển thị máu
     public Collider colliderBox; // Collider của enemy
     public GameObject slider; // GameObject chứa thanh máu
     //text
@@ -71,9 +73,10 @@ public class DrakonitController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         //mau
-        currentHp = maxHp; // Khởi tạo máu hiện tại bằng máu tối đa
+        currentHp = maxHp; // Khởi tạo máu hiện tại
         sliderHp.maxValue = currentHp; // Đặt giá trị tối đa cho thanh máu
         sliderHp.value = currentHp; // Đặt giá trị hiện tại cho thanh máu
+        textHp.text = $"{currentHp}/{maxHp}"; // Cập nhật text hiển thị máu
         slider.SetActive(false); // Ẩn thanh máu
         //effect skill
         auraSkill1.SetActive(false); // Tắt hiệu ứng kỹ năng 1
@@ -89,8 +92,10 @@ public class DrakonitController : MonoBehaviour
 
     void Update()
     {
+       
         // Gọi hàm Updat của trạng thái hiện tại 
         currentState?.Update();
+       
     }
 
     // Hàm chuyển trạng thái
@@ -105,6 +110,7 @@ public class DrakonitController : MonoBehaviour
     {
         currentHp -= amount; // Giảm máu hiện tại
         sliderHp.value = currentHp; // Cập nhật thanh máu
+        textHp.text = $"{currentHp}/{maxHp}"; // Cập nhật text hiển thị máu
         currentHp = Mathf.Clamp(currentHp, 0, maxHp); // Đảm bảo máu không âm và không vượt quá tối đa
         if (currentHp <= 0)
         {
@@ -114,6 +120,8 @@ public class DrakonitController : MonoBehaviour
             ChangeState(new DrakonitDeathState(this));
         }
     }
+    
+
 
     //bắt sự kiện event từ animator skill
     public void SpawnEffectSkill1()

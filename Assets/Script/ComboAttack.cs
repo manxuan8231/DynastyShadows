@@ -54,25 +54,31 @@ public class ComboAttack : MonoBehaviour
 
     void Update()
     {
-        // Chỉ cho phép tấn công nếu đã hết thời gian cooldown
-        if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime 
-            && isAttack && playerStatus.currentMana > 50 && playerController.IsGrounded())
+        // Chỉ cho phép tấn công nếu chuột bị khóa (không hiện trên màn hình)
+        if (Cursor.lockState == CursorLockMode.Locked)
         {
-            playerStatus.TakeMana(50);
-            OnAttack();
-        }
-        //tấn công khi ko chạm đất
-        if (Input.GetMouseButtonDown(0)
-            && isAttack && playerStatus.currentMana > 50 && playerController.IsGrounded() == false 
-            && Time.time >= coolDownAttackFly + 1f)
-        {
-            OnAttackFly();
-            coolDownAttackFly = Time.time;
-        }
-        // Nếu người chơi không nhấn trong 1.2s thì reset combo
-        if (Time.time >= nextAttackTime + 1.2f)
-        {
-            comboStep = 0;
+            // Tấn công trên mặt đất
+            if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime
+                && isAttack && playerStatus.currentMana > 50 && playerController.IsGrounded())
+            {
+                playerStatus.TakeMana(50);
+                OnAttack();
+            }
+
+            // Tấn công khi đang trên không
+            if (Input.GetMouseButtonDown(0)
+                && isAttack && playerStatus.currentMana > 50 && !playerController.IsGrounded()
+                && Time.time >= coolDownAttackFly + 1f)
+            {
+                OnAttackFly();
+                coolDownAttackFly = Time.time;
+            }
+
+            // Reset combo nếu không tấn công sau 1.2s
+            if (Time.time >= nextAttackTime + 1.2f)
+            {
+                comboStep = 0;
+            }
         }
     }
 
