@@ -7,10 +7,14 @@ public class Tele : MonoBehaviour
     public GameObject loadingPanel; // Gán Panel loading ở đây
 
     OpenMap openMap; // Tham chiếu đến OpenMap script
+    PlayerController playerController; // Tham chiếu đến PlayerController script
+    ComboAttack comboAttack; // Tham chiếu đến ComboAttack script
 
     public GameObject panelButtonTele;
     void Start()
     {
+        playerController = FindAnyObjectByType<PlayerController>(); // Tìm đối tượng PlayerController trong scene
+        comboAttack = FindAnyObjectByType<ComboAttack>(); // Tìm đối tượng ComboAttack trong scene
         openMap = FindAnyObjectByType<OpenMap>(); // Tìm đối tượng OpenMap trong scene
         panelButtonTele.SetActive(false); // Ẩn nút teleport khi bắt đầu
     }
@@ -43,11 +47,20 @@ public class Tele : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         // Hiện loading panel
         if (loadingPanel != null)
+        {
             loadingPanel.SetActive(true);
-        
-        // Đợi 5 giây
-        yield return new WaitForSeconds(3f);
+        }
+        playerController.enabled = false; // Tắt PlayerController
+        comboAttack.enabled = false; // Tắt ComboAttack
+        playerController. animator.SetBool("isWalking", false);
+        playerController.animator.SetBool("isRunning", false);
 
+        // Đợi 5 giây
+        yield return new WaitForSeconds(5f);
+        playerController.enabled = true; // Bật lại PlayerController
+        
+        comboAttack.enabled = true; // Bật lại ComboAttack
+       
         // Dịch chuyển nhân vật
         CharacterController cc = player.GetComponent<CharacterController>();
         if (cc != null)
