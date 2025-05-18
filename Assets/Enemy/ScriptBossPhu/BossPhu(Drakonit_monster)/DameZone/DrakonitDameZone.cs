@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DrakonitDameZone : MonoBehaviour
@@ -8,10 +9,16 @@ public class DrakonitDameZone : MonoBehaviour
     public float dame = 50f;
     public string tagPlayer;
     public List<Collider> listDame = new List<Collider>();
-
+    PlayerStatus playerStatus;
     void Start()
     {
         dameZoneCollider.enabled = false;
+       
+        GameObject playerObject = GameObject.Find("ItemCanUsing");
+        if (playerObject != null)
+        {
+            playerStatus = playerObject.GetComponent<PlayerStatus>();          
+        }      
     }
 
    
@@ -20,7 +27,7 @@ public class DrakonitDameZone : MonoBehaviour
         if (other.CompareTag(tagPlayer) && !listDame.Contains(other))
         {
            listDame.Add(other);
-            other.GetComponent<PlayerStatus>().TakeHealth(dame);
+           playerStatus.TakeHealth(dame);
         }
     }
     private void OnTriggerStay(Collider other)//nếu ontrigger xử lấy ko kịp thì nó dô đây xử lý tiếp
@@ -28,7 +35,7 @@ public class DrakonitDameZone : MonoBehaviour
         if (other.gameObject.CompareTag(tagPlayer) && !listDame.Contains(other))
         {
             listDame.Add(other);
-            other.GetComponent<PlayerStatus>().TakeHealth(dame);
+            playerStatus.TakeHealth(dame);
         }
     }
     public void beginDame()
