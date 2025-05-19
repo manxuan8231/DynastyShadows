@@ -1,32 +1,34 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
     public GameObject inventoryMenu;
     public GameObject inventoryLogo;
     private bool isInventoryOpen = false;
-
-
-
+    public GameObject equipmentMenu;
     //gọi hàm
     public ItemSlot[] itemSlot; // Array of item slots
+    public EquipmentSlot[] equipmentSlot; // Array of equipment slots
     public ItemSO[] itemSOs;
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Inventory") && isInventoryOpen)
+        if(Input.GetButtonDown("Inventory"))
+           Inventory();
+       
+
+    }
+    private void Inventory()
+    {
+        if (inventoryMenu.activeSelf)
         {
             Time.timeScale = 1f; // Resume the game
             Cursor.lockState = CursorLockMode.Locked; // Lock the cursor
             Cursor.visible = false; // Hide the cursor
             inventoryMenu.SetActive(false);
             inventoryLogo.SetActive(false);
-            isInventoryOpen = false;
+            equipmentMenu.SetActive(false);
         }
         else if (Input.GetButtonDown("Inventory") && !isInventoryOpen)
         {
@@ -35,27 +37,70 @@ public class InventoryManager : MonoBehaviour
             Cursor.visible = true; // Show the cursor
             inventoryMenu.SetActive(true);
             inventoryLogo.SetActive(true);
-            isInventoryOpen = true;
+            equipmentMenu.SetActive(false); 
         }
     }
-
-    public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription)
+    public void OpenInventory()
     {
-        // Implement your logic to add the item to the inventory
-        Debug.Log("Item added: " + itemName + ", Quantity: " + quantity + "Sprite" + itemSprite);
-        for (int i = 0; i < itemSlot.Length; i++)
+           Time.timeScale = 0f; // Pause the game
+            Cursor.lockState = CursorLockMode.None; // Unlock the cursor
+            Cursor.visible = true; // Show the cursor
+            inventoryMenu.SetActive(true);
+            inventoryLogo.SetActive(true);
+            equipmentMenu.SetActive(false);
+    }
+    public void OpenEquipmentMenu()
+    {
+        if (inventoryMenu.activeSelf)
         {
-            
-             if (itemSlot[i].isFull == false && (itemSlot[i].itemName == itemName || itemSlot[i].quantity == 0))
-            {
-              int leftOverItems =  itemSlot[i].AddItem(itemName, quantity, itemSprite,itemDescription);
-                if(leftOverItems > 0) 
-                leftOverItems = AddItem(itemName, leftOverItems, itemSprite, itemDescription);
-                return leftOverItems;
-               
-            }
+
+            Time.timeScale = 0f; // Pause the game
+            Cursor.lockState = CursorLockMode.None; // Unlock the cursor
+            Cursor.visible = true; // Show the cursor
+            inventoryMenu.SetActive(false);
+            inventoryLogo.SetActive(true);
+            equipmentMenu.SetActive(true);
         }
-        return quantity;
+    }
+    public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription,ItemType itemType)
+    {
+        if(itemType == ItemType.consumable || itemType == ItemType.crafting)
+        {
+            // Implement your logic to add the item to the inventory
+            Debug.Log("Item added: " + itemName + ", Quantity: " + quantity + "Sprite" + itemSprite);
+            for (int i = 0; i < itemSlot.Length; i++)
+            {
+
+                if (itemSlot[i].isFull == false && (itemSlot[i].itemName == itemName || itemSlot[i].quantity == 0))
+                {
+                    int leftOverItems = itemSlot[i].AddItem(itemName, quantity, itemSprite, itemDescription,itemType);
+                    if (leftOverItems > 0)
+                        leftOverItems = AddItem(itemName, leftOverItems, itemSprite, itemDescription, itemType);
+                    return leftOverItems;
+
+                }
+            }
+            return quantity;
+        }
+        else
+        {
+            // Implement your logic to add the item to the inventory
+            Debug.Log("Item added equipmentMenu: " + itemName + ", Quantity: " + quantity + "Sprite" + itemSprite);
+            for (int i = 0; i < equipmentSlot.Length; i++)
+            {
+
+                if (equipmentSlot[i].isFull == false && (equipmentSlot[i].itemName == itemName || equipmentSlot[i].quantity == 0))
+                {
+                    int leftOverItems = equipmentSlot[i].AddItem(itemName, quantity, itemSprite, itemDescription, itemType);
+                    if (leftOverItems > 0)
+                        leftOverItems = AddItem(itemName, leftOverItems, itemSprite, itemDescription, itemType);
+                    return leftOverItems;
+
+                }
+            }
+            return quantity;
+        }
+
 
     }
 
@@ -85,4 +130,20 @@ public class InventoryManager : MonoBehaviour
             itemSlot[i].isSelected = false;
         }
     }
+}
+
+
+public enum ItemType
+{
+    consumable,
+    crafting,
+    head,
+    body,
+    legs,
+    feet,
+    weapon,
+    //trang sức
+    Accessory,
+    none
+
 }
