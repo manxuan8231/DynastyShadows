@@ -10,6 +10,7 @@ public class InventoryManager : MonoBehaviour
     //gọi hàm
     public ItemSlot[] itemSlot; // Array of item slots
     public EquipmentSlot[] equipmentSlot; // Array of equipment slots
+    public EquippedSlot[] equippedSlot; // Array of equipped slots
     public ItemSO[] itemSOs;
     // Update is called once per frame
     void Update()
@@ -129,6 +130,19 @@ public class InventoryManager : MonoBehaviour
             itemSlot[i].selectedItem.SetActive(false);
             itemSlot[i].isSelected = false;
         }
+        for (int i = 0; i < equipmentSlot.Length; i++)
+        {
+            equipmentSlot[i].selectedItem.SetActive(false);
+            equipmentSlot[i].isSelected = false;
+            
+        }
+        for (int i = 0; i < equippedSlot.Length; i++)
+        {
+            equippedSlot[i].selectedItem.SetActive(false);
+            equippedSlot[i].isSelected = false;
+            
+        }
+
     }
 }
 

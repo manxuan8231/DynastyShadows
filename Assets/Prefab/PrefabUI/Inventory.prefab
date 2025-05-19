@@ -1817,6 +1817,15 @@ MonoBehaviour:
   - {fileID: 942217496145131274}
   - {fileID: 3870333645050898177}
   - {fileID: 1179716839558356166}
+  equippedSlot:
+  - {fileID: 5924052268460116892}
+  - {fileID: 4381991357563302397}
+  - {fileID: 2666896314084618822}
+  - {fileID: 2192140892479974703}
+  - {fileID: 7330918077404457407}
+  - {fileID: 4961370039461144395}
+  - {fileID: 3593278565795415812}
+  - {fileID: 6597985817371871138}
   itemSOs:
   - {fileID: 11400000, guid: 53a7b89178adba9488912641ff099cbe, type: 2}
 --- !u!1 &1546976894749968099
@@ -2689,6 +2698,9 @@ MonoBehaviour:
   slotImage: {fileID: 7283452738443269338}
   slotName: {fileID: 668753695543160562}
   itemType: 4
+  selectedItem: {fileID: 3919997503218070752}
+  isSelected: 0
+  emptySprite: {fileID: -665497218226721020, guid: 6ddd19f288dbbe5439ac47ab6eca4737, type: 3}
 --- !u!1 &1784739740319285871
 GameObject:
   m_ObjectHideFlags: 0
@@ -4108,6 +4120,9 @@ MonoBehaviour:
   slotImage: {fileID: 4259701847138450966}
   slotName: {fileID: 3888911254870205925}
   itemType: 7
+  selectedItem: {fileID: 3206205304376460306}
+  isSelected: 0
+  emptySprite: {fileID: -665497218226721020, guid: 6ddd19f288dbbe5439ac47ab6eca4737, type: 3}
 --- !u!1 &2511654075513006602
 GameObject:
   m_ObjectHideFlags: 0
@@ -5377,7 +5392,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 90, y: 90}
-  m_Spacing: {x: 20, y: 20}
+  m_Spacing: {x: 25, y: 25}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &2963822636522086406
@@ -5594,7 +5609,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 541.69977, y: 509.4}
+  m_AnchoredPosition: {x: 545.5, y: 511.9}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2195942655179830476
@@ -7776,6 +7791,9 @@ MonoBehaviour:
   slotImage: {fileID: 5632352013747062436}
   slotName: {fileID: 3027487347957330830}
   itemType: 5
+  selectedItem: {fileID: 4779358119093730851}
+  isSelected: 0
+  emptySprite: {fileID: -665497218226721020, guid: 6ddd19f288dbbe5439ac47ab6eca4737, type: 3}
 --- !u!1 &4245100949082384333
 GameObject:
   m_ObjectHideFlags: 0
@@ -9651,7 +9669,7 @@ RectTransform:
   m_GameObject: {fileID: 5483151074155567485}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.87618, y: 0.87618, z: 0.87618}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1534386052460564881}
@@ -10685,6 +10703,9 @@ MonoBehaviour:
   slotImage: {fileID: 6548035014839676073}
   slotName: {fileID: 4537915820579528406}
   itemType: 2
+  selectedItem: {fileID: 3239993325230605107}
+  isSelected: 0
+  emptySprite: {fileID: -665497218226721020, guid: 6ddd19f288dbbe5439ac47ab6eca4737, type: 3}
 --- !u!1 &6603525230395323794
 GameObject:
   m_ObjectHideFlags: 0
@@ -12563,6 +12584,9 @@ MonoBehaviour:
   slotImage: {fileID: 6233957781029153504}
   slotName: {fileID: 6898036979710879027}
   itemType: 7
+  selectedItem: {fileID: 8379463403415289629}
+  isSelected: 0
+  emptySprite: {fileID: -665497218226721020, guid: 6ddd19f288dbbe5439ac47ab6eca4737, type: 3}
 --- !u!1 &7443592031598382348
 GameObject:
   m_ObjectHideFlags: 0
@@ -13794,6 +13818,9 @@ MonoBehaviour:
   slotImage: {fileID: 1816015722434971059}
   slotName: {fileID: 3905399887749036885}
   itemType: 3
+  selectedItem: {fileID: 8270096641879553782}
+  isSelected: 0
+  emptySprite: {fileID: -665497218226721020, guid: 6ddd19f288dbbe5439ac47ab6eca4737, type: 3}
 --- !u!1 &8379463403415289629
 GameObject:
   m_ObjectHideFlags: 0
@@ -14100,6 +14127,9 @@ MonoBehaviour:
   slotImage: {fileID: 7393681544751825638}
   slotName: {fileID: 6688395761654248822}
   itemType: 7
+  selectedItem: {fileID: 5742881326968679676}
+  isSelected: 0
+  emptySprite: {fileID: -665497218226721020, guid: 6ddd19f288dbbe5439ac47ab6eca4737, type: 3}
 --- !u!1 &8496216826630002219
 GameObject:
   m_ObjectHideFlags: 0
@@ -14467,6 +14497,9 @@ MonoBehaviour:
   slotImage: {fileID: 3019933758049322192}
   slotName: {fileID: 2623644580492163938}
   itemType: 6
+  selectedItem: {fileID: 5926099172700925709}
+  isSelected: 0
+  emptySprite: {fileID: -665497218226721020, guid: 6ddd19f288dbbe5439ac47ab6eca4737, type: 3}
 --- !u!1 &8844743398592597873
 GameObject:
   m_ObjectHideFlags: 0

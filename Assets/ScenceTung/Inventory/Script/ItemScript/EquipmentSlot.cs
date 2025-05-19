@@ -52,11 +52,9 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         itemImage.sprite = itemSprite;
         //update item description
         this.itemDescription = itemDescription;
-
         //update item quantity
         this.quantity = 1;
         isFull = true;
-
         return 0;
 
 
@@ -68,10 +66,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         {
             OnLeftClick();
         }
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            OnRightClick();
-        }
+       
     }
     private void OnLeftClick()
     {
@@ -128,16 +123,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
 
     private void EmptySlot()
     {
+        isFull = false;
         itemImage.sprite = emptySprite;
-    
     }
-
-    private void OnRightClick()
-    {
-
-    }
-
-
-
-
 }
