@@ -49,7 +49,7 @@ public class DrakonitCameraState : DrakonitState
         characterController.enabled = false; // Vô hiệu hóa CharacterController
         characterController. animator.SetBool("isWalking", false);
         characterController.animator.SetBool("isRunning", false);
-        audioManager.audioSource.PlayOneShot(audioManager.backGroundSound); // phát âm thanh nen
+        audioManager.audioBackGround.enabled = true; // âm thanh nền
         //  Hiện chuột
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;

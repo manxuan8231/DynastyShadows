@@ -3,7 +3,8 @@
 public class DrakonitAudioManager : MonoBehaviour
 {
     public AudioSource audioSource; // Âm thanh của enemy
-    public AudioClip backGroundSound; // Âm thanh nen
+    public AudioSource audioBackGround; // Âm thanh nền
+   
     //Am thanh enemy
     public AudioClip attackSound; // Âm thanh tấn công
     public AudioClip roar;// Âm thanh gầm  
@@ -12,6 +13,7 @@ public class DrakonitAudioManager : MonoBehaviour
     public AudioClip SoundRuning; // Âm thanh skill
     void Start()
     {
+        audioBackGround.enabled = false; // Âm thanh nền
         audioSource = GetComponent<AudioSource>();
     }
 
