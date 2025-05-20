@@ -33,36 +33,6 @@ public class ItemSO : ScriptableObject
             }
               
         }
-        if(statToChange == StatToChange.stamina)
-        {
-            PlayerStatus playerStatus = GameObject.Find("ItemCanUsing").GetComponent<PlayerStatus>();
-            if(playerStatus.currentHp == playerStatus.maxHp)
-            {
-                Debug.Log("Máu đầy");
-                return false;
-            }
-            else
-            {
-                playerStatus.AddHealth(amoutToChangeStat);
-                Debug.Log("đã hồi máu " + amoutToChangeStat);
-                return true;
-            }
-        }
-        if (statToChange == StatToChange.mana)
-        {
-            PlayerStatus playerStatus = GameObject.Find("ItemCanUsing").GetComponent<PlayerStatus>();
-            if (playerStatus.currentMana == playerStatus.maxMana)
-            {
-                Debug.Log("mana đã đầy");
-                return false;
-            }
-            else
-            {
-                playerStatus.AddMana(amoutToChangeStat);
-                Debug.Log("đã hồi mana " + amoutToChangeStat);
-                return true;
-            }
-        }
         return false;
     }
   

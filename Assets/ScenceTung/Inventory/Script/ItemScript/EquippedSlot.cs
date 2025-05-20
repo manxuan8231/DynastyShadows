@@ -38,18 +38,19 @@ public class EquippedSlot : MonoBehaviour,IPointerClickHandler
         inventoryManager = GameObject.Find("CanvasInventory").GetComponent<InventoryManager>();
         
     }
-    public void EquipGear(Sprite itemSprite,string itemName,string itemDescription)
+    public void EquipGear(string itemName, Sprite itemSprite,string itemDescription)
     {
         //nếu đã trang bị item mà muốn trang bị item khác thì bỏ trang bị item cũ
         if (slotIsUse)
         {
             UnEquipGearn();
         }
-        if (itemSprite == emptySprite || string.IsNullOrEmpty(itemName))
-            return; // Không trang bị nếu là rỗng
+
+
+
         //update image
         this.itemSprite = itemSprite;   
-        slotImage.sprite = this.itemSprite;
+        slotImage.sprite = itemSprite;
         slotName.enabled = false;
 
 
@@ -90,20 +91,13 @@ public class EquippedSlot : MonoBehaviour,IPointerClickHandler
 
     public void UnEquipGearn()
     {
-        if (!slotIsUse || !isSelected) return; // tránh gọi nhầm
-
-        // Reset state
-        inventoryManager.AddItem(itemName, 1, itemSprite, itemDescription, itemType);
-
-        slotImage.sprite = emptySprite;
-        itemName = "";
-        itemDescription = "";
-        isSelected = false;
-        selectedItem.SetActive(false);
-        slotIsUse = false;
+        inventoryManager.DeselectedAllSLot();
+        inventoryManager.AddItem(itemName,1 ,itemSprite,itemDescription,itemType);
+        this.itemSprite = emptySprite;
+        slotImage.sprite = this.emptySprite;
         slotName.enabled = true;
-    }
 
+    }
 
     private void OnRightClick()
     {
