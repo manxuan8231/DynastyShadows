@@ -8,19 +8,19 @@ public class EnemyHP3 : MonoBehaviour
     public float currentHealth;
     public float maxHealth = 2000f;
     public GameObject textDame;
+
     //gọi hàm
     Enemy3 enemy3;
-
+    QuestManager questManager; // Tham chiếu đến QuestManager
     void Start()
     {
         currentHealth = maxHealth;
         sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
         enemy3 = GetComponent<Enemy3>(); // <- GÁN Ở ĐÂY
-
+        questManager = FindAnyObjectByType<QuestManager>(); // Lấy tham chiếu đến QuestManager
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
@@ -36,8 +36,6 @@ public class EnemyHP3 : MonoBehaviour
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         sliderHp.value = currentHealth;
-        
-
 
         if (currentHealth > 0)
         {
@@ -47,6 +45,8 @@ public class EnemyHP3 : MonoBehaviour
         }
         else
         {
+            // Gọi hàm cập nhật quest khi quái chết
+            questManager.UpdateQuestBacLam(1); // Cập nhật quest ở đây
             currentHealth = 0;
             enemy3.ChangeState(Enemy3.EnemyState.Death);
             enemy3.agent.isStopped = true; // Dừng lại khi chết
@@ -74,6 +74,8 @@ public class EnemyHP3 : MonoBehaviour
         }
         else
         {
+            // Gọi hàm cập nhật quest khi quái chết
+            questManager.UpdateQuestBacLam(1); // Cập nhật quest ở đây
             currentHealth = 0;
             enemy3.ChangeState(Enemy3.EnemyState.Death);
             enemy3.agent.isStopped = true; // Dừng lại khi chết

@@ -35,5 +35,13 @@ public class MapClickTeleporter : MonoBehaviour, IPointerClickHandler
                 tele.ShowButtonTele();
             }
         }
+        if(Physics.Raycast(ray, out hit))
+        {
+            ThongTinIcon thongTinIcon = hit.collider.GetComponent<ThongTinIcon>();
+            if (thongTinIcon != null)
+            {
+                thongTinIcon.ShowPanelIcon();
+            }
+        }
     }
 }
