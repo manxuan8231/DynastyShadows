@@ -88,42 +88,49 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
     {
        if(itemType == ItemType.head)
         {
-            headSlot.EquipGear(itemName, itemSprite, itemDescription);
+            headSlot.EquipGear(itemSprite, itemName, itemDescription);
         }
         if(itemType == ItemType.body)
         {
-            bodySlot.EquipGear(itemName, itemSprite, itemDescription);
+            bodySlot.EquipGear( itemSprite, itemName, itemDescription);
         }
         if(itemType == ItemType.legs)
         {
-            legsSlot.EquipGear(itemName, itemSprite, itemDescription);
+            legsSlot.EquipGear(itemSprite, itemName, itemDescription);
         }
         if (itemType == ItemType.feet)
         {
-            feetSlot.EquipGear(itemName, itemSprite, itemDescription);
+            feetSlot.EquipGear(itemSprite, itemName, itemDescription);
         }
         if (itemType == ItemType.weapon)
         {
-            weaponSlot.EquipGear(itemName, itemSprite, itemDescription);
+            weaponSlot.EquipGear(itemSprite, itemName, itemDescription);
         }
-        if (itemType == ItemType.Accessory)
+        if (itemType == ItemType.Accessory1)
         {
-            accessorySlot1.EquipGear(itemName, itemSprite, itemDescription);
+            accessorySlot1.EquipGear(itemSprite, itemName, itemDescription);
         }
-        if (itemType == ItemType.Accessory)
+        if (itemType == ItemType.Accessory2)
         {
-            accessorySlot2.EquipGear(itemName, itemSprite, itemDescription);
+            accessorySlot2.EquipGear(itemSprite, itemName, itemDescription);
         }
-        if (itemType == ItemType.Accessory)
+        if (itemType == ItemType.Accessory3)
         {
-            accessorySlot3.EquipGear(itemName, itemSprite, itemDescription);
+            accessorySlot3.EquipGear(itemSprite, itemName, itemDescription);
         }
         EmptySlot();
     }
 
     private void EmptySlot()
     {
-        isFull = false;
+
         itemImage.sprite = emptySprite;
+        itemName = "";
+        itemDescription = "";
+     
+        quantity = 0;
+        isFull = false;
+        isSelected = false;
+        selectedItem.SetActive(false);
     }
 }
