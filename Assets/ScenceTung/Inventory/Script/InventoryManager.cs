@@ -5,7 +5,7 @@ public class InventoryManager : MonoBehaviour
 {
     public GameObject inventoryMenu;
     public GameObject inventoryLogo;
-   
+    private bool isInventoryOpen = false;
     public GameObject equipmentMenu;
     //gọi hàm
     public ItemSlot[] itemSlot; // Array of item slots
@@ -15,13 +15,12 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Inventory"))
-            Inventory();
-        if (Input.GetButtonDown("EquipmentMenu"))
-            EquipmentMenu();
+        if(Input.GetButtonDown("Inventory"))
+           Inventory();
+       
 
     }
-    void Inventory()
+    private void Inventory()
     {
         if (inventoryMenu.activeSelf)
         {
@@ -32,30 +31,30 @@ public class InventoryManager : MonoBehaviour
             inventoryLogo.SetActive(false);
             equipmentMenu.SetActive(false);
         }
-        else
+        else if (Input.GetButtonDown("Inventory") && !isInventoryOpen)
         {
             Time.timeScale = 0f; // Pause the game
             Cursor.lockState = CursorLockMode.None; // Unlock the cursor
             Cursor.visible = true; // Show the cursor
             inventoryMenu.SetActive(true);
             inventoryLogo.SetActive(true);
-            equipmentMenu.SetActive(false);
+            equipmentMenu.SetActive(false); 
         }
     }
-
-    void EquipmentMenu()
+    public void OpenInventory()
     {
-        if (equipmentMenu.activeSelf)
-        {
-            Time.timeScale = 1f; // Resume the game
-            Cursor.lockState = CursorLockMode.Locked; // Lock the cursor
-            Cursor.visible = false; // Hide the cursor
-            inventoryMenu.SetActive(false);
-            inventoryLogo.SetActive(false);
+           Time.timeScale = 0f; // Pause the game
+            Cursor.lockState = CursorLockMode.None; // Unlock the cursor
+            Cursor.visible = true; // Show the cursor
+            inventoryMenu.SetActive(true);
+            inventoryLogo.SetActive(true);
             equipmentMenu.SetActive(false);
-        }
-        else
+    }
+    public void OpenEquipmentMenu()
+    {
+        if (inventoryMenu.activeSelf)
         {
+
             Time.timeScale = 0f; // Pause the game
             Cursor.lockState = CursorLockMode.None; // Unlock the cursor
             Cursor.visible = true; // Show the cursor
@@ -79,6 +78,7 @@ public class InventoryManager : MonoBehaviour
                     if (leftOverItems > 0)
                         leftOverItems = AddItem(itemName, leftOverItems, itemSprite, itemDescription, itemType);
                     return leftOverItems;
+
                 }
             }
             return quantity;
@@ -111,7 +111,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (itemSOs[i].itemName == itemName)
             {
-                Debug.Log("Check đúng tên item");
+                Debug.Log("Check đúng tên item");   
                 bool usable = itemSOs[i].UseItem();
                 return usable;
               
@@ -157,9 +157,7 @@ public enum ItemType
     feet,
     weapon,
     //trang sức
-    Accessory1,
-    Accessory2,
-    Accessory3,
+    Accessory,
     none
 
 }

@@ -88,49 +88,42 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
     {
        if(itemType == ItemType.head)
         {
-            headSlot.EquipGear(itemSprite, itemName, itemDescription);
+            headSlot.EquipGear(itemName, itemSprite, itemDescription);
         }
         if(itemType == ItemType.body)
         {
-            bodySlot.EquipGear( itemSprite, itemName, itemDescription);
+            bodySlot.EquipGear(itemName, itemSprite, itemDescription);
         }
         if(itemType == ItemType.legs)
         {
-            legsSlot.EquipGear(itemSprite, itemName, itemDescription);
+            legsSlot.EquipGear(itemName, itemSprite, itemDescription);
         }
         if (itemType == ItemType.feet)
         {
-            feetSlot.EquipGear(itemSprite, itemName, itemDescription);
+            feetSlot.EquipGear(itemName, itemSprite, itemDescription);
         }
         if (itemType == ItemType.weapon)
         {
-            weaponSlot.EquipGear(itemSprite, itemName, itemDescription);
+            weaponSlot.EquipGear(itemName, itemSprite, itemDescription);
         }
-        if (itemType == ItemType.Accessory1)
+        if (itemType == ItemType.Accessory)
         {
-            accessorySlot1.EquipGear(itemSprite, itemName, itemDescription);
+            accessorySlot1.EquipGear(itemName, itemSprite, itemDescription);
         }
-        if (itemType == ItemType.Accessory2)
+        if (itemType == ItemType.Accessory)
         {
-            accessorySlot2.EquipGear(itemSprite, itemName, itemDescription);
+            accessorySlot2.EquipGear(itemName, itemSprite, itemDescription);
         }
-        if (itemType == ItemType.Accessory3)
+        if (itemType == ItemType.Accessory)
         {
-            accessorySlot3.EquipGear(itemSprite, itemName, itemDescription);
+            accessorySlot3.EquipGear(itemName, itemSprite, itemDescription);
         }
         EmptySlot();
     }
 
     private void EmptySlot()
     {
-
-        itemImage.sprite = emptySprite;
-        itemName = "";
-        itemDescription = "";
-     
-        quantity = 0;
         isFull = false;
-        isSelected = false;
-        selectedItem.SetActive(false);
+        itemImage.sprite = emptySprite;
     }
 }
