@@ -5,6 +5,13 @@ using UnityEngine.UI;
 
 public class PlayerStatus : MonoBehaviour
 {
+
+    //xử lý stat
+    public TMP_Text statHP;
+    public TMP_Text statMana;
+    public TMP_Text statDame;
+    public TMP_Text statCrit;
+    public TMP_Text statCritChance;
     //xử lý máu
     public Slider sliderHp;
     public float currentHp ;
@@ -24,7 +31,7 @@ public class PlayerStatus : MonoBehaviour
     public TextMeshProUGUI textMana;
 
     //xu lý dame
-    public int criticalDamage = 600; // +600% damage khi crit
+    public int criticalDamage = 100; // +600% damage khi crit
     public int criticalChance = 20;  // 20% tỉ lệ crit
     public int baseDamage = 50; // dame aattack mac dinh
     public TextMeshProUGUI textHitDamage;
@@ -34,7 +41,7 @@ public class PlayerStatus : MonoBehaviour
     //xu ly toc do chay
     public float speedRun = 15f;
     public TextMeshProUGUI textSpeed;
-
+  
     //khoi tao
     private Animator animator;
     private AudioSource audioSource;
@@ -73,6 +80,8 @@ public class PlayerStatus : MonoBehaviour
         comboAttack = FindAnyObjectByType<ComboAttack>();
         //tat hieu uung
         effectStun.SetActive(false);
+
+        UpdateUI();
         
        
     }   
@@ -243,5 +252,17 @@ public class PlayerStatus : MonoBehaviour
         playerController.isController = true; // Bật lại điều khiển nhân vật
         animator.SetBool("Stun", false);
         effectStun.SetActive(false);
+    }
+
+
+    //update lại toàn bộ
+    public void UpdateUI()
+    {
+        statHP.text = currentHp.ToString();
+        statMana.text = currentMana.ToString();
+        statDame.text = baseDamage.ToString();
+        statCrit.text = criticalDamage.ToString()+"%";
+        statCritChance.text = criticalChance.ToString()+"%";
+
     }
 }
