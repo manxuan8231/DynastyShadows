@@ -16,6 +16,7 @@ public class QuestManager : MonoBehaviour
     TurnInQuest turnInQuest; // Tham chiếu đến TurnInQuest
     void Start()
     {
+        iconQuest.SetActive(false); // Ẩn icon quest khi bắt đầu
         questPanel.SetActive(false); // Ẩn panel quest khi bắt đầu
         npcScript = FindAnyObjectByType<NPCScript>(); // Lấy tham chiếu đến NPCScript
         turnInQuest = FindAnyObjectByType<TurnInQuest>(); // Lấy tham chiếu đến TurnInQuest

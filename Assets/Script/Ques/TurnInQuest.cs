@@ -133,7 +133,7 @@ public class TurnInQuest : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         //nhan phan thuong
-        questManager.questPanel.SetActive(false); //ần panel quest text
+        questManager.questPanel.SetActive(false); //ần panel quest text la cai ben trai man hinh do
         questManager.iconQuest.SetActive(false); // Ẩn icon quest trên bản đồ
         Debug.Log("Phần thưởng đã nhận");
     }
