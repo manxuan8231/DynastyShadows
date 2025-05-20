@@ -66,8 +66,12 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         {
             OnLeftClick();
         }
-       
+        
+
     }
+
+  
+
     private void OnLeftClick()
     {
         if (isSelected)

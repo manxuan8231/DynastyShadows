@@ -15,25 +15,22 @@ public class ItemSO : ScriptableObject
 
     public bool UseItem()
     {
-
-        if(statToChange == StatToChange.health)
+        if (statToChange == StatToChange.health)
         {
-          
             PlayerStatus playerStatus = GameObject.Find("ItemCanUsing").GetComponent<PlayerStatus>();
-            if(playerStatus.currentHp == playerStatus.maxHp)
+            if (playerStatus.currentHp == playerStatus.maxHp)
             {
-                Debug.Log("máu đã đầy");
+                Debug.Log("Máu đầy");
                 return false;
             }
             else
             {
-                playerStatus.AddHealth(ammoutToChangeAttackState);
+                playerStatus.AddHealth(amoutToChangeStat);
                 Debug.Log("đã hồi máu " + amoutToChangeStat);
                 return true;
             }
-              
         }
-        if(statToChange == StatToChange.stamina)
+        if (statToChange == StatToChange.stamina)
         {
             PlayerStatus playerStatus = GameObject.Find("ItemCanUsing").GetComponent<PlayerStatus>();
             if(playerStatus.currentHp == playerStatus.maxHp)

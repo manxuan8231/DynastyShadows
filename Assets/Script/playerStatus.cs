@@ -82,12 +82,13 @@ public class PlayerStatus : MonoBehaviour
         effectStun.SetActive(false);
 
         UpdateUI();
-        
-       
+
+
     }   
     void Update()
     {      
         RegenerateMana();//hồi mana dần
+        UpdateUI(); // Cập nhật UI mỗi frame
     }
 
     //hp
@@ -263,6 +264,10 @@ public class PlayerStatus : MonoBehaviour
         statDame.text = baseDamage.ToString();
         statCrit.text = criticalDamage.ToString()+"%";
         statCritChance.text = criticalChance.ToString()+"%";
+        
+    
+    
+        
 
     }
 }
