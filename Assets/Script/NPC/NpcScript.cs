@@ -17,16 +17,30 @@ public class NPCScript : MonoBehaviour
     public GameObject buttonF; // Nút F để tương tác với NPC
     private bool isContent = true;
     private bool isButtonF = false; // Kiểm tra trạng thái của nút F
+    //nut skip
+    public GameObject buttonSkip; // Nút Skip
+    private bool isTyping = false; // Đang chạy từng chữ
+    private bool skipPressed = false; // Người chơi đã bấm skip
+    private bool isWaitingForNext = false; // Đang chờ người chơi bấm Skip để qua câu tiếp theo
+
     //tham chieu
     PlayerController playerController; // Tham chiếu đến PlayerController
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack
+    QuestManager questManager; // Tham chiếu đến QuestManager
+
+    AudioSource audioSource; // Tham chiếu đến AudioSource
+
+    public AudioClip audioSkip; // Âm thanh khi bấm skip
     void Start()
     {
         // Lấy tham chiếu đến PlayerController và ComboAttack
+        questManager = FindAnyObjectByType<QuestManager>();
         playerController = FindAnyObjectByType<PlayerController>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
+        audioSource = GetComponent<AudioSource>();
         // Ẩn panel và nút F khi bắt đầu
         NPCPanel.SetActive(false);
+        buttonSkip.SetActive(false);
         buttonF.SetActive(false); // Ẩn nút F khi bắt đầu
         NPCName.text = "";
         NPCContent.text = "";
@@ -35,6 +49,8 @@ public class NPCScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F) && isButtonF)
         {   
+            Cursor.lockState = CursorLockMode.None; // mở chuột
+            Cursor.visible = true; // hiện chuột
             comboAttack.enabled = false; // Vô hiệu hóa ComboAttack
             playerController.isController = false; // Vô hiệu hóa PlayerController
             playerController.animator.SetBool("isWalking", false); // Dừng hoạt động của nhân vật
@@ -73,25 +89,67 @@ public class NPCScript : MonoBehaviour
 
     private IEnumerator ReadContent()
     {
-        // Lặp qua từng câu thoại và tên
+        buttonSkip.SetActive(true); // Hiện nút Skip
+
         for (int i = 0; i < content.Length; i++)
         {
             NPCContent.text = "";
-            NPCName.text = names.Length > i ? names[i] : "Unknown"; // Hiển thị tên hoặc "Unknown" nếu không có tên
+            NPCName.text = names.Length > i ? names[i] : "Unknown";
 
-            foreach (var item in content[i])
+            isTyping = true;
+            skipPressed = false;
+            isWaitingForNext = false;
+
+            foreach (var letter in content[i])
             {
-                NPCContent.text += item;
-                yield return new WaitForSeconds(0.05f); // Tốc độ chạy chữ
+                if (skipPressed)
+                {
+                    NPCContent.text = content[i]; // Hiện toàn bộ nội dung
+                    break;
+                }
+
+                NPCContent.text += letter;
+                yield return new WaitForSeconds(0.05f);
             }
-            yield return new WaitForSeconds(1f); // Thời gian ngừng giữa các câu
+
+            isTyping = false;
+            skipPressed = false;
+            isWaitingForNext = true;
+
+            // Đợi người chơi bấm Skip để qua câu tiếp theo
+            while (!skipPressed)
+            {
+                yield return null;
+            }
+
+            isWaitingForNext = false;
         }
 
-        // Ẩn panel sau khi kết thúc hội thoại
+        // Kết thúc + nhiem vu
+        buttonSkip.SetActive(false);
         NPCPanel.SetActive(false);
-        //
-        playerController.isController = true; // Bật lại PlayerController
-        comboAttack.enabled = true; // Bật lại ComboAttack
+        playerController.isController = true;
+        comboAttack.enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        //nhiệm vụ yêu cầu
+        questManager.StartQuestBacLam();
+    }
+
+
+    public void OnSkipButtonPressed()
+    {
+        audioSource.PlayOneShot(audioSkip); // Phát âm thanh khi bấm skip
+        if (isTyping)
+        {
+            // Bấm Skip trong lúc chữ đang chạy → hiện toàn bộ câu
+            skipPressed = true;
+        }
+        else if (isWaitingForNext)
+        {
+            // Bấm Skip lần 2 → chuyển sang câu tiếp theo
+            skipPressed = true;
+        }
     }
 
     public void EndContent()// Kết thúc hội thoại
@@ -103,4 +161,6 @@ public class NPCScript : MonoBehaviour
             StopCoroutine(coroutine);
         }
     }
+
+   
 }
