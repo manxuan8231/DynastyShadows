@@ -111,7 +111,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (itemSOs[i].itemName == itemName)
             {
-                Debug.Log("Check đúng tên item");   
+                Debug.Log("Check đúng tên item");
                 bool usable = itemSOs[i].UseItem();
                 return usable;
               
