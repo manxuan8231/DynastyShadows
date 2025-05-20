@@ -42,7 +42,7 @@ public class DrakonitChaseState : DrakonitState
             {
                 exitSkillTime = Time.time;
             }
-            if (Time.time >= exitSkillTime + 7f)
+            if (Time.time >= exitSkillTime + 5f)
             {               
                 enemy.ChangeState(new DrakonitSkillState(enemy));
                 return;
@@ -59,13 +59,12 @@ public class DrakonitChaseState : DrakonitState
 
         //target toi player walk random
         
-        if(Time.time >= lastWalkTime + 7f)
+        if(Time.time >= lastWalkTime + 6f)
         {
             int randomWalk = Random.Range(0, 4);
             if (randomWalk == 0)
             {
-                enemy.agent.speed = 4f; // Tăng tốc độ di chuyển của enemy
-              
+                enemy.agent.speed = 4f; // Tăng tốc độ di chuyển của enemy             
                 enemy.StartCoroutine(WaitRunAndWalk()); // Di chuyển đến vị trí của Player
                 enemy.animator.SetBool("WalkingLeft", false);
                 enemy.animator.SetBool("WalkingRight", false);
@@ -148,15 +147,17 @@ public class DrakonitChaseState : DrakonitState
 
    private IEnumerator WaitRunAndWalk()
     {
-       
+       enemy.isWalkRight = false;
+        enemy.isWalkLeft = false;
         enemy.isRunning = true; // Đặt trạng thái isRunning về true
         yield return new  WaitForSeconds(7f);
         enemy.isRunning = false; // Đặt lại trạng thái isRunning về false
-       
+      
     }
     private IEnumerator WaitLeftWalk()
     {
-     
+        enemy.isRunning = false;
+        enemy.isWalkRight = false;
         enemy.isWalkLeft = true; // Đặt trạng thái isRunning về true
         yield return new WaitForSeconds(7f);
         enemy.isWalkLeft = false; // Đặt lại trạng thái isRunning về false
@@ -164,7 +165,8 @@ public class DrakonitChaseState : DrakonitState
     }
     private IEnumerator WaitRightWalk()
     {
-       
+       enemy.isRunning = false;
+        enemy.isWalkLeft = false;
         enemy.isWalkRight = true; // Đặt trạng thái isRunning về true
         yield return new WaitForSeconds(7f);
         enemy.isWalkRight = false; // Đặt lại trạng thái isRunning về false

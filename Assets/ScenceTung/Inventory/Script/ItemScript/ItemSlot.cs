@@ -15,6 +15,7 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
     public GameObject selectedItem;
     public bool isSelected;
     public Sprite emptySprite;
+    public ItemType itemType;
   
     // Item Slot
     [SerializeField]
@@ -42,11 +43,13 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
     }
 
 
-    public int AddItem(string itemName, int quantity, Sprite itemSprite,string itemDescription)
+    public int AddItem(string itemName, int quantity, Sprite itemSprite,string itemDescription,ItemType itemType)
     {
 
         if (isFull )
             return quantity;
+        //update item type
+        this.itemType = itemType;
         //update item name
         this.itemName = itemName;
         //update item image

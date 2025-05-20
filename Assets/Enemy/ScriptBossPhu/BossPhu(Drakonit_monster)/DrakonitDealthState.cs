@@ -21,10 +21,11 @@ public class DrakonitDeathState : DrakonitState
         characterController.enabled = false; // Vô hiệu hóa CharacterController
         characterController.animator.SetBool("isWalking", false);
         characterController.animator.SetBool("isRunning", false);
-        //  //  Hiện chuột
-        audioManager.audioSource.Stop();    
+        // 
+        audioManager.audioBackGround.enabled = false;    
         enemy.agent.isStopped = true;
         enemy.cutScene3.Priority = 20;
+        //  Hiện chuột
         brain = Camera.main.GetComponent<CinemachineBrain>();
         if (brain != null)
         {
@@ -40,7 +41,9 @@ public class DrakonitDeathState : DrakonitState
         enemy.effectHandL.SetActive(false); // tắt hiệu ứng tay trái
         enemy.animator.SetBool("Walking", false); // Dừng animation đi bộ
         enemy.animator.SetBool("Running", false); // Dừng animation chạy
-        enemy.animator.SetBool("Attack", false); // Dừng animation tấn công
+        enemy.animator.SetBool("Attack2", false); // Dừng animation tấn công
+        enemy.animator.SetBool("Attack1", false); // Dừng animation tấn công
+        enemy.animator.SetBool("Attack3", false); // Dừng animation tấn công
         enemy.colliderBox.enabled = false; // Vô hiệu hóa collider
         enemy.agent.isStopped = true; // Dừng di chuyển
 
