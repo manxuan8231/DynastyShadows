@@ -6,14 +6,14 @@ using UnityEngine;
 public class TurnInQuest : MonoBehaviour
 {
     public GameObject NPCPanel; // Panel hiển thị hội thoại
+    public GameObject canvasName3D; //ẩn sau khi hoàn thành nhiệm vụ 
     public TextMeshProUGUI NPCName; // Tên của NPC
     public TextMeshProUGUI NPCContent; // Nội dung hội thoại
-
+    //
     public string[] names; // Danh sách tên (ai đang nói)
     public string[] content; // Nội dung hội thoại
-
+    //
     private Coroutine coroutine; //tieep tục hội thoại
-
     public GameObject buttonF; // Nút F để tương tác với NPC
     public bool isContent = false;
     public bool isButtonF = false; // Kiểm tra trạng thái của nút F
@@ -29,7 +29,6 @@ public class TurnInQuest : MonoBehaviour
     QuestManager questManager; // Tham chiếu đến QuestManager
 
     AudioSource audioSource; // Tham chiếu đến AudioSource
-
     public AudioClip audioSkip; // Âm thanh khi bấm skip
     void Start()
     {
@@ -135,6 +134,7 @@ public class TurnInQuest : MonoBehaviour
         //nhan phan thuong
         questManager.questPanel.SetActive(false); //ần panel quest text la cai ben trai man hinh do
         questManager.iconQuest.SetActive(false); // Ẩn icon quest trên bản đồ
+        canvasName3D.SetActive(false); // Ẩn tên NPC trên bản đồ
         Debug.Log("Phần thưởng đã nhận");
     }
 
