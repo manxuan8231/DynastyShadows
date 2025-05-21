@@ -21,7 +21,7 @@ public class InteractionPlayer : MonoBehaviour
         {
             float randomHealth = Random.Range(500, 2000);
             int randomValueAT = Random.Range(1, 5);
-            playerStatus.AddHealth(randomHealth);
+            playerStatus.BuffHealth(randomHealth);
             itemHealth.AddValueAvatar(randomValueAT);
             //destroy vat pham
             Destroy(other.gameObject);
