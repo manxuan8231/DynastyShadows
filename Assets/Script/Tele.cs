@@ -5,14 +5,16 @@ public class Tele : MonoBehaviour
 {
     public Transform teleportLocation;
     public GameObject loadingPanel; // Gán Panel loading ở đây
+    public GameObject bgClickicon;//bg khi click vào iconmap
 
     OpenMap openMap; // Tham chiếu đến OpenMap script
     PlayerController playerController; // Tham chiếu đến PlayerController script
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack script
 
-    public GameObject panelButtonTele;
+    public GameObject panelButtonTele;// Nút teleport
     void Start()
     {
+        bgClickicon.SetActive(false); // Ẩn hiệu ứng khi click vào iconmap
         playerController = FindAnyObjectByType<PlayerController>(); // Tìm đối tượng PlayerController trong scene
         comboAttack = FindAnyObjectByType<ComboAttack>(); // Tìm đối tượng ComboAttack trong scene
         openMap = FindAnyObjectByType<OpenMap>(); // Tìm đối tượng OpenMap trong scene
@@ -21,7 +23,7 @@ public class Tele : MonoBehaviour
     public void ShowButtonTele()
     {
         panelButtonTele.SetActive(true); // Hiện nút teleport khi click vào map
-        
+        bgClickicon.SetActive(true); // Hiện hiệu ứng khi click vào iconmap
 
     }
     public void TeleportPlayer()
@@ -36,6 +38,7 @@ public class Tele : MonoBehaviour
     public void CancelTeleport()
     {
         panelButtonTele.SetActive(false); // Ẩn nút teleport khi không còn click vào map
+        bgClickicon.SetActive(false); // Ẩn hiệu ứng khi click vào iconmap
     }
     IEnumerator TeleportAfterDelay(GameObject player)
     {

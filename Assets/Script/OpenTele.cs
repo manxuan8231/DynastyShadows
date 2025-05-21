@@ -5,15 +5,16 @@ public class OpenTele : MonoBehaviour
 {
     public GameObject imgTele;         // Panel Teleport
     public GameObject buttonF;      // UI nhấn F
+   
 
     private bool isInRange = false;
     public Collider colliderOpen; // Collider để kiểm tra va chạm
 
     public AudioSource audioSource;
-    // Âm thanh khi nhấn nút F
     public AudioClip soundF; // Âm thanh khi nhấn nút F
     void Start()
     {
+      
         imgTele.SetActive(false);
         buttonF.SetActive(false);
         colliderOpen.enabled = true; // Bật collider để nhận va chạm

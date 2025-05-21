@@ -6,7 +6,7 @@ public class ThongTinIcon : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip clipClick;
 
-    public GameObject clickBG;
+    public GameObject clickBG;//hieu ung khi click vao iconmap
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -21,17 +21,20 @@ public class ThongTinIcon : MonoBehaviour
         {
             panelIcon.SetActive(false); // Ẩn nút teleport khi không còn click vào map
             clickBG.SetActive(false );
+            
         }
     }
     public void ShowPanelIcon()
     {
         panelIcon.SetActive(true); // Hiện nút teleport khi click vào map
         audioSource.PlayOneShot(clipClick);
+        clickBG.SetActive(true); // Hiện hiệu ứng khi click vào iconmap
     }
     public void CancelPanelIcon()
     {
         panelIcon.SetActive(false); // Ẩn nút teleport khi không còn click vào map
-       // audioSource.PlayOneShot(clipClick);
+        clickBG.SetActive(false); // Ẩn hiệu ứng khi click vào iconmap
+                                
     }
 
 }
