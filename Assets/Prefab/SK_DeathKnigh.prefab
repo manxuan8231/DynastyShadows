@@ -26592,7 +26592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectHit: {fileID: 5238538877814813142, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
-  tranFormHit: {fileID: 0}
+  tranFormHit: {fileID: 6092799958948679759, guid: 04cb7c0da45d2264a8424a9f852cd721, type: 3}
   textDame: {fileID: 5085320511852087896, guid: 04cb7c0da45d2264a8424a9f852cd721, type: 3}
   textTransform: {fileID: 7809281616586065608}
 --- !u!1 &1911306825940187802
@@ -58709,7 +58709,7 @@ GameObject:
   - component: {fileID: 502501673485744864}
   - component: {fileID: 3599365684620360543}
   m_Layer: 9
-  m_Name: ItemCanUsing
+  m_Name: Stats
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58742,31 +58742,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1925eff51b4ea54c956cbdc0bd1246a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statHP: {fileID: 8169801371933781526}
+  statMana: {fileID: 8173158132240215300}
+  statDame: {fileID: 1513694584789417692}
+  statCrit: {fileID: 2337220527454036050}
+  statCritChance: {fileID: 8212717650873516120}
   sliderHp: {fileID: 8168992554226792717}
   currentHp: 0
-  maxHp: 2000
+  maxHp: 1000
   textHealth: {fileID: 3338265950309201438}
   sliderManaSkill: {fileID: 9047212935039832784}
   currentManaSkill: 0
-  maxManaSkill: 2000
+  maxManaSkill: 1000
   textManaSkill: {fileID: 3507662114628550300}
   sliderMana: {fileID: 8732129358779751215}
   currentMana: 0
-  maxMana: 2000
+  maxMana: 1000
   textMana: {fileID: 2764574464001080975}
-  criticalDamage: 600
-  criticalChance: 20
-  baseDamage: 50
+  criticalDamage: 100
+  criticalChance: 10
+  baseDamage: 55
   textHitDamage: {fileID: 7941818422517085815}
   textHitChance: {fileID: 6658923745218820963}
   textBaseDamage: {fileID: 2905795137257810610}
   speedRun: 15
   textSpeed: {fileID: 2905795137257810610}
-  hpStat: {fileID: 8169801371933781526}
-  manaStat: {fileID: 8173158132240215300}
-  basicDameStat: {fileID: 1513694584789417692}
-  critStat: {fileID: 2337220527454036050}
-  critChanceStat: {fileID: 8212717650873516120}
   effectStun: {fileID: 388171230543076497}
   audioHit: {fileID: 8300000, guid: e9f5297da35e59044ac28a31c61d9594, type: 3}
   audioStun: {fileID: 0}
@@ -87203,7 +87203,7 @@ MonoBehaviour:
   effectHit: {fileID: 5238538877814813142, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
   tranFormHit: {fileID: 8557626667464426841}
   textDame: {fileID: 5085320511852087896, guid: 04cb7c0da45d2264a8424a9f852cd721, type: 3}
-  textTransform: {fileID: 0}
+  textTransform: {fileID: 6092799958948679759, guid: 04cb7c0da45d2264a8424a9f852cd721, type: 3}
 --- !u!1 &7922285981773455847
 GameObject:
   m_ObjectHideFlags: 0
