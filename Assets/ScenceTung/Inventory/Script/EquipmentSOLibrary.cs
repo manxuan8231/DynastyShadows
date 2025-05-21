@@ -1,6 +1,6 @@
-using UnityEngine;
+    using UnityEngine;
 
-public class EquipmentSOLibrary : MonoBehaviour
-{
-    public EquipmentSO[] EquipmentSOs;
-}
+    public class EquipmentSOLibrary : MonoBehaviour
+    {
+        public EquipmentSO[] EquipmentSOs;
+    }

@@ -18,7 +18,7 @@ public class EquipmentSO : ScriptableObject
     public void EquipItem()
     {
         PlayerStatus playerStatus = GameObject.Find("Stats").GetComponent<PlayerStatus>();
-        playerStatus.currentHp += hp;
+        playerStatus.maxHp += hp;
         playerStatus.sliderHp.maxValue += hp;
         playerStatus.maxMana += mana;
         playerStatus.sliderMana.maxValue += mana;
@@ -32,8 +32,10 @@ public class EquipmentSO : ScriptableObject
     public void UnEquipItem()
     {
         PlayerStatus playerStatus = GameObject.Find("Stats").GetComponent<PlayerStatus>();
-        playerStatus.currentHp -= hp;
+        playerStatus.maxHp -= hp;
+        playerStatus.sliderHp.maxValue -= hp;
         playerStatus.maxMana -= mana;
+        playerStatus.sliderMana.maxValue -= mana;
         playerStatus.baseDamage -= attack;
         playerStatus.criticalDamage -= critDame;
         playerStatus.criticalChance -= critChance;

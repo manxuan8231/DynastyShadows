@@ -12,6 +12,7 @@ public class InventoryManager : MonoBehaviour
     public EquipmentSlot[] equipmentSlot; // Array of equipment slots
     public EquippedSlot[] equippedSlot; // Array of equipped slots
     public ItemSO[] itemSOs;
+  
     // Update is called once per frame
     void Update()
     {
@@ -64,7 +65,7 @@ public class InventoryManager : MonoBehaviour
             equipmentMenu.SetActive(true);
         }
     }
-    public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription,ItemType itemType)
+    public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription,ItemType itemType  )
     {
         if(itemType == ItemType.consumable || itemType == ItemType.crafting)
         {

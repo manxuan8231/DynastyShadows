@@ -16,7 +16,8 @@ public class Item : MonoBehaviour
 
     private InventoryManager inventoryManager;
     public ItemType itemType;
-   
+    
+
 
     void Start()
     {
@@ -36,4 +37,9 @@ public class Item : MonoBehaviour
                 quantity = leftOverItems;
         }
     }
+
+
+
+
+
 }
