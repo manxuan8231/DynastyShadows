@@ -17,7 +17,7 @@ public class ItemSO : ScriptableObject
     {
         if (statToChange == StatToChange.health)
         {
-            PlayerStatus playerStatus = GameObject.Find("ItemCanUsing").GetComponent<PlayerStatus>();
+            PlayerStatus playerStatus = GameObject.Find("Stats").GetComponent<PlayerStatus>();
             if (playerStatus.currentHp == playerStatus.maxHp)
             {
                 Debug.Log("Máu đầy");
@@ -32,7 +32,7 @@ public class ItemSO : ScriptableObject
         }
         if (statToChange == StatToChange.stamina)
         {
-            PlayerStatus playerStatus = GameObject.Find("ItemCanUsing").GetComponent<PlayerStatus>();
+            PlayerStatus playerStatus = GameObject.Find("Stats").GetComponent<PlayerStatus>();
             if(playerStatus.currentHp == playerStatus.maxHp)
             {
                 Debug.Log("Máu đầy");
@@ -47,7 +47,7 @@ public class ItemSO : ScriptableObject
         }
         if (statToChange == StatToChange.mana)
         {
-            PlayerStatus playerStatus = GameObject.Find("ItemCanUsing").GetComponent<PlayerStatus>();
+            PlayerStatus playerStatus = GameObject.Find("Stats").GetComponent<PlayerStatus>();
             if (playerStatus.currentMana == playerStatus.maxMana)
             {
                 Debug.Log("mana đã đầy");

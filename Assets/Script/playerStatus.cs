@@ -264,10 +264,5 @@ public class PlayerStatus : MonoBehaviour
         statDame.text = baseDamage.ToString();
         statCrit.text = criticalDamage.ToString()+"%";
         statCritChance.text = criticalChance.ToString()+"%";
-        
-    
-    
-        
-
     }
 }
