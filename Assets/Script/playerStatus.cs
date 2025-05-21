@@ -12,22 +12,32 @@ public class PlayerStatus : MonoBehaviour
     public TMP_Text statDame;
     public TMP_Text statCrit;
     public TMP_Text statCritChance;
+    //preview item stat
+    [SerializeField]
+    private TMP_Text hpPre, manaPre, damePre, critPre, critChancePre;
+    [SerializeField]
+    private Image previewImage;
+    [SerializeField]
+    private GameObject selectedItemStats;
+    [SerializeField]
+    private GameObject selectedItemImage;
+
     //xử lý máu
     public Slider sliderHp;
     public float currentHp ;
-    public float maxHp = 2000f;
+    public float maxHp ;
     public TextMeshProUGUI textHealth;
 
     //xử lý mana skill
     public Slider sliderManaSkill;
     public float currentManaSkill;
-    public float maxManaSkill = 2000f;
+    public float maxManaSkill ;
     public TextMeshProUGUI textManaSkill;
 
     //xử lý mana
     public Slider sliderMana;
     public float currentMana;
-    public float maxMana = 2000f;
+    public float maxMana ;
     public TextMeshProUGUI textMana;
 
     //xu lý dame
@@ -84,7 +94,35 @@ public class PlayerStatus : MonoBehaviour
         UpdateUI();
 
 
-    }   
+    }
+    //update lại toàn bộ
+    public void UpdateUI()
+    {
+        statHP.text = currentHp.ToString();
+        statMana.text = maxMana.ToString();
+        statDame.text = baseDamage.ToString();
+        statCrit.text = criticalDamage.ToString() + "%";
+        statCritChance.text = criticalChance.ToString() + "%";
+    }
+    //preview stat item
+    public void PreviewEquipmentItem(int hp, int mana,int dame,int crit,int critChance,Sprite itemImage )
+    {
+        hpPre.text = hp.ToString();
+        manaPre.text = mana.ToString();
+        damePre.text = dame.ToString();
+        critPre.text = crit.ToString() + "%";
+        critChancePre.text = critChance.ToString() + "%";
+
+        previewImage.sprite = itemImage;
+        selectedItemImage.SetActive(true);
+        selectedItemStats.SetActive(true);
+    }
+
+    public void TurnOffPreviewStats()
+    {
+        selectedItemImage.SetActive(false);
+        selectedItemStats.SetActive(false);
+    }
     void Update()
     {      
         RegenerateMana();//hồi mana dần
@@ -121,7 +159,7 @@ public class PlayerStatus : MonoBehaviour
 
         }
     }
-    public void AddHealth(float amount)
+    public void BuffHealth(float amount)
     {
         currentHp += amount;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
@@ -147,7 +185,7 @@ public class PlayerStatus : MonoBehaviour
         textManaSkill.text = ((int)currentManaSkill).ToString() + " / " + ((int)maxManaSkill).ToString();
 
     }
-    public void AddManaSkill(float amount)
+    public void BuffManaSkill(float amount)
     {
         currentManaSkill += amount;
         currentManaSkill = Mathf.Clamp(currentManaSkill, 0, maxManaSkill);
@@ -174,7 +212,7 @@ public class PlayerStatus : MonoBehaviour
         textMana.text = ((int)currentMana).ToString() + " / " + ((int)maxMana).ToString();
 
     }
-    public void AddMana(float amount)//hồi mana
+    public void BuffMana(float amount)//hồi mana
     {
         currentMana += amount;
         sliderMana.value = currentMana;
@@ -199,7 +237,7 @@ public class PlayerStatus : MonoBehaviour
         }
         else 
         {
-            AddMana(100 * Time.deltaTime); // cộng dần theo thời gian   
+            BuffMana(100 * Time.deltaTime); // cộng dần theo thời gian   
         }
     }
 
@@ -256,13 +294,5 @@ public class PlayerStatus : MonoBehaviour
     }
 
 
-    //update lại toàn bộ
-    public void UpdateUI()
-    {
-        statHP.text = currentHp.ToString();
-        statMana.text = currentMana.ToString();
-        statDame.text = baseDamage.ToString();
-        statCrit.text = criticalDamage.ToString()+"%";
-        statCritChance.text = criticalChance.ToString()+"%";
-    }
+
 }

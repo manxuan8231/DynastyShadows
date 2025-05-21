@@ -33,10 +33,11 @@ public class EquippedSlot : MonoBehaviour,IPointerClickHandler
     private Sprite emptySprite;
 
     private InventoryManager inventoryManager;
+    private EquipmentSOLibrary equipmentSOLibrary;
     private void Start()
     {
         inventoryManager = GameObject.Find("CanvasInventory").GetComponent<InventoryManager>();
-        
+        equipmentSOLibrary = GameObject.Find("CanvasInventory").GetComponent<EquipmentSOLibrary>();
     }
     public void EquipGear(Sprite itemSprite,string itemName,string itemDescription)
     {
@@ -51,11 +52,17 @@ public class EquippedSlot : MonoBehaviour,IPointerClickHandler
         this.itemSprite = itemSprite;   
         slotImage.sprite = this.itemSprite;
         slotName.enabled = false;
-
-
         //update data
         this.itemName = itemName;
         this.itemDescription = itemDescription;
+        for (int i = 0; i < equipmentSOLibrary.EquipmentSOs.Length; i++)
+        {
+            if (equipmentSOLibrary.EquipmentSOs[i].itemName == itemName)
+            {
+                equipmentSOLibrary.EquipmentSOs[i].EquipItem();
+                break;
+            }
+        }
 
         slotIsUse = true;
 
@@ -84,6 +91,11 @@ public class EquippedSlot : MonoBehaviour,IPointerClickHandler
             inventoryManager.DeselectedAllSLot();
             selectedItem.SetActive(true);
             isSelected = true; 
+            for (int i = 0; i < equipmentSOLibrary.EquipmentSOs.Length; i++)
+            {
+                if (equipmentSOLibrary.EquipmentSOs[i].itemName == this.itemName)
+                    equipmentSOLibrary.EquipmentSOs[i].PreviewEquipment();
+            }
 
         }
     }
@@ -91,7 +103,16 @@ public class EquippedSlot : MonoBehaviour,IPointerClickHandler
     public void UnEquipGearn()
     {
         if (!slotIsUse || !isSelected) return; // tránh gọi nhầm
-
+        for (int i = 0; i < equipmentSOLibrary.EquipmentSOs.Length; i++)
+        {
+            if (equipmentSOLibrary.EquipmentSOs[i].itemName == itemName)
+            {
+                equipmentSOLibrary.EquipmentSOs[i].UnEquipItem();
+                Debug.Log("UnEquip item: " + itemName);
+                break;
+            }
+        }
+        GameObject.Find("Stats").GetComponent<PlayerStatus>().TurnOffPreviewStats();
         // Reset state
         inventoryManager.AddItem(itemName, 1, itemSprite, itemDescription, itemType);
 
@@ -102,6 +123,7 @@ public class EquippedSlot : MonoBehaviour,IPointerClickHandler
         selectedItem.SetActive(false);
         slotIsUse = false;
         slotName.enabled = true;
+       
     }
 
 

@@ -30,10 +30,12 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
 
     //gọi hàm
     private InventoryManager inventoryManager;
+    private EquipmentSOLibrary equipmentSOLibrary;
 
     private void Start()
     {
         inventoryManager = GameObject.Find("CanvasInventory").GetComponent<InventoryManager>();
+        equipmentSOLibrary = GameObject.Find("CanvasInventory").GetComponent<EquipmentSOLibrary>();
 
     }
 
@@ -74,17 +76,31 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
 
     private void OnLeftClick()
     {
-        if (isSelected)
+        if (isFull)
         {
-            EquipGear();
+            if (isSelected)
+            {
+                EquipGear();
+            }
+            else
+            {
+                inventoryManager.DeselectedAllSLot();
+                selectedItem.SetActive(true);
+                isSelected = true;
+                for (int i = 0; i < equipmentSOLibrary.EquipmentSOs.Length; i++)
+                {
+                    if (equipmentSOLibrary.EquipmentSOs[i].itemName == this.itemName)
+                        equipmentSOLibrary.EquipmentSOs[i].PreviewEquipment();
+                }
+
+            }
         }
         else
         {
-            inventoryManager.DeselectedAllSLot();
-            selectedItem.SetActive(true);
-            isSelected = true;
-            
+            GameObject.Find("Stats").GetComponent<PlayerStatus>().TurnOffPreviewStats();
+
         }
+
 
     }
 

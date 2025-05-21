@@ -25,7 +25,7 @@ public class ItemSO : ScriptableObject
             }
             else
             {
-                playerStatus.AddHealth(amoutToChangeStat);
+                playerStatus.BuffHealth(amoutToChangeStat);
                 Debug.Log("đã hồi máu " + amoutToChangeStat);
                 return true;
             }
@@ -40,7 +40,7 @@ public class ItemSO : ScriptableObject
             }
             else
             {
-                playerStatus.AddHealth(amoutToChangeStat);
+                playerStatus.BuffHealth(amoutToChangeStat);
                 Debug.Log("đã hồi máu " + amoutToChangeStat);
                 return true;
             }
@@ -55,7 +55,7 @@ public class ItemSO : ScriptableObject
             }
             else
             {
-                playerStatus.AddMana(amoutToChangeStat);
+                playerStatus.BuffMana(amoutToChangeStat);
                 Debug.Log("đã hồi mana " + amoutToChangeStat);
                 return true;
             }
