@@ -98,7 +98,7 @@ public class PlayerStatus : MonoBehaviour
     //update lại toàn bộ
     public void UpdateUI()
     {
-        statHP.text = currentHp.ToString();
+        statHP.text = maxHp.ToString();
         statMana.text = maxMana.ToString();
         statDame.text = baseDamage.ToString();
         statCrit.text = criticalDamage.ToString() + "%";
