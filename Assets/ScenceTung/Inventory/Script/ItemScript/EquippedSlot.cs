@@ -60,7 +60,7 @@ public class EquippedSlot : MonoBehaviour,IPointerClickHandler
         {
             if (equipmentSOLibrary.EquipmentSOs[i].itemName == itemName)
             {
-
+                
                 equipmentSOLibrary.EquipmentSOs[i].EquipItem();
                 break;
             }
