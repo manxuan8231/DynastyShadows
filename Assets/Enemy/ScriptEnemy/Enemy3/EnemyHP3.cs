@@ -11,14 +11,14 @@ public class EnemyHP3 : MonoBehaviour
 
     //gọi hàm
     Enemy3 enemy3;
-    QuestManager questManager; // Tham chiếu đến QuestManager
+    Quest1 questManager; // Tham chiếu đến QuestManager
     void Start()
     {
         currentHealth = maxHealth;
         sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
         enemy3 = GetComponent<Enemy3>(); // <- GÁN Ở ĐÂY
-        questManager = FindAnyObjectByType<QuestManager>(); // Lấy tham chiếu đến QuestManager
+        questManager = FindAnyObjectByType<Quest1>(); // Lấy tham chiếu đến QuestManager
     }
 
     void Update()

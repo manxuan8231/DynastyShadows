@@ -5713,7 +5713,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669570163472146046}
-  - component: {fileID: 7935487418960558534}
   m_Layer: 0
   m_Name: QuestManager
   m_TagString: Untagged
@@ -5737,22 +5736,6 @@ Transform:
   - {fileID: 3199845133487121964}
   m_Father: {fileID: 3474838433819867865}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7935487418960558534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7243857279423054754}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad551eeb4e841d94d9224e90c0f6e259, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  questPanel: {fileID: 8619297696543075965}
-  questName: {fileID: 8276002137689120129}
-  icon: {fileID: 6614123248539966009}
-  iconQuest: {fileID: 0}
 --- !u!1 &7303070259537187186
 GameObject:
   m_ObjectHideFlags: 0
@@ -6200,7 +6183,6 @@ GameObject:
   - component: {fileID: 7331277179496896174}
   - component: {fileID: 8220553376845728674}
   - component: {fileID: 259310711090731086}
-  - component: {fileID: 1364084032333993485}
   - component: {fileID: 8185420738652942491}
   - component: {fileID: 7015298449947671176}
   - component: {fileID: -5111389184768861142}
@@ -6270,6 +6252,7 @@ MonoBehaviour:
   NPCPanel: {fileID: 3693112263248139156}
   NPCName: {fileID: 6618550182094945510}
   NPCContent: {fileID: 2884749757186581700}
+  questToStart: 0
   names:
   - "B\xE1c L\xE2m"
   - "H\xE0 Nh\xE2n"
@@ -6315,35 +6298,6 @@ MonoBehaviour:
     pha s\u1EB5n \u1EA5m tr\xE0, con v\u1EC1 c\xF2n u\u1ED1ng."
   - "Gi\u1ECFi! \u0110\xFAng l\xE0 con c\u1EE7a b\xE1c c\xF3 kh\xE1c!"
   buttonF: {fileID: 8246100255006152293}
-  buttonSkip: {fileID: 4358048302723244817}
-  audioSkip: {fileID: 8300000, guid: 4cc29975311436d479c3dffd47ea15be, type: 3}
---- !u!114 &1364084032333993485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7954388678387188881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16103a2ddb8e5824087346c5f29470af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NPCPanel: {fileID: 3693112263248139156}
-  canvasName3D: {fileID: 9212168577862997185}
-  NPCName: {fileID: 6618550182094945510}
-  NPCContent: {fileID: 2884749757186581700}
-  names:
-  - "B\xE1c L\xE2m"
-  - "B\xE1c L\xE2m"
-  content:
-  - "B\xE1c c\u1EA3m \u01A1n nhi\u1EC1u. C\u1EE7i gi\u1EDD b\xE1c c\xF3 th\u1EC3
-    gom l\u1EA1i \u0111\u01B0\u1EE3c r\u1ED3i."
-  - "\xC0 \u0111\xE2y, b\xE1c c\xF3 ch\xFAt g\xEC \u0111\xF3 \u0111\u1EC3 c\u1EA3m
-    \u01A1n ch\xE1u."
-  buttonF: {fileID: 8246100255006152293}
-  isContent: 0
-  isButtonF: 0
   buttonSkip: {fileID: 4358048302723244817}
   audioSkip: {fileID: 8300000, guid: 4cc29975311436d479c3dffd47ea15be, type: 3}
 --- !u!65 &8185420738652942491
@@ -7422,11 +7376,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5430195440197693679, guid: 8bf598ef074d83f4cb7118975bedd902, type: 3}
   m_PrefabInstance: {fileID: 5616002445936192629}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &9212168577862997185 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3614207950086371508, guid: 8bf598ef074d83f4cb7118975bedd902, type: 3}
-  m_PrefabInstance: {fileID: 5616002445936192629}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6513405869601478016
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7515,10 +7464,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 259310711090731086}
-    - target: {fileID: 5502947531290254866, guid: 81a9d3d810c663748be0f2d8ad126ed0, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 1364084032333993485}
     - target: {fileID: 5502947531290254866, guid: 81a9d3d810c663748be0f2d8ad126ed0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2

@@ -8,10 +8,12 @@ public class NPCScript : MonoBehaviour
     public GameObject NPCPanel; // Panel hiển thị hội thoại
     public TextMeshProUGUI NPCName; // Tên của NPC
     public TextMeshProUGUI NPCContent; // Nội dung hội thoại
+    public enum QuestToStart { None, BacLam, Village }
+    public QuestToStart questToStart = QuestToStart.None;
+
 
     public string[] names; // Danh sách tên (ai đang nói)
     public string[] content; // Nội dung hội thoại
-
     private Coroutine coroutine; //tieep tục hội thoại
 
     public GameObject buttonF; // Nút F để tương tác với NPC
@@ -26,15 +28,16 @@ public class NPCScript : MonoBehaviour
     //tham chieu
     PlayerController playerController; // Tham chiếu đến PlayerController
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack
-    QuestManager questManager; // Tham chiếu đến QuestManager
+    Quest1 quest1; // Tham chiếu đến QuestManager
+    Quest2 quest2; // Tham chiếu đến QuestManager
 
     AudioSource audioSource; // Tham chiếu đến AudioSource
-
     public AudioClip audioSkip; // Âm thanh khi bấm skip
     void Start()
     {
         // Lấy tham chiếu đến PlayerController và ComboAttack
-        questManager = FindAnyObjectByType<QuestManager>();
+        quest1 = FindAnyObjectByType<Quest1>();
+        quest2 = FindAnyObjectByType<Quest2>();
         playerController = FindAnyObjectByType<PlayerController>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
@@ -132,8 +135,18 @@ public class NPCScript : MonoBehaviour
         comboAttack.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
         //nhiệm vụ yêu cầu
-        questManager.StartQuestBacLam();
+        switch (questToStart)
+        {
+            case QuestToStart.BacLam:
+                quest1.StartQuestBacLam();
+                break;
+            case QuestToStart.Village:
+                quest2.StartQuestVillage();
+                break;
+        }
+
     }
 
 

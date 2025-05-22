@@ -6,11 +6,14 @@ using UnityEngine;
 public class TurnInQuest : MonoBehaviour
 {
     public GameObject NPCPanel; // Panel hiển thị hội thoại
-    public GameObject canvasName3D; //ẩn sau khi hoàn thành nhiệm vụ 
     public TextMeshProUGUI NPCName; // Tên của NPC
     public TextMeshProUGUI NPCContent; // Nội dung hội thoại
+    public GameObject iconMap; // Icon hiển thị trên bản đồ
+    //trang thai
+    public enum QuestToStart { None, BacLam, Village }
+    public QuestToStart questToStart = QuestToStart.None;
     //
-    public string[] names; // Danh sách tên (ai đang nói)
+    public string[] names; // Danh sách tên 
     public string[] content; // Nội dung hội thoại
     //
     private Coroutine coroutine; //tieep tục hội thoại
@@ -26,14 +29,16 @@ public class TurnInQuest : MonoBehaviour
     //tham chieu
     PlayerController playerController; // Tham chiếu đến PlayerController
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack
-    QuestManager questManager; // Tham chiếu đến QuestManager
+    Quest1 quest1; // Tham chiếu đến QuestManager
+    Quest2 quest2; // Tham chiếu đến QuestManager
 
     AudioSource audioSource; // Tham chiếu đến AudioSource
     public AudioClip audioSkip; // Âm thanh khi bấm skip
     void Start()
     {
         // Lấy tham chiếu đến PlayerController và ComboAttack
-        questManager = FindAnyObjectByType<QuestManager>();
+        quest1 = FindAnyObjectByType<Quest1>();
+        quest2 = FindAnyObjectByType<Quest2>();
         playerController = FindAnyObjectByType<PlayerController>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
@@ -131,11 +136,21 @@ public class TurnInQuest : MonoBehaviour
         comboAttack.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        //nhan phan thuong
-        questManager.questPanel.SetActive(false); //ần panel quest text la cai ben trai man hinh do
-        questManager.iconQuest.SetActive(false); // Ẩn icon quest trên bản đồ
-        canvasName3D.SetActive(false); // Ẩn tên NPC trên bản đồ
-        Debug.Log("Phần thưởng đã nhận");
+
+        //
+        switch(questToStart)
+        {
+            case QuestToStart.BacLam:
+                quest1.questPanel.SetActive(false);// Ẩn icon quest trên bản đồ làm nhiệm vụ;
+                quest1.iconQuest.SetActive(false); //ần panel quest text la cai ben trai man hinh 
+                iconMap.SetActive(false); // Ẩn icon quest trên bản đồ
+                Debug.Log("Phần thưởng đã nhận");
+                break;
+            case QuestToStart.Village:
+               
+                break;
+        }
+       
     }
 
 

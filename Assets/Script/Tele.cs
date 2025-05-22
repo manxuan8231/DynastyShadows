@@ -20,14 +20,23 @@ public class Tele : MonoBehaviour
         openMap = FindAnyObjectByType<OpenMap>(); // Tìm đối tượng OpenMap trong scene
         panelButtonTele.SetActive(false); // Ẩn nút teleport khi bắt đầu
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            panelButtonTele.SetActive(false); // Ẩn nút teleport khi không còn click vào map
+            bgClickicon.SetActive(false); // Ẩn hiệu ứng khi click vào iconmap
+        }
+    }
     public void ShowButtonTele()
     {
         panelButtonTele.SetActive(true); // Hiện nút teleport khi click vào map
         bgClickicon.SetActive(true); // Hiện hiệu ứng khi click vào iconmap
-
+        
     }
     public void TeleportPlayer()
     {
+        bgClickicon.SetActive(false); // an hiệu ứng khi click vào iconmap
         panelButtonTele.SetActive(false); // Ẩn nút teleport khi không còn click vào map
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null && teleportLocation != null)

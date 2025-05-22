@@ -10,14 +10,14 @@ public class EnemyHP2 : MonoBehaviour
     public GameObject textDame;
     //gọi hàm
     Enemy2 enemy2;
-
+    KnightD knightD;
     void Start()
     {
         currentHealth = maxHealth;
         sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
         enemy2 = GetComponent<Enemy2>(); // <- GÁN Ở ĐÂY
-
+        knightD = FindAnyObjectByType<KnightD>();
     }
 
     // Update is called once per frame
@@ -52,7 +52,7 @@ public class EnemyHP2 : MonoBehaviour
             currentHealth = 0;
             enemy2.ChangeState(Enemy2.EnemyState.Death);
             enemy2.agent.isStopped = true; // Dừng lại khi chết
-
+            knightD.UpDateQuest2(1); // Cập nhật quest khi enemy chết
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
         }
@@ -80,7 +80,7 @@ public class EnemyHP2 : MonoBehaviour
             currentHealth = 0;
             enemy2.ChangeState(Enemy2.EnemyState.Death);
             enemy2.agent.isStopped = true; // Dừng lại khi chết
-
+            knightD.UpDateQuest2(1); // Cập nhật quest khi enemy chết
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
         }
