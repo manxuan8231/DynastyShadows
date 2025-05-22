@@ -31,7 +31,7 @@ public class Item : MonoBehaviour
         {
             int leftOverItems = inventoryManager.AddItem(itemName , quantity,itemSprite,itemDescription,itemType);
 
-            if (leftOverItems <= 0)
+            if (leftOverItems <= 0)    
                 Destroy(gameObject);
             else
                 quantity = leftOverItems;

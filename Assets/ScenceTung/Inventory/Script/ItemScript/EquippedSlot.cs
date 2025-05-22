@@ -12,9 +12,9 @@ public class EquippedSlot : MonoBehaviour,IPointerClickHandler
 
     [SerializeField]
     private TMP_Text slotName;
-  
+ 
 
- [SerializeField]
+    [SerializeField]
  private ItemType itemType = new ItemType();
 
     private Sprite itemSprite;
@@ -38,6 +38,7 @@ public class EquippedSlot : MonoBehaviour,IPointerClickHandler
     {
         inventoryManager = GameObject.Find("CanvasInventory").GetComponent<InventoryManager>();
         equipmentSOLibrary = GameObject.Find("CanvasInventory").GetComponent<EquipmentSOLibrary>();
+       
     }
     public void EquipGear(Sprite itemSprite,string itemName,string itemDescription)
     {
@@ -59,6 +60,7 @@ public class EquippedSlot : MonoBehaviour,IPointerClickHandler
         {
             if (equipmentSOLibrary.EquipmentSOs[i].itemName == itemName)
             {
+
                 equipmentSOLibrary.EquipmentSOs[i].EquipItem();
                 break;
             }

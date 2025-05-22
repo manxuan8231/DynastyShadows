@@ -1,34 +1,71 @@
+﻿using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu]
 public class EquipmentSO : ScriptableObject
 {
-  public string itemName;
-    public int attack,hp,mana,critDame, critChance;
+    
+    public string itemName;
+    
+    // Cho phép random trong khoảng
+    public Vector2Int attackRange;
+    public Vector2Int hpRange;
+    public Vector2Int manaRange;
+    public Vector2Int critDameRange;
+    public Vector2Int critChanceRange;
 
     [SerializeField]
     private Sprite itemSprite;
+    private bool hasGeneratedStats = false;
 
+
+    // Biến lưu chỉ số sau khi random
+    [HideInInspector] public int attack;
+    [HideInInspector] public int hp;
+    [HideInInspector] public int mana;
+    [HideInInspector] public int critDame;
+    [HideInInspector] public int critChance;
+
+    // Gọi hàm này trước khi equip để random stats
+    public void GenerateRandomStats()
+    {
+        attack = Random.Range(attackRange.x, attackRange.y + 1);
+        hp = Random.Range(hpRange.x, hpRange.y + 1);
+        mana = Random.Range(manaRange.x, manaRange.y + 1);
+        critDame = Random.Range(critDameRange.x, critDameRange.y + 1);
+        critChance = Random.Range(critChanceRange.x, critChanceRange.y + 1);
+    }
+    public void ResetStats()
+    {
+        hasGeneratedStats = false;
+    }
     public void PreviewEquipment()
     {
-        GameObject.Find("Stats").GetComponent<PlayerStatus>().
-            PreviewEquipmentItem(hp,mana,attack,critDame,critChance,itemSprite);
-        
+        if (!hasGeneratedStats)
+        {
+            GenerateRandomStats();
+          
+            hasGeneratedStats = true;
+        }
+
+        GameObject.Find("Stats").GetComponent<PlayerStatus>().PreviewEquipmentItem(
+            hp, mana, attack, critDame, critChance, itemSprite);
     }
+
     public void EquipItem()
     {
+        // Equip theo chỉ số đã random
         PlayerStatus playerStatus = GameObject.Find("Stats").GetComponent<PlayerStatus>();
         playerStatus.maxHp += hp;
         playerStatus.sliderHp.maxValue += hp;
         playerStatus.maxMana += mana;
         playerStatus.sliderMana.maxValue += mana;
         playerStatus.baseDamage += attack;
-
         playerStatus.criticalDamage += critDame;
         playerStatus.criticalChance += critChance;
-
-
+       
     }
+
     public void UnEquipItem()
     {
         PlayerStatus playerStatus = GameObject.Find("Stats").GetComponent<PlayerStatus>();
@@ -39,5 +76,18 @@ public class EquipmentSO : ScriptableObject
         playerStatus.baseDamage -= attack;
         playerStatus.criticalDamage -= critDame;
         playerStatus.criticalChance -= critChance;
+    }
+    public EquipmentSO CloneAndGenerate()
+    {
+        EquipmentSO clone = CreateInstance<EquipmentSO>();
+        clone.itemName = this.itemName;
+        clone.attackRange = this.attackRange;
+        clone.hpRange = this.hpRange;
+        clone.manaRange = this.manaRange;
+        clone.critDameRange = this.critDameRange;
+        clone.critChanceRange = this.critChanceRange;
+        clone.itemSprite = this.itemSprite;
+        clone.GenerateRandomStats();
+        return clone;
     }
 }
