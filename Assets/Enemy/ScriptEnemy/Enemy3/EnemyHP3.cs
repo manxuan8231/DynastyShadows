@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyHP3 : MonoBehaviour
@@ -8,7 +9,7 @@ public class EnemyHP3 : MonoBehaviour
     public float currentHealth;
     public float maxHealth = 2000f;
     public GameObject textDame;
-
+    public List<ItemDrop> itemDrops = new List<ItemDrop>();
     //gọi hàm
     Enemy3 enemy3;
     QuestManager questManager; // Tham chiếu đến QuestManager
@@ -20,7 +21,21 @@ public class EnemyHP3 : MonoBehaviour
         enemy3 = GetComponent<Enemy3>(); // <- GÁN Ở ĐÂY
         questManager = FindAnyObjectByType<QuestManager>(); // Lấy tham chiếu đến QuestManager
     }
+    public void DropItem()
+    {
+        float rand = Random.Range(0f, 100f); // số ngẫu nhiên từ 0 đến 100
+        float cumulative = 0f;
 
+        foreach (ItemDrop item in itemDrops)
+        {
+            cumulative += item.dropRate;
+            if (rand <= cumulative)
+            {
+                Instantiate(item.itemPrefabs, transform.position + Vector3.up, Quaternion.identity);
+                return;
+            }
+        }
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
@@ -50,7 +65,7 @@ public class EnemyHP3 : MonoBehaviour
             currentHealth = 0;
             enemy3.ChangeState(Enemy3.EnemyState.Death);
             enemy3.agent.isStopped = true; // Dừng lại khi chết
-
+            DropItem();
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
         }
@@ -79,7 +94,7 @@ public class EnemyHP3 : MonoBehaviour
             currentHealth = 0;
             enemy3.ChangeState(Enemy3.EnemyState.Death);
             enemy3.agent.isStopped = true; // Dừng lại khi chết
-
+            DropItem();
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
         }

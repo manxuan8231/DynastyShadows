@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using NUnit.Framework;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyHP4 : MonoBehaviour
@@ -10,8 +12,8 @@ public class EnemyHP4 : MonoBehaviour
 
     //gọi hàm
     Enemy4 enemy4;
-
-    void Start()
+    public List<ItemDrop> itemDrops = new List<ItemDrop>();
+    public void Start()
     {
         currentHealth = maxHealth;
         sliderHp.maxValue = currentHealth;
@@ -28,7 +30,21 @@ public class EnemyHP4 : MonoBehaviour
             TakeDamage(100); // Gọi hàm giảm máu
         }
     }
+    public void DropItem()
+    {
+        float rand = Random.Range(0f, 100f); // số ngẫu nhiên từ 0 đến 100
+        float cumulative = 0f;
 
+        foreach (ItemDrop item in itemDrops)
+        {
+            cumulative += item.dropRate;
+            if (rand <= cumulative)
+            {
+                Instantiate(item.itemPrefabs, transform.position + Vector3.up, Quaternion.identity);
+                return;
+            }
+        }
+    }
     public void TakeDamage(float damage)
     {
         if (enemy4.currentState == Enemy4.EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
@@ -48,7 +64,7 @@ public class EnemyHP4 : MonoBehaviour
             currentHealth = 0;
             enemy4.ChangeState(Enemy4.EnemyState.Death);
             enemy4.agent.isStopped = true; // Dừng lại khi chết
-
+            DropItem();
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
         }
@@ -75,7 +91,7 @@ public class EnemyHP4 : MonoBehaviour
             currentHealth = 0;
             enemy4.ChangeState(Enemy4.EnemyState.Death);
             enemy4.agent.isStopped = true; // Dừng lại khi chết
-
+            DropItem();
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
         }

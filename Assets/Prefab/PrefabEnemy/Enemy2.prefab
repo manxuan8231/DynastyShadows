@@ -14030,6 +14030,7 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 2000
   textDame: {fileID: 0}
+  itemDrops: []
 --- !u!1 &7037351683271971341
 GameObject:
   m_ObjectHideFlags: 0
@@ -15386,6 +15387,13 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 500
   textDame: {fileID: 5085320511852087896, guid: 04cb7c0da45d2264a8424a9f852cd721, type: 3}
+  itemDrops:
+  - itemPrefabs: {fileID: 6949369660476216111, guid: 32900240d43c1d548808760585e16285, type: 3}
+    dropRate: 49
+  - itemPrefabs: {fileID: 3556544607577041345, guid: b926a3568f80fb14caf69d8cb249026c, type: 3}
+    dropRate: 40
+  - itemPrefabs: {fileID: 377432316260766231, guid: 9093a3add1e507e40a293eca4dc4e174, type: 3}
+    dropRate: 20
 --- !u!65 &7829435287722785430
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ public class Item : MonoBehaviour
 
     private InventoryManager inventoryManager;
     public ItemType itemType;
-    
+        
 
 
     void Start()
