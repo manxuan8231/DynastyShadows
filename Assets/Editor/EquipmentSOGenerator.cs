@@ -6,7 +6,7 @@ public class EquipmentSOGeneratorSmart
     [MenuItem("Tools/Generate Equipment Items By Type")]
     public static void GenerateItems()
     {
-        string[] types = { "Head", "Body", "Legs", "Feet", "Weapon" };
+        string[] types = {  "Weapon" };
         string[] rarities = { "Common", "Rare", "Epic", "Legendary", "Special" };
         string path = "Assets/ScenceTung/Inventory/Script/DataEquipItem/";
 
@@ -61,32 +61,6 @@ public class EquipmentSOGeneratorSmart
                         so.attackRange = new Vector2Int(130, 160);
                         so.critDameRange = new Vector2Int(120,130);
                         so.critChanceRange = new Vector2Int(25,30);
-                        break;
-                }
-                break;
-
-            default: // Head, Body, Legs, Feet
-                switch (rarity)
-                {
-                    case "Common":
-                        so.hpRange = new Vector2Int(120, 130);
-                        so.manaRange = new Vector2Int(150, 170);
-                        break;
-                    case "Rare":
-                        so.hpRange = new Vector2Int(130, 170);
-                        so.manaRange = new Vector2Int(170, 180);
-                        break;
-                    case "Epic":
-                        so.hpRange = new Vector2Int(170, 200);
-                        so.manaRange = new Vector2Int(180, 195);
-                        break;
-                    case "Legendary":
-                        so.hpRange = new Vector2Int(210, 250);
-                        so.manaRange = new Vector2Int(200, 220);
-                        break;
-                    case "Special":
-                        so.hpRange = new Vector2Int(260, 350);
-                        so.manaRange = new Vector2Int(230, 270);
                         break;
                 }
                 break;

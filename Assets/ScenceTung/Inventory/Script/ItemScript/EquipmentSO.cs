@@ -35,16 +35,13 @@ public class EquipmentSO : ScriptableObject
         critDame = Random.Range(critDameRange.x, critDameRange.y + 1);
         critChance = Random.Range(critChanceRange.x, critChanceRange.y + 1);
     }
-    public void ResetStats()
-    {
-        hasGeneratedStats = false;
-    }
     public void PreviewEquipment()
     {
         if (!hasGeneratedStats)
         {
-            GenerateRandomStats();
           
+            GenerateRandomStats();
+            Debug.Log(attack + hp + mana + critDame + critChance);
             hasGeneratedStats = true;
         }
 
@@ -77,17 +74,5 @@ public class EquipmentSO : ScriptableObject
         playerStatus.criticalDamage -= critDame;
         playerStatus.criticalChance -= critChance;
     }
-    public EquipmentSO CloneAndGenerate()
-    {
-        EquipmentSO clone = CreateInstance<EquipmentSO>();
-        clone.itemName = this.itemName;
-        clone.attackRange = this.attackRange;
-        clone.hpRange = this.hpRange;
-        clone.manaRange = this.manaRange;
-        clone.critDameRange = this.critDameRange;
-        clone.critChanceRange = this.critChanceRange;
-        clone.itemSprite = this.itemSprite;
-        clone.GenerateRandomStats();
-        return clone;
-    }
+
 }
