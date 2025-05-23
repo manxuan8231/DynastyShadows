@@ -39,12 +39,12 @@ public class QuestPointer : MonoBehaviour
         arrowImage.position = screenPos;
 
         // Tính góc xoay dựa trên hướng nhìn màn hình
-        Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
-        Vector3 direction = screenPos - screenCenter;
+       // Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
+       // Vector3 direction = screenPos - screenCenter;
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         // Xoay mũi tên chỉ về phía target trên màn hình
-        arrowImage.rotation = Quaternion.Euler(0, 0, angle - 90f);
+       // arrowImage.rotation = Quaternion.Euler(0, 0, angle - 90f);
     }
 }

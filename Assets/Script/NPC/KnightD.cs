@@ -89,7 +89,7 @@ public class KnightD : MonoBehaviour
         {
             lastAttackTime = Time.time;
             animator.SetTrigger("Attack");
-            Debug.Log("Tấn công enemy: " + targetEnemy.name);
+          
         }
     }
 

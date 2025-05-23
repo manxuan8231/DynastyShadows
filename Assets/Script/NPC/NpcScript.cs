@@ -62,8 +62,7 @@ public class NPCScript : MonoBehaviour
             NPCPanel.SetActive(true);
             coroutine = StartCoroutine(ReadContent());
             buttonF.SetActive(false); // Ẩn nút F khi bắt đầu hội thoại
-            isButtonF = false; // Đặt trạng thái hội thoại là false
-            isContent = false; // Đặt lại trạng thái hội thoại
+           
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -83,6 +82,12 @@ public class NPCScript : MonoBehaviour
            
             isButtonF = false; // Đặt trạng thái hội thoại là false
             NPCPanel.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked; // mở chuột
+            Cursor.visible = false; // hiện chuột
+            comboAttack.enabled = true; //  ComboAttack
+            playerController.isController = true; //  PlayerController
+            playerController.animator.SetBool("isWalking", true); //  hoạt động của nhân vật
+            playerController.animator.SetBool("isRunning", true); //  hoạt động của nhân vật
             if (coroutine != null)
             {
                 StopCoroutine(coroutine);
@@ -135,7 +140,8 @@ public class NPCScript : MonoBehaviour
         comboAttack.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
+        isButtonF = false; // Đặt trạng thái hội thoại là false
+        isContent = false; // Đặt lại trạng thái hội thoại
         //nhiệm vụ yêu cầu
         switch (questToStart)
         {
