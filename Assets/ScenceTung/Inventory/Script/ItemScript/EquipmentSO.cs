@@ -39,10 +39,10 @@ public class EquipmentSO : ScriptableObject
     {
         if (!hasGeneratedStats)
         {
-          
             GenerateRandomStats();
             Debug.Log(attack + hp + mana + critDame + critChance);
             hasGeneratedStats = true;
+
         }
 
         GameObject.Find("Stats").GetComponent<PlayerStatus>().PreviewEquipmentItem(

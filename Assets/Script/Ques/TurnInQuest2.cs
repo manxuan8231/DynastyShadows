@@ -29,7 +29,7 @@ public class TurnInQuest2 : MonoBehaviour
    
     Quest2 quest2; // Tham chiếu đến QuestManager
 
-    AudioSource audioSource; // Tham chiếu đến AudioSource
+    public AudioSource audioSource; // Tham chiếu đến AudioSource
     public AudioClip audioSkip; // Âm thanh khi bấm skip
     void Start()
     {

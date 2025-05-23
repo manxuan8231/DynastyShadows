@@ -93,7 +93,7 @@ public class KnightD : MonoBehaviour
         }
     }
 
-    public void UpDateQuest2(float amount)
+    public void UpdateKillCount(float amount)
     {
         killEnemy += amount;
 

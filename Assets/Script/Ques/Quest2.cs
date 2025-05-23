@@ -30,4 +30,8 @@ public class Quest2 : MonoBehaviour
         questPanel.SetActive(true);
         questNameText.text = "Đến khu đánh cá điều tra về bọ yêu tinh quấy phá";
     }
+    public void UpdateKillCount()
+    {
+        
+    }
 }
