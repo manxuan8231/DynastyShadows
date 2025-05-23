@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using NUnit.Framework;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyHP : MonoBehaviour
@@ -14,8 +16,7 @@ public class EnemyHP : MonoBehaviour
     Enemy1 enemy1;
     //box nhận dame
     public BoxCollider boxDame;
-    public GameObject swordPrefab; // gán prefab có script Item
-
+public List<ItemDrop> itemDrops = new List<ItemDrop>();
     void Start()
     {
         currentHealth = maxHealth;
@@ -42,8 +43,8 @@ public class EnemyHP : MonoBehaviour
         if (currentHealth <= 0)
         {
             enemy1.ChangeState(Enemy1.EnemyState.Death);
-            Instantiate(swordPrefab, transform.position + Vector3.up, Quaternion.identity);
             enemy1.agent.isStopped = true; // Dừng lại khi chết
+            DropItem(); // Gọi hàm rơi đồ
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject, 3f);
             // Tạo expPrefab tại vị trí của enemy
@@ -67,8 +68,8 @@ public class EnemyHP : MonoBehaviour
         if (currentHealth <= 0)
         {
             enemy1.ChangeState(Enemy1.EnemyState.Death);
-            Instantiate(swordPrefab, transform.position + Vector3.up, Quaternion.identity);
             enemy1.agent.isStopped = true; // Dừng lại khi chết
+            DropItem(); // Gọi hàm rơi đồ
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject, 3f);
             // Tạo expPrefab tại vị trí của enemy
@@ -85,8 +86,21 @@ public class EnemyHP : MonoBehaviour
 
        
     }
+    public void DropItem()
+    {
+        float rand = Random.Range(0f, 100f); // số ngẫu nhiên từ 0 đến 100
+        float cumulative = 0f;
 
-   
+        foreach (ItemDrop item in itemDrops)
+        {
+            cumulative += item.dropRate;
+            if (rand <= cumulative)
+            {
+                Instantiate(item.itemPrefabs, transform.position + Vector3.up, Quaternion.identity);
+                return;
+            }
+        }
+    }
 
     void BackToChase()
     {
@@ -103,4 +117,12 @@ public class EnemyHP : MonoBehaviour
             }
         }
     }
+}
+
+[System.Serializable]
+public class  ItemDrop
+{
+    public GameObject itemPrefabs;
+    public float dropRate;
+
 }

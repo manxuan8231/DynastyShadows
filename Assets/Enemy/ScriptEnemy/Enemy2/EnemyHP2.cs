@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using NUnit.Framework;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyHP2 : MonoBehaviour
@@ -10,14 +12,29 @@ public class EnemyHP2 : MonoBehaviour
     public GameObject textDame;
     //gọi hàm
     Enemy2 enemy2;
-    KnightD knightD;
+    public List<ItemDrop> itemDrops = new List<ItemDrop>();
     void Start()
     {
         currentHealth = maxHealth;
         sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
         enemy2 = GetComponent<Enemy2>(); // <- GÁN Ở ĐÂY
-        knightD = FindAnyObjectByType<KnightD>();
+
+    }
+    public void DropItem()
+    {
+        float rand = Random.Range(0f, 100f); // số ngẫu nhiên từ 0 đến 100
+        float cumulative = 0f;
+
+        foreach (ItemDrop item in itemDrops)
+        {
+            cumulative += item.dropRate;
+            if (rand <= cumulative)
+            {
+                Instantiate(item.itemPrefabs, transform.position + Vector3.up, Quaternion.identity);
+                return;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -52,7 +69,8 @@ public class EnemyHP2 : MonoBehaviour
             currentHealth = 0;
             enemy2.ChangeState(Enemy2.EnemyState.Death);
             enemy2.agent.isStopped = true; // Dừng lại khi chết
-            knightD.UpDateQuest2(1); // Cập nhật quest khi enemy chết
+            DropItem();
+
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
         }
@@ -80,7 +98,7 @@ public class EnemyHP2 : MonoBehaviour
             currentHealth = 0;
             enemy2.ChangeState(Enemy2.EnemyState.Death);
             enemy2.agent.isStopped = true; // Dừng lại khi chết
-            knightD.UpDateQuest2(1); // Cập nhật quest khi enemy chết
+            DropItem();
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
         }
@@ -104,3 +122,4 @@ public class EnemyHP2 : MonoBehaviour
         }
     }
 }
+

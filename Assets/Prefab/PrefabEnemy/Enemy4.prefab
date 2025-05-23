@@ -851,6 +851,13 @@ MonoBehaviour:
   sliderHp: {fileID: 1925424607141133662}
   currentHealth: 0
   maxHealth: 500
+  itemDrops:
+  - itemPrefabs: {fileID: 6949369660476216111, guid: 32900240d43c1d548808760585e16285, type: 3}
+    dropRate: 40
+  - itemPrefabs: {fileID: 3556544607577041345, guid: b926a3568f80fb14caf69d8cb249026c, type: 3}
+    dropRate: 40
+  - itemPrefabs: {fileID: 377432316260766231, guid: 9093a3add1e507e40a293eca4dc4e174, type: 3}
+    dropRate: 20
 --- !u!54 &2872073693972590158
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -6845,7 +6845,13 @@ MonoBehaviour:
   maxHealth: 500
   expPrefab: {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
   boxDame: {fileID: 564998064837071077}
-  swordPrefab: {fileID: 0}
+  itemDrops:
+  - itemPrefabs: {fileID: 6949369660476216111, guid: 32900240d43c1d548808760585e16285, type: 3}
+    dropRate: 40
+  - itemPrefabs: {fileID: 3556544607577041345, guid: b926a3568f80fb14caf69d8cb249026c, type: 3}
+    dropRate: 40
+  - itemPrefabs: {fileID: 377432316260766231, guid: 9093a3add1e507e40a293eca4dc4e174, type: 3}
+    dropRate: 20
 --- !u!65 &564998064837071077
 BoxCollider:
   m_ObjectHideFlags: 0

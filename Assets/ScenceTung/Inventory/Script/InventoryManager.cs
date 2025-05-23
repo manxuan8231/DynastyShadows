@@ -12,7 +12,7 @@ public class InventoryManager : MonoBehaviour
     public EquipmentSlot[] equipmentSlot; // Array of equipment slots
     public EquippedSlot[] equippedSlot; // Array of equipped slots
     public ItemSO[] itemSOs;
-  
+
     // Update is called once per frame
     void Update()
     {
