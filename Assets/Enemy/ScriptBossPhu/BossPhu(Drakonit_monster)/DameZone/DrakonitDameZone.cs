@@ -14,7 +14,7 @@ public class DrakonitDameZone : MonoBehaviour
     {
         dameZoneCollider.enabled = false;
        
-        GameObject playerObject = GameObject.Find("ItemCanUsing");
+        GameObject playerObject = GameObject.Find("Stats");
         if (playerObject != null)
         {
             playerStatus = playerObject.GetComponent<PlayerStatus>();          

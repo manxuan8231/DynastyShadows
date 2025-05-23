@@ -28,11 +28,18 @@ public class PlayerStatus : MonoBehaviour
     public float maxHp ;
     public TextMeshProUGUI textHealth;
 
-    //xử lý mana skill
-    public Slider sliderManaSkill;
-    public float currentManaSkill;
-    public float maxManaSkill ;
-    public TextMeshProUGUI textManaSkill;
+    //xu lý exp
+    public Slider expSlider; 
+    public TextMeshProUGUI levelText;
+    public TextMeshProUGUI scoreText;
+    public int currentLevel = 1;        // Cấp hiện tại
+    public float currentExp = 0f;         // EXP hiện tại
+    private float expToNextLevel = 50f;        // EXP yêu cầu để lên cấp tiếp theo
+    public float expIncreasePerLevel = 50f;
+    //score
+    public int score = 0; // Điểm số hiện tại
+    public int scorePerLevel = 2;   // Điểm cộng khi lên cấp 1
+  
 
     //xử lý mana
     public Slider sliderMana;
@@ -53,7 +60,7 @@ public class PlayerStatus : MonoBehaviour
     public TextMeshProUGUI textSpeed;
   
     //khoi tao
-    private Animator animator;
+   
     private AudioSource audioSource;
    
 
@@ -71,20 +78,21 @@ public class PlayerStatus : MonoBehaviour
         sliderHp.maxValue = currentHp;
         textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
 
-        //
-        currentManaSkill = maxManaSkill;
-        sliderManaSkill.maxValue = currentManaSkill;
-        textManaSkill.text = ((int)currentManaSkill).ToString() + " / " + ((int)maxManaSkill).ToString();
-        //
+        //level and score
+        expSlider.maxValue = expToNextLevel;
+        expSlider.value = currentExp;
+        levelText.text = "Level: " + currentLevel;
+        scoreText.text = "Score: " + score;
+        //mana
         currentMana = maxMana;
         sliderMana.maxValue = currentMana;
         textMana.text = ((int)currentMana).ToString() + " / " + ((int)maxMana).ToString();
-        //
+        // 
         textHitDamage.text = $"{criticalDamage}%";
         textHitChance.text = $"{criticalChance}%";
         textBaseDamage.text = $"{baseDamage}";
         //thaam chieu
-        animator = GetComponent<Animator>();
+       
         audioSource = GetComponent<AudioSource>();
         playerController = FindAnyObjectByType<PlayerController>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
@@ -103,6 +111,7 @@ public class PlayerStatus : MonoBehaviour
         statDame.text = baseDamage.ToString();
         statCrit.text = criticalDamage.ToString() + "%";
         statCritChance.text = criticalChance.ToString() + "%";
+
     }
     //preview stat item
     public void PreviewEquipmentItem(int hp, int mana,int dame,int crit,int critChance,Sprite itemImage )
@@ -127,6 +136,7 @@ public class PlayerStatus : MonoBehaviour
     {      
         RegenerateMana();//hồi mana dần
         UpdateUI(); // Cập nhật UI mỗi frame
+       
     }
 
     //hp
@@ -151,7 +161,6 @@ public class PlayerStatus : MonoBehaviour
         sliderHp.value = currentHp;
         textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
         StartCoroutine(WaitStun(4f)); // gọi hàm WaitHit với thời gian 0.5 giây
-
         audioSource.PlayOneShot(audioHit);
         if (currentHp <= 0)
         {
@@ -176,33 +185,6 @@ public class PlayerStatus : MonoBehaviour
 
     }
 
-    //manaskill
-    public void TakeManaSkill(float amount)//bị lấy manaskill
-    {
-        currentManaSkill -= amount;
-        currentManaSkill = Mathf.Clamp(currentManaSkill, 0, maxManaSkill);
-        sliderManaSkill.value = currentManaSkill;
-        textManaSkill.text = ((int)currentManaSkill).ToString() + " / " + ((int)maxManaSkill).ToString();
-
-    }
-    public void BuffManaSkill(float amount)
-    {
-        currentManaSkill += amount;
-        currentManaSkill = Mathf.Clamp(currentManaSkill, 0, maxManaSkill);
-        sliderManaSkill.value = currentManaSkill;
-        textManaSkill.text = ((int)currentManaSkill).ToString() + " / " + ((int)maxManaSkill).ToString();
-
-    }
-
-    public void UpMaxManaSkill(float amount)//tăng giới hạn hp
-    {
-        maxManaSkill += amount;
-        currentManaSkill = Mathf.Clamp(currentManaSkill, 0, maxManaSkill);
-        sliderManaSkill.maxValue = maxManaSkill;
-        textManaSkill.text = ((int)currentManaSkill).ToString() + " / " + ((int)maxManaSkill).ToString();
-
-    }
-
     //mana
     public void TakeMana(float amount)//bị lấy mana
     {
@@ -223,11 +205,44 @@ public class PlayerStatus : MonoBehaviour
     {
         maxMana += amount;
         currentMana = Mathf.Clamp(currentMana, 0, maxMana);
-        sliderMana.maxValue = maxManaSkill;
+        sliderMana.maxValue = maxMana;
         textMana.text = ((int)currentMana).ToString() + " / " + ((int)maxMana).ToString();
 
     }
 
+    // Hàm cộng thêm EXP
+    public void AddExp(float amount)
+    {
+        currentExp += amount;
+
+        if (currentExp >= expToNextLevel)
+        {
+            LevelUp();
+        }
+        //update UI
+        if (expSlider != null)
+        {
+            expSlider.maxValue = expToNextLevel;
+            expSlider.value = currentExp;
+        }
+
+        if (levelText != null)
+        {
+            levelText.text = "Level: " + currentLevel;
+        }
+
+        if (scoreText != null)
+        {
+            scoreText.text = "Score: " + score;
+        }
+    }
+    public void TakeScore(int amount)
+    {
+        score -= amount;
+        score = Mathf.Clamp(score, 0, int.MaxValue);
+        scoreText.text = "Score: " + score;
+
+    }
     //tăng mana dần
     public void RegenerateMana()
     {
@@ -280,7 +295,7 @@ public class PlayerStatus : MonoBehaviour
 
     private IEnumerator WaitStun(float time)
     {
-        animator.SetBool("Stun", true);
+        playerController.animator.SetBool("Stun", true);
         effectStun.SetActive(true);
         playerController.isController = false; // Ngừng điều khiển nhân vật
         comboAttack.isAttack = false; // Ngừng tấn công
@@ -289,8 +304,19 @@ public class PlayerStatus : MonoBehaviour
 
         comboAttack.isAttack = true; // Bật lại tấn công
         playerController.isController = true; // Bật lại điều khiển nhân vật
-        animator.SetBool("Stun", false);
+        playerController.animator.SetBool("Stun", false);
         effectStun.SetActive(false);
+    }
+
+
+    void LevelUp()
+    {
+        currentExp = 0f; // Reset EXP về 0
+        currentLevel++;
+        expToNextLevel += expIncreasePerLevel; // Tăng EXP cần thiết cho cấp sau
+
+        score += scorePerLevel; // Cộng score cố định
+        Debug.Log("Level Up! Now level " + currentLevel + " | Score: " + score);
     }
 
 

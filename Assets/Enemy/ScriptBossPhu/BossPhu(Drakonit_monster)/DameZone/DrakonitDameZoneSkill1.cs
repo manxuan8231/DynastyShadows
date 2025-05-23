@@ -6,7 +6,7 @@ public class DrakonitDameZoneSkill1 : MonoBehaviour
     PlayerStatus playerStatus;
     void Start()
     {
-        GameObject gameObject = GameObject.Find("ItemCanUsing");
+        GameObject gameObject = GameObject.Find("Stats");
         if (gameObject != null)
         {
             playerStatus = gameObject.GetComponent<PlayerStatus>();

@@ -1,10 +1,15 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ItemHealth : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    PlayerStatus playerStatus;
     void Start()
     {
+        GameObject gameObject = GameObject.Find("Stats");
+        if (gameObject != null)
+        {
+            playerStatus = gameObject.GetComponent<PlayerStatus>();
+        }
         
     }
 
@@ -12,5 +17,17 @@ public class ItemHealth : MonoBehaviour
     void Update()
     {
         
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            
+            if (playerStatus != null)
+            {
+                playerStatus.AddExp(100); // Tăng exp cho người chơi
+                Destroy(gameObject); // Xóa item sau khi nhặt
+            }
+        }
     }
 }

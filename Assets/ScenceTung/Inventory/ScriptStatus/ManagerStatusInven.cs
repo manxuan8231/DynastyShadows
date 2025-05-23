@@ -4,13 +4,15 @@ using UnityEngine.Audio;
 
 public class ManagerStatusInven : MonoBehaviour
 {
-
+    public GameObject stats;
+    public GameObject inven;
+    public GameObject evipment;
 
     public AudioSource audioSource;
     public AudioClip clipClick;
 
     //ke thua
-    LevelAvatar levelAvatar;//quan ly avatarlv
+   
     PlayerStatus playerStatus;//quan ly mau mana
 
 
@@ -19,8 +21,8 @@ public class ManagerStatusInven : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
-        levelAvatar = FindAnyObjectByType<LevelAvatar>();
-
+       
+        stats.SetActive(false);
     }
 
 
@@ -28,30 +30,44 @@ public class ManagerStatusInven : MonoBehaviour
     {
 
     }
+    public void Stats()
+    {
+        audioSource.PlayOneShot(clipClick);
+        stats.SetActive(true);
+        inven.SetActive(false);
+        evipment.SetActive(false);
+    }
+    public void ButtonInven()
+    {
+        audioSource.PlayOneShot(clipClick);
+        stats.SetActive(false);
+        inven.SetActive(true);
+        evipment.SetActive(false);
+    }
+    public void ButtonEvipment()
+    {
+        audioSource.PlayOneShot(clipClick);
+        stats.SetActive(false);
+        inven.SetActive(false);
+        evipment.SetActive(true);
+    }
     public void ButtonUpHealth()//up mau
     {
-        if (levelAvatar.score > 0)
+        if (playerStatus.score > 0)
         {
-            levelAvatar.TakeScore(1);
+
+            playerStatus.TakeScore(1);
             audioSource.PlayOneShot(clipClick);
             playerStatus.UpMaxHealth(200);
 
         }
     }
-    public void ButtonUpManaSkill()//upmana
-    {
-        if (levelAvatar.score > 0)
-        {
-            levelAvatar.TakeScore(1);
-            audioSource.PlayOneShot(clipClick);
-            playerStatus.UpMaxManaSkill(200);
-        }
-    }
+   
     public void ButtonUpMana()//up stamina
     {
-        if (levelAvatar.score > 0)
+        if (playerStatus.score > 0)
         {
-            levelAvatar.TakeScore(1);
+            playerStatus.TakeScore(1);
             audioSource.PlayOneShot(clipClick);
             playerStatus.UpMaxMana(200);
         }
@@ -60,9 +76,9 @@ public class ManagerStatusInven : MonoBehaviour
    
     public void UpCriticalHitDamage()//up max dame
     {
-        if (levelAvatar.score > 0)
+        if (playerStatus.score > 0)
         {
-            levelAvatar.TakeScore(1);//tru 1 score
+            playerStatus.TakeScore(1);//tru 1 score
             audioSource.PlayOneShot(clipClick);
             playerStatus.UpCriticalHitDamage(100);
 
@@ -71,9 +87,9 @@ public class ManagerStatusInven : MonoBehaviour
     }
     public void UpCriticalHitChance()//up ty le 
     {
-        if (levelAvatar.score > 0)
+        if (playerStatus.score > 0)
         {
-            levelAvatar.TakeScore(1);//tru 1 score
+            playerStatus.TakeScore(1);//tru 1 score
             audioSource.PlayOneShot(clipClick);
             playerStatus.UpCriticalHitChance(10);
         }
@@ -81,9 +97,9 @@ public class ManagerStatusInven : MonoBehaviour
 
     public void UpBaseDamage()//up dame chinh
     {
-        if (levelAvatar.score > 0)
+        if (playerStatus.score > 0)
         {
-            levelAvatar.TakeScore(1);//tru 1 score
+            playerStatus.TakeScore(1);//tru 1 score
             audioSource.PlayOneShot(clipClick);
             playerStatus.UpBaseDamage(20);
         }
