@@ -10,6 +10,7 @@ public class QuestPointer : MonoBehaviour
     public TextMeshProUGUI distanceText;          // Hiển thị khoảng cách
     public float borderPadding = 50f;             // Viền an toàn màn hình
 
+    public GameObject canvas; // Canvas chứa mũi tên và khoảng cách
     private void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
@@ -36,15 +37,20 @@ public class QuestPointer : MonoBehaviour
         screenPos.y = Mathf.Clamp(screenPos.y, borderPadding, Screen.height - borderPadding);
 
         // Di chuyển mũi tên UI
-        arrowImage.position = screenPos;
-
-        // Tính góc xoay dựa trên hướng nhìn màn hình
-       // Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
-       // Vector3 direction = screenPos - screenCenter;
-
-        //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // Xoay mũi tên chỉ về phía target trên màn hình
-       // arrowImage.rotation = Quaternion.Euler(0, 0, angle - 90f);
+        arrowImage.position = screenPos;     
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            canvas.SetActive(false); // Hiển thị canvas khi người chơi vào vùng trigger
+        }
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            canvas.SetActive(true); // Ẩn canvas khi người chơi ra khỏi vùng trigger
+        }
     }
 }
