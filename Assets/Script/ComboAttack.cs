@@ -13,7 +13,7 @@ public class ComboAttack : MonoBehaviour
     private float nextAttackTime = 0f;
     public bool isAttack = true;
     private float coolDownAttackFly = 0f;
-
+    private bool isFlip=false;
     //effect slash
     [SerializeField] private GameObject effectAttack1;
     //[SerializeField] private GameObject effectAttack2;
@@ -77,6 +77,18 @@ public class ComboAttack : MonoBehaviour
                 comboStep = 0;
             }
         }
+        if(isFlip == true)//
+        {
+            // Tìm và quay về hướng enemy gần nhất
+            GameObject closestEnemy = FindClosestEnemy(30f);
+            if (closestEnemy != null)
+            {
+                Vector3 lookDirection = closestEnemy.transform.position - transform.position;
+                lookDirection.y = 0; // Giữ player không ngẩng lên/ngửa xuống
+                transform.forward = lookDirection.normalized;
+            }
+        }
+       
     }
 
     void OnAttack()
@@ -125,7 +137,9 @@ public class ComboAttack : MonoBehaviour
         }
         animator.SetTrigger("FlyAttack");
     }
-    private GameObject FindClosestEnemy(float range)
+
+    
+    public GameObject FindClosestEnemy(float range)
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         GameObject closest = null;
@@ -216,6 +230,17 @@ public class ComboAttack : MonoBehaviour
     }
     public void EndDameZoneHit()
     {
+       
+    }
+
+    public void StartFlip()
+    {
+        isFlip = true;
+       
+    }
+    public void EndFlip()
+    {
+        isFlip = false;
        
     }
 }

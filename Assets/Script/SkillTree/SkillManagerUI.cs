@@ -18,11 +18,13 @@ public class SkillManagerUI : MonoBehaviour
 
     private GameObject activeVideoCamera = null;
 
+    //tham chieu
+    private PlayerController playerController;
     void Start()
     {
         panelPreview.SetActive(false);
         buttonEquip.gameObject.SetActive(false);
-
+        playerController = FindAnyObjectByType<PlayerController>();
         // Khi bắt đầu, tắt tất cả videoCamera của skill để chắc chắn
         foreach (var skill in skills)
         {
@@ -32,7 +34,13 @@ public class SkillManagerUI : MonoBehaviour
             }
         }
     }
-
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            UseEquippedSkill();
+        }
+    }
     public void PreviewSkill(int index)
     {
         currentSkillIndex = index;
@@ -88,8 +96,7 @@ public class SkillManagerUI : MonoBehaviour
         equippedSlotUI.color = Color.white;
     }
 
-    public Transform skillSpawnPoint; // vi tri
-
+   
     public void UseEquippedSkill()
     {
         if (equippedSkillIndex < 0) return;
@@ -105,20 +112,28 @@ public class SkillManagerUI : MonoBehaviour
                 CastFireball(skill);
                 break;
             default:
-                Debug.Log("No skill effect assigned.");//khong có kỹ năng nào 
+                Debug.Log("khong có kỹ năng nào ");//khong có kỹ năng nào 
                 break;
         }
     }
 
-    private void CastRostbindSoul(SkillData skill)
+  
+    private void CastRostbindSoul(SkillData skill) // skill 1
     {
-        Debug.Log("dong bang ke dich");
-
+        Debug.Log("Bắn kỹ năng đóng băng");
+        playerController.animator.SetTrigger("Skill1");
+        // Tạo đạn từ prefab tại vị trí player với rotation hiện tại
+        GameObject projectile = Instantiate(skill.skillPrefab, skill.spawnPoint.position, skill.spawnPoint.rotation);
+       
     }
+
+
+
     private void CastFireball(SkillData skill)
     {
         Debug.Log("ban cau lua");
 
     }
+
    
 }
