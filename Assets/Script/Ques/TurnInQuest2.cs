@@ -61,8 +61,7 @@ public class TurnInQuest2 : MonoBehaviour
             NPCPanel.SetActive(true);
             coroutine = StartCoroutine(ReadContent());
             buttonF.SetActive(false); // Ẩn nút F khi bắt đầu hội thoại
-            isButtonF = false; // Đặt trạng thái hội thoại là false
-            isContent = false; // Đặt lại trạng thái hội thoại
+          
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -139,6 +138,8 @@ public class TurnInQuest2 : MonoBehaviour
         quest2.questPanel.SetActive(false);// Ẩn icon quest trên bản đồ làm nhiệm vụ;
         quest2.iconQuest.SetActive(false); //ần panel quest text la cai ben trai man hinh 
         iconMap.SetActive(false); // Ẩn icon quest trên bản đồ
+        isButtonF = false; // Đặt trạng thái hội thoại là false
+        isContent = false; // Đặt lại trạng thái hội thoại
         Debug.Log("Phần thưởng đã nhận");
         
     }

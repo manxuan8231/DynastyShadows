@@ -100,9 +100,9 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && velocity.y < 0)
             velocity.y = -2f;
         //
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded && playerStatus.currentMana > 100)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded && playerStatus.currentMana > 50)
         {
-            playerStatus.TakeMana(100);
+            playerStatus.TakeMana(50);
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             audioSource.PlayOneShot(audioJump);
             animator.SetTrigger("jump");

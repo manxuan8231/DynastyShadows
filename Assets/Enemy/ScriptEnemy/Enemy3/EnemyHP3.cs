@@ -60,14 +60,15 @@ public class EnemyHP3 : MonoBehaviour
         }
         else
         {
-            // Gọi hàm cập nhật quest khi quái chết
-            questManager.UpdateQuestBacLam(1); // Cập nhật quest ở đây
+            
             currentHealth = 0;
             enemy3.ChangeState(Enemy3.EnemyState.Death);
             enemy3.agent.isStopped = true; // Dừng lại khi chết
             DropItem();
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
+            // Gọi hàm cập nhật quest khi quái chết
+            questManager.UpdateQuestBacLam(1); return; 
         }
     }
     public void TakeDamageHit(float damage)
@@ -89,14 +90,15 @@ public class EnemyHP3 : MonoBehaviour
         }
         else
         {
-            // Gọi hàm cập nhật quest khi quái chết
-            questManager.UpdateQuestBacLam(1); // Cập nhật quest ở đây
+           
             currentHealth = 0;
             enemy3.ChangeState(Enemy3.EnemyState.Death);
             enemy3.agent.isStopped = true; // Dừng lại khi chết
             DropItem();
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
+            // Gọi hàm cập nhật quest khi quái chết
+            questManager.UpdateQuestBacLam(1); return;
         }
     }
    

@@ -15,6 +15,8 @@ public class KnightD : MonoBehaviour
     public NavMeshAgent agent;
 
     public float killEnemy = 0f;
+
+    private bool isKill = true;
     //tham chieu
     EnemyHP2 enemyHP2;
     TurnInQuest2 turnInQuest2;
@@ -50,9 +52,12 @@ public class KnightD : MonoBehaviour
             StopMoving();
         }
 
-        if (killEnemy >= 4) { 
-           turnInQuest2.isButtonF = true; // Đặt trạng thái hội thoại là true
+        if (killEnemy >= 4 && isKill == true) 
+        {
+          
+            turnInQuest2.isButtonF = true; // Đặt trạng thái hội thoại là true
             turnInQuest2.isContent = true; // Đặt trạng thái hội thoại là true
+            isKill = false; // Đặt lại trạng thái skill
         }
     }
 

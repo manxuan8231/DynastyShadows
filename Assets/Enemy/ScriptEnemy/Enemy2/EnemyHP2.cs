@@ -72,9 +72,10 @@ public class EnemyHP2 : MonoBehaviour
             enemy2.ChangeState(Enemy2.EnemyState.Death);
             enemy2.agent.isStopped = true; // Dừng lại khi chết
             DropItem();
-            knightD.UpdateKillCount(1); // Gọi hàm cập nhật quest
+          
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
+            knightD.UpdateKillCount(1); // Gọi hàm cập nhật quest
         }
     }
     public void TakeDamageHit(float damage)
@@ -101,9 +102,10 @@ public class EnemyHP2 : MonoBehaviour
             enemy2.ChangeState(Enemy2.EnemyState.Death);
             enemy2.agent.isStopped = true; // Dừng lại khi chết
             DropItem();
-            knightD.UpdateKillCount(1); // Gọi hàm cập nhật quest
+           
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
+            knightD.UpdateKillCount(1); // Gọi hàm cập nhật quest
         }
     }
 

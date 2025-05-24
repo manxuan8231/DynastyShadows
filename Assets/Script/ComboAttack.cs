@@ -32,10 +32,8 @@ public class ComboAttack : MonoBehaviour
     //Goi ham
     PlayerStatus playerStatus;
     PlayerController playerController;
+    DameZone dameZone;
 
-    //damezone
-    public BoxCollider boxColliderDameZone;
-    public BoxCollider boxColliderDameZoneHit;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -47,9 +45,8 @@ public class ComboAttack : MonoBehaviour
 
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         playerController = FindAnyObjectByType<PlayerController>();
+        dameZone = FindAnyObjectByType<DameZone>();
 
-        boxColliderDameZone.enabled = false;
-        boxColliderDameZoneHit.enabled = false;
     }
 
     void Update()
@@ -207,18 +204,18 @@ public class ComboAttack : MonoBehaviour
     //damezone box
     public void StartDameZone()
     {
-        boxColliderDameZone.enabled = true;
+       dameZone.beginDame();
     }
     public void EndDameZone()
     {
-        boxColliderDameZone.enabled = false;
+        dameZone.endDame();
     }
     public void StartDameZoneHit()
     {
-        boxColliderDameZoneHit.enabled = true;
+       
     }
     public void EndDameZoneHit()
     {
-        boxColliderDameZoneHit.enabled = false;
+       
     }
 }
