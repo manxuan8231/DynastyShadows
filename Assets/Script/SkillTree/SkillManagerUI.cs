@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using System.Collections;
 
 public class SkillManagerUI : MonoBehaviour
 {
@@ -121,12 +122,17 @@ public class SkillManagerUI : MonoBehaviour
     private void CastRostbindSoul(SkillData skill) // skill 1
     {
         Debug.Log("Bắn kỹ năng đóng băng");
-        playerController.animator.SetTrigger("Skill1");
+        StartCoroutine(WaitRig()); // Bật RigBuilder để có thể chạy animator
         // Tạo đạn từ prefab tại vị trí player với rotation hiện tại
         GameObject projectile = Instantiate(skill.skillPrefab, skill.spawnPoint.position, skill.spawnPoint.rotation);
        
     }
-
+    private IEnumerator WaitRig()
+    {
+        playerController.rigBuilder.enabled = true; // Bật RigBuilder để có thể chayj animator 
+        yield return new WaitForSeconds(0.3f); // Chờ 1 giây
+        playerController.rigBuilder.enabled = false; // Tắt RigBuilder sau khi hoàn thành
+    }
 
 
     private void CastFireball(SkillData skill)

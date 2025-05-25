@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CharacterController controller;
     public Animator animator;
     [SerializeField] private AudioSource audioSource;
-   
+    public RigBuilder rigBuilder;
     [Header("Leo tường -----------------------------")]
     
     //cham dat
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip audioJump;
     [SerializeField] private AudioClip audioRoll;
     [SerializeField] private AudioClip audioMovemen;
+    
     //goi ham
     PlayerStatus playerStatus;
 
@@ -41,6 +43,8 @@ public class PlayerController : MonoBehaviour
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         audioSource = GetComponent<AudioSource>();
         runSpeed = playerStatus.speedRun;// tốc độ chạy
+        rigBuilder = GetComponent<RigBuilder>();
+        rigBuilder.enabled = false; // 
     }
     void Update()
     {
