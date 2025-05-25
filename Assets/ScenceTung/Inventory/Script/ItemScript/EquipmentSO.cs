@@ -75,4 +75,14 @@ public class EquipmentSO : ScriptableObject
         playerStatus.criticalChance -= critChance;
     }
 
+    public void RemovedItem()
+    {
+        // Optionally, reset generated stats and mark as not generated
+        hasGeneratedStats = false;
+        attack = 0;
+        hp = 0;
+        mana = 0;
+        critDame = 0;
+        critChance = 0;
+    }
 }
