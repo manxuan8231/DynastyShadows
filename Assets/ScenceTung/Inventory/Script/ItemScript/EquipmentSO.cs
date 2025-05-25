@@ -46,7 +46,7 @@ public class EquipmentSO : ScriptableObject
         }
 
         GameObject.Find("Stats").GetComponent<PlayerStatus>().PreviewEquipmentItem(
-            hp, mana, attack, critDame, critChance, itemSprite);
+            hp, mana, attack, critDame, critChance, itemSprite,itemName);
     }
 
     public void EquipItem()

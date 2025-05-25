@@ -21,7 +21,7 @@ public class PlayerStatus : MonoBehaviour
     private GameObject selectedItemStats;
     [SerializeField]
     private GameObject selectedItemImage;
-
+    public  TMP_Text itemName;
     //xử lý máu
     public Slider sliderHp;
     public float currentHp ;
@@ -114,7 +114,7 @@ public class PlayerStatus : MonoBehaviour
 
     }
     //preview stat item
-    public void PreviewEquipmentItem(int hp, int mana,int dame,int crit,int critChance,Sprite itemImage )
+    public void PreviewEquipmentItem(int hp, int mana,int dame,int crit,int critChance,Sprite itemImage,string itemName )
     {
         hpPre.text = hp.ToString();
         manaPre.text = mana.ToString();
@@ -123,6 +123,7 @@ public class PlayerStatus : MonoBehaviour
         critChancePre.text = critChance.ToString() + "%";
 
         previewImage.sprite = itemImage;
+       this.itemName.text = itemName;
         selectedItemImage.SetActive(true);
         selectedItemStats.SetActive(true);
     }

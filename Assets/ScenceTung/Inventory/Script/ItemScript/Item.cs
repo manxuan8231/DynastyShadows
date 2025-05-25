@@ -16,13 +16,14 @@ public class Item : MonoBehaviour
 
     private InventoryManager inventoryManager;
     public ItemType itemType;
-        
+    private EquipmentSOLibrary equipmentSOLibrary;
 
 
     void Start()
     {
         inventoryManager = GameObject.Find("CanvasInventory").GetComponent<InventoryManager>();
-      
+        equipmentSOLibrary = GameObject.Find("CanvasInventory").GetComponent<EquipmentSOLibrary>();
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,7 +32,8 @@ public class Item : MonoBehaviour
         {
             int leftOverItems = inventoryManager.AddItem(itemName , quantity,itemSprite,itemDescription,itemType);
 
-            if (leftOverItems <= 0)    
+            if (leftOverItems <= 0)  
+                
                 Destroy(gameObject);
             else
                 quantity = leftOverItems;
