@@ -30,12 +30,13 @@ public class TurnInQuest3 : MonoBehaviour
     PlayerController playerController; // Tham chiếu đến PlayerController
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack
     Quest3 quest3;
+    PlayerStatus playerStatus;
 
     AudioSource audioSource; // Tham chiếu đến AudioSource
     public AudioClip audioSkip; // Âm thanh khi bấm skip
     void Start()
     {
-      
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
         quest3 = FindAnyObjectByType<Quest3>();
         playerController = FindAnyObjectByType<PlayerController>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
@@ -146,6 +147,7 @@ public class TurnInQuest3 : MonoBehaviour
                 quest3.questPanel.SetActive(false);// Ẩn icon quest trên bản đồ làm nhiệm vụ;
                 quest3.iconQuest.SetActive(false); //ần panel quest text la cai ben trai man hinh 
                 quest3.pointerLinhCanh.SetActive(false);
+                playerStatus.AddExp(500); // Thêm kinh nghiệm cho người chơi
                 Debug.Log("Phần thưởng đã nhận");
                 break;
         }
