@@ -68,11 +68,14 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         {
             OnLeftClick();
         }
-        
+         if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            OnRightClick(); // Gọi hàm xóa khi click chuột phải
+        }
 
     }
 
-  
+
 
     private void OnLeftClick()
     {
@@ -92,16 +95,21 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
                     if (equipmentSOLibrary.EquipmentSOs[i].itemName == this.itemName)
                         equipmentSOLibrary.EquipmentSOs[i].PreviewEquipment();
                 }
-
             }
         }
         else
         {
             GameObject.Find("Stats").GetComponent<PlayerStatus>().TurnOffPreviewStats();
-
         }
-
-
+    }
+    private void OnRightClick()
+    {
+        // Khi click chuột phải, xóa item khỏi kho đồ
+        if (isFull)
+        {
+            inventoryManager.RemoveItemFromInventory(itemName); // Gọi phương thức để xóa item
+            EmptySlot(); // Đặt lại slot
+        }
     }
 
     private void EquipGear()
@@ -141,7 +149,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         EmptySlot();
     }
 
-    private void EmptySlot()
+    public void EmptySlot()
     {
 
         itemImage.sprite = emptySprite;

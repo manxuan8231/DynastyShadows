@@ -145,6 +145,28 @@ public class InventoryManager : MonoBehaviour
         }
 
     }
+    public void RemoveItemFromInventory(string itemName)
+    {
+        // Tìm item trong Equipment Slot
+        for (int i = 0; i < equipmentSlot.Length; i++)
+        {
+            if (equipmentSlot[i].itemName == itemName)
+            {
+                equipmentSlot[i].EmptySlot(); // Xóa item khỏi slot
+                return; // Item đã được xóa, không cần tiếp tục vòng lặp
+            }
+        }
+
+        // Nếu item không tìm thấy trong Equipment Slot, tìm và xóa trong Item Slot
+        for (int i = 0; i < itemSlot.Length; i++)
+        {
+            if (itemSlot[i].itemName == itemName)
+            {
+                itemSlot[i].EmptySlot(); // Xóa item khỏi slot
+                return;
+            }
+        }
+    }
 }
 
 

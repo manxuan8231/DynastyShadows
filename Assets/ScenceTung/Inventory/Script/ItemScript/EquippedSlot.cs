@@ -40,36 +40,50 @@ public class EquippedSlot : MonoBehaviour,IPointerClickHandler
         equipmentSOLibrary = GameObject.Find("CanvasInventory").GetComponent<EquipmentSOLibrary>();
        
     }
-    public void EquipGear(Sprite itemSprite,string itemName,string itemDescription)
+    public void EquipGear(Sprite newItemSprite, string newItemName, string newItemDescription)
     {
-        //nếu đã trang bị item mà muốn trang bị item khác thì bỏ trang bị item cũ
+        // Nếu đã có trang bị thì bỏ trang bị cũ trước (và nhớ giữ lại data cũ)
         if (slotIsUse)
         {
-            UnEquipGearn();
+            string oldItemName = itemName;
+            string oldItemDescription = itemDescription;
+            Sprite oldItemSprite = itemSprite;
+
+            // Bỏ trang bị cũ
+            for (int i = 0; i < equipmentSOLibrary.EquipmentSOs.Length; i++)
+            {
+                if (equipmentSOLibrary.EquipmentSOs[i].itemName == oldItemName)
+                {
+                    equipmentSOLibrary.EquipmentSOs[i].UnEquipItem();
+                    break;
+                }
+            }
+
+            inventoryManager.AddItem(oldItemName, 1, oldItemSprite, oldItemDescription, itemType);
         }
-        if (itemSprite == emptySprite || string.IsNullOrEmpty(itemName))
+
+        if (newItemSprite == emptySprite || string.IsNullOrEmpty(newItemName))
             return; // Không trang bị nếu là rỗng
-        //update image
-        this.itemSprite = itemSprite;   
+
+        // update image & data
+        this.itemSprite = newItemSprite;
         slotImage.sprite = this.itemSprite;
         slotName.enabled = false;
-        //update data
-        this.itemName = itemName;
-        this.itemDescription = itemDescription;
+        this.itemName = newItemName;
+        this.itemDescription = newItemDescription;
+
         for (int i = 0; i < equipmentSOLibrary.EquipmentSOs.Length; i++)
         {
-            if (equipmentSOLibrary.EquipmentSOs[i].itemName == itemName)
+            if (equipmentSOLibrary.EquipmentSOs[i].itemName == newItemName)
             {
-                
                 equipmentSOLibrary.EquipmentSOs[i].EquipItem();
                 break;
             }
         }
 
         slotIsUse = true;
-
-
     }
+
 
     public void OnPointerClick(PointerEventData eventData)
     {
