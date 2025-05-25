@@ -13,7 +13,7 @@ public class CastRostbindSoul : MonoBehaviour
     private void Start()
     {
         // Khi skill tạo ra, tìm enemy gần nhất
-        targetEnemy = FindNearestEnemy();
+        targetEnemy = FindNearestEnemy(20);
         if (targetEnemy != null)
         {
             Debug.Log("Target enemy:");
@@ -27,7 +27,7 @@ public class CastRostbindSoul : MonoBehaviour
         }
     }
 
-    private GameObject FindNearestEnemy()
+    private GameObject FindNearestEnemy(float maxRange)
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         GameObject nearest = null;
@@ -37,7 +37,7 @@ public class CastRostbindSoul : MonoBehaviour
         foreach (var enemy in enemies)
         {
             float dist = Vector3.Distance(currentPos, enemy.transform.position);
-            if (dist < minDist)
+            if (dist < minDist && dist <= maxRange)
             {
                 minDist = dist;
                 nearest = enemy;
@@ -45,6 +45,7 @@ public class CastRostbindSoul : MonoBehaviour
         }
         return nearest;
     }
+
 
     private IEnumerator MoveToTarget()
     {
