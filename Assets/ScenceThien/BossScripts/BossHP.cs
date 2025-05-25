@@ -12,6 +12,8 @@ public class BossHP : MonoBehaviour
     private bool isDead = false;
     private bool hasEnteredPhase2 = false;
 
+    //tham chieu
+    Quest3 quest3;
     void Start()
     {
         currentHealth = maxHealth;
@@ -23,6 +25,7 @@ public class BossHP : MonoBehaviour
         }
 
         bossScript = GetComponent<BossScript>();
+        quest3 = FindAnyObjectByType<Quest3>();
     }
 
     void Update()
@@ -89,5 +92,6 @@ public class BossHP : MonoBehaviour
             sliderHp.gameObject.SetActive(false);
 
         Destroy(gameObject, 5f);
+        quest3.UpdateKillOrk(1);
     }
 }

@@ -10,7 +10,7 @@ public class TurnInQuest : MonoBehaviour
     public TextMeshProUGUI NPCContent; // Nội dung hội thoại
     public GameObject iconMap; // Icon hiển thị trên bản đồ
     //trang thai
-    public enum QuestToStart { None, BacLam, Village }
+    public enum QuestToStart { None, BacLam, LinhCanh }
     public QuestToStart questToStart = QuestToStart.None;
     //
     public string[] names; // Danh sách tên 
@@ -146,7 +146,7 @@ public class TurnInQuest : MonoBehaviour
                 iconMap.SetActive(false); // Ẩn icon quest trên bản đồ
                 Debug.Log("Phần thưởng đã nhận");
                 break;
-            case QuestToStart.Village:
+            case QuestToStart.LinhCanh:
                
                 break;
         }

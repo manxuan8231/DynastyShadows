@@ -67,7 +67,7 @@ public class DameZone : MonoBehaviour
                 enemyHP4.TakeDamage(finalDamage);
                 return;
             }
-
+            //boss drakonit
             DrakonitController drakonitController = other.GetComponent<DrakonitController>();
             if (drakonitController != null)
             {
@@ -76,6 +76,16 @@ public class DameZone : MonoBehaviour
                 drakonitController.TakeDame(finalDamage);
                 return;
             }
+            //boss ork
+            BossHP bossHP = other.GetComponent<BossHP>();
+            if(bossHP != null)
+            {
+                listDame.Add(other);
+                ShowTextDame(finalDamage);
+                bossHP.TakeDamage(finalDamage);
+                return;
+            }
+
         }
     }
     private void OnTriggerStay(Collider other)//nếu ontrigger xử lấy ko kịp thì nó dô đây xử lý tiếp
