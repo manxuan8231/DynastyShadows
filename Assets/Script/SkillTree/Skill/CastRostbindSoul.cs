@@ -48,26 +48,27 @@ public class CastRostbindSoul : MonoBehaviour
 
     private IEnumerator MoveToTarget()
     {
-        while (targetEnemy != null && Vector3.Distance(transform.position, targetEnemy.transform.position) > 0.1f)
+        Vector3 targetPos = targetEnemy.transform.position + new Vector3(0f, 2.4f, 0f); // Vị trí ngực
+        while (targetEnemy != null && Vector3.Distance(transform.position, targetPos) > 0.1f)
         {
-            // Di chuyển về phía targetEnemy
-            Vector3 dir = (targetEnemy.transform.position - transform.position).normalized;
+            // Di chuyển thẳng tới vị trí ngực
+            Vector3 dir = (targetPos - transform.position).normalized;
             transform.position += dir * moveSpeed * Time.deltaTime;
+
             yield return null;
         }
 
         if (targetEnemy != null)
         {
-            // Đến nơi rồi mới thực hiện đóng băng
             FreezeEnemy(targetEnemy);
-            // Chờ đợi trong thời gian duration
             yield return new WaitForSeconds(duration);
-            // Bật lại enemy
             UnfreezeEnemy(targetEnemy);
         }
 
         Destroy(gameObject);
     }
+
+
 
     private void FreezeEnemy(GameObject enemy)
     {
@@ -76,7 +77,8 @@ public class CastRostbindSoul : MonoBehaviour
         // Hiệu ứng đóng băng
         if (effectPrefab != null)
         {
-            Instantiate(effectPrefab, enemy.transform.position, Quaternion.identity, enemy.transform);
+            Vector3 instanPos = enemy.transform.position + new Vector3(0f, 2.4f, 0f); // Vị trí ngực
+            Instantiate(effectPrefab, instanPos, Quaternion.identity, enemy.transform);
         }
 
         // Tắt NavMeshAgent
