@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class PlayerStatus : MonoBehaviour
 {
 
+    //xử lý tăng vàng
+    [SerializeField]
+    public TMP_Text goldQuantityTxt;
     //xử lý stat
     public TMP_Text statHP;
     public TMP_Text statMana;
