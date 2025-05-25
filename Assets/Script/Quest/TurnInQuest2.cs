@@ -28,13 +28,14 @@ public class TurnInQuest2 : MonoBehaviour
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack
    
     Quest2 quest2; // Tham chiếu đến QuestManager
+    PlayerStatus playerStatus; // Tham chiếu đến PlayerStatus
 
     public AudioSource audioSource; // Tham chiếu đến AudioSource
     public AudioClip audioSkip; // Âm thanh khi bấm skip
     void Start()
     {
         // Lấy tham chiếu đến PlayerController và ComboAttack
-       
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
         quest2 = FindAnyObjectByType<Quest2>();
         playerController = FindAnyObjectByType<PlayerController>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
@@ -140,6 +141,7 @@ public class TurnInQuest2 : MonoBehaviour
         iconMap.SetActive(false); // Ẩn icon quest trên bản đồ
         isButtonF = false; // Đặt trạng thái hội thoại là false
         isContent = false; // Đặt lại trạng thái hội thoại
+        playerStatus.AddExp(200); // Thêm kinh nghiệm cho người chơi
         Debug.Log("Phần thưởng đã nhận");
         
     }

@@ -31,12 +31,14 @@ public class TurnInQuest : MonoBehaviour
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack
     Quest1 quest1; // Tham chiếu đến QuestManager
     Quest2 quest2; // Tham chiếu đến QuestManager
+    PlayerStatus playerStatus; // Tham chiếu đến PlayerStatus
 
     AudioSource audioSource; // Tham chiếu đến AudioSource
     public AudioClip audioSkip; // Âm thanh khi bấm skip
     void Start()
     {
         // Lấy tham chiếu đến PlayerController và ComboAttack
+        playerStatus = FindAnyObjectByType<PlayerStatus>(); // Lấy tham chiếu đến PlayerStatus
         quest1 = FindAnyObjectByType<Quest1>();
         quest2 = FindAnyObjectByType<Quest2>();
         playerController = FindAnyObjectByType<PlayerController>();
@@ -144,7 +146,9 @@ public class TurnInQuest : MonoBehaviour
                 quest1.questPanel.SetActive(false);// Ẩn icon quest trên bản đồ làm nhiệm vụ;
                 quest1.iconQuest.SetActive(false); //ần panel quest text la cai ben trai man hinh 
                 iconMap.SetActive(false); // Ẩn icon quest trên bản đồ
+                playerStatus.AddExp(100); // Thêm kinh nghiệm cho người chơi
                 Debug.Log("Phần thưởng đã nhận");
+
                 break;
             case QuestToStart.LinhCanh:
                
