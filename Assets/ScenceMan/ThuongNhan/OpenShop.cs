@@ -16,6 +16,7 @@ public class OpenShop : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F)) 
         { 
+            buttonF.SetActive(false); // Ẩn nút F khi nhấn để mở cửa hàng
             shopPanel.SetActive(!shopPanel.activeSelf); // Mở hoặc đóng cửa hàng khi nhấn F
         }
     }

@@ -21,7 +21,7 @@ public class SkillData
 
     //cooldown skill
     public Slider cooldownSkilSlider;
-    public float cooldownSkill;
+    public float cooldownSkill = 10f;
     public float lastTimeSkill  = 0f;
     public bool isSkillCooldown = false;
 
