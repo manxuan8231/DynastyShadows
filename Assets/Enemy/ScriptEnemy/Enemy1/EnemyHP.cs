@@ -17,7 +17,7 @@ public class EnemyHP : MonoBehaviour
     Quest3 quest3;
     //box nhận dame
     public BoxCollider boxDame;
-public List<ItemDrop> itemDrops = new List<ItemDrop>();
+    public List<ItemDrop> itemDrops = new List<ItemDrop>();
     void Start()
     {
         currentHealth = maxHealth;
@@ -43,6 +43,8 @@ public List<ItemDrop> itemDrops = new List<ItemDrop>();
         sliderHp.value = currentHealth;
         if (currentHealth <= 0)
         {
+            enemy1.animator.enabled = true; // Bật animator để có thể chơi animation chết
+            enemy1.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết
             enemy1.ChangeState(Enemy1.EnemyState.Death);
             enemy1.agent.isStopped = true; // Dừng lại khi chết
             DropItem(); // Gọi hàm rơi đồ
@@ -69,12 +71,14 @@ public List<ItemDrop> itemDrops = new List<ItemDrop>();
         sliderHp.value = currentHealth;
         if (currentHealth <= 0)
         {
+            enemy1.animator.enabled = true; // Bật animator để có thể chơi animation chết
+            enemy1.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết
             enemy1.ChangeState(Enemy1.EnemyState.Death);
             enemy1.agent.isStopped = true; // Dừng lại khi chết
             DropItem(); // Gọi hàm rơi đồ
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject, 3f);
-            quest3.UpdateKillEnemy(1);
+            quest3.UpdateKillEnemy(1);//
             // Tạo expPrefab tại vị trí của enemy
 
         }

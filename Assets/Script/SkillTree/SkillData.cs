@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public enum SkillType
 {
@@ -18,8 +19,16 @@ public class SkillData
     public SkillType skillType = SkillType.None;
     public GameObject videoCamera;//video hướng dẫn dùng skil
 
+    //cooldown skill
+    public Slider cooldownSkilSlider;
+    public float cooldownSkill;
+    public float lastTimeSkill  = 0f;
+    public bool isSkillCooldown = false;
+
     //skill 1 dong cung enemy
     public GameObject skillPrefab; // Prefab của kỹ năng
     public Transform spawnPoint; // Vị trí spawn kỹ năng
+
+
 
 }

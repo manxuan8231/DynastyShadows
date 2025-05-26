@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
 using System.Collections;
+using UnityEditor.Experimental.GraphView;
 
 public class SkillManagerUI : MonoBehaviour
 {
@@ -37,10 +38,9 @@ public class SkillManagerUI : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            UseEquippedSkill();
-        }
+      
+        UseEquippedSkill();//quan ly trang thai skill
+       
     }
     public void PreviewSkill(int index)
     {
@@ -103,6 +103,20 @@ public class SkillManagerUI : MonoBehaviour
         if (equippedSkillIndex < 0) return;
 
         SkillData skill = skills[equippedSkillIndex];
+        skill.cooldownSkilSlider.value = 0;
+        // Cập nhật cooldown
+        if (skill.isSkillCooldown)
+        {
+            skill.lastTimeSkill -= Time.deltaTime;
+            skill.cooldownSkilSlider.value = skill.lastTimeSkill;
+
+            if (skill.lastTimeSkill <= 0f)
+            {
+                skill.isSkillCooldown = false;
+                skill.cooldownSkilSlider.gameObject.SetActive(false);
+            }
+            return; // Đang cooldown thì không dùng được kỹ năng
+        }
 
         switch (skill.skillType)
         {
@@ -118,15 +132,31 @@ public class SkillManagerUI : MonoBehaviour
         }
     }
 
-  
-    private void CastRostbindSoul(SkillData skill) // skill 1
+
+    private void CastRostbindSoul(SkillData skill)
     {
-        Debug.Log("Bắn kỹ năng đóng băng");
-        StartCoroutine(WaitRig()); // Bật RigBuilder để có thể chạy animator
-        // Tạo đạn từ prefab tại vị trí player với rotation hiện tại
-        GameObject projectile = Instantiate(skill.skillPrefab, skill.spawnPoint.position, skill.spawnPoint.rotation);
-       
+        if (Input.GetKeyDown(KeyCode.R) && !skill.isSkillCooldown)
+        {
+            Debug.Log("Bắn kỹ năng đóng băng");
+
+            // Tạo hiệu ứng kỹ năng
+            Instantiate(skill.skillPrefab, skill.spawnPoint.position, skill.spawnPoint.rotation);
+            StartCoroutine(WaitRig());
+
+            // Kích hoạt cooldown
+            skill.isSkillCooldown = true;
+            skill.lastTimeSkill = skill.cooldownSkill;
+
+            // Kích hoạt và thiết lập Slider
+            if (skill.cooldownSkilSlider != null)
+            {
+                skill.cooldownSkilSlider.maxValue = skill.cooldownSkill;
+                skill.cooldownSkilSlider.value = skill.cooldownSkill;
+                skill.cooldownSkilSlider.gameObject.SetActive(true);
+            }
+        }
     }
+
     private IEnumerator WaitRig()
     {
         playerController.rigBuilder.enabled = true; // Bật RigBuilder để có thể chayj animator 
@@ -137,9 +167,23 @@ public class SkillManagerUI : MonoBehaviour
 
     private void CastFireball(SkillData skill)
     {
-        Debug.Log("ban cau lua");
+        if (Input.GetKeyDown(KeyCode.R) && !skill.isSkillCooldown)
+        {
+            Debug.Log("Bắn cầu lửa");
 
+          
+            // Kích hoạt cooldown
+            skill.isSkillCooldown = true;
+            skill.lastTimeSkill = skill.cooldownSkill;
+
+            if (skill.cooldownSkilSlider != null)
+            {
+                skill.cooldownSkilSlider.maxValue = skill.cooldownSkill;
+                skill.cooldownSkilSlider.value = skill.cooldownSkill;
+                skill.cooldownSkilSlider.gameObject.SetActive(true);
+            }
+        }
     }
 
-   
+  
 }

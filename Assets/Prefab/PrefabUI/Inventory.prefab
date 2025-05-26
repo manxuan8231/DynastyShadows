@@ -417,6 +417,10 @@ MonoBehaviour:
     isUnlocked: 0
     skillType: 1
     videoCamera: {fileID: 5273891249160775830}
+    cooldownSkilSlider: {fileID: 0}
+    cooldownSkill: 0
+    lastTimeSkill: 0
+    isSkillCooldown: 0
     skillPrefab: {fileID: 2123583566008278770, guid: f859b6c7990f8d34192242458aa77f8b, type: 3}
     spawnPoint: {fileID: 0}
   - skillName: "C\u1EA7u l\u1EEDa"
@@ -424,6 +428,10 @@ MonoBehaviour:
     isUnlocked: 0
     skillType: 2
     videoCamera: {fileID: 4703341008157054820}
+    cooldownSkilSlider: {fileID: 0}
+    cooldownSkill: 0
+    lastTimeSkill: 0
+    isSkillCooldown: 0
     skillPrefab: {fileID: 0}
     spawnPoint: {fileID: 0}
   panelPreview: {fileID: 7781871146976568908}
@@ -431,6 +439,7 @@ MonoBehaviour:
   buttonUnlock: {fileID: 3796455959415915773}
   buttonEquip: {fileID: 9045374804769582916}
   equippedSlotUI: {fileID: 5542579663385846386}
+  equippedSlotUIs: []
 --- !u!1 &95046073633544608
 GameObject:
   m_ObjectHideFlags: 0
@@ -17940,6 +17949,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3887927301792072329}
+  - {fileID: 4215397041625875370}
   m_Father: {fileID: 6460210650548138272}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -39490,7 +39500,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2988823015622397534}
-  - {fileID: 4215397041625875370}
   m_Father: {fileID: 7721561750795542282}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -41405,11 +41414,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6460210650548138272}
+  m_Father: {fileID: 2988823015622397534}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 740.9999, y: -389}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 86.8, y: 85.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3762877006712889194
