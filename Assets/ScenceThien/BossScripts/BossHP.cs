@@ -7,11 +7,12 @@ public class BossHP : MonoBehaviour
     public Slider sliderHp;
     public float currentHealth;
     public float maxHealth = 10000f;
-
+    
     private BossScript bossScript;
     private bool isDead = false;
     private bool hasEnteredPhase2 = false;
 
+    public BossAnimationData bossAnimationData;
     //tham chieu
     Quest3 quest3;
     void Start()
