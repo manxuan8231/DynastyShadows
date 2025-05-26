@@ -16,7 +16,7 @@ public class ShopManager : MonoBehaviour
         for (int i = 0; i < shopItems.Count && i < shopSlots.Length; i++)
         {
             ShopItems shopItem = shopItems[i];
-            shopSlots[i].Initallize(shopItem.itermShopData, shopItem.price);
+            shopSlots[i].Initallize(shopItem.itermShopData, shopItem.price,shopItem.sellPrice);
             shopSlots[i].gameObject.SetActive(true);
 
         }
@@ -33,4 +33,5 @@ public class  ShopItems
 {
     public ItermShopData itermShopData;
     public int price;
+    public int sellPrice;
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 public class GoldItem : MonoBehaviour
 {
     public PlayerStatus status;
-    private int gold=0;
+    
     private void Start()
     {
         status = FindAnyObjectByType<PlayerStatus>();
@@ -14,17 +14,11 @@ public class GoldItem : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            IncreasedGold(10);
+           status. IncreasedGold(10);
             Destroy(gameObject);
            
         }
     }
    
-    public void IncreasedGold(int value)
-    {
-        gold += value;
-       status.goldQuantityTxt.text = value.ToString();
-
-    }
-
+  
 }
