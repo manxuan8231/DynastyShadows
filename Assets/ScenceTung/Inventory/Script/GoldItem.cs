@@ -14,7 +14,7 @@ public class GoldItem : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-           status. IncreasedGold(10);
+           status. IncreasedGold(1000);
             Destroy(gameObject);
            
         }

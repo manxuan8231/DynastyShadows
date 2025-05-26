@@ -1,8 +1,8 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class ShopSlot : MonoBehaviour
+using UnityEngine.EventSystems; 
+public class ShopSlot : MonoBehaviour, IPointerClickHandler
 {
     public ItermShopData itermShopData;
     public TMP_Text itemNameText;
@@ -13,14 +13,13 @@ public class ShopSlot : MonoBehaviour
     private int sellPrice;
     [SerializeField] private PlayerStatus playerStatus;
     [SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private ItemSO[] itemSos;
     
 
-    private void Start()
+private void Start()
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         inventoryManager = FindAnyObjectByType<InventoryManager>();
-
-        
     }
 
     public void Initallize(ItermShopData newSO, int price,int sellPrice)
@@ -49,18 +48,55 @@ public class ShopSlot : MonoBehaviour
                 itermShopData.itemType
             );
 
-            Debug.Log("Đã mua vật phẩm: " + itermShopData.itemName);
+            Debug.Log("đã mua: " + itermShopData.itemName);
         }
         else
         {
-            Debug.Log("Không đủ vàng để mua " + itermShopData.itemName);
+            Debug.Log("mày nghèo vl" + itermShopData.itemName);
         }
     }
-
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+           
+            SellItem();
+        }
+        else if (eventData.button == PointerEventData.InputButton.Left)
+        {
+           
+            BuyItem();
+            Debug.Log("Mua item" + itemNameText);
+        }
+    }
     public void SellItem()
     {
+        for (int i = 0; i < inventoryManager.itemSlot.Length; i++)
+        {
+            var slot = inventoryManager.itemSlot[i];
 
+            if (slot.itemName == itermShopData.itemName && slot.quantity > 0)
+            {
+                playerStatus.gold += sellPrice;
+                playerStatus.goldQuantityTxt.text = playerStatus.gold.ToString();
+
+                slot.quantity--;
+
+                if (slot.quantity <= 0)
+                {
+                    slot.EmptySlot();
+                }
+                else
+                {
+                    Debug.Log("Đã bán 1 " + itermShopData.itemName + " từ slot " + i);
+                }
+
+               
+                return;
+            }
+        }
+
+        Debug.Log("Không còn " + itermShopData.itemName + " trong kho để bán.");
     }
-
 
 }

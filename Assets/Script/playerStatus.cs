@@ -102,7 +102,8 @@ public class PlayerStatus : MonoBehaviour
         comboAttack = FindAnyObjectByType<ComboAttack>();
         //tat hieu uung
         effectStun.SetActive(false);
-
+        // gold
+        goldQuantityTxt.text = gold.ToString();
         UpdateUI();
 
 
@@ -330,6 +331,20 @@ public class PlayerStatus : MonoBehaviour
 
     }
 
+    //hàm buff dame trong vòng 60 giây
+    public void BuffDamage(int value, float duration)
+    {
+        baseDamage += value;
+        textBaseDamage.text = $"{baseDamage}";
+        StartCoroutine(ResetDamageAfterDuration(value, duration));
+    }
+    private IEnumerator ResetDamageAfterDuration(int value, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        baseDamage -= value;
+        textBaseDamage.text = $"{baseDamage}";
+        Debug.Log("Buff damage đã hết hạn.");
+    }
 
 
 }

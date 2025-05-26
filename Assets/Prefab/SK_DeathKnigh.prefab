@@ -624,6 +624,7 @@ MonoBehaviour:
   previewName: {fileID: 8482444194789072595}
   buttonUnlock: {fileID: 3838336328348028889}
   buttonEquip: {fileID: 8965710749573899360}
+  buttonRemove: {fileID: 0}
   equippedSlotUI: {fileID: 5548444429404416342}
 --- !u!1 &112570302692697780
 GameObject:
@@ -84427,7 +84428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goldQuantityTxt: {fileID: 6679175845978015216}
-  gold: 0
+  gold: 400
   statHP: {fileID: 446228391056060498}
   statMana: {fileID: 8391745319439420529}
   statDame: {fileID: 8958255840401493929}
@@ -86451,7 +86452,7 @@ Transform:
   - {fileID: 5283193903979328457}
   - {fileID: 7927588791193312800}
   - {fileID: 8232446911522785364}
-  - {fileID: 5331420018476107462}
+  - {fileID: 5972071904267899454}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4394782127376731178
@@ -148933,7 +148934,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6419684252068982167, guid: 1ef4ac66f54d68244bf32d80fc39a19f, type: 3}
   m_PrefabInstance: {fileID: 3109957683628631491}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3513469123643360006
+--- !u!1001 &3161056410037819390
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -149030,10 +149031,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92696634b63830b4b89750890f1ebaa1, type: 3}
---- !u!224 &5331420018476107462 stripped
+--- !u!224 &5972071904267899454 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8736802750928258496, guid: 92696634b63830b4b89750890f1ebaa1, type: 3}
-  m_PrefabInstance: {fileID: 3513469123643360006}
+  m_PrefabInstance: {fileID: 3161056410037819390}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5116595613711631358
 PrefabInstance:

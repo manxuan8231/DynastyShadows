@@ -19,7 +19,7 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
   
     // Item Slot
     [SerializeField]
-    private TMP_Text quantityText;
+    public TMP_Text quantityText;
 
     [SerializeField]
     private Image itemImage;

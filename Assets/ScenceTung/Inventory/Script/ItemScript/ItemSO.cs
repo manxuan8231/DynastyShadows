@@ -42,6 +42,7 @@ public class ItemSO : ScriptableObject
             {
                 playerStatus.BuffHealth(amoutToChangeStat);
                 Debug.Log("đã hồi máu " + amoutToChangeStat);
+                playerStatus.BuffDamage(amoutToChangeStat,60);
                 return true;
             }
         }
