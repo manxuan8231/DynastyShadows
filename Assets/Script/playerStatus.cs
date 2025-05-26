@@ -9,6 +9,7 @@ public class PlayerStatus : MonoBehaviour
     //xử lý tăng vàng
     [SerializeField]
     public TMP_Text goldQuantityTxt;
+    public int gold = 0; // Số vàng hiện tại
     //xử lý stat
     public TMP_Text statHP;
     public TMP_Text statMana;
@@ -321,6 +322,12 @@ public class PlayerStatus : MonoBehaviour
 
         score += scorePerLevel; // Cộng score cố định
         Debug.Log("Level Up! Now level " + currentLevel + " | Score: " + score);
+    }
+    public void IncreasedGold(int value)
+    {
+        gold += value;
+     goldQuantityTxt.text = value.ToString();
+
     }
 
 
