@@ -39,7 +39,9 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
     private void Start()
     {
         inventoryManager = GameObject.Find("CanvasInventory").GetComponent<InventoryManager>();
-        
+        itemDescriptionNameText.text = "";
+        itemDescriptionText.text = "";
+
     }
 
 
@@ -94,45 +96,64 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
     }
     private void OnLeftClick()
     {
+        // Nếu không có item thì không làm gì cả
+        if (quantity <= 0 || string.IsNullOrEmpty(itemName))
+        {
+            Debug.Log("Slot này đang trống, không làm gì cả");
+            return;
+        }
+
         if (isSelected)
-        { 
-            Debug.Log("Đã chọn trúng tên item" + itemName);
-            
+        {
+            Debug.Log("Đã chọn trúng tên item " + itemName);
+
             bool usable = inventoryManager.UseItem(itemName);
             if (usable)
             {
                 this.quantity -= 1;
-                quantityText.text = this.quantity.ToString();
                 if (this.quantity <= 0)
                 {
                     EmptySlot();
                 }
-            }           
+                else
+                {
+                    quantityText.text = this.quantity.ToString();
+                }
+            }
         }
         else
         {
             inventoryManager.DeselectedAllSLot();
             selectedItem.SetActive(true);
             isSelected = true;
+
             itemDescriptionNameText.text = itemName;
             itemDescriptionText.text = itemDescription;
-            itemDescriptionImage.sprite = itemSprite;
-
-            if (itemDescriptionImage.sprite == null)
-            {
-                itemDescriptionImage.sprite = emptySprite;
-            }
+            itemDescriptionImage.sprite = itemSprite != null ? itemSprite : emptySprite;
         }
-         
+
     }
 
     public void EmptySlot()
     {
         quantityText.enabled = false;
         itemImage.sprite = emptySprite;
+
+        // Reset dữ liệu slot
+        itemName = "";
+        itemSprite = null;
+        itemDescription = "";
+        isFull = false;
+        quantity = 0;
+        itemType = ItemType.none;
+
+        // Reset mô tả và trạng thái chọn
         itemDescriptionNameText.text = "";
         itemDescriptionText.text = "";
         itemDescriptionImage.sprite = emptySprite;
+
+        selectedItem.SetActive(false);  // Tắt viền chọn (nếu có)
+        isSelected = false;
     }
 
     private void OnRightClick()
