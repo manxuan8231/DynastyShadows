@@ -13,6 +13,7 @@ public class EnemyHP3 : MonoBehaviour
     //gọi hàm
     Enemy3 enemy3;
     Quest1 questManager; // Tham chiếu đến QuestManager
+    ThuongNhan thuongNhan; // Tham chiếu đến ThuongNhan
     void Start()
     {
         currentHealth = maxHealth;
@@ -20,6 +21,7 @@ public class EnemyHP3 : MonoBehaviour
         sliderHp.value = currentHealth;
         enemy3 = GetComponent<Enemy3>(); // <- GÁN Ở ĐÂY
         questManager = FindAnyObjectByType<Quest1>(); // Lấy tham chiếu đến QuestManager
+        thuongNhan = FindAnyObjectByType<ThuongNhan>(); // Lấy tham chiếu đến ThuongNhan
     }
     public void DropItem()
     {
@@ -38,10 +40,7 @@ public class EnemyHP3 : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            TakeDamage(100); // Gọi hàm giảm máu
-        }
+      
     }
 
     public void TakeDamage(float damage)
@@ -59,8 +58,7 @@ public class EnemyHP3 : MonoBehaviour
             Invoke(nameof(BackToChase), 0.5f);
         }
         else
-        {
-            
+        {           
             currentHealth = 0;
             enemy3.ChangeState(Enemy3.EnemyState.Death);
             enemy3.agent.isStopped = true; // Dừng lại khi chết
@@ -68,7 +66,8 @@ public class EnemyHP3 : MonoBehaviour
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
             // Gọi hàm cập nhật quest khi quái chết
-            questManager.UpdateQuestBacLam(1); return; 
+            questManager.UpdateQuestBacLam(1);  
+            thuongNhan.UpdateKillEnemy(1); //  Cập nhật số lượng kẻ thù đã tiêu diệt trong quest thuong nhan
         }
     }
     public void TakeDamageHit(float damage)
@@ -98,7 +97,8 @@ public class EnemyHP3 : MonoBehaviour
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
             // Gọi hàm cập nhật quest khi quái chết
-            questManager.UpdateQuestBacLam(1); return;
+            questManager.UpdateQuestBacLam(1);
+            thuongNhan.UpdateKillEnemy(1); // Cập nhật số lượng kẻ thù đã tiêu diệt trong quest thuong nhan
         }
     }
    

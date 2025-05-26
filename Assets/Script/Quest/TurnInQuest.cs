@@ -9,6 +9,8 @@ public class TurnInQuest : MonoBehaviour
     public TextMeshProUGUI NPCName; // Tên của NPC
     public TextMeshProUGUI NPCContent; // Nội dung hội thoại
     public GameObject iconMap; // Icon hiển thị trên bản đồ
+
+    public GameObject questThuongNhan;//làm xong nhiệm vụ của bác lâm thì mới suất hiện thuognw nhân
     //trang thai
     public enum QuestToStart { None, BacLam, LinhCanh }
     public QuestToStart questToStart = QuestToStart.None;
@@ -48,6 +50,7 @@ public class TurnInQuest : MonoBehaviour
         NPCPanel.SetActive(false);
         buttonSkip.SetActive(false);
         buttonF.SetActive(false); // Ẩn nút F khi bắt đầu
+        questThuongNhan.SetActive(false); // Ẩn NPC ThuongNhan khi bắt đầu
         NPCName.text = "";
         NPCContent.text = "";
     }
@@ -147,6 +150,7 @@ public class TurnInQuest : MonoBehaviour
                 quest1.iconQuest.SetActive(false); //ần panel quest text la cai ben trai man hinh 
                 iconMap.SetActive(false); // Ẩn icon quest trên bản đồ
                 playerStatus.AddExp(100); // Thêm kinh nghiệm cho người chơi
+                questThuongNhan.SetActive(true); // Hiện NPC ThuongNhan sau khi hoàn thành nhiệm vụ
                 Debug.Log("Phần thưởng đã nhận");
 
                 break;
