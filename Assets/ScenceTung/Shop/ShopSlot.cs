@@ -13,7 +13,6 @@ public class ShopSlot : MonoBehaviour, IPointerClickHandler
     private int sellPrice;
     [SerializeField] private PlayerStatus playerStatus;
     [SerializeField] private InventoryManager inventoryManager;
-    [SerializeField] private ItemSO[] itemSos;
     
 
 private void Start()
