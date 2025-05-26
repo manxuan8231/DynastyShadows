@@ -11,12 +11,14 @@ public class SkillManagerUI : MonoBehaviour
 
     public GameObject panelPreview;
     public TextMeshProUGUI previewName;
-    public Button buttonUnlock;
-    public Button buttonEquip;
-    public Image equippedSlotUI;
+    public Button buttonUnlock;// nút mở khóa kỹ năng
+    public Button buttonEquip;// nút trang bị kỹ năng
+    public Button buttonRemove;// nút hủy trang bị kỹ năng
 
-    private int currentSkillIndex = -1;
-    private int equippedSkillIndex = -1;
+    public Image equippedSlotUI;//slot ngoai man hinh HUD
+
+    private int currentSkillIndex = -1;// chỉ số kỹ năng hiện tại đang xem trước
+    private int equippedSkillIndex = -1;// chỉ số kỹ năng đã trang bị
 
     private GameObject activeVideoCamera = null;
 
@@ -26,6 +28,8 @@ public class SkillManagerUI : MonoBehaviour
     {
         panelPreview.SetActive(false);
         buttonEquip.gameObject.SetActive(false);
+        buttonRemove.gameObject.SetActive(false);
+
         playerController = FindAnyObjectByType<PlayerController>();
         // Khi bắt đầu, tắt tất cả videoCamera của skill để chắc chắn
         foreach (var skill in skills)
@@ -52,6 +56,8 @@ public class SkillManagerUI : MonoBehaviour
 
         buttonUnlock.interactable = !skill.isUnlocked;
         buttonEquip.gameObject.SetActive(skill.isUnlocked);
+
+        buttonRemove.gameObject.SetActive(equippedSkillIndex == currentSkillIndex);
 
         // Tắt camera đang bật nếu có
         if (activeVideoCamera != null)
@@ -95,9 +101,25 @@ public class SkillManagerUI : MonoBehaviour
         equippedSkillIndex = currentSkillIndex;
         equippedSlotUI.sprite = skills[equippedSkillIndex].skillIcon;
         equippedSlotUI.color = Color.white;
+        buttonRemove.gameObject.SetActive(true);
+
     }
 
-   
+    public void RemoveSkill()//gỡ trang bị kỹ năng
+    {
+        if (equippedSkillIndex < 0) return;
+
+        // Xóa icon kỹ năng khỏi slot
+        equippedSlotUI.sprite = null;
+        equippedSlotUI.color = Color.clear;
+
+        // Reset trạng thái trang bị
+        equippedSkillIndex = -1;
+
+        // Ẩn nút gỡ kỹ năng
+        buttonRemove.gameObject.SetActive(false);
+    }
+
     public void UseEquippedSkill()
     {
         if (equippedSkillIndex < 0) return;
