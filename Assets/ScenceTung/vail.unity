@@ -811,7 +811,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 0
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -12964,8 +12964,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4786214539577879680, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1380236753903437857}
   m_SourcePrefab: {fileID: 100100000, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+--- !u!1 &1380236753903437856 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4786214539577879680, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+  m_PrefabInstance: {fileID: 1380236753903437855}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1380236753903437857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380236753903437856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6afa6f8e7eaabd744a176c74986f1d31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1395287628332170857 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6997295521512254797, guid: 58733167d511a3b4bb24813165c73fcb, type: 3}
