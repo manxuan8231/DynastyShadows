@@ -71,6 +71,12 @@ public class ItemSO : ScriptableObject
             itemBuff.PotionCritRate(ammoutToChangeAttackState, 8);
             return true;
         }
+        if(statToChange == StatToChange.buffAllStats)
+        {
+            itemBuff itemBuff = GameObject.Find("Stats").GetComponent<itemBuff>();
+            itemBuff.BuffAllStats(amoutToChangeStat, 85, 30, 30, 10);
+            return true;
+        }
         return false;
     }
 
@@ -84,7 +90,8 @@ public class ItemSO : ScriptableObject
         stamina,
         buffAttack,
         buffCrit,
-        BuffCritRate
+        BuffCritRate,
+        buffAllStats
 
 
     }
