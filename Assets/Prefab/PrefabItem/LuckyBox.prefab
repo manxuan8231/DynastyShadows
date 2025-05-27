@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "B\xECnh T\u1EADp Trung"
   quantity: 1
-  itemSprite: {fileID: 21300000, guid: 6640b580b0c7e48458b9db87e378d8bd, type: 3}
+  itemSprite: {fileID: 21300000, guid: e502a61a26458134f8851cb27d9fdcef, type: 3}
   itemDescription: "sau khi s\u1EED d\u1EE5ng s\u1EBD t\u0103ng 25% t\u1EC9 l\u1EC7
     ch\xED m\u1EA1ng trong v\xF2ng 8 gi\xE2y(chu\u1ED9t tr\xE1i \u0111\u1EC3 s\u1EED
     d\u1EE5ng)\n\u0110\u1EC1 xu\u1EA5t: K\u1EBFt h\u1EE3p v\u1EDBi b\xECnh H\u1EE7y
@@ -15638,7 +15638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "B\xECnh M\xE1u \u0110\xE1"
   quantity: 1
-  itemSprite: {fileID: 21300000, guid: ea2123a5e5549dd4bafa06c51d587bae, type: 3}
+  itemSprite: {fileID: 21300000, guid: 40f508b3babe761448364f30cba3ad35, type: 3}
   itemDescription: "Sau khi s\u1EED d\u1EE5ng b\u1EA1n s\u1EBD \u0111\u01B0\u1EE3c
     t\u0103ng t\u1EA5t c\u1EA3 ch\u1EC9 s\u1ED1 trong v\xF2ng 10 gi\xE2y(chu\u1ED9t
     tr\xE1i \u0111\u1EC3 s\u1EED d\u1EE5ng) \n\n"
@@ -15653,9 +15653,9 @@ GameObject:
   m_Component:
   - component: {fileID: 74680229800469636}
   - component: {fileID: 3685726359685502644}
-  - component: {fileID: 7138761227975496993}
   - component: {fileID: 1750932774887414047}
   - component: {fileID: 1509262665895248711}
+  - component: {fileID: 7536953821581526662}
   m_Layer: 0
   m_Name: LuckyBox
   m_TagString: Untagged
@@ -15704,31 +15704,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7138761227975496993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5995201497592488168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 796e1ad1fda4af445906889cd99fb983, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemDrops:
-  - itemPrefabs: {fileID: 1006130040860351134}
-    dropRate: 25
-  - itemPrefabs: {fileID: 112200356596973911}
-    dropRate: 25
-  - itemPrefabs: {fileID: 1284323749453648955}
-    dropRate: 25
-  - itemPrefabs: {fileID: 2347657351644590665}
-    dropRate: 25
-  animator: {fileID: 0}
-  destroyBox: {fileID: 7150873134385632397}
-  boxOrg: {fileID: 5409995546605650752}
-  source: {fileID: 0}
 --- !u!65 &1750932774887414047
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15760,8 +15735,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 01746d92e7bd99344972980f507c06b7, type: 3}
-  m_Resource: {fileID: 8300000, guid: 01746d92e7bd99344972980f507c06b7, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 281d5c19785950f458a4efb825298974, type: 3}
+  m_Resource: {fileID: 8300000, guid: 281d5c19785950f458a4efb825298974, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -15847,6 +15822,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7536953821581526662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5995201497592488168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abbae54ccb725834cabc20771c6d3c3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDrops:
+  - itemPrefabs: {fileID: 1006130040860351134}
+    dropRate: 25
+  - itemPrefabs: {fileID: 112200356596973911}
+    dropRate: 25
+  - itemPrefabs: {fileID: 1284323749453648955}
+    dropRate: 25
+  - itemPrefabs: {fileID: 2347657351644590665}
+    dropRate: 25
+  animator: {fileID: 3685726359685502644}
+  destroyBox: {fileID: 7150873134385632397}
+  boxOrg: {fileID: 5409995546605650752}
+  source: {fileID: 1509262665895248711}
 --- !u!1 &6212839121780337156
 GameObject:
   m_ObjectHideFlags: 0
