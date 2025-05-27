@@ -9,7 +9,7 @@ public class TurnInQuest2 : MonoBehaviour
     public TextMeshProUGUI NPCName; // Tên của NPC
     public TextMeshProUGUI NPCContent; // Nội dung hội thoại
     public GameObject iconMap; // Icon hiển thị trên bản đồ
-   
+    public GameObject linhCanh;
     public string[] names; // Danh sách tên 
     public string[] content; // Nội dung hội thoại
     //
@@ -34,6 +34,7 @@ public class TurnInQuest2 : MonoBehaviour
     public AudioClip audioSkip; // Âm thanh khi bấm skip
     void Start()
     {
+        linhCanh.SetActive(false); // Ẩn linh canh khi bắt đầu
         // Lấy tham chiếu đến PlayerController và ComboAttack
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         quest2 = FindAnyObjectByType<Quest2>();
@@ -141,6 +142,7 @@ public class TurnInQuest2 : MonoBehaviour
         iconMap.SetActive(false); // Ẩn icon quest trên bản đồ
         isButtonF = false; // Đặt trạng thái hội thoại là false
         isContent = false; // Đặt lại trạng thái hội thoại
+        linhCanh.SetActive(true); // Hiện linh canh
         playerStatus.AddExp(200); // Thêm kinh nghiệm cho người chơi
         Debug.Log("Phần thưởng đã nhận");
         
