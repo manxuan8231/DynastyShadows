@@ -6,11 +6,18 @@ public class RanDomItem : MonoBehaviour
 {
     public List<ItemBuffDrop> itemDrops = new List<ItemBuffDrop>();
     private InventoryManager inventoryManager;
-
+    public Animator animator;
+    public GameObject destroyBox;
+    public GameObject boxOrg;
+    public AudioSource source;
     private void Start()
     {
         inventoryManager = FindAnyObjectByType<InventoryManager>();
+        animator = GetComponent<Animator>();
+        destroyBox.SetActive(false);
+        source = GetComponent<AudioSource>();
     }
+
     public void DropItem()
     {
         float rand = Random.Range(0f, 100f); // số ngẫu nhiên từ 0 đến 100
@@ -39,8 +46,12 @@ public class RanDomItem : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            boxOrg.SetActive(false);
+            animator.SetTrigger("Destroy");
+            source.Play();
+            destroyBox.SetActive(true);
             DropItem();
-            Destroy(gameObject);
+            Destroy(gameObject,2f);
 
         }
     }
