@@ -13,7 +13,7 @@ public class itemBuff : MonoBehaviour
     public void PotionDameRage(int damage,float duration)
     {
         status.baseDamage += damage;
-        
+        status.statDame.text = damage.ToString();
         StartCoroutine(PotionDameRageDuration(damage, duration));
     }
 
@@ -21,35 +21,44 @@ public class itemBuff : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         status.baseDamage -= damage;
+        status.statDame.text = damage.ToString();
+
     }
 
 
     public void BUffCrit(int critDamage, float duration)
     {
         status.criticalDamage += critDamage;
+        status.statCrit.text = critDamage.ToString();
         StartCoroutine(BuffCritDuration(critDamage, duration));
     }
     IEnumerator BuffCritDuration(int critDamage, float duration)
     {
         yield return new WaitForSeconds(duration);
         status.criticalDamage -= critDamage;
+        status.statCrit.text = critDamage.ToString();
     }
 
     public void PotionCritRate(int critRate, float duration)
     {
         status.criticalChance += critRate;
+        status.statCritChance.text = critRate.ToString();
         StartCoroutine(PotionCritRateDuration(critRate, duration));
     }
     IEnumerator PotionCritRateDuration(int critRate, float duration)
     {
         yield return new WaitForSeconds(duration);
         status.criticalChance -= critRate;
+        status.statCritChance.text = critRate.ToString();
+
     }
 
     public void BuffDameAndCrit(int damage, int critRate, float duration)
     {
         status.baseDamage += damage;
+        status.statDame.text = damage.ToString();
         status.criticalChance += critRate;
+        status.statCritChance.text = critRate.ToString();
 
         StartCoroutine(BuffDameAndCritDuration(damage, critRate, duration));
     }
@@ -57,7 +66,11 @@ public class itemBuff : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         status.baseDamage -= damage;
+        status.statDame.text = damage.ToString();
+
         status.criticalChance -= critRate;
+        status.statCritChance.text = critRate.ToString();
+
     }
 
     //buff HP và mana
@@ -75,5 +88,58 @@ public class itemBuff : MonoBehaviour
         status.currentMana = status.sliderMana.maxValue; // Đảm bảo mana không vượt quá max mana
     }
 
+    public void BuffAllStats(int stats,int crit,int critChance,int dame,float duration)
+    {
+        //tăng máu
+        status.maxHp += stats;
+        status.sliderHp.maxValue = status.maxHp;
+        status.sliderHp.value = status.maxHp;
+
+        //tăng mana
+        status.maxMana += stats;
+        status.sliderMana.maxValue = status.maxMana;
+        status.sliderMana.value = status.maxMana;
+
+
+        //tăng crit
+        status.criticalDamage += crit;
+        status.statCrit.text = crit.ToString();
+        //tăng critchance
+        status.criticalChance += critChance;
+        status.statCritChance.text = critChance.ToString();
+        //tang8 dame
+        status.baseDamage += dame;
+        status.statDame.text = dame.ToString();
+        StartCoroutine(StopBuffAllStats(stats, crit, critChance, dame, duration));
+        
+
+    }
+    IEnumerator StopBuffAllStats(int stats, int crit, int critChance, int dame, float duration)
+    {
+
+        yield return new WaitForSeconds(duration);
+
+
+        //tăng máu
+        status.maxHp -= stats;
+        status.sliderHp.maxValue = status.maxHp;
+        status.sliderHp.value = status.maxHp;
+
+        //tăng mana
+        status.maxMana -= stats;
+        status.sliderMana.maxValue = status.maxMana;
+        status.sliderMana.value = status.maxMana;
+
+
+        //tăng crit
+        status.criticalDamage -= crit;
+        status.statCrit.text = crit.ToString();
+        //tăng critchance
+        status.criticalChance -= critChance;
+        status.statCritChance.text = critChance.ToString();
+        //tang8 dame
+        status.baseDamage -= dame;
+        status.statDame.text = dame.ToString();
+    }
 
 }

@@ -4,15 +4,15 @@ public class Item : MonoBehaviour
 {
 
     [SerializeField]
-    private string itemName;
+    public string itemName;
     [SerializeField]
-    private int quantity;
+    public int quantity;
     [SerializeField]
-    private Sprite itemSprite;
+    public Sprite itemSprite;
 
     [TextArea]
     [SerializeField]
-    private string itemDescription;
+    public string itemDescription;
 
     private InventoryManager inventoryManager;
     public ItemType itemType;
