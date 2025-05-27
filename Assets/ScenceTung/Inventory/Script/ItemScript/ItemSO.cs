@@ -17,66 +17,78 @@ public class ItemSO : ScriptableObject
     {
         if (statToChange == StatToChange.health)
         {
-            PlayerStatus playerStatus = GameObject.Find("Stats").GetComponent<PlayerStatus>();
-            if (playerStatus.currentHp == playerStatus.maxHp)
+            itemBuff itemBuff = GameObject.Find("Stats").GetComponent<itemBuff>();
+            if (itemBuff.status.currentHp == itemBuff.status.maxHp)
             {
                 Debug.Log("Máu đầy");
                 return false;
             }
             else
             {
-                playerStatus.BuffHealth(amoutToChangeStat);
+                itemBuff.BuffHP(amoutToChangeStat);
+                Debug.Log("đã hồi máu " + amoutToChangeStat);
+                return true;
+            }
+        }
+
+        if (statToChange == StatToChange.mana)
+        {
+            itemBuff itemBuff = GameObject.Find("Stats").GetComponent<itemBuff>();
+            if (itemBuff.status.currentMana == itemBuff.status.maxMana)
+            {
+                Debug.Log("Máu đầy");
+                return false;
+            }
+            else
+            {
+                itemBuff.BuffMana(amoutToChangeStat);
                 Debug.Log("đã hồi máu " + amoutToChangeStat);
                 return true;
             }
         }
         if (statToChange == StatToChange.stamina)
         {
-            PlayerStatus playerStatus = GameObject.Find("Stats").GetComponent<PlayerStatus>();
-            if(playerStatus.currentHp == playerStatus.maxHp)
-            {
-                Debug.Log("Máu đầy");
-                return false;
-            }
-            else
-            {
-                playerStatus.BuffHealth(amoutToChangeStat);
-                Debug.Log("đã hồi máu " + amoutToChangeStat);
-                playerStatus.BuffDamage(amoutToChangeStat,60);
-                return true;
-            }
+            itemBuff itemBuff = GameObject.Find("Stats").GetComponent<itemBuff>();
+
+            itemBuff.BuffDameAndCrit(ammoutToChangeAttackState, 10, 15);
+            return true;
         }
-        if (statToChange == StatToChange.mana)
+        if (statToChange == StatToChange.buffAttack)
         {
-            PlayerStatus playerStatus = GameObject.Find("Stats").GetComponent<PlayerStatus>();
-            if (playerStatus.currentMana == playerStatus.maxMana)
-            {
-                Debug.Log("mana đã đầy");
-                return false;
-            }
-            else
-            {
-                playerStatus.BuffMana(amoutToChangeStat);
-                Debug.Log("đã hồi mana " + amoutToChangeStat);
-                return true;
-            }
+            itemBuff itemBuff = GameObject.Find("Stats").GetComponent<itemBuff>();
+            itemBuff.PotionDameRage(ammoutToChangeAttackState, 10);
+            return true;
+        }
+        if (statToChange == StatToChange.buffCrit)
+        {
+            itemBuff itemBuff = GameObject.Find("Stats").GetComponent<itemBuff>();
+            itemBuff.BUffCrit(ammoutToChangeAttackState, 8);
+            return true;
+        }
+        if (statToChange == StatToChange.BuffCritRate)
+        {
+            itemBuff itemBuff = GameObject.Find("Stats").GetComponent<itemBuff>();
+            itemBuff.PotionCritRate(ammoutToChangeAttackState, 8);
+            return true;
         }
         return false;
     }
-  
 
-      
+
+
     public enum StatToChange
     {
         none,
         health,
         mana,
         stamina,
-        crit,
-        critChance,
+        buffAttack,
+        buffCrit,
+        BuffCritRate
+
 
     }
-   
+
 
     public enum AttributeChange
     {
