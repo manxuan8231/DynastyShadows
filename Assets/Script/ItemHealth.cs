@@ -1,14 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 public class ItemHealth : MonoBehaviour
 {
     PlayerStatus playerStatus;
+    public Transform player;
+    public NavMeshAgent agent;
     void Start()
     {
         GameObject gameObject = GameObject.Find("Stats");
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        agent = GetComponent<NavMeshAgent>();
         if (gameObject != null)
         {
             playerStatus = gameObject.GetComponent<PlayerStatus>();
+        }
+     
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
         }
         
     }
@@ -16,7 +26,7 @@ public class ItemHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        agent.SetDestination(player.transform.position);
     }
     public void OnTriggerEnter(Collider other)
     {

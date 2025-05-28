@@ -10,6 +10,7 @@ public class RanDomItem : MonoBehaviour
     public GameObject destroyBox;
     public GameObject boxOrg;
     public AudioSource source;
+    public BoxCollider boxCollider;
     private void Start()
     {
         inventoryManager = FindAnyObjectByType<InventoryManager>();
@@ -51,6 +52,7 @@ public class RanDomItem : MonoBehaviour
             source.Play();
             destroyBox.SetActive(true);
             DropItem();
+            boxCollider.enabled = false;
             Destroy(gameObject,2f);
 
         }

@@ -47,6 +47,7 @@ public class EnemyHP : MonoBehaviour
             enemy1.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết
             enemy1.ChangeState(Enemy1.EnemyState.Death);
             enemy1.agent.isStopped = true; // Dừng lại khi chết
+            boxDame.enabled = false;
             DropItem(); // Gọi hàm rơi đồ
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject, 3f);
@@ -75,6 +76,7 @@ public class EnemyHP : MonoBehaviour
             enemy1.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết
             enemy1.ChangeState(Enemy1.EnemyState.Death);
             enemy1.agent.isStopped = true; // Dừng lại khi chết
+            boxDame.enabled = false;
             DropItem(); // Gọi hàm rơi đồ
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject, 3f);
