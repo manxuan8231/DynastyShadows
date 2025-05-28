@@ -2,23 +2,29 @@
 using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class TimeLineDesert : MonoBehaviour
 {
-    public CinemachineCamera scene1;
-    public GameObject effectDesert;
+    public CinemachineCamera scene1;//camera 1
+    public CinemachineCamera scene2;//camera 2
+    public CinemachineCamera scene3;//canh enemy suất hiện
+    public GameObject effectDesert;//hieu ung bao cat
 
     public TextMeshProUGUI textContent;
 
     private bool isScene1Active = false;
     private bool isPlayer = true;
+    public bool isScene2Active = false;
 
    
-    public PlayerController characterController;
+    //goi ham
+    private QuestDesert5 questDesert; // Quest Desert 
+    private PlayerController characterController;
     void Start()
     {
         characterController = FindAnyObjectByType<PlayerController>();
-      
+        questDesert = FindAnyObjectByType<QuestDesert5>(); // Lấy đối tượng QuestDesert5
         effectDesert.SetActive(false); // Ẩn hiệu ứng sa mạc ban đầu
         textContent.enabled = false; // Ẩn nội dung văn bản ban đầu
         scene1.Priority = 0; // Đặt độ ưu tiên của camera scene1 là 0
@@ -29,7 +35,13 @@ public class TimeLineDesert : MonoBehaviour
         if (isScene1Active == true)
         {
             isScene1Active = false; // Đặt cờ để hủy kích hoạt scene1
-            StartCoroutine(WaitTimeline());
+           
+            StartCoroutine(WaitScene1());
+        }
+        else if(isScene2Active == true)
+        {
+            isScene2Active = false; // Đặt cờ để hủy kích hoạt scene2
+            StartCoroutine(WaitScene2());
         }
     }
     public void OnTriggerEnter(Collider other)
@@ -49,7 +61,7 @@ public class TimeLineDesert : MonoBehaviour
         }
     }
 
-    public IEnumerator WaitTimeline()
+    public IEnumerator WaitScene1()
     {
         // Vô hiệu hóa các chức năng của nhân vật
         characterController.enabled = false; // Vô hiệu hóa CharacterController
@@ -80,6 +92,8 @@ public class TimeLineDesert : MonoBehaviour
         yield return new WaitForSeconds(2.5f);//---------------------
         Destroy(effectDesert,40f);
         characterController.enabled = true; // bat CharacterController
+        questDesert.StartQuestDesert5();
+
         // tat chuot
         UnityEngine.Cursor.visible = false;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
@@ -88,6 +102,39 @@ public class TimeLineDesert : MonoBehaviour
         // Đặt độ ưu tiên của camera scene1 về 0
         scene1.Priority = 0;
     
+    }
+
+    public IEnumerator WaitScene2()
+    {
+        // Hiện camera scene2
+        scene2.Priority = 20; // Đặt độ ưu tiên của camera scene2 là 1
+        Cursor.lockState = CursorLockMode.None; // Cho phép di chuyển chuột tự do
+        Cursor.visible = true; //hien chuột
+        characterController.enabled = false; // Vô hiệu hóa CharacterController
+        characterController.animator.SetBool("isWalking", false);
+        characterController.animator.SetBool("isRunning", false);
+        textContent.enabled = true; // Hiện nội dung văn bản
+        textContent.text = "Không ngờ ở đây lại có các dấu vết còn sót lại của con người.";
+
+        yield return new WaitForSeconds(3f); // Chờ trong 3 giây
+        characterController.enabled = true; // Bật CharacterController
+        Cursor.lockState = CursorLockMode.Locked; // Khóa chuột lại
+        Cursor.visible = false; //an chuot
+        scene2.Priority = 0;
+        textContent.text = "?";
+        RenderSettings.fogDensity = 0.01f; //tăng độ mờ của sương mù
+
+        yield return new WaitForSeconds(2f); // Chờ trong 3 giây
+        textContent.text = "Không ổn rồi.";
+       
+        yield return new WaitForSeconds(2f); // Chờ trong 3 giây
+        textContent.text = "Bị bao vay rồi.";
+        questDesert.enemy.SetActive(true); // Kích hoạt kẻ thù
+
+        yield return new WaitForSeconds(2f); // Chờ trong 3 giây
+        textContent.enabled = false; // Ẩn nội dung văn bản
+
+
     }
 }
 

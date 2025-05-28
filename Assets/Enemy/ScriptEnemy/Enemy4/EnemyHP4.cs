@@ -12,14 +12,16 @@ public class EnemyHP4 : MonoBehaviour
 
     //gọi hàm
     Enemy4 enemy4;
+    QuestDesert5 questDesert5;
     public List<ItemDrop> itemDrops = new List<ItemDrop>();
+
     public void Start()
     {
         currentHealth = maxHealth;
         sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
         enemy4 = GetComponent<Enemy4>(); // <- GÁN Ở ĐÂY
-
+        questDesert5 = FindAnyObjectByType<QuestDesert5>();
     }
 
     // Update is called once per frame
@@ -64,6 +66,7 @@ public class EnemyHP4 : MonoBehaviour
             currentHealth = 0;
             enemy4.ChangeState(Enemy4.EnemyState.Death);
             enemy4.agent.isStopped = true; // Dừng lại khi chết
+            questDesert5.UpdateKillEnemy(1); // Cập nhật số lượng kẻ thù đã giết trong nhiệm vụ
             DropItem();
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
@@ -91,6 +94,7 @@ public class EnemyHP4 : MonoBehaviour
             currentHealth = 0;
             enemy4.ChangeState(Enemy4.EnemyState.Death);
             enemy4.agent.isStopped = true; // Dừng lại khi chết
+            questDesert5.UpdateKillEnemy(1); // Cập nhật số lượng kẻ thù đã giết trong nhiệm vụ
             DropItem();
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
