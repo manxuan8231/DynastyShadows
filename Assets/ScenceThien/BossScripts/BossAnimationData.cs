@@ -10,4 +10,5 @@ public class BossAnimationData : ScriptableObject
     public string death;
     public string phaseChangeState;
     public string gethit;
+    public string idlecombat;
 }
