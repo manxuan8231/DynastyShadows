@@ -138,6 +138,57 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &677029227396839479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7404800574325203853}
+  - component: {fileID: 8815431651183616284}
+  m_Layer: 0
+  m_Name: Debuff3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7404800574325203853
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677029227396839479}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5075295372117444999}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8815431651183616284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677029227396839479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcba3229947e0ca45bce465d12813d63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: "B\xECnh K\xEDch Ph\xE1t"
+  quantity: 1
+  itemSprite: {fileID: 21300000, guid: 9676d2122cd102a459ce40bbc6596058, type: 3}
+  itemDescription: "Sau khi s\u1EED d\u1EE5ng t\u1EC9 l\u1EC7 ch\xED m\u1EA1ng \u0111\u01B0\u1EE3c
+    t\u0103ng l\xEAn 100% nh\u01B0ng s\xE1t th\u01B0\u01A1ng b\u1ECB gi\u1EA3m 20%(duy
+    tr\xEC trong 5 gi\xE2y)"
+  itemType: 0
 --- !u!1 &850655854801045676
 GameObject:
   m_ObjectHideFlags: 0
@@ -9796,6 +9847,109 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &1234833011271013622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2163494859664512449}
+  - component: {fileID: 4509601322592369154}
+  m_Layer: 0
+  m_Name: Debuff4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2163494859664512449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234833011271013622}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5075295372117444999}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4509601322592369154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234833011271013622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcba3229947e0ca45bce465d12813d63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: "B\xECnh Cu\u1ED3ng S\xE1t"
+  quantity: 1
+  itemSprite: {fileID: 21300000, guid: b39e48da77d36974eb51aedc3b76a0c2, type: 3}
+  itemDescription: "Sau khi s\u1EED d\u1EE5ng s\u1EBD \u0111\u01B0\u1EE3c nh\xE2n
+    \u0111\xF4i s\xE1t th\u01B0\u01A1ng  v\xE0 50% s\xE1t th\u01B0\u01A1ng ch\xED
+    m\u1EA1ng nh\u01B0ng t\u1EC9 l\u1EC7 ch\xED m\u1EA1ng gi\u1EA3m c\xF2n 1 ( duy
+    tr\xEC 10 gi\xE2y)"
+  itemType: 0
+--- !u!1 &1720232565310694278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8629807744867835320}
+  - component: {fileID: 3783987417114677892}
+  m_Layer: 0
+  m_Name: Debuff2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8629807744867835320
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720232565310694278}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5075295372117444999}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3783987417114677892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720232565310694278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcba3229947e0ca45bce465d12813d63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: "B\xECnh H\u1EAFc \xC1m"
+  quantity: 1
+  itemSprite: {fileID: 21300000, guid: a35140b0102ec7746a62c0ef2b0a607e, type: 3}
+  itemDescription: "Sau khi s\u1EED d\u1EE5ng \u0111\u01B0\u1EE3c t\u0103ng 200%
+    s\xE1t th\u01B0\u01A1ng nh\u01B0ng s\u1EBD b\u1ECB m\u1EA5t 30% m\xE1u ngay l\u1EADp
+    t\u1EE9c(duy tr\xEC 50% s\xE1t th\u01B0\u01A1ng trong v\xF2ng 5 gi\xE2y)"
+  itemType: 0
 --- !u!1 &1733275700128892483
 GameObject:
   m_ObjectHideFlags: 0
@@ -15248,6 +15402,41 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5302906139313774401
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5075295372117444999}
+  m_Layer: 0
+  m_Name: PotionDebuff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5075295372117444999
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5302906139313774401}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2065563105308805648}
+  - {fileID: 8629807744867835320}
+  - {fileID: 7404800574325203853}
+  - {fileID: 2163494859664512449}
+  m_Father: {fileID: 74680229800469636}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5379965320571551315
 GameObject:
   m_ObjectHideFlags: 0
@@ -15420,6 +15609,57 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5581451239581393324
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2065563105308805648}
+  - component: {fileID: 3955703681850984507}
+  m_Layer: 0
+  m_Name: Debuff1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2065563105308805648
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581451239581393324}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5075295372117444999}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3955703681850984507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581451239581393324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcba3229947e0ca45bce465d12813d63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: "B\xECnh Ph\u1EABn N\u1ED9"
+  quantity: 1
+  itemSprite: {fileID: 21300000, guid: 92a8ab91d7f83804f976800c5049cbbf, type: 3}
+  itemDescription: "Sau khi s\u1EED d\u1EE5ng b\u1EA1n s\u1EBD t\u0103ng 300% s\xE1t
+    th\u01B0\u01A1ng ch\xED m\u1EA1ng nh\u01B0ng t\u1EC9 l\u1EC7 ch\xED m\u1EA1ng
+    gi\u1EA3m c\xF2n 1%(Duy tr\xEC trong 10s)"
+  itemType: 0
 --- !u!1 &5783200173637197948
 GameObject:
   m_ObjectHideFlags: 0
@@ -15672,14 +15912,15 @@ Transform:
   m_GameObject: {fileID: 5995201497592488168}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.23970278, z: 0, w: 0.97084635}
-  m_LocalPosition: {x: 42.171, y: 0.53412, z: 61.232}
+  m_LocalPosition: {x: 40.211086, y: 0.0368042, z: 52.988583}
   m_LocalScale: {x: 1.6914061, y: 1.6914061, z: 1.6914061}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7497691947415664999}
   - {fileID: 7842461020591598471}
-  - {fileID: 2256837978764350952}
   - {fileID: 1481561762231969328}
+  - {fileID: 2256837978764350952}
+  - {fileID: 5075295372117444999}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 27.738, z: 0}
 --- !u!95 &3685726359685502644
@@ -15836,13 +16077,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemDrops:
   - itemPrefabs: {fileID: 1006130040860351134}
-    dropRate: 25
+    dropRate: 20
   - itemPrefabs: {fileID: 2347657351644590665}
-    dropRate: 25
+    dropRate: 10
   - itemPrefabs: {fileID: 112200356596973911}
-    dropRate: 25
+    dropRate: 15
   - itemPrefabs: {fileID: 1284323749453648955}
-    dropRate: 25
+    dropRate: 5
+  - itemPrefabs: {fileID: 3955703681850984507}
+    dropRate: 15
+  - itemPrefabs: {fileID: 3783987417114677892}
+    dropRate: 10
+  - itemPrefabs: {fileID: 8815431651183616284}
+    dropRate: 10
+  - itemPrefabs: {fileID: 4509601322592369154}
+    dropRate: 15
   animator: {fileID: 0}
   destroyBox: {fileID: 7150873134385632397}
   boxOrg: {fileID: 5409995546605650752}

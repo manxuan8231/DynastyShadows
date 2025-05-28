@@ -12,10 +12,13 @@ public class InventoryManager : MonoBehaviour
     public EquipmentSlot[] equipmentSlot; // Array of equipment slots
     public EquippedSlot[] equippedSlot; // Array of equipped slots
     public ItemSO[] itemSOs;
-
+    public AudioSource audioSource;
+    public AudioClip selectedClip;
+    public AudioClip usingClip;
     // Update is called once per frame
     void Update()
     {
+        audioSource = GameObject.Find("Inventory").GetComponent<AudioSource>(); 
         if (Input.GetButtonDown("Inventory"))
             Inventory();
         if (Input.GetButtonDown("EquipmentMenu"))
@@ -114,6 +117,7 @@ public class InventoryManager : MonoBehaviour
             {
                 Debug.Log("Check đúng tên item");
                 bool usable = itemSOs[i].UseItem();
+               
                 return usable;
               
             }

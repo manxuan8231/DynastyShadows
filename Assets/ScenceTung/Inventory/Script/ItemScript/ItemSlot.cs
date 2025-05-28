@@ -1,6 +1,7 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -96,30 +97,44 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
     }
     private void OnLeftClick()
     {
+        bool isAudio = false;
         // Nếu không có item thì không làm gì cả
         if (quantity <= 0 || string.IsNullOrEmpty(itemName))
         {
+           
+
             Debug.Log("Slot này đang trống, không làm gì cả");
             return;
         }
-
+        if (selectedItem && !isAudio)
+        {
+            inventoryManager.audioSource.PlayOneShot(inventoryManager.selectedClip);
+            isAudio = false;
+        }
         if (isSelected)
         {
-            Debug.Log("Đã chọn trúng tên item " + itemName);
+            isAudio = true;
 
-            bool usable = inventoryManager.UseItem(itemName);
-            if (usable)
-            {
+            Debug.Log("Đã chọn trúng tên item " + itemName);
+                bool usable = inventoryManager.UseItem(itemName);
+                
+                if (usable)
+                {
                 this.quantity -= 1;
+                inventoryManager.audioSource.PlayOneShot(inventoryManager.usingClip);
                 if (this.quantity <= 0)
-                {
-                    EmptySlot();
+                    {
+
+                        EmptySlot();
+                    }
+                    else
+                    {
+                        quantityText.text = this.quantity.ToString();
+                  
                 }
-                else
-                {
-                    quantityText.text = this.quantity.ToString();
-                }
+                
             }
+            
         }
         else
         {
