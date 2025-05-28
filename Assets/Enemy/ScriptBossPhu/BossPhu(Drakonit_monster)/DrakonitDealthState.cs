@@ -11,6 +11,7 @@ public class DrakonitDeathState : DrakonitState
     // tham chiếu
     private PlayerController characterController;
     private ComboAttack comboAttack;
+    private QuestMainBacLam questMainBacLam;
 
     private DrakonitAudioManager audioManager;
     public override void Enter()
@@ -18,6 +19,7 @@ public class DrakonitDeathState : DrakonitState
         audioManager = GameObject.FindAnyObjectByType<DrakonitAudioManager>();
         characterController = GameObject.FindAnyObjectByType<PlayerController>();
         comboAttack = GameObject.FindAnyObjectByType<ComboAttack>();
+       questMainBacLam = GameObject.FindAnyObjectByType<QuestMainBacLam>();
         characterController.enabled = false; // Vô hiệu hóa CharacterController
         characterController.animator.SetBool("isWalking", false);
         characterController.animator.SetBool("isRunning", false);
@@ -92,9 +94,10 @@ public class DrakonitDeathState : DrakonitState
         brain.DefaultBlend.Style = CinemachineBlendDefinition.Styles.EaseInOut;// chuyển cam lại thành easeinout
         comboAttack.enabled = true; // Kích hoạt lại ComboAttack cua player
         characterController.enabled = true; // Kích hoạt lại CharacterController
-                                            //  Hiện chuột                                    
+        //  Hiện chuột                                                                     
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        questMainBacLam.UpdateKillEnemy(1);// cập nhật số lượng kẻ thù đã giết
         GameObject.Destroy(enemy.gameObject,2f);
     }
 }
