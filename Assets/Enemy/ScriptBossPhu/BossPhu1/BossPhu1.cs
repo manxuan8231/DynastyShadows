@@ -36,15 +36,16 @@ public class BossPhu1 : MonoBehaviour
 
     private void Start()
     {
+        firstPos = transform.position;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        firstPos = transform.position;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         ChangeState(EnemyState.Idle);
     }
 
     void Update()
     {
+        
         if (currentState == EnemyState.Death) return;
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
@@ -55,7 +56,9 @@ public class BossPhu1 : MonoBehaviour
         switch (currentState)
         {
             case EnemyState.Idle:
+              
                 HandleIdle(distanceToPlayer);
+                agent.stoppingDistance = 5; 
                 break;
 
             case EnemyState.Walk:
@@ -65,12 +68,14 @@ public class BossPhu1 : MonoBehaviour
                 }
                 else
                 {
+
                     HandleWalk(distanceToPlayer);
                 }
                 break;
 
             case EnemyState.BackToPos:
                 HandleBackToPos();
+                agent.stoppingDistance = 0f;
                 break;
 
             case EnemyState.Attack1:
@@ -154,9 +159,25 @@ public class BossPhu1 : MonoBehaviour
         if (distance >= radius)
         {
             if (hasTakenDamage)
+            {
                 ChangeState(EnemyState.BackToPos);
+            }
             else
+            {
+                agent.stoppingDistance = 0;
                 agent.SetDestination(firstPos);
+
+                // 🛠 Thêm đoạn này để về Idle nếu đã tới firstPos
+                float distToFirstPos = Vector2.Distance(
+                    new Vector2(transform.position.x, transform.position.z),
+                    new Vector2(firstPos.x, firstPos.z)
+                );
+
+                if (distToFirstPos < 0.5f)
+                {
+                    ChangeState(EnemyState.Idle);
+                }
+            }
         }
         else
         {
@@ -167,6 +188,7 @@ public class BossPhu1 : MonoBehaviour
 
     void HandleBackToPos()
     {
+       
         float distToPos = Vector3.Distance(transform.position, firstPos);
 
         agent.isStopped = false;
@@ -174,9 +196,10 @@ public class BossPhu1 : MonoBehaviour
 
         if (distToPos < 0.5f)
         {
+            
             hasTakenDamage = false;
             ChangeState(EnemyState.Idle);
-        }
+        }   
     }
 
     public void ChangeState(EnemyState newState)
