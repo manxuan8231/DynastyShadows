@@ -15374,7 +15374,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5409995546605650752}
-  m_Mesh: {fileID: 4300000, guid: bf5c3e0cc8f27e44fa80b78fbca7ac1a, type: 3}
+  m_Mesh: {fileID: 5060444177187149915, guid: d929bf8f55a82124d9a755920066a898, type: 3}
 --- !u!23 &3498023114905654648
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -15655,7 +15655,7 @@ GameObject:
   - component: {fileID: 3685726359685502644}
   - component: {fileID: 1750932774887414047}
   - component: {fileID: 1509262665895248711}
-  - component: {fileID: 7536953821581526662}
+  - component: {fileID: 7433335538420543809}
   m_Layer: 0
   m_Name: LuckyBox
   m_TagString: Untagged
@@ -15671,7 +15671,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5995201497592488168}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.23970485, z: -0, w: 0.9708458}
+  m_LocalRotation: {x: 0, y: 0.23970278, z: 0, w: 0.97084635}
   m_LocalPosition: {x: 42.171, y: 0.53412, z: 61.232}
   m_LocalScale: {x: 1.6914061, y: 1.6914061, z: 1.6914061}
   m_ConstrainProportionsScale: 0
@@ -15681,7 +15681,7 @@ Transform:
   - {fileID: 2256837978764350952}
   - {fileID: 1481561762231969328}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 27.664001, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 27.738, z: 0}
 --- !u!95 &3685726359685502644
 Animator:
   serializedVersion: 7
@@ -15735,7 +15735,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 281d5c19785950f458a4efb825298974, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 281d5c19785950f458a4efb825298974, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -15822,7 +15822,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7536953821581526662
+--- !u!114 &7433335538420543809
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15831,22 +15831,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 5995201497592488168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abbae54ccb725834cabc20771c6d3c3f, type: 3}
+  m_Script: {fileID: 11500000, guid: a885fbf266b58154495f7d6737edd197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemDrops:
   - itemPrefabs: {fileID: 1006130040860351134}
     dropRate: 25
+  - itemPrefabs: {fileID: 2347657351644590665}
+    dropRate: 25
   - itemPrefabs: {fileID: 112200356596973911}
     dropRate: 25
   - itemPrefabs: {fileID: 1284323749453648955}
     dropRate: 25
-  - itemPrefabs: {fileID: 2347657351644590665}
-    dropRate: 25
-  animator: {fileID: 3685726359685502644}
+  animator: {fileID: 0}
   destroyBox: {fileID: 7150873134385632397}
   boxOrg: {fileID: 5409995546605650752}
-  source: {fileID: 1509262665895248711}
+  source: {fileID: 0}
 --- !u!1 &6212839121780337156
 GameObject:
   m_ObjectHideFlags: 0
