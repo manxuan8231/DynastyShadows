@@ -17353,6 +17353,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 739e0c4f70795bf4697471768eba421a, type: 2}
   - {fileID: 11400000, guid: 034af2ca3f7c88f4c9ae7818968357c5, type: 2}
   - {fileID: 11400000, guid: 49c05638163b5694c858356080ae0aed, type: 2}
+  - {fileID: 11400000, guid: 0a902f81c757f4e42a9cf46b9554a595, type: 2}
+  - {fileID: 11400000, guid: 03dc2f10b10034d4b83af3d43ff6ced3, type: 2}
+  - {fileID: 11400000, guid: 18edfc158d8502848be70b0ed00c88b7, type: 2}
+  - {fileID: 11400000, guid: 8523272ad8cf7a84fb69beb8be8e5313, type: 2}
   - {fileID: 11400000, guid: 53a7b89178adba9488912641ff099cbe, type: 2}
   - {fileID: 11400000, guid: 2e241d96c6ab19e408956b5b030d6b6c, type: 2}
 --- !u!114 &3494774656537356223
@@ -82704,6 +82708,7 @@ GameObject:
   - component: {fileID: 1448588806499743927}
   - component: {fileID: 2361048585297516036}
   - component: {fileID: 4250413026769758975}
+  - component: {fileID: 3025915792552124096}
   m_Layer: 9
   m_Name: Stats
   m_TagString: Untagged
@@ -82738,6 +82743,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1925eff51b4ea54c956cbdc0bd1246a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstCritChance: 0
   goldQuantityTxt: {fileID: 6679175845978015216}
   gold: 400
   statHP: {fileID: 287877039022127486}
@@ -82888,6 +82894,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5c482ec706b6df4790b356061702cd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: {fileID: 0}
+--- !u!114 &3025915792552124096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4786214539577879680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8424c8fe63100f44d9e227a08a91151c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   status: {fileID: 0}
@@ -100691,7 +100710,7 @@ Transform:
   m_GameObject: {fileID: 5856964789536236358}
   serializedVersion: 2
   m_LocalRotation: {x: -0.00289336, y: -0.9996841, z: 0.018412637, w: 0.016860992}
-  m_LocalPosition: {x: 2.3400133, y: 4.130003, z: 0.5399952}
+  m_LocalPosition: {x: 2.3400092, y: 4.1300044, z: 0.539992}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerStatus : MonoBehaviour
 {
-
+    public int firstCritChance;
     //xử lý tăng vàng
     [SerializeField]
     public TMP_Text goldQuantityTxt;
@@ -95,8 +95,9 @@ public class PlayerStatus : MonoBehaviour
         textHitDamage.text = $"{criticalDamage}%";
         textHitChance.text = $"{criticalChance}%";
         textBaseDamage.text = $"{baseDamage}";
+        firstCritChance = criticalChance;
         //thaam chieu
-       
+
         audioSource = GetComponent<AudioSource>();
         playerController = FindAnyObjectByType<PlayerController>();
         comboAttack = FindAnyObjectByType<ComboAttack>();

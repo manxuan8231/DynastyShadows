@@ -77,6 +77,30 @@ public class ItemSO : ScriptableObject
             itemBuff.BuffAllStats(amoutToChangeStat, 85, 30, 30, 10);
             return true;
         }
+        if(statToChange == StatToChange.debuff1)
+        {
+            ItemDebuff debuff = GameObject.Find("Stats").GetComponent<ItemDebuff>();
+            debuff.Debuff1(3, 10);
+            return true;
+        }
+        if(statToChange ==StatToChange.debuff2)
+        {
+            ItemDebuff debuff = GameObject.Find("Stats").GetComponent<ItemDebuff>();
+            debuff.Debuff2(2,300,5);
+            return true;
+        }
+        if (statToChange == StatToChange.debuff3)
+        {
+            ItemDebuff debuff = GameObject.Find("Stats").GetComponent<ItemDebuff>();
+            debuff.DeBuff3(10, 11, 5);
+            return true;
+        }
+        if (statToChange == StatToChange.debuff4)
+        {
+            ItemDebuff debuff = GameObject.Find("Stats").GetComponent<ItemDebuff>();
+            debuff.Debuff4(2, 50, 10);
+            return true;
+        }
         return false;
     }
 
@@ -91,7 +115,11 @@ public class ItemSO : ScriptableObject
         buffAttack,
         buffCrit,
         BuffCritRate,
-        buffAllStats
+        buffAllStats,
+        debuff1,
+        debuff2,
+        debuff3,
+        debuff4
 
 
     }
