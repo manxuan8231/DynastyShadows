@@ -13,15 +13,20 @@ public class OpenShop : MonoBehaviour
         buttonF.SetActive(false); // Ẩn nút F khi bắt đầu
     }
 
-   
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && isButtonF == true) 
-        { 
-            buttonF.SetActive(false); // Ẩn nút F khi nhấn để mở cửa hàng
-            shopPanel.SetActive(!shopPanel.activeSelf); // Mở hoặc đóng cửa hàng khi nhấn F
+        if (Input.GetKeyDown(KeyCode.F) && isButtonF)
+        {
+            // Đảo trạng thái cửa hàng
+            bool isShopActive = !shopPanel.activeSelf;
+            shopPanel.SetActive(isShopActive);
+
+            // Dừng hoặc tiếp tục thời gian tùy theo trạng thái cửa hàng
+            Time.timeScale = isShopActive ? 0f : 1f;
         }
     }
+
     public void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
