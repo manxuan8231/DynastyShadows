@@ -9,7 +9,7 @@ public class TurnInQuest : MonoBehaviour
     public TextMeshProUGUI NPCName; // Tên của NPC
     public TextMeshProUGUI NPCContent; // Nội dung hội thoại
     public GameObject iconMap; // Icon hiển thị trên bản đồ
-
+    public GameObject niceQuestUI;
     public GameObject questThuongNhan;//làm xong nhiệm vụ của bác lâm thì mới suất hiện thuognw nhân
     //trang thai
     public enum QuestToStart { None, BacLam, LinhCanh }
@@ -51,6 +51,7 @@ public class TurnInQuest : MonoBehaviour
         buttonSkip.SetActive(false);
         buttonF.SetActive(false); // Ẩn nút F khi bắt đầu
         questThuongNhan.SetActive(false); // Ẩn NPC ThuongNhan khi bắt đầu
+        niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp khi bắt đầu
         NPCName.text = "";
         NPCContent.text = "";
     }
@@ -151,6 +152,7 @@ public class TurnInQuest : MonoBehaviour
                 iconMap.SetActive(false); // Ẩn icon quest trên bản đồ
                 playerStatus.AddExp(100); // Thêm kinh nghiệm cho người chơi
                 questThuongNhan.SetActive(true); // Hiện NPC ThuongNhan sau khi hoàn thành nhiệm vụ
+                StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 2 giây
                 Debug.Log("Phần thưởng đã nhận");
 
                 break;
@@ -187,5 +189,10 @@ public class TurnInQuest : MonoBehaviour
         }
     }
 
-
+    private IEnumerator WaitQuestUI()
+    {
+        niceQuestUI.SetActive(true); // Hiện UI nhiệm vụ đẹp
+        yield return new WaitForSeconds(5f);
+        niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp sau 2 giây
+    }
 }

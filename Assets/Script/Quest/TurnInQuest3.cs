@@ -10,6 +10,7 @@ public class TurnInQuest3 : MonoBehaviour
     public TextMeshProUGUI NPCContent; // Nội dung hội thoại
     public GameObject icon3D; // Icon 3D của NPC
     public GameObject bacLamQuestMain; // Bac Lam NPC nhiem vu sau khi lam xong nhiem vu tieu diet ork
+    public GameObject niceQuestUI;
     //trang thai
     public enum QuestToStart { None, BacLam, LinhCanh }
     public QuestToStart questToStart = QuestToStart.None;
@@ -48,6 +49,7 @@ public class TurnInQuest3 : MonoBehaviour
         buttonSkip.SetActive(false);
         buttonF.SetActive(false); // Ẩn nút F khi bắt đầu
         bacLamQuestMain.SetActive(false); // Ẩn Bac Lam NPC khi bắt đầu
+        niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp khi bắt đầu
         NPCName.text = "";
         NPCContent.text = "";
     }
@@ -153,6 +155,7 @@ public class TurnInQuest3 : MonoBehaviour
                 icon3D.SetActive(false); // Ẩn icon 3D của NPC
                 playerStatus.AddExp(500); // Thêm kinh nghiệm cho người chơi
                 bacLamQuestMain.SetActive(true); // Hiện Bac Lam NPC sau khi hoàn thành nhiệm vụ
+                StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
                 Debug.Log("Phần thưởng đã nhận");
                 break;
         }
@@ -185,5 +188,10 @@ public class TurnInQuest3 : MonoBehaviour
         }
     }
 
-
+    private IEnumerator WaitQuestUI()
+    {
+        niceQuestUI.SetActive(true); // Hiện UI nhiệm vụ đẹp
+        yield return new WaitForSeconds(5f);
+        niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp sau 2 giây
+    }
 }

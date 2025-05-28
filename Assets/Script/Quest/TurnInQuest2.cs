@@ -11,6 +11,7 @@ public class TurnInQuest2 : MonoBehaviour
     public GameObject iconMap; // Icon hiển thị trên bản đồ
     public GameObject linhCanh;
     public GameObject thuongNhan;
+    public GameObject niceQuestUI;
     public string[] names; // Danh sách tên 
     public string[] content; // Nội dung hội thoại
     //
@@ -48,6 +49,7 @@ public class TurnInQuest2 : MonoBehaviour
         buttonSkip.SetActive(false);
         buttonF.SetActive(false); // Ẩn nút F khi bắt đầu
         isButtonF = false; // Đặt trạng thái hội thoại là false
+        niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp khi bắt đầu
         NPCName.text = "";
         NPCContent.text = "";
     }
@@ -147,6 +149,7 @@ public class TurnInQuest2 : MonoBehaviour
         linhCanh.SetActive(true); // Hiện linh canh
         thuongNhan.SetActive(true); // Hiện thuong nhan
         playerStatus.AddExp(200); // Thêm kinh nghiệm cho người chơi
+        StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
         Debug.Log("Phần thưởng đã nhận");
         
     }
@@ -177,5 +180,10 @@ public class TurnInQuest2 : MonoBehaviour
         }
     }
 
-
+    private IEnumerator WaitQuestUI()
+    {
+        niceQuestUI.SetActive(true); // Hiện UI nhiệm vụ đẹp
+        yield return new WaitForSeconds(5f);
+        niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp sau 2 giây
+    }
 }

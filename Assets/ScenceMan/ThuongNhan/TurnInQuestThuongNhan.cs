@@ -8,6 +8,7 @@ public class TurnInQuestThuongNhan : MonoBehaviour
     public GameObject NPCPanel; // Panel hiển thị hội thoại
     public TextMeshProUGUI NPCName; // Tên của NPC
     public TextMeshProUGUI NPCContent; // Nội dung hội thoại
+    public GameObject niceQuestUI;
     //
     public string[] names; // Danh sách tên 
     public string[] content; // Nội dung hội thoại
@@ -43,6 +44,7 @@ public class TurnInQuestThuongNhan : MonoBehaviour
         buttonSkip.SetActive(false);
         buttonF.SetActive(false); // Ẩn nút F khi bắt đầu
         openShop.enabled = false; // Vô hiệu hóa OpenShop nếu không cần thiết
+        niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp khi bắt đầu
         NPCName.text = "";
         NPCContent.text = "";
     }
@@ -136,6 +138,7 @@ public class TurnInQuestThuongNhan : MonoBehaviour
 
         //phan thuong
         playerStatus.AddExp(300); ; // Thưởng kinh nghiệm
+        StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
         openShop.enabled = true; // Kích hoạt OpenShop
     }
 
@@ -165,5 +168,10 @@ public class TurnInQuestThuongNhan : MonoBehaviour
         }
     }
 
-
+    private IEnumerator WaitQuestUI()
+    {
+        niceQuestUI.SetActive(true); // Hiện UI nhiệm vụ đẹp
+        yield return new WaitForSeconds(5f);
+        niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp sau 2 giây
+    }
 }
