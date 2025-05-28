@@ -46,6 +46,7 @@ public class QuestDesert5 : MonoBehaviour
         }
         else if (enemyCount >= 1)
         {        
+            StartCoroutine(WaitNiceQuest()); 
             Debug.Log("Hoàn thành nv");
         }
     }
