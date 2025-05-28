@@ -18,7 +18,7 @@ public class BossScript : MonoBehaviour
     public DeathState deathState;
     public PhaseChangeState phase2State;
     public IdleCombatState idleCombatState;
-
+    public BossAnimationData animationData;
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;

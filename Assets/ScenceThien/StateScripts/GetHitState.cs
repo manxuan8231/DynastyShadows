@@ -11,7 +11,7 @@ public class GetHitState : BaseState
     public override void EnterState()
     {
         boss.agent.isStopped = true;
-        boss.anim.SetTrigger("gethit");
+        boss.anim.SetTrigger(boss.animationData.gethit);
         boss.StartCoroutine(ReturnToFight());
     }
 

@@ -8,7 +8,7 @@ public class PhaseChangeState : BaseState
     public override void EnterState()
     {
         boss.agent.isStopped = true;
-        boss.anim.SetTrigger("Phase2");
+        boss.anim.SetTrigger(boss.animationData.phaseChangeState);
         AudioBossManager.instance?.PlaySFX("Roar");
         boss.StartCoroutine(EnterPhase2());
     }
