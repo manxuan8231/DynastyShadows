@@ -17,6 +17,7 @@ public class ItemSO : ScriptableObject
     {
         if (statToChange == StatToChange.health)
         {
+            
             itemBuff itemBuff = GameObject.Find("Stats").GetComponent<itemBuff>();
             if (itemBuff.status.currentHp == itemBuff.status.maxHp)
             {
@@ -26,6 +27,7 @@ public class ItemSO : ScriptableObject
             else
             {
                 itemBuff.BuffHP(amoutToChangeStat);
+            
                 Debug.Log("đã hồi máu " + amoutToChangeStat);
                 return true;
             }
