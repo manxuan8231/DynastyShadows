@@ -1,9 +1,11 @@
 ﻿using System;
 using TMPro;
 using Unity.Cinemachine;
+using UnityEditor.Overlays;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 // Script điều khiển hành vi của enemy Drakonit bằng State Machine
 public class DrakonitController : MonoBehaviour
@@ -48,6 +50,8 @@ public class DrakonitController : MonoBehaviour
     public CinemachineCamera cutScene2;
     public CinemachineCamera cutScene3;
 
+    //vùng chặn lại khi thấy pllayer 
+    public GameObject blockZone; 
     // thanh máu
     public Slider sliderHp; // Thanh máu
     public float maxHp = 1000; // Máu tối đa
@@ -60,14 +64,15 @@ public class DrakonitController : MonoBehaviour
     public GameObject imgBietDanh; // GameObject chứa text
     // Biến tham chiếu đến DrakonitDameZone
     public DrakonitDameZone dameZone;
+    private DrakonitController enemy; // Biến tham chiếu đến DrakonitController
 
-   
     // Trạng thái hiện tại
     private DrakonitState currentState; 
     void Start()
     {
         // Lấy component DrakonitDameZone từ enemy
         dameZone = FindAnyObjectByType<DrakonitDameZone>();
+        enemy = FindAnyObjectByType<DrakonitController>();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform; 
         agent = GetComponent<NavMeshAgent>();
@@ -83,6 +88,8 @@ public class DrakonitController : MonoBehaviour
         auraSkill2.SetActive(false); // Tắt hiệu ứng kỹ năng 2
         effectHandR.SetActive(false); // Tắt hiệu ứng tay phải
         effectHandL.SetActive(false); // Tắt hiệu ứng tay trái
+        //vùng chặn lại
+        blockZone.SetActive(false);
         //text
         textConten.enabled = false; // ẩn text hoi thoai
         imgBietDanh.SetActive(false); // ẩn text biêt danh
@@ -114,6 +121,9 @@ public class DrakonitController : MonoBehaviour
         currentHp = Mathf.Clamp(currentHp, 0, maxHp); // Đảm bảo máu không âm và không vượt quá tối đa
         if (currentHp <= 0)
         {
+            enemy.blockZone.SetActive(false); // voo hiệu hóa vùng chặn
+            animator.enabled = true; // Bật animator để có thể chơi animation chết
+            enemy.enabled = true; // Bật lại DrakonitController để có thể chơi animation chết
             colliderBox.enabled = false;
             slider.SetActive(false); // Ẩn thanh máu
                                      // Gọi hàm chết ở đây

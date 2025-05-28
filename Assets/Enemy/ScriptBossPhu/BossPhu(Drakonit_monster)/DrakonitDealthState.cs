@@ -83,7 +83,7 @@ public class DrakonitDeathState : DrakonitState
         yield return new WaitForSeconds(4f);
 
         // 3. Câu cuối cùng
-        enemy.textConten.text = "... sẽ báo thù cho ta";
+        enemy.textConten.text = "Ta sẽ báo thù";
         yield return new WaitForSeconds(4f);
 
         // 4. Ẩn thoại và chết

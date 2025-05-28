@@ -69,6 +69,10 @@ public class NPCScript : MonoBehaviour
             buttonF.SetActive(false); // Ẩn nút F khi bắt đầu hội thoại
            
         }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+           OnSkipButtonPressed(); // Bấm Escape để bỏ qua hội thoại
+        }
     }
     private void OnTriggerEnter(Collider other)
     {

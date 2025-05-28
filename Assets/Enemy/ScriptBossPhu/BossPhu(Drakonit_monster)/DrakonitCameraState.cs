@@ -45,6 +45,7 @@ public class DrakonitCameraState : DrakonitState
 
     public IEnumerator PlayCutscene(float seconds)
     {  
+        enemy.blockZone.SetActive(true); // vùng chặn
         comboAttack.enabled = false; // Vô hiệu hóa ComboAttack
         characterController.enabled = false; // Vô hiệu hóa CharacterController
         characterController. animator.SetBool("isWalking", false);
