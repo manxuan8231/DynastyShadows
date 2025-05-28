@@ -4,6 +4,8 @@ public class OpenShop : MonoBehaviour
 {
     public GameObject shopPanel; // Panel hiển thị cửa hàng
     public GameObject buttonF; // Nút F để mở cửa hàng
+
+    private bool isButtonF;
     
     void Start()
     {
@@ -14,7 +16,7 @@ public class OpenShop : MonoBehaviour
    
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F)) 
+        if (Input.GetKeyDown(KeyCode.F) && isButtonF == true) 
         { 
             buttonF.SetActive(false); // Ẩn nút F khi nhấn để mở cửa hàng
             shopPanel.SetActive(!shopPanel.activeSelf); // Mở hoặc đóng cửa hàng khi nhấn F
@@ -24,6 +26,7 @@ public class OpenShop : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
+            isButtonF = true; // Đặt biến isButtonF thành true khi người chơi vào vùng kích hoạt
             buttonF.SetActive(true); // Hiển thị nút F khi người chơi vào vùng kích hoạt
         }
     }
@@ -31,6 +34,7 @@ public class OpenShop : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            isButtonF = false; // Đặt biến isButtonF thành false khi người chơi rời khỏi vùng kích hoạt
             buttonF.SetActive(false); // Ẩn nút F khi người chơi rời khỏi vùng kích hoạt
         }
     }
