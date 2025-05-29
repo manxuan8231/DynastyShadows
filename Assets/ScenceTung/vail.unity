@@ -13017,7 +13017,7 @@ Transform:
   m_GameObject: {fileID: 3715174104003833303}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42.78, y: 0.12, z: 56.885}
+  m_LocalPosition: {x: 42.78, y: 0.12, z: 137.1}
   m_LocalScale: {x: 2.2551, y: 2.2551, z: 2.2551}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23562,6 +23562,7 @@ GameObject:
   - component: {fileID: 3715174104003833306}
   - component: {fileID: 3715174104003833305}
   - component: {fileID: 3715174104003833307}
+  - component: {fileID: 3715174104003833308}
   m_Layer: 0
   m_Name: Necromanser Prefab
   m_TagString: Untagged
@@ -23598,7 +23599,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3715174104003833303}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c08098ee18971f43b12fa53e2a2e640, type: 3}
   m_Name: 
@@ -23612,7 +23613,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3715174104003833303}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83045d8ace87e2444b025f83a129745b, type: 3}
   m_Name: 
@@ -23651,6 +23652,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2.41, z: 1}
   m_Center: {x: 0, y: 1.26, z: 0}
+--- !u!114 &3715174104003833308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3715174104003833303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a797aa59c2fb34f818c7e5522d038e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anmt: {fileID: 0}
+  agent: {fileID: 0}
+  player: {fileID: 0}
+  radius: 35
 --- !u!1 &3715176302763608805
 GameObject:
   m_ObjectHideFlags: 0
