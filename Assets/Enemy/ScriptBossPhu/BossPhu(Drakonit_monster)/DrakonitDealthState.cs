@@ -97,10 +97,7 @@ public class DrakonitDeathState : DrakonitState
         //  Hiện chuột                                                                     
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-        if(questMainBacLam != null)
-        {
-            questMainBacLam.UpdateKillEnemy(1);// cập nhật số lượng kẻ thù đã giết
-        }    
+        questMainBacLam.UpdateKillEnemy(1);// cập nhật số lượng kẻ thù đã giết
         GameObject.Destroy(enemy.gameObject,2f);
     }
 }

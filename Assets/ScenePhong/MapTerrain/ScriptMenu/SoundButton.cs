@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Audio; // Quan trọng để sử dụng AudioMixerGroup
 
 [RequireComponent(typeof(AudioSource))]
 public class UIButtonSoundManager : MonoBehaviour
@@ -12,6 +13,9 @@ public class UIButtonSoundManager : MonoBehaviour
     [Header("Âm thanh riêng cho nút Play")]
     public AudioClip playHoverSound;
     public AudioClip playClickSound;
+
+    [Header("Audio Mixer Group")]
+    public AudioMixerGroup mixerGroup; // <-- thêm Mixer Group
 
     void Start()
     {
@@ -27,21 +31,24 @@ public class UIButtonSoundManager : MonoBehaviour
             if (source == null)
                 source = btn.gameObject.AddComponent<AudioSource>();
 
+            // Gán mixer group (nếu có)
+            if (mixerGroup != null)
+                source.outputAudioMixerGroup = mixerGroup;
+
             // Tạo handler và gán âm tương ứng
             UIButtonSoundHandler handler = btn.gameObject.AddComponent<UIButtonSoundHandler>();
 
-            if (btnName == "Play")  // Gán âm thanh riêng cho nút Play
+            if (btnName == "Play")
             {
                 handler.Setup(source, playHoverSound, playClickSound);
             }
-            else // Gán âm mặc định cho các nút khác
+            else
             {
                 handler.Setup(source, hoverSound, clickSound);
             }
         }
     }
 
-    // Script xử lý sự kiện chuột riêng cho từng button
     private class UIButtonSoundHandler : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
     {
         private AudioSource audioSource;
@@ -68,4 +75,5 @@ public class UIButtonSoundManager : MonoBehaviour
                 audioSource.PlayOneShot(clickSound);
         }
     }
+
 }

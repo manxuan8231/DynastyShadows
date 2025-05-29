@@ -66,11 +66,7 @@ public class EnemyHP4 : MonoBehaviour
             currentHealth = 0;
             enemy4.ChangeState(Enemy4.EnemyState.Death);
             enemy4.agent.isStopped = true; // Dừng lại khi chết
-            if(questDesert5 != null)
-            {
-                questDesert5.UpdateKillEnemy(1); // Cập nhật số lượng kẻ thù đã giết trong nhiệm vụ
-            }
-             
+            questDesert5.UpdateKillEnemy(1); // Cập nhật số lượng kẻ thù đã giết trong nhiệm vụ
             DropItem();
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
