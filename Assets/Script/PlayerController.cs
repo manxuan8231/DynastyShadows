@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     private bool isRunning = false;
     public bool isController = true;
     //cooldown roll
-    private float rollColdownTime = 0f;
+    private float rollColdownTime = -2f;
     //audio
     [SerializeField] private AudioClip audioJump;
     [SerializeField] private AudioClip audioRoll;
@@ -122,6 +122,7 @@ public class PlayerController : MonoBehaviour
 
     public void Roll()
     {
+       
         if(Input.GetKeyDown(KeyCode.LeftControl) && isGrounded && playerStatus.currentMana > 100 && Time.time >= rollColdownTime + 2f)
         {
             playerStatus.TakeMana(100);
