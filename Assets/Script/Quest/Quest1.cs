@@ -36,7 +36,7 @@ public class Quest1 : MonoBehaviour
 
         iconQuest.SetActive(true);
         questPanel.SetActive(true);
-        questNameText.text = $"Tiêu diệt hết quái ở bãi gỗ của Bác Lâm: {questBacLamKillCount}/5";
+        questNameText.text = $"Tiêu diệt hết quái ở bãi gỗ của Bác Lâm {questBacLamKillCount}/5";
     }
 
     // Gọi khi tiêu diệt quái
@@ -46,7 +46,7 @@ public class Quest1 : MonoBehaviour
 
         questBacLamKillCount += amount;
         questBacLamKillCount = Mathf.Clamp(questBacLamKillCount, 0, 5);
-        questNameText.text = $"Tiêu diệt hết quái ở bãi gỗ của Bác Lâm: {questBacLamKillCount}/5";
+        questNameText.text = $"Tiêu diệt hết quái ở bãi gỗ của Bác Lâm {questBacLamKillCount}/5";
 
         if (questBacLamKillCount >= 5)
         {
