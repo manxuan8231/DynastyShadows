@@ -24,10 +24,11 @@ public class NecController : MonoBehaviour
     public bool isSKill3 = false;
 
     public Vector3 playerPos;
-    
+    public DameZoneWeapon damezoneWP;
    
     void Start()
     {
+        damezoneWP = FindAnyObjectByType<DameZoneWeapon>();
         anmt = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         ChangState(new NecIdleState(this));
@@ -101,5 +102,16 @@ public class NecController : MonoBehaviour
             GameObject obj = Instantiate(skill3, playerPos, Quaternion.identity);
             Destroy(obj, 6f);
         }
+    }
+
+    public void BeginDame()
+    {
+        damezoneWP.beginDame();
+
+    }
+
+    public void EndDame()
+    {
+        damezoneWP.endDame();
     }
 }
