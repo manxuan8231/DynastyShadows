@@ -7,7 +7,7 @@ public class IdleState : BaseState
     public override void EnterState()
     {
         boss.agent.isStopped = true;
-        boss.anim.SetTrigger("Idle");
+        boss.anim.SetTrigger(boss.animationData.idlecombat);
     }
 
     public override void UpdateState()

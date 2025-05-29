@@ -6,7 +6,7 @@ public class ChaseState : BaseState
     private AudioBossManager audioBossManager;
     public override void EnterState()
     {
-        boss.anim.SetTrigger("chase");
+        boss.anim.SetTrigger(boss.animationData.chase);
         boss.agent.isStopped = false;
     }
 

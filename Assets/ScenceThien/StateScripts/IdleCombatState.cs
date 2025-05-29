@@ -8,7 +8,7 @@ public class IdleCombatState : BaseState
     {
         boss.agent.isStopped = true;
         boss.anim.ResetAllTriggers(); // xoá trigger cũ để tránh bug
-        boss.anim.SetTrigger("IdleCombat");
+        boss.anim.SetTrigger(boss.animationData.idlecombat);
     }
 
     public override void UpdateState()

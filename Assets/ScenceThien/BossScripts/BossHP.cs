@@ -11,8 +11,6 @@ public class BossHP : MonoBehaviour
     private BossScript bossScript;
     private bool isDead = false;
     private bool hasEnteredPhase2 = false;
-
-    public BossAnimationData bossAnimationData;
     //tham chieu
     Quest3 quest3;
     void Start()

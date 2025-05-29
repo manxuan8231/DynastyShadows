@@ -28,17 +28,18 @@ public class AttackState : BaseState
         }
 
         attackTimer += Time.deltaTime;
-
         if (attackTimer >= attackCooldown)
         {
-            // Chọn đòn tấn công phù hợp với Phase
-            string[] attackPool = boss.isPhase2 ? phase2Attacks : phase1Attacks;
-            string clip = attackPool[Random.Range(0, attackPool.Length)];
+            string[] attackPool = boss.isPhase2
+                ? boss.animationData.attackPhase2
+                : boss.animationData.attackPhase1;
 
-            boss.anim.SetTrigger(clip);
+            string attackAnim = attackPool[Random.Range(0, attackPool.Length)];
+            boss.anim.SetTrigger(attackAnim);
+
+            AudioBossManager.instance?.PlaySFX("Attack");
+
             attackTimer = 0f;
-
-            AudioBossManager.instance?.PlaySFX("Attack"); // hoặc dùng clip nếu âm thanh tách riêng
         }
     }
 }

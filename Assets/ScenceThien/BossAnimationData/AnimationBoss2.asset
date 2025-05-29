@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 494a9c06feca0a8419f3f16fedb5f144, type: 3}
   m_Name: AnimationBoss2
   m_EditorClassIdentifier: 
-  idle: 
-  chase: 
-  attackPhase1: []
-  attackPhase2: []
-  death: 
-  phaseChangeState: 
-  gethit: 
+  idle: idle
+  chase: chase
+  attackPhase1:
+  - Attack 1
+  - Attack 2
+  attackPhase2:
+  - Attack 3
+  death: death
+  phaseChangeState: roar
+  gethit: gethit
+  idlecombat: idlecombat
