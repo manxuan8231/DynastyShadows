@@ -4,40 +4,38 @@ using UnityEngine;
 public class Skill1NecState : INecState
 {
     public Skill1NecState(NecController enemy) : base(enemy) { }
-
     public bool isTele;
     
     public override void Enter()
     {
         isTele = false;
+        
     }
 
     public override void Update()
     {
 
-         if (enemy.necHp.curhp <= 350 && !isTele)
+         if (enemy.necHp.curhp <= 350 && !isTele  && enemy.isSkill1==false)
         {
-           
+          
+            enemy.agent.enabled = false;
             isTele = true;
+            // 2. Tính hướng lùi
             Vector3 directionAway = (enemy.transform.position - enemy.player.transform.position).normalized;
             float retreatDistance = 25f;
             Vector3 retreatPosition = enemy.transform.position + directionAway * retreatDistance;
 
-            // Đảm bảo không thay đổi độ cao
-            retreatPosition.y = enemy.transform.position.y;
+            // 3. Nâng trục Y lên 3–4 đơn vị
+            retreatPosition.y = enemy.transform.position.y + Random.Range(3f, 4f);
 
-            // Tắt agent để có thể set vị trí thủ công
-            enemy.agent.enabled = false;
-
-            // Dịch chuyển ngay lập tức
+            // 4. Dịch chuyển enemy tới vị trí mới
             enemy.transform.position = retreatPosition;
-
-            // Bật lại agent
-            enemy.agent.enabled = true;
-            enemy.agent.isStopped = true;
+            enemy.necHp.curhp = 500f;
+            
 
             // Trigger skill hoặc animation
             enemy.anmt.SetTrigger("Skill1");
+            enemy.transform.LookAt(enemy.player);
             enemy.StartCoroutine(Open());
             if(enemy.checkEnemyCount <= 10)
             {
@@ -45,6 +43,7 @@ public class Skill1NecState : INecState
             } 
             
         }
+         
     }
     public override void Exit()
     {

@@ -21,12 +21,11 @@ public class NecIdleState : INecState
     
         }
         enemy.anmt.SetTrigger("Idle");
-
         if (enemy.necHp.curhp <= 350)
         {
             enemy.ChangState(new Skill1NecState(enemy));
         }
-       
+
     }
 
     public override void Exit()

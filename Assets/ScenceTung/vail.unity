@@ -1077,6 +1077,75 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1230380070}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1230649110
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3080186190315693994, guid: 14440df7d81c1c74b831ce66af7a8ea7, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.5754717
+      objectReference: {fileID: 0}
+    - target: {fileID: 3080186190315693994, guid: 14440df7d81c1c74b831ce66af7a8ea7, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.16349757
+      objectReference: {fileID: 0}
+    - target: {fileID: 3080186190315693994, guid: 14440df7d81c1c74b831ce66af7a8ea7, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.11672304
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300120397292527053, guid: 14440df7d81c1c74b831ce66af7a8ea7, type: 3}
+      propertyPath: m_Name
+      value: Skill3BossNec
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528627117975823684, guid: 14440df7d81c1c74b831ce66af7a8ea7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 40.042442
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528627117975823684, guid: 14440df7d81c1c74b831ce66af7a8ea7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528627117975823684, guid: 14440df7d81c1c74b831ce66af7a8ea7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 55.959663
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528627117975823684, guid: 14440df7d81c1c74b831ce66af7a8ea7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528627117975823684, guid: 14440df7d81c1c74b831ce66af7a8ea7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528627117975823684, guid: 14440df7d81c1c74b831ce66af7a8ea7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528627117975823684, guid: 14440df7d81c1c74b831ce66af7a8ea7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528627117975823684, guid: 14440df7d81c1c74b831ce66af7a8ea7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528627117975823684, guid: 14440df7d81c1c74b831ce66af7a8ea7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528627117975823684, guid: 14440df7d81c1c74b831ce66af7a8ea7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 14440df7d81c1c74b831ce66af7a8ea7, type: 3}
 --- !u!1 &1395129144
 GameObject:
   m_ObjectHideFlags: 0
@@ -14172,8 +14241,8 @@ Transform:
   m_GameObject: {fileID: 3715174104003833303}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42.78, y: 0.12, z: 86.6}
-  m_LocalScale: {x: 2.2551, y: 2.2551, z: 2.2551}
+  m_LocalPosition: {x: 42.267, y: 0.14, z: 86.297}
+  m_LocalScale: {x: 3.1321084, y: 3.1321084, z: 3.1321084}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3717913043676815475}
@@ -24719,7 +24788,7 @@ GameObject:
   - component: {fileID: 3715174104003833308}
   - component: {fileID: 3715174104003833309}
   m_Layer: 0
-  m_Name: Necromanser Prefab
+  m_Name: BossMap2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24801,7 +24870,10 @@ MonoBehaviour:
   enemyCountToSpawn: 10
   hasSpawned: 0
   isSkill2: 0
-  skill2: {fileID: 0}
+  skill2: {fileID: 8154359369950531275, guid: 7bdb0cfe68c1c734eb9de37f9a226fe1, type: 3}
+  isSkill1: 0
+  skill3: {fileID: 5300120397292527053, guid: 14440df7d81c1c74b831ce66af7a8ea7, type: 3}
+  isSKill3: 0
   playerPos: {x: 0, y: 0, z: 0}
 --- !u!114 &3715174104003833309
 MonoBehaviour:
@@ -28454,3 +28526,4 @@ SceneRoots:
   - {fileID: 1139552980}
   - {fileID: 3712717138481964573}
   - {fileID: 968041521}
+  - {fileID: 1230649110}

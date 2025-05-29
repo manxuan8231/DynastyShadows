@@ -27,12 +27,16 @@ public class NecAttackState : INecState
             {
                 enemy.agent.isStopped = true;
                 enemy.anmt.SetTrigger("Attack1");
+                enemy.transform.LookAt(enemy.player);
+
             }
             else
             {
                 enemy.agent.isStopped = true;
 
                 enemy.anmt.SetTrigger("Attack2");
+                enemy.transform.LookAt(enemy.player);
+
             }
 
             attackTimer = Time.time;

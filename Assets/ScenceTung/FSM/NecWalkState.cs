@@ -32,7 +32,7 @@ public class NecWalkState : INecState
         {
             enemy.ChangState(new Skill1NecState(enemy));
         }
-       
+
     }
 
     public override void Exit()

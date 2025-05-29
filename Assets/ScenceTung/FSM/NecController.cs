@@ -19,7 +19,12 @@ public class NecController : MonoBehaviour
     public bool hasSpawned = false;
     public bool isSkill2 = false;
     public GameObject skill2;
+    public bool isSkill1 = false;
+    public GameObject skill3;
+    public bool isSKill3 = false;
+
     public Vector3 playerPos;
+    
    
     void Start()
     {
@@ -32,7 +37,7 @@ public class NecController : MonoBehaviour
             player = playerObj.transform;
         }  
         necHp = FindAnyObjectByType<NecHp>();
-        skill2.SetActive(false);
+       
        
         
     }
@@ -40,7 +45,7 @@ public class NecController : MonoBehaviour
 
      void Update()
     {
-        playerPos = transform.position;
+        playerPos = player.transform.position;
         currentState?.Update();
         if (Input.GetKeyDown(KeyCode.T))
         {
@@ -79,8 +84,22 @@ public class NecController : MonoBehaviour
 
     public void SpawnSKill2()
     {
-        Vector3 playerPos = transform.position;
-        GameObject obj = Instantiate(skill2, playerPos, Quaternion.identity);
-        Destroy(obj,10f);
+        if(!isSkill1 && !isSKill3)
+        {
+            Vector3 playerPos = player.transform.position;
+            GameObject obj = Instantiate(skill2, playerPos, Quaternion.identity);
+            Destroy(obj, 6f);
+        }
+     
+    }
+
+    public void SpawnSkill3()
+    {
+        if(isSkill1 && isSKill3)
+        {
+            Vector3 playerPos = player.transform.position;
+            GameObject obj = Instantiate(skill3, playerPos, Quaternion.identity);
+            Destroy(obj, 6f);
+        }
     }
 }
