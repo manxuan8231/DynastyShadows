@@ -15,6 +15,7 @@ public class EnemyHP : MonoBehaviour
     //gọi hàm
     Enemy1 enemy1;
     Quest3 quest3;
+    NecController Necboss;
     //box nhận dame
     public BoxCollider boxDame;
     public List<ItemDrop> itemDrops = new List<ItemDrop>();
@@ -25,6 +26,7 @@ public class EnemyHP : MonoBehaviour
         sliderHp.value = currentHealth;
         enemy1 = GetComponent<Enemy1>(); // <- GÁN Ở ĐÂY
         quest3 = FindAnyObjectByType<Quest3>();
+        Necboss = FindAnyObjectByType<NecController>();
     }
 
     // Update is called once per frame
@@ -50,8 +52,15 @@ public class EnemyHP : MonoBehaviour
             boxDame.enabled = false;
             DropItem(); // Gọi hàm rơi đồ
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
-            Destroy(gameObject, 3f);
-            quest3.UpdateKillEnemy(1);
+           EnemyPoolManager.Instance.ReturnToPool(gameObject);
+            if(quest3 != null)
+            {
+                quest3.UpdateKillEnemy(1);
+            }
+            if(Necboss != null)
+            {
+                Necboss.EnemyCount();
+            }
             // Tạo expPrefab tại vị trí của enemy
         }
         if (currentHealth > 0)
