@@ -40,7 +40,7 @@ public class QuestMainBacLam : MonoBehaviour
         if(enemyCount >= 1)
         {
             pointerEnemy.SetActive(false); // Ẩn mũi tên chỉ đường đến kẻ thù
-            enemyPrefab.SetActive(false); // Ẩn prefab kẻ thù
+           
             iconQuest2.SetActive(false); // Ẩn icon nhiệm vụ
             questPanel.SetActive(false); // Ẩn panel nhiệm vụ
             questNameText.text = ""; // Xóa tên nhiệm vụ
@@ -72,6 +72,7 @@ public class QuestMainBacLam : MonoBehaviour
     public void CompleteQuestMainBacLam()
     {
         StartCoroutine(WaitNiceQuest()); // Bắt đầu coroutine để hiển thị thông báo hoàn thành nhiệm vụ
+        QuestDesert.SetActive(true); // Hiện nhiệm vụ bất ngờ ở sa mạc
         //phần thưởng
         playerStatus.AddExp(1000); // Thêm kinh nghiệm cho người chơi
     }
