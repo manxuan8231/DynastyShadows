@@ -12,7 +12,7 @@ public class QuestMainBacLam : MonoBehaviour
 
     public GameObject iconQuest2; // Icon hiển thị nơi làm nhiệm vụ
     public GameObject pointerEnemy;//mui ten chi duong den linh canh
-    public GameObject enemyPrefab; // Prefab ẩn hiện
+   
     public float enemyCount = 0; // Biến đếm số lượng kẻ thù đã tiêu diệt
 
     public GameObject niceQuest; // Hiển thị thông báo hoàn thành nhiệm vụ
@@ -30,7 +30,7 @@ public class QuestMainBacLam : MonoBehaviour
         iconQuest2.SetActive(false);
         linhCanhB.enabled = false; // Tắt script NPC để không tương tác được
         pointerEnemy.SetActive(false);
-        enemyPrefab.SetActive(false); // Ẩn prefab kẻ thù ban đầu
+      
 
         niceQuest.SetActive(false); // Ẩn thông báo hoàn thành nhiệm vụ 
     }
@@ -39,8 +39,9 @@ public class QuestMainBacLam : MonoBehaviour
         //hoan thanh quest
         if(enemyCount >= 1)
         {
+            enemyCount = 0; // Reset số lượng kẻ thù đã tiêu diệt
             pointerEnemy.SetActive(false); // Ẩn mũi tên chỉ đường đến kẻ thù
-            enemyPrefab.SetActive(false); // Ẩn prefab kẻ thù
+            QuestDesert.SetActive(true); // Ẩn nhiệm vụ bất ngờ ở sa mạc
             iconQuest2.SetActive(false); // Ẩn icon nhiệm vụ
             questPanel.SetActive(false); // Ẩn panel nhiệm vụ
             questNameText.text = ""; // Xóa tên nhiệm vụ
@@ -61,7 +62,7 @@ public class QuestMainBacLam : MonoBehaviour
 
     public void StartQuestLinhCanhB()
     {
-        enemyPrefab.SetActive(true); // Hiện prefab kẻ thù
+       
         iconQuest2.SetActive(true);// Hiện icon nhiệm vụ trên bản đồ
         iconQuest.SetActive(false);
         pointerEnemy.SetActive(true);// Hiện mũi tên chỉ đường đến Lính Canh B

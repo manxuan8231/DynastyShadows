@@ -13,6 +13,7 @@ public class BossHP : MonoBehaviour
     private bool hasEnteredPhase2 = false;
     //tham chieu
     Quest3 quest3;
+    QuestDesert5 questDesert5;
     void Start()
     {
         currentHealth = maxHealth;
@@ -25,6 +26,7 @@ public class BossHP : MonoBehaviour
 
         bossScript = GetComponent<BossScript>();
         quest3 = FindAnyObjectByType<Quest3>();
+        questDesert5 = FindAnyObjectByType<QuestDesert5>();
     }
 
     void Update()
@@ -54,13 +56,15 @@ public class BossHP : MonoBehaviour
             return;
         }
 
-        if (currentHealth > 0)
+        if (currentHealth >= 0)
         {
             bossScript.TransitionToState(bossScript.getHitState);
             StartCoroutine(ReturnToBattle(0.6f));
         }
         else
         {
+            if (questDesert5 != null)
+                questDesert5.UpdateKillBoss(1); // Bắt đầu nhiệm vụ Desert5
             Die();
         }
     }
@@ -90,7 +94,8 @@ public class BossHP : MonoBehaviour
         if (sliderHp != null)
             sliderHp.gameObject.SetActive(false);
 
+       
         Destroy(gameObject, 5f);
-        quest3.UpdateKillOrk(1);
+       
     }
 }

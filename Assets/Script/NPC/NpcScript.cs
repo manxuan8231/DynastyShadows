@@ -187,7 +187,7 @@ public class NPCScript : MonoBehaviour
 
     public void OnSkipButtonPressed()
     {
-        audioSource.PlayOneShot(audioSkip); // Phát âm thanh khi bấm skip
+       
         if (isTyping)
         {
             // Bấm Skip trong lúc chữ đang chạy → hiện toàn bộ câu

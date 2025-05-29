@@ -19,14 +19,17 @@ public class QuestDesert5 : MonoBehaviour
     public GameObject niceQuestDesert5;
     //goi ham
     TimeLineDesert timeLineDesert; // Lấy đối tượng TimeLineDesert
+    TurnInQuest5 turnInQuest5; // Lấy đối tượng TurnInQuest5
     void Start()
     {
         niceQuestDesert5.SetActive(false); // Ẩn nhiệm vụ sa mạc ban đầu
         boss.SetActive(false);
         timeLineDesert = FindAnyObjectByType<TimeLineDesert>(); // Lấy đối tượng TimeLineDesert
+        turnInQuest5 = FindAnyObjectByType<TurnInQuest5>(); // Lấy đối tượng TurnInQuest5
         questPanel.SetActive(false); // Ẩn panel nhiệm vụ ban đầu
         questNameText.text = ""; // Xóa tên nhiệm vụ ban đầu
         enemy.SetActive(false); // Ẩn kẻ thù ban đầu
+        turnInQuest5.enabled = false; // Vô hiệu hóa TurnInQuest5 ban đầu
     }
 
 
@@ -41,12 +44,16 @@ public class QuestDesert5 : MonoBehaviour
         else
         if (enemyCount >= 10)
         {
+            enemyCount = 0; // Reset số lượng kẻ thù đã tiêu diệt
             boss.SetActive(true); // Hiện boss khi số lượng kẻ thù >= 10
             Debug.Log("Boss đã xuất hiện");
         }
-        else if (enemyCount >= 1)
-        {        
-            StartCoroutine(WaitNiceQuest()); 
+        else if (bossCount >= 1)
+        {
+            bossCount = 0; // Reset số lượng kẻ thù đã tiêu diệt
+            StartCoroutine(WaitNiceQuest());
+            turnInQuest5.StartTurnInQuest5();
+
             Debug.Log("Hoàn thành nv");
         }
     }

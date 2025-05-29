@@ -127,6 +127,7 @@ public class TimeLineDesert : MonoBehaviour
         Cursor.visible = false; //an chuot
         scene2.Priority = 0;
         textContent.text = "?";
+        questDesert.enemy.SetActive(true); // Kích hoạt kẻ thù
         RenderSettings.fogDensity = 0.01f; //tăng độ mờ của sương mù
 
         yield return new WaitForSeconds(2f); // Chờ trong 3 giây
@@ -134,7 +135,7 @@ public class TimeLineDesert : MonoBehaviour
        
         yield return new WaitForSeconds(2f); // Chờ trong 3 giây
         textContent.text = "Bị bao vay rồi.";
-        questDesert.enemy.SetActive(true); // Kích hoạt kẻ thù
+       
 
         yield return new WaitForSeconds(2f); // Chờ trong 3 giây
         panelContent.SetActive(false); // Ẩn panel nội dung
