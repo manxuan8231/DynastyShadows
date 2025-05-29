@@ -8,9 +8,10 @@ public class TimeLineDesert : MonoBehaviour
 {
     public CinemachineCamera scene1;//camera 1
     public CinemachineCamera scene2;//camera 2
-    public CinemachineCamera scene3;//canh enemy suất hiện
+  
     public GameObject effectDesert;//hieu ung bao cat
 
+    public GameObject panelContent;
     public TextMeshProUGUI textContent;
 
     private bool isScene1Active = false;
@@ -26,6 +27,7 @@ public class TimeLineDesert : MonoBehaviour
         characterController = FindAnyObjectByType<PlayerController>();
         questDesert = FindAnyObjectByType<QuestDesert5>(); // Lấy đối tượng QuestDesert5
         effectDesert.SetActive(false); // Ẩn hiệu ứng sa mạc ban đầu
+        panelContent.SetActive(false); // Ẩn panel nội dung ban đầu
         textContent.enabled = false; // Ẩn nội dung văn bản ban đầu
         scene1.Priority = 0; // Đặt độ ưu tiên của camera scene1 là 0
     }
@@ -77,6 +79,7 @@ public class TimeLineDesert : MonoBehaviour
         effectDesert.SetActive(true);
         yield return new WaitForSeconds(2f);//---------------------
         // Hiện nội dung văn bản
+        panelContent.SetActive(true); // Hiện panel nội dung
         textContent.enabled = true;
         textContent.text = "Hình như mình cảm thấy một khi tức kì lạ từ con đường này?";
         // Chờ 3 giây
@@ -98,6 +101,7 @@ public class TimeLineDesert : MonoBehaviour
         UnityEngine.Cursor.visible = false;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         // Ẩn nội dung văn bản
+        panelContent.SetActive(false); // Ẩn panel nội dung
         textContent.enabled = false;
         // Đặt độ ưu tiên của camera scene1 về 0
         scene1.Priority = 0;
@@ -113,6 +117,7 @@ public class TimeLineDesert : MonoBehaviour
         characterController.enabled = false; // Vô hiệu hóa CharacterController
         characterController.animator.SetBool("isWalking", false);
         characterController.animator.SetBool("isRunning", false);
+        panelContent.SetActive(true); // Hiện panel nội dung
         textContent.enabled = true; // Hiện nội dung văn bản
         textContent.text = "Không ngờ ở đây lại có các dấu vết còn sót lại của con người.";
 
@@ -132,6 +137,7 @@ public class TimeLineDesert : MonoBehaviour
         questDesert.enemy.SetActive(true); // Kích hoạt kẻ thù
 
         yield return new WaitForSeconds(2f); // Chờ trong 3 giây
+        panelContent.SetActive(false); // Ẩn panel nội dung
         textContent.enabled = false; // Ẩn nội dung văn bản
 
 
