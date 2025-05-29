@@ -12,7 +12,7 @@ public class NecIdleState : INecState
 
     public override void Update()
     {
-
+       
         float distance = Vector3.Distance(enemy.transform.position, enemy.player.transform.position);
         if (distance <= enemy.radius) 
         { 
@@ -21,11 +21,11 @@ public class NecIdleState : INecState
     
         }
         enemy.anmt.SetTrigger("Idle");
-        if (enemy.necHp.curhp <= 350)
+        if (enemy.necHp.curhp <= 7000)
         {
             enemy.ChangState(new Skill1NecState(enemy));
         }
-
+        
     }
 
     public override void Exit()

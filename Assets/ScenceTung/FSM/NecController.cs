@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-
 public class NecController : MonoBehaviour
 {
     public INecState currentState;
@@ -25,9 +24,13 @@ public class NecController : MonoBehaviour
 
     public Vector3 playerPos;
     public DameZoneWeapon damezoneWP;
-   
+    public BoxCollider offDame;
+    public NecAudioManager audioManager;
+
+
     void Start()
     {
+        audioManager = FindAnyObjectByType<NecAudioManager>();
         damezoneWP = FindAnyObjectByType<DameZoneWeapon>();
         anmt = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -46,13 +49,19 @@ public class NecController : MonoBehaviour
 
      void Update()
     {
+        if(necHp.curhp <= 0)
+        {
+            ChangState(new DeathNecState(this));
+        }
         playerPos = player.transform.position;
         currentState?.Update();
         if (Input.GetKeyDown(KeyCode.T))
         {
-            necHp.TakeDame(150);
+           TakeDame(3000);
             Debug.Log("Đã trừ máu");
         }
+
+       
 
     }
 
@@ -87,6 +96,7 @@ public class NecController : MonoBehaviour
     {
         if(!isSkill1 && !isSKill3)
         {
+            audioManager.audioSource.PlayOneShot(audioManager.skill2Sound);
             Vector3 playerPos = player.transform.position;
             GameObject obj = Instantiate(skill2, playerPos, Quaternion.identity);
             Destroy(obj, 6f);
@@ -98,6 +108,8 @@ public class NecController : MonoBehaviour
     {
         if(isSkill1 && isSKill3)
         {
+            audioManager.audioSource.PlayOneShot(audioManager.skill3Sound);
+
             Vector3 playerPos = player.transform.position;
             GameObject obj = Instantiate(skill3, playerPos, Quaternion.identity);
             Destroy(obj, 6f);
@@ -113,5 +125,16 @@ public class NecController : MonoBehaviour
     public void EndDame()
     {
         damezoneWP.endDame();
+    }
+    public void TakeDame(float damage)
+    {
+        necHp.curhp -= damage;
+
+        necHp.curhp = Mathf.Clamp(necHp.curhp, 0, necHp.maxhp);
+        necHp.sliderHp.maxValue = necHp.curhp;
+        necHp.sliderHp.value = necHp.curhp;
+        necHp.textHp.text = $"{necHp.curhp}/{necHp.maxhp}";
+
+       
     }
 }

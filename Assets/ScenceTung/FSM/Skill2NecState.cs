@@ -13,8 +13,8 @@ public class Skill2NecState : INecState
     }
 
     public override void Update()
-    {  
-        
+    {
+       
         if (enemy.isSkill2 == true)
         {
             if (enemy.checkEnemyCount <= 10 && Time.time >= skillTimer + skillCooldown)
