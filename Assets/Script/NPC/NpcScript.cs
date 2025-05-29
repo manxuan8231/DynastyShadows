@@ -67,11 +67,21 @@ public class NPCScript : MonoBehaviour
             NPCPanel.SetActive(true);
             coroutine = StartCoroutine(ReadContent());
             buttonF.SetActive(false); // Ẩn nút F khi bắt đầu hội thoại
+
            
         }
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-           OnSkipButtonPressed(); // Bấm Escape để bỏ qua hội thoại
+            if (isTyping)
+            {
+                // Bấm Skip trong lúc chữ đang chạy → hiện toàn bộ câu
+                skipPressed = true;
+            }
+            else if (isWaitingForNext)
+            {
+                // Bấm Skip lần 2 → chuyển sang câu tiếp theo
+                skipPressed = true;
+            }
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -80,6 +90,7 @@ public class NPCScript : MonoBehaviour
         {
             buttonF.SetActive(true); // Hiện nút F khi vào vùng tương tác
             isButtonF = true; // Đặt trạng thái hội thoại là true
+           
         }
     }
                                     

@@ -66,8 +66,10 @@ public class EnemyHP3 : MonoBehaviour
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             Destroy(gameObject, 3f);
             // Gọi hàm cập nhật quest khi quái chết
-            questManager.UpdateQuestBacLam(1);  
-            thuongNhan.UpdateKillEnemy(1); //  Cập nhật số lượng kẻ thù đã tiêu diệt trong quest thuong nhan
+            if (questManager != null) 
+                questManager.UpdateQuestBacLam(1);
+            if (thuongNhan != null)
+                thuongNhan.UpdateKillEnemy(1); //  Cập nhật số lượng kẻ thù đã tiêu diệt trong quest thuong nhan
         }
     }
     public void TakeDamageHit(float damage)
