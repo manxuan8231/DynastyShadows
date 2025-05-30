@@ -135,11 +135,12 @@ public class TurnInQuestThuongNhan : MonoBehaviour
         comboAttack.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
+        openShop.enabled = true; // Kích hoạt OpenShop
+        openShop.isShopActive = true; // Đặt trạng thái cửa hàng là true
         //phan thuong
         playerStatus.AddExp(300); ; // Thưởng kinh nghiệm
         StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
-        openShop.enabled = true; // Kích hoạt OpenShop
+      
     }
 
 

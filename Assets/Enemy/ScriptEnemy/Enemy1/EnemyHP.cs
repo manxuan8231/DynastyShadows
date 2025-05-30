@@ -52,8 +52,7 @@ public class EnemyHP : MonoBehaviour
             boxDame.enabled = false;
             DropItem(); // Gọi hàm rơi đồ
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
-           EnemyPoolManager.Instance.ReturnToPool(gameObject);
-            if(quest3 != null)
+            if (quest3 != null)
             {
                 quest3.UpdateKillEnemy(1);
             }
@@ -61,7 +60,8 @@ public class EnemyHP : MonoBehaviour
             {
                 Necboss.EnemyCount();
             }
-            // Tạo expPrefab tại vị trí của enemy
+           
+            EnemyPoolManager.Instance.ReturnToPool(gameObject);
         }
         if (currentHealth > 0)
         {
@@ -89,7 +89,11 @@ public class EnemyHP : MonoBehaviour
             DropItem(); // Gọi hàm rơi đồ
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject, 3f);
-            quest3.UpdateKillEnemy(1);//
+            if(quest3 != null)
+            {
+                quest3.UpdateKillEnemy(1);
+            }
+          
             // Tạo expPrefab tại vị trí của enemy
 
         }
