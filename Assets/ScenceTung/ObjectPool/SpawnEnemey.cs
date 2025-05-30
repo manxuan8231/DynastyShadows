@@ -3,7 +3,7 @@
 public class SpawnEnemy : MonoBehaviour
 {
     public Transform[] spawnPoints; // Vị trí spawn sẵn
-    public int enemySpawnCount = 3; // Số enemy muốn spawn
+    public int enemySpawnCount; // Số enemy muốn spawn
     public string enemyTag = "Enemy1"; // Tag của enemy dùng để gọi từ pool
     public bool hasSpawned = false;
 
