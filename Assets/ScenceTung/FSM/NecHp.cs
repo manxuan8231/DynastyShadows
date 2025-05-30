@@ -32,6 +32,8 @@ public class NecHp : MonoBehaviour
         {
             audioManager.audioSource.PlayOneShot(audioManager.audopBackgroud);
             sliderHpBoss2.SetActive(true);
+            
         }
     }
+    
 }
