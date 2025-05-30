@@ -7,11 +7,15 @@ public class Skill3NecState : INecState
     public float skill3Cooldown = 7;
     public override void Enter()
     {
+
        
     }
     public override void Update()
     {
-       
+        enemy.necHp.textHp.text = $"{(int)enemy.necHp.curhp}/{(int)enemy.necHp.maxhp}";
+
+
+
         if (enemy.isSkill1 == true)
         {
             if (Time.time >= skill3Timer + skill3Cooldown)
