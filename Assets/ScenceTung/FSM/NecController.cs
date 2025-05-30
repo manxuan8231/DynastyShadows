@@ -55,12 +55,7 @@ public class NecController : MonoBehaviour
         }
         playerPos = player.transform.position;
         currentState?.Update();
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-           TakeDame(3000);
-            Debug.Log("Đã trừ máu");
-        }
-
+        
        
 
     }
@@ -134,7 +129,7 @@ public class NecController : MonoBehaviour
         necHp.sliderHp.maxValue = necHp.curhp;
         necHp.sliderHp.value = necHp.curhp;
         necHp.textHp.text = $"{necHp.curhp}/{necHp.maxhp}";
+        Debug.Log("NecController TakeDame: " + necHp.curhp);
 
-       
     }
 }

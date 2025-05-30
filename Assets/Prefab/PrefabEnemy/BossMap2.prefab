@@ -20551,6 +20551,7 @@ GameObject:
   - component: {fileID: 234058433017115565}
   - component: {fileID: 5837599443076998970}
   - component: {fileID: 5046470696762969899}
+  - component: {fileID: -2521711690921909682}
   m_Layer: 0
   m_Name: BossMap2
   m_TagString: Untagged
@@ -20844,6 +20845,33 @@ MonoBehaviour:
   skill2Sound: {fileID: 8300000, guid: e8bcb76d42ba7964b84b6695adbe0a52, type: 3}
   skill3Sound: {fileID: 8300000, guid: eccb87eb73f97d34f8996189949e7666, type: 3}
   deathClip: {fileID: 8300000, guid: b5150556e968870479f980df47b7ae10, type: 3}
+--- !u!54 &-2521711690921909682
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7732524260665382206}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7737077559950914891
 GameObject:
   m_ObjectHideFlags: 0

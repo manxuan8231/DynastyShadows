@@ -35,7 +35,7 @@ public class DameZoneHit : MonoBehaviour
             if (enemyHP != null)
             {
                 ShowTextDame(maxDame);
-                enemyHP.TakeDamageHit(maxDame);
+               // enemyHP.TakeDamageHit(maxDame);
                 return;
             }
 

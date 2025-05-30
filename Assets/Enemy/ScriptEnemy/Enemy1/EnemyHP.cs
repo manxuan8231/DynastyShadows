@@ -72,42 +72,7 @@ public class EnemyHP : MonoBehaviour
         
    
     }
-    public void TakeDamageHit(float damage)
-    {
-        if (enemy1.currentState == Enemy1.EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
-
-        currentHealth -= damage;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        sliderHp.value = currentHealth;
-        if (currentHealth <= 0)
-        {
-            enemy1.animator.enabled = true; // Bật animator để có thể chơi animation chết
-            enemy1.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết
-            enemy1.ChangeState(Enemy1.EnemyState.Death);
-            enemy1.agent.isStopped = true; // Dừng lại khi chết
-            boxDame.enabled = false;
-            DropItem(); // Gọi hàm rơi đồ
-            GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
-            Destroy(gameObject, 3f);
-            if(quest3 != null)
-            {
-                quest3.UpdateKillEnemy(1);
-            }
-          
-            // Tạo expPrefab tại vị trí của enemy
-
-        }
-        if (currentHealth > 0)
-        {
-            enemy1.ChangeState(Enemy1.EnemyState.GetHit);
-
-
-            // Sau một thời gian nhỏ thì quay lại Run/Attack
-            Invoke(nameof(BackToChase), 0.2f);
-        }
-
-       
-    }
+      
     public void DropItem()
     {
         float rand = Random.Range(0f, 100f); // số ngẫu nhiên từ 0 đến 100

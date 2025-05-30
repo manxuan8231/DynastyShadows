@@ -18,9 +18,10 @@ public class DameZone : MonoBehaviour
 
     //ke thua
     PlayerStatus playerStatus;
-
+   
     private void Start()
     {
+        
         playerStatus = FindAnyObjectByType<PlayerStatus>();
     }
     private void OnTriggerEnter(Collider other)
@@ -85,7 +86,15 @@ public class DameZone : MonoBehaviour
                 bossHP.TakeDamage(finalDamage);
                 return;
             }
-
+            NecController necController = other.GetComponent<NecController>();
+            if (necController != null)
+            {
+                Debug.Log("Đã trúng NecController");
+                listDame.Add(other);
+                ShowTextDame(finalDamage);
+                necController.TakeDame(finalDamage);
+                return;
+            }
         }
     }
     private void OnTriggerStay(Collider other)//nếu ontrigger xử lấy ko kịp thì nó dô đây xử lý tiếp
