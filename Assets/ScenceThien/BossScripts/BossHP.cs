@@ -63,8 +63,7 @@ public class BossHP : MonoBehaviour
         }
         else
         {
-            if (questDesert5 != null)
-                questDesert5.UpdateKillBoss(1); // Bắt đầu nhiệm vụ Desert5
+          
             Die();
         }
     }
@@ -85,9 +84,11 @@ public class BossHP : MonoBehaviour
 
     void Die()
     {
+        Debug.Log("Boss đã chết");
         isDead = true;
         bossScript.TransitionToState(bossScript.deathState);
-
+        if (questDesert5 != null)
+            questDesert5.UpdateKillBoss(1); // Bắt đầu nhiệm vụ Desert5
         if (bossScript.agent != null)
             bossScript.agent.isStopped = true;
 

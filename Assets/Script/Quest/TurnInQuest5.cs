@@ -10,7 +10,7 @@ public class TurnInQuest5 : MonoBehaviour
     public TextMeshProUGUI NPCContent; // Nội dung hội thoại
     public GameObject icon3D; // Icon 3D của NPC
     public GameObject niceQuestUI;
-   public GameObject pointerLinhCanh; // Mũi tên chỉ đường đến Linh Canh
+    public GameObject arrowIcon; // Mũi tên chỉ hướng đến NPC
 
     public string[] names; // Danh sách tên 
     public string[] content; // Nội dung hội thoại
@@ -28,7 +28,7 @@ public class TurnInQuest5 : MonoBehaviour
     //tham chieu
     PlayerController playerController; // Tham chiếu đến PlayerController
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack
-    Quest3 quest3;
+    QuestDesert5 questDesert5;
     PlayerStatus playerStatus;
 
     AudioSource audioSource; // Tham chiếu đến AudioSource
@@ -37,7 +37,7 @@ public class TurnInQuest5 : MonoBehaviour
     {
 
         playerStatus = FindAnyObjectByType<PlayerStatus>();
-        quest3 = FindAnyObjectByType<Quest3>();
+        questDesert5 = FindAnyObjectByType<QuestDesert5>(); // Lấy đối tượng QuestDesert5
         playerController = FindAnyObjectByType<PlayerController>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
@@ -45,7 +45,7 @@ public class TurnInQuest5 : MonoBehaviour
         NPCPanel.SetActive(false);
         buttonSkip.SetActive(false);
         buttonF.SetActive(false); // Ẩn nút F khi bắt đầu
-        pointerLinhCanh.SetActive(false); // Ẩn mũi tên chỉ đường đến Linh Canh
+        arrowIcon.SetActive(false); // Ẩn mũi tên chỉ hướng đến NPC khi bắt đầu
         niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp khi bắt đầu
         NPCName.text = "";
         NPCContent.text = "";
@@ -137,12 +137,12 @@ public class TurnInQuest5 : MonoBehaviour
         comboAttack.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-
-       
+        questDesert5.questNameText.enabled = false; // Ẩn tên nhiệm vụ
+        questDesert5.questPanel.SetActive(false); // Ẩn panel nhiệm vụ
+        arrowIcon.SetActive(false); // Ẩn mũi tên chỉ hướng đến NPC khi bắt đầu
         icon3D.SetActive(false); // Ẩn icon 3D của NPC
         playerStatus.AddExp(500); // Thêm kinh nghiệm cho người chơi
-      
+        
         StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
         Debug.Log("Phần thưởng đã nhận");
 
@@ -186,7 +186,7 @@ public class TurnInQuest5 : MonoBehaviour
     public void StartTurnInQuest5()
     {
        
-        pointerLinhCanh.SetActive(true); 
+       arrowIcon.SetActive(true); // Hiện mũi tên chỉ hướng đến NPC
         isContent = true; // Đặt trạng thái nhiệm vụ là true
         icon3D.SetActive(true); // Hiện icon 3D của NPC   
         isButtonF = true; // Đặt trạng thái hội thoại là true

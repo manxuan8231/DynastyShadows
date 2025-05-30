@@ -57,7 +57,7 @@ public class QuestMainBacLam : MonoBehaviour
         iconQuest.SetActive(true);// Hiện icon nhiệm vụ trên bản đồ
         questPanel.SetActive(true);// Hiện panel nhiệm vụ
         pointerLinhCanhB.SetActive(true);// Hiện mũi tên chỉ đường đến Lính Canh B
-        questNameText.text = $"Nhiệm vụ đến chổ Lính Canh B";
+        questNameText.text = $"Đến chổ Lính Canh B";
     }
 
     public void StartQuestLinhCanhB()
@@ -67,7 +67,7 @@ public class QuestMainBacLam : MonoBehaviour
         iconQuest.SetActive(false);
         pointerEnemy.SetActive(true);// Hiện mũi tên chỉ đường đến Lính Canh B
        
-        questNameText.text = $"Nhiệm vụ Tiêu diệt sinh vật ở khu đầm lầy";
+        questNameText.text = $"Tiêu diệt sinh vật ở khu đầm lầy";
     }
     //hoan thanh quest
     public void CompleteQuestMainBacLam()

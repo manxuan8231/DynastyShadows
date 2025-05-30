@@ -126,8 +126,9 @@ public class TimeLineDesert : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked; // Khóa chuột lại
         Cursor.visible = false; //an chuot
         scene2.Priority = 0;
-        textContent.text = "?";
-        questDesert.enemy.SetActive(true); // Kích hoạt kẻ thù
+        textContent.text = "...?";//
+        questDesert.enemy.SetActive(true); // Kích hoạt kẻ thù---------------------------------
+        questDesert.questNameText.text = $"Tiêu diệt hết kẻ thù bao vây"; // Hiển thị tên nhiệm vụ
         RenderSettings.fogDensity = 0.01f; //tăng độ mờ của sương mù
 
         yield return new WaitForSeconds(2f); // Chờ trong 3 giây

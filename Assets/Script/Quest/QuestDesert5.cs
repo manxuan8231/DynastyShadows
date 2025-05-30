@@ -52,10 +52,17 @@ public class QuestDesert5 : MonoBehaviour
         {
             bossCount = 0; // Reset số lượng kẻ thù đã tiêu diệt
             StartCoroutine(WaitNiceQuest());
+            turnInQuest5.enabled = true; // Kích hoạt TurnInQuest5
             turnInQuest5.StartTurnInQuest5();
 
             Debug.Log("Hoàn thành nv");
+        } 
+        else
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            UpdateKillBoss(1); 
         }
+       
     }
     // Bắt đầu quest
     public void StartQuestDesert5()
@@ -95,7 +102,7 @@ public class QuestDesert5 : MonoBehaviour
         niceQuestDesert5.SetActive(true); // Hiện nhiệm vụ sa mạc
         yield return new WaitForSeconds(5f); // Chờ 2 giây
         niceQuestDesert5.SetActive(false); // Ẩn nhiệm vụ sa mạc
-        questPanel.SetActive(false); // Ẩn panel nhiệm vụ
-        questNameText.enabled = false; // Ẩn tên nhiệm vụ
+       // questPanel.SetActive(false); // Ẩn panel nhiệm vụ
+        questNameText.text = $"Trả nhiệm vụ cho Lính Canh B"; // Hiển thị tên nhiệm vụ
     }
 }
