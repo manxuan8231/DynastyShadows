@@ -64,12 +64,13 @@ public class EnemyHP3 : MonoBehaviour
             enemy3.agent.isStopped = true; // Dừng lại khi chết
             DropItem();
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
-            Destroy(gameObject, 3f);
+            
             // Gọi hàm cập nhật quest khi quái chết
             if (questManager != null) 
                 questManager.UpdateQuestBacLam(1);
             if (thuongNhan != null)
                 thuongNhan.UpdateKillEnemy(1); //  Cập nhật số lượng kẻ thù đã tiêu diệt trong quest thuong nhan
+            EnemyPoolManager.Instance.ReturnToPool(gameObject); // Trả enemy về pool
         }
     }
     public void TakeDamageHit(float damage)

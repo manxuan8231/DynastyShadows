@@ -6,7 +6,10 @@ public class Quest2 : MonoBehaviour
     public GameObject questPanel;// Panel hiển thị thông tin nhiệm vụ 
     public TextMeshProUGUI questNameText;// Tên nhiệm vụ
     public GameObject iconQuest; // Icon hiển thị nơi làm nhiệm vụ
-
+    //// Các điểm xuất hiện kẻ thù
+    public Transform[] spawnPoints;
+    public int enemyCountToSpawn = 10;
+    public bool hasSpawned = false;
     // Quest Village
     private bool questVillageStarted = false;
     public GameObject enemy; // Kẻ thù trong quest
@@ -25,6 +28,7 @@ public class Quest2 : MonoBehaviour
     {
         if (questVillageStarted) return;// Nếu quest đã bắt đầu thì không làm gì cả
         enemy.SetActive(true); // Kẻ thù sẽ xuất hiện khi bắt đầu quest
+        SpawnEnemiesInstantly();
         questVillageStarted = true;
         iconQuest.SetActive(true);
         questPanel.SetActive(true);
@@ -33,5 +37,15 @@ public class Quest2 : MonoBehaviour
     public void UpdateKillCount()
     {
         
+    }
+    public void SpawnEnemiesInstantly()
+    {
+        for (int i = 0; i < enemyCountToSpawn; i++)
+        {
+            Transform randomPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            EnemyPoolManager.Instance.GetEnemyFromPool(randomPoint.position);
+        }
+
+
     }
 }

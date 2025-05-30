@@ -41,7 +41,7 @@ public class OpenShop : MonoBehaviour
     }
     public void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && isShopActive == true)
         {
             isButtonF = false; // Đặt biến isButtonF thành false khi người chơi rời khỏi vùng kích hoạt
             buttonF.SetActive(false); // Ẩn nút F khi người chơi rời khỏi vùng kích hoạt

@@ -6,7 +6,11 @@ public class Quest1 : MonoBehaviour
     public GameObject questPanel;
     public TextMeshProUGUI questNameText;
     public GameObject iconQuest; // Icon hiển thị nơi làm nhiệm vụ
-   
+
+    //// Các điểm xuất hiện kẻ thù
+    public Transform[] spawnPoints;
+    public int enemyCountToSpawn = 10;
+    public bool hasSpawned = false;
 
     // Quest Bác Lâm
     private int questBacLamKillCount = 0;
@@ -29,7 +33,7 @@ public class Quest1 : MonoBehaviour
     public void StartQuestBacLam()
     {
         if (questBacLamStarted) return;
-
+        SpawnEnemiesInstantly(); // Gọi hàm để spawn kẻ thù ngay lập tức
         questBacLamStarted = true;
         questBacLamKillCount = 0;
         questBacLamCompleted = false;
@@ -61,5 +65,14 @@ public class Quest1 : MonoBehaviour
         }
     }
 
-  
+    public void SpawnEnemiesInstantly()
+    {
+        for (int i = 0; i < enemyCountToSpawn; i++)
+        {
+            Transform randomPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            EnemyPoolManager.Instance.GetEnemyFromPool(randomPoint.position);
+        }
+
+
+    }
 }

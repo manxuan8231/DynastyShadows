@@ -74,8 +74,11 @@ public class EnemyHP2 : MonoBehaviour
             DropItem();
           
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
-            Destroy(gameObject, 3f);
-            knightD.UpdateKillCount(1); // Gọi hàm cập nhật quest
+           if(knightD != null)
+            {
+                knightD.UpdateKillCount(1); // Gọi hàm cập nhật quest
+            }
+           EnemyPoolManager.Instance.ReturnToPool(gameObject); // Trả enemy về pool
         }
     }
     public void TakeDamageHit(float damage)
