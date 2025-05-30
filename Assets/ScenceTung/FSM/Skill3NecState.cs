@@ -11,7 +11,8 @@ public class Skill3NecState : INecState
     }
     public override void Update()
     {
-        if(enemy.isSkill1 == true)
+       
+        if (enemy.isSkill1 == true)
         {
             if (Time.time >= skill3Timer + skill3Cooldown)
             {
@@ -20,6 +21,8 @@ public class Skill3NecState : INecState
                 skill3Timer = Time.time;
             }
         }
+
+      
     }
     public override void Exit()
     {

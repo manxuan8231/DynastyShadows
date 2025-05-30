@@ -1,16 +1,31 @@
 using UnityEngine;
 
-public class DeathNecState : MonoBehaviour
+public class DeathNecState : INecState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+   public DeathNecState(NecController enemy)  : base(enemy) { }
+
+    public override void Enter()
     {
-        
+
+    }
+    public override void Update()
+    {
+        if (enemy.necHp.curhp <= 0)
+
+        {
+            enemy.audioManager.audioSource.Stop();
+            enemy.audioManager.audioSource.clip = enemy.audioManager.deathClip;
+            enemy.audioManager.audioSource.Play();
+            enemy.offDame.enabled = false;
+            enemy.anmt.SetTrigger("Death");
+            GameObject.Destroy(enemy.gameObject, 5f);
+        }
+    }
+    public override void Exit()
+    {
+        enemy.enabled = false;
+        enemy.agent.enabled = false ;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  
 }
