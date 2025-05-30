@@ -45,6 +45,7 @@ public class EnemyHP : MonoBehaviour
         sliderHp.value = currentHealth;
         if (currentHealth <= 0)
         {
+
             enemy1.animator.enabled = true; // Bật animator để có thể chơi animation chết
             enemy1.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết
             enemy1.ChangeState(Enemy1.EnemyState.Death);
@@ -62,6 +63,7 @@ public class EnemyHP : MonoBehaviour
             }
            
             EnemyPoolManager.Instance.ReturnToPool(gameObject);
+           
         }
         if (currentHealth > 0)
         {

@@ -34,6 +34,10 @@ public class TurnInQuest2 : MonoBehaviour
 
     public AudioSource audioSource; // Tham chiếu đến AudioSource
     public AudioClip audioSkip; // Âm thanh khi bấm skip
+
+    public Transform[] enemySpawn; // Điểm xuất hiện kẻ thù
+    public int enemyCountToSpawn = 3; // Số lượng kẻ thù cần spawn
+
     void Start()
     {
         linhCanh.SetActive(false); // Ẩn linh canh khi bắt đầu
@@ -148,6 +152,11 @@ public class TurnInQuest2 : MonoBehaviour
         isContent = false; // Đặt lại trạng thái hội thoại
         linhCanh.SetActive(true); // Hiện linh canh
         thuongNhan.SetActive(true); // Hiện thuong nhan
+        if(thuongNhan != null && thuongNhan.activeSelf)
+        {
+            SpawnEnemiesInstantly(); // Gọi hàm để spawn kẻ thù ngay lập tức
+          
+        }
         playerStatus.AddExp(200); // Thêm kinh nghiệm cho người chơi
         StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
         Debug.Log("Phần thưởng đã nhận");
@@ -185,5 +194,16 @@ public class TurnInQuest2 : MonoBehaviour
         niceQuestUI.SetActive(true); // Hiện UI nhiệm vụ đẹp
         yield return new WaitForSeconds(5f);
         niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp sau 2 giây
+    }
+
+    public void SpawnEnemiesInstantly()
+    {
+        for (int i = 0; i < enemyCountToSpawn; i++)
+        {
+            Transform randomPoint = enemySpawn[Random.Range(0, enemySpawn.Length)];
+            EnemyPoolManager.Instance.GetEnemyFromPool(randomPoint.position);
+        }
+
+
     }
 }

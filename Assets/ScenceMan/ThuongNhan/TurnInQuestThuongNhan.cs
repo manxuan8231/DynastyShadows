@@ -22,7 +22,7 @@ public class TurnInQuestThuongNhan : MonoBehaviour
     private bool isTyping = false; // Đang chạy từng chữ
     private bool skipPressed = false; // Người chơi đã bấm skip
     private bool isWaitingForNext = false; // Đang chờ người chơi bấm Skip để qua câu tiếp theo
-
+    public bool isOpenShop = false; // Kiểm tra trạng thái của OpenShop
     //tham chieu
     PlayerController playerController; // Tham chiếu đến PlayerController
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack
@@ -136,7 +136,7 @@ public class TurnInQuestThuongNhan : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         openShop.enabled = true; // Kích hoạt OpenShop
-        openShop.isShopActive = true; // Đặt trạng thái cửa hàng là true
+        isOpenShop = true; // Đặt trạng thái OpenShop là true
         //phan thuong
         playerStatus.AddExp(300); ; // Thưởng kinh nghiệm
         StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây

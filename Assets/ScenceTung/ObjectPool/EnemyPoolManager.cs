@@ -6,6 +6,7 @@ public class EnemyPoolManager : MonoBehaviour
     public static EnemyPoolManager Instance;
 
     public GameObject enemyPrefab;
+
     public int poolSize = 30;
 
     private Queue<GameObject> enemyPool = new Queue<GameObject>();

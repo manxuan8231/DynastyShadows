@@ -6,12 +6,15 @@ public class OpenShop : MonoBehaviour
     public GameObject buttonF; // Nút F để mở cửa hàng
 
     public bool isButtonF;
-    public bool isShopActive = false; // Biến để kiểm tra trạng thái của cửa hàng
+
+    //
+    TurnInQuestThuongNhan turnInQuestThuongNhan; // Tham chiếu đến TurnInQuestThuongNhan
     void Start()
     {
         shopPanel.SetActive(false); // Ẩn cửa hàng khi bắt đầu
         buttonF.SetActive(false); // Ẩn nút F khi bắt đầu
-        isShopActive = false; // Đặt biến isButtonF ban đầu là false
+        turnInQuestThuongNhan = FindAnyObjectByType<TurnInQuestThuongNhan>(); // Lấy tham chiếu đến TurnInQuestThuongNhan
+       
     }
 
 
@@ -33,7 +36,7 @@ public class OpenShop : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player") && isShopActive == true)
+        if(other.CompareTag("Player") && turnInQuestThuongNhan.isOpenShop == true)
         {
             isButtonF = true; // Đặt biến isButtonF thành true khi người chơi vào vùng kích hoạt
             buttonF.SetActive(true); // Hiển thị nút F khi người chơi vào vùng kích hoạt
@@ -41,7 +44,7 @@ public class OpenShop : MonoBehaviour
     }
     public void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && isShopActive == true)
+        if (other.CompareTag("Player"))
         {
             isButtonF = false; // Đặt biến isButtonF thành false khi người chơi rời khỏi vùng kích hoạt
             buttonF.SetActive(false); // Ẩn nút F khi người chơi rời khỏi vùng kích hoạt
