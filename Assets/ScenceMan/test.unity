@@ -1222,24 +1222,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 888846865}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91b80427a2a1faf41baa9ff2f7da7ce3, type: 3}
+  m_Script: {fileID: 11500000, guid: bc709c37f66125e4ea7e4bef342c4d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySpawn:
-  - {fileID: 1438172564}
-  - {fileID: 696679398}
-  - {fileID: 1217441124}
-  - {fileID: 690689632}
-  - {fileID: 840608081}
-  - {fileID: 1932679341}
-  - {fileID: 154995966}
-  - {fileID: 410024784}
-  - {fileID: 710768269}
-  - {fileID: 1190629463}
-  - {fileID: 1427671189}
-  - {fileID: 761524128}
-  - {fileID: 1988319421}
-  enemyCount: 5
+  enemyPrefab: {fileID: 7331802775954158954, guid: bd2dc31464080044dbdd373a82a2788f, type: 3}
+  poolSize: 30
 --- !u!1 &1135784131
 GameObject:
   m_ObjectHideFlags: 0

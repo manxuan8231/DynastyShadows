@@ -85,7 +85,7 @@ public class PlayerStatus : MonoBehaviour
         //level and score
         expSlider.maxValue = expToNextLevel;
         expSlider.value = currentExp;
-        levelText.text = "Level: " + currentLevel;
+        levelText.text = currentLevel.ToString();
         scoreText.text = "Score: " + score;
         //mana
         currentMana = maxMana;
@@ -235,7 +235,7 @@ public class PlayerStatus : MonoBehaviour
 
         if (levelText != null)
         {
-            levelText.text = "Level: " + currentLevel;
+            levelText.text = currentLevel.ToString();
         }
 
         if (scoreText != null)

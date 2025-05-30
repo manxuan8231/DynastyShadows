@@ -28,7 +28,10 @@ public class Quest3 : MonoBehaviour
     }
     private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            UpdateKillOrk(1); // Giả lập việc tiêu diệt Ork khi nhấn T
+        }
     }
 
     // Bắt đầu quest
