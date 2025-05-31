@@ -26,8 +26,7 @@ public class ItemSO : ScriptableObject
             }
             else
             {
-                itemBuff.BuffHP(amoutToChangeStat);
-            
+                itemBuff.BuffHP(amoutToChangeStat);     
                 Debug.Log("đã hồi máu " + amoutToChangeStat);
                 return true;
             }
