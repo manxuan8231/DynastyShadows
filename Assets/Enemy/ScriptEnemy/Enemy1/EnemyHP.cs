@@ -19,6 +19,10 @@ public class EnemyHP : MonoBehaviour
     //box nhận dame
     public BoxCollider boxDame;
     public List<ItemDrop> itemDrops = new List<ItemDrop>();
+    //void OnEnable()
+    //{
+    //    ResetEnemy(); // Mỗi lần lấy từ pool ra thì reset lại
+    //}
     void Start()
     {
         currentHealth = maxHealth;
@@ -27,14 +31,16 @@ public class EnemyHP : MonoBehaviour
         enemy1 = GetComponent<Enemy1>(); // <- GÁN Ở ĐÂY
         quest3 = FindAnyObjectByType<Quest3>();
         Necboss = FindAnyObjectByType<NecController>();
+        
     }
+    
 
     // Update is called once per frame
     void Update()
     {
        
     }
-
+   
     public void TakeDamage(float damage)
     {
         if (enemy1.currentState == Enemy1.EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
@@ -61,8 +67,9 @@ public class EnemyHP : MonoBehaviour
             {
                 Necboss.EnemyCount();
             }
-           
+
             EnemyPoolManager.Instance.ReturnToPool(gameObject);
+            
            
         }
         if (currentHealth > 0)
@@ -105,6 +112,27 @@ public class EnemyHP : MonoBehaviour
                 enemy1.ChangeState(Enemy1.EnemyState.Run);
             }
         }
+    }
+
+    void ResetEnemy()
+    {
+        currentHealth = maxHealth;
+        sliderHp.maxValue = currentHealth;
+        sliderHp.value = currentHealth;
+
+        boxDame.enabled = true;
+        if (enemy1.animator != null)
+        {
+            enemy1.animator.Rebind();        // Khôi phục tất cả trạng thái mặc định ban đầu
+            enemy1.animator.Update(0f);      // Đảm bảo không bị đứng hình ở frame cũ
+        }
+        // Reset trạng thái di chuyển
+        if (enemy1.agent != null)
+        {
+            enemy1.agent.ResetPath();
+            enemy1.agent.enabled = true;
+        }
+
     }
 }
 

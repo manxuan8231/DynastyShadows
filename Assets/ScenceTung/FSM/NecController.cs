@@ -126,7 +126,6 @@ public class NecController : MonoBehaviour
         necHp.curhp -= damage;
 
         necHp.curhp = Mathf.Clamp(necHp.curhp, 0, necHp.maxhp);
-        necHp.sliderHp.maxValue = necHp.curhp;
         necHp.sliderHp.value = necHp.curhp;
         necHp.textHp.text = $"{necHp.curhp}/{necHp.maxhp}";
         Debug.Log("NecController TakeDame: " + necHp.curhp);
