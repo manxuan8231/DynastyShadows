@@ -35,8 +35,10 @@ public class TurnInQuest2 : MonoBehaviour
     public AudioSource audioSource; // Tham chiếu đến AudioSource
     public AudioClip audioSkip; // Âm thanh khi bấm skip
 
-    public Transform[] enemySpawn; // Điểm xuất hiện kẻ thù
-    public int enemyCountToSpawn = 3; // Số lượng kẻ thù cần spawn
+    //
+    public Transform[] spawnPoints; // Vị trí spawn sẵn
+    public int enemySpawnCount; // Số enemy muốn spawn
+    public string enemyTag; // Tag của enemy dùng để gọi từ pool
 
     void Start()
     {
@@ -154,7 +156,7 @@ public class TurnInQuest2 : MonoBehaviour
         thuongNhan.SetActive(true); // Hiện thuong nhan
         if(thuongNhan != null && thuongNhan.activeSelf)
         {
-            SpawnEnemiesInstantly(); // Gọi hàm để spawn kẻ thù ngay lập tức
+            SpawnEnemies(); // Gọi hàm để spawn kẻ thù ngay lập tức
           
         }
         playerStatus.AddExp(200); // Thêm kinh nghiệm cho người chơi
@@ -196,14 +198,20 @@ public class TurnInQuest2 : MonoBehaviour
         niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp sau 2 giây
     }
 
-    public void SpawnEnemiesInstantly()
+    void SpawnEnemies()
     {
-        for (int i = 0; i < enemyCountToSpawn; i++)
+        int count = Mathf.Min(enemySpawnCount, spawnPoints.Length);
+
+        for (int i = 0; i < count; i++)
         {
-            Transform randomPoint = enemySpawn[Random.Range(0, enemySpawn.Length)];
-            EnemyPoolManager.Instance.GetEnemyFromPool(randomPoint.position);
+            Vector3 spawnPos = spawnPoints[i].position;
+
+            GameObject enemy = ObjPoolingManager.Instance.GetEnemyFromPool(enemyTag, spawnPos);
+
+            if (enemy == null)
+            {
+                Debug.LogWarning("Enemy không đủ trong pool!");
+            }
         }
-
-
     }
 }

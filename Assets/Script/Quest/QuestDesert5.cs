@@ -7,6 +7,7 @@ public class QuestDesert5 : MonoBehaviour
 {
     public GameObject questPanel; // Panel hiển thị thông tin nhiệm vụ
     public TextMeshProUGUI questNameText; // Tên nhiệm vụ
+    public Light directionalLight; // Đèn chiếu sáng trong scene
 
     private bool isScene2 = false;// Biến kiểm tra xem đã vào scene 2 hay chưa
     public bool isPlayer = true; // Biến kiểm tra xem người chơi có đang ở trong khu vực này hay không
@@ -20,6 +21,11 @@ public class QuestDesert5 : MonoBehaviour
     //goi ham
     TimeLineDesert timeLineDesert; // Lấy đối tượng TimeLineDesert
     TurnInQuest5 turnInQuest5; // Lấy đối tượng TurnInQuest5
+
+    // Biến để lưu trữ các điểm spawn của kẻ thù
+    public Transform[] spawnPoints; // Vị trí spawn sẵn
+    public int enemySpawnCount; // Số lượng kẻ thù muốn spawn
+    public string enemyTag; // Tag của kẻ thù dùng để gọi từ pool
     void Start()
     {
         niceQuestDesert5.SetActive(false); // Ẩn nhiệm vụ sa mạc ban đầu
@@ -45,7 +51,8 @@ public class QuestDesert5 : MonoBehaviour
         if (enemyCount >= 10)
         {
             enemyCount = 0; // Reset số lượng kẻ thù đã tiêu diệt
-            boss.SetActive(true); // Hiện boss khi số lượng kẻ thù >= 10
+            //boss.SetActive(true); // Hiện boss khi số lượng kẻ thù >= 10
+            SpawnEnemies(); // Gọi hàm SpawnEnemies để spawn kẻ thù
             Debug.Log("Boss đã xuất hiện");
         }
         else if (bossCount >= 1)
@@ -54,7 +61,8 @@ public class QuestDesert5 : MonoBehaviour
             StartCoroutine(WaitNiceQuest());
             turnInQuest5.enabled = true; // Kích hoạt TurnInQuest5
             turnInQuest5.StartTurnInQuest5();
-
+            RenderSettings.fogDensity = 0; //giam độ mờ của sương mù
+            directionalLight.color = Color.white; // Đặt màu sắc của ánh sáng
             Debug.Log("Hoàn thành nv");
         } 
         else
@@ -104,5 +112,22 @@ public class QuestDesert5 : MonoBehaviour
         niceQuestDesert5.SetActive(false); // Ẩn nhiệm vụ sa mạc
        // questPanel.SetActive(false); // Ẩn panel nhiệm vụ
         questNameText.text = $"Trả nhiệm vụ cho Lính Canh B"; // Hiển thị tên nhiệm vụ
+    }
+
+    void SpawnEnemies()
+    {
+        int count = Mathf.Min(enemySpawnCount, spawnPoints.Length);
+
+        for (int i = 0; i < count; i++)
+        {
+            Vector3 spawnPos = spawnPoints[i].position;
+
+            GameObject enemy = ObjPoolingManager.Instance.GetEnemyFromPool(enemyTag, spawnPos);
+
+            if (enemy == null)
+            {
+                Debug.LogWarning("Enemy không đủ trong pool!");
+            }
+        }
     }
 }

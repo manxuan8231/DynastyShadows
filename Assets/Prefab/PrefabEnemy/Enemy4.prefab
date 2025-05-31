@@ -745,7 +745,7 @@ GameObject:
   - component: {fileID: 6716202094263034379}
   m_Layer: 0
   m_Name: Enemy4
-  m_TagString: Enemy
+  m_TagString: Enemy4
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -830,7 +830,7 @@ MonoBehaviour:
   player: {fileID: 0}
   firstPos: {x: 0, y: 0, z: 0}
   animator: {fileID: 0}
-  radius: 20
+  radius: 60
   attackRange: 3
   attackCooldown: 5
   leftSpine: {fileID: 4869125881869475869}
@@ -851,6 +851,7 @@ MonoBehaviour:
   sliderHp: {fileID: 1925424607141133662}
   currentHealth: 0
   maxHealth: 500
+  boxDame: {fileID: 0}
   itemDrops:
   - itemPrefabs: {fileID: 377432316260766231, guid: 39b0a3ee1fafb1245a9baec04558eed3, type: 3}
     dropRate: 40

@@ -95,8 +95,9 @@ public class BossHP : MonoBehaviour
         if (sliderHp != null)
             sliderHp.gameObject.SetActive(false);
 
-       
+        ObjPoolingManager.Instance.ReturnToPool("BossOrk1", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
         Destroy(gameObject, 5f);
        
     }
+
 }

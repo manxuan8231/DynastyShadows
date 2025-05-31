@@ -7504,7 +7504,7 @@ GameObject:
   - component: {fileID: 267384795352209559}
   m_Layer: 0
   m_Name: ork berserk prefab
-  m_TagString: Enemy
+  m_TagString: BossOrk1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7592,6 +7592,7 @@ MonoBehaviour:
   attackRange: 2.5
   isDead: 0
   isPhase2: 0
+  animationData: {fileID: 0}
 --- !u!114 &206717277359825406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7607,7 +7608,6 @@ MonoBehaviour:
   sliderHp: {fileID: 5683156262242678025}
   currentHealth: 0
   maxHealth: 200
-  bossAnimationData: {fileID: 0}
 --- !u!65 &761609419893517129
 BoxCollider:
   m_ObjectHideFlags: 0

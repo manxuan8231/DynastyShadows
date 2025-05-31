@@ -19,10 +19,10 @@ public class EnemyHP : MonoBehaviour
     //box nhận dame
     public BoxCollider boxDame;
     public List<ItemDrop> itemDrops = new List<ItemDrop>();
-    //void OnEnable()
-    //{
-    //    ResetEnemy(); // Mỗi lần lấy từ pool ra thì reset lại
-    //}
+    void OnEnable()
+    {
+        ResetEnemy(); // Mỗi lần lấy từ pool ra thì reset lại
+    }
     void Start()
     {
         currentHealth = maxHealth;
@@ -68,9 +68,9 @@ public class EnemyHP : MonoBehaviour
                 Necboss.EnemyCount();
             }
 
-            EnemyPoolManager.Instance.ReturnToPool(gameObject);
-            
-           
+            ObjPoolingManager.Instance.ReturnToPool("Enemy1", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
+
+
         }
         if (currentHealth > 0)
         {

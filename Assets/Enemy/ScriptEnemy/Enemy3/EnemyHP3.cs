@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,12 @@ public class EnemyHP3 : MonoBehaviour
     Enemy3 enemy3;
     Quest1 questManager; // Tham chiếu đến QuestManager
     ThuongNhan thuongNhan; // Tham chiếu đến ThuongNhan
+                           //box nhận dame                      
+    public BoxCollider boxDame;
+    void OnEnable()
+    {
+        ResetEnemy(); // Mỗi lần lấy từ pool ra thì reset lại
+    }
     void Start()
     {
         currentHealth = maxHealth;
@@ -22,6 +29,7 @@ public class EnemyHP3 : MonoBehaviour
         enemy3 = GetComponent<Enemy3>(); // <- GÁN Ở ĐÂY
         questManager = FindAnyObjectByType<Quest1>(); // Lấy tham chiếu đến QuestManager
         thuongNhan = FindAnyObjectByType<ThuongNhan>(); // Lấy tham chiếu đến ThuongNhan
+        boxDame = GetComponent<BoxCollider>(); // Lấy BoxCollider để nhận damage
     }
     public void DropItem()
     {
@@ -70,7 +78,8 @@ public class EnemyHP3 : MonoBehaviour
                 questManager.UpdateQuestBacLam(1);
             if (thuongNhan != null)
                 thuongNhan.UpdateKillEnemy(1); //  Cập nhật số lượng kẻ thù đã tiêu diệt trong quest thuong nhan
-            EnemyPoolManager.Instance.ReturnToPool(gameObject); // Trả enemy về pool
+            ObjPoolingManager.Instance.ReturnToPool("Enemy3",gameObject); // Trả về pool thay vì Destroy để tái sử dụng
+            
         }
     }
     public void TakeDamageHit(float damage)
@@ -119,5 +128,26 @@ public class EnemyHP3 : MonoBehaviour
                 enemy3.ChangeState(Enemy3.EnemyState.Run);
             }
         }
+    }
+
+    void ResetEnemy()
+    {
+        currentHealth = maxHealth;
+        sliderHp.maxValue = currentHealth;
+        sliderHp.value = currentHealth;
+
+        boxDame.enabled = true;
+        if (enemy3.animator != null)
+        {
+            enemy3.animator.Rebind();        // Khôi phục tất cả trạng thái mặc định ban đầu
+            enemy3.animator.Update(0f);      // Đảm bảo không bị đứng hình ở frame cũ
+        }
+        // Reset trạng thái di chuyển
+        if (enemy3.agent != null)
+        {
+            enemy3.agent.ResetPath();
+            enemy3.agent.enabled = true;
+        }
+
     }
 }

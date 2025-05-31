@@ -8,8 +8,9 @@ public class Quest1 : MonoBehaviour
     public GameObject iconQuest; // Icon hiển thị nơi làm nhiệm vụ
 
     //// Các điểm xuất hiện kẻ thù
-    public Transform[] spawnPoints;
-    public int enemyCountToSpawn = 10;
+    public Transform[] spawnPoints; // Vị trí spawn sẵn
+    public int enemySpawnCount; // Số enemy muốn spawn
+    public string enemyTag; // Tag của enemy dùng để gọi từ pool
     public bool hasSpawned = false;
 
     // Quest Bác Lâm
@@ -28,12 +29,18 @@ public class Quest1 : MonoBehaviour
         questPanel.SetActive(false);
         turnInQuest = FindAnyObjectByType<TurnInQuest>();
     }
-
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            SpawnEnemies();
+        }
+    }
     // Bắt đầu quest Bác Lâm
     public void StartQuestBacLam()
     {
         if (questBacLamStarted) return;
-        SpawnEnemiesInstantly(); // Gọi hàm để spawn kẻ thù ngay lập tức
+        SpawnEnemies(); // Gọi hàm để spawn kẻ thù ngay lập tức
         questBacLamStarted = true;
         questBacLamKillCount = 0;
         questBacLamCompleted = false;
@@ -65,14 +72,20 @@ public class Quest1 : MonoBehaviour
         }
     }
 
-    public void SpawnEnemiesInstantly()
+    void SpawnEnemies()
     {
-        for (int i = 0; i < enemyCountToSpawn; i++)
+        int count = Mathf.Min(enemySpawnCount, spawnPoints.Length);
+
+        for (int i = 0; i < count; i++)
         {
-            Transform randomPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            EnemyPoolManager.Instance.GetEnemyFromPool(randomPoint.position);
+            Vector3 spawnPos = spawnPoints[i].position;
+
+            GameObject enemy = ObjPoolingManager.Instance.GetEnemyFromPool(enemyTag, spawnPos);
+
+            if (enemy == null)
+            {
+                Debug.LogWarning("Enemy không đủ trong pool!");
+            }
         }
-
-
     }
 }

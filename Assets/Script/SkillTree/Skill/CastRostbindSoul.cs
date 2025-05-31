@@ -6,19 +6,25 @@ public class CastRostbindSoul : MonoBehaviour
 {
     public float duration = 3f; // Thời gian đóng băng
     public GameObject effectPrefab; // Hiệu ứng đóng băng
-    public float moveSpeed = 10f; // Tốc độ bay đến target
-
+    public string[] enemyTag; // Tag của enemy cần đóng băng
     private GameObject targetEnemy;
+
 
     private void Start()
     {
-        // Khi skill tạo ra, tìm enemy gần nhất
-        targetEnemy = FindNearestEnemy(20);
+        // Tìm enemy gần nhất trong phạm vi 20
+        targetEnemy = FindNearestEnemy(50);
         if (targetEnemy != null)
         {
-            Debug.Log("Target enemy:");
-            // Bắt đầu bay đến target
-            StartCoroutine(MoveToTarget());
+           
+            // Dịch chuyển skill đến vị trí enemy (ngực)
+            transform.position = targetEnemy.transform.position + new Vector3(0f, 2.4f, 0f);
+
+            // Thực hiện đóng băng
+            FreezeEnemy(targetEnemy);
+
+            // Bắt đầu đếm thời gian đóng băng
+            StartCoroutine(UnfreezeAfterDelay(targetEnemy,duration));
         }
         else
         {
@@ -29,46 +35,27 @@ public class CastRostbindSoul : MonoBehaviour
 
     private GameObject FindNearestEnemy(float maxRange)
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         GameObject nearest = null;
         float minDist = Mathf.Infinity;
         Vector3 currentPos = transform.position;
 
-        foreach (var enemy in enemies)
+        for (int i = 0; i < enemyTag.Length; i++)
         {
-            float dist = Vector3.Distance(currentPos, enemy.transform.position);
-            if (dist < minDist && dist <= maxRange)
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag[i]);
+
+            foreach (var enemy in enemies)
             {
-                minDist = dist;
-                nearest = enemy;
+                float dist = Vector3.Distance(currentPos, enemy.transform.position);
+                if (dist < minDist && dist <= maxRange)
+                {
+                    minDist = dist;
+                    nearest = enemy;
+                }
             }
         }
+
         return nearest;
     }
-
-
-    private IEnumerator MoveToTarget()
-    {
-        Vector3 targetPos = targetEnemy.transform.position + new Vector3(0f, 2.4f, 0f); // Vị trí ngực
-        while (targetEnemy != null && Vector3.Distance(transform.position, targetPos) > 0.1f)
-        {
-            // Di chuyển thẳng tới vị trí ngực
-            Vector3 dir = (targetPos - transform.position).normalized;
-            transform.position += dir * moveSpeed * Time.deltaTime;
-
-            yield return null;
-        }
-
-        if (targetEnemy != null)
-        {
-            FreezeEnemy(targetEnemy);
-            yield return new WaitForSeconds(duration);
-            UnfreezeEnemy(targetEnemy);
-        }
-
-        Destroy(gameObject);
-    }
-
 
 
     private void FreezeEnemy(GameObject enemy)
@@ -78,55 +65,47 @@ public class CastRostbindSoul : MonoBehaviour
         // Hiệu ứng đóng băng
         if (effectPrefab != null)
         {
-            Vector3 instanPos = enemy.transform.position + new Vector3(0f, 2.4f, 0f); // Vị trí ngực
+            Vector3 instanPos = enemy.transform.position + new Vector3(0f, 2.4f, 0f);
             Instantiate(effectPrefab, instanPos, Quaternion.identity, enemy.transform);
+            Destroy(effectPrefab, 5); // Giả sử hiệu ứng tồn tại trong 2 giây
         }
 
         // Tắt NavMeshAgent
         NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
-        if (agent != null)
-        {
-            agent.enabled = false;
-        }
+        if (agent != null) agent.enabled = false;
 
         // Tắt Animator
         Animator anim = enemy.GetComponent<Animator>();
-        if (anim != null)
-        {
-            anim.enabled = false;
-        }
+        if (anim != null) anim.enabled = false;
 
-        // Tắt script điều khiển
-        MonoBehaviour ai = enemy.GetComponent<MonoBehaviour>(); // Thay thế bằng script AI cụ thể nếu có
-        if (ai != null)
-        {
-            ai.enabled = false;
-        }
+        // Tắt script AI (thay bằng tên thật nếu có)
+        MonoBehaviour ai = enemy.GetComponent<MonoBehaviour>();
+        if (ai != null) ai.enabled = false;
     }
 
-    private void UnfreezeEnemy(GameObject enemy)
+    private void UnfreezeEnemy(GameObject enemy)//hoạt động lại enemy sau khi đóng băng
     {
-        if (enemy != null)
-        {
-            NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
-            if (agent != null)
-            {
-                agent.enabled = true;
-            }
+        if (enemy == null) return;
 
-            Animator anim = enemy.GetComponent<Animator>();
-            if (anim != null)
-            {
-                anim.enabled = true;
-            }
+        NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
+        if (agent != null) agent.enabled = true;
 
-            MonoBehaviour ai = enemy.GetComponent<MonoBehaviour>();
-            if (ai != null)
-            {
-                ai.enabled = true;
-            }
+        Animator anim = enemy.GetComponent<Animator>();
+        if (anim != null) anim.enabled = true;
 
-            Debug.Log("Enemy hoạt động lại");
-        }
+        MonoBehaviour ai = enemy.GetComponent<MonoBehaviour>();
+        if (ai != null) ai.enabled = true;
+
+        Debug.Log("Enemy hoạt động lại");
+    }
+
+    private IEnumerator UnfreezeAfterDelay(GameObject enemy,float delay)//Đợi thời gian đóng băng
+    {
+        yield return new WaitForSeconds(delay);
+        UnfreezeEnemy(targetEnemy);
+        Destroy(gameObject);
+        Vector3 instanPos = enemy.transform.position + new Vector3(0f, 2.4f, 0f);
+        Instantiate(effectPrefab, instanPos, Quaternion.identity, enemy.transform);
+        Destroy(effectPrefab, 5); // Giả sử hiệu ứng tồn tại trong 2 giây
     }
 }

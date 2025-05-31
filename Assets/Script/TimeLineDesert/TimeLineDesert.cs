@@ -18,7 +18,10 @@ public class TimeLineDesert : MonoBehaviour
     private bool isPlayer = true;
     public bool isScene2Active = false;
 
-   
+    // Biến để lưu trữ các điểm spawn của kẻ thù
+    public Transform[] spawnPoints; // Vị trí spawn sẵn
+    public int enemySpawnCount; // Số lượng kẻ thù muốn spawn
+    public string enemyTag; // Tag của kẻ thù dùng để gọi từ pool
     //goi ham
     private QuestDesert5 questDesert; // Quest Desert 
     private PlayerController characterController;
@@ -128,9 +131,10 @@ public class TimeLineDesert : MonoBehaviour
         scene2.Priority = 0;
         textContent.text = "...?";//
         questDesert.enemy.SetActive(true); // Kích hoạt kẻ thù---------------------------------
+        SpawnEnemies(); // Gọi hàm spawn kẻ thù từ pool
         questDesert.questNameText.text = $"Tiêu diệt hết kẻ thù bao vây"; // Hiển thị tên nhiệm vụ
         RenderSettings.fogDensity = 0.01f; //tăng độ mờ của sương mù
-
+        questDesert.directionalLight.color = Color.black; // Đặt màu sắc của ánh sáng
         yield return new WaitForSeconds(2f); // Chờ trong 3 giây
         textContent.text = "Không ổn rồi.";
        
@@ -143,6 +147,23 @@ public class TimeLineDesert : MonoBehaviour
         textContent.enabled = false; // Ẩn nội dung văn bản
 
 
+    }
+
+    void SpawnEnemies()
+    {
+        int count = Mathf.Min(enemySpawnCount, spawnPoints.Length);
+
+        for (int i = 0; i < count; i++)
+        {
+            Vector3 spawnPos = spawnPoints[i].position;
+
+            GameObject enemy = ObjPoolingManager.Instance.GetEnemyFromPool(enemyTag, spawnPos);
+
+            if (enemy == null)
+            {
+                Debug.LogWarning("Enemy không đủ trong pool!");
+            }
+        }
     }
 }
 

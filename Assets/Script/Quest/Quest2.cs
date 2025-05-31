@@ -6,14 +6,15 @@ public class Quest2 : MonoBehaviour
     public GameObject questPanel;// Panel hiển thị thông tin nhiệm vụ 
     public TextMeshProUGUI questNameText;// Tên nhiệm vụ
     public GameObject iconQuest; // Icon hiển thị nơi làm nhiệm vụ
-    //// Các điểm xuất hiện kẻ thù
-    public Transform[] spawnPoints;
-    public int enemyCountToSpawn = 10;
-    public bool hasSpawned = false;
+   
     // Quest Village
     private bool questVillageStarted = false;
     public GameObject enemy; // Kẻ thù trong quest
 
+    //spawn enemy
+    public Transform[] spawnPoints; // Vị trí spawn sẵn
+    public int enemySpawnCount; // Số enemy muốn spawn
+    public string enemyTag; // Tag của enemy dùng để gọi từ pool
     void Start()
     {
         iconQuest.SetActive(false);
@@ -28,7 +29,7 @@ public class Quest2 : MonoBehaviour
     {
         if (questVillageStarted) return;// Nếu quest đã bắt đầu thì không làm gì cả
         enemy.SetActive(true); // Kẻ thù sẽ xuất hiện khi bắt đầu quest
-        SpawnEnemiesInstantly();
+        SpawnEnemies();
         questVillageStarted = true;
         iconQuest.SetActive(true);
         questPanel.SetActive(true);
@@ -38,14 +39,21 @@ public class Quest2 : MonoBehaviour
     {
         
     }
-    public void SpawnEnemiesInstantly()
+    void SpawnEnemies()
     {
-        for (int i = 0; i < enemyCountToSpawn; i++)
+        int count = Mathf.Min(enemySpawnCount, spawnPoints.Length);
+
+        for (int i = 0; i < count; i++)
         {
-            Transform randomPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            EnemyPoolManager.Instance.GetEnemyFromPool(randomPoint.position);
+            Vector3 spawnPos = spawnPoints[i].position;
+
+            GameObject enemy = ObjPoolingManager.Instance.GetEnemyFromPool(enemyTag, spawnPos);
+
+            if (enemy == null)
+            {
+                Debug.LogWarning("Enemy không đủ trong pool!");
+            }
         }
-
-
     }
+    
 }
