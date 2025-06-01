@@ -71,14 +71,15 @@ public class NecController : MonoBehaviour
 
     //spawn enwmy
     public void SpawnEnemiesInstantly()
-    { 
-    for (int i = 0; i < enemyCountToSpawn; i++)
-     {
-      Transform randomPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-      EnemyPoolManager.Instance.GetEnemyFromPool(randomPoint.position);
-    } 
-      
-        
+    {
+        for (int i = 0; i < enemyCountToSpawn; i++)
+        {
+            Transform randomPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            Vector3 spawnPoint = randomPoint.position;
+            ObjPoolingManager.Instance.GetEnemyFromPool("Enemy1", spawnPoint);
+
+
+        }
     }
 
     //check số lượng

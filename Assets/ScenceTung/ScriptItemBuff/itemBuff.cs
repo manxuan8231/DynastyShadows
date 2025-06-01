@@ -77,7 +77,7 @@ public class itemBuff : MonoBehaviour
     public void BuffHP(int health)
     {
         status.currentHp += health;
-        status.sliderHp.value = health;
+        status.sliderHp.value = status.currentHp;
         status.currentHp = Mathf.Clamp(status.currentHp, 0, status.sliderHp.maxValue); // Đảm bảo HP không vượt quá max HP
         status.currentHp = status.sliderHp.maxValue; // Đảm bảo HP không vượt quá max HP
     }
