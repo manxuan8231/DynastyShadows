@@ -14722,8 +14722,8 @@ Transform:
   m_GameObject: {fileID: 8154359369950531275}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 39.696514, y: 0.0000019073486, z: 111.464294}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 39.696514, y: -3.5356, z: 111.464294}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2184461803423198306}
@@ -24467,7 +24467,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d1bbb93e3a5414399afc9df37193b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dameZoneCollider: {fileID: 7017212869067693190}
-  dame: 100
-  tagPlayer: Player
-  listDame: []
+  dame: 25
+  status: {fileID: 0}

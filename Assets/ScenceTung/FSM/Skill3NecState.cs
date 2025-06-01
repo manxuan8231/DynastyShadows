@@ -3,8 +3,8 @@ using UnityEngine;
 public class Skill3NecState : INecState
 {
     public Skill3NecState(NecController enemy): base(enemy) { }
-    public float skill3Timer = -7;
-    public float skill3Cooldown = 7;
+    public float skill3Timer = -12f;
+    public float skill3Cooldown = 12f;
     public override void Enter()
     {
 

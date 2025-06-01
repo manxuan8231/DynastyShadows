@@ -12,7 +12,7 @@ public class NecHp : MonoBehaviour
     private NecController controller;
     private NecAudioManager audioManager;
     public BoxCollider triggerBox;
-
+    public bool isAudioBgr;
     void Start()
     {
         audioManager = FindAnyObjectByType<NecAudioManager>();
@@ -20,6 +20,7 @@ public class NecHp : MonoBehaviour
 
        UpdateUI();
         controller = FindAnyObjectByType<NecController>();
+        isAudioBgr = false;
     }
 
     public void UpdateUI()
@@ -32,9 +33,10 @@ public class NecHp : MonoBehaviour
    
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.tag == "Player"  )
         {
-            audioManager.audioSource.PlayOneShot(audioManager.audopBackgroud);
+            if (!isAudioBgr) audioManager.audioSource.PlayOneShot(audioManager.audopBackgroud); isAudioBgr = true;
+
             sliderHpBoss2.SetActive(true);
             triggerBox.enabled = false;
             

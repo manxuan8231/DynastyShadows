@@ -13,11 +13,11 @@ public class Enemy4 : MonoBehaviour
     }
     public EnemyState currentState;
 
-    public NavMeshAgent agent;
+    [SerializeField] public NavMeshAgent agent;
     [SerializeField] public Transform player;
-    public Vector3 firstPos;
-    public Animator animator;
-    private string currentTrigger;
+    [SerializeField] public Vector3 firstPos;
+    [SerializeField] public Animator animator;
+    public string currentTrigger;
 
     //khoảng cách
     public float radius = 20f;
@@ -39,18 +39,21 @@ public class Enemy4 : MonoBehaviour
     public BoxCollider leftSpine;
     public BoxCollider rightSpine;
     public BoxCollider RightHand;
-
-    void Start()
+    private void Awake()
     {
-        RightHand.enabled = false;
-        leftSpine.enabled = false;
-        rightSpine.enabled = false;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         firstPos = transform.position;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         enemyHP4 = FindAnyObjectByType<EnemyHP4>();
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
+    }
+    void Start()
+    {
+        RightHand.enabled = false;
+        leftSpine.enabled = false;
+        rightSpine.enabled = false;
+       
     }
 
     // Update is called once per frame

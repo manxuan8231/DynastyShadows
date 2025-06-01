@@ -2,7 +2,7 @@
 
 public class DameZoneSkill2 : MonoBehaviour
 {
-    public float dame = 100f;
+    public float dame = 10f;
     public PlayerStatus status;
     private void Start()
     {
@@ -16,4 +16,13 @@ public class DameZoneSkill2 : MonoBehaviour
             status.TakeHealth(dame);
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            status.TakeHealth(dame * Time.deltaTime );
+        }
+    }
+
 }
