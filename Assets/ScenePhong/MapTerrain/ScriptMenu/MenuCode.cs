@@ -8,6 +8,26 @@ public class MenuCode : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
+    public void Regis(string Registant)
+    {
+        SceneManager.LoadScene(Registant);
+    }
+
+    public void Logi(string Login)
+    {
+        SceneManager.LoadScene(Login);
+    }
+
+    public void Backtomainmenu(string MainMenu)
+    {
+        SceneManager.LoadScene(MainMenu);
+    }
+
+    public void ResAndLog(string ReAndLog)
+    {
+        SceneManager.LoadScene(ReAndLog);
+    }
+
     public void Quit()
     {
         Application.Quit();
