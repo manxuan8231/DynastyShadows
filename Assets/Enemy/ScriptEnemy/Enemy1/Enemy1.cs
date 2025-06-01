@@ -14,11 +14,11 @@ public class Enemy1 : MonoBehaviour
     }
     public EnemyState currentState;
 
-    public NavMeshAgent agent;
+    [SerializeField] public NavMeshAgent agent;
     [SerializeField] public Transform player;
-    public Vector3 firstPos;
-    public Animator animator;
-    private string currentTrigger;
+    [SerializeField] public Vector3 firstPos;
+    [SerializeField] public Animator animator;
+    [SerializeField] public string currentTrigger;
 
     //khoảng cách
     public float radius = 20f;
@@ -36,15 +36,19 @@ public class Enemy1 : MonoBehaviour
 
     //goi ham
     EnemyHP enemyHP;
-    void Start()
+    private void Awake()
     {
-        damageBox.enabled = false; // Tắt box dame khi bắt đầu
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        firstPos = transform.position;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         enemyHP = FindAnyObjectByType<EnemyHP>();
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
+
+    }
+    void Start()
+    {
+        damageBox.enabled = false; // Tắt box dame khi bắt đầu   
+        firstPos = transform.position; 
     }
 
     // Update is called once per frame

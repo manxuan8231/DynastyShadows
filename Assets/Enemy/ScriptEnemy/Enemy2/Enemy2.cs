@@ -16,7 +16,7 @@ public class Enemy2 : MonoBehaviour
     [SerializeField] public Transform player;
     public Vector3 firstPos;
     public Animator animator;
-    private string currentTrigger;
+    public string currentTrigger;
 
     //khoảng cách
     public float radius = 20f;
@@ -35,18 +35,21 @@ public class Enemy2 : MonoBehaviour
     public BoxCollider RightHand;
     public BoxCollider tailBox;
 
-
-    void Start()
+    private void Awake()
     {
-        LeftHand.enabled = false; // Tắt box dame khi bắt đầu
-        RightHand.enabled = false; // Tắt box dame khi bắt đầu
-        tailBox.enabled = false; // Tắt box dame khi bắt đầu
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         firstPos = transform.position;
         enemyHP2 = FindAnyObjectByType<EnemyHP2>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
+    }
+    void Start()
+    {
+        LeftHand.enabled = false; // Tắt box dame khi bắt đầu
+        RightHand.enabled = false; // Tắt box dame khi bắt đầu
+        tailBox.enabled = false; // Tắt box dame khi bắt đầu
+        
     }
 
     // Update is called once per frame

@@ -15,8 +15,8 @@ public class Enemy3 : MonoBehaviour
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public Transform player;
     public Vector3 firstPos;
-    public Animator animator;
-    private string currentTrigger;
+    [SerializeField] public Animator animator;
+    public string currentTrigger;
 
     //khoảng cách
     public float radius = 20f;
@@ -32,16 +32,20 @@ public class Enemy3 : MonoBehaviour
 
     //box damage
     public BoxCollider damageBox;
-    void Start()
+    private void Awake()
     {
-      
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         firstPos = transform.position;
-       enemyHP3 = FindAnyObjectByType<EnemyHP3>();
+        enemyHP3 = FindAnyObjectByType<EnemyHP3>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         damageBox.enabled = false; // Tắt box dame khi bắt đầu
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
+    }
+    void Start()
+    {
+      
+        
     }
 
     // Update is called once per frame

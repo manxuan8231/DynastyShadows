@@ -19,16 +19,20 @@ public class ObjPoolingManager : MonoBehaviour
     private Dictionary<string, Queue<GameObject>> poolDictionary = new Dictionary<string, Queue<GameObject>>();
     private Dictionary<string, Transform> parentDictionary = new Dictionary<string, Transform>();
 
-    void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
+    //void Awake()
+    //{
+    //    if (Instance == null)
+    //        Instance = this;
+    //    else
+    //        Destroy(gameObject);
 
+    //    CreatePools();
+    //}
+    private void Start()
+    {
+        Instance = this;
         CreatePools();
     }
-
     void CreatePools()
     {
         foreach (PoolConfig config in poolConfigs)
@@ -37,12 +41,14 @@ public class ObjPoolingManager : MonoBehaviour
 
             // Tạo parent riêng cho mỗi loại enemy
             GameObject parentObj = new GameObject(config.tag);
+            parentObj.transform.position = poolRoot.transform.position ;
             parentObj.transform.SetParent(poolRoot);
             parentDictionary[config.tag] = parentObj.transform;
 
             for (int i = 0; i < config.size; i++)
             {
-                GameObject obj = Instantiate(config.prefab, parentObj.transform);
+               
+                GameObject obj = Instantiate(config.prefab, parentObj.transform); 
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
@@ -67,6 +73,7 @@ public class ObjPoolingManager : MonoBehaviour
             obj.transform.SetParent(parentDictionary[tag]); // Gắn vào parent đúng loại
             obj.transform.position = position;
             obj.SetActive(true);
+            
             return obj;
         }
         else

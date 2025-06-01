@@ -1,16 +1,17 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class EnemyHP : MonoBehaviour
 {
     //xử lý máu
-    public Slider sliderHp;
-    public float currentHealth;
-    public float maxHealth = 2000f;
+    [SerializeField] public Slider sliderHp;
+   [SerializeField] public float currentHealth;
+    [SerializeField]  public float maxHealth = 2000f;
     //drop exp
-    public GameObject expPrefab;
+    [SerializeField] public GameObject expPrefab;
     
     //gọi hàm
     Enemy1 enemy1;
@@ -19,10 +20,7 @@ public class EnemyHP : MonoBehaviour
     //box nhận dame
     public BoxCollider boxDame;
     public List<ItemDrop> itemDrops = new List<ItemDrop>();
-    void OnEnable()
-    {
-        ResetEnemy(); // Mỗi lần lấy từ pool ra thì reset lại
-    }
+   
     void Start()
     {
         currentHealth = maxHealth;
@@ -116,23 +114,31 @@ public class EnemyHP : MonoBehaviour
 
     void ResetEnemy()
     {
+       
         currentHealth = maxHealth;
         sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
-
+        Debug.Log("ResetEnemy bắt đầu");
+      
+        Debug.Log("enemyState: " + currentHealth);
+        Debug.Log("animator: " + enemy1.animator);
         boxDame.enabled = true;
         if (enemy1.animator != null)
         {
             enemy1.animator.Rebind();        // Khôi phục tất cả trạng thái mặc định ban đầu
-            enemy1.animator.Update(0f);      // Đảm bảo không bị đứng hình ở frame cũ
+            enemy1.animator.Update(0f);
         }
-        // Reset trạng thái di chuyển
-        if (enemy1.agent != null)
+
+        if(enemy1.agent != null)
         {
             enemy1.agent.ResetPath();
             enemy1.agent.enabled = true;
         }
-
+        enemy1.ChangeState(Enemy1.EnemyState.Idle);
+    }
+    void OnEnable()
+    {
+        ResetEnemy(); // Mỗi lần lấy từ pool ra thì reset lại
     }
 }
 
