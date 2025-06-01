@@ -20,7 +20,14 @@ public class EnemyHP : MonoBehaviour
     //box nhận dame
     public BoxCollider boxDame;
     public List<ItemDrop> itemDrops = new List<ItemDrop>();
-   
+    void OnEnable()
+    {
+        ResetEnemy(); // Mỗi lần lấy từ pool ra thì reset lại
+    }
+    private void Awake()
+    {
+        enemy1 = GetComponent<Enemy1>();
+    }
     void Start()
     {
         currentHealth = maxHealth;
@@ -36,7 +43,7 @@ public class EnemyHP : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+     
     }
    
     public void TakeDamage(float damage)
@@ -67,6 +74,7 @@ public class EnemyHP : MonoBehaviour
             }
 
             ObjPoolingManager.Instance.ReturnToPool("Enemy1", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
+          
 
 
         }
@@ -118,10 +126,7 @@ public class EnemyHP : MonoBehaviour
         currentHealth = maxHealth;
         sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
-        Debug.Log("ResetEnemy bắt đầu");
-      
-        Debug.Log("enemyState: " + currentHealth);
-        Debug.Log("animator: " + enemy1.animator);
+        
         boxDame.enabled = true;
         if (enemy1.animator != null)
         {
@@ -136,10 +141,7 @@ public class EnemyHP : MonoBehaviour
         }
         enemy1.ChangeState(Enemy1.EnemyState.Idle);
     }
-    void OnEnable()
-    {
-        ResetEnemy(); // Mỗi lần lấy từ pool ra thì reset lại
-    }
+
 }
 
 [System.Serializable]

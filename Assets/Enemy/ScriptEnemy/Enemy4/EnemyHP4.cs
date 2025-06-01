@@ -22,6 +22,10 @@ public class EnemyHP4 : MonoBehaviour
     {
         ResetEnemy(); // Mỗi lần lấy từ pool ra thì reset lại
     }
+    private void Awake()
+    {
+        enemy4 = GetComponent<Enemy4>();
+    }
     public void Start()
     {
         currentHealth = maxHealth;
