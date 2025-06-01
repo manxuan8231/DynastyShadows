@@ -13,11 +13,11 @@ public class DrakonitCameraState : DrakonitState
     public DrakonitCameraState(DrakonitController enemy) : base(enemy) { }
     //tham chieu
     public DrakonitAudioManager audioManager;
-    private PlayerController characterController;
+    private PlayerControllerState characterController;
     private ComboAttack comboAttack;
     public override void Enter()
     {
-        characterController = GameObject.FindAnyObjectByType<PlayerController>();
+        characterController = GameObject.FindAnyObjectByType<PlayerControllerState>();
         comboAttack = GameObject.FindAnyObjectByType<ComboAttack>();
         audioManager = GameObject.FindAnyObjectByType<DrakonitAudioManager>();
         Debug.Log("trang thai camera");

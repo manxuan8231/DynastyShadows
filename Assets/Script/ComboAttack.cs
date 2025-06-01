@@ -2,7 +2,6 @@
 
 public class ComboAttack : MonoBehaviour
 {
-    private Animator animator;
 
     [Header("Thời gian cooldown cho mỗi đòn combo")]
     [SerializeField] private float attack1Cooldown = 0.5f;
@@ -31,12 +30,12 @@ public class ComboAttack : MonoBehaviour
 
     //Goi ham
     PlayerStatus playerStatus;
-    PlayerController playerController;
+    PlayerControllerState playerController;
     DameZone dameZone;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+
         effectAttack1.SetActive(false);
        
         effectAttack3.SetActive(false);
@@ -44,12 +43,17 @@ public class ComboAttack : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         playerStatus = FindAnyObjectByType<PlayerStatus>();
-        playerController = FindAnyObjectByType<PlayerController>();
+        playerController = FindAnyObjectByType<PlayerControllerState>();
         dameZone = FindAnyObjectByType<DameZone>();
 
     }
 
     void Update()
+    {
+
+        //InputAttack();
+    }
+    public void InputAttack()
     {
         // Chỉ cho phép tấn công nếu chuột bị khóa (không hiện trên màn hình)
         if (Cursor.lockState == CursorLockMode.Locked)
@@ -77,7 +81,7 @@ public class ComboAttack : MonoBehaviour
                 comboStep = 0;
             }
         }
-        if(isFlip == true)//
+        if (isFlip == true)//
         {
             // Tìm và quay về hướng enemy gần nhất
             GameObject closestEnemy = FindClosestEnemy(30f);
@@ -88,8 +92,8 @@ public class ComboAttack : MonoBehaviour
                 transform.forward = lookDirection.normalized;
             }
         }
-       
     }
+
 
     void OnAttack()
     {
@@ -106,17 +110,17 @@ public class ComboAttack : MonoBehaviour
 
         if (comboStep == 1)
         {
-            animator.SetTrigger("Attack1");
+            playerController.animator.SetTrigger("Attack1");
             nextAttackTime = Time.time + attack1Cooldown;
         }
         else if (comboStep == 2)
         {
-            animator.SetTrigger("Attack2");
+            playerController.animator.SetTrigger("Attack2");
             nextAttackTime = Time.time + attack2Cooldown;
         }
         else if (comboStep == 3)
         {
-            animator.SetTrigger("Attack3");
+            playerController.animator.SetTrigger("Attack3");
             nextAttackTime = Time.time + attack3Cooldown;
             comboStep = 0;
         }
@@ -135,7 +139,7 @@ public class ComboAttack : MonoBehaviour
             lookDirection.y = 0; // Giữ player không ngẩng lên/ngửa xuống
             transform.forward = lookDirection.normalized;
         }
-        animator.SetTrigger("FlyAttack");
+        playerController.animator.SetTrigger("FlyAttack");
     }
 
     

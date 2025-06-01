@@ -18,12 +18,12 @@ public class PlayerRaycast : MonoBehaviour
     private LevelAvatar itemHealth;
     private PlayerStatus playerStatus;
     private ComboAttack comboAttack;
-    private PlayerController playerController;
+    private PlayerControllerState playerController;
     void Start()
     {
         comboAttack = FindAnyObjectByType<ComboAttack>();
         itemHealth = FindAnyObjectByType<LevelAvatar>();
-        playerController = FindAnyObjectByType<PlayerController>();
+        playerController = FindAnyObjectByType<PlayerControllerState>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
 
         animator = GetComponent<Animator>();

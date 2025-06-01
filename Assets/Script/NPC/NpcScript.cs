@@ -26,7 +26,7 @@ public class NPCScript : MonoBehaviour
     private bool isWaitingForNext = false; // Đang chờ người chơi bấm Skip để qua câu tiếp theo
 
     //tham chieu
-    PlayerController playerController; // Tham chiếu đến PlayerController
+    PlayerControllerState playerController; // Tham chiếu đến PlayerController
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack
     Quest1 quest1; // Tham chiếu đến QuestManager
     Quest2 quest2; // Tham chiếu đến QuestManager
@@ -41,7 +41,7 @@ public class NPCScript : MonoBehaviour
         quest1 = FindAnyObjectByType<Quest1>();
         quest2 = FindAnyObjectByType<Quest2>();
 
-        playerController = FindAnyObjectByType<PlayerController>();
+        playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
         quest3 = FindAnyObjectByType<Quest3>();

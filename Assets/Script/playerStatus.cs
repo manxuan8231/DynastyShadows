@@ -73,7 +73,7 @@ public class PlayerStatus : MonoBehaviour
     public AudioClip audioHit;
     public AudioClip audioStun;
     //tham chieu 
-    private PlayerController playerController; // Tham chiếu đến PlayerController
+    private PlayerControllerState playerController; // Tham chiếu đến PlayerController
     private ComboAttack comboAttack; // Tham chiếu đến ComboAttack
     void Start()
     {     
@@ -99,7 +99,7 @@ public class PlayerStatus : MonoBehaviour
         //thaam chieu
 
         audioSource = GetComponent<AudioSource>();
-        playerController = FindAnyObjectByType<PlayerController>();
+        playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         //tat hieu uung
         effectStun.SetActive(false);

@@ -23,14 +23,14 @@ public class SkillManagerUI : MonoBehaviour
     private GameObject activeVideoCamera = null;
 
     //tham chieu
-    private PlayerController playerController;
+    private PlayerControllerState playerController;
     void Start()
     {
         panelPreview.SetActive(false);
         buttonEquip.gameObject.SetActive(false);
         buttonRemove.gameObject.SetActive(false);
 
-        playerController = FindAnyObjectByType<PlayerController>();
+        playerController = FindAnyObjectByType<PlayerControllerState>();
         // Khi bắt đầu, tắt tất cả videoCamera của skill để chắc chắn
         foreach (var skill in skills)
         {

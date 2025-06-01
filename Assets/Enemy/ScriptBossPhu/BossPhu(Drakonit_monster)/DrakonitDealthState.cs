@@ -9,7 +9,7 @@ public class DrakonitDeathState : DrakonitState
     CinemachineBrain brain;
     public DrakonitDeathState(DrakonitController enemy) : base(enemy) { }
     // tham chiếu
-    private PlayerController characterController;
+    private PlayerControllerState characterController;
     private ComboAttack comboAttack;
     private QuestMainBacLam questMainBacLam;
 
@@ -17,7 +17,7 @@ public class DrakonitDeathState : DrakonitState
     public override void Enter()
     {
         audioManager = GameObject.FindAnyObjectByType<DrakonitAudioManager>();
-        characterController = GameObject.FindAnyObjectByType<PlayerController>();
+        characterController = GameObject.FindAnyObjectByType<PlayerControllerState>();
         comboAttack = GameObject.FindAnyObjectByType<ComboAttack>();
        questMainBacLam = GameObject.FindAnyObjectByType<QuestMainBacLam>();
         characterController.enabled = false; // Vô hiệu hóa CharacterController

@@ -24,7 +24,7 @@ public class TurnInQuestThuongNhan : MonoBehaviour
     private bool isWaitingForNext = false; // Đang chờ người chơi bấm Skip để qua câu tiếp theo
     public bool isOpenShop = false; // Kiểm tra trạng thái của OpenShop
     //tham chieu
-    PlayerController playerController; // Tham chiếu đến PlayerController
+    PlayerControllerState playerController; // Tham chiếu đến PlayerController
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack
     PlayerStatus playerStatus;
     OpenShop openShop;
@@ -35,7 +35,7 @@ public class TurnInQuestThuongNhan : MonoBehaviour
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
   
-        playerController = FindAnyObjectByType<PlayerController>();
+        playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
         openShop = FindAnyObjectByType<OpenShop>();

@@ -26,7 +26,7 @@ public class TurnInQuest5 : MonoBehaviour
     private bool isWaitingForNext = false; // Đang chờ người chơi bấm Skip để qua câu tiếp theo
 
     //tham chieu
-    PlayerController playerController; // Tham chiếu đến PlayerController
+    PlayerControllerState playerController; // Tham chiếu đến PlayerController
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack
     QuestDesert5 questDesert5;
     PlayerStatus playerStatus;
@@ -38,7 +38,7 @@ public class TurnInQuest5 : MonoBehaviour
 
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         questDesert5 = FindAnyObjectByType<QuestDesert5>(); // Lấy đối tượng QuestDesert5
-        playerController = FindAnyObjectByType<PlayerController>();
+        playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
         // Ẩn panel và nút F khi bắt đầu

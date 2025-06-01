@@ -8,14 +8,14 @@ public class Tele : MonoBehaviour
     public GameObject bgClickicon;//bg khi click vào iconmap
 
     OpenMap openMap; // Tham chiếu đến OpenMap script
-    PlayerController playerController; // Tham chiếu đến PlayerController script
+    PlayerControllerState playerController; // Tham chiếu đến PlayerController script
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack script
 
     public GameObject panelButtonTele;// Nút teleport
     void Start()
     {
         bgClickicon.SetActive(false); // Ẩn hiệu ứng khi click vào iconmap
-        playerController = FindAnyObjectByType<PlayerController>(); // Tìm đối tượng PlayerController trong scene
+        playerController = FindAnyObjectByType<PlayerControllerState>(); // Tìm đối tượng PlayerController trong scene
         comboAttack = FindAnyObjectByType<ComboAttack>(); // Tìm đối tượng ComboAttack trong scene
         openMap = FindAnyObjectByType<OpenMap>(); // Tìm đối tượng OpenMap trong scene
         panelButtonTele.SetActive(false); // Ẩn nút teleport khi bắt đầu

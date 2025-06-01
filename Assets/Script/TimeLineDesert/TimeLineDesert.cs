@@ -24,10 +24,10 @@ public class TimeLineDesert : MonoBehaviour
     public string enemyTag; // Tag của kẻ thù dùng để gọi từ pool
     //goi ham
     private QuestDesert5 questDesert; // Quest Desert 
-    private PlayerController characterController;
+    private PlayerControllerState characterController;
     void Start()
     {
-        characterController = FindAnyObjectByType<PlayerController>();
+        characterController = FindAnyObjectByType<PlayerControllerState>();
         questDesert = FindAnyObjectByType<QuestDesert5>(); // Lấy đối tượng QuestDesert5
         effectDesert.SetActive(false); // Ẩn hiệu ứng sa mạc ban đầu
         panelContent.SetActive(false); // Ẩn panel nội dung ban đầu

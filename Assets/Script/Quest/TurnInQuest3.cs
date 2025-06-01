@@ -29,7 +29,7 @@ public class TurnInQuest3 : MonoBehaviour
     private bool isWaitingForNext = false; // Đang chờ người chơi bấm Skip để qua câu tiếp theo
 
     //tham chieu
-    PlayerController playerController; // Tham chiếu đến PlayerController
+    PlayerControllerState playerController; // Tham chiếu đến PlayerController
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack
     Quest3 quest3;
     PlayerStatus playerStatus;
@@ -41,7 +41,7 @@ public class TurnInQuest3 : MonoBehaviour
 
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         quest3 = FindAnyObjectByType<Quest3>();
-        playerController = FindAnyObjectByType<PlayerController>();
+        playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
         // Ẩn panel và nút F khi bắt đầu
