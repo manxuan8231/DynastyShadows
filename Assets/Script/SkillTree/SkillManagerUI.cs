@@ -163,8 +163,7 @@ public class SkillManagerUI : MonoBehaviour
 
             // Tạo hiệu ứng kỹ năng
             Instantiate(skill.skillPrefab, skill.spawnPoint.position, skill.spawnPoint.rotation);
-            StartCoroutine(WaitRig());
-
+           
             // Kích hoạt cooldown
             skill.isSkillCooldown = true;
             skill.lastTimeSkill = skill.cooldownSkill;
@@ -179,12 +178,7 @@ public class SkillManagerUI : MonoBehaviour
         }
     }
 
-    private IEnumerator WaitRig()
-    {
-        playerController.rigBuilder.enabled = true; // Bật RigBuilder để có thể chayj animator 
-        yield return new WaitForSeconds(0.3f); // Chờ 1 giây
-        playerController.rigBuilder.enabled = false; // Tắt RigBuilder sau khi hoàn thành
-    }
+   
 
 
     private void CastFireball(SkillData skill)

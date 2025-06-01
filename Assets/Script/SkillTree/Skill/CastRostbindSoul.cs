@@ -106,6 +106,6 @@ public class CastRostbindSoul : MonoBehaviour
         Destroy(gameObject);
         Vector3 instanPos = enemy.transform.position + new Vector3(0f, 2.4f, 0f);
         Instantiate(effectPrefab, instanPos, Quaternion.identity, enemy.transform);
-        Destroy(effectPrefab, 5); // Giả sử hiệu ứng tồn tại trong 2 giây
+        Destroy(effectPrefab, 5); 
     }
 }

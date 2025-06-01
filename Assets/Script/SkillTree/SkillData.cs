@@ -30,5 +30,7 @@ public class SkillData
     public Transform spawnPoint; // Vị trí spawn kỹ năng
 
 
+   
+       
 
 }
