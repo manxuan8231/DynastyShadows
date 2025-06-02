@@ -40,12 +40,21 @@ public class PlayerControllerState : MonoBehaviour
     //goi ham
     public PlayerStatus playerStatus;
     public ComboAttack comboAttack;
+    //skill2
+    public Skill2Manager skill2Manager;
+    public bool isRemoveClone = false;
+
     // Trạng thái hiện tại
+    public RuntimeAnimatorController animatorDefauld;
+    public RuntimeAnimatorController animatorSkill2;
     private PlayerState currentState;
     void Start()
     {
+        animator = GetComponent<Animator>();
+        animator.runtimeAnimatorController = animatorDefauld; // Gán bộ điều khiển hoạt hình mặc định
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
+        skill2Manager = FindAnyObjectByType<Skill2Manager>();
         audioSource = GetComponent<AudioSource>();
         runSpeed = playerStatus.speedRun;// tốc độ chạy
         rigBuilder = GetComponent<RigBuilder>();

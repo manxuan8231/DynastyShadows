@@ -8,22 +8,29 @@ public class Skill2Manager : MonoBehaviour
     public Transform spawnPoint;
     public Slider coolDownSKillSlider;
     public float skillCooldown = 5f;
-
-    private bool isSkillActive = false;
+    
+    public bool isSkillActive = false;
+    public bool isInputSkill2 = false;
     private float cooldownTimer = 0f;
-    private GameObject playerClone;
+    public GameObject playerClone;
+    //effect
+    public GameObject effectRun;
 
+    public PlayerControllerState playerControllerState;
     void Start()
     {
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
         coolDownSKillSlider.gameObject.SetActive(false);
         coolDownSKillSlider.maxValue = skillCooldown;
         coolDownSKillSlider.value = skillCooldown;
+        effectRun.SetActive(false);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha2) && !isSkillActive)
         {
+           
             ActivateCloneSkill();
         }
 
@@ -41,10 +48,23 @@ public class Skill2Manager : MonoBehaviour
                 coolDownSKillSlider.value = skillCooldown;
             }
         }
+        // Xử lý việc loại bỏ phân thân nếu cần
+        if (playerControllerState.isRemoveClone == true)
+        {
+            if (playerClone != null)
+            {
+                Destroy(playerClone);
+            }
+            playerControllerState.isRemoveClone = false;
+        }
+        StartCoroutine(WaitForRemoveClone());// Đợi 10 giây để loại bỏ phân thân
     }
 
+    // Kích hoạt kỹ năng phân thân
     void ActivateCloneSkill()
     {
+        isInputSkill2 = true;
+        effectRun.SetActive(true);
         isSkillActive = true;
         cooldownTimer = skillCooldown;
         coolDownSKillSlider.gameObject.SetActive(true);
@@ -66,7 +86,7 @@ public class Skill2Manager : MonoBehaviour
             Debug.LogWarning("Không tìm thấy SK_DeathKnight trong scene.");
         }
     }
-
+    //khoi phục hồi tag sau một khoảng thời gian
     private IEnumerator RestoreTagAfterDelay(GameObject obj, string originalTag, float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -76,9 +96,19 @@ public class Skill2Manager : MonoBehaviour
             obj.tag = originalTag;
         }
 
+        
+    }
+    //dợi 10 giây để loại bỏ phân thân
+    public IEnumerator WaitForRemoveClone()
+    {
+        yield return new WaitForSeconds(10f); // Thời gian chờ trước khi loại bỏ phân thân
         if (playerClone != null)
         {
             Destroy(playerClone);
+            effectRun.SetActive(false);
         }
+        playerControllerState.isRemoveClone = false; // Đặt lại cờ để không loại bỏ phân thân nữa
     }
+
+   
 }

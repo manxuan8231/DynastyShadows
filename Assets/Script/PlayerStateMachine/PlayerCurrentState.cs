@@ -8,7 +8,7 @@ public class PlayerCurrentState : PlayerState
 
     public override void Enter()
     {
-       
+        player.animator.runtimeAnimatorController = player.animatorDefauld;
     }
 
     public override void Update()
@@ -19,6 +19,12 @@ public class PlayerCurrentState : PlayerState
             Jump();
             Roll();
             player.comboAttack.InputAttack();
+            //skill2
+            if (player.skill2Manager.isInputSkill2)
+            {
+             
+                player.ChangeState(new Skill2State(player));
+            }
         }
         else
         {
@@ -26,7 +32,9 @@ public class PlayerCurrentState : PlayerState
            player.animator.SetBool("isRunning", false);
 
         }
+        
     }
+
     public void Move()
     {
         float horizontal = Input.GetAxis("Horizontal");
@@ -98,5 +106,7 @@ public class PlayerCurrentState : PlayerState
     }
 
 
-    public override void Exit() { }
+    public override void Exit() {
+      
+    }
 }
