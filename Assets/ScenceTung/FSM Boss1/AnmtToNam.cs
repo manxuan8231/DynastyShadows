@@ -18,6 +18,7 @@ public class AnmtToNam : MonoBehaviour
     public void Changed()
     {
         anmt.SetTrigger("ChangeModel");
-        trigger.transform.LookAt(trigger.player);
+        trigger.transform.LookAt(trigger.playerPos);
+
     }
 }
