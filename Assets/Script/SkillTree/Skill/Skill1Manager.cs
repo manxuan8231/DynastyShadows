@@ -18,10 +18,12 @@ public class Skill1Manager : MonoBehaviour
     public Transform spawnPoint; // Vị trí spawn kỹ năng
                                  //tham chieu
     private PlayerControllerState playerController;
+
+
     private void Start()
     {
-        playerController = GetComponent<PlayerControllerState>();
-       
+        playerController = FindAnyObjectByType<PlayerControllerState>();
+
     }
     private void Update()
     {
