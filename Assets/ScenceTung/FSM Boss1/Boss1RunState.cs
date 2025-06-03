@@ -21,13 +21,22 @@ public class Boss1RunState : Boss1State
             enemy.agent.isStopped = false;
 
         }
+        else if (distance <= enemy.skillRange && distance > enemy.attackRange && Time.time >= enemy.skillTimer + enemy.skillCooldown && enemy.isUsingSkill == false)
+        {
+            enemy.ChangState(new SkillBossState(enemy));
+        }
         if (distance <= enemy.attackRange)
         {
             enemy.agent.isStopped = true;
 
             enemy.ChangState(new Boss1AttackState(enemy));
         }
-        
+        else if (distance <= enemy.skillRange && distance > enemy.attackRange && Time.time >= enemy.skillTimer + enemy.skillCooldown && enemy.isUsingSkill == false)
+        {
+            enemy.ChangState(new SkillBossState(enemy));
+        }
+
+
     }
     public override void Exit()
     {

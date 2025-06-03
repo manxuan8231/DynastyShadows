@@ -1,12 +1,12 @@
+using System.Threading;
 using UnityEngine;
 
 public class Boss1AttackState : Boss1State
 {
     public Boss1AttackState(Boss1Controller enemy) : base(enemy) { }
 
-    public float attackTimer = -9f;
-    public float attackCooldown = 9;
-    bool isAttacking = false;
+   
+    
     public override void Enter()
     {
         Debug.Log("Attack");
@@ -20,8 +20,9 @@ public class Boss1AttackState : Boss1State
 
     public override void Update()
     {
+        if (enemy.isUsingSkill) return;
         float distance = Vector3.Distance(enemy.transform.position,enemy.player.transform.position);
-        if (distance <= enemy.attackRange && Time.time >= attackTimer + attackCooldown && !isAttacking)
+        if (distance <= enemy.attackRange && Time.time >= enemy.attackTimer + enemy.attackCooldown && enemy.isAttacking == false)
         {
             int random = Random.Range(0, 2);
             if (random == 0)
@@ -29,25 +30,25 @@ public class Boss1AttackState : Boss1State
                 enemy.agent.isStopped = true;
                 enemy.anmt.SetTrigger("Attack1");
                 enemy.transform.LookAt(enemy.player);
-                isAttacking = true;
+                enemy.isAttacking = true;
             }
             else
             {
                 enemy.agent.isStopped = true;
                 enemy.anmt.SetTrigger("Attack3");
                 enemy.transform.LookAt(enemy.player);
-                isAttacking = true;
-
+                enemy.isAttacking = true;
             }
 
-            attackTimer = Time.time;
           
-            isAttacking = false;
+          
+            enemy.isAttacking = false;
+            enemy.attackTimer = Time.time;
 
         }
-        if(enemy.hp.currHp < 10000)
+        if (enemy.hp.currHp < 10000)
         {
-            if (distance <= enemy.attackRange && Time.time >= attackTimer + attackCooldown && !isAttacking)
+            if (distance <= enemy.attackRange && Time.time >= enemy.attackTimer + enemy.attackCooldown && enemy.isAttacking == false)
             {
                 int random = Random.Range(0, 3);
                 if (random == 0)
@@ -55,33 +56,42 @@ public class Boss1AttackState : Boss1State
                     enemy.agent.isStopped = true;
                     enemy.anmt.SetTrigger("Attack2");
                     enemy.transform.LookAt(enemy.player);
-                    isAttacking = true;
+                    enemy.isAttacking = true;
                 }
                 else if(random == 1)
                 {
                     enemy.agent.isStopped = true;
                     enemy.anmt.SetTrigger("Attack1");
                     enemy.transform.LookAt(enemy.player);
-                    isAttacking = true;
+                    enemy.isAttacking = true;
                 }
                 else
                 {
                     enemy.agent.isStopped = true;
                     enemy.anmt.SetTrigger("Attack4");
                     enemy.transform.LookAt(enemy.player);
-                    isAttacking = true;
+                    enemy.isAttacking = true;
 
                 }
 
-                attackTimer = Time.time;
+                enemy.attackTimer = Time.time;
 
-                isAttacking = false;
+                enemy.isAttacking = false;
             }
         }
-        
-        if (distance > enemy.attackRange + 1f && !isAttacking)
+    
+
+         if (distance > enemy.attackRange + 1f && enemy.isAttacking == false)
         {
             enemy.ChangState(new Boss1RunState(enemy));
         }
+
+        else if (distance <= enemy.skillRange && distance > enemy.attackRange && enemy.isUsingSkill == false)
+        {
+            enemy.ChangState(new SkillBossState(enemy));
+        }
+        
+
+
     }
 }
