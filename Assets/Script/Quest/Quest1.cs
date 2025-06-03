@@ -77,7 +77,7 @@ public class Quest1 : MonoBehaviour
         int count = Mathf.Min(enemySpawnCount, spawnPoints.Length);
 
         for (int i = 0; i < count; i++)
-        {
+        {   
             Vector3 spawnPos = spawnPoints[i].position;
 
             GameObject enemy = ObjPoolingManager.Instance.GetEnemyFromPool(enemyTag, spawnPos);

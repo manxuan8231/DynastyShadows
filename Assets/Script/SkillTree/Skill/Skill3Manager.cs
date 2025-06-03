@@ -3,42 +3,25 @@ using UnityEngine;
 
 public class Skill3Manager : MonoBehaviour
 {
-    public GameObject clonePrefab;        // Prefab của phân thân
-    public Transform playerTransform;     // Vị trí của người chơi
-    public int numberOfClones = 5;        // Số lượng phân thân
-    public float delayBetweenClones = 1f; // Thời gian giữa mỗi lần sinh
-    public float spawnRadius = 2f;        // Khoảng cách phân thân xuất hiện quanh player
-
-    private bool isSpawning = false;
-
+    public Transform[] spawnClonePL;
+    public string clonePLTag = "PlayerClone"; // Tag của clone player
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha3) && !isSpawning)
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            StartCoroutine(SpawnClones());
+            StartCoroutine(SpawnClone());
         }
     }
 
-    IEnumerator SpawnClones()
+    public IEnumerator SpawnClone()
     {
-        isSpawning = true;
-
-        for (int i = 0; i < numberOfClones; i++)
+        for (int i = 0; i < Mathf.Min(5, spawnClonePL.Length); i++)
         {
-            Vector3 spawnOffset = Random.onUnitSphere;
-            spawnOffset.y = 0f; // tránh sinh phân thân trên đầu
-            spawnOffset = spawnOffset.normalized * spawnRadius;
-
-            Vector3 spawnPos = playerTransform.position + spawnOffset;
-
-            GameObject clone = Instantiate(clonePrefab, spawnPos, playerTransform.rotation);
-
-            // Optionally: hủy clone sau vài giây (VD: 5s)
-            Destroy(clone, 5f);
-
-            yield return new WaitForSeconds(delayBetweenClones);
+            Vector3 spawnPosition = spawnClonePL[i].position;
+            GameObject clone = ObjPoolingManager.Instance.GetEnemyFromPool(clonePLTag, spawnPosition);
+            clone.transform.rotation = spawnClonePL[i].rotation;
+            Destroy(clone, 5f); 
+            yield return new WaitForSeconds(0.3f); 
         }
-
-        isSpawning = false;
     }
 }
