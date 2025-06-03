@@ -4,84 +4,70 @@ public class Boss1AttackState : Boss1State
 {
     public Boss1AttackState(Boss1Controller enemy) : base(enemy) { }
 
-    public float attackTimer = -9f;
-    public float attackCooldown = 9;
-    bool isAttacking = false;
     public override void Enter()
     {
-        Debug.Log("Attack");
+        Debug.Log("Attack State Entered");
     }
 
     public override void Exit()
     {
         enemy.anmt.ResetTrigger("Attack1");
         enemy.anmt.ResetTrigger("Attack2");
+        enemy.anmt.ResetTrigger("Attack3");
+        enemy.anmt.ResetTrigger("Attack4");
     }
 
     public override void Update()
     {
-        float distance = Vector3.Distance(enemy.transform.position,enemy.player.transform.position);
-        if (distance <= enemy.attackRange && Time.time >= attackTimer + attackCooldown && !isAttacking)
+        if (enemy.isUsingSkill) return;
+
+        float distance = Vector3.Distance(enemy.transform.position, enemy.player.transform.position);
+
+        // Check if we should attack
+        if (distance <= enemy.attackRange &&
+            Time.time >= enemy.attackTimer + enemy.attackCooldown &&
+            !enemy.isAttacking)
         {
-            int random = Random.Range(0, 2);
-            if (random == 0)
-            {
-                enemy.agent.isStopped = true;
-                enemy.anmt.SetTrigger("Attack1");
-                enemy.transform.LookAt(enemy.player);
-                isAttacking = true;
-            }
-            else
-            {
-                enemy.agent.isStopped = true;
-                enemy.anmt.SetTrigger("Attack3");
-                enemy.transform.LookAt(enemy.player);
-                isAttacking = true;
-
-            }
-
-            attackTimer = Time.time;
-          
-            isAttacking = false;
-
+            PerformAttack();
         }
-        if(enemy.hp.currHp < 10000)
+
+        // State transitions
+        if (distance > enemy.attackRange + 1f && !enemy.isAttacking)
         {
-            if (distance <= enemy.attackRange && Time.time >= attackTimer + attackCooldown && !isAttacking)
-            {
-                int random = Random.Range(0, 3);
-                if (random == 0)
-                {
-                    enemy.agent.isStopped = true;
-                    enemy.anmt.SetTrigger("Attack2");
-                    enemy.transform.LookAt(enemy.player);
-                    isAttacking = true;
-                }
-                else if(random == 1)
-                {
-                    enemy.agent.isStopped = true;
-                    enemy.anmt.SetTrigger("Attack1");
-                    enemy.transform.LookAt(enemy.player);
-                    isAttacking = true;
-                }
-                else
-                {
-                    enemy.agent.isStopped = true;
-                    enemy.anmt.SetTrigger("Attack4");
-                    enemy.transform.LookAt(enemy.player);
-                    isAttacking = true;
-
-                }
-
-                attackTimer = Time.time;
-
-                isAttacking = false;
-            }
-        }
-        
-        if (distance > enemy.attackRange + 1f && !isAttacking)
-        {
+            enemy.isAttacking = false;
+            enemy.agent.isStopped = false;
             enemy.ChangState(new Boss1RunState(enemy));
+        }
+        else if (distance <= enemy.skillRange &&
+                 distance > enemy.attackRange &&
+                 !enemy.isUsingSkill &&
+                 Time.time >= enemy.skillTimer + enemy.skillCooldown)
+        {
+            enemy.ChangState(new SkillBossState(enemy));
+        }
+    }
+
+    private void PerformAttack()
+    {
+        enemy.agent.isStopped = true;
+        enemy.transform.LookAt(enemy.player.transform.position);
+        enemy.isAttacking = true;
+        enemy.attackTimer = Time.time;
+
+        // Different attack patterns based on HP
+        if (enemy.hp.currHp < 10000)
+        {
+            // Phase 2 attacks (more variety)
+            int random = Random.Range(0, 4);
+            string[] attacks = { "Attack1", "Attack2", "Attack3", "Attack4" };
+            enemy.anmt.SetTrigger(attacks[random]);
+        }
+        else
+        {
+            // Phase 1 attacks (simpler)
+            int random = Random.Range(0, 2);
+            string[] attacks = { "Attack1", "Attack3" };
+            enemy.anmt.SetTrigger(attacks[random]);
         }
     }
 }
