@@ -57,7 +57,9 @@ public class Skill2Manager : MonoBehaviour
             }
             playerControllerState.isRemoveClone = false;
         }
-        StartCoroutine(WaitForRemoveClone());// Đợi 10 giây để loại bỏ phân thân
+       
+        
+        
     }
 
     // Kích hoạt kỹ năng phân thân
@@ -85,6 +87,8 @@ public class Skill2Manager : MonoBehaviour
         {
             Debug.LogWarning("Không tìm thấy SK_DeathKnight trong scene.");
         }
+        StartCoroutine(WaitForRemoveClone()); // đợi 10 giây để loại bỏ phân thân và effect
+
     }
     //khoi phục hồi tag sau một khoảng thời gian
     private IEnumerator RestoreTagAfterDelay(GameObject obj, string originalTag, float delay)
@@ -98,7 +102,8 @@ public class Skill2Manager : MonoBehaviour
 
         
     }
-    //dợi 10 giây để loại bỏ phân thân
+
+    //dợi 10 giây để loại bỏ phân thân va effect
     public IEnumerator WaitForRemoveClone()
     {
         yield return new WaitForSeconds(10f); // Thời gian chờ trước khi loại bỏ phân thân

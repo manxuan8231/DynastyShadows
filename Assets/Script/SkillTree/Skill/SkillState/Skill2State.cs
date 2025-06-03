@@ -14,6 +14,7 @@ public class Skill2State : PlayerState
         Debug.Log("Chạy trạng thái skill2");
         player.StartCoroutine(MoveBackward(4f, 0.1f)); // Lùi 3 đơn vị trong 0.2s
         player.StartCoroutine(WaitForMove()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
+        player.StartCoroutine(WaitForSkill2()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
     }
 
     public override void Update()
@@ -24,7 +25,7 @@ public class Skill2State : PlayerState
         
         }   
         DashToNearestEnemyAndAttack();
-        player.StartCoroutine(WaitForSkill2()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
+      
     }
 
     public override void Exit()
