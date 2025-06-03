@@ -1,20 +1,23 @@
-using System.Collections;
+﻿using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
+using TMPro;
 
 public class Trigger : MonoBehaviour
 {
     public GameObject modelPlayer;
     public GameObject modelBoss;
     public GameObject effect;
-   public AnmtToNam anmtTn;
+    public AnmtToNam anmtTn;
     public Transform player;
-    Vector3 playerPos;
+    public Vector3 playerPos;
+    public GameObject canvasText;
+    
     public CinemachineCamera cam1;
-    public CinemachineCamera camPlayer;
-    public CinemachineCamera cam3;
-
-    void Start()
+    public TMP_Text textContent;
+    bool isChangedModel = false;
+    public BoxCollider boxTrigger;
+     void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
@@ -25,32 +28,51 @@ public class Trigger : MonoBehaviour
         anmtTn = FindAnyObjectByType<AnmtToNam>();  
         effect.SetActive(false);
         modelBoss.SetActive(false);
-        
-        
+        playerPos = player.transform.position;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-       player.transform.position = playerPos;
+       
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.tag == "Player" && !isChangedModel)
         {
             StartCoroutine(ChangModel());
+            isChangedModel = true;
         }
     }
     IEnumerator ChangModel()
     {
+        boxTrigger.enabled = false;
+        canvasText.SetActive(true);
+        textContent.text = "Là cậu ư?....";
+        cam1.Priority = 99;
+        yield return new WaitForSeconds(2.8f);
+        textContent.text = "Cậu đã ở đâu trong suốt 1 tháng qua?...";
+        yield return new WaitForSeconds(5);
+        canvasText.SetActive(false);
         anmtTn.Changed();
+        CharacterController characterController = FindAnyObjectByType<CharacterController>();
+        characterController.enabled = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         yield return new WaitForSeconds(6f);
         effect.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
         modelPlayer.SetActive(false); 
         yield return new WaitForSeconds(4.5f);
         effect.SetActive(false);
-        yield return null;
-        modelBoss?.SetActive(true);
+        yield return new WaitForSeconds(0.3f) ;
+        modelBoss.SetActive(true);
+        yield return new WaitForSeconds(2);
+        cam1.Priority = 0;
+        characterController.enabled = true;
+        Cursor.visible = false;
+        Cursor.lockState= CursorLockMode.Locked;
         
     }
 }
