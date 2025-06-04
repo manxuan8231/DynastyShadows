@@ -178,9 +178,6 @@ public class SkillManagerUI : MonoBehaviour
         }
     }
 
-   
-
-
     private void CastFireball(SkillData skill)
     {
         if (Input.GetKeyDown(KeyCode.R) && !skill.isSkillCooldown)
