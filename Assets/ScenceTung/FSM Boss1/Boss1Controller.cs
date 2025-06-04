@@ -40,6 +40,7 @@ public class Boss1Controller : MonoBehaviour
 
     [Header("Object")]
     public GameObject bossMap1;
+    public DameZoneWeapon dameZoneWp;
     private void Awake()
     {
         InitializeComponents();
@@ -211,5 +212,14 @@ public class Boss1Controller : MonoBehaviour
         Debug.Log("Tô Nam TakeDame: " + hp.currHp);
 
     }
+    public void BeginDame()
+    {
+        dameZoneWp.beginDame();
 
+    }
+
+    public void EndDame()
+    {
+        dameZoneWp.endDame();
+    }
 }
