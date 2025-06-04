@@ -14,6 +14,10 @@ public class OpenSkillTree : MonoBehaviour
     public Image buttonCoreBG;
     public GameObject coreTree;
     public TextMeshProUGUI textCore;
+    //panel inven an no
+    public GameObject panelInven;
+    public GameObject panelInvenEq;
+    public GameObject buttonInven;
 
     public AudioSource audioSource; // Thêm biến AudioSource để phát âm thanh
     public AudioClip openSkillTreeSound; // Thêm biến AudioClip để chứa âm thanh mở Skill Tree
@@ -23,7 +27,7 @@ public class OpenSkillTree : MonoBehaviour
            panelSkillTree.SetActive(false);
            flexibleSkill.SetActive(false);
            coreTree.SetActive(false);
-       audioSource = GetComponent<AudioSource>(); // Lấy AudioSource từ GameObject này
+            audioSource = GetComponent<AudioSource>(); // Lấy AudioSource từ GameObject này
     }
 
    
@@ -37,19 +41,31 @@ public class OpenSkillTree : MonoBehaviour
             audioSource.PlayOneShot(openSkillTreeSound);
             Cursor.lockState = willOpen ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = willOpen;
-
+            Time.timeScale = willOpen ? 0.0f : 1.0f;//
+            
             // Mặc định mở Flexible Tree
             flexibleSkill.SetActive(true);
             buttonFlexibleBG.enabled = true;
             textFlexible.color = Color.black;
-
+            // Mặc định mở core Tree
             coreTree.SetActive(false);
             buttonCoreBG.enabled = false;
             textCore.color = Color.white;
+
+            //inventory tat moi khi mo skill treee
+            panelInven.SetActive(false);
+            panelInvenEq.SetActive(false);
+            buttonInven.SetActive(false);
+        }
+        else if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Tab))
+        {
+            panelSkillTree.SetActive(false);
+            flexibleSkill.SetActive(false);
+            coreTree.SetActive(false);
         }
 
     }
-    // Mở icon Skill Tree khi nhấn nút trên giao diện
+    // Mở skill da dang  khi nhấn nút trên giao diện
     public void ButtonFlexibleSkill()
     {
         audioSource.PlayOneShot(clickButtonSound); // Phát âm thanh khi nhấn nút Flexible Skill
@@ -62,7 +78,7 @@ public class OpenSkillTree : MonoBehaviour
     }
   
 
-    // Mở Core Tree khi nhấn nút trên giao diện
+    // Mở skill cung khi nhấn nút trên giao diện
     public void ButtonCoreTree()
     {
         audioSource.PlayOneShot(clickButtonSound); // Phát âm thanh khi nhấn nút Flexible Skill

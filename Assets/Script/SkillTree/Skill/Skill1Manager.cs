@@ -13,15 +13,20 @@ public class Skill1Manager : MonoBehaviour
     public float lastTimeSkill = 0f;
     public bool isSkillCooldown = false;
 
+    public bool isInputSkill1 = true;
     //skill 1 dong cung enemy
     public GameObject skillPrefab; // Prefab của kỹ năng
     public Transform spawnPoint; // Vị trí spawn kỹ năng
                                  //tham chieu
     private PlayerControllerState playerController;
 
-
+    //unlock skill trong UI thi moi cho dung skill
+    public bool isUnlockSkill1 = false;
+    public GameObject iconSkill1;
     private void Start()
     {
+        iconSkill1.SetActive(false);
+        isSkillCooldown = false;
         playerController = FindAnyObjectByType<PlayerControllerState>();
 
     }
@@ -40,7 +45,7 @@ public class Skill1Manager : MonoBehaviour
             }
             return; // Đang cooldown thì không dùng được kỹ năng
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !isSkillCooldown)
+        if (Input.GetKeyDown(KeyCode.Alpha1) && !isSkillCooldown && isInputSkill1 == true && isUnlockSkill1 == true)
         {
             Debug.Log("Bắn kỹ năng đóng băng");
 

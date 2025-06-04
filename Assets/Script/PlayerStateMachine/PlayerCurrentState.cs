@@ -9,6 +9,8 @@ public class PlayerCurrentState : PlayerState
     public override void Enter()
     {
         player.animator.runtimeAnimatorController = player.animatorDefauld;
+        player.skill3Manager.isInputSkill3 = true;
+        player.skill1Manager.isInputSkill1 = true;
     }
 
     public override void Update()
@@ -20,11 +22,12 @@ public class PlayerCurrentState : PlayerState
             Roll();
             player.comboAttack.InputAttack();
             //skill2
-            if (player.skill2Manager.isInputSkill2)
+            if (player.skill2Manager.isInputSkill2)//để chuyển sang trạng thái skill2 animator
             {
              
                 player.ChangeState(new Skill2State(player));
             }
+            
         }
         else
         {
@@ -107,6 +110,7 @@ public class PlayerCurrentState : PlayerState
 
 
     public override void Exit() {
-      
+        player.skill3Manager.isInputSkill3 = false;
+        player.skill1Manager.isInputSkill1 = false;
     }
 }

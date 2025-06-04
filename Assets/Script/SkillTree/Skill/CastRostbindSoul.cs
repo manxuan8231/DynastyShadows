@@ -104,8 +104,8 @@ public class CastRostbindSoul : MonoBehaviour
         yield return new WaitForSeconds(delay);
         UnfreezeEnemy(targetEnemy);
         Destroy(gameObject);
-        Vector3 instanPos = enemy.transform.position + new Vector3(0f, 2.4f, 0f);
-        Instantiate(effectPrefab, instanPos, Quaternion.identity, enemy.transform);
+      /*  Vector3 instanPos = enemy.transform.position + new Vector3(0f, 2.4f, 0f);
+        Instantiate(effectPrefab, instanPos, Quaternion.identity, enemy.transform);*/
         Destroy(effectPrefab, 5); 
     }
 }

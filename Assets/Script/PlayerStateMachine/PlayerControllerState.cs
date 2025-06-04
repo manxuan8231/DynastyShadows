@@ -37,12 +37,16 @@ public class PlayerControllerState : MonoBehaviour
     public AudioClip audioRoll;
     public AudioClip audioMovemen;
 
-    //goi ham
+    //goi ham tham chieu
     public PlayerStatus playerStatus;
     public ComboAttack comboAttack;
-    //skill2
+    //skill2 tham chieu
     public Skill2Manager skill2Manager;
     public bool isRemoveClone = false;
+    //skill3 tham chieu
+    public Skill3Manager skill3Manager;
+    //skill1 tham chieu
+    public Skill1Manager skill1Manager;
 
     // Trạng thái hiện tại
     public RuntimeAnimatorController animatorDefauld;
@@ -54,7 +58,10 @@ public class PlayerControllerState : MonoBehaviour
         animator.runtimeAnimatorController = animatorDefauld; // Gán bộ điều khiển hoạt hình mặc định
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
+        skill1Manager = FindAnyObjectByType<Skill1Manager>();
         skill2Manager = FindAnyObjectByType<Skill2Manager>();
+        skill3Manager = FindAnyObjectByType<Skill3Manager>();
+
         audioSource = GetComponent<AudioSource>();
         runSpeed = playerStatus.speedRun;// tốc độ chạy
         rigBuilder = GetComponent<RigBuilder>();

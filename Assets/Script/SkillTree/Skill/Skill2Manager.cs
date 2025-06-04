@@ -17,10 +17,16 @@ public class Skill2Manager : MonoBehaviour
     public GameObject effectRun;
 
     public PlayerControllerState playerControllerState;
+
+    //unlock skill trong UI thi moi cho dung skill
+    public bool isUnlockSkill2 = false;
+    public GameObject iconSkill2;
     void Start()
     {
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
         coolDownSKillSlider.gameObject.SetActive(false);
+        isUnlockSkill2 = false;
+        iconSkill2.SetActive(false);
         coolDownSKillSlider.maxValue = skillCooldown;
         coolDownSKillSlider.value = skillCooldown;
         effectRun.SetActive(false);
@@ -28,7 +34,7 @@ public class Skill2Manager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha2) && !isSkillActive)
+        if (Input.GetKeyDown(KeyCode.Alpha2) && !isSkillActive && isUnlockSkill2 == true)
         {
            
             ActivateCloneSkill();
