@@ -19,7 +19,9 @@ public class Boss1AttackState : Boss1State
 
     public override void Update()
     {
-        if (enemy.isUsingSkill) return;
+
+       
+            if (enemy.isUsingSkill) return;
 
         float distance = Vector3.Distance(enemy.transform.position, enemy.player.transform.position);
 
@@ -55,7 +57,7 @@ public class Boss1AttackState : Boss1State
         enemy.attackTimer = Time.time;
 
         // Different attack patterns based on HP
-        if (enemy.hp.currHp < 10000)
+        if (enemy.hp.currHp <= 10000)
         {
             // Phase 2 attacks (more variety)
             int random = Random.Range(0, 4);

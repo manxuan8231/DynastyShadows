@@ -36,6 +36,10 @@ public class Boss1Controller : MonoBehaviour
     public GameObject skill4Prefabs;
     public Vector3 playerPos;
 
+
+
+    [Header("Object")]
+    public GameObject bossMap1;
     private void Awake()
     {
         InitializeComponents();
@@ -82,8 +86,17 @@ public class Boss1Controller : MonoBehaviour
 
     void Update()
     {
+        if(hp.currHp <= 0)
+        {
+            ChangState(new DeathBossState(this));
+           
+        }
         currentState?.Update();
         playerPos = player.transform.position;
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            TakeDame(1000);
+        }
     }
 
     public void ChangState(Boss1State newState)
@@ -156,8 +169,14 @@ public class Boss1Controller : MonoBehaviour
 
     public void Skill3()
     {
+        if (hp.currHp <= 0)
+        {
+            skill3Prefabs.SetActive(false);
+            this.enabled = false;
+        }
         skill3Prefabs.SetActive(true);
         StartCoroutine(CooldownSkill3(2));
+       
     }
     IEnumerator CooldownSkill3(float duration)
     {
@@ -168,12 +187,28 @@ public class Boss1Controller : MonoBehaviour
     }
     public void Skill4()
     {
+        if (hp.currHp <= 0)
+        {
+            skill4Prefabs.SetActive(false);
+            this.enabled = false;
+            this.agent.enabled = false; 
+        }
         skill4Prefabs.SetActive(true);
         GameObject obj = Instantiate(skill4Prefabs,playerPos, Quaternion.identity);
         Destroy(obj,4.5f);
 
         isUsingSkill = false;
 
+
+    }
+    public void TakeDame(int damage)
+    {
+        hp.currHp -= damage;
+
+        hp.currHp = Mathf.Clamp(hp.currHp, 0, hp.maxHp);
+        hp.sliderHP.value = hp.currHp;
+        hp.textHP.text = $"{hp.currHp}/{hp.maxHp}";
+        Debug.Log("Tô Nam TakeDame: " + hp.currHp);
 
     }
 

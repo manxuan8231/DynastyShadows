@@ -12,6 +12,7 @@ public class SkillBossState : Boss1State
 
     public override void Update()
     {
+      
         if (enemy.player == null) return;
 
         float distance = Vector3.Distance(enemy.transform.position, enemy.player.transform.position);
@@ -75,6 +76,11 @@ public class SkillBossState : Boss1State
 
     private IEnumerator Skill1Manager()
     {
+        if (enemy.hp.currHp <= 0)
+        {
+            enemy.skill2Prefabs.SetActive(false);
+            enemy.enabled = false;
+        }
         enemy.anmt.SetTrigger("Skill1");
 
         if (enemy.skill1Prefabs != null)

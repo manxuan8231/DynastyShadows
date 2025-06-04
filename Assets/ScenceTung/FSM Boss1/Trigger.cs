@@ -17,6 +17,7 @@ public class Trigger : MonoBehaviour
     public TMP_Text textContent;
     bool isChangedModel = false;
     public BoxCollider boxTrigger;
+    public GameObject sliderBoss;
      void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -29,6 +30,7 @@ public class Trigger : MonoBehaviour
         effect.SetActive(false);
         modelBoss.SetActive(false);
         playerPos = player.transform.position;
+        sliderBoss.SetActive(false);
 
     }
 
@@ -69,6 +71,7 @@ public class Trigger : MonoBehaviour
         yield return new WaitForSeconds(0.3f) ;
         modelBoss.SetActive(true);
         yield return new WaitForSeconds(2);
+        sliderBoss.SetActive(true);
         cam1.Priority = 0;
         characterController.enabled = true;
         Cursor.visible = false;

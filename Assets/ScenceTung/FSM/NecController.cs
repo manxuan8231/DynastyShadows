@@ -52,6 +52,7 @@ public class NecController : MonoBehaviour
         if(necHp.curhp <= 0)
         {
             ChangState(new DeathNecState(this));
+           
         }
         playerPos = player.transform.position;
         currentState?.Update();

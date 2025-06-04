@@ -14,7 +14,7 @@ public class Boss1RunState : Boss1State
     public override void Update()
     {
         if (enemy.player == null) return;
-
+      
         float distance = Vector3.Distance(enemy.transform.position, enemy.player.transform.position);
 
         // Continue chasing if within radius
