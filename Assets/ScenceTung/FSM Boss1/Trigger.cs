@@ -51,6 +51,10 @@ public class Trigger : MonoBehaviour
     {
         boxTrigger.enabled = false;
         canvasText.SetActive(true);
+        CharacterController characterController = FindAnyObjectByType<CharacterController>();
+        characterController.enabled = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         textContent.text = "Là cậu ư?....";
         cam1.Priority = 99;
         yield return new WaitForSeconds(2.8f);
@@ -58,10 +62,7 @@ public class Trigger : MonoBehaviour
         yield return new WaitForSeconds(5);
         canvasText.SetActive(false);
         anmtTn.Changed();
-        CharacterController characterController = FindAnyObjectByType<CharacterController>();
-        characterController.enabled = false;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+    
         yield return new WaitForSeconds(6f);
         effect.SetActive(true);
         yield return new WaitForSeconds(0.1f);
