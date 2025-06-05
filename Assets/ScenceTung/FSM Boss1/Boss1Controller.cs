@@ -41,6 +41,9 @@ public class Boss1Controller : MonoBehaviour
     [Header("Object")]
     public GameObject bossMap1;
     public DameZoneWeapon dameZoneWp;
+    public GameObject playerObj;
+  
+    
     private void Awake()
     {
         InitializeComponents();
@@ -222,4 +225,6 @@ public class Boss1Controller : MonoBehaviour
     {
         dameZoneWp.endDame();
     }
+
+  
 }
