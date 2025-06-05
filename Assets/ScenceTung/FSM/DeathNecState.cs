@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DeathNecState : INecState
 {
@@ -19,6 +20,7 @@ public class DeathNecState : INecState
             enemy.offDame.enabled = false;
             enemy.anmt.SetTrigger("Death");
             GameObject.Destroy(enemy.gameObject, 5f);
+            
         }
     }
     public override void Exit()
