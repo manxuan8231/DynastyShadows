@@ -12,40 +12,17 @@ public class ComboAttack : MonoBehaviour
     private float nextAttackTime = 0f;
     public bool isAttack = true;
     private float coolDownAttackFly = 0f;
-    private bool isFlip=false;
-    //effect slash
-    [SerializeField] private GameObject effectAttack1;
-    //[SerializeField] private GameObject effectAttack2;
-    [SerializeField] private GameObject effectAttack3;
-    [SerializeField] private GameObject effectAttackFly3;
-
-   
-
-    //audio
-    private AudioSource audioSource;
-    public AudioClip slashSound1;
-    public AudioClip slashSound2;
-    public AudioClip slashSound3;
-    public AudioClip slashSoundFly;
-
+  
+    
     //Goi ham
     PlayerStatus playerStatus;
     PlayerControllerState playerController;
-    DameZone dameZone;
+   
 
     void Start()
     {
-
-        effectAttack1.SetActive(false);
-       
-        effectAttack3.SetActive(false);
-        effectAttackFly3.SetActive(false);
-        audioSource = GetComponent<AudioSource>();
-
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         playerController = FindAnyObjectByType<PlayerControllerState>();
-        dameZone = FindAnyObjectByType<DameZone>();
-
     }
 
     void Update()
@@ -69,7 +46,7 @@ public class ComboAttack : MonoBehaviour
             // Tấn công khi đang trên không
             if (Input.GetMouseButtonDown(0)
                 && isAttack && playerStatus.currentMana > 50 && !playerController.IsGrounded()
-                && Time.time >= coolDownAttackFly + 1f)
+                && Time.time >= coolDownAttackFly + 5)
             {
                 OnAttackFly();
                 coolDownAttackFly = Time.time;
@@ -80,32 +57,13 @@ public class ComboAttack : MonoBehaviour
             {
                 comboStep = 0;
             }
-        }
-        if (isFlip == true)//
-        {
-            // Tìm và quay về hướng enemy gần nhất
-            GameObject closestEnemy = FindClosestEnemy(30f);
-            if (closestEnemy != null)
-            {
-                Vector3 lookDirection = closestEnemy.transform.position - transform.position;
-                lookDirection.y = 0; // Giữ player không ngẩng lên/ngửa xuống
-                transform.forward = lookDirection.normalized;
-            }
-        }
+        }       
     }
 
 
     void OnAttack()
     {
-        // Tìm và quay về hướng enemy gần nhất
-        GameObject closestEnemy = FindClosestEnemy(7f);
-        if (closestEnemy != null)
-        {
-            Vector3 lookDirection = closestEnemy.transform.position - transform.position;
-            lookDirection.y = 0; // Giữ player không ngẩng lên/ngửa xuống
-            transform.forward = lookDirection.normalized;
-        }
-
+        
         comboStep++;
 
         if (comboStep == 1)
@@ -131,120 +89,12 @@ public class ComboAttack : MonoBehaviour
     }
     void OnAttackFly()
     {
-        // Tìm và quay về hướng enemy gần nhất
-        GameObject closestEnemy = FindClosestEnemy(10f);
-        if (closestEnemy != null)
-        {
-            Vector3 lookDirection = closestEnemy.transform.position - transform.position;
-            lookDirection.y = 0; // Giữ player không ngẩng lên/ngửa xuống
-            transform.forward = lookDirection.normalized;
-        }
         playerController.animator.SetTrigger("FlyAttack");
     }
 
     
-    public GameObject FindClosestEnemy(float range)
-    {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        GameObject closest = null;
-        float minDistance = Mathf.Infinity;
-        Vector3 currentPosition = transform.position;
-
-        foreach (GameObject enemy in enemies)
-        {
-            float distance = Vector3.Distance(currentPosition, enemy.transform.position);
-            if (distance < minDistance && distance <= range)
-            {
-                minDistance = distance;
-                closest = enemy;
-            }
-        }
-
-        return closest;
-    }
-
-
-    //effect even
-    public void StartEffectAttack1()
-    {
-        effectAttack1.SetActive(true);
-    }
-    public void EndEffectAttack1()
-    {
-        effectAttack1.SetActive(false);
-    }
    
-   /* public void StartEffectAttack2()
-    {
-        effectAttack2.SetActive(true);
-    }
-    public void EndEffectAttack2()
-    {
-        effectAttack2.SetActive(false);
-    }*/
- 
-    public void StartEffectAttack3()
-    {
-        effectAttack3.SetActive(true);
-    }
-    public void EndEffectAttack3()
-    {
-        effectAttack3.SetActive(false);
-    }
-   
-    public void StartEffectAttackFly3()
-    {
-        effectAttackFly3.SetActive(true);
-    }
-    public void EndEffectAttackFly3()
-    {
-        effectAttackFly3.SetActive(false);
-    }
 
-    //sounds even
-    public void PlaySlashSound1()
-    {
-        audioSource.PlayOneShot(slashSound1);
-    }
-    public void PlaySlashSound2()
-    {
-        audioSource.PlayOneShot(slashSound2);
-    }
-    public void PlaySlashSound3()
-    {
-        audioSource.PlayOneShot(slashSound3);
-    }
-    public void PlaySlashSoundFly()
-    {
-        audioSource.PlayOneShot(slashSoundFly);
-    }
 
-    //damezone box
-    public void StartDameZone()
-    {
-       dameZone.beginDame();
-    }
-    public void EndDameZone()
-    {
-        dameZone.endDame();
-    }
-    public void StartDameZoneHit()
-    {
-       
-    }
-    public void EndDameZoneHit()
-    {
-       
-    }
-
-    public void StartFlip()
-    {
-        isFlip = true;
-       
-    }
-    public void EndFlip()
-    {
-        isFlip = false;
-       
-    }
+    
 }

@@ -15,7 +15,8 @@ public class Skill2State : PlayerState
       
         player.StartCoroutine(WaitForMove()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
         player.StartCoroutine(WaitForSkill2()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
-      
+
+       
     }
 
     public override void Update()
@@ -35,6 +36,7 @@ public class Skill2State : PlayerState
         isMove = true; // Đặt lại trạng thái di chuyển
         player.animator.runtimeAnimatorController = player.animatorDefauld; // Quay về bộ điều khiển hoạt hình mặc định
         player.skill2Manager.effectRun.SetActive(false);
+
     }
 
     public void Move()

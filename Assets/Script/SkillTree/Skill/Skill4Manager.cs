@@ -1,26 +1,46 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class Skill4Manager : MonoBehaviour
 {
     public SkinnedMeshRenderer[] skill4MeshRenderers; // Mảng chứa các SkinnedMeshRenderer của skill 4
-    public GameObject effectAura; // Hiệu ứng Aura của skill 4
+ 
     public bool isInputSkill4 = false;//kiem tra de chuyen trang thai skill4
 
+    public float coolDownTime = 10f; // Thời gian hồi chiêu của skill 4
+    private float lastCoolDown = -10f; // Biến để theo dõi thời gian hồi chiêu hiện tại
+    public Slider sliderCoolDown;
 
+    //unlock skill trong UI thi moi cho dung skill
+    public bool isUnlockSkill4 = false;
+    public GameObject iconSkill4;
     void Start()
     {
         isInputSkill4 = false; // Khởi tạo trạng thái skill 4 là không được kích hoạt
-        effectAura.SetActive(false); // Tắt hiệu ứng Aura ban đầu
+        iconSkill4.SetActive(false);
+        sliderCoolDown.maxValue = coolDownTime; // Đặt giá trị tối đa của slider là thời gian hồi chiêu
+        sliderCoolDown.value = coolDownTime; // Đặt giá trị ban đầu của slider là thời gian hồi chiêu
+
+        sliderCoolDown.enabled = false; // Tắt slider ban đầu
         ToggleSkill4(false); // Tắt skill 4 ban đầu
     }
 
-    // Update is called once per frame
+   
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha4)) 
+
+        //slider giảm dần
+        float time = Time.time - lastCoolDown;
+        float remainingCooldown = Mathf.Clamp(0, coolDownTime - time, coolDownTime);
+        sliderCoolDown.value = remainingCooldown;
+
+        if (Input.GetKeyDown(KeyCode.Alpha4) && Time.time >= lastCoolDown + coolDownTime && isUnlockSkill4 == true) 
         {
+            sliderCoolDown.enabled = true; // Bật slider khi nhấn phím 4        
             isInputSkill4 = true;
-            ToggleSkill4(true); // Bật skill 4 khi nhấn phím 4   
+            StartCoroutine(WaitChangeSkin()); // Bắt đầu coroutine để thay đổi skin
+            lastCoolDown = Time.time; // Cập nhật thời gian hồi chiêu
         }
     }
     public void ToggleSkill4(bool isActive)
@@ -29,5 +49,12 @@ public class Skill4Manager : MonoBehaviour
         {
             renderer.enabled = isActive; // Bật hoặc tắt tất cả các SkinnedMeshRenderer
         }
+    }
+
+    public IEnumerator WaitChangeSkin()
+    {
+        yield return new WaitForSeconds(1.5f); // Chờ 10 giây trước khi tắt skill 4
+        ToggleSkill4(true); // Bật skin khi nhấn phím 4   
+      
     }
 }

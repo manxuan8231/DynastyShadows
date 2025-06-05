@@ -117,5 +117,6 @@ public class PlayerCurrentState : PlayerState
         //tat ko cho phép nhap skill1 va skill3
         player.skill3Manager.isInputSkill3 = false;
         player.skill1Manager.isInputSkill1 = false;
+
     }
 }

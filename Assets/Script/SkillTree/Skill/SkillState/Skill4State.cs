@@ -36,6 +36,7 @@ public class Skill4State : PlayerState
         player.skill4Manager.isInputSkill4 = false; //chuyen thanh false de ko chay lai skill4
         player.weaponSword.SetActive(true); // weapon khi chay skill4
         player.skill4Manager.ToggleSkill4(false); //tat model skill 4
+      
     }
 
     public void Move()
