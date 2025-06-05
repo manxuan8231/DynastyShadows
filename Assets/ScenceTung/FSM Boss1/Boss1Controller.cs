@@ -41,7 +41,7 @@ public class Boss1Controller : MonoBehaviour
     [Header("Object")]
     public GameObject bossMap1;
     public DameZoneWeapon dameZoneWp;
-    public GameObject playerObj;
+    public GameObject playerObjScence1;
   
     
     private void Awake()
@@ -97,7 +97,7 @@ public class Boss1Controller : MonoBehaviour
         }
         currentState?.Update();
         playerPos = player.transform.position;
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             TakeDame(1000);
         }
