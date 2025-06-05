@@ -27,7 +27,11 @@ public class PlayerCurrentState : PlayerState
              
                 player.ChangeState(new Skill2State(player));
             }
-            
+            //skill4
+            if (player.skill4Manager.isInputSkill4) //để chuyển sang trạng thái skill4 animator
+            {
+                player.ChangeState(new Skill4State(player));
+            }
         }
         else
         {
@@ -110,6 +114,7 @@ public class PlayerCurrentState : PlayerState
 
 
     public override void Exit() {
+        //tat ko cho phép nhap skill1 va skill3
         player.skill3Manager.isInputSkill3 = false;
         player.skill1Manager.isInputSkill1 = false;
     }

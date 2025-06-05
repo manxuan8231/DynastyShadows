@@ -12,9 +12,10 @@ public class Skill2State : PlayerState
         player.animator.runtimeAnimatorController = player.animatorSkill2;
         player.skill2Manager.effectRun.SetActive(true);
         Debug.Log("Chạy trạng thái skill2");
-        player.StartCoroutine(MoveBackward(4f, 0.1f)); // Lùi 3 đơn vị trong 0.2s
+      
         player.StartCoroutine(WaitForMove()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
         player.StartCoroutine(WaitForSkill2()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
+      
     }
 
     public override void Update()
@@ -144,27 +145,7 @@ public class Skill2State : PlayerState
         player.ChangeState(new PlayerCurrentState(player)); // Quay về trạng thái hiện tại
     }
 
-    //lùi về sau một khoảng cách nhất định
-    IEnumerator MoveBackward(float distance, float duration)
-    {
-        Vector3 start = player.transform.position;
-        Vector3 dir = -player.transform.forward;
-        Vector3 end = start + dir * distance;
-        float elapsed = 0f;
-
-        player.controller.enabled = false;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / duration;
-            player.transform.position = Vector3.Lerp(start, end, t);
-            yield return null;
-        }
-
-        player.transform.position = end;
-        player.controller.enabled = true;
-    }
+   
 
     IEnumerator WaitForMove()
     {

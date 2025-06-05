@@ -30,6 +30,7 @@ public class PlayerControllerState : MonoBehaviour
     public bool wasGroundedLastFrame;
     public bool isRunning = false;
     public bool isController = true;
+    
     //cooldown roll
     public float rollColdownTime = -2f;
     //audio
@@ -40,18 +41,21 @@ public class PlayerControllerState : MonoBehaviour
     //goi ham tham chieu
     public PlayerStatus playerStatus;
     public ComboAttack comboAttack;
+
     //skill2 tham chieu
     public Skill2Manager skill2Manager;
     public bool isRemoveClone = false;
-    //skill3 tham chieu
-    public Skill3Manager skill3Manager;
-    //skill1 tham chieu
-    public Skill1Manager skill1Manager;
+    public Skill3Manager skill3Manager; //skill3 tham chieu
+    public Skill1Manager skill1Manager; //skill1 tham chieu
+    public Skill4Manager skill4Manager;// skill 4 tham chieu
 
     // Trạng thái hiện tại
-    public RuntimeAnimatorController animatorDefauld;
-    public RuntimeAnimatorController animatorSkill2;
+    public RuntimeAnimatorController animatorDefauld;//trang thai mac định
+    public RuntimeAnimatorController animatorSkill2;//trang thai skill2
+    public RuntimeAnimatorController animatorSkill4;//trang thai skill4
     private PlayerState currentState;
+
+    public GameObject weaponSword; //weapon
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -61,12 +65,13 @@ public class PlayerControllerState : MonoBehaviour
         skill1Manager = FindAnyObjectByType<Skill1Manager>();
         skill2Manager = FindAnyObjectByType<Skill2Manager>();
         skill3Manager = FindAnyObjectByType<Skill3Manager>();
+        skill4Manager = FindAnyObjectByType<Skill4Manager>();
 
         audioSource = GetComponent<AudioSource>();
         runSpeed = playerStatus.speedRun;// tốc độ chạy
         rigBuilder = GetComponent<RigBuilder>();
         rigBuilder.enabled = false; // 
-
+        
         // Gọi hàm ChangeState để chuyển sang trạng thái ban đầu
         ChangeState(new PlayerCurrentState(this));
     }
