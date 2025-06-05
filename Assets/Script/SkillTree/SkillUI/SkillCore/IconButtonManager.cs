@@ -47,7 +47,7 @@ public class IconButtonManager : MonoBehaviour
             //skill1
             case "DongCung1":
                 previewText.text = "Đông cứng";
-                contenSkill.text = "Khi dùng skill có khả năng đông cứng kẻ địch trong 5 giây có thời gian hồi chiêu là 50 giây không gây sát thương";
+                contenSkill.text = "Khi dùng skill có khả năng đông cứng kẻ địch trong 5 giây không gây sát thương có thời gian hồi chiêu là 50 giây.";
                 skillBGs[0].enabled = true;
                 
                 break;
@@ -68,6 +68,34 @@ public class IconButtonManager : MonoBehaviour
                 previewText.text = "Đông cứng";
                 contenSkill.text = "Gây 50 sát thương liên tục trong 10 giây";
                 skillBGs[3].enabled = true;
+                break;
+
+            //skill2--------------
+            case "TheAnh1":
+                previewText.text = "Thế ảnh";
+                contenSkill.text = "Khi dùng Thế ảnh người chơi có thể tạo ra một bản thể ảo ảnh giúp đánh lạc hướng kẻ thù và " +
+                    "chuyển sang trạng thái tàng hình trong 10 giây, " +
+                    "khi nhấn tấn công thì player sẽ lao tới kẻ địch gần nhất chém 1 nhát chém và hủy trạng thái tàng hình, có thời gian hồi chiêu là 50 giây.";
+                skillBGs[4].enabled = true;
+
+                break;
+
+            case "TheAnh2":
+                previewText.text = "Thế ảnh - Cấp 2";
+                contenSkill.text = "Giảm thời gian hồi chiêu còn 35 giây";
+                skillBGs[5].enabled = true;
+                break;
+
+            case "TheAnh3":
+                previewText.text = "Thế ảnh - Cấp 3";
+                contenSkill.text = "Tăng thời gian tàng hình lên 20 giây.";
+                skillBGs[6].enabled = true;
+                break;
+
+            case "TheAnh4":
+                previewText.text = "Thế ảnh - Cấp 4";
+                contenSkill.text = "Trong thời gian tàng hình, bản thể ảo gây 200 sát thương cho kẻ địch ở gần trước khi biến mất.";
+                skillBGs[7].enabled = true;
                 break;
 
             default:
@@ -92,26 +120,121 @@ public class IconButtonManager : MonoBehaviour
             case "DongCung2":
                 Debug.Log("Đã mở khóa kỹ năng: ĐôngCung2");           
                 ColorUnlockIcon();
-                //mo khoa de su dung skill2
-                skill2Manager.isUnlockSkill2 = true;
-                skill2Manager.iconSkill2.SetActive(true);
+                //mo khoa de su dung 
+              
                 break;
             case "DongCung3":
                 Debug.Log("Đã mở khóa kỹ năng: ĐôngCung3");
                 ColorUnlockIcon();
-                //mo khoa de su dung skill2
-                skill3Manager.isUnlockSkill3 = true;
-                skill3Manager.iconSkill3.SetActive(true);
+                //mo khoa de su dung 
+               
                 break;
             case "DongCung4":
                 Debug.Log("Đã mở khóa kỹ năng: ĐôngCung4");
                 ColorUnlockIcon();
+               
+                break;
+
+            //skill 2 the ảnh --------------------------------
+            case "TheAnh1":
+                Debug.Log("Đã mở khóa kỹ năng: TheAnh1");
+                ColorUnlockIcon();
+                //mo khoa de su dung 
+                skill2Manager.isUnlockSkill2 = true;
+                skill2Manager.iconSkill2.SetActive(true);
+                break;
+            case "TheAnh2":
+                Debug.Log("Đã mở khóa kỹ năng: TheAnh2");
+                ColorUnlockIcon();
+                //mo khoa de su dung 
+               
+                break;
+            case "TheAnh3":
+                Debug.Log("Đã mở khóa kỹ năng: TheAnh3");
+                ColorUnlockIcon();
+                //mo khoa de su dung 
+               
+                break;
+            case "TheAnh4":
+                Debug.Log("Đã mở khóa kỹ năng: TheAnh4");
+                ColorUnlockIcon();
 
                 break;
 
+            //skill 3 quan doan bong ma --------------------------------
+            case "QuanDoanBongMa1":
+                Debug.Log("Đã mở khóa kỹ năng: QuanDoanBongMa1");
+                ColorUnlockIcon();
+                //mo khoa de su dung 
+                skill3Manager.isUnlockSkill3 = true;
+                skill3Manager.iconSkill3.SetActive(true);
+                break;
+            case "QuanDoanBongMa2":
+                Debug.Log("Đã mở khóa kỹ năng: QuanDoanBongMa2");
+                ColorUnlockIcon();
               
+                break;
+            case "QuanDoanBongMa3":
+                Debug.Log("Đã mở khóa kỹ năng: QuanDoanBongMa3");
+                ColorUnlockIcon();
+              
+                break;
+            case "QuanDoanBongMa4":
+                Debug.Log("Đã mở khóa kỹ năng: QuanDoanBongMa4");
+                ColorUnlockIcon();
+
+                break;
+            case "QuanDoanBongMa5":
+                Debug.Log("Đã mở khóa kỹ năng: QuanDoanBongMa4");
+                ColorUnlockIcon();
+
+                break;
+            case "QuanDoanBongMa6":
+                Debug.Log("Đã mở khóa kỹ năng: QuanDoanBongMa4");
+                ColorUnlockIcon();
+
+                break;
+
+            //skill 4 Phản nhản --------------------------------
+            case "PhanNhan1":
+                Debug.Log("Đã mở khóa kỹ năng: PhanNhan1");
+                ColorUnlockIcon();
+                //mo khoa de su dung 
+                skill3Manager.isUnlockSkill3 = true;
+                skill3Manager.iconSkill3.SetActive(true);
+                break;
+            case "PhanNhan2":
+                Debug.Log("Đã mở khóa kỹ năng: PhanNhan2");
+                ColorUnlockIcon();
+
+                break;
+            case "PhanNhan3":
+                Debug.Log("Đã mở khóa kỹ năng: PhanNhan3");
+                ColorUnlockIcon();
+
+                break;
+            case "PhanNhan4":
+                Debug.Log("Đã mở khóa kỹ năng: PhanNhan4");
+                ColorUnlockIcon();
+
+                break;
+            case "PhanNhan5":
+                Debug.Log("Đã mở khóa kỹ năng: PhanNhan5");
+                ColorUnlockIcon();
+
+                break;
+            case "PhanNhan6":
+                Debug.Log("Đã mở khóa kỹ năng: PhanNhan6");
+                ColorUnlockIcon();
+
+                break;
+            case "PhanNhan7":
+                Debug.Log("Đã mở khóa kỹ năng: PhanNhan7");
+                ColorUnlockIcon();
+
+                break;
         }
-     
+
 
     }
 
@@ -122,6 +245,7 @@ public class IconButtonManager : MonoBehaviour
 
         switch (currentSkillID)
         {
+            //skill1
             case "DongCung1":
                 index = 0; 
                 break;
@@ -133,6 +257,19 @@ public class IconButtonManager : MonoBehaviour
                 break;
             case "DongCung4": 
                 index = 3; 
+                break;
+            //skill2
+            case "TheAnh1":
+                index = 4;
+                break;
+            case "TheAnh2":
+                index = 5;
+                break;
+            case "TheAnh3":
+                index = 6;
+                break;
+            case "TheAnh4":
+                index = 7;
                 break;
         }
 
