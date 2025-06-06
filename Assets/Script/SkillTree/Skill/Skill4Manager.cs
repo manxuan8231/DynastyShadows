@@ -8,8 +8,9 @@ public class Skill4Manager : MonoBehaviour
  
     public bool isInputSkill4 = false;//kiem tra de chuyen trang thai skill4
 
-    public float coolDownTime = 10f; // Thời gian hồi chiêu của skill 4
-    private float lastCoolDown = -10f; // Biến để theo dõi thời gian hồi chiêu hiện tại
+    public float coolDownTime = 50f; // Thời gian hồi chiêu của skill 4
+    public float lastCoolDown = -50f; // Biến để theo dõi thời gian hồi chiêu hiện tại
+    public float timeSkill4 = 10f;//thời gian skill 4 ton tai
     public Slider sliderCoolDown;
 
     //unlock skill trong UI thi moi cho dung skill

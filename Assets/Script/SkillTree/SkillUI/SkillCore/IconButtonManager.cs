@@ -25,6 +25,11 @@ public class IconButtonManager : MonoBehaviour
     public Skill2Manager skill2Manager;
     public Skill3Manager skill3Manager;
     public Skill4Manager skill4Manager;
+
+    public float turnInSkill1 = 0f;
+    public float turnInSkill2 = 0f;
+    public float turnInSkill3 = 0f;
+    public float turnInSkill4 = 0f;
     void Start()
     {
         skill1Manager = FindAnyObjectByType<Skill1Manager>();
@@ -54,21 +59,41 @@ public class IconButtonManager : MonoBehaviour
                 break;
 
             case "DongCung2":
+            if(turnInSkill1 >= 1)
+                {
                 previewText.text = "Đông cứng - Cấp 2";
                 contenSkill.text = "Giảm thời gian hồi chiêu còn 35 giây";
                 skillBGs[1].enabled = true;
+                } else
+                {
+                    previewPanel.SetActive(false);
+                }
+                        
                 break;
 
             case "DongCung3":
+                if(turnInSkill1 >= 2)
+                {
                 previewText.text = "Đông cứng - Cấp 3";
                 contenSkill.text = "Tăng thời gian đông cứng kẻ địch trong 10 giây";
                 skillBGs[2].enabled = true;
+                } else
+                {
+                    previewPanel.SetActive(false);
+                }           
                 break;
 
             case "DongCung4":
+                if(turnInSkill1 >= 3)
+                {
                 previewText.text = "Đông cứng - Cấp 4";
                 contenSkill.text = "Gây 50 sát thương liên tục trong 10 giây";
-                skillBGs[3].enabled = true;
+                skillBGs[3].enabled = true;   
+                } else
+                {
+                    previewPanel.SetActive(false);
+                }
+               
                 break;
 
             //skill2--------------
@@ -206,23 +231,32 @@ public class IconButtonManager : MonoBehaviour
                 //mo khoa de su dung skill1
                 skill1Manager.isUnlockSkill1 = true;
                 skill1Manager.iconSkill1.SetActive(true);
+                turnInSkill1 = 1;
                 break;
             case "DongCung2":
+                if(turnInSkill1 >= 1)
+                {
                 Debug.Log("Đã mở khóa kỹ năng: ĐôngCung2");           
                 ColorUnlockIcon();
                 //mo khoa de su dung 
-              
+                turnInSkill1 = 2;   
+                }
                 break;
             case "DongCung3":
+                if(turnInSkill1 >= 2)
+                {
                 Debug.Log("Đã mở khóa kỹ năng: ĐôngCung3");
                 ColorUnlockIcon();
-                //mo khoa de su dung 
-               
+                //mo khoa de su dung
+                turnInSkill1 = 3;
+                }
                 break;
             case "DongCung4":
+                if(turnInSkill1 >= 3)
+                {
                 Debug.Log("Đã mở khóa kỹ năng: ĐôngCung4");
                 ColorUnlockIcon();
-               
+                }
                 break;
 
             //skill 2 the ảnh --------------------------------

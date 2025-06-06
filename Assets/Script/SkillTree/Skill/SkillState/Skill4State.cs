@@ -9,7 +9,9 @@ public class Skill4State : PlayerState
 
     public override void Enter()
     {
+        
         player.animator.runtimeAnimatorController = player.animatorSkill4;//chay animator skill 4 khi bat dau
+        player.animator.SetTrigger("Change");
         player.weaponSword.SetActive(false); //tat weapon khi chay skill4
         player.StartCoroutine(WaitChangeState()); //bat dau chay ham doi trang thai sau 10 giay
         Debug.Log("Chạy trạng thái skill4");
@@ -112,7 +114,7 @@ public class Skill4State : PlayerState
     //doi trạng thái sau 10 giây
     public IEnumerator WaitChangeState()
     {
-        yield return new WaitForSeconds(10f); // Thời gian chờ 10 giây
+        yield return new WaitForSeconds(player.skill4Manager.timeSkill4); // Thời gian chờ 10 giây rồi chuyển trạng thái
         player.ChangeState(new PlayerCurrentState(player)); // Trở về trạng thái hiện tại
         player.animator.runtimeAnimatorController = player.animatorDefauld; // Trở về animator mặc định
        

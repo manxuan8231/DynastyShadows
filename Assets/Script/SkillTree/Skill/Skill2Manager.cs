@@ -7,12 +7,13 @@ public class Skill2Manager : MonoBehaviour
     public GameObject clonePrefab;
     public Transform spawnPoint;
     public Slider coolDownSKillSlider;
-    public float skillCooldown = 5f;
-    //thời gian tồn tại của skill
-    public float timeSkill2 = 10f;
+    public float lastTime = -50f;
+    public float skillCooldown = 50f;
+    
+    public float timeSkill2 = 10f;//thời gian tồn tại của skill
     public bool isSkillActive = false;
     public bool isInputSkill2 = false;
-    private float cooldownTimer = 0f;
+    
     public GameObject playerClone;
     //effect
     public GameObject effectRun;
@@ -44,13 +45,13 @@ public class Skill2Manager : MonoBehaviour
         // Nếu đang hồi chiêu, cập nhật timer và Slider
         if (isSkillActive)
         {
-            cooldownTimer -= Time.deltaTime;
-            coolDownSKillSlider.value = cooldownTimer;
+            lastTime -= Time.deltaTime;
+            coolDownSKillSlider.value = lastTime;
 
-            if (cooldownTimer <= 0f)
+            if (lastTime <= 0f)
             {
                 isSkillActive = false;
-                cooldownTimer = 0f;
+                lastTime = 0f;
                 coolDownSKillSlider.gameObject.SetActive(false);
                 coolDownSKillSlider.value = skillCooldown;
             }
@@ -75,7 +76,7 @@ public class Skill2Manager : MonoBehaviour
         isInputSkill2 = true;
         effectRun.SetActive(true);
         isSkillActive = true;
-        cooldownTimer = skillCooldown;
+        lastTime = skillCooldown;
         coolDownSKillSlider.gameObject.SetActive(true);
         coolDownSKillSlider.value = skillCooldown;
 

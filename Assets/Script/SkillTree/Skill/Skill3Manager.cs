@@ -6,10 +6,11 @@ public class Skill3Manager : MonoBehaviour
 {
     public Transform[] spawnClonePL;
     public string clonePLTag = "PlayerClone"; // Tag của clone player
-    private float lastTime = -10;
-    private float cooldownSkill = 10;
-    public bool isInputSkill3;
+    public float lastTime = -50;
+    public float cooldownSkill = 50;
+    public float timeSkill3 = 10f;//thoi gian skill 3 ton tai
 
+    public bool isInputSkill3;
     public Slider cooldownSlider;
 
     //unlock skill trong UI thi moi cho dung skill
@@ -45,7 +46,7 @@ public class Skill3Manager : MonoBehaviour
             Vector3 spawnPosition = spawnClonePL[i].position;
             GameObject clone = ObjPoolingManager.Instance.GetEnemyFromPool(clonePLTag, spawnPosition);
             clone.transform.rotation = spawnClonePL[i].rotation;
-            Destroy(clone, 5f); 
+            Destroy(clone, timeSkill3); 
             yield return new WaitForSeconds(0.3f); 
         }
     }

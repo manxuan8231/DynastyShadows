@@ -9,8 +9,9 @@ public class Skill1Manager : MonoBehaviour
 
     //cooldown skill
     public Slider cooldownSkilSlider;
-    public float cooldownSkill = 10f;
-    public float lastTimeSkill = 0f;
+    public float cooldownSkill = 50f;
+    public float lastTimeSkill = -50f;
+    public float timeSkill1 = 10f; //thoi gian skill 1 ton tai
     public bool isSkillCooldown = false;
 
     public bool isInputSkill1 = true;
@@ -50,7 +51,9 @@ public class Skill1Manager : MonoBehaviour
             Debug.Log("Bắn kỹ năng đóng băng");
 
             // Tạo hiệu ứng kỹ năng
-            Instantiate(skillPrefab, spawnPoint.position, spawnPoint.rotation);
+           GameObject skill1 = Instantiate(skillPrefab, spawnPoint.position, spawnPoint.rotation);
+           Destroy(skill1, timeSkill1);
+            
             StartCoroutine(WaitRig());
 
             // Kích hoạt cooldown
@@ -66,7 +69,7 @@ public class Skill1Manager : MonoBehaviour
             }
         }
     }
-    private IEnumerator WaitRig()
+    private IEnumerator WaitRig()//cho chay animator
     {
         playerController.rigBuilder.enabled = true; // Bật RigBuilder để có thể chayj animator 
         yield return new WaitForSeconds(0.3f); // Chờ 1 giây
