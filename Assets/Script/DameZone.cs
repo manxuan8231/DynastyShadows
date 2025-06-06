@@ -88,6 +88,7 @@ public class DameZone : MonoBehaviour
                     bossHP.TakeDamage(finalDamage);
                     return;
                 }
+                //boss sa mac
                 NecController necController = other.GetComponent<NecController>();
                 if (necController != null)
                 {
@@ -95,6 +96,15 @@ public class DameZone : MonoBehaviour
                     listDame.Add(other);
                     ShowTextDame(finalDamage);
                     necController.TakeDame(finalDamage);
+                    return;
+                }
+                //boss chinh map 1
+                Boss1Controller boss1HP = other.GetComponent<Boss1Controller>();
+                if (boss1HP != null)
+                {
+                    listDame.Add(other);
+                    ShowTextDame(finalDamage);
+                    boss1HP.TakeDame((int)finalDamage);
                     return;
                 }
             }
@@ -165,6 +175,7 @@ public class DameZone : MonoBehaviour
                     bossHP.TakeDamage(finalDamage);
                     return;
                 }
+                //boss sa mac
                 NecController necController = other.GetComponent<NecController>();
                 if (necController != null)
                 {
@@ -172,6 +183,15 @@ public class DameZone : MonoBehaviour
                     listDame.Add(other);
                     ShowTextDame(finalDamage);
                     necController.TakeDame(finalDamage);
+                    return;
+                }
+                //boss chinh map 1
+                Boss1Controller boss1HP = other.GetComponent<Boss1Controller>();
+                if (boss1HP != null)
+                {
+                    listDame.Add(other);
+                    ShowTextDame(finalDamage);
+                    boss1HP.TakeDame((int)finalDamage);
                     return;
                 }
             }

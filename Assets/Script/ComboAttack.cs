@@ -11,7 +11,7 @@ public class ComboAttack : MonoBehaviour
     private int comboStep = 0;
     private float nextAttackTime = 0f;
     public bool isAttack = true;
-    private float coolDownAttackFly = 0f;
+    private float coolDownAttackFly = -5f;
   
     
     //Goi ham

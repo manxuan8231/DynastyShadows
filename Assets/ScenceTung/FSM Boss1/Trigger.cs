@@ -57,6 +57,8 @@ public class Trigger : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         textContent.text = "Là cậu ư?....";
         cam1.Priority = 99;
+        yield return new WaitForSeconds(1f); 
+        textContent.text = "Tô Nam";
         yield return new WaitForSeconds(2.8f);
         textContent.text = "Cậu đã ở đâu trong suốt 1 tháng qua?...";
         yield return new WaitForSeconds(5);

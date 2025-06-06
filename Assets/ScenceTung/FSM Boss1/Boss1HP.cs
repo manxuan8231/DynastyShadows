@@ -21,4 +21,5 @@ public class Boss1HP : MonoBehaviour
         sliderHP.value = currHp; // Đặt giá trị hiện tại cho thanh máu
         textHP.text = $"{currHp}/{maxHp}"; // Cập nhật text hiển thị máu
     }
+   
 }

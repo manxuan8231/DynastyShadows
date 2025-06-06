@@ -143,7 +143,7 @@ public class Skill2State : PlayerState
     // Đợi 10 giây để loại bỏ phân thân
     public IEnumerator WaitForSkill2()
     {
-        yield return new WaitForSeconds(10); // Thời gian chờ trước khi chuyển về trạng thái hiện tại
+        yield return new WaitForSeconds(player.skill2Manager.timeSkill2); // Thời gian chờ trước khi chuyển về trạng thái hiện tại
         player.ChangeState(new PlayerCurrentState(player)); // Quay về trạng thái hiện tại
     }
 

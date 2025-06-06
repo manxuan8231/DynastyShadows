@@ -8,7 +8,8 @@ public class Skill2Manager : MonoBehaviour
     public Transform spawnPoint;
     public Slider coolDownSKillSlider;
     public float skillCooldown = 5f;
-    
+    //thời gian tồn tại của skill
+    public float timeSkill2 = 10f;
     public bool isSkillActive = false;
     public bool isInputSkill2 = false;
     private float cooldownTimer = 0f;
@@ -87,7 +88,7 @@ public class Skill2Manager : MonoBehaviour
         {
             string originalTag = player.tag;
             player.tag = "Untagged";
-            StartCoroutine(RestoreTagAfterDelay(player, originalTag, skillCooldown));
+            StartCoroutine(RestoreTagAfterDelay(player, originalTag, timeSkill2));
         }
         else
         {

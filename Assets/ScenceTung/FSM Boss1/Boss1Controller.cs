@@ -81,6 +81,7 @@ public class Boss1Controller : MonoBehaviour
         if (playerObj != null)
         {
             player = playerObj.transform;
+            playerObjScence1 = playerObj;
         }
         else
         {
