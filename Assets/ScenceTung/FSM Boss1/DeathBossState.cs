@@ -27,7 +27,6 @@ public class DeathBossState : Boss1State
             enemy.agent.enabled = false;
             GameObject.DontDestroyOnLoad(enemy.playerObjScence1);
             enemy.StartCoroutine(dontDestroy(5));
-            SceneManager.LoadScene("Map2");
 
 
 
