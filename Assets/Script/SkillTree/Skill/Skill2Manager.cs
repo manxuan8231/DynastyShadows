@@ -13,7 +13,7 @@ public class Skill2Manager : MonoBehaviour
     public float timeSkill2 = 10f;//thời gian tồn tại của skill
     public bool isSkillActive = false;
     public bool isInputSkill2 = false;
-    
+    public bool isChangeSkill2 = false;
     public GameObject playerClone;
     //effect
     public GameObject effectRun;
@@ -36,7 +36,7 @@ public class Skill2Manager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha2) && !isSkillActive && isUnlockSkill2 == true)
+        if (Input.GetKeyDown(KeyCode.Alpha2) && !isSkillActive && isUnlockSkill2 == true && isInputSkill2 == true)
         {
            
             ActivateCloneSkill();
@@ -73,7 +73,7 @@ public class Skill2Manager : MonoBehaviour
     // Kích hoạt kỹ năng phân thân
     void ActivateCloneSkill()
     {
-        isInputSkill2 = true;
+        isChangeSkill2 = true;
         effectRun.SetActive(true);
         isSkillActive = true;
         lastTime = skillCooldown;

@@ -33,15 +33,13 @@ public class PlayerControllerState : MonoBehaviour
     
     //cooldown roll
     public float rollColdownTime = -2f;
-    //audio
-    public AudioClip audioJump;
-    public AudioClip audioRoll;
-    public AudioClip audioMovemen;
+   
 
     //goi ham tham chieu
     public PlayerStatus playerStatus;
     public ComboAttack comboAttack;
-
+    public ThirdPersonOrbitCamera thirdPersonOrbitCamera;
+    public EvenAnimator evenAnimator;
     //skill2 tham chieu
     public Skill2Manager skill2Manager;
     public bool isRemoveClone = false;
@@ -66,7 +64,8 @@ public class PlayerControllerState : MonoBehaviour
         skill2Manager = FindAnyObjectByType<Skill2Manager>();
         skill3Manager = FindAnyObjectByType<Skill3Manager>();
         skill4Manager = FindAnyObjectByType<Skill4Manager>();
-
+        thirdPersonOrbitCamera = FindAnyObjectByType<ThirdPersonOrbitCamera>();
+        evenAnimator = FindAnyObjectByType<EvenAnimator>();
         weaponSword.SetActive(false);
         audioSource = GetComponent<AudioSource>();
         runSpeed = playerStatus.speedRun;// tốc độ chạy
@@ -96,9 +95,5 @@ public class PlayerControllerState : MonoBehaviour
     {
         return isGrounded;
     }
-    //sound even 
-    public void SoundMovemen()
-    {
-        audioSource.PlayOneShot(audioMovemen);
-    }
+    
 }

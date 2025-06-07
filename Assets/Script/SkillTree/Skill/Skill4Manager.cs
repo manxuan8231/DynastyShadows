@@ -7,7 +7,7 @@ public class Skill4Manager : MonoBehaviour
     public SkinnedMeshRenderer[] skill4MeshRenderers; // Mảng chứa các SkinnedMeshRenderer của skill 4
  
     public bool isInputSkill4 = false;//kiem tra de chuyen trang thai skill4
-
+    public bool isChangeStateSkill4 = false;
     public float coolDownTime = 50f; // Thời gian hồi chiêu của skill 4
     public float lastCoolDown = -50f; // Biến để theo dõi thời gian hồi chiêu hiện tại
     public float timeSkill4 = 10f;//thời gian skill 4 ton tai
@@ -19,6 +19,7 @@ public class Skill4Manager : MonoBehaviour
     void Start()
     {
         isInputSkill4 = false; // Khởi tạo trạng thái skill 4 là không được kích hoạt
+        isChangeStateSkill4 = false;
         iconSkill4.SetActive(false);
         sliderCoolDown.maxValue = coolDownTime; // Đặt giá trị tối đa của slider là thời gian hồi chiêu
         sliderCoolDown.value = coolDownTime; // Đặt giá trị ban đầu của slider là thời gian hồi chiêu
@@ -36,10 +37,10 @@ public class Skill4Manager : MonoBehaviour
         float remainingCooldown = Mathf.Clamp(0, coolDownTime - time, coolDownTime);
         sliderCoolDown.value = remainingCooldown;
 
-        if (Input.GetKeyDown(KeyCode.Alpha4) && Time.time >= lastCoolDown + coolDownTime && isUnlockSkill4 == true) 
+        if (Input.GetKeyDown(KeyCode.Alpha4) && Time.time >= lastCoolDown + coolDownTime && isUnlockSkill4 == true && isInputSkill4 == true) 
         {
             sliderCoolDown.enabled = true; // Bật slider khi nhấn phím 4        
-            isInputSkill4 = true;
+            isChangeStateSkill4 = true;
             StartCoroutine(WaitChangeSkin()); // Bắt đầu coroutine để thay đổi skin
             lastCoolDown = Time.time; // Cập nhật thời gian hồi chiêu
         }

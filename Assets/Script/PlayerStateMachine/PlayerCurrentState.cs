@@ -11,6 +11,9 @@ public class PlayerCurrentState : PlayerState
         player.animator.runtimeAnimatorController = player.animatorDefauld;
         player.skill3Manager.isInputSkill3 = true;
         player.skill1Manager.isInputSkill1 = true;
+        player.skill4Manager.isInputSkill4 = true;
+        player.skill2Manager.isInputSkill2 = true;
+
     }
 
     public override void Update()
@@ -22,13 +25,13 @@ public class PlayerCurrentState : PlayerState
             Roll();
             player.comboAttack.InputAttack();
             //skill2
-            if (player.skill2Manager.isInputSkill2)//để chuyển sang trạng thái skill2 animator
+            if (player.skill2Manager.isChangeSkill2)//để chuyển sang trạng thái skill2 animator
             {
              
                 player.ChangeState(new Skill2State(player));
             }
             //skill4
-            if (player.skill4Manager.isInputSkill4) //để chuyển sang trạng thái skill4 animator
+            if (player.skill4Manager.isChangeStateSkill4) //để chuyển sang trạng thái skill4 animator
             {
                 player.ChangeState(new Skill4State(player));
             }
@@ -88,7 +91,7 @@ public class PlayerCurrentState : PlayerState
         {
            player.playerStatus.TakeMana(50);
            player.velocity.y = Mathf.Sqrt(player.jumpHeight * -2f * player.gravity);
-           player.audioSource.PlayOneShot(player.audioJump);
+           player.audioSource.PlayOneShot(player.evenAnimator.audioJump);
            player. animator.SetTrigger("jump");
         }
         //
@@ -106,7 +109,7 @@ public class PlayerCurrentState : PlayerState
         if (Input.GetKeyDown(KeyCode.LeftControl) && player.isGrounded && player.playerStatus.currentMana > 100 && Time.time >= player.rollColdownTime + 2f)
         {
            player. playerStatus.TakeMana(100);
-           player. audioSource.PlayOneShot(player.audioRoll);
+           player. audioSource.PlayOneShot(player.evenAnimator.audioRoll);
            player.animator.SetTrigger("Roll");
             player.rollColdownTime = Time.time;
         }
@@ -117,6 +120,7 @@ public class PlayerCurrentState : PlayerState
         //tat ko cho phép nhap skill1 va skill3
         player.skill3Manager.isInputSkill3 = false;
         player.skill1Manager.isInputSkill1 = false;
-
+     player.skill4Manager.isInputSkill4 = false;
+        player.skill2Manager.isInputSkill2 = false;
     }
 }

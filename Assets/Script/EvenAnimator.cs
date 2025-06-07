@@ -22,6 +22,11 @@ public class EvenAnimator : MonoBehaviour
     [SerializeField] private GameObject effectSkill4Attack3;
     [SerializeField] private GameObject effectSkill4Fly;
     [SerializeField] private Transform positionSKill4;
+    [Header("even audio---------------------------- ")]
+    //audio
+    public AudioClip audioJump;
+    public AudioClip audioRoll;
+    public AudioClip audioMovemen;
     //Goi ham
     DameZone dameZone;
     ComboAttack comboAttack;
@@ -35,6 +40,12 @@ public class EvenAnimator : MonoBehaviour
         dameZone = FindAnyObjectByType<DameZone>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
 
+    }
+    //movemen
+    //sound even 
+    public void SoundMovemen()
+    {
+        audioSource.PlayOneShot(audioMovemen);
     }
     //effect even
     public void StartEffectAttack1()
@@ -142,6 +153,8 @@ public class EvenAnimator : MonoBehaviour
     public void StartEffectSkill4Fly()
     {
         GameObject effect = Instantiate(effectSkill4Fly, positionSKill4.position, transform.rotation);
+        Rigidbody r = effect.GetComponent<Rigidbody>();
+        r.AddForce(transform.forward * 150f, ForceMode.Impulse);
         Destroy(effect, 4f);
     }
 }

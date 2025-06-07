@@ -76,14 +76,25 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.21668975
+        functionName: PlaySlashSound2
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
-      - path: HumanF_BodyMesh
-        weight: 0
+      - path: HumanM_BodyMesh
+        weight: 1
       - path: Rig
         weight: 1
       - path: Rig/B-root
+        weight: 1
+      - path: Rig/B-root/B-handProp.L
+        weight: 1
+      - path: Rig/B-root/B-handProp.R
         weight: 1
       - path: Rig/B-root/B-hips
         weight: 1
@@ -104,8 +115,6 @@ ModelImporter:
       - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L
         weight: 1
       - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-handProp.L
         weight: 1
       - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-indexFinger01.L
         weight: 1
@@ -144,8 +153,6 @@ ModelImporter:
       - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R
         weight: 1
       - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-handProp.R
         weight: 1
       - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-indexFinger01.R
         weight: 1
@@ -192,8 +199,6 @@ ModelImporter:
       - path: Rig/B-root/B-hips/B-thigh.R/B-shin.R/B-foot.R
         weight: 1
       - path: Rig/B-root/B-hips/B-thigh.R/B-shin.R/B-foot.R/B-toe.R
-        weight: 1
-      - path: Rig/B-root/B-spineProxy
         weight: 1
       maskType: 1
       maskSource: {fileID: 31900000, guid: 89527f5525238ee44b3182458d85143a, type: 2}

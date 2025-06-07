@@ -10,7 +10,7 @@ public class Skill4State : PlayerState
     [SerializeField] private float attack1Cooldown = 0.5f;
     [SerializeField] private float attack2Cooldown = 0.6f;
     [SerializeField] private float attack3Cooldown = 0.7f;
-
+    private bool isMovement = false;
     private int comboStep = 0;
     private float nextAttackTime = 0f;
     public bool isAttack = true;
@@ -25,10 +25,11 @@ public class Skill4State : PlayerState
         player.weaponSword.SetActive(true); //tat weapon khi chay skill4
         player.StartCoroutine(WaitChangeState()); //bat dau chay ham doi trang thai sau 10 giay
         Debug.Log("Chạy trạng thái skill4");
+       
     }
     public override void Update()
     {
-        if (player.isController == true)
+        if (player.isController == true && isMovement ==true)
         {
             Move();
             Jump();
@@ -45,7 +46,7 @@ public class Skill4State : PlayerState
     }
     public override void Exit() 
     {
-        player.skill4Manager.isInputSkill4 = false; //chuyen thanh false de ko chay lai skill4
+        player.skill4Manager.isChangeStateSkill4 = false; //chuyen thanh false de ko chay lai skill4
         player.weaponSword.SetActive(false); // weapon khi chay skill4
         player.skill4Manager.ToggleSkill4(false); //tat model skill 4
       
@@ -97,7 +98,7 @@ public class Skill4State : PlayerState
         {
             player.playerStatus.TakeMana(50);
             player.velocity.y = Mathf.Sqrt(player.jumpHeight * -2f * player.gravity);
-            player.audioSource.PlayOneShot(player.audioJump);
+            player.audioSource.PlayOneShot(player.evenAnimator.audioJump);
             player.animator.SetTrigger("jump");
         }
         //
@@ -115,7 +116,7 @@ public class Skill4State : PlayerState
         if (Input.GetKeyDown(KeyCode.LeftControl) && player.isGrounded && player.playerStatus.currentMana > 100 && Time.time >= player.rollColdownTime + 2f)
         {
             player.playerStatus.TakeMana(100);
-            player.audioSource.PlayOneShot(player.audioRoll);
+            player.audioSource.PlayOneShot(player.evenAnimator.audioRoll);
             player.animator.SetTrigger("Roll");
             player.rollColdownTime = Time.time;
         }
@@ -185,6 +186,10 @@ public class Skill4State : PlayerState
     //doi trạng thái sau 10 giây
     public IEnumerator WaitChangeState()
     {
+
+        isMovement = false;//
+        yield return new WaitForSeconds(2f);
+        isMovement = true;//cho di chuyen
         yield return new WaitForSeconds(player.skill4Manager.timeSkill4); // Thời gian chờ 10 giây rồi chuyển trạng thái
         player.ChangeState(new PlayerCurrentState(player)); // Trở về trạng thái hiện tại
         player.animator.runtimeAnimatorController = player.animatorDefauld; // Trở về animator mặc định
@@ -193,9 +198,11 @@ public class Skill4State : PlayerState
 
     //doi roi xuong
     public IEnumerator WaitGravity() 
-    { 
-       player.gravity = 0;
-        yield return new WaitForSeconds(2f);
+    {
+        player.thirdPersonOrbitCamera.flipCamera= true;//tat bat flip theo camera
+        player.gravity = 0;
+        yield return new WaitForSeconds(2.4f);
         player.gravity = -9.81f;
+        player.thirdPersonOrbitCamera.flipCamera= false;
     }
 }
