@@ -1,11 +1,21 @@
 ﻿using System.Collections;
+using Unity.Android.Gradle.Manifest;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Skill4State : PlayerState
 {
     public Skill4State(PlayerControllerState player) : base(player) { }
-    //tham chieu
+    [Header("Thời gian cooldown cho mỗi đòn combo")]
+    [SerializeField] private float attack1Cooldown = 0.5f;
+    [SerializeField] private float attack2Cooldown = 0.6f;
+    [SerializeField] private float attack3Cooldown = 0.7f;
+
+    private int comboStep = 0;
+    private float nextAttackTime = 0f;
+    public bool isAttack = true;
+    private float coolDownAttackFly = -5f;
+
 
     public override void Enter()
     {
@@ -23,7 +33,7 @@ public class Skill4State : PlayerState
             Move();
             Jump();
             Roll();
-            player.comboAttack.InputAttack();
+            InputAttack();
             
         }
         else
@@ -110,7 +120,68 @@ public class Skill4State : PlayerState
             player.rollColdownTime = Time.time;
         }
     }
+    public void InputAttack()
+    {
+        // Chỉ cho phép tấn công nếu chuột bị khóa (không hiện trên màn hình)
+        if (Cursor.lockState == CursorLockMode.Locked)
+        {
+            // Tấn công trên mặt đất
+            if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime
+                && isAttack && player.playerStatus.currentMana > 50 && player.IsGrounded())
+            {
+                player.playerStatus.TakeMana(50);
+                OnAttack();
+            }
 
+            // Tấn công khi đang trên không
+            if (Input.GetMouseButtonDown(0)
+                && isAttack && player.playerStatus.currentMana > 50 && !player.IsGrounded()
+                && Time.time >= coolDownAttackFly + 5)
+            {
+                OnAttackFly();
+                coolDownAttackFly = Time.time;
+            }
+
+            // Reset combo nếu không tấn công sau 1.2s
+            if (Time.time >= nextAttackTime + 1.2f)
+            {
+                comboStep = 0;
+            }
+        }
+    }
+
+
+    void OnAttack()
+    {
+
+        comboStep++;
+
+        if (comboStep == 1)
+        {
+            player.animator.SetTrigger("Attack1");
+            nextAttackTime = Time.time + attack1Cooldown;
+        }
+        else if (comboStep == 2)
+        {
+            player.animator.SetTrigger("Attack2");
+            nextAttackTime = Time.time + attack2Cooldown;
+        }
+        else if (comboStep == 3)
+        {
+            player.animator.SetTrigger("Attack3");
+            nextAttackTime = Time.time + attack3Cooldown;
+            comboStep = 0;
+        }
+        else
+        {
+            comboStep = 0;
+        }
+    }
+    void OnAttackFly()
+    {
+        player.animator.SetTrigger("FlyAttack");
+        player.StartCoroutine(WaitGravity());
+    }
     //doi trạng thái sau 10 giây
     public IEnumerator WaitChangeState()
     {
@@ -118,5 +189,13 @@ public class Skill4State : PlayerState
         player.ChangeState(new PlayerCurrentState(player)); // Trở về trạng thái hiện tại
         player.animator.runtimeAnimatorController = player.animatorDefauld; // Trở về animator mặc định
        
+    }
+
+    //doi roi xuong
+    public IEnumerator WaitGravity() 
+    { 
+       player.gravity = 0;
+        yield return new WaitForSeconds(2f);
+        player.gravity = -9.81f;
     }
 }
