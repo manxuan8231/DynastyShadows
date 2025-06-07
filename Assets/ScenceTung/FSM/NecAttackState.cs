@@ -45,8 +45,9 @@ public class NecAttackState : INecState
         }
        else if (distance > enemy.attackRange + 1f)
         {
+           
             enemy.ChangState(new NecWalkState(enemy));
-            return;
+            
         }
         if (enemy.necHp.curhp <= 7000)
         {
