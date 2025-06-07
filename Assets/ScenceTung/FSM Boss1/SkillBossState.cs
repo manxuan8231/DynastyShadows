@@ -3,33 +3,64 @@ using UnityEngine;
 
 public class SkillBossState : Boss1State
 {
+    private float maxWaitTime = 1f; // Thời gian tối đa chờ hồi skill
+    private float waitTimer = 0f;
+
     public SkillBossState(Boss1Controller enemy) : base(enemy) { }
 
     public override void Enter()
     {
         Debug.Log("Skill State Entered");
+        waitTimer = 0f;
     }
 
     public override void Update()
     {
-      
         if (enemy.player == null) return;
 
         float distance = Vector3.Distance(enemy.transform.position, enemy.player.transform.position);
 
-        // Execute skill if conditions are met
-        if (distance <= enemy.skillRange &&
-            distance > enemy.attackRange &&
-            Time.time >= enemy.skillTimer + enemy.skillCooldown &&
-            !enemy.isUsingSkill)
+        // Nếu đang sử dụng skill, không làm gì cả
+        if (enemy.isUsingSkill)
         {
-            ExecuteRandomSkill();
+            return;
         }
-        // State transitions
-        else if (distance <= enemy.attackRange && !enemy.isAttacking)
+
+        // Nếu trong tầm đánh thường, ưu tiên tấn công
+        if (distance <= enemy.attackRange)
         {
             enemy.ChangState(new Boss1AttackState(enemy));
+            return;
         }
+
+        // Nếu trong tầm skill và skill đã hết cooldown
+        if (distance <= enemy.skillRange && 
+            distance > enemy.attackRange &&
+            Time.time >= enemy.skillTimer + enemy.skillCooldown)
+        {
+            ExecuteRandomSkill();
+            waitTimer = 0f; // Reset timer khi sử dụng skill
+        }
+        // Nếu đang chờ hồi skill
+        else if (distance <= enemy.skillRange && 
+                 distance > enemy.attackRange &&
+                 Time.time < enemy.skillTimer + enemy.skillCooldown)
+        {
+            waitTimer += Time.deltaTime;
+            
+            // Nếu chờ quá lâu, chuyển sang run để đuổi theo player
+            if (waitTimer >= maxWaitTime)
+            {
+                enemy.ChangState(new Boss1RunState(enemy));
+                return;
+            }
+
+            // Di chuyển để giữ khoảng cách với player
+            Vector3 directionToPlayer = (enemy.player.position - enemy.transform.position).normalized;
+            Vector3 targetPosition = enemy.player.position - directionToPlayer * (enemy.skillRange * 0.8f);
+            enemy.agent.SetDestination(targetPosition);
+        }
+        // Nếu player quá xa
         else if (distance > enemy.skillRange)
         {
             enemy.ChangState(new Boss1RunState(enemy));
@@ -80,7 +111,9 @@ public class SkillBossState : Boss1State
         {
             enemy.skill2Prefabs.SetActive(false);
             enemy.enabled = false;
+            yield break;
         }
+
         enemy.anmt.SetTrigger("Skill1");
 
         if (enemy.skill1Prefabs != null)

@@ -7,7 +7,7 @@ public class NecWalkState : INecState
 
     public override void Enter()
     {
-
+        Debug.Log("Đang đi");
     }
 
     public override void Update()
@@ -18,7 +18,9 @@ public class NecWalkState : INecState
         if (distance < enemy.radius)
         {
             enemy.agent.SetDestination(enemy.player.transform.position);
+            enemy.agent.isStopped = false;  
             enemy.anmt.SetTrigger("Walk");
+            Debug.Log("Di chuyển lại player");
         }
         //khoảng cách để nó đấm lộn 
 
@@ -32,7 +34,7 @@ public class NecWalkState : INecState
         {
             enemy.ChangState(new Skill1NecState(enemy));
         }
-       
+        
     }
 
     public override void Exit()
