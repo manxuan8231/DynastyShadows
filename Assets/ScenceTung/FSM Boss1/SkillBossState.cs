@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SkillBossState : Boss1State
 {
-    private float maxWaitTime = 3f; // Thời gian tối đa chờ hồi skill
+    private float maxWaitTime = 1f; // Thời gian tối đa chờ hồi skill
     private float waitTimer = 0f;
 
     public SkillBossState(Boss1Controller enemy) : base(enemy) { }
