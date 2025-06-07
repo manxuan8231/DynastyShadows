@@ -8,7 +8,7 @@ public class EvenAnimator : MonoBehaviour
     [SerializeField] private GameObject effectAttack1;
     //[SerializeField] private GameObject effectAttack2;
     [SerializeField] private GameObject effectAttack3;
-    [SerializeField] private GameObject effectAttackFly3; 
+    [SerializeField] private GameObject effectAttackFly3;
     private AudioSource audioSource; //audio
     public AudioClip slashSound1;
     public AudioClip slashSound2;
@@ -110,41 +110,38 @@ public class EvenAnimator : MonoBehaviour
     }
 
     //skill4--------------------------------------------------------
-    public void StartEffectSkill4Level1(float force = 10f, float duration = 2f)//effect skill4 level 1
+    public void StartEffectChangeSkill4()
+    {
+        GameObject effect = Instantiate(effectChangeSkill4, positionSKill4.position, transform.rotation);
+        Destroy(effect, 4f);
+    }
+
+    public void StartEffectSkill4Attack1()
     {
         GameObject effect = Instantiate(effectSkill4Attack1, positionSKill4.position, transform.rotation);
         Rigidbody rb = effect.GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * force, ForceMode.Impulse);
-        Destroy(effect, duration);
+        rb.AddForce(transform.forward * 10f, ForceMode.Impulse);
+        Destroy(effect, 4f);
     }
 
-    public void StartEffectSkill4Level2(float force = 15f, float duration = 2.5f)//effect skill4 level 2
+    public void StartEffectSkill4Attack2()
     {
         GameObject effect = Instantiate(effectSkill4Attack2, positionSKill4.position, transform.rotation);
         Rigidbody rb = effect.GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * force, ForceMode.Impulse);
-        Destroy(effect, duration);
+        rb.AddForce(transform.forward * 10f, ForceMode.Impulse);
+        Destroy(effect, 4f);
     }
 
-    public void StartEffectSkill4Level3(float force = 20f, float duration = 3f)//effect skill4 level 3
-    {
+    public void StartEffectSkill4Attack3() { 
         GameObject effect = Instantiate(effectSkill4Attack3, positionSKill4.position, transform.rotation);
         Rigidbody rb = effect.GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * force, ForceMode.Impulse);
-        Destroy(effect, duration);
+        rb.AddForce(transform.forward * 10f, ForceMode.Impulse);
+        Destroy(effect, 4f);
     }
 
-    public void StartEffectSkill4Ultimate(float force = 25f, float duration = 3.5f)//effect skill4 ultimate
+    public void StartEffectSkill4Fly()
     {
         GameObject effect = Instantiate(effectSkill4Fly, positionSKill4.position, transform.rotation);
-        Rigidbody rb = effect.GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * force, ForceMode.Impulse);
-        Destroy(effect, duration);
-    }
-
-    public void StartEffectSkill4Transform(float duration = 2f)//effect skill4 transform
-    {
-        GameObject effect = Instantiate(effectChangeSkill4, positionSKill4.position, Quaternion.identity);
-        Destroy(effect, duration);
+        Destroy(effect, 4f);
     }
 }

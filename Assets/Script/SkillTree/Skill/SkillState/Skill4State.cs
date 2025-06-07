@@ -12,7 +12,7 @@ public class Skill4State : PlayerState
         
         player.animator.runtimeAnimatorController = player.animatorSkill4;//chay animator skill 4 khi bat dau
         player.animator.SetTrigger("Change");
-        player.weaponSword.SetActive(false); //tat weapon khi chay skill4
+        player.weaponSword.SetActive(true); //tat weapon khi chay skill4
         player.StartCoroutine(WaitChangeState()); //bat dau chay ham doi trang thai sau 10 giay
         Debug.Log("Chạy trạng thái skill4");
     }
@@ -36,7 +36,7 @@ public class Skill4State : PlayerState
     public override void Exit() 
     {
         player.skill4Manager.isInputSkill4 = false; //chuyen thanh false de ko chay lai skill4
-        player.weaponSword.SetActive(true); // weapon khi chay skill4
+        player.weaponSword.SetActive(false); // weapon khi chay skill4
         player.skill4Manager.ToggleSkill4(false); //tat model skill 4
       
     }

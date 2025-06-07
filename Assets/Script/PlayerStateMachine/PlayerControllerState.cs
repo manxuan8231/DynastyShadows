@@ -67,6 +67,7 @@ public class PlayerControllerState : MonoBehaviour
         skill3Manager = FindAnyObjectByType<Skill3Manager>();
         skill4Manager = FindAnyObjectByType<Skill4Manager>();
 
+        weaponSword.SetActive(false);
         audioSource = GetComponent<AudioSource>();
         runSpeed = playerStatus.speedRun;// tốc độ chạy
         rigBuilder = GetComponent<RigBuilder>();
