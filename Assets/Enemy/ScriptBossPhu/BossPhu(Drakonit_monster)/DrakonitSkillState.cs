@@ -26,7 +26,7 @@ public class DrakonitSkillState : DrakonitState
             return;
         }
         //cooldown skill
-        if (Time.time >= lastSkillTime + 7 && enemy.isSkill)
+        if (Time.time >= lastSkillTime + 5 && enemy.isSkill)
         {
             int randomSkill = Random.Range(0, 3); // Chọn ngẫu nhiên kỹ năng từ 0 đến 1
             switch (randomSkill)

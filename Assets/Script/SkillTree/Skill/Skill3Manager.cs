@@ -16,6 +16,10 @@ public class Skill3Manager : MonoBehaviour
     //unlock skill trong UI thi moi cho dung skill
     public bool isUnlockSkill3 = false;
     public GameObject iconSkill3;
+
+    //tham chieu
+    public PlayerControllerState playerControllerState;
+
     private void Start()
     {
         iconSkill3.SetActive(false);
@@ -24,6 +28,7 @@ public class Skill3Manager : MonoBehaviour
         cooldownSlider.maxValue = cooldownSkill;
         cooldownSlider.value = cooldownSkill;
         cooldownSlider.enabled = false;
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
     }
     void Update()
     {
@@ -33,6 +38,7 @@ public class Skill3Manager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha3) && Time.time >= lastTime + cooldownSkill && isInputSkill3 == true && isUnlockSkill3 == true)
         {
+            playerControllerState.animator.SetTrigger("Skill3");
             cooldownSlider.enabled = true;
             StartCoroutine(SpawnClone());
             lastTime = Time.time;
