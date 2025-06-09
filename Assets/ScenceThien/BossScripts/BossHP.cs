@@ -31,11 +31,7 @@ public class BossHP : MonoBehaviour
 
     void Update()
     {
-   
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            TakeDamage(500);
-        }
+
     }
 
     public void TakeDamage(float damage)
@@ -61,7 +57,7 @@ public class BossHP : MonoBehaviour
             bossScript.TransitionToState(bossScript.getHitState);
             StartCoroutine(ReturnToBattle(0.6f));
         }
-        else
+        if(currentHealth == 0)
         {
           
             Die();
