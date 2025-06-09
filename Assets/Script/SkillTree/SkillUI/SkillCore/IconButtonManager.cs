@@ -25,6 +25,7 @@ public class IconButtonManager : MonoBehaviour
     public Skill2Manager skill2Manager;
     public Skill3Manager skill3Manager;
     public Skill4Manager skill4Manager;
+    public PlayerStatus playerStatus;
 
 //nâng cấp theo trình tự
     public float turnInSkill1 = 0f;
@@ -37,6 +38,7 @@ public class IconButtonManager : MonoBehaviour
         skill2Manager = FindAnyObjectByType<Skill2Manager>();
         skill3Manager = FindAnyObjectByType<Skill3Manager>();
         skill4Manager = FindAnyObjectByType<Skill4Manager>();
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
         previewPanel.SetActive(false);
         HideAllHighlights();//effect
         skillAudioSource = GetComponent<AudioSource>();
@@ -312,28 +314,36 @@ public class IconButtonManager : MonoBehaviour
                 turnInSkill1 += 1;
                 break;
             case "DongCung2":
-                if(turnInSkill1 >= 1)
+                if(turnInSkill1 >= 1 && playerStatus.score >= 2)
                 {
                 Debug.Log("Đã mở khóa kỹ năng: ĐôngCung2");           
                 ColorUnlockIcon();
-                //mo khoa de su dung 
                 turnInSkill1 += 1;   
+                playerStatus.score -= 2;
+                playerStatus.scoreText[0].text = "" + playerStatus.score;
+                //mo khoa de su dung 
+             
                 }
                 break;
             case "DongCung3":
-                if(turnInSkill1 >= 1)
+                if(turnInSkill1 >= 1 && playerStatus.score >= 2)
                 {
                 Debug.Log("Đã mở khóa kỹ năng: ĐôngCung3");
                 ColorUnlockIcon();
+                  turnInSkill1 += 1;
+                  playerStatus.score -= 2;
+                  playerStatus.scoreText[0].text = "" + playerStatus.score;
                 //mo khoa de su dung
-                turnInSkill1 += 1;
+              
                 }
                 break;
             case "DongCung4":
-                if(turnInSkill1 >= 3)
+                if(turnInSkill1 >= 3 && playerStatus.score >= 4)
                 {
                 Debug.Log("Đã mở khóa kỹ năng: ĐôngCung4");
                 ColorUnlockIcon();
+                playerStatus.score -= 4;
+                playerStatus.scoreText[0].text = "" + playerStatus.score;
                 }
                 break;
 

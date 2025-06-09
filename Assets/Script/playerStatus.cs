@@ -35,7 +35,7 @@ public class PlayerStatus : MonoBehaviour
     //xu lý exp
     public Slider expSlider; 
     public TextMeshProUGUI levelText;
-    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI[] scoreText;
     public int currentLevel = 1;        // Cấp hiện tại
     public float currentExp = 0f;         // EXP hiện tại
     private float expToNextLevel = 50f;        // EXP yêu cầu để lên cấp tiếp theo
@@ -43,7 +43,7 @@ public class PlayerStatus : MonoBehaviour
     //score
     public int score = 0; // Điểm số hiện tại
     public int scorePerLevel = 2;   // Điểm cộng khi lên cấp 1
-  
+    
 
     //xử lý mana
     public Slider sliderMana;
@@ -86,7 +86,11 @@ public class PlayerStatus : MonoBehaviour
         expSlider.maxValue = expToNextLevel;
         expSlider.value = currentExp;
         levelText.text = currentLevel.ToString();
-        scoreText.text = "Score: " + score;
+        for (int i = 0; i < scoreText.Length; i++)
+        {
+            scoreText[i].text = "" + score.ToString();
+        }
+        
         //mana
         currentMana = maxMana;
         sliderMana.maxValue = currentMana;
@@ -240,14 +244,20 @@ public class PlayerStatus : MonoBehaviour
 
         if (scoreText != null)
         {
-            scoreText.text = "Score: " + score;
+            for (int i = 0; i < scoreText.Length; i++)
+            {
+                scoreText[i].text = "" + score.ToString();
+            }
         }
     }
     public void TakeScore(int amount)
     {
         score -= amount;
         score = Mathf.Clamp(score, 0, int.MaxValue);
-        scoreText.text = "Score: " + score;
+        for (int i = 0; i < scoreText.Length; i++)
+        {
+            scoreText[i].text = "" + score.ToString();
+        }
 
     }
     //tăng mana dần
@@ -347,5 +357,5 @@ public class PlayerStatus : MonoBehaviour
         Debug.Log("Buff damage đã hết hạn.");
     }
 
-
+    
 }
