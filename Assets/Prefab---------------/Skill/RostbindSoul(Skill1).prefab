@@ -125,14 +125,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 5
   effectPrefab: {fileID: 8993028334714224416, guid: fd8a0ad5410ec564a8f0e36b34797571, type: 3}
-  enemyTag:
-  - Enemy1
-  - Enemy2
-  - Enemy3
-  - Enemy4
-  - Enemy
-  - BossDesert
-  - BossOrk1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!54 &1734103777678760395
 Rigidbody:
   m_ObjectHideFlags: 0

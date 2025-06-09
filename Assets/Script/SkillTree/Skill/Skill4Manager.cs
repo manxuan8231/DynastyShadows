@@ -18,7 +18,7 @@ public class Skill4Manager : MonoBehaviour
     public GameObject iconSkill4;
     void Start()
     {
-        isInputSkill4 = false; // Khởi tạo trạng thái skill 4 là không được kích hoạt
+        isInputSkill4 = true; // Khởi tạo trạng thái skill 4 là không được kích hoạt
         isChangeStateSkill4 = false;
         iconSkill4.SetActive(false);
         sliderCoolDown.maxValue = coolDownTime; // Đặt giá trị tối đa của slider là thời gian hồi chiêu

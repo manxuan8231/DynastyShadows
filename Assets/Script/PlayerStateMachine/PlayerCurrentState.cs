@@ -29,11 +29,13 @@ public class PlayerCurrentState : PlayerState
             {
              
                 player.ChangeState(new Skill2State(player));
+              
             }
             //skill4
             if (player.skill4Manager.isChangeStateSkill4) //để chuyển sang trạng thái skill4 animator
             {
                 player.ChangeState(new Skill4State(player));
+              
             }
         }
         else
