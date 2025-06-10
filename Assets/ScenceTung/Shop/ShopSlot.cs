@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems; 
-public class ShopSlot : MonoBehaviour, IPointerClickHandler
+public class ShopSlot : MonoBehaviour
 {
     public ItermShopData itermShopData;
     public TMP_Text itemNameText;
@@ -54,20 +54,7 @@ private void Start()
             Debug.Log("mày nghèo vl" + itermShopData.itemName);
         }
     }
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-           
-            SellItem();
-        }
-        else if (eventData.button == PointerEventData.InputButton.Left)
-        {
-           
-            BuyItem();
-            Debug.Log("Mua item" + itemNameText);
-        }
-    }
+  
     public void SellItem()
     {
         for (int i = 0; i < inventoryManager.itemSlot.Length; i++)
