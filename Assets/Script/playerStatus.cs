@@ -16,7 +16,7 @@ public class PlayerStatus : MonoBehaviour
     public TMP_Text statDame;
     public TMP_Text statCrit;
     public TMP_Text statCritChance;
-    //preview item stat
+    //preview item stat----------------------------------------
     [SerializeField]
     private TMP_Text hpPre, manaPre, damePre, critPre, critChancePre;
     [SerializeField]
@@ -26,32 +26,35 @@ public class PlayerStatus : MonoBehaviour
     [SerializeField]
     private GameObject selectedItemImage;
     public  TMP_Text itemName;
-    //xử lý máu
+    //xử lý máu------------------------------------------
     public Slider sliderHp;
     public float currentHp ;
     public float maxHp ;
     public TextMeshProUGUI textHealth;
 
-    //xu lý exp
+    //xu lý exp-----------------------------------------------
     public Slider expSlider; 
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI[] scoreText;
+    public GameObject effectLevelUp;//effect level up
+    
+    
     public int currentLevel = 1;        // Cấp hiện tại
     public float currentExp = 0f;         // EXP hiện tại
     private float expToNextLevel = 50f;        // EXP yêu cầu để lên cấp tiếp theo
     public float expIncreasePerLevel = 50f;
-    //score
+    //score------------------------------------------
     public int score = 0; // Điểm số hiện tại
     public int scorePerLevel = 2;   // Điểm cộng khi lên cấp 1
     
 
-    //xử lý mana
+    //xử lý mana------------------------------------------
     public Slider sliderMana;
     public float currentMana;
     public float maxMana ;
     public TextMeshProUGUI textMana;
 
-    //xu lý dame
+    //xu lý dame------------------------------------------
     public int criticalDamage = 100; // +600% damage khi crit
     public int criticalChance = 20;  // 20% tỉ lệ crit
     public int baseDamage = 50; // dame aattack mac dinh
@@ -59,20 +62,20 @@ public class PlayerStatus : MonoBehaviour
     public TextMeshProUGUI textHitChance;
     public TextMeshProUGUI textBaseDamage;
 
-    //xu ly toc do chay
+    //xu ly toc do chay------------------------------------------
     public float speedRun = 15f;
     public TextMeshProUGUI textSpeed;
   
-    //khoi tao
+    //khoi tao------------------------------------------
    
     private AudioSource audioSource;
    
 
-    //efffect stun
+    //efffect stun------------------------------------------
     public GameObject effectStun;
     public AudioClip audioHit;
     public AudioClip audioStun;
-    //tham chieu 
+    //tham chieu ------------------------------------------
     private PlayerControllerState playerController; // Tham chiếu đến PlayerController
     private ComboAttack comboAttack; // Tham chiếu đến ComboAttack
     void Start()
@@ -107,9 +110,10 @@ public class PlayerStatus : MonoBehaviour
         comboAttack = FindAnyObjectByType<ComboAttack>();
         //tat hieu uung
         effectStun.SetActive(false);
+        effectLevelUp.SetActive(false);
         // gold
         goldQuantityTxt.text = gold.ToString();
-        UpdateUI();
+        UpdateUI(); 
 
 
     }
@@ -331,7 +335,7 @@ public class PlayerStatus : MonoBehaviour
         currentExp = 0f; // Reset EXP về 0
         currentLevel++;
         expToNextLevel += expIncreasePerLevel; // Tăng EXP cần thiết cho cấp sau
-
+        StartCoroutine(WaitLevelUp());//effect level up
         score += scorePerLevel; // Cộng score cố định
         Debug.Log("Level Up! Now level " + currentLevel + " | Score: " + score);
     }
@@ -357,5 +361,11 @@ public class PlayerStatus : MonoBehaviour
         Debug.Log("Buff damage đã hết hạn.");
     }
 
-    
+    public IEnumerator WaitLevelUp()
+    {
+        effectLevelUp.SetActive(true);
+      
+        yield return new WaitForSeconds(4f);
+        effectLevelUp.SetActive(false);
+    }
 }
