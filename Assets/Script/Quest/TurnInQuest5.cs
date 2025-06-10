@@ -11,6 +11,7 @@ public class TurnInQuest5 : MonoBehaviour
     public GameObject icon3D; // Icon 3D của NPC
     public GameObject niceQuestUI;
     public GameObject arrowIcon; // Mũi tên chỉ hướng đến NPC
+    public GameObject questBoss; //quest boss
 
     public string[] names; // Danh sách tên 
     public string[] content; // Nội dung hội thoại
@@ -47,12 +48,15 @@ public class TurnInQuest5 : MonoBehaviour
         buttonF.SetActive(false); // Ẩn nút F khi bắt đầu
         arrowIcon.SetActive(false); // Ẩn mũi tên chỉ hướng đến NPC khi bắt đầu
         niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp khi bắt đầu
+        questBoss.SetActive(false); // Ẩn quest boss
+         isButtonF = false; // Đặt trạng thái hội thoại là false
+            isContent = false; // Đặt lại trạng thái hội thoại
         NPCName.text = "";
         NPCContent.text = "";
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && isButtonF)
+        if (Input.GetKeyDown(KeyCode.F) && isButtonF == true)
         {
             Cursor.lockState = CursorLockMode.None; // mở chuột
             Cursor.visible = true; // hiện chuột
@@ -70,7 +74,7 @@ public class TurnInQuest5 : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && isContent)
+        if (other.gameObject.CompareTag("Player") && isContent == true)
         {
             buttonF.SetActive(true); // Hiện nút F khi vào vùng tương tác
             isButtonF = true; // Đặt trạng thái hội thoại là true
@@ -141,9 +145,10 @@ public class TurnInQuest5 : MonoBehaviour
         questDesert5.questPanel.SetActive(false); // Ẩn panel nhiệm vụ
         arrowIcon.SetActive(false); // Ẩn mũi tên chỉ hướng đến NPC khi bắt đầu
         icon3D.SetActive(false); // Ẩn icon 3D của NPC
-        playerStatus.AddExp(500); // Thêm kinh nghiệm cho người chơi
-        
+       
+        playerStatus.IncreasedGold(500); // Thêm vàng cho người chơi
         StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
+        questBoss.SetActive(true); // Hiện quest boss
         Debug.Log("Phần thưởng đã nhận");
 
 

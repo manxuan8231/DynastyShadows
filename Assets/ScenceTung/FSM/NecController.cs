@@ -26,10 +26,11 @@ public class NecController : MonoBehaviour
     public DameZoneWeapon damezoneWP;
     public BoxCollider offDame;
     public NecAudioManager audioManager;
-
+    public QuestDesert5 questDesert5;
 
     void Start()
     {
+        questDesert5 = FindAnyObjectByType<QuestDesert5>();
         audioManager = FindAnyObjectByType<NecAudioManager>();
         damezoneWP = FindAnyObjectByType<DameZoneWeapon>();
         anmt = GetComponent<Animator>();
@@ -131,6 +132,9 @@ public class NecController : MonoBehaviour
         necHp.sliderHp.value = necHp.curhp;
         necHp.textHp.text = $"{necHp.curhp}/{necHp.maxhp}";
         Debug.Log("NecController TakeDame: " + necHp.curhp);
-
+        if(necHp.curhp <= 0)
+        {
+            questDesert5.UpdateKillBoss(1);
+        }
     }
 }

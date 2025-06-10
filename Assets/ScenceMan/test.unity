@@ -119,17 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &381371026 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8997311562165307551, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-  m_PrefabInstance: {fileID: 4976289716809267990}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &487242744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -389,11 +378,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &981360774 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2807880879115837978, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-  m_PrefabInstance: {fileID: 4976289716809267990}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1074007961
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,18 +992,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1448588806499743927, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-      propertyPath: effectLevelUp
-      value: 
-      objectReference: {fileID: 981360774}
-    - target: {fileID: 1448588806499743927, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-      propertyPath: scoreText.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1448588806499743927, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-      propertyPath: 'scoreText.Array.data[2]'
-      value: 
-      objectReference: {fileID: 381371026}
     - target: {fileID: 2807880879115837978, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1084,10 +1056,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6582524872583949387, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-      propertyPath: m_text
-      value: "l\xEAn c\u1EA5p:"
-      objectReference: {fileID: 0}
     - target: {fileID: 7944067633512513597, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1095,10 +1063,6 @@ PrefabInstance:
     - target: {fileID: 8375052925470058915, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8506685797058146503, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-      propertyPath: m_Name
-      value: Text(CapDo)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
