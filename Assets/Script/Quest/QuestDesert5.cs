@@ -20,7 +20,7 @@ public class QuestDesert5 : MonoBehaviour
     public GameObject niceQuestDesert5;
     //goi ham
     TimeLineDesert timeLineDesert; // Lấy đối tượng TimeLineDesert
-    TurnInQuest5 turnInQuest5; // Lấy đối tượng TurnInQuest5
+   public TurnInQuest5 turnInQuest5; // Lấy đối tượng TurnInQuest5
 
     // Biến để lưu trữ các điểm spawn của kẻ thù
     public Transform[] spawnPoints; // Vị trí spawn sẵn
@@ -58,12 +58,13 @@ public class QuestDesert5 : MonoBehaviour
         else if (bossCount >= 1)
         {
             bossCount = 0; // Reset số lượng kẻ thù đã tiêu diệt
-            StartCoroutine(WaitNiceQuest());
+           
             turnInQuest5.enabled = true; // Kích hoạt TurnInQuest5
             turnInQuest5.isContent = true;
             turnInQuest5.StartTurnInQuest5();
             RenderSettings.fogDensity = 0; //giam độ mờ của sương mù
             directionalLight.color = Color.white; // Đặt màu sắc của ánh sáng
+             StartCoroutine(WaitNiceQuest());
             Debug.Log("Hoàn thành nv");
         } 
         
