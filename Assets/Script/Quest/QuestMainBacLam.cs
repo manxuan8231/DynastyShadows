@@ -74,7 +74,7 @@ public class QuestMainBacLam : MonoBehaviour
     {
         StartCoroutine(WaitNiceQuest()); // Bắt đầu coroutine để hiển thị thông báo hoàn thành nhiệm vụ
         //phần thưởng
-        playerStatus.AddExp(1000); // Thêm kinh nghiệm cho người chơi
+        playerStatus.IncreasedGold(1000); // Thêm kinh nghiệm cho người chơi
     }
     public void UpdateKillEnemy(float amount)
     {

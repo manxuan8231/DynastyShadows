@@ -65,6 +65,7 @@ public class DrakonitController : MonoBehaviour
     // Biến tham chiếu đến DrakonitDameZone
     public DrakonitDameZone dameZone;
     private DrakonitController enemy; // Biến tham chiếu đến DrakonitController
+    public QuestMainBacLam questMainBacLam;
 
     // Trạng thái hiện tại
     private DrakonitState currentState; 
@@ -73,6 +74,7 @@ public class DrakonitController : MonoBehaviour
         // Lấy component DrakonitDameZone từ enemy
         dameZone = FindAnyObjectByType<DrakonitDameZone>();
         enemy = FindAnyObjectByType<DrakonitController>();
+        questMainBacLam = FindAnyObjectByType<QuestMainBacLam>();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform; 
         agent = GetComponent<NavMeshAgent>();
@@ -127,7 +129,12 @@ public class DrakonitController : MonoBehaviour
             colliderBox.enabled = false;
             slider.SetActive(false); // Ẩn thanh máu
                                      // Gọi hàm chết ở đây
-            ChangeState(new DrakonitDeathState(this));
+             if (questMainBacLam != null) { 
+            questMainBacLam.UpdateKillEnemy(1);// cập nhật số lượng kẻ thù đã giết
+            }
+             animator.SetTrigger("Death");
+             Destroy(gameObject,5f);
+           // ChangeState(new DrakonitDeathState(this));
         }
     }
     
