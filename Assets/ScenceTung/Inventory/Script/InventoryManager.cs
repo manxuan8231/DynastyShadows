@@ -139,7 +139,7 @@ public class InventoryManager : MonoBehaviour
         {
             equipmentSlot[i].selectedItem.SetActive(false);
             equipmentSlot[i].isSelected = false;
-            
+            equipmentSlot[i].removeItemButton.SetActive(false);
         }
         for (int i = 0; i < equippedSlot.Length; i++)
         {

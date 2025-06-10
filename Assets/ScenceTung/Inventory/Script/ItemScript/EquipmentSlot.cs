@@ -13,6 +13,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
     public bool isFull;
     public string itemDescription;
     public GameObject selectedItem;
+    public GameObject removeItemButton; // button xóa item
     public bool isSelected;
     public Sprite emptySprite;
     public ItemType itemType;
@@ -79,6 +80,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
 
     private void OnLeftClick()
     {
+      
         if (isFull)
         {
             if (isSelected)
@@ -89,6 +91,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
             {
                 inventoryManager.DeselectedAllSLot();
                 selectedItem.SetActive(true);
+                removeItemButton.SetActive(true);
                 isSelected = true;
                 for (int i = 0; i < equipmentSOLibrary.EquipmentSOs.Length; i++)
                 {
@@ -100,6 +103,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         else
         {
             GameObject.Find("Stats").GetComponent<PlayerStatus>().TurnOffPreviewStats();
+            
         }
     }
     private void OnRightClick()
@@ -110,6 +114,12 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
             inventoryManager.RemoveItemFromInventory(itemName); // Gọi phương thức để xóa item
             EmptySlot(); // Đặt lại slot
         }
+    }
+    //khi removeitembutton được hiển thị thì thì nếu như click vào button thì sẽ remove item
+    public void RemoveItem()
+    {
+        inventoryManager.RemoveItemFromInventory(itemName);
+        EmptySlot();
     }
 
     private void EquipGear()
@@ -155,10 +165,10 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         itemImage.sprite = emptySprite;
         itemName = "";
         itemDescription = "";
-     
         quantity = 0;
         isFull = false;
         isSelected = false;
         selectedItem.SetActive(false);
+        removeItemButton.SetActive(false);
     }
 }
