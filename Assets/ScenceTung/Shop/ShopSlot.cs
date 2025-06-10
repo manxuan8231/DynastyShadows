@@ -13,7 +13,10 @@ public class ShopSlot : MonoBehaviour
     private int sellPrice;
     [SerializeField] private PlayerStatus playerStatus;
     [SerializeField] private InventoryManager inventoryManager;
-    
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip buySound;
+    [SerializeField] private AudioClip sellSound;
+    [SerializeField] private AudioClip notEnoughGoldSound;
 
 private void Start()
     {
@@ -36,6 +39,7 @@ private void Start()
     {
         if (playerStatus.gold >= price)
         {
+            audioSource.PlayOneShot(buySound);
             playerStatus.gold -= price;
             playerStatus.goldQuantityTxt.text = playerStatus.gold.ToString();
 
@@ -51,12 +55,14 @@ private void Start()
         }
         else
         {
+            audioSource.PlayOneShot(notEnoughGoldSound);
             Debug.Log("mày nghèo vl" + itermShopData.itemName);
         }
     }
   
     public void SellItem()
     {
+        audioSource.PlayOneShot(sellSound);
         for (int i = 0; i < inventoryManager.itemSlot.Length; i++)
         {
             var slot = inventoryManager.itemSlot[i];
