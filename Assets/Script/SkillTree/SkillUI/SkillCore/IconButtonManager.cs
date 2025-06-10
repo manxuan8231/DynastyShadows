@@ -59,7 +59,8 @@ public class IconButtonManager : MonoBehaviour
                 previewText.text = "Đông cứng - Cấp 1";
                 contenSkill.text = "Khi dùng skill có khả năng đông cứng kẻ địch trong 5 giây không gây sát thương có thời gian hồi chiêu là 50 giây.";
                 skillBGs[0].enabled = true;
-                scoreUpgradeText.text = "/2";//so diem can de nang cap
+                scoreUpgradeText.text = "/0";//so diem can de nang cap
+                 
                 break;
 
             case "DongCung2":
@@ -113,7 +114,7 @@ public class IconButtonManager : MonoBehaviour
                     "chuyển sang trạng thái tàng hình và tăng tốc độ chạy trong 10 giây, " +
                     "khi nhấn tấn công thì player sẽ lao tới kẻ địch gần nhất chém 1 nhát chém và hủy trạng thái, có thời gian hồi chiêu là 50 giây.";
                 skillBGs[4].enabled = true;
-         
+                 scoreUpgradeText.text = "/0";//so diem can de nang cap
                 break;
 
             case "TheAnh2":
@@ -158,7 +159,7 @@ public class IconButtonManager : MonoBehaviour
                 previewText.text = "Quân đoàn bóng tối - Cấp 1";
                 contenSkill.text = "Khi dùng kỹ năng thì nguời chơi sẽ tạo ra 4 phân thân giúp hỗ trợ, có sát thương theo chỉ số hiện tại của người chơi và có thời gian tồn tại là 30 giây, có thời gian hồi chiêu là 100 giây.";
                 skillBGs[8].enabled = true;
-               
+                 scoreUpgradeText.text = "/0";//so diem can de nang cap
                 break;
 
             case "QuanDoanBongToi2":
@@ -230,6 +231,7 @@ public class IconButtonManager : MonoBehaviour
                 previewText.text = "Phản nhãn - Cấp 1";
                 contenSkill.text = "Trong thời gian tàng hình, bản thể ảo gây 200 sát thương cho kẻ địch ở gần trước khi biến mất.";
                 skillBGs[14].enabled = true;
+                scoreUpgradeText.text = "/0";//so diem can de nang cap
                 break;
 
             case "PhanNhan2":
