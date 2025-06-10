@@ -35,7 +35,7 @@ public class ItemHealth : MonoBehaviour
             
             if (playerStatus != null)
             {
-                playerStatus.AddExp(100); // Tăng exp cho người chơi
+                playerStatus.AddExp(50); // Tăng exp cho người chơi
                 Destroy(gameObject); // Xóa item sau khi nhặt
             }
         }

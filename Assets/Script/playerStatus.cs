@@ -37,7 +37,7 @@ public class PlayerStatus : MonoBehaviour
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI[] scoreText;
     public GameObject effectLevelUp;//effect level up
-    public AudioClip audioLevelUp;
+    
     
     public int currentLevel = 1;        // Cấp hiện tại
     public float currentExp = 0f;         // EXP hiện tại
@@ -335,7 +335,7 @@ public class PlayerStatus : MonoBehaviour
         currentExp = 0f; // Reset EXP về 0
         currentLevel++;
         expToNextLevel += expIncreasePerLevel; // Tăng EXP cần thiết cho cấp sau
-
+        StartCoroutine(WaitLevelUp());//effect level up
         score += scorePerLevel; // Cộng score cố định
         Debug.Log("Level Up! Now level " + currentLevel + " | Score: " + score);
     }
@@ -364,8 +364,8 @@ public class PlayerStatus : MonoBehaviour
     public IEnumerator WaitLevelUp()
     {
         effectLevelUp.SetActive(true);
-        audioSource.PlayOneShot(audioLevelUp);
-        yield return new WaitForSeconds(1.5f);
+      
+        yield return new WaitForSeconds(4f);
         effectLevelUp.SetActive(false);
     }
 }
