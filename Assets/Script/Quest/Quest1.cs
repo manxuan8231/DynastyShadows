@@ -31,10 +31,7 @@ public class Quest1 : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            SpawnEnemies();
-        }
+        
     }
     // Bắt đầu quest Bác Lâm
     public void StartQuestBacLam()

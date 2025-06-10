@@ -40,7 +40,7 @@ public class Quest3 : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.F1))
         {
             UpdateKillOrk(1); // Giả lập việc tiêu diệt Ork khi nhấn T
         }

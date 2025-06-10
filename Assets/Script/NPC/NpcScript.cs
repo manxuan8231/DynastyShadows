@@ -33,7 +33,7 @@ public class NPCScript : MonoBehaviour
     Quest3 quest3;
     QuestMainBacLam questMainBacLam; // Tham chiếu đến QuestManager
 
-    AudioSource audioSource; // Tham chiếu đến AudioSource
+   public AudioSource audioSource; // Tham chiếu đến AudioSource
     public AudioClip audioSkip; // Âm thanh khi bấm skip
     void Start()
     {

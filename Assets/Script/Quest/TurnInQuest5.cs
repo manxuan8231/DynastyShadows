@@ -32,7 +32,7 @@ public class TurnInQuest5 : MonoBehaviour
     public QuestDesert5 questDesert5;
     PlayerStatus playerStatus;
 
-    AudioSource audioSource; // Tham chiếu đến AudioSource
+  public  AudioSource audioSource; // Tham chiếu đến AudioSource
     public AudioClip audioSkip; // Âm thanh khi bấm skip
     void Start()
     {
@@ -50,7 +50,7 @@ public class TurnInQuest5 : MonoBehaviour
         niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp khi bắt đầu
         questBoss.SetActive(false); // Ẩn quest boss
          isButtonF = false; // Đặt trạng thái hội thoại là false
-            isContent = false; // Đặt lại trạng thái hội thoại
+          
         NPCName.text = "";
         NPCContent.text = "";
     }
@@ -193,7 +193,7 @@ public class TurnInQuest5 : MonoBehaviour
     {
        
         arrowIcon.SetActive(true); // Hiện mũi tên chỉ hướng đến NPC
-        isContent = true; // Đặt trạng thái nhiệm vụ là true
+       
         icon3D.SetActive(true); // Hiện icon 3D của NPC   
         isButtonF = true; // Đặt trạng thái hội thoại là true
        

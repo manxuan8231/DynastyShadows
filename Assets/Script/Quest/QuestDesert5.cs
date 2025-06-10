@@ -59,8 +59,8 @@ public class QuestDesert5 : MonoBehaviour
         {
             bossCount = 0; // Reset số lượng kẻ thù đã tiêu diệt
            
-            turnInQuest5.enabled = true; // Kích hoạt TurnInQuest5
-            turnInQuest5.isContent = true;
+            turnInQuest5.enabled = true; // Kích hoạt TurnInQuest5       
+            turnInQuest5.isContent = true; // Đặt trạng thái nhiệm vụ là true
             turnInQuest5.StartTurnInQuest5();
             RenderSettings.fogDensity = 0; //giam độ mờ của sương mù
             directionalLight.color = Color.white; // Đặt màu sắc của ánh sáng

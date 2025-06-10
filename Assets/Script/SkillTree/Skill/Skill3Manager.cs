@@ -52,7 +52,7 @@ public class Skill3Manager : MonoBehaviour
             Vector3 spawnPosition = spawnClonePL[i].position;
             GameObject clone = ObjPoolingManager.Instance.GetEnemyFromPool(clonePLTag, spawnPosition);
             clone.transform.rotation = spawnClonePL[i].rotation;
-            Destroy(clone, timeSkill3); 
+          
             yield return new WaitForSeconds(0.3f); 
         }
     }

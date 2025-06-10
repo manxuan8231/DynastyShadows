@@ -4,9 +4,10 @@ using UnityEngine.Audio;
 
 public class ManagerStatusInven : MonoBehaviour
 {
-    public GameObject stats;
+    public GameObject skillTree;
     public GameObject inven;
     public GameObject evipment;
+    public GameObject iconButton;
 
     public AudioSource audioSource;
     public AudioClip clipClick;
@@ -21,8 +22,8 @@ public class ManagerStatusInven : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
-       
-        stats.SetActive(false);
+      
+        skillTree.SetActive(false);
     }
 
 
@@ -30,24 +31,25 @@ public class ManagerStatusInven : MonoBehaviour
     {
 
     }
-    public void Stats()
+    public void SkillTree()
     {
         audioSource.PlayOneShot(clipClick);
-        stats.SetActive(true);
+        skillTree.SetActive(true);
         inven.SetActive(false);
         evipment.SetActive(false);
+        iconButton.SetActive(false);
     }
     public void ButtonInven()
     {
         audioSource.PlayOneShot(clipClick);
-        stats.SetActive(false);
+        skillTree.SetActive(false);
         inven.SetActive(true);
         evipment.SetActive(false);
     }
     public void ButtonEvipment()
     {
         audioSource.PlayOneShot(clipClick);
-        stats.SetActive(false);
+        skillTree.SetActive(false);
         inven.SetActive(false);
         evipment.SetActive(true);
     }

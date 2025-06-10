@@ -138,7 +138,7 @@ public class TurnInQuestThuongNhan : MonoBehaviour
         openShop.enabled = true; // Kích hoạt OpenShop
         isOpenShop = true; // Đặt trạng thái OpenShop là true
         //phan thuong
-        playerStatus.AddExp(300); ; // Thưởng kinh nghiệm
+        playerStatus.IncreasedGold(300); ; // Thưởng kinh nghiệm
         StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
       
     }

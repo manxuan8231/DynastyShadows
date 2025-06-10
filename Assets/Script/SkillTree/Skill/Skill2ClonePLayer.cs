@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,12 +14,14 @@ public class Skill3ClonePLayer : MonoBehaviour
    
     private Transform nearestEnemy;
     private float lastAttackTime = -15f;
-
+    Skill3Manager skill3Manager;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        skill3Manager = FindAnyObjectByType<Skill3Manager>();
         animator = GetComponent<Animator>();
         agent.speed = speed;
+        StartCoroutine(ReturnToPool());
     }
 
     void Update()
@@ -47,6 +50,7 @@ public class Skill3ClonePLayer : MonoBehaviour
         }else{
             animator.SetBool("Run", false);
         }
+      
     }
 
     void FindNearestEnemy()
@@ -88,5 +92,10 @@ public class Skill3ClonePLayer : MonoBehaviour
          
            
         }
+    }
+   public  IEnumerator ReturnToPool()
+    {
+        yield return new WaitForSeconds(skill3Manager.timeSkill3);
+        ObjPoolingManager.Instance.ReturnToPool(skill3Manager.clonePLTag,gameObject);
     }
 }

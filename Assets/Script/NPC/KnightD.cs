@@ -64,7 +64,7 @@ public class KnightD : MonoBehaviour
     // Tìm enemy gần nhất trong khoảng detectionRange
     void FindClosestEnemy()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy2");
 
         targetEnemy = enemies
             .Where(e => Vector3.Distance(transform.position, e.transform.position) <= detectionRange)

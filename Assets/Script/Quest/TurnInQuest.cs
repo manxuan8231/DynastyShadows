@@ -150,7 +150,7 @@ public class TurnInQuest : MonoBehaviour
                 quest1.questPanel.SetActive(false);// Ẩn icon quest trên bản đồ làm nhiệm vụ;
                 quest1.iconQuest.SetActive(false); //ần panel quest text la cai ben trai man hinh 
                 iconMap.SetActive(false); // Ẩn icon quest trên bản đồ
-                playerStatus.AddExp(100); // Thêm kinh nghiệm cho người chơi
+                playerStatus.IncreasedGold(100); // Thêm kinh nghiệm cho người chơi
                 questThuongNhan.SetActive(true); // Hiện NPC ThuongNhan sau khi hoàn thành nhiệm vụ
                 StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 2 giây
                 Debug.Log("Phần thưởng đã nhận");

@@ -159,7 +159,7 @@ public class TurnInQuest2 : MonoBehaviour
             SpawnEnemies(); // Gọi hàm để spawn kẻ thù ngay lập tức
           
         }
-        playerStatus.AddExp(200); // Thêm kinh nghiệm cho người chơi
+        playerStatus.IncreasedGold(200); // Thêm kinh nghiệm cho người chơi
         StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
         Debug.Log("Phần thưởng đã nhận");
         
