@@ -29,7 +29,7 @@ public class TurnInQuest5 : MonoBehaviour
     //tham chieu
     PlayerControllerState playerController; // Tham chiếu đến PlayerController
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack
-    QuestDesert5 questDesert5;
+    public QuestDesert5 questDesert5;
     PlayerStatus playerStatus;
 
     AudioSource audioSource; // Tham chiếu đến AudioSource
@@ -135,6 +135,7 @@ public class TurnInQuest5 : MonoBehaviour
         }
 
         // Kết thúc + nhiem vu
+        Debug.Log("Kết thúc hội thoại");
         buttonSkip.SetActive(false);
         NPCPanel.SetActive(false);
         playerController.isController = true;
@@ -191,7 +192,7 @@ public class TurnInQuest5 : MonoBehaviour
     public void StartTurnInQuest5()
     {
        
-       arrowIcon.SetActive(true); // Hiện mũi tên chỉ hướng đến NPC
+        arrowIcon.SetActive(true); // Hiện mũi tên chỉ hướng đến NPC
         isContent = true; // Đặt trạng thái nhiệm vụ là true
         icon3D.SetActive(true); // Hiện icon 3D của NPC   
         isButtonF = true; // Đặt trạng thái hội thoại là true
