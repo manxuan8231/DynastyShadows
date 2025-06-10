@@ -28,7 +28,7 @@ public class Skill1NecState : INecState
             Vector3 retreatPosition = enemy.transform.position + directionAway * retreatDistance;
 
             // 3. Nâng trục Y lên 3–4 đơn vị
-            retreatPosition.y = enemy.transform.position.y + Random.Range(3f, 4f);
+            retreatPosition.y = enemy.transform.position.y + Random.Range(15f,25f);
 
             // 4. Dịch chuyển enemy tới vị trí mới
             enemy.transform.position = retreatPosition;
