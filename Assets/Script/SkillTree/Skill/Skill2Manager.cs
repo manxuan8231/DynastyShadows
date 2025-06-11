@@ -83,34 +83,11 @@ public class Skill2Manager : MonoBehaviour
         // Tạo phân thân
         playerClone = Instantiate(clonePrefab, spawnPoint.position, spawnPoint.rotation);
 
-        // Tắt tag của "SK_DeathKnight"
-        GameObject player = GameObject.Find("SK_DeathKnight");
-        if (player != null)
-        {
-            string originalTag = player.tag;
-            player.tag = "Untagged";
-            StartCoroutine(RestoreTagAfterDelay(player, originalTag, timeSkill2));
-        }
-        else
-        {
-            Debug.LogWarning("Không tìm thấy SK_DeathKnight trong scene.");
-        }
+       
         StartCoroutine(WaitForRemoveClone()); // đợi 10 giây để loại bỏ phân thân và effect
 
     }
-    //khoi phục hồi tag sau một khoảng thời gian
-    private IEnumerator RestoreTagAfterDelay(GameObject obj, string originalTag, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        if (obj != null)
-        {
-            obj.tag = originalTag;
-        }
-
-        
-    }
-
+   
     //dợi 10 giây để loại bỏ phân thân va effect
     public IEnumerator WaitForRemoveClone()
     {

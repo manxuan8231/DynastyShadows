@@ -11722,8 +11722,8 @@ GameObject:
   - component: {fileID: 1847448209971831587}
   - component: {fileID: 256680334051184096}
   - component: {fileID: 6420630170983925092}
-  - component: {fileID: 5890275434495508831}
   - component: {fileID: -5533079187246399814}
+  - component: {fileID: 5890275434495508831}
   - component: {fileID: 3041884007349098765}
   m_Layer: 9
   m_Name: Skill3ClonePL
@@ -11817,28 +11817,6 @@ MonoBehaviour:
   detectionRange: 70
   attackRange: 4
   attackCooldown: 7
---- !u!195 &5890275434495508831
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2747091067908950030}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &-5533079187246399814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11867,6 +11845,28 @@ MonoBehaviour:
   audioJump: {fileID: 0}
   audioRoll: {fileID: 0}
   audioMovemen: {fileID: 0}
+--- !u!195 &5890275434495508831
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2747091067908950030}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!82 &3041884007349098765
 AudioSource:
   m_ObjectHideFlags: 0

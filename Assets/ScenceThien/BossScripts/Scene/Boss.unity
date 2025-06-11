@@ -323,17 +323,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &178995784 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8003900408736365534, guid: 36846cc3dc169ed4e8b268ba772e5910, type: 3}
-  m_PrefabInstance: {fileID: 4237023084642577954}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &307316587
 GameObject:
   m_ObjectHideFlags: 0
@@ -1358,6 +1347,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2397147715427366986, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2566017793277226923, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1858,6 +1851,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5030794172006681016, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5045261743069803646, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
       propertyPath: m_Name
       value: SK_DeathKnigh
@@ -1936,6 +1933,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6036724469543083606, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071727350124977906, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6140390134697174531, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
@@ -2454,6 +2455,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8585353638413640123, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8675054221414115397, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2850,14 +2855,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ork berserk prefab
       objectReference: {fileID: 0}
-    - target: {fileID: 2527462522078932777, guid: 36846cc3dc169ed4e8b268ba772e5910, type: 3}
-      propertyPath: sliderHp
-      value: 
-      objectReference: {fileID: 178995784}
-    - target: {fileID: 2527462522078932777, guid: 36846cc3dc169ed4e8b268ba772e5910, type: 3}
-      propertyPath: maxHealth
-      value: 10000
-      objectReference: {fileID: 0}
     - target: {fileID: 3693579453617523578, guid: 36846cc3dc169ed4e8b268ba772e5910, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2902,18 +2899,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1329245987}
-    - target: {fileID: 4276318591001158331, guid: 36846cc3dc169ed4e8b268ba772e5910, type: 3}
-      propertyPath: animationData
-      value: 
-      objectReference: {fileID: 11400000, guid: 7b669bcff0e6f1744a87277176bc7fca, type: 2}
-    - target: {fileID: 6916423043520488761, guid: 36846cc3dc169ed4e8b268ba772e5910, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6916423043520488761, guid: 36846cc3dc169ed4e8b268ba772e5910, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -83,6 +83,8 @@ public class BossHP : MonoBehaviour
         Debug.Log("Boss đã chết");
         isDead = true;
         bossScript.TransitionToState(bossScript.deathState);
+        if (quest3 != null)
+            quest3.UpdateKillOrk(1);//quest cap nhap khi kill osrk
         if (questDesert5 != null)
             questDesert5.UpdateKillBoss(1); // Bắt đầu nhiệm vụ Desert5
         if (bossScript.agent != null)
@@ -92,7 +94,7 @@ public class BossHP : MonoBehaviour
             sliderHp.gameObject.SetActive(false);
 
         ObjPoolingManager.Instance.ReturnToPool("BossOrk1", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
-        Destroy(gameObject, 5f);
+       // Destroy(gameObject, 5f);
        
     }
 

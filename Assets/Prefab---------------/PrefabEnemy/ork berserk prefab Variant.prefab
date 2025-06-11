@@ -11,6 +11,22 @@ PrefabInstance:
     - target: {fileID: 206717277359825406, guid: 671fb3d72b1408f4a8a4eb6ddada281e, type: 3}
       propertyPath: sliderHp
       value: 
+      objectReference: {fileID: 8003900408736365534}
+    - target: {fileID: 206717277359825406, guid: 671fb3d72b1408f4a8a4eb6ddada281e, type: 3}
+      propertyPath: maxHealth
+      value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 267384795352209559, guid: 671fb3d72b1408f4a8a4eb6ddada281e, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 761609419893517129, guid: 671fb3d72b1408f4a8a4eb6ddada281e, type: 3}
+      propertyPath: m_Size.y
+      value: 2.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 761609419893517129, guid: 671fb3d72b1408f4a8a4eb6ddada281e, type: 3}
+      propertyPath: m_Center.y
+      value: 1.35
       objectReference: {fileID: 0}
     - target: {fileID: 1337300194258748845, guid: 671fb3d72b1408f4a8a4eb6ddada281e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -52,6 +68,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1915640194209590380, guid: 671fb3d72b1408f4a8a4eb6ddada281e, type: 3}
+      propertyPath: animationData
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b669bcff0e6f1744a87277176bc7fca, type: 2}
     - target: {fileID: 3565348733953714155, guid: 671fb3d72b1408f4a8a4eb6ddada281e, type: 3}
       propertyPath: m_Name
       value: ork berserk prefab Variant
@@ -61,3 +81,14 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 671fb3d72b1408f4a8a4eb6ddada281e, type: 3}
+--- !u!114 &8003900408736365534 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5683156262242678025, guid: 671fb3d72b1408f4a8a4eb6ddada281e, type: 3}
+  m_PrefabInstance: {fileID: 2435657405449064151}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
