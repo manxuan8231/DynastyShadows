@@ -69,10 +69,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         {
             OnLeftClick();
         }
-         if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            OnRightClick(); // Gọi hàm xóa khi click chuột phải
-        }
+        
 
     }
 
@@ -106,15 +103,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
             
         }
     }
-    private void OnRightClick()
-    {
-        // Khi click chuột phải, xóa item khỏi kho đồ
-        if (isFull)
-        {
-            inventoryManager.RemoveItemFromInventory(itemName); // Gọi phương thức để xóa item
-            EmptySlot(); // Đặt lại slot
-        }
-    }
+   
     //khi removeitembutton được hiển thị thì thì nếu như click vào button thì sẽ remove item
     public void RemoveItem()
     {
