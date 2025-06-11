@@ -72,7 +72,10 @@ public class DrakonitCameraState : DrakonitState
         enemy.imgBietDanh.SetActive(true);// hiện text biêt danh
         enemy.textConten.enabled = false; // ẩn text
         enemy.animator.SetBool("Walking", false); // dung animation đi bộ
-        enemy.agent.isStopped = true;  
+        if (enemy.agent.enabled)
+        {
+            enemy.agent.isStopped = true;
+        }
         enemy.animator.SetTrigger("Spell"); // gam
         audioManager.audioSource.PlayOneShot(audioManager.roar); // phát âm thanh gầm
         enemy.cutScene2.Priority = 0;

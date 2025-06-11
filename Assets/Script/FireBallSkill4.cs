@@ -1,41 +1,40 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FireBallSkill4 : MonoBehaviour
 {
     public GameObject impactEffect;       // Hiệu ứng va chạm
     public float destroyDelay = 2f;       // Thời gian hủy hiệu ứng
-    public int damage = 5;               // Sát thương gây ra
+    public int damage = 5;                // Sát thương gốc
 
-    public GameObject textDame;           // Prefab hiệu ứng số damage
+    public GameObject textDame;           // Prefab số damage
     public Transform textTransform;       // Vị trí hiển thị damage text
-   
 
     PlayerStatus playerStatus;
+
     private void Start()
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
-        damage *= playerStatus.baseDamage;
-
-      
-
-      
+        if (playerStatus != null)
+        {
+            damage *= playerStatus.baseDamage;
+        }
+        else
+        {
+            Debug.LogWarning("Không tìm thấy PlayerStatus!");
+        }
     }
- 
-    void OnCollisionEnter(Collision collision)
-    {
-        GameObject hitObj = collision.gameObject;
 
-        // Nếu trúng Enemy
+    public void OnTriggerEnter(Collider other)
+    {
+        GameObject hitObj = other.gameObject;
+
         if (hitObj.layer == LayerMask.NameToLayer("Enemy"))
         {
-            Debug.Log("enemy da cham");
+            Debug.Log("Enemy đã bị trúng");
+
             float finalDamage = damage;
 
-            // Dùng interface hoặc phương pháp chung là tốt nhất,
-            // Nhưng với cấu trúc hiện tại, duyệt từng loại cụ thể
-
-            // Kiểm tra và gọi TakeDamage nếu có
+            // Gọi hàm gây damage
             TryDealDamage(hitObj.GetComponent<EnemyHP>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<EnemyHP2>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<EnemyHP3>(), finalDamage);
@@ -45,12 +44,12 @@ public class FireBallSkill4 : MonoBehaviour
             TryDealDamage(hitObj.GetComponent<NecController>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<Boss1Controller>(), finalDamage);
 
-            SpawnImpact(collision.contacts[0].point);
+            SpawnImpact(other.transform.position); // Sửa lại chỗ lỗi
             Destroy(gameObject);
         }
         else if (hitObj.layer == LayerMask.NameToLayer("Ground"))
         {
-            SpawnImpact(collision.contacts[0].point);
+            SpawnImpact(other.transform.position);
             Destroy(gameObject);
         }
     }
@@ -76,7 +75,6 @@ public class FireBallSkill4 : MonoBehaviour
         }
     }
 
-    // Hàm generic xử lý gây damage
     void TryDealDamage(object target, float dmg)
     {
         if (target == null) return;
@@ -85,24 +83,14 @@ public class FireBallSkill4 : MonoBehaviour
 
         switch (target)
         {
-            case EnemyHP hp: hp.TakeDamage((int)dmg); 
-                break;
-            case EnemyHP2 hp2: hp2.TakeDamage((int)dmg); 
-                break;
-            case EnemyHP3 hp3: hp3.TakeDamage((int)dmg); 
-                break;
-            case EnemyHP4 hp4: hp4.TakeDamage((int)dmg); 
-                break;  
-            case DrakonitController d: d.TakeDame((int)dmg); 
-                break;
-            case BossHP b: b.TakeDamage((int)dmg);
-                break;
-            case NecController n: n.TakeDame((int)dmg); 
-                break;
-            case Boss1Controller b1: b1.TakeDame((int)dmg); 
-                break;
+            case EnemyHP hp: hp.TakeDamage((int)dmg); break;
+            case EnemyHP2 hp2: hp2.TakeDamage((int)dmg); break;
+            case EnemyHP3 hp3: hp3.TakeDamage((int)dmg); break;
+            case EnemyHP4 hp4: hp4.TakeDamage((int)dmg); break;
+            case DrakonitController d: d.TakeDame((int)dmg); break;
+            case BossHP b: b.TakeDamage((int)dmg); break;
+            case NecController n: n.TakeDame((int)dmg); break;
+            case Boss1Controller b1: b1.TakeDame((int)dmg); break;
         }
     }
-   
-
 }

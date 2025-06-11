@@ -24,7 +24,7 @@ public class CastRostbindSoul : MonoBehaviour
         targetEnemy = FindNearestEnemy(50f);
         if (targetEnemy != null)
         {
-            transform.position = targetEnemy.transform.position + new Vector3(0f, 2.4f, 0f);
+            transform.position = targetEnemy.transform.position + new Vector3(0f, 2f, 0f);
             FreezeEnemy(targetEnemy);
             StartCoroutine(UnfreezeAfterDelay(targetEnemy, skill1Manager.timeSkill1));
         }
@@ -73,16 +73,89 @@ public class CastRostbindSoul : MonoBehaviour
         MonoBehaviour ai = enemy.GetComponent<MonoBehaviour>();
         if (ai != null) ai.enabled = false;
 
-        // Tìm script EnemyHP 
-        EnemyHP enemyHP = enemy.GetComponent<EnemyHP>();
-        if (enemyHP != null && skill1Manager.isDamaged == true)//mở khóa kỹ năng mới cho mất máu
-        {
+        // Tìm script EnemyHP lay mau
+        if (skill1Manager.isDamaged == true) {
+            EnemyHP enemyHP = enemy.GetComponent<EnemyHP>();
+            if (enemyHP != null)//mở khóa kỹ năng mới cho mất máu
+            {
 
-            ShowTextDame(status.baseDamage);
-            enemyHP.TakeDamage(status.baseDamage);
+                ShowTextDame(status.baseDamage);
+                enemyHP.TakeDamage(status.baseDamage);
+                return;
+            }
+            EnemyHP2 enemyHP2 = enemy.GetComponent<EnemyHP2>();
+            if (enemyHP2 != null)
+            {
 
+                ShowTextDame(status.baseDamage);
+                enemyHP2.TakeDamage(status.baseDamage);
+                return;
+            }
+
+            EnemyHP3 enemyHP3 = enemy.GetComponent<EnemyHP3>();
+            if (enemyHP3 != null)
+            {
+
+                ShowTextDame(status.baseDamage);
+                enemyHP3.TakeDamage(status.baseDamage);
+                return;
+            }
+
+            EnemyHP4 enemyHP4 = enemy.GetComponent<EnemyHP4>();
+            if (enemyHP4 != null)
+            {
+
+                ShowTextDame(status.baseDamage);
+                enemyHP4.TakeDamage(status.baseDamage);
+                return;
+            }
+            //boss drakonit
+            DrakonitController drakonitController = enemy.GetComponent<DrakonitController>();
+            if (drakonitController != null)
+            {
+
+                ShowTextDame(status.baseDamage);
+                drakonitController.TakeDame(status.baseDamage);
+                return;
+            }
+            //boss ork
+            BossHP bossHP = enemy.GetComponent<BossHP>();
+            if (bossHP != null)
+            {
+
+                ShowTextDame(status.baseDamage);
+                bossHP.TakeDamage(status.baseDamage);
+                return;
+            }
+            //boss sa mac
+            NecController necController = enemy.GetComponent<NecController>();
+            if (necController != null)
+            {
+                Debug.Log("Đã trúng NecController");
+
+                ShowTextDame(status.baseDamage);
+                necController.TakeDame(status.baseDamage);
+                return;
+            }
+            //boss chinh map 1
+            Boss1Controller boss1HP = enemy.GetComponent<Boss1Controller>();
+            if (boss1HP != null)
+            {
+
+                ShowTextDame(status.baseDamage);
+                boss1HP.TakeDame(status.baseDamage);
+                return;
+            }
+            //enemy map 2 1 + 2
+            EnemyMap2_HP enemyMap2_1 = enemy.GetComponent<EnemyMap2_HP>();
+            if (enemyMap2_1 != null)
+            {
+
+                ShowTextDame(status.baseDamage);
+                enemyMap2_1.TakeDamage(status.baseDamage);
+                return;
+            } 
         }
-        return;
     }
 
     private void UnfreezeEnemy(GameObject enemy)

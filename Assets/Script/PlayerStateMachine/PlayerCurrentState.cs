@@ -70,8 +70,10 @@ public class PlayerCurrentState : PlayerState
             camRight.Normalize();
 
             Vector3 moveDir = camForward * inputDirection.z + camRight * inputDirection.x;
-           player.controller.Move(moveDir * speed * Time.deltaTime);
-
+            if (player.controller != null && player.controller.enabled == true)
+            {
+                player.controller.Move(moveDir * speed * Time.deltaTime);
+            }
            player.transform.rotation = Quaternion.Slerp(player.transform.rotation, Quaternion.LookRotation(moveDir), 0.15f);
         }
         else
@@ -102,7 +104,10 @@ public class PlayerCurrentState : PlayerState
        player.wasGroundedLastFrame = player.isGrounded;
 
        player.velocity.y += player.gravity * Time.deltaTime;
-       player. controller.Move(player.velocity * Time.deltaTime);
+        if (player.controller != null && player.controller.enabled == true)
+        {
+            player.controller.Move(player.velocity * Time.deltaTime);
+        }
     }
 
     public void Roll()

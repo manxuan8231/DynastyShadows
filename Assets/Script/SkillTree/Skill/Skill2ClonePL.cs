@@ -19,7 +19,7 @@ public class Skill2ClonePL : MonoBehaviour
         {
             Vector3 y = new Vector3(0f, 6f, 0f);
             GameObject instan = Instantiate(effectExplotion, y, Quaternion.identity);
-            Destroy(instan, 3f);
+            Destroy(instan, 2f);
         }
     }
     public IEnumerator WaitEffect(float seconds)
@@ -27,6 +27,6 @@ public class Skill2ClonePL : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         Vector3 y = new Vector3(0f, 6f, 0f);
         GameObject instan = Instantiate(effectExplotion, y, Quaternion.identity);
-        Destroy(instan,3f);
+        Destroy(instan,2f);
     }
 }

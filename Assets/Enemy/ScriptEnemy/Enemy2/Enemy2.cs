@@ -142,6 +142,7 @@ public class Enemy2 : MonoBehaviour
                 currentTrigger = "Run";
                 break;
             case EnemyState.Attack:
+                if(agent.enabled == true)
                 agent.isStopped = true;
                 animator.SetTrigger("Attack");
                 currentTrigger = "Attack";

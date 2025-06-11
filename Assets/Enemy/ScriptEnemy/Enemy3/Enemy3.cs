@@ -110,6 +110,7 @@ public class Enemy3 : MonoBehaviour
             animator.SetTrigger("Attack");
             attackTimer = 0f; // Reset thời gian tấn công
         }
+        if(agent.enabled)
         agent.isStopped = true; // Dừng lại khi tấn công
         float dist = Vector3.Distance(transform.position, player.position);
         if (dist > attackRange + 1f)

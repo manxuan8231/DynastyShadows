@@ -113,6 +113,16 @@ public class Skill2State : PlayerState
             player.controller.enabled = true; // Bật lại controller
             player.StartCoroutine(WaitForChangeState()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
         }
+        // Nếu ko co enemy gần thì cung cho attack
+        if (Input.GetMouseButtonDown(0))
+        {
+           
+            // Chạy animation chém
+            player.animator.SetTrigger("Attack");
+            player.isRemoveClone = true; // Đặt cờ để loại bỏ phân thân nếu có
+          
+            player.StartCoroutine(WaitForChangeState()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
+        }
     }
     // Hàm dash đến vị trí mục tiêu
     IEnumerator DashToTarget(Vector3 targetPosition, float duration)
@@ -137,7 +147,7 @@ public class Skill2State : PlayerState
     public IEnumerator WaitForChangeState()
     {
 
-        yield return new WaitForSeconds(1f); // Thời gian chờ trước khi chuyển về trạng thái hiện tại
+        yield return new WaitForSeconds(0.8f); // Thời gian chờ trước khi chuyển về trạng thái hiện tại
         player.ChangeState(new PlayerCurrentState(player)); // Quay về trạng thái hiện tại
     }
     // Đợi 10 giây để loại bỏ phân thân

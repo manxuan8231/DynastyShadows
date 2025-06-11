@@ -144,7 +144,10 @@ public class Enemy1 : MonoBehaviour
                 currentTrigger = "Run";
                 break;
             case EnemyState.Attack:
-                agent.isStopped = true; // Dừng lại khi tấn công 
+                if (agent.enabled == true)
+                {
+                    agent.isStopped = true; // Dừng lại khi tấn công 
+                }
                 animator.SetTrigger("Attack");
                 currentTrigger = "Attack";
                 break;

@@ -56,6 +56,9 @@ public class PlayerControllerState : MonoBehaviour
     public GameObject weaponSword; //weapon
     void Start()
     {
+      
+        controller = GetComponent<CharacterController>();
+       
         animator = GetComponent<Animator>();
         animator.runtimeAnimatorController = animatorDefauld; // Gán bộ điều khiển hoạt hình mặc định
         playerStatus = FindAnyObjectByType<PlayerStatus>();
