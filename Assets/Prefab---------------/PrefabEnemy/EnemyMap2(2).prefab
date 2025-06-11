@@ -665,11 +665,12 @@ GameObject:
   - component: {fileID: 1866090160615626189}
   - component: {fileID: 3180313534942444491}
   - component: {fileID: 7545123676743646244}
-  - component: {fileID: 1567320403561853534}
   - component: {fileID: 3004276441645898759}
+  - component: {fileID: 4356862860026754495}
+  - component: {fileID: 7439707220731575787}
   m_Layer: 0
   m_Name: EnemyMap2(2)
-  m_TagString: Untagged
+  m_TagString: EnemyMap2_2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -758,24 +759,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1567320403561853534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1135646479534031831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0629c902a6bcdf449dcb9aa9db613fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sliderHp: {fileID: 4816832534300981994}
-  currentHealth: 0
-  maxHealth: 2000
-  expPrefab: {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
-  boxDame: {fileID: 3004276441645898759}
-  itemDrops: []
 --- !u!65 &3004276441645898759
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -791,12 +774,56 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 2.33, z: 0.88}
+  m_Center: {x: 0, y: 1.15, z: 0.13}
+--- !u!54 &4356862860026754495
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135646479534031831}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &7439707220731575787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135646479534031831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b207d9a70e70e548ac03a3454d5ef5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sliderHp: {fileID: 4816832534300981994}
+  currentHealth: 0
+  maxHealth: 2000
+  expPrefab: {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
+  boxDame: {fileID: 3004276441645898759}
 --- !u!1 &1180864290329842387
 GameObject:
   m_ObjectHideFlags: 0
