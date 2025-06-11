@@ -14,7 +14,9 @@ public class Skill2Manager : MonoBehaviour
     public bool isSkillActive = false;
     public bool isInputSkill2 = false;
     public bool isChangeSkill2 = false;
+    public bool isExplosionSkill2 = false;
     public GameObject playerClone;
+    
     //effect
     public GameObject effectRun;
 
@@ -32,6 +34,7 @@ public class Skill2Manager : MonoBehaviour
         coolDownSKillSlider.maxValue = skillCooldown;
         coolDownSKillSlider.value = skillCooldown;
         effectRun.SetActive(false);
+        isExplosionSkill2 = false;
     }
 
     void Update()
@@ -91,7 +94,7 @@ public class Skill2Manager : MonoBehaviour
     //dợi 10 giây để loại bỏ phân thân va effect
     public IEnumerator WaitForRemoveClone()
     {
-        yield return new WaitForSeconds(10f); // Thời gian chờ trước khi loại bỏ phân thân
+        yield return new WaitForSeconds(timeSkill2); // Thời gian chờ trước khi loại bỏ phân thân
         if (playerClone != null)
         {
             Destroy(playerClone);

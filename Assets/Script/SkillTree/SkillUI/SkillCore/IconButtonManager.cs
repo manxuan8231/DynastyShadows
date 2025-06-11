@@ -82,7 +82,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill1 >= 1)
                 {
                 previewText.text = "Đông cứng - Cấp 3";
-                contenSkill.text = "Tăng thời gian đông cứng kẻ địch trong 10 giây";
+                contenSkill.text = "Tăng thời gian đông cứng kẻ địch trong 20 giây";
                 skillBGs[2].enabled = true;
                  scoreUpgradeText.text = "/2";//so diem can de nang cap
                 }
@@ -96,7 +96,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill1 >= 3)
                 {
                 previewText.text = "Đông cứng - Cấp 4";
-                contenSkill.text = "Gây 50 sát thương liên tục trong 10 giây";
+                contenSkill.text = "Gây sát thương theo player sau khi đóng băng";
                 skillBGs[3].enabled = true;   
                 scoreUpgradeText.text = "/4";//so diem can de nang cap
                 } 
@@ -110,8 +110,8 @@ public class IconButtonManager : MonoBehaviour
             //skill2-----------------------------------------
             case "TheAnh1":
                 previewText.text = "Thế ảnh - Cấp 1";
-                contenSkill.text = "Khi dùng Thế ảnh người chơi có thể tạo ra một bản thể ảo ảnh giúp đánh lạc hướng kẻ thù và " +
-                    "chuyển sang trạng thái tàng hình và tăng tốc độ chạy trong 10 giây, " +
+                contenSkill.text = "Khi dùng Thế ảnh người chơi có thể tạo ra một bản thể ảo ảnh giúp đánh lạc hướng kẻ thù" +
+                    " và chuyển sang trạng thái thế ảnh trong 10 giây, " +
                     "khi nhấn tấn công thì player sẽ lao tới kẻ địch gần nhất chém 1 nhát chém và hủy trạng thái, có thời gian hồi chiêu là 50 giây.";
                 skillBGs[4].enabled = true;
                  scoreUpgradeText.text = "/0";//so diem can de nang cap
@@ -134,7 +134,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill2 >= 2)
                 {
                     previewText.text = "Thế ảnh - Cấp 3";
-                    contenSkill.text = "Tăng tốc độ chạy thời gian tàng hình lên 20 giây.";
+                    contenSkill.text = "Tăng thời gian trạng thái thế ảnh lên 15 giây";
                     skillBGs[6].enabled = true;
                     scoreUpgradeText.text = "/3";//so diem can de nang cap
                 }else{
@@ -145,7 +145,7 @@ public class IconButtonManager : MonoBehaviour
             case "TheAnh4":
             if(turnInSkill2 >= 3){
                 previewText.text = "Thế ảnh - Cấp 4";
-                contenSkill.text = "Khi hết thời gian tàng hình, bản thể ảo sẽ gây 200 sát thương cho kẻ địch ở gần trước khi biến mất.";
+                contenSkill.text = "Khi hết thời gian trạng thái thế ảnh, bản thể ảo sẽ phát nổ gây 1000 sát thương cho kẻ địch ở gần trước khi biến mất.";
                 skillBGs[7].enabled = true;
                 scoreUpgradeText.text = "/4";//so diem can de nang cap
             }else{
@@ -336,17 +336,16 @@ public class IconButtonManager : MonoBehaviour
             case "DongCung2":
                 if(turnInSkill1 >= 1 && playerStatus.score >= 2)
                 {
-                Debug.Log("Đã mở khóa kỹ năng: ĐôngCung2");           
-                ColorUnlockIcon();
-                turnInSkill1 += 1;   
-                playerStatus.score -= 2;
-                //cap nhat text score(moon)
-                for(int i = 0; i < playerStatus.scoreText.Length; i++){
-                    playerStatus.scoreText[i].text = playerStatus.score.ToString();
-                }
-                
-                //mo khoa de su dung 
-             
+                    Debug.Log("Đã mở khóa kỹ năng: ĐôngCung2");           
+                    ColorUnlockIcon();
+                    turnInSkill1 += 1;   
+                    playerStatus.score -= 2;
+                    skill1Manager.cooldownSkill = 35f;//khi nâng cấp giảm thời gian hồi kỹ năng xuống còn 35f
+                    //cap nhat text score(moon)
+                    for (int i = 0; i < playerStatus.scoreText.Length; i++)
+                    {
+                        playerStatus.scoreText[i].text = playerStatus.score.ToString();
+                    }     
                 }
                 break;
             case "DongCung3":
@@ -360,7 +359,7 @@ public class IconButtonManager : MonoBehaviour
                     playerStatus.scoreText[i].text = playerStatus.score.ToString();
                 }
                 //mo khoa de su dung
-              
+                skill1Manager.timeSkill1 = 20f;
                 }
                 break;
             case "DongCung4":
@@ -373,6 +372,7 @@ public class IconButtonManager : MonoBehaviour
                     playerStatus.scoreText[i].text = playerStatus.score.ToString();
                 }
                 //mo khoa de su dung
+                skill1Manager.isDamaged = true;
                 }
                 break;
 
@@ -396,35 +396,42 @@ public class IconButtonManager : MonoBehaviour
                     }
                      //mo khoa de su dung 
                     turnInSkill2 += 1;
+                    skill2Manager.skillCooldown = 35;//giam thoi gian hoi chieu con 35 giay
+
                 }
               
                
                 break;
             case "TheAnh3":
-                if(turnInSkill2 >= 2 && playerStatus.score >= 3)
+                if (turnInSkill2 >= 2 && playerStatus.score >= 3)
                 {
-                 Debug.Log("Đã mở khóa kỹ năng: TheAnh3");
-                 ColorUnlockIcon();
-                turnInSkill2 += 1;
-                playerStatus.score -= 3;
-                for(int i = 0; i < playerStatus.scoreText.Length; i++){
-                    playerStatus.scoreText[i].text = playerStatus.score.ToString();
+                    Debug.Log("Đã mở khóa kỹ năng: TheAnh3");
+                    ColorUnlockIcon();
+                    turnInSkill2 += 1;
+                    playerStatus.score -= 3;
+                    for (int i = 0; i < playerStatus.scoreText.Length; i++)
+                    {
+                        playerStatus.scoreText[i].text = playerStatus.score.ToString();
+                    }
+                    skill2Manager.timeSkill2 = 15;
                 }
-                }
-               
-               
+
+
                 break;
             case "TheAnh4":
-                if(turnInSkill2 >= 3 && playerStatus.score >= 4){
-                Debug.Log("Đã mở khóa kỹ năng: TheAnh4");
-                ColorUnlockIcon();
-                turnInSkill2 += 1;
-                playerStatus.score -= 4;
-                for(int i = 0; i < playerStatus.scoreText.Length; i++){
-                    playerStatus.scoreText[i].text = playerStatus.score.ToString();
+                if (turnInSkill2 >= 3 && playerStatus.score >= 4)
+                {
+                    Debug.Log("Đã mở khóa kỹ năng: TheAnh4");
+                    ColorUnlockIcon();
+                    turnInSkill2 += 1;
+                    playerStatus.score -= 4;
+                    for (int i = 0; i < playerStatus.scoreText.Length; i++)
+                    {
+                        playerStatus.scoreText[i].text = playerStatus.score.ToString();
+                    }
+                  skill2Manager.isExplosionSkill2 = true;
                 }
-                }
-              
+
                 break;
 
             //skill 3 quan doan bong ma --------------------------------

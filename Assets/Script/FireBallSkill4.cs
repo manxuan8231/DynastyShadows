@@ -85,14 +85,22 @@ public class FireBallSkill4 : MonoBehaviour
 
         switch (target)
         {
-            case EnemyHP hp: hp.TakeDamage((int)dmg); break;
-            case EnemyHP2 hp2: hp2.TakeDamage((int)dmg); break;
-            case EnemyHP3 hp3: hp3.TakeDamage((int)dmg); break;
-            case EnemyHP4 hp4: hp4.TakeDamage((int)dmg); break;  
-            case DrakonitController d: d.TakeDame((int)dmg); break;
-            case BossHP b: b.TakeDamage((int)dmg); break;
-            case NecController n: n.TakeDame((int)dmg); break;
-            case Boss1Controller b1: b1.TakeDame((int)dmg); break;
+            case EnemyHP hp: hp.TakeDamage((int)dmg); 
+                break;
+            case EnemyHP2 hp2: hp2.TakeDamage((int)dmg); 
+                break;
+            case EnemyHP3 hp3: hp3.TakeDamage((int)dmg); 
+                break;
+            case EnemyHP4 hp4: hp4.TakeDamage((int)dmg); 
+                break;  
+            case DrakonitController d: d.TakeDame((int)dmg); 
+                break;
+            case BossHP b: b.TakeDamage((int)dmg);
+                break;
+            case NecController n: n.TakeDame((int)dmg); 
+                break;
+            case Boss1Controller b1: b1.TakeDame((int)dmg); 
+                break;
         }
     }
    

@@ -1,22 +1,32 @@
 ﻿using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class CastRostbindSoul : MonoBehaviour
 {
-    public float duration = 3f; // Thời gian đóng băng
+   
     public GameObject effectPrefab; // Hiệu ứng đóng băng
     public LayerMask enemyLayer; // Layer của enemy
     private GameObject targetEnemy;
+    
+    //hien dame effect
+    public GameObject textDame;
+    public Transform textTransform;
 
+    //tham chieu
+    public PlayerStatus status;
+    public Skill1Manager skill1Manager;
     private void Start()
     {
+        skill1Manager = FindAnyObjectByType<Skill1Manager>();
+        status = FindAnyObjectByType<PlayerStatus>();
         targetEnemy = FindNearestEnemy(50f);
         if (targetEnemy != null)
         {
             transform.position = targetEnemy.transform.position + new Vector3(0f, 2.4f, 0f);
             FreezeEnemy(targetEnemy);
-            StartCoroutine(UnfreezeAfterDelay(targetEnemy, duration));
+            StartCoroutine(UnfreezeAfterDelay(targetEnemy, skill1Manager.timeSkill1));
         }
         else
         {
@@ -62,6 +72,17 @@ public class CastRostbindSoul : MonoBehaviour
 
         MonoBehaviour ai = enemy.GetComponent<MonoBehaviour>();
         if (ai != null) ai.enabled = false;
+
+        // Tìm script EnemyHP 
+        EnemyHP enemyHP = enemy.GetComponent<EnemyHP>();
+        if (enemyHP != null && skill1Manager.isDamaged == true)//mở khóa kỹ năng mới cho mất máu
+        {
+
+            ShowTextDame(status.baseDamage);
+            enemyHP.TakeDamage(status.baseDamage);
+
+        }
+        return;
     }
 
     private void UnfreezeEnemy(GameObject enemy)
@@ -85,5 +106,17 @@ public class CastRostbindSoul : MonoBehaviour
         yield return new WaitForSeconds(delay);
         UnfreezeEnemy(enemy);
         Destroy(gameObject);
+    }
+
+    public void ShowTextDame(float damage)
+    {
+        GameObject effectText = Instantiate(textDame, textTransform.position, Quaternion.identity);
+        Destroy(effectText, 0.5f);
+        // Truyền dame vào prefab
+        TextDamePopup popup = effectText.GetComponent<TextDamePopup>();
+        if (popup != null)
+        {
+            popup.Setup(damage);
+        }
     }
 }

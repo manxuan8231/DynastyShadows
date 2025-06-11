@@ -11,9 +11,9 @@ public class Skill1Manager : MonoBehaviour
     public Slider cooldownSkilSlider;
     public float cooldownSkill = 50f;
     public float lastTimeSkill = -50f;
-    public float timeSkill1 = 10f; //thoi gian skill 1 ton tai
+    public float timeSkill1 = 10; //thoi gian skill 1 ton tai
     public bool isSkillCooldown = false;
-
+    public bool isDamaged = false;
     public bool isInputSkill1 = true;
     //skill 1 dong cung enemy
     public GameObject skillPrefab; // Prefab của kỹ năng
@@ -26,6 +26,7 @@ public class Skill1Manager : MonoBehaviour
     public GameObject iconSkill1;
     private void Start()
     {
+        isDamaged = false;
         iconSkill1.SetActive(false);
         isSkillCooldown = false;
         playerController = FindAnyObjectByType<PlayerControllerState>();
@@ -52,7 +53,7 @@ public class Skill1Manager : MonoBehaviour
 
             // Tạo hiệu ứng kỹ năng
            GameObject skill1 = Instantiate(skillPrefab, spawnPoint.position, spawnPoint.rotation);
-           Destroy(skill1, timeSkill1);
+          // Destroy(skill1, timeSkill1);
             
             StartCoroutine(WaitRig());
 
