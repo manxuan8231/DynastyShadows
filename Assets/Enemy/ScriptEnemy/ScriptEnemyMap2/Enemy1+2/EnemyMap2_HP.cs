@@ -52,14 +52,7 @@ public class EnemyMap2_HP : MonoBehaviour
             enemyMap2_1.ChangeState(EnemyMap2_1.EnemyState.Death);
             enemyMap2_1.agent.isStopped = true; // Dừng lại khi chết
             boxDame.enabled = false;
-           
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
-         
-
-       
-
-
-
         }
         if (currentHealth > 0)
         {
