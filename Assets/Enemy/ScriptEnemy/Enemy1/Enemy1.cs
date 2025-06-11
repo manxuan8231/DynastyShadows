@@ -88,6 +88,7 @@ public class Enemy1 : MonoBehaviour
 
         if (distToPlayer < radius)
         {
+          
             agent.SetDestination(player.position); // Đuổi theo player
         }
         else

@@ -39,10 +39,7 @@ public class EnemyHP4 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            TakeDamage(100); // Gọi hàm giảm máu
-        }
+       
     }
     public void DropItem()
     {

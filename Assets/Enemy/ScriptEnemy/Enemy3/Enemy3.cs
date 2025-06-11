@@ -82,9 +82,9 @@ public class Enemy3 : MonoBehaviour
     {
         float distToPlayer = Vector3.Distance(transform.position, player.position);
 
-        if (distToPlayer < radius)
+        if (distToPlayer < radius )
         {
-         
+         if ( agent.enabled)
             agent.SetDestination(player.position); // Đuổi theo player
         }
         else
@@ -115,7 +115,10 @@ public class Enemy3 : MonoBehaviour
         float dist = Vector3.Distance(transform.position, player.position);
         if (dist > attackRange + 1f)
         {
-            agent.isStopped = false;
+            if (agent.enabled)
+            {
+                agent.isStopped = false;
+            }
             attackTimer = 0f; //nếu như player đi xa
             ChangeState(EnemyState.Run);
         }
