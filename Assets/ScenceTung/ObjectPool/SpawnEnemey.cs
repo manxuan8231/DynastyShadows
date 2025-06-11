@@ -6,16 +6,20 @@ public class SpawnEnemy : MonoBehaviour
     public int enemySpawnCount; // Số enemy muốn spawn
     public string enemyTag; // Tag của enemy dùng để gọi từ pool
     public bool hasSpawned = false;
-
+    public float spawnTimer = -60f;
+    public float spawnCooldown = 60f;
+    
     private void OnTriggerEnter(Collider other)
     {
         if (hasSpawned) return;
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && Time.time >= spawnTimer + spawnCooldown && !hasSpawned )
         {
             SpawnEnemies();
-            hasSpawned = true;
+            hasSpawned = false;
+            spawnTimer = Time.time; // Cập nhật thời gian spawn
         }
+        
     }
 
     void SpawnEnemies()
@@ -27,11 +31,12 @@ public class SpawnEnemy : MonoBehaviour
             Vector3 spawnPos = spawnPoints[i].position;
 
             GameObject enemy = ObjPoolingManager.Instance.GetEnemyFromPool(enemyTag, spawnPos);
-
+          
             if (enemy == null)
             {
                 Debug.LogWarning("Enemy không đủ trong pool!");
             }
         }
+        
     }
 }

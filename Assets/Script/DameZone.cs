@@ -107,6 +107,15 @@ public class DameZone : MonoBehaviour
                     boss1HP.TakeDame((int)finalDamage);
                     return;
                 }
+                //enemy map 2 1 + 2
+                EnemyMap2_HP enemyMap2_1 = other.GetComponent<EnemyMap2_HP>();
+                if (enemyMap2_1 != null)
+                {
+                    listDame.Add(other);// thêm collider vào danh sách
+                    ShowTextDame(finalDamage);
+                    enemyMap2_1.TakeDamage(finalDamage);
+                    return;
+                }
             }
         }
         
