@@ -3,6 +3,7 @@ using TMPro;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CamTrigger : MonoBehaviour
 {
@@ -16,7 +17,13 @@ public class CamTrigger : MonoBehaviour
     public GameObject triggerCam;
     public GameObject canvasText;
     public TMP_Text content;
-
+    public GameObject stateCanvas;
+    public TMP_Text stateQuestion;
+    public TMP_Text missionName;
+    public Image missionIcon;
+    public Sprite missionSprite;
+    public GameObject canvasQuest;
+    
     private void Start()
     {
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
@@ -67,9 +74,16 @@ public class CamTrigger : MonoBehaviour
             Style = CinemachineBlendDefinition.Styles.EaseInOut
         };
         cinemachineBrain.DefaultBlend = defaultCam;
-        Destroy(triggerCam);
         canvasText.SetActive(false);
-        
-
+        yield return new WaitForSeconds(1f);
+        stateCanvas.SetActive(true);
+        stateQuestion.text = "Bạn vừa nhận nhiệm vụ mới !";
+        missionName.text = "Nhiệm vụ: Khám phá thị trấn";
+       missionIcon.sprite = missionSprite;
+        yield return new WaitForSeconds(4.5f);
+        stateCanvas.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        canvasQuest.SetActive(true);
+        Destroy(triggerCam);
     }
 }
