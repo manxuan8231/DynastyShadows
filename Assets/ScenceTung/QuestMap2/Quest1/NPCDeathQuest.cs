@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class NPCDeathQuest : MonoBehaviour
@@ -34,11 +34,13 @@ public class NPCDeathQuest : MonoBehaviour
             {
                 Cursor.lockState = CursorLockMode.None; // Unlock the cursor
                 Cursor.visible = true; // Show the cursor
-                content.text = "V�o chi?u h�m qua ch�ng t�i ?� thay ca canh g�c cho ??i tr??c\r" +
-                    "\n??t nhi�n nghe th?y m?t �m thanh k? l? v� r?i c�nh c?a b? ph� m?t l? l?n\r" +
-                    "\nb?n qu�i v?t ? ?�u x�ng v�o r?t ?�ng v� c�c ??i g?n ?� ?� chi vi?n ?? ch?ng l?i.\r" +
-                    "\ntrong ?�m ?� ??t nhi�n c� m?t con r?t kh�c l? v� n� ?� h? h?t c�c ??i c?a ch�ng t�i\r" +
-                    "\nkh�ng c�n nhi?u th?i gian, t�i ngh? m�nh kh�ng c?m c? ???c n?a, n� �..\r\n";
+                Time.timeScale = 0f; // Pause the game time
+
+                content.text = "Vào chiều hôm qua chúng tôi đã thay ca canh gác cho đội trước\r" +
+                    "\nđột nhiên nghe thấy một âm thanh kì lạ và rồi cánh cửa bị phá một lổ lớn\r" +
+                    "\nbọn quái vật từ đâu xông vào rất đông và các đội gần đó đã chi viện để chống lại.\r" +
+                    "\ntrong đám đó đột nhiên có một con rất khác lạ và nó đã hạ hết các đội của chúng tôi\r" +
+                    "\nkhông còn nhiều thời gian, tôi nghĩ mình không cầm cự được nữa, nó …..\r\n";
             }
             else
             {
@@ -50,6 +52,7 @@ public class NPCDeathQuest : MonoBehaviour
     }
     public void closeDiary()
     {
+        Time.timeScale = 1f; // Resume the game time
         diaryContent.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked; // Lock the cursor
         Cursor.visible = false; // Hide the cursor
