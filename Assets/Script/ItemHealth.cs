@@ -26,7 +26,9 @@ public class ItemHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        agent.SetDestination(player.transform.position);
+          
+            agent.SetDestination(player.transform.position);
+        
     }
     public void OnTriggerEnter(Collider other)
     {
