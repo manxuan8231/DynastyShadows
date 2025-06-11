@@ -1,5 +1,7 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NPCDeathQuest : MonoBehaviour
 {
@@ -7,6 +9,14 @@ public class NPCDeathQuest : MonoBehaviour
     public GameObject diaryContent;
     public GameObject btnPressF;
     public TMP_Text content;
+    public GameObject canvasQuest1;
+    public GameObject stateCanvas;
+    public TMP_Text stateQuestion;
+    public TMP_Text missionName;
+    public Image missionIcon;
+    public Sprite missionSprite;
+    public AudioCanvasState audioCanvasStatequest;
+   
 
     private void OnTriggerEnter(Collider other)
     {
@@ -57,6 +67,21 @@ public class NPCDeathQuest : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked; // Lock the cursor
         Cursor.visible = false; // Hide the cursor
         diaryModel.SetActive(false);
+        StartCoroutine(ShowQuestCanvas()); // Start the coroutine to show the quest canvas
     }
 
+    IEnumerator ShowQuestCanvas()
+    {
+        canvasQuest1.SetActive(false); // Show the quest canvas
+        yield return new WaitForSeconds(1f);
+        stateCanvas.SetActive(true); // Show the state canvas
+        stateQuestion.text = "Hoàn thành nhiệm vụ !";
+        missionName.text = "Chúc mừng bạn đã hoàn thành nhiệm vụ!!";
+        audioCanvasStatequest.PlayDoneQuest(); // Play the quest complete audio
+        missionIcon.sprite = missionSprite;
+        yield return new WaitForSeconds(4f);
+        stateCanvas.SetActive(false); // Hide the state canvas
+       
+        
+    }
 }
