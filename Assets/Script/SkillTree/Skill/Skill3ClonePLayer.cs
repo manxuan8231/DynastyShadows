@@ -14,10 +14,15 @@ public class Skill3ClonePLayer : MonoBehaviour
    
     private Transform nearestEnemy;
     private float lastAttackTime = -15f;
+
+    //tham chieu
     Skill3Manager skill3Manager;
+    DameZoneSkill3PL dameZoneSkill3PL;
+   
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        dameZoneSkill3PL= FindAnyObjectByType<DameZoneSkill3PL>();
         skill3Manager = FindAnyObjectByType<Skill3Manager>();
         animator = GetComponent<Animator>();
         agent.speed = speed;
@@ -97,5 +102,13 @@ public class Skill3ClonePLayer : MonoBehaviour
     {
         yield return new WaitForSeconds(skill3Manager.timeSkill3);
         ObjPoolingManager.Instance.ReturnToPool(skill3Manager.clonePLTag,gameObject);
+    }
+    public void StartDameZone()
+    {
+        dameZoneSkill3PL.beginDame();
+    }
+    public void EndDameZone()
+    {
+        dameZoneSkill3PL.endDame();
     }
 }

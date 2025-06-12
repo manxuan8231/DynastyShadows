@@ -73,22 +73,24 @@ public class CastRostbindSoul : MonoBehaviour
         MonoBehaviour ai = enemy.GetComponent<MonoBehaviour>();
         if (ai != null) ai.enabled = false;
 
-        // Tìm script EnemyHP lay mau
-        if (skill1Manager.isDamaged == true) {
+        // láy mau enemy sau khi mở khóa
+        if (skill1Manager.isDamaged == true) 
+        {
+            float dame = status.baseDamage * 1f + status.criticalDamage / 100f;
             EnemyHP enemyHP = enemy.GetComponent<EnemyHP>();
             if (enemyHP != null)//mở khóa kỹ năng mới cho mất máu
             {
 
-                ShowTextDame(status.criticalDamage);
-                enemyHP.TakeDamage(status.criticalDamage);
+                ShowTextDame(dame);
+                enemyHP.TakeDamage(dame);
                 return;
             }
             EnemyHP2 enemyHP2 = enemy.GetComponent<EnemyHP2>();
             if (enemyHP2 != null)
             {
 
-                ShowTextDame(status.criticalDamage);
-                enemyHP2.TakeDamage(status.criticalDamage);
+                ShowTextDame(dame);
+                enemyHP2.TakeDamage(dame);
                 return;
             }
 
@@ -96,8 +98,8 @@ public class CastRostbindSoul : MonoBehaviour
             if (enemyHP3 != null)
             {
 
-                ShowTextDame(status.criticalDamage);
-                enemyHP3.TakeDamage(status.criticalDamage);
+                ShowTextDame(dame);
+                enemyHP3.TakeDamage(dame);
                 return;
             }
 
@@ -105,8 +107,8 @@ public class CastRostbindSoul : MonoBehaviour
             if (enemyHP4 != null)
             {
 
-                ShowTextDame(status.criticalDamage);
-                enemyHP4.TakeDamage(status.criticalDamage);
+                ShowTextDame(dame);
+                enemyHP4.TakeDamage(dame);
                 return;
             }
             //boss drakonit
@@ -114,8 +116,8 @@ public class CastRostbindSoul : MonoBehaviour
             if (drakonitController != null)
             {
 
-                ShowTextDame(status.criticalDamage);
-                drakonitController.TakeDame(status.criticalDamage);
+                ShowTextDame(dame);
+                drakonitController.TakeDame(dame);
                 return;
             }
             //boss ork
@@ -123,8 +125,8 @@ public class CastRostbindSoul : MonoBehaviour
             if (bossHP != null)
             {
 
-                ShowTextDame(status.criticalDamage);
-                bossHP.TakeDamage(status.criticalDamage);
+                ShowTextDame(dame);
+                bossHP.TakeDamage(dame);
                 return;
             }
             //boss sa mac
@@ -133,8 +135,8 @@ public class CastRostbindSoul : MonoBehaviour
             {
                 Debug.Log("Đã trúng NecController");
 
-                ShowTextDame(status.criticalDamage);
-                necController.TakeDame(status.criticalDamage);
+                ShowTextDame(dame);
+                necController.TakeDame(dame);
                 return;
             }
             //boss chinh map 1
@@ -142,8 +144,8 @@ public class CastRostbindSoul : MonoBehaviour
             if (boss1HP != null)
             {
 
-                ShowTextDame(status.criticalDamage);
-                boss1HP.TakeDame(status.criticalDamage);
+                ShowTextDame(dame);
+                boss1HP.TakeDame((int)dame);
                 return;
             }
             //enemy map 2 1 + 2
@@ -151,8 +153,8 @@ public class CastRostbindSoul : MonoBehaviour
             if (enemyMap2_1 != null)
             {
 
-                ShowTextDame(status.criticalDamage);
-                enemyMap2_1.TakeDamage(status.criticalDamage);
+                ShowTextDame(dame);
+                enemyMap2_1.TakeDamage(dame);
                 return;
             } 
         }

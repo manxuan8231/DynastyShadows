@@ -6,14 +6,15 @@ public class Skill3Manager : MonoBehaviour
 {
     public Transform[] spawnClonePL;
     public string clonePLTag = "PlayerClone"; // Tag của clone player
-    public float lastTime = -50;
-    public float cooldownSkill = 50;
-    public float timeSkill3 = 10f;//thoi gian skill 3 ton tai
-
+    public float lastTime = -100;
+    public float cooldownSkill = 100;
+    public float timeSkill3 = 30f;//thoi gian skill 3 ton tai
+    public float playerCount = 4;//player spawn 
     public bool isInputSkill3;
     public Slider cooldownSlider;
 
     //unlock skill trong UI thi moi cho dung skill
+    public bool isDamaged;//neu true thi dame tang x2
     public bool isUnlockSkill3 = false;
     public GameObject iconSkill3;
 
@@ -22,6 +23,7 @@ public class Skill3Manager : MonoBehaviour
 
     private void Start()
     {
+        isDamaged=false;
         iconSkill3.SetActive(false);
         isUnlockSkill3 = false;
         isInputSkill3 = true;
@@ -47,7 +49,8 @@ public class Skill3Manager : MonoBehaviour
 
     public IEnumerator SpawnClone()
     {
-        for (int i = 0; i < Mathf.Min(5, spawnClonePL.Length); i++)
+        float spawnCount = Mathf.Min(playerCount, spawnClonePL.Length);
+        for (int i = 0; i < spawnCount; i++)
         {
             Vector3 spawnPosition = spawnClonePL[i].position;
             GameObject clone = ObjPoolingManager.Instance.GetEnemyFromPool(clonePLTag, spawnPosition);

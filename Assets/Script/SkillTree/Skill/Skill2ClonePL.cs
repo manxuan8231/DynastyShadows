@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class Skill2ClonePL : MonoBehaviour
@@ -8,6 +8,7 @@ public class Skill2ClonePL : MonoBehaviour
     void Start()
     {
         skill2Manager = FindAnyObjectByType<Skill2Manager>();
+        //đợi để khỏi tạo hiệu ứng nổ
         if(skill2Manager.isExplosionSkill2 == true)
             StartCoroutine(WaitEffect(skill2Manager.timeSkill2));
     }
@@ -15,6 +16,7 @@ public class Skill2ClonePL : MonoBehaviour
    
     void Update()
     {
+        //click chuột để tạo hiệu ứng nổ
         if (Input.GetMouseButtonDown(0) && skill2Manager.isExplosionSkill2 == true)
         {
             Vector3 y = new Vector3(0f, 6f, 0f);

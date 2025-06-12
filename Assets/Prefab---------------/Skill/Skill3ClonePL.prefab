@@ -16719,7 +16719,7 @@ MonoBehaviour:
   speed: 4
   detectionRange: 70
   attackRange: 4
-  attackCooldown: 7
+  attackCooldown: 6
 --- !u!114 &-5533079187246399814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75239,7 +75239,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8509196276395546008}
   - component: {fileID: 3039861577815473629}
-  - component: {fileID: 846283098770527172}
+  - component: {fileID: 3936228209237694856}
   m_Layer: 9
   m_Name: DameZone
   m_TagString: Untagged
@@ -75281,9 +75281,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.642413, z: 1}
+  m_Size: {x: 2.18, y: 1.642413, z: 2.18}
   m_Center: {x: -0.00000784053, y: -0.32120022, z: 0.000005767955}
---- !u!114 &846283098770527172
+--- !u!114 &3936228209237694856
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75292,23 +75292,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8587205339877953615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c716dc791e11b9428c8688df44b6d4d, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c513be71cece244bba626b69c0cd58a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectHit: {fileID: 5238538877814813142, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
-  tranFormHit: {fileID: 8061913253879927325}
+  boxCollider: {fileID: 3039861577815473629}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1024
   textDame: {fileID: 5085320511852087896, guid: 04cb7c0da45d2264a8424a9f852cd721, type: 3}
-  textTransform: {fileID: 8061913253879927325}
-  dameZoneCollider: {fileID: 3039861577815473629}
-  tagEnemy:
-  - Enemy1
-  - Enemy2
-  - Enemy3
-  - Enemy4
-  - BossOrk1
-  - BossDesert
-  - Enemy
-  listDame: []
+  textTransform: {fileID: 8509196276395546008}
+  playerStatus: {fileID: 0}
 --- !u!1 &8618184535976093758
 GameObject:
   m_ObjectHideFlags: 0

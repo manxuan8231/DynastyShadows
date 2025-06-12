@@ -57,7 +57,7 @@ public class IconButtonManager : MonoBehaviour
             //skill1-------------
             case "DongCung1":
                 previewText.text = "Đông cứng - Cấp 1";
-                contenSkill.text = "Khi dùng skill có khả năng đông cứng kẻ địch trong 5 giây không gây sát thương có thời gian hồi chiêu là 50 giây.";
+                contenSkill.text = "Khi dùng skill có khả năng đông cứng kẻ địch trong 10 giây không gây sát thương có thời gian hồi chiêu là 50 giây.";
                 skillBGs[0].enabled = true;
                 scoreUpgradeText.text = "/0";//so diem can de nang cap
                  
@@ -96,7 +96,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill1 >= 3)
                 {
                 previewText.text = "Đông cứng - Cấp 4";
-                contenSkill.text = "Gây sát thương theo player sau khi đóng băng";
+                contenSkill.text = "Gây sát thương sau khi bị đóng băng, dựa vào sát thương bạo kích của player không cần tỷ lệ bạo.";
                 skillBGs[3].enabled = true;   
                 scoreUpgradeText.text = "/4";//so diem can de nang cap
                 } 
@@ -157,7 +157,9 @@ public class IconButtonManager : MonoBehaviour
             case "QuanDoanBongToi1":
 
                 previewText.text = "Quân đoàn bóng tối - Cấp 1";
-                contenSkill.text = "Khi dùng kỹ năng thì nguời chơi sẽ tạo ra 4 phân thân giúp hỗ trợ, có sát thương theo chỉ số hiện tại của người chơi và có thời gian tồn tại là 30 giây, có thời gian hồi chiêu là 100 giây.";
+                contenSkill.text = "Khi dùng kỹ năng thì nguời chơi sẽ tạo ra 4 phân thân giúp hỗ trợ, " +
+                    "có sát thương theo chỉ số hiện tại của người chơi và có thời gian tồn tại là 30 giây, " +
+                    "có thời gian hồi chiêu là 100 giây.";
                 skillBGs[8].enabled = true;
                  scoreUpgradeText.text = "/0";//so diem can de nang cap
                 break;
@@ -169,7 +171,7 @@ public class IconButtonManager : MonoBehaviour
                     contenSkill.text = "Giảm thời gian hồi chiêu còn 70 giây";
                     skillBGs[9].enabled = true;
                     scoreUpgradeText.text = "/2";//so diem can de nang cap
-
+                   
                 }else{
                     previewPanel.SetActive(false);
                 }
@@ -193,7 +195,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill3 >= 3)
                 {
                     previewText.text = "Quân đoàn bóng tối - Cấp 4";
-                    contenSkill.text = "Tăng số lượng phân thân lên 6.";
+                    contenSkill.text = "Tăng sát thương lên x2 so với player";
                     skillBGs[11].enabled = true;
                     scoreUpgradeText.text = "/4";//so diem can de nang cap
                 }else{
@@ -205,7 +207,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill3 >= 4)
                 {
                     previewText.text = "Quân đoàn bóng tối - Cấp 5";
-                    contenSkill.text = "Tăng thời gian tồn tại phân thân lên 50 giây.";
+                    contenSkill.text = "Tăng số lượng phân thân lên 6.";
                     skillBGs[12].enabled = true;
                     scoreUpgradeText.text = "/5";//so diem can de nang cap
                 }else{
@@ -340,8 +342,10 @@ public class IconButtonManager : MonoBehaviour
                     ColorUnlockIcon();
                     turnInSkill1 += 1;   
                     playerStatus.score -= 2;
-                    skill1Manager.cooldownSkill = 35f;//khi nâng cấp giảm thời gian hồi kỹ năng xuống còn 35f
-                    //cap nhat text score(moon)
+                    //khi nâng cấp giảm thời gian hồi kỹ năng xuống còn 35f
+                    skill1Manager.lastTimeSkill = -35;
+                    skill1Manager.cooldownSkill = 35f;
+                    //cap nhat textscore(moon)
                     for (int i = 0; i < playerStatus.scoreText.Length; i++)
                     {
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
@@ -394,9 +398,11 @@ public class IconButtonManager : MonoBehaviour
                     for(int i = 0; i < playerStatus.scoreText.Length; i++){
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
-                     //mo khoa de su dung 
+                     //mo khoa de su dung --------
                     turnInSkill2 += 1;
-                    skill2Manager.skillCooldown = 35;//giam thoi gian hoi chieu con 35 giay
+                    //giam thoi gian hoi chieu con 35 giay
+                    skill2Manager.lastTime = -35;
+                    skill2Manager.skillCooldown = 35;
 
                 }
               
@@ -454,6 +460,8 @@ public class IconButtonManager : MonoBehaviour
                     for(int i = 0; i < playerStatus.scoreText.Length; i++){
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
+                    skill3Manager.lastTime = -70;
+                    skill3Manager.cooldownSkill = 70;//giam cooldown con 70
                 }
               
                 break;
@@ -467,6 +475,7 @@ public class IconButtonManager : MonoBehaviour
                     for(int i = 0; i < playerStatus.scoreText.Length; i++){
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
+                    skill3Manager.timeSkill3 = 40; //tang thoi gian ton tai clone len 40
                 }
               
                 break;
@@ -480,6 +489,7 @@ public class IconButtonManager : MonoBehaviour
                     for(int i = 0; i < playerStatus.scoreText.Length; i++){
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
+                    skill3Manager.isDamaged = true;//tang dame len x2
                 }
 
                 break;
@@ -493,6 +503,7 @@ public class IconButtonManager : MonoBehaviour
                     for(int i = 0; i < playerStatus.scoreText.Length; i++){
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
+                    skill3Manager.playerCount = 6;
                 }
 
                 break;
@@ -506,6 +517,7 @@ public class IconButtonManager : MonoBehaviour
                     for(int i = 0; i < playerStatus.scoreText.Length; i++){
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
+                    //chx co
                 }
 
                 break;

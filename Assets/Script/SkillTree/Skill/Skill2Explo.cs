@@ -13,7 +13,7 @@ public class Skill2Explo : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         
