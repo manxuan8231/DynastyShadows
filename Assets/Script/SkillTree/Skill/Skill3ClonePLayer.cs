@@ -105,6 +105,7 @@ public class Skill3ClonePLayer : MonoBehaviour
     }
     public void StartDameZone()
     {
+       
         dameZoneSkill3PL.beginDame();
     }
     public void EndDameZone()
