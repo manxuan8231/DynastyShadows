@@ -15,7 +15,10 @@ public class NPCDeathQuest : MonoBehaviour
     public TMP_Text missionName;
     public Image missionIcon;
     public Sprite missionSprite;
+    public Sprite newQuest;
     public AudioCanvasState audioCanvasStatequest;
+    public TMP_Text contentQuest;
+    public bool isQuest1 = false; 
    
 
     private void OnTriggerEnter(Collider other)
@@ -72,8 +75,10 @@ public class NPCDeathQuest : MonoBehaviour
 
     IEnumerator ShowQuestCanvas()
     {
-        canvasQuest1.SetActive(false); // Show the quest canvas
-        yield return new WaitForSeconds(1f);
+        content.text = "Chuyện này thật tệ, mình cần xem xung quanh khu này còn ai không!?";
+        yield return new WaitForSeconds(3f);
+        content.text = "Có vẽ ở đây có chuyện chẳng lành rồi...";
+        yield return new WaitForSeconds(3f);
         stateCanvas.SetActive(true); // Show the state canvas
         stateQuestion.text = "Hoàn thành nhiệm vụ !";
         missionName.text = "Chúc mừng bạn đã hoàn thành nhiệm vụ!!";
@@ -81,7 +86,16 @@ public class NPCDeathQuest : MonoBehaviour
         missionIcon.sprite = missionSprite;
         yield return new WaitForSeconds(4f);
         stateCanvas.SetActive(false); // Hide the state canvas
-       
-        
+        yield return new WaitForSeconds(3f);
+        stateCanvas.SetActive(true); // Show the state canvas
+        stateQuestion.text = "Bạn vừa nhận được nhiệm vụ mới!";
+        missionName.text = "Khám phá thị trấn!!";
+        audioCanvasStatequest.PlayNewQuest(); // Play the quest complete audio
+        missionIcon.sprite = newQuest;
+        isQuest1 = true; // Set the quest flag to true
+        yield return new WaitForSeconds(3f);
+        stateCanvas.SetActive(false);
+        canvasQuest1.SetActive(true); // Show the quest canvas
+        contentQuest.text = "Nhiệm vụ: Khám phá thị trấn";
     }
 }

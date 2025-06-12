@@ -23,6 +23,7 @@ public class CamTrigger : MonoBehaviour
     public Image missionIcon;
     public Sprite missionSprite;
     public GameObject canvasQuest;
+    public AudioCanvasState audioCanvasState;
     
     private void Start()
     {
@@ -78,8 +79,9 @@ public class CamTrigger : MonoBehaviour
         yield return new WaitForSeconds(1f);
         stateCanvas.SetActive(true);
         stateQuestion.text = "Bạn vừa nhận nhiệm vụ mới !";
-        missionName.text = "Nhiệm vụ: Khám phá thị trấn";
+        missionName.text = "Nhiệm vụ: Đi xung quanh khu bị phá hủy kiểm tra...!";
        missionIcon.sprite = missionSprite;
+        audioCanvasState.PlayNewQuest();
         yield return new WaitForSeconds(4.5f);
         stateCanvas.SetActive(false);
         yield return new WaitForSeconds(1f);
