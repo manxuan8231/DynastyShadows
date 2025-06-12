@@ -53,7 +53,7 @@ public class ComboAttack : MonoBehaviour
             }
 
             // Reset combo nếu không tấn công sau 1.2s
-            if (Time.time >= nextAttackTime + 1.2f)
+            if (Time.time >= nextAttackTime + 2f)
             {
                 comboStep = 0;
             }
@@ -63,30 +63,35 @@ public class ComboAttack : MonoBehaviour
 
     void OnAttack()
     {
-        
-        comboStep++;
+        // Kiểm tra có được phép tấn công tiếp không
+        if (Time.time < nextAttackTime)
+            return;
 
-        if (comboStep == 1)
+        // Chỉ tăng comboStep nếu cooldown đã hết
+        if (comboStep == 0)
         {
+            comboStep = 1;
             playerController.animator.SetTrigger("Attack1");
             nextAttackTime = Time.time + attack1Cooldown;
         }
-        else if (comboStep == 2)
+        else if (comboStep == 1)
         {
+            comboStep = 2;
             playerController.animator.SetTrigger("Attack2");
             nextAttackTime = Time.time + attack2Cooldown;
         }
-        else if (comboStep == 3)
+        else if (comboStep == 2)
         {
+            comboStep = 3;
             playerController.animator.SetTrigger("Attack3");
             nextAttackTime = Time.time + attack3Cooldown;
-            comboStep = 0;
         }
         else
         {
             comboStep = 0;
         }
     }
+
     void OnAttackFly()
     {
         playerController.animator.SetTrigger("FlyAttack");

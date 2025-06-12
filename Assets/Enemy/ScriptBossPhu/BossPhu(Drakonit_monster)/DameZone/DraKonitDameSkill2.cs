@@ -18,7 +18,7 @@ public class DraKonitDameSkill2 : MonoBehaviour
         if (other.CompareTag("Player"))
         {
 
-            playerStatus.TakeHealth(damagePerSecond * Time.deltaTime); // Gây sát thương theo thời gian      
+            playerStatus.TakeHealth(damagePerSecond * Time.deltaTime, gameObject); // Gây sát thương theo thời gian      
 
         }
     }

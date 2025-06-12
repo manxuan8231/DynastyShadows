@@ -17,10 +17,6 @@ public class EvenAnimator : MonoBehaviour
 
     [Header("EvenSkill4--------------------------------")]
     [SerializeField] private GameObject effectChangeSkill4;
-    [SerializeField] private GameObject effectSkill4Attack1;
-    [SerializeField] private GameObject effectSkill4Attack2;
-    [SerializeField] private GameObject effectSkill4Attack3;
-    [SerializeField] private GameObject effectSkill4Fly;
     [SerializeField] private Transform positionSKill4;
     [Header("even audio---------------------------- ")]
     //audio
@@ -124,37 +120,8 @@ public class EvenAnimator : MonoBehaviour
     public void StartEffectChangeSkill4()
     {
         GameObject effect = Instantiate(effectChangeSkill4, positionSKill4.position, transform.rotation);
-        Destroy(effect, 4f);
+        Destroy(effect, 1.3f);
     }
 
-    public void StartEffectSkill4Attack1()
-    {
-        GameObject effect = Instantiate(effectSkill4Attack1, positionSKill4.position, transform.rotation);
-        Rigidbody rb = effect.GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * 10f, ForceMode.Impulse);
-        Destroy(effect, 4f);
-    }
-
-    public void StartEffectSkill4Attack2()
-    {
-        GameObject effect = Instantiate(effectSkill4Attack2, positionSKill4.position, transform.rotation);
-        Rigidbody rb = effect.GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * 10f, ForceMode.Impulse);
-        Destroy(effect, 4f);
-    }
-
-    public void StartEffectSkill4Attack3() { 
-        GameObject effect = Instantiate(effectSkill4Attack3, positionSKill4.position, transform.rotation);
-        Rigidbody rb = effect.GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * 10f, ForceMode.Impulse);
-        Destroy(effect, 4f);
-    }
-
-    public void StartEffectSkill4Fly()
-    {
-        GameObject effect = Instantiate(effectSkill4Fly, positionSKill4.position, transform.rotation);
-        Rigidbody r = effect.GetComponent<Rigidbody>();
-        r.AddForce(transform.forward * 150f, ForceMode.Impulse);
-        Destroy(effect, 4f);
-    }
+  
 }

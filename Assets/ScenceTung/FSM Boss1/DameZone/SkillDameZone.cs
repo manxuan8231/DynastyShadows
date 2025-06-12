@@ -13,7 +13,7 @@ public class SkillDameZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            status.TakeHealth(dame);
+            status.TakeHealth(dame, gameObject);
         }
     }
 
@@ -21,7 +21,7 @@ public class SkillDameZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            status.TakeHealth(dame * Time.deltaTime * dame);
+            status.TakeHealth(dame * Time.deltaTime * dame, gameObject);
         }
     }
 }

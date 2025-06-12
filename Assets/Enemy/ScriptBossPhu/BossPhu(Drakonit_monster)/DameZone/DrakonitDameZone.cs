@@ -10,6 +10,7 @@ public class DrakonitDameZone : MonoBehaviour
     public string tagPlayer;
     public List<Collider> listDame = new List<Collider>();
     PlayerStatus playerStatus;
+    public GameObject enemy;
     void Start()
     {
         dameZoneCollider.enabled = false;
@@ -27,7 +28,7 @@ public class DrakonitDameZone : MonoBehaviour
         if (other.CompareTag(tagPlayer) && !listDame.Contains(other))
         {
            listDame.Add(other);
-           playerStatus.TakeHealth(dame);
+           playerStatus.TakeHealth(dame, enemy);
         }
     }
     private void OnTriggerStay(Collider other)//nếu ontrigger xử lấy ko kịp thì nó dô đây xử lý tiếp
@@ -35,7 +36,7 @@ public class DrakonitDameZone : MonoBehaviour
         if (other.gameObject.CompareTag(tagPlayer) && !listDame.Contains(other))
         {
             listDame.Add(other);
-            playerStatus.TakeHealth(dame);
+            playerStatus.TakeHealth(dame, enemy);
         }
     }
     public void beginDame()

@@ -231,7 +231,7 @@ public class IconButtonManager : MonoBehaviour
             case "PhanNhan1":
                 
                 previewText.text = "Phản nhãn - Cấp 1";
-                contenSkill.text = "Trong thời gian tàng hình, bản thể ảo gây 200 sát thương cho kẻ địch ở gần trước khi biến mất.";
+                contenSkill.text = "Khi dùng kỹ năng thì player sẽ chuyển sang trạng thái phản nhãn trong vòng 25 giây, giúp hồi đầy máu, năng lượng và giúp đánh nhanh hơn.";
                 skillBGs[14].enabled = true;
                 scoreUpgradeText.text = "/0";//so diem can de nang cap
                 break;
@@ -240,7 +240,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill4 >= 1)
                 {
                     previewText.text = "Phản nhãn - Cấp 2";
-                    contenSkill.text = "Trong thời gian tàng hình, bản thể ảo gây 200 sát thương cho kẻ địch ở gần trước khi biến mất.";
+                    contenSkill.text = "Giảm thời gian hồi chiêu còn 70 giây.";
                     skillBGs[15].enabled = true;
                     scoreUpgradeText.text = "/2";//so diem can de nang cap
                 }else{
@@ -252,7 +252,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill4 >= 1)
                 {
                     previewText.text = "Phản nhãn - Cấp 3";
-                    contenSkill.text = "Trong thời gian tàng hình, bản thể ảo gây 200 sát thương cho kẻ địch ở gần trước khi biến mất.";
+                    contenSkill.text = "Tăng thời gian trạng thái Phản Nhãn lên 35 giây.";
                     skillBGs[16].enabled = true;
                     scoreUpgradeText.text = "/2";//so diem can de nang cap
                 }else{
@@ -264,7 +264,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill4 >= 3)
                 {
                     previewText.text = "Phản nhãn - Cấp 4";
-                    contenSkill.text = "Trong thời gian tàng hình, bản thể ảo gây 200 sát thương cho kẻ địch ở gần trước khi biến mất.";
+                    contenSkill.text = "Khi trong trạng thái Phản Nhãn bị kẻ địch tấn công sẽ phản lại sát thương nhận vào cho kẻ địch.";
                     skillBGs[17].enabled = true;
                     scoreUpgradeText.text = "/3";//so diem can de nang cap
                 }else{
@@ -276,7 +276,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill4 >= 4)
                 {
                     previewText.text = "Phản nhãn - Cấp 5";
-                    contenSkill.text = "Trong thời gian tàng hình, bản thể ảo gây 200 sát thương cho kẻ địch ở gần trước khi biến mất.";
+                    contenSkill.text = "Trong trạng thái phản nhãn, tốc độ di chuyển tăng 15% và miễn nhiễm tất cả hiệu ứng xấu.";
                     skillBGs[18].enabled = true;
                     scoreUpgradeText.text = "/4";//so diem can de nang cap
                 }else{
@@ -288,7 +288,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill4 >= 4)
                 {
                     previewText.text = "Phản nhãn - Cấp 6";
-                    contenSkill.text = "Trong thời gian tàng hình, bản thể ảo gây 200 sát thương cho kẻ địch ở gần trước khi biến mất.";
+                    contenSkill.text = "Trong trạng thái Phản Nhãn, người chơi miễn nhiễm với hiệu ứng choáng.";
                     skillBGs[19].enabled = true;
                     scoreUpgradeText.text = "/4";//so diem can de nang cap
                 }else{
@@ -300,7 +300,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill4 >= 5)
                 {
                     previewText.text = "Phản nhãn - Cấp 7";
-                    contenSkill.text = "Trong thời gian tàng hình, bản thể ảo gây 200 sát thương cho kẻ địch ở gần trước khi biến mất.";
+                    contenSkill.text = "Khi trong đang trong trạng thái Phãn Nhãn giúp tăng sát thương x2 và bất tử.";
                     skillBGs[20].enabled = true;
                     scoreUpgradeText.text = "/5";//so diem can de nang cap
                 }else{
@@ -530,6 +530,7 @@ public class IconButtonManager : MonoBehaviour
                 //mo khoa de su dung 
                 skill4Manager.isUnlockSkill4 = true;
                 skill4Manager.iconSkill4.SetActive(true);
+               
                 break;
             case "PhanNhan2":
                 if(turnInSkill4 >= 1 && playerStatus.score >= 2)
@@ -541,6 +542,7 @@ public class IconButtonManager : MonoBehaviour
                     for(int i = 0; i < playerStatus.scoreText.Length; i++){
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
+                    skill4Manager.coolDownTime = 70f;//giam thoi gian cooldown con 70
                 }
 
                 break;
@@ -554,6 +556,7 @@ public class IconButtonManager : MonoBehaviour
                     for(int i = 0; i < playerStatus.scoreText.Length; i++){
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
+                    skill4Manager.timeSkill4 = 35;//tang thoi gian len 35 giay
                 }
 
                 break;
@@ -567,6 +570,7 @@ public class IconButtonManager : MonoBehaviour
                     for(int i = 0; i < playerStatus.scoreText.Length; i++){
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
+                    skill4Manager.isReflectDamage = true;//bat trang thai phan dame
                 }
 
                 break;

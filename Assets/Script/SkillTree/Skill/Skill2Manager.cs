@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ public class Skill2Manager : MonoBehaviour
     public GameObject clonePrefab;
     public Transform spawnPoint;
     public Slider coolDownSKillSlider;
+    public TextMeshProUGUI textCoolDownSkill;
     public float lastTime = -50f;
     public float skillCooldown = 50f;
     
@@ -35,6 +37,7 @@ public class Skill2Manager : MonoBehaviour
         coolDownSKillSlider.value = skillCooldown;
         effectRun.SetActive(false);
         isExplosionSkill2 = false;
+        textCoolDownSkill.enabled= false;
     }
 
     void Update()
@@ -50,13 +53,14 @@ public class Skill2Manager : MonoBehaviour
         {
             lastTime -= Time.deltaTime;
             coolDownSKillSlider.value = lastTime;
-
+            textCoolDownSkill.text = Mathf.FloorToInt(lastTime).ToString();
             if (lastTime <= 0f)
             {
                 isSkillActive = false;
                 lastTime = 0f;
                 coolDownSKillSlider.gameObject.SetActive(false);
                 coolDownSKillSlider.value = skillCooldown;
+                textCoolDownSkill.enabled = false;
             }
         }
         // Xử lý việc loại bỏ phân thân nếu cần
@@ -76,6 +80,7 @@ public class Skill2Manager : MonoBehaviour
     // Kích hoạt kỹ năng phân thân
     void ActivateCloneSkill()
     {
+        textCoolDownSkill.enabled = true;
         isChangeSkill2 = true;
         effectRun.SetActive(true);
         isSkillActive = true;

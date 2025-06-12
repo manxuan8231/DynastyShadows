@@ -47,18 +47,20 @@ public class PlayerControllerState : MonoBehaviour
     public Skill1Manager skill1Manager; //skill1 tham chieu
     public Skill4Manager skill4Manager;// skill 4 tham chieu
 
-    // Trạng thái hiện tại
+  //trang thai animator
     public RuntimeAnimatorController animatorDefauld;//trang thai mac định
     public RuntimeAnimatorController animatorSkill2;//trang thai skill2
     public RuntimeAnimatorController animatorSkill4;//trang thai skill4
+    // Trạng thái hiện tại                                              
     private PlayerState currentState;
-
-    public GameObject weaponSword; //weapon
+    //weapon L
+    public GameObject weaponSword; 
     void Start()
     {
-      
-        controller = GetComponent<CharacterController>();
-       
+        if (controller.enabled == true)
+        {
+            controller = GetComponent<CharacterController>();
+        }
         animator = GetComponent<Animator>();
         animator.runtimeAnimatorController = animatorDefauld; // Gán bộ điều khiển hoạt hình mặc định
         playerStatus = FindAnyObjectByType<PlayerStatus>();

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ public class Skill1Manager : MonoBehaviour
 
     //cooldown skill
     public Slider cooldownSkilSlider;
+    public TextMeshProUGUI textCoolDownSkill;
     public float cooldownSkill = 50f;
     public float lastTimeSkill = -50f;
     public float timeSkill1 = 10; //thoi gian skill 1 ton tai
@@ -26,6 +28,7 @@ public class Skill1Manager : MonoBehaviour
     public GameObject iconSkill1;
     private void Start()
     {
+        textCoolDownSkill.enabled = false;
         isDamaged = false;
         iconSkill1.SetActive(false);
         isSkillCooldown = false;
@@ -39,18 +42,21 @@ public class Skill1Manager : MonoBehaviour
         {
             lastTimeSkill -= Time.deltaTime;
             cooldownSkilSlider.value = lastTimeSkill;
-
+            // Cập nhật text cooldown
+            textCoolDownSkill.text = Mathf.FloorToInt(lastTimeSkill).ToString();
             if (lastTimeSkill <= 0f)
             {
                 isSkillCooldown = false;
+                textCoolDownSkill.enabled = false ;
                 cooldownSkilSlider.gameObject.SetActive(false);
             }
-            return; // Đang cooldown thì không dùng được kỹ năng
+            return;
         }
         if (Input.GetKeyDown(KeyCode.Alpha1) && !isSkillCooldown && isInputSkill1 == true && isUnlockSkill1 == true)
         {
             Debug.Log("Bắn kỹ năng đóng băng");
-
+            textCoolDownSkill.enabled = true;
+           
             // Tạo hiệu ứng kỹ năng
            GameObject skill1 = Instantiate(skillPrefab, spawnPoint.position, spawnPoint.rotation);
           // Destroy(skill1, timeSkill1);

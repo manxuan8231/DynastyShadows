@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,7 +32,9 @@ public class PlayerStatus : MonoBehaviour
     public float currentHp ;
     public float maxHp ;
     public TextMeshProUGUI textHealth;
-
+    //hien dame effect
+    public GameObject textDame;
+    public Transform textTransform;
     //xu lý exp-----------------------------------------------
     public Slider expSlider; 
     public TextMeshProUGUI levelText;
@@ -61,7 +64,7 @@ public class PlayerStatus : MonoBehaviour
     public TextMeshProUGUI textHitDamage;
     public TextMeshProUGUI textHitChance;
     public TextMeshProUGUI textBaseDamage;
-
+    public bool isReflectDamage;//phản dame của skill4
     //xu ly toc do chay------------------------------------------
     public float speedRun = 15f;
     public TextMeshProUGUI textSpeed;
@@ -113,8 +116,8 @@ public class PlayerStatus : MonoBehaviour
         effectLevelUp.SetActive(false);
         // gold
         goldQuantityTxt.text = gold.ToString();
-        UpdateUI(); 
-
+        UpdateUI();
+        isReflectDamage = false;//khoi tao ban dau la false 
 
     }
     //update lại toàn bộ
@@ -155,18 +158,113 @@ public class PlayerStatus : MonoBehaviour
     }
 
     //hp
-    public void TakeHealth(float amount)//bị lấy hp
+    public void TakeHealth(float amount ,GameObject enemy)//bị lấy hp
     {
         currentHp -= amount;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
         sliderHp.value = currentHp;
         textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
-       
+        //tim enemy de phan dame
+        if (enemy != null && isReflectDamage == true) 
+        {          
+            // Tìm script EnemyHP 
+            EnemyHP enemyHP = enemy.GetComponent<EnemyHP>();
+           
+            if (enemyHP != null)
+            {
+               
+                ShowTextDame(amount);
+                enemyHP.TakeDamage(amount);
+                return;
+            }
+            EnemyHP2 enemyHP2 = enemy.GetComponent<EnemyHP2>();
+            if (enemyHP2 != null)
+            {
+
+                ShowTextDame(amount);
+                enemyHP2.TakeDamage(amount);
+                return;
+            }
+
+            EnemyHP3 enemyHP3 = enemy.GetComponent<EnemyHP3>();
+            if (enemyHP3 != null)
+            {
+                ShowTextDame(amount);
+                enemyHP3.TakeDamage(amount);
+                return;
+            }
+
+            EnemyHP4 enemyHP4 = enemy.GetComponent<EnemyHP4>();
+            if (enemyHP4 != null)
+            {
+
+                ShowTextDame(amount);
+                enemyHP4.TakeDamage(amount);
+                return;
+            }
+            //boss drakonit
+            DrakonitController drakonitController = enemy.GetComponent<DrakonitController>();
+            if (drakonitController != null)
+            {
+
+                ShowTextDame(amount);
+                drakonitController.TakeDame(amount);
+                return;
+            }
+            //boss ork
+            BossHP bossHP = enemy.GetComponent<BossHP>();
+            if (bossHP != null)
+            {
+
+                ShowTextDame(amount);
+                bossHP.TakeDamage(amount);
+                return;
+            }
+            //boss sa mac
+            NecController necController = enemy.GetComponent<NecController>();
+            if (necController != null)
+            {
+                Debug.Log("Đã trúng NecController");
+
+                ShowTextDame(amount);
+                necController.TakeDame(amount);
+                return;
+            }
+            //boss chinh map 1
+            Boss1Controller boss1HP = enemy.GetComponent<Boss1Controller>();
+            if (boss1HP != null)
+            {
+
+                ShowTextDame(amount);
+                boss1HP.TakeDame((int)amount);
+                return;
+            }
+            //enemy map 2 1 + 2
+            EnemyMap2_HP enemyMap2_1 = enemy.GetComponent<EnemyMap2_HP>();
+            if (enemyMap2_1 != null)
+            {
+
+                ShowTextDame(amount);
+                enemyMap2_1.TakeDamage(amount);
+                return;
+            }
+        }
        
         if (currentHp <= 0)
         {
             Destroy(gameObject);
 
+        }
+    }
+    public void ShowTextDame(float damage)
+    {
+        GameObject effectText = Instantiate(textDame, textTransform.position, Quaternion.identity);
+        Destroy(effectText, 0.5f);
+        // Truyền dame vào prefab
+        TextDamePopup popup = effectText.GetComponent<TextDamePopup>();
+        if (popup != null)
+        {
+            popup.Setup(damage);
         }
     }
     public void TakeHealthStun(float amount)//bị lấy hp

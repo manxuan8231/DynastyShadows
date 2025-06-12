@@ -15,16 +15,19 @@ public class Skill4State : PlayerState
     public bool isAttack = true;
     private float coolDownAttackFly = -5f;
 
-
+    
     public override void Enter()
     {
-        
+      
         player.animator.runtimeAnimatorController = player.animatorSkill4;//chay animator skill 4 khi bat dau
         player.animator.SetTrigger("Change");
         player.weaponSword.SetActive(true); //tat weapon khi chay skill4
         player.StartCoroutine(WaitChangeState()); //bat dau chay ham doi trang thai sau 10 giay
         Debug.Log("Chạy trạng thái skill4");
-       
+        if(player.skill4Manager.isReflectDamage == true)//phai unlock moi dung dc
+        {
+            player.playerStatus.isReflectDamage = true;//trang thai phan dame
+        }
     }
     public override void Update()
     {
@@ -48,7 +51,10 @@ public class Skill4State : PlayerState
         player.skill4Manager.isChangeStateSkill4 = false; //chuyen thanh false de ko chay lai skill4
         player.weaponSword.SetActive(false); // weapon khi chay skill4
         player.skill4Manager.ToggleSkill4(false); //tat model skill 4
-      
+        if (player.skill4Manager.isReflectDamage == true)
+        {
+            player.playerStatus.isReflectDamage = false;
+        }
     }
 
     public void Move()
@@ -180,7 +186,7 @@ public class Skill4State : PlayerState
     void OnAttackFly()
     {
         player.animator.SetTrigger("FlyAttack");
-        player.StartCoroutine(WaitGravity());
+      
     }
     //doi trạng thái sau 10 giây
     public IEnumerator WaitChangeState()
@@ -192,16 +198,8 @@ public class Skill4State : PlayerState
         yield return new WaitForSeconds(player.skill4Manager.timeSkill4); // Thời gian chờ 10 giây rồi chuyển trạng thái
         player.ChangeState(new PlayerCurrentState(player)); // Trở về trạng thái hiện tại
         player.animator.runtimeAnimatorController = player.animatorDefauld; // Trở về animator mặc định
-       
+     
     }
 
-    //doi roi xuong
-    public IEnumerator WaitGravity() 
-    {
-        player.thirdPersonOrbitCamera.flipCamera= true;//tat bat flip theo camera
-        player.gravity = 0;
-        yield return new WaitForSeconds(2.4f);
-        player.gravity = -9.81f;
-        player.thirdPersonOrbitCamera.flipCamera= false;
-    }
+  
 }

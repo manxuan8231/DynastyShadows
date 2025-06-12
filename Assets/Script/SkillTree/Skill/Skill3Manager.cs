@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ public class Skill3Manager : MonoBehaviour
     public float playerCount = 4;//player spawn 
     public bool isInputSkill3;
     public Slider cooldownSlider;
-
+    public TextMeshProUGUI textCoolDownSkill;
     //unlock skill trong UI thi moi cho dung skill
     public bool isDamaged;//neu true thi dame tang x2
     public bool isUnlockSkill3 = false;
@@ -23,7 +24,8 @@ public class Skill3Manager : MonoBehaviour
 
     private void Start()
     {
-        isDamaged=false;
+        textCoolDownSkill.enabled = false;
+        isDamaged =false;
         iconSkill3.SetActive(false);
         isUnlockSkill3 = false;
         isInputSkill3 = true;
@@ -34,12 +36,18 @@ public class Skill3Manager : MonoBehaviour
     }
     void Update()
     {
-       float time =  Time.time - lastTime; 
-       float remainingCooldown = Mathf.Clamp(cooldownSkill - time, 0, cooldownSkill);
-       cooldownSlider.value = remainingCooldown;
-
+        float time =  Time.time - lastTime; 
+        float remainingCooldown = Mathf.Clamp(cooldownSkill - time, 0, cooldownSkill);
+        cooldownSlider.value = remainingCooldown;
+        textCoolDownSkill.text = Mathf.FloorToInt(remainingCooldown).ToString();//cap nhap text
+        if (remainingCooldown <= 0) {
+            textCoolDownSkill.enabled = false;//neu be hon 0 thi tat text
+        }
         if (Input.GetKeyDown(KeyCode.Alpha3) && Time.time >= lastTime + cooldownSkill && isInputSkill3 == true && isUnlockSkill3 == true)
         {
+            textCoolDownSkill.enabled = true;
+           
+            StartCoroutine(WaitMove());
             playerControllerState.animator.SetTrigger("Skill3");
             cooldownSlider.enabled = true;
             StartCoroutine(SpawnClone());
@@ -58,5 +66,11 @@ public class Skill3Manager : MonoBehaviour
           
             yield return new WaitForSeconds(0.3f); 
         }
+    }
+    public IEnumerator WaitMove()
+    {
+        playerControllerState.controller.enabled = false;
+        yield return new WaitForSeconds(1);
+        playerControllerState.controller.enabled = true;
     }
 }
