@@ -34,7 +34,7 @@ public class NPCQuest : MonoBehaviour
     public bool isContent;
     bool hasFinishedDialogue = false; // THÊM BIẾN NÀY
     bool hasPlayedTalkingAnim = false;
-   
+    public bool quest2;
 
 
 
@@ -203,7 +203,7 @@ public class NPCQuest : MonoBehaviour
     }
     public void EndContent()
     {
-      
+        quest2 = true;
         questionGameCanvas.SetActive(false);
         hasFinishedDialogue = true; // Đánh dấu đã xong hội thoại
         if (Coroutine != null)

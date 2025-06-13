@@ -24,9 +24,11 @@ public class CamTrigger : MonoBehaviour
     public Sprite missionSprite;
     public GameObject canvasQuest;
     public AudioCanvasState audioCanvasState;
-    
+    public GameObject transformQuest;
+    public BoxCollider boxCollider;
     private void Start()
     {
+        transformQuest.SetActive(false);
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
     }
 
@@ -67,6 +69,7 @@ public class CamTrigger : MonoBehaviour
         cam3.Priority = 0;
         yield return new WaitForSeconds(5f);
         cam4.Priority = 0;
+        boxCollider.enabled = false;
         playerControllerState.enabled = true;
         playerControllerState.animator.enabled = true;
         cam4.Priority = 0;
@@ -86,6 +89,7 @@ public class CamTrigger : MonoBehaviour
         stateCanvas.SetActive(false);
         yield return new WaitForSeconds(1f);
         canvasQuest.SetActive(true);
+        transformQuest.SetActive(true);
         Destroy(gameObject);
     }
 }
