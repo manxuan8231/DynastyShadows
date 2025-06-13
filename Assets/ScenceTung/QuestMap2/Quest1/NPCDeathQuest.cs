@@ -23,7 +23,7 @@ public class NPCDeathQuest : MonoBehaviour
     public TMP_Text contentText;
     public GameObject quest2;
     public GameObject quest1;
-
+    public GameObject transformQuest;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && diaryModel.activeSelf )
@@ -113,6 +113,6 @@ public class NPCDeathQuest : MonoBehaviour
         canvasQuest1.SetActive(true); // Show the quest canvas
         contentQuest.text = "Nhiệm vụ: Khám phá thị trấn";
         isQuest1 = true; // Set the quest flag to true
-
+        transformQuest.SetActive(true); // Activate the transform quest object
     }
 }
