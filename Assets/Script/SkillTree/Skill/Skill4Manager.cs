@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class Skill4Manager : MonoBehaviour
 {
-    public SkinnedMeshRenderer[] skill4MeshRenderers; // Mảng chứa các SkinnedMeshRenderer của skill 4
- 
+    public SkinnedMeshRenderer[] skill4MeshRenderers; // Mảng chứa các Skin của skill 4
+  
     public bool isInputSkill4 = false;//kiem tra de chuyen trang thai skill4
     public bool isChangeStateSkill4 = false;
     public float coolDownTime = 50f; // Thời gian hồi chiêu của skill 4
@@ -15,8 +15,12 @@ public class Skill4Manager : MonoBehaviour
     public Slider sliderCoolDown;
     public TextMeshProUGUI textCoolDownSkill;
     //unlock skill trong UI thi moi cho dung skill
-    public bool isUnlockSkill4 = false;
-    public bool isReflectDamage = false;//unlock để mở trạng thái phản dame
+    public bool isUnlockSkill4 = false;//lv1
+    public bool isReflectDamage = false;//unlock để mở trạng thái phản dame lv4
+    public bool isUpSpeed = false;//tang tốc khi mở khóa level 5
+    public bool isStun = false; // trạng thái stun khi mở khóa level 6
+    public bool isImmotal; // trạng thái bất tử khi mở khóa level 7
+
     public GameObject iconSkill4;
    
     //tham chieu
@@ -32,7 +36,7 @@ public class Skill4Manager : MonoBehaviour
         iconSkill4.SetActive(false);
         sliderCoolDown.maxValue = coolDownTime; // Đặt giá trị tối đa của slider là thời gian hồi chiêu
         sliderCoolDown.value = coolDownTime; // Đặt giá trị ban đầu của slider là thời gian hồi chiêu
-
+     
         sliderCoolDown.enabled = false; // Tắt slider ban đầu
         ToggleSkill4(false); // Tắt skill 4 ban đầu
     }

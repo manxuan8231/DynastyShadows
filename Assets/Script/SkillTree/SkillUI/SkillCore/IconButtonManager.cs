@@ -276,7 +276,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill4 >= 4)
                 {
                     previewText.text = "Phản nhãn - Cấp 5";
-                    contenSkill.text = "Trong trạng thái phản nhãn, tốc độ di chuyển tăng 15% và miễn nhiễm tất cả hiệu ứng xấu.";
+                    contenSkill.text = "Trong trạng thái phản nhãn, tốc độ di chuyển tăng 10%.";
                     skillBGs[18].enabled = true;
                     scoreUpgradeText.text = "/4";//so diem can de nang cap
                 }else{
@@ -288,7 +288,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill4 >= 4)
                 {
                     previewText.text = "Phản nhãn - Cấp 6";
-                    contenSkill.text = "Trong trạng thái Phản Nhãn, người chơi miễn nhiễm với hiệu ứng choáng.";
+                    contenSkill.text = "Trong trạng thái Phản Nhãn, miễn nhiễm tất cả hiệu ứng xấu.";
                     skillBGs[19].enabled = true;
                     scoreUpgradeText.text = "/4";//so diem can de nang cap
                 }else{
@@ -300,7 +300,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill4 >= 5)
                 {
                     previewText.text = "Phản nhãn - Cấp 7";
-                    contenSkill.text = "Khi trong đang trong trạng thái Phãn Nhãn giúp tăng sát thương x2 và bất tử.";
+                    contenSkill.text = "Khi trong đang trong trạng thái Phãn Nhãn giúp tăng tỷ lệ bạo kích lên 100% và bất tử.";
                     skillBGs[20].enabled = true;
                     scoreUpgradeText.text = "/5";//so diem can de nang cap
                 }else{
@@ -584,6 +584,8 @@ public class IconButtonManager : MonoBehaviour
                     for(int i = 0; i < playerStatus.scoreText.Length; i++){
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
+                    skill4Manager.isUpSpeed = true;//tang toc do di chuyen khi mo khoa
+                  
                 }
 
                 break;
@@ -597,6 +599,7 @@ public class IconButtonManager : MonoBehaviour
                     for(int i = 0; i < playerStatus.scoreText.Length; i++){
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
+                    skill4Manager.isStun = true;//mo khoa trang thai khang stun 
                 }
 
                 break;
@@ -610,6 +613,7 @@ public class IconButtonManager : MonoBehaviour
                     for(int i = 0; i < playerStatus.scoreText.Length; i++){
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
+                    skill4Manager.isImmotal = true;//mo khoa trang thai bat tu
                 }
 
                 break;

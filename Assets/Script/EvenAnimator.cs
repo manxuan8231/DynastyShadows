@@ -123,5 +123,5 @@ public class EvenAnimator : MonoBehaviour
         Destroy(effect, 1.3f);
     }
 
-  
+   
 }

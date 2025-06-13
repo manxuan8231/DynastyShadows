@@ -32,6 +32,7 @@ public class PlayerStatus : MonoBehaviour
     public float currentHp ;
     public float maxHp ;
     public TextMeshProUGUI textHealth;
+    public bool isStun = true; //kiểm tra stun hay không
     //hien dame effect
     public GameObject textDame;
     public Transform textTransform;
@@ -56,6 +57,8 @@ public class PlayerStatus : MonoBehaviour
     public float currentMana;
     public float maxMana ;
     public TextMeshProUGUI textMana;
+    private float lastTimeShiftRelease = 0f;
+    private bool isHoldingShiftLastFrame = false;
 
     //xu lý dame------------------------------------------
     public int criticalDamage = 100; // +600% damage khi crit
@@ -65,12 +68,8 @@ public class PlayerStatus : MonoBehaviour
     public TextMeshProUGUI textHitChance;
     public TextMeshProUGUI textBaseDamage;
     public bool isReflectDamage;//phản dame của skill4
-    //xu ly toc do chay------------------------------------------
-    public float speedRun = 15f;
-    public TextMeshProUGUI textSpeed;
   
-    //khoi tao------------------------------------------
-   
+    //khoi tao------------------------------------------  
     private AudioSource audioSource;
    
 
@@ -152,9 +151,9 @@ public class PlayerStatus : MonoBehaviour
     }
     void Update()
     {      
-        RegenerateMana();//hồi mana dần
-        UpdateUI(); // Cập nhật UI mỗi frame
        
+        UpdateUI(); // Cập nhật UI mỗi frame
+        RegenerateMana();//hoi mana
     }
 
     //hp
@@ -164,6 +163,11 @@ public class PlayerStatus : MonoBehaviour
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
         sliderHp.value = currentHp;
         textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
+        if (isStun == true) //nếu đang stun thì gọi hàm WaitStun
+        {    
+           StartCoroutine(WaitHit(0.7f)); // gọi hàm WaitStun với thời gian 4 giây
+            audioSource.PlayOneShot(audioHit); //phát âm thanh bị hit
+        }
         //tim enemy de phan dame
         if (enemy != null && isReflectDamage == true) 
         {          
@@ -273,8 +277,11 @@ public class PlayerStatus : MonoBehaviour
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
         sliderHp.value = currentHp;
         textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
-        StartCoroutine(WaitStun(4f)); // gọi hàm WaitHit với thời gian 0.5 giây
-        audioSource.PlayOneShot(audioHit);
+        if(isStun == true)
+        {
+            StartCoroutine(WaitStun(4f)); // gọi hàm WaitHit với thời gian 0.5 giây
+            audioSource.PlayOneShot(audioHit);
+        }           
         if (currentHp <= 0)
         {
             Destroy(gameObject);
@@ -322,7 +329,7 @@ public class PlayerStatus : MonoBehaviour
         textMana.text = ((int)currentMana).ToString() + " / " + ((int)maxMana).ToString();
 
     }
-
+    
     // Hàm cộng thêm EXP
     public void AddExp(float amount)
     {
@@ -362,19 +369,34 @@ public class PlayerStatus : MonoBehaviour
         }
 
     }
-    //tăng mana dần
+
+
     public void RegenerateMana()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            TakeMana(100 * Time.deltaTime); // trừ dần theo thời gian
-        }
-        else 
-        {
-            BuffMana(100 * Time.deltaTime); // cộng dần theo thời gian   
-        }
-    }
+        bool isHoldingShift = Input.GetKey(KeyCode.LeftShift);
 
+        if (isHoldingShift && playerController.isRunning)
+        {
+            TakeMana(100 * Time.deltaTime); // Trừ mana khi đang chạy
+        }
+        else
+        {
+            // Khi vừa thả Shift thì cập nhật thời điểm
+            if (isHoldingShiftLastFrame)
+            {
+                lastTimeShiftRelease = Time.time;
+            }
+
+            // Nếu đã thả Shift hơn 2 giây, thì mới bắt đầu hồi mana
+            if (Time.time >= lastTimeShiftRelease + 1f)
+            {
+                BuffMana(100 * Time.deltaTime); // Hồi mana
+            }
+        }
+
+        // Cập nhật trạng thái Shift cho frame sau
+        isHoldingShiftLastFrame = isHoldingShift;
+    }//hoi mana
     // --- Nâng chỉ số ---
     public void UpCriticalHitDamage(int amount)
     {
@@ -427,7 +449,13 @@ public class PlayerStatus : MonoBehaviour
         effectStun.SetActive(false);
     }
 
-
+    private IEnumerator WaitHit(float time)
+    {
+        playerController.animator.SetTrigger("Hit"); // bật animator hit
+        playerController.isController = false;// lại điều khiển nhân vật
+        yield return new WaitForSeconds(time);
+        playerController.isController = true; // Bật lại điều khiển nhân vật
+    }
     void LevelUp()
     {
         currentExp = 0f; // Reset EXP về 0
@@ -440,7 +468,7 @@ public class PlayerStatus : MonoBehaviour
     public void IncreasedGold(int value)
     {
         gold += value;
-     goldQuantityTxt.text = value.ToString();
+         goldQuantityTxt.text = value.ToString();
 
     }
 

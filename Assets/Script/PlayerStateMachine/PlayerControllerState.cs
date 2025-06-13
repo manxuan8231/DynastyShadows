@@ -8,7 +8,7 @@ public class PlayerControllerState : MonoBehaviour
 {
     [Header("Tham số ------------------------------")]
     public float walkSpeed = 5f;
-    public float runSpeed;
+    public float runSpeed = 15f;
     public float jumpHeight = 5f;
     public float gravity = -9.81f;
 
@@ -73,7 +73,7 @@ public class PlayerControllerState : MonoBehaviour
         evenAnimator = FindAnyObjectByType<EvenAnimator>();
         weaponSword.SetActive(false);
         audioSource = GetComponent<AudioSource>();
-        runSpeed = playerStatus.speedRun;// tốc độ chạy
+       
         rigBuilder = GetComponent<RigBuilder>();
         rigBuilder.enabled = false; // 
         

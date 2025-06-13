@@ -24,13 +24,38 @@ public class Skill4State : PlayerState
         player.weaponSword.SetActive(true); //tat weapon khi chay skill4
         player.StartCoroutine(WaitChangeState()); //bat dau chay ham doi trang thai sau 10 giay
         Debug.Log("Chạy trạng thái skill4");
+        //lv4-------
         if(player.skill4Manager.isReflectDamage == true)//phai unlock moi dung dc
         {
+          
             player.playerStatus.isReflectDamage = true;//trang thai phan dame
+        }
+        //lv5--------
+        if (player.skill4Manager.isUpSpeed == true) //tang toc
+        {
+            player.runSpeed += 10f; //tang toc do chay
+            player.walkSpeed += 10f; //tang toc do di bo
+        }
+        //lv6--------
+        if (player.skill4Manager.isStun == true) //trang thai stun
+        {
+            player.playerStatus.isStun = false; //trang thai stun
+        }
+        //  lv7--------
+        if (player.skill4Manager.isImmotal == true) //trang thai bat tu khi unlock level 7
+        {
+            player.playerStatus.baseDamage += 100; //tang dame
+          
         }
     }
     public override void Update()
     {
+        //  lv7--------
+        if (player.skill4Manager.isImmotal == true) //trang thai bat tu khi unlock level 7
+        {
+           
+            player.playerStatus.BuffHealth(100 * Time.deltaTime); //tang mau
+        }
         if (player.isController == true && isMovement ==true)
         {
             Move();
@@ -53,7 +78,23 @@ public class Skill4State : PlayerState
         player.skill4Manager.ToggleSkill4(false); //tat model skill 4
         if (player.skill4Manager.isReflectDamage == true)
         {
+          
             player.playerStatus.isReflectDamage = false;
+        }
+        if (player.skill4Manager.isUpSpeed == true) //tang toc
+        {
+            player.runSpeed -= 10f; //tang toc do chay
+            player.walkSpeed -= 10f; //tang toc do di bo
+        }
+        if (player.skill4Manager.isStun == true) //trang thai stun
+        {
+            player.playerStatus.isStun = true; //trang thai stun
+        }
+        //  lv7--------
+        if (player.skill4Manager.isImmotal == true) //trang thai bat tu khi unlock level 7
+        {
+            player.playerStatus.baseDamage -= 100; //tang dame
+           
         }
     }
 
@@ -156,7 +197,7 @@ public class Skill4State : PlayerState
         }
     }
 
-
+   
     void OnAttack()
     {
 

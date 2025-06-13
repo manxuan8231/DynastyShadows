@@ -23,6 +23,7 @@ public class PlayerCurrentState : PlayerState
             Move();
             Jump();
             Roll();
+          
             player.comboAttack.InputAttack();
             //skill2
             if (player.skill2Manager.isChangeSkill2)//để chuyển sang trạng thái skill2 animator
@@ -55,11 +56,11 @@ public class PlayerCurrentState : PlayerState
 
         if (inputDirection.magnitude >= 0.1f)
         {
-           player.isRunning = Input.GetKey(KeyCode.LeftShift) && player.playerStatus.currentMana > 0;
+            player.isRunning = Input.GetKey(KeyCode.LeftShift) && player.playerStatus.currentMana > 0;
             float speed = player.isRunning ? player.runSpeed : player.walkSpeed;
 
-
-           player.animator.SetBool("isRunning",player. isRunning);
+          
+            player.animator.SetBool("isRunning",player. isRunning);
             player.animator.SetBool("isWalking", !player.isRunning);
 
             Vector3 camForward = player.cameraTransform.forward;
@@ -79,10 +80,11 @@ public class PlayerCurrentState : PlayerState
         else
         {
            player. animator.SetBool("isWalking", false);
-          player. animator.SetBool("isRunning", false);
+           player. animator.SetBool("isRunning", false);
         }
 
     }
+  
 
     public void Jump()
     {
@@ -127,7 +129,7 @@ public class PlayerCurrentState : PlayerState
         //tat ko cho phép nhap skill1 va skill3
         player.skill3Manager.isInputSkill3 = false;
         player.skill1Manager.isInputSkill1 = false;
-     player.skill4Manager.isInputSkill4 = false;
+        player.skill4Manager.isInputSkill4 = false;
         player.skill2Manager.isInputSkill2 = false;
     }
 }
