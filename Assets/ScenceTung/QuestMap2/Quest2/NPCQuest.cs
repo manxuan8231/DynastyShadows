@@ -34,16 +34,20 @@ public class NPCQuest : MonoBehaviour
     public bool isContent;
     bool hasFinishedDialogue = false; // THÊM BIẾN NÀY
     bool hasPlayedTalkingAnim = false;
-    public bool quest2;
-
-
+    public GameObject canvanQuest;
+    public TMP_Text contentQuest;
+    public GameObject turnInTheQuest; // trả nv
+    public GameObject transformTurnInTheQuest;
 
 
     Coroutine Coroutine;
     private void Start()
     {
+        isContent = true;
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        turnInTheQuest.SetActive(false);
+        transformTurnInTheQuest.SetActive(false);
     }
 
     void Update()
@@ -185,8 +189,13 @@ public class NPCQuest : MonoBehaviour
             isWriteSkip = false;
         
         }
+        yield return new WaitForSeconds(1f);
+        canvanQuest.SetActive(true);
+        contentQuest.text = "Mang tin báo đến cho Người đưa tin";
+        turnInTheQuest.SetActive(true);
+        transformTurnInTheQuest.SetActive(true);
         EndContent();
-       
+        
 
 
     }
@@ -203,8 +212,8 @@ public class NPCQuest : MonoBehaviour
     }
     public void EndContent()
     {
-        quest2 = true;
         questionGameCanvas.SetActive(false);
+        PanelContent.SetActive(false);
         hasFinishedDialogue = true; // Đánh dấu đã xong hội thoại
         if (Coroutine != null)
         {
