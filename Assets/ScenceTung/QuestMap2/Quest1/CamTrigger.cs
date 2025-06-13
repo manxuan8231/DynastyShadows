@@ -82,10 +82,10 @@ public class CamTrigger : MonoBehaviour
         missionName.text = "Nhiệm vụ: Đi xung quanh khu bị phá hủy kiểm tra...!";
        missionIcon.sprite = missionSprite;
         audioCanvasState.PlayNewQuest();
-        yield return new WaitForSeconds(4.5f);
+        yield return new WaitForSeconds(2f);
         stateCanvas.SetActive(false);
         yield return new WaitForSeconds(1f);
         canvasQuest.SetActive(true);
-        Destroy(triggerCam);
+        Destroy(gameObject);
     }
 }

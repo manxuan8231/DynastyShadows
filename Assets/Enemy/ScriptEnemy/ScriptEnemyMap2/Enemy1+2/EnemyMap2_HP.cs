@@ -11,6 +11,7 @@ public class EnemyMap2_HP : MonoBehaviour
     [SerializeField] public GameObject expPrefab;
     EnemyMap2_1 enemyMap2_1;
     public BoxCollider boxDame;
+    public NPCQuest npc;
 
     void OnEnable()
     {
@@ -18,6 +19,7 @@ public class EnemyMap2_HP : MonoBehaviour
     }
     private void Awake()
     {
+        npc = FindFirstObjectByType<NPCQuest>();
         enemyMap2_1 = GetComponent<EnemyMap2_1>();
     }
     void Start()
@@ -53,6 +55,12 @@ public class EnemyMap2_HP : MonoBehaviour
             enemyMap2_1.agent.isStopped = true; // Dừng lại khi chết
             boxDame.enabled = false;
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
+
+            if (npc != null)
+            {
+                npc.UpdateKillQuest(); // Đánh dấu đã giết được enemy
+            }
+            ObjPoolingManager.Instance.ReturnToPool("EnemyMap2_2", gameObject);
         }
         if (currentHealth > 0)
         {

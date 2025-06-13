@@ -18,13 +18,13 @@ public class KnightD : MonoBehaviour
 
     private bool isKill = true;
     //tham chieu
-    EnemyHP2 enemyHP2;
+  
     TurnInQuest2 turnInQuest2;
     private void Start()
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        enemyHP2 = FindAnyObjectByType<EnemyHP2>();
+       
         turnInQuest2 = FindAnyObjectByType<TurnInQuest2>();
        
     }
