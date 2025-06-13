@@ -42,15 +42,18 @@ public class NecController : MonoBehaviour
             player = playerObj.transform;
         }  
         necHp = FindAnyObjectByType<NecHp>();
-       
-       
-        
+        player = FindClosestPlayer();
+
+
     }
 
 
      void Update()
     {
-        if(necHp.curhp <= 0)
+
+        player = FindClosestPlayer();
+
+        if (necHp.curhp <= 0)
         {
             ChangState(new DeathNecState(this));
            
@@ -136,5 +139,23 @@ public class NecController : MonoBehaviour
         {
             questDesert5.UpdateKillBoss(1);
         }
+    }
+    Transform FindClosestPlayer()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        Transform closest = null;
+        float minDistance = Mathf.Infinity;
+
+        foreach (GameObject go in players)
+        {
+            float dist = Vector3.Distance(transform.position, go.transform.position);
+            if (dist < minDistance)
+            {
+                minDistance = dist;
+                closest = go.transform;
+            }
+        }
+
+        return closest;
     }
 }

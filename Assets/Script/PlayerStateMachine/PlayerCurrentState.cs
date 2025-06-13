@@ -56,13 +56,25 @@ public class PlayerCurrentState : PlayerState
 
         if (inputDirection.magnitude >= 0.1f)
         {
-            player.isRunning = Input.GetKey(KeyCode.LeftShift) && player.playerStatus.currentMana > 0;
+            bool canRun = Input.GetKey(KeyCode.LeftShift) && player.playerStatus.currentMana > 0;
+
+            // Nếu không đủ mana mà vẫn đè Shift → không được chạy
+            if (!canRun && Input.GetKey(KeyCode.LeftShift))
+            {
+                player.isRunning = false; // không cho chạy
+            }
+            else
+            {
+                player.isRunning = canRun;
+            }
+
             float speed = player.isRunning ? player.runSpeed : player.walkSpeed;
 
-          
-            player.animator.SetBool("isRunning",player. isRunning);
+            // Animator logic
+            player.animator.SetBool("isRunning", player.isRunning);
             player.animator.SetBool("isWalking", !player.isRunning);
 
+            // Di chuyển nhân vật
             Vector3 camForward = player.cameraTransform.forward;
             Vector3 camRight = player.cameraTransform.right;
             camForward.y = 0f;
@@ -71,20 +83,27 @@ public class PlayerCurrentState : PlayerState
             camRight.Normalize();
 
             Vector3 moveDir = camForward * inputDirection.z + camRight * inputDirection.x;
+
             if (player.controller != null && player.controller.enabled == true)
             {
                 player.controller.Move(moveDir * speed * Time.deltaTime);
             }
-           player.transform.rotation = Quaternion.Slerp(player.transform.rotation, Quaternion.LookRotation(moveDir), 0.15f);
+
+            player.transform.rotation = Quaternion.Slerp(
+                player.transform.rotation,
+                Quaternion.LookRotation(moveDir),
+                0.15f
+            );
         }
         else
         {
-           player. animator.SetBool("isWalking", false);
-           player. animator.SetBool("isRunning", false);
+            player.isRunning = false;
+            player.animator.SetBool("isWalking", false);
+            player.animator.SetBool("isRunning", false);
         }
-
     }
-  
+
+
 
     public void Jump()
     {

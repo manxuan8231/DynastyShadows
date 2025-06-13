@@ -48,7 +48,7 @@ public class Boss1Controller : MonoBehaviour
     {
         InitializeComponents();
         InitializeState();
-        FindPlayer();
+        player = FindClosestPlayer();
     }
 
     private void InitializeComponents()
@@ -75,23 +75,30 @@ public class Boss1Controller : MonoBehaviour
         ChangState(new Boss1IdleState(this));
     }
 
-    private void FindPlayer()
+    Transform FindClosestPlayer()
     {
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null)
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        Transform closest = null;
+        float minDistance = Mathf.Infinity;
+
+        foreach (GameObject go in players)
         {
-            player = playerObj.transform;
-            playerObjScence1 = playerObj;
+            float dist = Vector3.Distance(transform.position, go.transform.position);
+            if (dist < minDistance)
+            {
+                minDistance = dist;
+                closest = go.transform;
+            }
         }
-        else
-        {
-            Debug.LogWarning("Player not found! Make sure player has 'Player' tag.");
-        }
+
+        return closest;
     }
 
     void Update()
     {
-        if(hp.currHp <= 0)
+        
+        player = FindClosestPlayer();
+        if (hp.currHp <= 0)
         {
             ChangState(new DeathBossState(this));
            

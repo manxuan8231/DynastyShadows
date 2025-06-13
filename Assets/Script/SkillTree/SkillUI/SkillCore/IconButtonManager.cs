@@ -344,7 +344,7 @@ public class IconButtonManager : MonoBehaviour
                     turnInSkill1 += 1;   
                     playerStatus.score -= 2;
                     //khi nâng cấp giảm thời gian hồi kỹ năng xuống còn 35f
-                    skill1Manager.lastTimeSkill = -35;
+                   
                     skill1Manager.cooldownSkill = 35f;
                     //cap nhat textscore(moon)
                     for (int i = 0; i < playerStatus.scoreText.Length; i++)
@@ -402,7 +402,7 @@ public class IconButtonManager : MonoBehaviour
                      //mo khoa de su dung --------
                     turnInSkill2 += 1;
                     //giam thoi gian hoi chieu con 35 giay
-                    skill2Manager.lastTime = -35;
+                  
                     skill2Manager.skillCooldown = 35;
 
                 }
@@ -461,7 +461,7 @@ public class IconButtonManager : MonoBehaviour
                     for(int i = 0; i < playerStatus.scoreText.Length; i++){
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
-                    skill3Manager.lastTime = -70;
+                   
                     skill3Manager.cooldownSkill = 70;//giam cooldown con 70
                 }
               

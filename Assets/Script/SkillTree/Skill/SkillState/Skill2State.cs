@@ -7,8 +7,10 @@ public class Skill2State : PlayerState
     public Skill2State(PlayerControllerState player) : base(player) { }
     public LayerMask enemyLayer = LayerMask.GetMask("Enemy"); // Layer của enemy
     private bool isMove = false;
+    private bool isAttack = true; // Biến để kiểm tra trạng thái tấn công
     public override void Enter()
     {
+        isAttack = true;
         player.animator.runtimeAnimatorController = player.animatorSkill2;
         player.skill2Manager.effectRun.SetActive(true);
         Debug.Log("Chạy trạng thái skill2");
@@ -93,8 +95,9 @@ public class Skill2State : PlayerState
         }
 
         // Nếu có enemy gần thì mới cho bấm chuột trái để dash
-        if (nearestEnemy != null && Input.GetMouseButtonDown(0))
+        if (nearestEnemy != null && Input.GetMouseButtonDown(0) && isAttack == true)
         {
+            isAttack = false;
             isMove = false;
             player.controller.enabled = false; // Tắt controller để tránh va chạm
 
@@ -114,9 +117,9 @@ public class Skill2State : PlayerState
             player.StartCoroutine(WaitForChangeState()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
         }
         // Nếu ko co enemy gần thì cung cho attack
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && isAttack == true)
         {
-           
+            isAttack = false;
             // Chạy animation chém
             player.animator.SetTrigger("Attack");
             player.isRemoveClone = true; // Đặt cờ để loại bỏ phân thân nếu có

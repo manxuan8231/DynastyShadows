@@ -57,7 +57,7 @@ public class PlayerStatus : MonoBehaviour
     public float currentMana;
     public float maxMana ;
     public TextMeshProUGUI textMana;
-    private float lastTimeShiftRelease = 0f;
+    private float lastTimeShiftRelease = -999f;
     private bool isHoldingShiftLastFrame = false;
 
     //xu lý dame------------------------------------------
@@ -373,32 +373,42 @@ public class PlayerStatus : MonoBehaviour
     }
 
 
+
     public void RegenerateMana()
     {
         bool isHoldingShift = Input.GetKey(KeyCode.LeftShift);
+        bool isMoving = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
 
-        if (isHoldingShift && playerController.isRunning)
+        // Nếu đang giữ Shift và đang di chuyển → trừ mana
+        if (isHoldingShift && isMoving && currentMana > 0)
         {
-            TakeMana(100 * Time.deltaTime); // Trừ mana khi đang chạy
+            TakeMana(100 * Time.deltaTime);
         }
-        else
-        {
-            // Khi vừa thả Shift thì cập nhật thời điểm
-            if (isHoldingShiftLastFrame)
-            {
-                lastTimeShiftRelease = Time.time;
-            }
 
-            // Nếu đã thả Shift hơn 2 giây, thì mới bắt đầu hồi mana
-            if (Time.time >= lastTimeShiftRelease + 1f)
-            {
-                BuffMana(100 * Time.deltaTime); // Hồi mana
-            }
+        // Nếu vừa thả Shift  ghi lại thời điểm thả
+        if (isHoldingShiftLastFrame && !isHoldingShift)
+        {
+            lastTimeShiftRelease = Time.time;
+        }
+
+        //  Nếu KHÔNG giữ Shift hồi mana sau 0.5s
+        if (!isHoldingShift && Time.time >= lastTimeShiftRelease + 0.5f)
+        {
+            BuffMana(100 * Time.deltaTime);
+        }
+
+        // Nếu ĐANG giữ Shift nhưng KHÔNG di chuyển  cho phép hồi mana
+        if (isHoldingShift && !isMoving)
+        {
+            BuffMana(100 * Time.deltaTime);
         }
 
         // Cập nhật trạng thái Shift cho frame sau
         isHoldingShiftLastFrame = isHoldingShift;
-    }//hoi mana
+    }
+
+
+    
     // --- Nâng chỉ số ---
     public void UpCriticalHitDamage(int amount)
     {
