@@ -96,7 +96,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill1 >= 3)
                 {
                 previewText.text = "Đông cứng - Cấp 4";
-                contenSkill.text = "Gây sát thương sau khi bị đóng băng, dựa vào sát thương bạo kích của player không cần tỷ lệ bạo.";
+                contenSkill.text = "Gây sát thương sau khi bị đông cứng, dựa vào sát thương bạo kích của player không cần tỷ lệ bạo.";
                 skillBGs[3].enabled = true;   
                 scoreUpgradeText.text = "/4";//so diem can de nang cap
                 } 
@@ -195,7 +195,7 @@ public class IconButtonManager : MonoBehaviour
                 if(turnInSkill3 >= 3)
                 {
                     previewText.text = "Quân đoàn bóng tối - Cấp 4";
-                    contenSkill.text = "Tăng sát thương lên x2 so với player";
+                    contenSkill.text = "Tăng sát thương của quân đoàn lên x2 so với player";
                     skillBGs[11].enabled = true;
                     scoreUpgradeText.text = "/4";//so diem can de nang cap
                 }else{
@@ -231,7 +231,8 @@ public class IconButtonManager : MonoBehaviour
             case "PhanNhan1":
                 
                 previewText.text = "Phản nhãn - Cấp 1";
-                contenSkill.text = "Khi dùng kỹ năng thì player sẽ chuyển sang trạng thái phản nhãn trong vòng 25 giây, giúp hồi đầy máu, năng lượng và giúp đánh nhanh hơn.";
+                contenSkill.text = "Khi dùng kỹ năng thì player sẽ chuyển sang trạng thái phản nhãn trong vòng 25 giây, giúp hồi đầy máu, " +
+                    "năng lượng và giúp đánh nhanh hơn.";
                 skillBGs[14].enabled = true;
                 scoreUpgradeText.text = "/0";//so diem can de nang cap
                 break;

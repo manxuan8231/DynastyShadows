@@ -22,7 +22,7 @@ public class Skill4Manager : MonoBehaviour
     public bool isImmotal; // trạng thái bất tử khi mở khóa level 7
 
     public GameObject iconSkill4;
-   
+   public AudioClip soundReflectDame; // Âm thanh phản dame
     //tham chieu
     public PlayerStatus playerStatus;
    

@@ -38,7 +38,7 @@ public class Enemy3 : MonoBehaviour
         animator = GetComponent<Animator>();
         firstPos = transform.position;
         enemyHP3 = FindAnyObjectByType<EnemyHP3>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = FindClosestPlayer();
         damageBox.enabled = false; // Tắt box dame khi bắt đầu
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
     }
@@ -46,12 +46,12 @@ public class Enemy3 : MonoBehaviour
     {
       
         
-    }
+    }                                                                   
 
     // Update is called once per frame
     void Update()
     {
-        
+        player = FindClosestPlayer(); // Tìm player gần nhất
         switch (currentState)
         {
             case EnemyState.Idle:
@@ -174,6 +174,24 @@ public class Enemy3 : MonoBehaviour
     public void DisableDamageBox()
     {
         damageBox.enabled = false; // Tắt box dame khi không tấn công
+    }
+    Transform FindClosestPlayer()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        Transform closest = null;
+        float minDistance = Mathf.Infinity;
+
+        foreach (GameObject go in players)
+        {
+            float dist = Vector3.Distance(transform.position, go.transform.position);
+            if (dist < minDistance)
+            {
+                minDistance = dist;
+                closest = go.transform;
+            }
+        }
+
+        return closest;
     }
 }
 

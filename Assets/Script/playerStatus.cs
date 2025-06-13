@@ -80,6 +80,7 @@ public class PlayerStatus : MonoBehaviour
     //tham chieu ------------------------------------------
     private PlayerControllerState playerController; // Tham chiếu đến PlayerController
     private ComboAttack comboAttack; // Tham chiếu đến ComboAttack
+    private Skill4Manager skill4Manager; // Tham chiếu đến Skill4Manager
     void Start()
     {     
         //khởi tạo hp
@@ -106,10 +107,10 @@ public class PlayerStatus : MonoBehaviour
         textBaseDamage.text = $"{baseDamage}";
         firstCritChance = criticalChance;
         //thaam chieu
-
         audioSource = GetComponent<AudioSource>();
         playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
+        skill4Manager = FindAnyObjectByType<Skill4Manager>();
         //tat hieu uung
         effectStun.SetActive(false);
         effectLevelUp.SetActive(false);
@@ -176,7 +177,7 @@ public class PlayerStatus : MonoBehaviour
            
             if (enemyHP != null)
             {
-               
+                audioSource.PlayOneShot(skill4Manager.soundReflectDame); // Phát âm thanh phản dame
                 ShowTextDame(amount);
                 enemyHP.TakeDamage(amount);
                 return;
@@ -184,7 +185,7 @@ public class PlayerStatus : MonoBehaviour
             EnemyHP2 enemyHP2 = enemy.GetComponent<EnemyHP2>();
             if (enemyHP2 != null)
             {
-
+                audioSource.PlayOneShot(skill4Manager.soundReflectDame); // Phát âm thanh phản dame
                 ShowTextDame(amount);
                 enemyHP2.TakeDamage(amount);
                 return;
@@ -193,6 +194,7 @@ public class PlayerStatus : MonoBehaviour
             EnemyHP3 enemyHP3 = enemy.GetComponent<EnemyHP3>();
             if (enemyHP3 != null)
             {
+                audioSource.PlayOneShot(skill4Manager.soundReflectDame); // Phát âm thanh phản dame
                 ShowTextDame(amount);
                 enemyHP3.TakeDamage(amount);
                 return;
@@ -201,7 +203,7 @@ public class PlayerStatus : MonoBehaviour
             EnemyHP4 enemyHP4 = enemy.GetComponent<EnemyHP4>();
             if (enemyHP4 != null)
             {
-
+                audioSource.PlayOneShot(skill4Manager.soundReflectDame); // Phát âm thanh phản dame
                 ShowTextDame(amount);
                 enemyHP4.TakeDamage(amount);
                 return;
@@ -210,7 +212,7 @@ public class PlayerStatus : MonoBehaviour
             DrakonitController drakonitController = enemy.GetComponent<DrakonitController>();
             if (drakonitController != null)
             {
-
+                audioSource.PlayOneShot(skill4Manager.soundReflectDame); // Phát âm thanh phản dame
                 ShowTextDame(amount);
                 drakonitController.TakeDame(amount);
                 return;
@@ -219,7 +221,7 @@ public class PlayerStatus : MonoBehaviour
             BossHP bossHP = enemy.GetComponent<BossHP>();
             if (bossHP != null)
             {
-
+                audioSource.PlayOneShot(skill4Manager.soundReflectDame); // Phát âm thanh phản dame
                 ShowTextDame(amount);
                 bossHP.TakeDamage(amount);
                 return;
@@ -229,7 +231,7 @@ public class PlayerStatus : MonoBehaviour
             if (necController != null)
             {
                 Debug.Log("Đã trúng NecController");
-
+                audioSource.PlayOneShot(skill4Manager.soundReflectDame); // Phát âm thanh phản dame
                 ShowTextDame(amount);
                 necController.TakeDame(amount);
                 return;
@@ -238,7 +240,7 @@ public class PlayerStatus : MonoBehaviour
             Boss1Controller boss1HP = enemy.GetComponent<Boss1Controller>();
             if (boss1HP != null)
             {
-
+                audioSource.PlayOneShot(skill4Manager.soundReflectDame); // Phát âm thanh phản dame
                 ShowTextDame(amount);
                 boss1HP.TakeDame((int)amount);
                 return;
@@ -247,7 +249,7 @@ public class PlayerStatus : MonoBehaviour
             EnemyMap2_HP enemyMap2_1 = enemy.GetComponent<EnemyMap2_HP>();
             if (enemyMap2_1 != null)
             {
-
+                audioSource.PlayOneShot(skill4Manager.soundReflectDame); // Phát âm thanh phản dame
                 ShowTextDame(amount);
                 enemyMap2_1.TakeDamage(amount);
                 return;

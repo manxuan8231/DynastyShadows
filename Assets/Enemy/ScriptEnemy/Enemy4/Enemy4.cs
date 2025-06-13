@@ -44,7 +44,7 @@ public class Enemy4 : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         firstPos = transform.position;
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = FindClosestPlayer();
         enemyHP4 = FindAnyObjectByType<EnemyHP4>();
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
     }
@@ -59,7 +59,7 @@ public class Enemy4 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        player = FindClosestPlayer(); // Tìm player gần nhất
         switch (currentState)
         {
             case EnemyState.Idle:
@@ -198,5 +198,23 @@ public class Enemy4 : MonoBehaviour
     public void OffRightHand()
     {
         RightHand.enabled = false;
+    }
+    Transform FindClosestPlayer()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        Transform closest = null;
+        float minDistance = Mathf.Infinity;
+
+        foreach (GameObject go in players)
+        {
+            float dist = Vector3.Distance(transform.position, go.transform.position);
+            if (dist < minDistance)
+            {
+                minDistance = dist;
+                closest = go.transform;
+            }
+        }
+
+        return closest;
     }
 }

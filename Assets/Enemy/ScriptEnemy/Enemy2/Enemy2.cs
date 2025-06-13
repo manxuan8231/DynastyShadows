@@ -41,7 +41,7 @@ public class Enemy2 : MonoBehaviour
         animator = GetComponent<Animator>();
         firstPos = transform.position;
         enemyHP2 = FindAnyObjectByType<EnemyHP2>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = FindClosestPlayer(); // Tìm player gần nhất
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
     }
     void Start()
@@ -55,7 +55,7 @@ public class Enemy2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        player = FindClosestPlayer(); // Tìm player gần nhất
         switch (currentState)
         {
             case EnemyState.Idle:
@@ -193,5 +193,23 @@ public class Enemy2 : MonoBehaviour
         animator.ResetTrigger("Attack");
         animator.ResetTrigger("GetHit");
         animator.ResetTrigger("Death");
+    }
+    Transform FindClosestPlayer()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        Transform closest = null;
+        float minDistance = Mathf.Infinity;
+
+        foreach (GameObject go in players)
+        {
+            float dist = Vector3.Distance(transform.position, go.transform.position);
+            if (dist < minDistance)
+            {
+                minDistance = dist;
+                closest = go.transform;
+            }
+        }
+
+        return closest;
     }
 }

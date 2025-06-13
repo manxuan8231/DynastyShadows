@@ -76,7 +76,7 @@ public class DrakonitController : MonoBehaviour
         enemy = FindAnyObjectByType<DrakonitController>();
         questMainBacLam = FindAnyObjectByType<QuestMainBacLam>();
         animator = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player").transform; 
+        player = FindClosestPlayer(); 
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         //mau
@@ -101,7 +101,7 @@ public class DrakonitController : MonoBehaviour
 
     void Update()
     {
-       
+        player = FindClosestPlayer(); // Tìm player gần nhất
         // Gọi hàm Updat của trạng thái hiện tại 
         currentState?.Update();
        
@@ -177,5 +177,24 @@ public class DrakonitController : MonoBehaviour
     public void endDame()
     {
         dameZone.endDame();
+    }
+    //tim play gan nhat
+    Transform FindClosestPlayer()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+    Transform closest = null;
+    float minDistance = Mathf.Infinity;
+
+        foreach (GameObject go in players)
+        {
+            float dist = Vector3.Distance(transform.position, go.transform.position);
+            if (dist<minDistance)
+            {
+                minDistance = dist;
+                closest = go.transform;
+            }
+        }
+
+        return closest;
     }
 }
