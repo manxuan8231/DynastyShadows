@@ -17,6 +17,12 @@ public class TriggerQuest2 : MonoBehaviour
     public Sprite missionSprite;
     public GameObject npcQuest;
     public TMP_Text contentQuest;
+    public PlayerControllerState playerControllerState;
+    private void Start()
+    {
+        playerControllerState = FindFirstObjectByType<PlayerControllerState>();
+
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
@@ -30,6 +36,8 @@ public class TriggerQuest2 : MonoBehaviour
     IEnumerator Show()
     {
         cam1.Priority = 11; // Set the camera priority to 11
+        playerControllerState.animator.enabled = false; // Disable player animations
+        playerControllerState.enabled = false; // Disable player controls
         canvasText.SetActive(true); // Show the canvas text
         contentText.text = "Các binh sĩ ?!";
         yield return new WaitForSeconds(2.5f);
@@ -37,6 +45,8 @@ public class TriggerQuest2 : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         contentText.text = "Tôi đến giúp các anh đây.Hãy cố lên!!!";
         yield return new WaitForSeconds(3f); // Wait for 3 seconds
+        playerControllerState.enabled = true; // Re-enable player controls
+        playerControllerState.animator.enabled = true; // Re-enable player animations
         cam1.Priority = 0; // Reset the camera priority to 9
         canvasText.SetActive(false); // Hide the canvas text
         stateCanvas.SetActive(true); // Show the state canvas
@@ -48,6 +58,7 @@ public class TriggerQuest2 : MonoBehaviour
         npcQuest.SetActive(true);
         contentQuest.text = "Hỗ trợ kỵ sĩ còn sống đẩy lùi đợt tấn công của dị thể";
         yield return new WaitForSeconds(1.5f);
+      
         Destroy(gameObject); // Destroy the trigger object after showing the text
 
     }

@@ -83,6 +83,7 @@ public class NPCDeathQuest : MonoBehaviour
         Cursor.visible = false; // Hide the cursor
         diaryModel.SetActive(false);
         StartCoroutine(ShowQuestCanvas()); // Start the coroutine to show the quest canvas
+       transformQuest.SetActive(false); // Deactivate the transform quest object
     }
 
     IEnumerator ShowQuestCanvas()
