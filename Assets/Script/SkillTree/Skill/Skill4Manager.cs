@@ -20,7 +20,7 @@ public class Skill4Manager : MonoBehaviour
     public bool isUpSpeed = false;//tang tốc khi mở khóa level 5
     public bool isStun = false; // trạng thái stun khi mở khóa level 6
     public bool isImmotal; // trạng thái bất tử khi mở khóa level 7
-
+    public GameObject prohibitedIcon; // cản ko cho dùng skill khi sử dụng skill 4 canvas
     public GameObject iconSkill4;
    public AudioClip soundReflectDame; // Âm thanh phản dame
     //tham chieu
@@ -36,7 +36,7 @@ public class Skill4Manager : MonoBehaviour
         iconSkill4.SetActive(false);
         sliderCoolDown.maxValue = coolDownTime; // Đặt giá trị tối đa của slider là thời gian hồi chiêu
         sliderCoolDown.value = coolDownTime; // Đặt giá trị ban đầu của slider là thời gian hồi chiêu
-     
+        prohibitedIcon.SetActive(false); // Ẩn biểu tượng cấm sử dụng skill 4 ban đầu
         sliderCoolDown.enabled = false; // Tắt slider ban đầu
         ToggleSkill4(false); // Tắt skill 4 ban đầu
     }
@@ -59,6 +59,7 @@ public class Skill4Manager : MonoBehaviour
             textCoolDownSkill.enabled = true;
             isChangeStateSkill4 = true;
             StartCoroutine(WaitChangeSkin()); // Bắt đầu coroutine để thay đổi skin
+           StartCoroutine( WaitProhibitedIcon());
             lastCoolDown = Time.time; // Cập nhật thời gian hồi chiêu
         }
     }
@@ -80,5 +81,11 @@ public class Skill4Manager : MonoBehaviour
         //hoi day mana
         playerStatus.currentMana = playerStatus.maxMana;
         playerStatus.sliderMana.value = playerStatus.maxMana;
+    }
+    public IEnumerator WaitProhibitedIcon()
+    {
+        prohibitedIcon.SetActive(true); // Hiển thị biểu tượng cấm sử dụng skill 4
+        yield return new WaitForSeconds(timeSkill4); // Chờ hết skill 4
+        prohibitedIcon.SetActive(false); // Ẩn biểu tượng cấm sử dụng skill 4
     }
 }
