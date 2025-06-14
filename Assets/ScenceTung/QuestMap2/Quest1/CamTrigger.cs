@@ -26,10 +26,13 @@ public class CamTrigger : MonoBehaviour
     public AudioCanvasState audioCanvasState;
     public GameObject transformQuest;
     public BoxCollider boxCollider;
+    public AudioSource audioSource;
+    public AudioClip backGround;
     private void Start()
     {
         transformQuest.SetActive(false);
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -52,6 +55,8 @@ public class CamTrigger : MonoBehaviour
             Style = CinemachineBlendDefinition.Styles.Cut
         };
         cinemachineBrain.DefaultBlend = blendDefinition;
+        audioSource.clip = backGround;
+        audioSource.Play();
 
         content.text = "Bọn quái vật đã phá hủy mất một phần thị trấn rồi sao?....";
         cam1.Priority = 20;
@@ -90,6 +95,7 @@ public class CamTrigger : MonoBehaviour
         yield return new WaitForSeconds(1f);
         canvasQuest.SetActive(true);
         transformQuest.SetActive(true);
+        audioSource.Stop();
         Destroy(gameObject);
     }
 }

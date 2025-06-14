@@ -38,7 +38,7 @@ public class NPCQuest : MonoBehaviour
     public TMP_Text contentQuest;
     public GameObject turnInTheQuest; // trả nv
     public GameObject transformTurnInTheQuest;
-
+    public GameObject trigger;
 
     Coroutine Coroutine;
     private void Start()
@@ -55,6 +55,7 @@ public class NPCQuest : MonoBehaviour
         enemyMap2_1 = FindFirstObjectByType<EnemyMap2_1>();
         if (killEnemy >= 6)
         {
+            Destroy(trigger);
             isHelp = true;
         }
         FindClosestEnemy();
