@@ -18,7 +18,7 @@ public class Skill2Manager : MonoBehaviour
     public bool isChangeSkill2 = false;
     public bool isExplosionSkill2 = false;
     public GameObject playerClone;
-    
+    public GameObject prohibitedIcon; // cản ko cho dùng skill khi sử dụng skill 4 canvas 
     //effect
     public GameObject effectRun;
 
@@ -38,6 +38,7 @@ public class Skill2Manager : MonoBehaviour
         effectRun.SetActive(false);
         isExplosionSkill2 = false;
         textCoolDownSkill.enabled= false;
+        prohibitedIcon.SetActive(false); // Ẩn biểu tượng cấm sử dụng skill 2 ban đầu
     }
 
     void Update()
@@ -99,6 +100,7 @@ public class Skill2Manager : MonoBehaviour
     //dợi 10 giây để loại bỏ phân thân va effect
     public IEnumerator WaitForRemoveClone()
     {
+        prohibitedIcon.SetActive(true); // Ẩn biểu tượng cấm sử dụng skill 2 ban đầu
         yield return new WaitForSeconds(timeSkill2); // Thời gian chờ trước khi loại bỏ phân thân
         if (playerClone != null)
         {
@@ -106,6 +108,7 @@ public class Skill2Manager : MonoBehaviour
             effectRun.SetActive(false);
         }
         playerControllerState.isRemoveClone = false; // Đặt lại cờ để không loại bỏ phân thân nữa
+        prohibitedIcon.SetActive(false); // Ẩn biểu tượng cấm sử dụng skill 2 ban đầu
     }
 
    

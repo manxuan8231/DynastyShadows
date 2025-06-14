@@ -23,15 +23,37 @@ public class Skill2State : PlayerState
 
     public override void Update()
     {
+        player.animator.SetBool("jumpLand", player.isGrounded && !player.wasGroundedLastFrame == true);
         if (isMove == true)
         {
-            Move(); 
-        
+            Move();
+            Jump();
         }   
         DashToNearestEnemyAndAttack();
       
     }
+    public void Jump()
+    {
+        player.isGrounded = Physics.CheckSphere(player.groundCheck.position, player.groundDistance, player.groundMask);
 
+        if (player.isGrounded && player.velocity.y < 0)
+            player.velocity.y = -2f;
+        //
+        if (Input.GetKeyDown(KeyCode.Space) && player.isGrounded && player.playerStatus.currentMana > 50)
+        {
+            player.playerStatus.TakeMana(50);
+            player.velocity.y = Mathf.Sqrt(player.jumpHeight * -2f * player.gravity);
+            player.audioSource.PlayOneShot(player.evenAnimator.audioJump);
+            player.animator.SetTrigger("jump");
+        }
+        //
+        player.animator.SetBool("jumpLand", player.isGrounded && !player.wasGroundedLastFrame == true);
+
+        player.wasGroundedLastFrame = player.isGrounded;
+
+        player.velocity.y += player.gravity * Time.deltaTime;
+        player.controller.Move(player.velocity * Time.deltaTime);
+    }
     public override void Exit()
     {
         player.skill2Manager.isChangeSkill2 = false;
@@ -103,8 +125,10 @@ public class Skill2State : PlayerState
 
             Vector3 targetPos = nearestEnemy.transform.position;
             Vector3 dashDir = (targetPos - player.transform.position).normalized;
-            
-            player.StartCoroutine(DashToTarget(targetPos + dashDir * -2f, 0.3f));
+
+            Vector3 offset = new Vector3(0, -2f, 0); // Thêm 2 đơn vị độ cao
+            player.StartCoroutine(DashToTarget(targetPos + dashDir * -2f + offset, 0.3f));
+
 
 
             // Quay mặt về enemy

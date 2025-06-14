@@ -50,10 +50,10 @@ public class Skill4State : PlayerState
     }
     public override void Update()
     {
-        //  lv7--------
+
+        player.animator.SetBool("jumpLand", player.isGrounded && !player.wasGroundedLastFrame == true);
         if (player.skill4Manager.isImmotal == true) //trang thai bat tu khi unlock level 7
         {
-           
             player.playerStatus.BuffHealth(100 * Time.deltaTime); //tang mau
         }
         if (player.isController == true && isMovement ==true)
@@ -70,6 +70,7 @@ public class Skill4State : PlayerState
             player.animator.SetBool("isRunning", false);
 
         }
+        
     }
     public override void Exit() 
     {

@@ -18,6 +18,7 @@ public class PlayerCurrentState : PlayerState
 
     public override void Update()
     {
+        player.animator.SetBool("jumpLand", player.isGrounded && !player.wasGroundedLastFrame == true);//để đây đụng đất thì true liên tục
         if (player.isController == true)
         {
             Move();
@@ -120,7 +121,7 @@ public class PlayerCurrentState : PlayerState
            player. animator.SetTrigger("jump");
         }
         //
-       player. animator.SetBool("jumpLand", player.isGrounded && !player.wasGroundedLastFrame == true);
+       player.animator.SetBool("jumpLand", player.isGrounded && !player.wasGroundedLastFrame == true);
 
        player.wasGroundedLastFrame = player.isGrounded;
 

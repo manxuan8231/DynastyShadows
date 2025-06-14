@@ -16,7 +16,10 @@ public class PlayerControllerState : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-
+    //cham dat
+    public Vector3 velocity;
+    public bool isGrounded;
+    public bool wasGroundedLastFrame;// kiểm tra xem có chạm đất trong frame trước hay không
     [Header("Thành phần -------------------------------")]
     public Transform cameraTransform;
     public CharacterController controller;
@@ -24,10 +27,7 @@ public class PlayerControllerState : MonoBehaviour
     public AudioSource audioSource;
     public RigBuilder rigBuilder;
 
-    //cham dat
-    public Vector3 velocity;
-    public bool isGrounded;
-    public bool wasGroundedLastFrame;
+    
     public bool isRunning = false;
     public bool isController = true;
     
