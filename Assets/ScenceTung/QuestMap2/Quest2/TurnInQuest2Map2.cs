@@ -14,11 +14,11 @@ public class TurnInQuest2Map2 : MonoBehaviour
     public GameObject canvasContent;
     public GameObject btnF;
     public GameObject turnInQuest;
-
     public Transform targetPos; // <-- Vị trí muốn NPC đi tới
-
+    
     private bool isMoving = false;
     private bool isArrived = false;
+    public GameObject canvasQuest;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -48,7 +48,7 @@ public class TurnInQuest2Map2 : MonoBehaviour
             {
                 isArrived = true;
                 agent.ResetPath();
-                Destroy(gameObject); // Ẩn NPC sau khi đến nơi
+                gameObject.SetActive(false); // Ẩn NPC sau khi đến nơi
             }
         }
     }
@@ -62,6 +62,8 @@ public class TurnInQuest2Map2 : MonoBehaviour
 
         canvasContent.SetActive(false);
         canvasText.SetActive(false);
+        canvasQuest.SetActive(false);
+        
 
         // Bắt đầu di chuyển tới vị trí target
         isMoving = true;
