@@ -35,8 +35,8 @@ public class MinotaurEnemy : MonoBehaviour
     private void SetupBehaviorTree()
     {
         //xu ly die-------------------
-        var isDead = new ConditionNode(() => currentHealth <= 0);// kiểm tra xem Hilichurl đã chết hay chưa
-        var deathAction = new ActionNode(PlayDeathAnimation);// hành động khi Hilichurl chết
+        var isDead = new ConditionNode(() => currentHealth <= 0);// kiểm tra xem  đã chết hay chưa
+        var deathAction = new ActionNode(PlayDeathAnimation);// hành động khi  chết
 
         // xu ly di chuyển đến người chơi -----------------
         var isMove = new ConditionNode(ISPlayerMove);  
@@ -44,9 +44,9 @@ public class MinotaurEnemy : MonoBehaviour
 
         //xu ly tấn công người chơi---------------------
         var isPlayerInAttackRange = new ConditionNode(IsPlayerInAttackRange);// kiểm tra xem người chơi có trong khoảng tấn công hay không
-        var isCooldownAttack = new ConditionNode(() => Time.time >= _lastAttackTime + attackCooldown);// kiểm tra cooldown tấn công
-        var backOffAction = new ActionNode(BackOff);// hành động lùi lại sau khi tấn công
+        var isCooldownAttack = new ConditionNode(() => Time.time >= _lastAttackTime + attackCooldown);// kiểm tra cooldown tấn công      
         var attackAction = new ActionNode(AttackPlayer);// hành động tấn công người chơi
+        var backOffAction = new ActionNode(BackOff);// hành động lùi lại sau khi tấn công
         var waitAction = new ActionNode(WaitForCooldown); // Viết hàm đứng yên chờ cooldown
 
         // hành vi idle------------------
@@ -58,10 +58,10 @@ public class MinotaurEnemy : MonoBehaviour
              //die
              new SequenceNode(new List<Node> { isDead, deathAction }),
              //move
-             new SequenceNode(new List<Node> { isMove, moveToPlayerAction}),
+             new SequenceNode(new List<Node> { isCooldownAttack, isMove, moveToPlayerAction}),
              //Attack
              new SequenceNode(new List<Node> { isPlayerInAttackRange,isCooldownAttack, 
-                 attackAction,backOffAction,waitAction }),
+                                                attackAction, backOffAction,waitAction }),
               //idle
              idleAction
 
@@ -105,12 +105,34 @@ public class MinotaurEnemy : MonoBehaviour
     }
     private NodeState BackOff()
     {
-        Vector3 direction = (transform.position - targetPlayer.position).normalized;
-        Vector3 backPos = transform.position + direction * 2f;
-        _agent.SetDestination(backPos);
-        _animator.SetBool("IsRunBack", true);
-        return NodeState.RUNNING;
+        if (targetPlayer == null) return NodeState.FAILURE;
+
+        _agent.isStopped = false;
+
+        Vector3 runDirection = transform.position - targetPlayer.position;
+        Vector3 fleePosition = transform.position + runDirection.normalized * 5f;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(fleePosition, out hit, 10f, NavMesh.AllAreas))
+        {
+            _agent.SetDestination(hit.position);
+            _animator.SetBool("isRunBack", true);
+
+            // Nếu đã gần đến điểm lùi lại thì coi là lùi thành công
+            if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
+            {
+                _animator.SetBool("isRunBack", false); // tắt animation lùi lại
+                return NodeState.SUCCESS;
+            }
+
+            return NodeState.RUNNING;
+        }
+
+        Debug.LogWarning("Không tìm được điểm lùi hợp lệ");
+        return NodeState.FAILURE;
     }
+
+
 
     private NodeState WaitForCooldown()
     {
