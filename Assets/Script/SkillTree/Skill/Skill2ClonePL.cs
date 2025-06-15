@@ -19,16 +19,16 @@ public class Skill2ClonePL : MonoBehaviour
         //click chuột để tạo hiệu ứng nổ
         if (Input.GetMouseButtonDown(0) && skill2Manager.isExplosionSkill2 == true)
         {
-            Vector3 y = new Vector3(0f, 6f, 0f);
-            GameObject instan = Instantiate(effectExplotion, y, Quaternion.identity);
+           transform.position = new Vector3(0f, 6f, 0f);
+            GameObject instan = Instantiate(effectExplotion, transform.position, Quaternion.identity);
             Destroy(instan, 2f);
         }
     }
     public IEnumerator WaitEffect(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        Vector3 y = new Vector3(0f, 6f, 0f);
-        GameObject instan = Instantiate(effectExplotion, y, Quaternion.identity);
-        Destroy(instan,2f);
+        transform.position = new Vector3(0f, 6f, 0f);
+        GameObject instan = Instantiate(effectExplotion, transform.position, Quaternion.identity);
+        Destroy(instan, 2f);
     }
 }

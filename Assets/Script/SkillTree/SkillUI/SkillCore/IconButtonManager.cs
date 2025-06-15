@@ -66,6 +66,7 @@ public class IconButtonManager : MonoBehaviour
         {
             panelSkill4.SetActive(false);//an panel neu du cap
         }
+        SimulateUnlockAllSkills(); //giả lập mở khóa tất cả kỹ năng (chỉ để test)
     }
     public void ShowPreview(string iconID)
     {
@@ -170,6 +171,10 @@ public class IconButtonManager : MonoBehaviour
                     previewPanel.SetActive(false);
                     panelSkill2.SetActive(true);
                 }
+                if (skill2Manager.isUnlockSkill2 == true)
+                {
+                    buttonUnlock.SetActive(false);
+                }
                     break;
 
             case "TheAnh2":
@@ -183,6 +188,10 @@ public class IconButtonManager : MonoBehaviour
                 else{
                 previewPanel.SetActive(false);
                 }
+                if (skill2Manager.skillCooldown == 35)
+                {
+                    buttonUnlock.SetActive(false);
+                }
                 break;
 
             case "TheAnh3":
@@ -194,7 +203,10 @@ public class IconButtonManager : MonoBehaviour
                     scoreUpgradeText.text = "/3";//so diem can de nang cap
                 }else{
                     previewPanel.SetActive(false);
-                }             
+                }if(skill2Manager.timeSkill2 == 15f)
+                {
+                    buttonUnlock.SetActive(false);
+                }
                 break;
 
             case "TheAnh4":
@@ -206,6 +218,10 @@ public class IconButtonManager : MonoBehaviour
             }else{
                 previewPanel.SetActive(false);
             }
+                if (skill2Manager.isExplosionSkill2 == true)
+                {
+                    buttonUnlock.SetActive(false);
+                }
                 break;
 
             //skill3--------------
@@ -225,6 +241,9 @@ public class IconButtonManager : MonoBehaviour
                     previewPanel.SetActive(false);
                     panelSkill3.SetActive(true);//hien panel neu chua du cap
                     return; // Nếu chưa đủ cấp độ thì không hiển thị gì
+                }if (skill3Manager.isUnlockSkill3 == true)
+                {
+                    buttonUnlock.SetActive(false);//ẩn panel nếu đã mở khóa
                 }
                     break;
 
@@ -238,6 +257,9 @@ public class IconButtonManager : MonoBehaviour
                    
                 }else{
                     previewPanel.SetActive(false);
+                }if(skill3Manager.cooldownSkill == 70f)
+                {
+                    buttonUnlock.SetActive(false);
                 }
                 break;
 
@@ -251,6 +273,9 @@ public class IconButtonManager : MonoBehaviour
                    
                 }else{
                     previewPanel.SetActive(false);
+                }if(skill3Manager.timeSkill3 == 40f)
+                {
+                    buttonUnlock.SetActive(false);
                 }
 
                 break;
@@ -264,6 +289,9 @@ public class IconButtonManager : MonoBehaviour
                     scoreUpgradeText.text = "/4";//so diem can de nang cap
                 }else{
                     previewPanel.SetActive(false);
+                }if(skill3Manager.isDamaged == true)
+                {
+                    buttonUnlock.SetActive(false);
                 }
                 break;
 
@@ -276,6 +304,9 @@ public class IconButtonManager : MonoBehaviour
                     scoreUpgradeText.text = "/5";//so diem can de nang cap
                 }else{
                     previewPanel.SetActive(false);
+                }if (skill3Manager.playerCount == 6)
+                {
+                    buttonUnlock.SetActive(false);
                 }
                 break;
 
@@ -307,6 +338,9 @@ public class IconButtonManager : MonoBehaviour
                     previewPanel.SetActive(false);
                     panelSkill4.SetActive(true);//hien panel neu chua du cap
                     return; // Nếu chưa đủ cấp độ thì không hiển thị gì
+                }if(skill4Manager.isUnlockSkill4 == true)
+                {
+                    buttonUnlock.SetActive(false);
                 }
                     break;
 
@@ -319,6 +353,9 @@ public class IconButtonManager : MonoBehaviour
                     scoreUpgradeText.text = "/2";//so diem can de nang cap
                 }else{
                     previewPanel.SetActive(false);
+                }if (skill4Manager.coolDownTime == 70f)
+                {
+                    buttonUnlock.SetActive(false);
                 }
                 break;
 
@@ -331,6 +368,9 @@ public class IconButtonManager : MonoBehaviour
                     scoreUpgradeText.text = "/2";//so diem can de nang cap
                 }else{
                     previewPanel.SetActive(false);
+                }if(skill4Manager.timeSkill4 == 35f)
+                {
+                    buttonUnlock.SetActive(false);
                 }
                 break;
 
@@ -343,6 +383,9 @@ public class IconButtonManager : MonoBehaviour
                     scoreUpgradeText.text = "/3";//so diem can de nang cap
                 }else{
                     previewPanel.SetActive(false);
+                }if(skill4Manager.isReflectDamage == true)
+                {
+                    buttonUnlock.SetActive(false);
                 }
                 break;
 
@@ -355,6 +398,9 @@ public class IconButtonManager : MonoBehaviour
                     scoreUpgradeText.text = "/4";//so diem can de nang cap
                 }else{
                     previewPanel.SetActive(false);
+                }if (skill4Manager.isUpSpeed == true)//tang toc do di chuyen khi mo khoa
+                {
+                    buttonUnlock.SetActive(false);
                 }
                 break;
 
@@ -367,6 +413,9 @@ public class IconButtonManager : MonoBehaviour
                     scoreUpgradeText.text = "/4";//so diem can de nang cap
                 }else{
                     previewPanel.SetActive(false);
+                }if (skill4Manager.isStun == true)
+                {
+                    buttonUnlock.SetActive(false);
                 }
                 break;
 
@@ -379,6 +428,9 @@ public class IconButtonManager : MonoBehaviour
                     scoreUpgradeText.text = "/5";//so diem can de nang cap
                 }else{
                     previewPanel.SetActive(false);
+                }if(skill4Manager.isImmotal == true)
+                {
+                    buttonUnlock.SetActive(false);
                 }
                 break;
 
@@ -838,6 +890,56 @@ public class IconButtonManager : MonoBehaviour
         {
             if (bg != null)
                 bg.enabled = false;
+        }
+    }
+
+
+
+
+    private void SimulateUnlockAllSkills()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            Debug.Log("Đã nhấn Alt - Mở tất cả kỹ năng");
+
+            // Đông Cung
+            turnInSkill1 = 4;
+            skill1Manager.isUnlockSkill1 = true;
+            skill1Manager.iconSkill1.SetActive(true);
+            skill1Manager.cooldownSkill = 35f;
+            skill1Manager.timeSkill1 = 20f;
+            skill1Manager.isDamaged = true;
+
+            // Thế Ảnh
+            turnInSkill2 = 4;
+            skill2Manager.isUnlockSkill2 = true;
+            skill2Manager.iconSkill2.SetActive(true);
+            skill2Manager.skillCooldown = 35f;
+            skill2Manager.timeSkill2 = 15f;
+            skill2Manager.isExplosionSkill2 = true;
+
+            // Quân Đoàn Bóng Tối
+            turnInSkill3 = 6;
+            skill3Manager.isUnlockSkill3 = true;
+            skill3Manager.iconSkill3.SetActive(true);
+            skill3Manager.cooldownSkill = 70f;
+            skill3Manager.timeSkill3 = 40f;
+            skill3Manager.isDamaged = true;
+            skill3Manager.playerCount = 6;
+
+            // Phản Nhân
+            turnInSkill4 = 7;
+            skill4Manager.isUnlockSkill4 = true;
+            skill4Manager.iconSkill4.SetActive(true);
+            skill4Manager.coolDownTime = 70f;
+            skill4Manager.timeSkill4 = 35f;
+            skill4Manager.isReflectDamage = true;
+            skill4Manager.isUpSpeed = true;
+            skill4Manager.isStun = true;
+            skill4Manager.isImmotal = true;
+
+            // Ẩn nút unlock (nếu cần)
+            buttonUnlock.SetActive(false);
         }
     }
 }
