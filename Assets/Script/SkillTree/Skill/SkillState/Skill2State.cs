@@ -8,13 +8,15 @@ public class Skill2State : PlayerState
     public LayerMask enemyLayer = LayerMask.GetMask("Enemy"); // Layer của enemy
     private bool isMove = false;
     private bool isAttack = true; // Biến để kiểm tra trạng thái tấn công
+    private bool isChangeState = false; // Biến để kiểm tra trạng thái chuyển đổi
     public override void Enter()
     {
+        isChangeState = true;
         isAttack = true;
         player.animator.runtimeAnimatorController = player.animatorSkill2;
         player.skill2Manager.effectRun.SetActive(true);
         Debug.Log("Chạy trạng thái skill2");
-      
+        player.skill2Manager.isHibitedIcon = true; // cấm sử dụng skill con lại icon
         player.StartCoroutine(WaitForMove()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
         player.StartCoroutine(WaitForSkill2()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
 
@@ -60,7 +62,7 @@ public class Skill2State : PlayerState
         isMove = true; // Đặt lại trạng thái di chuyển
         player.animator.runtimeAnimatorController = player.animatorDefauld; // Quay về bộ điều khiển hoạt hình mặc định
         player.skill2Manager.effectRun.SetActive(false);
-
+        isChangeState = false;
     }
 
     public void Move()
@@ -175,13 +177,20 @@ public class Skill2State : PlayerState
     {
 
         yield return new WaitForSeconds(0.8f); // Thời gian chờ trước khi chuyển về trạng thái hiện tại
+        player.skill2Manager.isHibitedIcon = false; // Bỏ cấm sử dụng skill 2
         player.ChangeState(new PlayerCurrentState(player)); // Quay về trạng thái hiện tại
     }
     // Đợi 10 giây để loại bỏ phân thân
     public IEnumerator WaitForSkill2()
     {
         yield return new WaitForSeconds(player.skill2Manager.timeSkill2); // Thời gian chờ trước khi chuyển về trạng thái hiện tại
-        player.ChangeState(new PlayerCurrentState(player)); // Quay về trạng thái hiện tại
+        Debug.Log("Kết thúc skill2");
+        if (isChangeState == true)
+        {
+            player.skill2Manager.isHibitedIcon = false; // Bỏ cấm sử dụng skill 2
+            player.ChangeState(new PlayerCurrentState(player)); // Quay về trạng thái hiện tại
+        }
+       
     }
 
    

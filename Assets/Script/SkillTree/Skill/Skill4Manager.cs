@@ -21,6 +21,7 @@ public class Skill4Manager : MonoBehaviour
     public bool isStun = false; // trạng thái stun khi mở khóa level 6
     public bool isImmotal; // trạng thái bất tử khi mở khóa level 7
     public GameObject prohibitedIcon; // cản ko cho dùng skill khi sử dụng skill 4 canvas
+    public bool isHibitedIcon; // kiểm tra để cấm sử dụng skill 4 khi đang sử dụng skill khác
     public GameObject iconSkill4;
    public AudioClip soundReflectDame; // Âm thanh phản dame
     //tham chieu
@@ -29,7 +30,7 @@ public class Skill4Manager : MonoBehaviour
     void Start()
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
-     
+        isHibitedIcon = false; // Khởi tạo trạng thái không cấm sử dụng skill 4
         textCoolDownSkill.enabled = false;
         isInputSkill4 = true; // Khởi tạo trạng thái skill 4 là không được kích hoạt
         isChangeStateSkill4 = false;
@@ -59,8 +60,16 @@ public class Skill4Manager : MonoBehaviour
             textCoolDownSkill.enabled = true;
             isChangeStateSkill4 = true;
             StartCoroutine(WaitChangeSkin()); // Bắt đầu coroutine để thay đổi skin
-           StartCoroutine( WaitProhibitedIcon());
+            
             lastCoolDown = Time.time; // Cập nhật thời gian hồi chiêu
+        }
+        if(isHibitedIcon == true)
+        {
+            prohibitedIcon.SetActive(true); // Hiển thị biểu tượng cấm sử dụng skill 4
+        }
+        else
+        {
+            prohibitedIcon.SetActive(false); // Ẩn biểu tượng cấm sử dụng skill 4
         }
     }
     public void ToggleSkill4(bool isActive)
@@ -82,10 +91,5 @@ public class Skill4Manager : MonoBehaviour
         playerStatus.currentMana = playerStatus.maxMana;
         playerStatus.sliderMana.value = playerStatus.maxMana;
     }
-    public IEnumerator WaitProhibitedIcon()
-    {
-        prohibitedIcon.SetActive(true); // Hiển thị biểu tượng cấm sử dụng skill 4
-        yield return new WaitForSeconds(timeSkill4); // Chờ hết skill 4
-        prohibitedIcon.SetActive(false); // Ẩn biểu tượng cấm sử dụng skill 4
-    }
+   
 }

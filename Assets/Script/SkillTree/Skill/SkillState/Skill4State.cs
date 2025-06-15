@@ -22,6 +22,7 @@ public class Skill4State : PlayerState
         player.animator.runtimeAnimatorController = player.animatorSkill4;//chay animator skill 4 khi bat dau
         player.animator.SetTrigger("Change");
         player.weaponSword.SetActive(true); //tat weapon khi chay skill4
+        player.skill4Manager.isHibitedIcon=true; //bat cam skill icon
         player.StartCoroutine(WaitChangeState()); //bat dau chay ham doi trang thai sau 10 giay
         Debug.Log("Chạy trạng thái skill4");
         //lv4-------
@@ -237,10 +238,10 @@ public class Skill4State : PlayerState
         isMovement = false;//
         yield return new WaitForSeconds(2f);
         isMovement = true;//cho di chuyen
-        yield return new WaitForSeconds(player.skill4Manager.timeSkill4); // Thời gian chờ 10 giây rồi chuyển trạng thái
-        player.ChangeState(new PlayerCurrentState(player)); // Trở về trạng thái hiện tại
+        yield return new WaitForSeconds(player.skill4Manager.timeSkill4); // Thời gian chờ 10 giây rồi chuyển trạng thái     
         player.animator.runtimeAnimatorController = player.animatorDefauld; // Trở về animator mặc định
-     
+        player.skill4Manager.isHibitedIcon = false; //bat cam skill icon
+        player.ChangeState(new PlayerCurrentState(player)); // Trở về trạng thái hiện tại
     }
 
   

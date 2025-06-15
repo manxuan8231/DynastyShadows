@@ -19,6 +19,7 @@ public class Skill2Manager : MonoBehaviour
     public bool isExplosionSkill2 = false;
     public GameObject playerClone;
     public GameObject prohibitedIcon; // cản ko cho dùng skill khi sử dụng skill 4 canvas 
+    public bool isHibitedIcon;//kieemr tra 
     //effect
     public GameObject effectRun;
 
@@ -37,6 +38,7 @@ public class Skill2Manager : MonoBehaviour
         coolDownSKillSlider.value = skillCooldown;
         effectRun.SetActive(false);
         isExplosionSkill2 = false;
+        isHibitedIcon = false;
         textCoolDownSkill.enabled= false;
         prohibitedIcon.SetActive(false); // Ẩn biểu tượng cấm sử dụng skill 2 ban đầu
     }
@@ -73,9 +75,16 @@ public class Skill2Manager : MonoBehaviour
             }
             playerControllerState.isRemoveClone = false;
         }
-       
-        
-        
+        if(isHibitedIcon == true)
+        {
+            prohibitedIcon.SetActive(true); // Hiển thị biểu tượng cấm sử dụng skill 2
+        }
+        else
+        {
+            prohibitedIcon.SetActive(false); // Ẩn biểu tượng cấm sử dụng skill 2
+        }
+
+
     }
 
     // Kích hoạt kỹ năng phân thân
@@ -100,7 +109,7 @@ public class Skill2Manager : MonoBehaviour
     //dợi 10 giây để loại bỏ phân thân va effect
     public IEnumerator WaitForRemoveClone()
     {
-        prohibitedIcon.SetActive(true); // Ẩn biểu tượng cấm sử dụng skill 2 ban đầu
+       
         yield return new WaitForSeconds(timeSkill2); // Thời gian chờ trước khi loại bỏ phân thân
         if (playerClone != null)
         {
