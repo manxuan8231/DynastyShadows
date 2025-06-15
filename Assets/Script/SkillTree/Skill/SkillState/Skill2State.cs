@@ -128,7 +128,7 @@ public class Skill2State : PlayerState
             Vector3 targetPos = nearestEnemy.transform.position;
             Vector3 dashDir = (targetPos - player.transform.position).normalized;
 
-            Vector3 offset = new Vector3(0, -2f, 0); // Thêm 2 đơn vị độ cao
+            Vector3 offset = new Vector3(0, 1f, 0); // Thêm 2 đơn vị độ cao
             player.StartCoroutine(DashToTarget(targetPos + dashDir * -2f + offset, 0.3f));
 
 

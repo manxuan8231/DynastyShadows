@@ -26,10 +26,9 @@ public class DameZone : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        for (int i = 0; i < tagEnemy.Length; i++)
-        {
-            if (other.gameObject.CompareTag(tagEnemy[i]) && !listDame.Contains(other))
-            {
+        GameObject hitObj = other.gameObject;
+        if (hitObj.layer == LayerMask.NameToLayer("Enemy"))
+                {
                 float finalDamage = playerStatus.CalculateFinalDamage();
 
                 GameObject hitEffect = Instantiate(effectHit, tranFormHit.position, transform.rotation);
@@ -116,15 +115,22 @@ public class DameZone : MonoBehaviour
                     enemyMap2_1.TakeDamage(finalDamage);
                     return;
                 }
-            }
+                //Minotaur
+                MinotaurEnemy minotaurController = other.GetComponent<MinotaurEnemy>();
+                if (minotaurController != null)
+                {
+                    listDame.Add(other);// thêm collider vào danh sách
+                    ShowTextDame(finalDamage);
+                    minotaurController.TakeDamage(finalDamage);
+                    return;
+                }
         }
         
     }
     private void OnTriggerStay(Collider other)//nếu ontrigger xử lấy ko kịp thì nó dô đây xử lý tiếp
     {
-        for (int i = 0; i < tagEnemy.Length; i++)
-        {
-            if (other.gameObject.CompareTag(tagEnemy[i]) && !listDame.Contains(other))
+        GameObject hitObj = other.gameObject;
+        if (hitObj.layer == LayerMask.NameToLayer("Enemy"))
             {
                 float finalDamage = playerStatus.CalculateFinalDamage();
 
@@ -203,7 +209,7 @@ public class DameZone : MonoBehaviour
                     boss1HP.TakeDame((int)finalDamage);
                     return;
                 }
-            }
+            
         }
     }
     public void ShowTextDame(float damage)
