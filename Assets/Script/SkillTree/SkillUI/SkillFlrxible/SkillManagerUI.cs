@@ -2,8 +2,6 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
-using System.Collections;
-using UnityEditor.Experimental.GraphView;
 
 public class SkillManagerUI : MonoBehaviour
 {

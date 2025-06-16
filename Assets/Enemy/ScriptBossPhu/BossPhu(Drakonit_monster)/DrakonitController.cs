@@ -1,11 +1,11 @@
-﻿using System;
+﻿
 using TMPro;
 using Unity.Cinemachine;
-using UnityEditor.Overlays;
+
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
+
 
 // Script điều khiển hành vi của enemy Drakonit bằng State Machine
 public class DrakonitController : MonoBehaviour

@@ -1,7 +1,5 @@
-﻿using System;
-using UnityEditor.Overlays;
+﻿
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Animations.Rigging;
 
 public class PlayerControllerState : MonoBehaviour
