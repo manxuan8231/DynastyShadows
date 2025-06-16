@@ -156,7 +156,15 @@ public class CastRostbindSoul : MonoBehaviour
                 ShowTextDame(dame);
                 enemyMap2_1.TakeDamage(dame);
                 return;
-            } 
+            }
+            //Minotaur
+            MinotaurEnemy minotaurController = enemy.GetComponent<MinotaurEnemy>();
+            if (minotaurController != null)
+            {
+                ShowTextDame(dame);
+                minotaurController.TakeDamage(dame);
+                return;
+            }
         }
     }
 

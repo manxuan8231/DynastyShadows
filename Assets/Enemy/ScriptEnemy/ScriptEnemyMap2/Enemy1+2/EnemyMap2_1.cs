@@ -142,6 +142,7 @@ public class EnemyMap2_1 : MonoBehaviour
                 currentTrigger = "Run";
                 break;
             case EnemyState.Attack:
+                if(agent.enabled == false) return; // Nếu agent không hoạt động thì không tấn công
                 agent.isStopped = true; // Dừng lại khi tấn công 
                 animator.SetTrigger("Attack");
                 currentTrigger = "Attack";

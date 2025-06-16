@@ -13,6 +13,10 @@ public class QuestPointer : MonoBehaviour
     public GameObject canvas; // Canvas chứa mũi tên và khoảng cách
     private void Start()
     {
+        if (canvas != null)
+        {
+            canvas.SetActive(true); // Hiển thị canvas khi bắt đầu
+        }
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
     void Update()

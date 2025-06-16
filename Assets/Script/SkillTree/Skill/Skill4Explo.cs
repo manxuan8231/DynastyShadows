@@ -40,9 +40,10 @@ public class Skill4Explo : MonoBehaviour
             TryDealDamage(hitObj.GetComponent<BossHP>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<NecController>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<Boss1Controller>(), finalDamage);
+            TryDealDamage(hitObj.GetComponent<EnemyMap2_HP>(), finalDamage);
+            TryDealDamage(hitObj.GetComponent<MinotaurEnemy>(), finalDamage);
 
 
-         
         }
 
     }
@@ -78,6 +79,12 @@ public class Skill4Explo : MonoBehaviour
                 break;
             case Boss1Controller b1:
                 b1.TakeDame((int)dmg);
+                break;
+            case EnemyMap2_HP em2:
+                em2.TakeDamage((int)dmg);
+                break;
+            case MinotaurEnemy minotaur:
+                minotaur.TakeDamage((int)dmg);
                 break;
         }
     }

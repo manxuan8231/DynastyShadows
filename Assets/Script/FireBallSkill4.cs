@@ -43,8 +43,10 @@ public class FireBallSkill4 : MonoBehaviour
             TryDealDamage(hitObj.GetComponent<BossHP>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<NecController>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<Boss1Controller>(), finalDamage);
+            TryDealDamage(hitObj.GetComponent<EnemyMap2_HP>(), finalDamage);
+            TryDealDamage(hitObj.GetComponent<MinotaurEnemy>(), finalDamage);
 
-            SpawnImpact(other.transform.position); // Sửa lại chỗ lỗi
+            SpawnImpact(other.transform.position); 
             Destroy(gameObject);
         }
         else if (hitObj.layer == LayerMask.NameToLayer("Ground"))
@@ -91,6 +93,8 @@ public class FireBallSkill4 : MonoBehaviour
             case BossHP b: b.TakeDamage((int)dmg); break;
             case NecController n: n.TakeDame((int)dmg); break;
             case Boss1Controller b1: b1.TakeDame((int)dmg); break;
+            case EnemyMap2_HP em: em.TakeDamage((int)dmg); break;
+            case MinotaurEnemy me: me.TakeDamage((int)dmg); break;
         }
     }
 }

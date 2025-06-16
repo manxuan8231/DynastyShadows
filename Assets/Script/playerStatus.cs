@@ -32,13 +32,14 @@ public class PlayerStatus : MonoBehaviour
     public float currentHp ;
     public float maxHp ;
     public TextMeshProUGUI textHealth;
+    public bool isHit = true; 
     public bool isStun = true; //kiểm tra stun hay không
     //hien dame effect
     public GameObject textDame;
     public Transform textTransform;
     //xu lý exp-----------------------------------------------
     public Slider expSlider; 
-    public TextMeshProUGUI levelText;
+    public TextMeshProUGUI[] levelText;
     public TextMeshProUGUI[] scoreText;
     public GameObject effectLevelUp;//effect level up
     
@@ -91,7 +92,11 @@ public class PlayerStatus : MonoBehaviour
         //level and score
         expSlider.maxValue = expToNextLevel;
         expSlider.value = currentExp;
-        levelText.text = currentLevel.ToString();
+        for (int i = 0; i < levelText.Length; i++)
+        {
+            levelText[i].text = currentLevel.ToString();
+        }
+        
         for (int i = 0; i < scoreText.Length; i++)
         {
             scoreText[i].text = "" + score.ToString();
@@ -164,9 +169,9 @@ public class PlayerStatus : MonoBehaviour
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
         sliderHp.value = currentHp;
         textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
-        if (isStun == true) //nếu đang stun thì gọi hàm WaitStun
+        if (isStun == true && isHit == true) //nếu bị hit r thi đợi 1 giay ms cho tiep
         {    
-           StartCoroutine(WaitHit(0.7f)); // gọi hàm WaitStun với thời gian 4 giây
+            StartCoroutine(WaitHit(0.7f)); // gọi hàm WaitStun với thời gian 4 giây
             audioSource.PlayOneShot(audioHit); //phát âm thanh bị hit
         }
         //tim enemy de phan dame
@@ -256,11 +261,7 @@ public class PlayerStatus : MonoBehaviour
             }
         }
        
-        if (currentHp <= 0)
-        {
-            Destroy(gameObject);
-
-        }
+       
     }
     public void ShowTextDame(float damage)
     {
@@ -284,11 +285,7 @@ public class PlayerStatus : MonoBehaviour
             StartCoroutine(WaitStun(4f)); // gọi hàm WaitHit với thời gian 0.5 giây
             audioSource.PlayOneShot(audioHit);
         }           
-        if (currentHp <= 0)
-        {
-            Destroy(gameObject);
-
-        }
+       
     }
     public void BuffHealth(float amount)
     {
@@ -350,7 +347,10 @@ public class PlayerStatus : MonoBehaviour
 
         if (levelText != null)
         {
-            levelText.text = currentLevel.ToString();
+            for (int i = 0; i < levelText.Length; i++)
+            {
+                levelText[i].text = currentLevel.ToString();
+            }
         }
 
         if (scoreText != null)
@@ -445,7 +445,7 @@ public class PlayerStatus : MonoBehaviour
 
         return damage;
     }
-
+    
     private IEnumerator WaitStun(float time)
     {
         playerController.animator.SetBool("Stun", true);
@@ -463,10 +463,13 @@ public class PlayerStatus : MonoBehaviour
 
     private IEnumerator WaitHit(float time)
     {
+        isHit = false; // Tắt trạng thái bị hit
         playerController.animator.SetTrigger("Hit"); // bật animator hit
         playerController.isController = false;// lại điều khiển nhân vật
         yield return new WaitForSeconds(time);
         playerController.isController = true; // Bật lại điều khiển nhân vật
+        yield return new WaitForSeconds(0.5f);
+        isHit = true; // Bật lại trạng thái bị hit
     }
     void LevelUp()
     {

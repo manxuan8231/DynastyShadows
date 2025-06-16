@@ -37,6 +37,8 @@ public class MinotaurEnemy : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return; // Nếu đã chết, không thực hiện hành động nào khác    
+        targetPlayer = FindClosestPlayer(); // Cập nhật người chơi gần nhất mỗi khung hình
         _rootNode?.Evaluate();
     }
    
@@ -161,6 +163,7 @@ public class MinotaurEnemy : MonoBehaviour
     }
     public void TakeDamage(float damage)
     {
+        Debug.Log($"Minotaur nhận {damage} sát thương");
         currentHealth -= damage;
         sliderHp.value = currentHealth; // Cập nhật thanh máu
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // Đảm bảo máu không âm

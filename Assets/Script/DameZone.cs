@@ -28,8 +28,9 @@ public class DameZone : MonoBehaviour
     {
         GameObject hitObj = other.gameObject;
         if (hitObj.layer == LayerMask.NameToLayer("Enemy"))
-                {
-                float finalDamage = playerStatus.CalculateFinalDamage();
+          {
+            if (listDame.Contains(other)) return;
+            float finalDamage = playerStatus.CalculateFinalDamage();
 
                 GameObject hitEffect = Instantiate(effectHit, tranFormHit.position, transform.rotation);
                 Destroy(hitEffect, 1f);
@@ -132,7 +133,8 @@ public class DameZone : MonoBehaviour
         GameObject hitObj = other.gameObject;
         if (hitObj.layer == LayerMask.NameToLayer("Enemy"))
             {
-                float finalDamage = playerStatus.CalculateFinalDamage();
+            if (listDame.Contains(other)) return;
+            float finalDamage = playerStatus.CalculateFinalDamage();
 
                 GameObject hitEffect = Instantiate(effectHit, tranFormHit.position, transform.rotation);
                 Destroy(hitEffect, 1f);

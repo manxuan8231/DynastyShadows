@@ -51,8 +51,8 @@ public class QuestDesert5 : MonoBehaviour
         if (enemyCount >= 10)
         {
             enemyCount = 0; // Reset số lượng kẻ thù đã tiêu diệt
-            //boss.SetActive(true); // Hiện boss khi số lượng kẻ thù >= 10
-            SpawnEnemies(); // Gọi hàm SpawnEnemies để spawn kẻ thù
+            boss.SetActive(true); // Hiện boss khi số lượng kẻ thù >= 10
+            //SpawnEnemies(); // Gọi hàm SpawnEnemies để spawn kẻ thù
             Debug.Log("Boss đã xuất hiện");
         }
         else if (bossCount >= 1)

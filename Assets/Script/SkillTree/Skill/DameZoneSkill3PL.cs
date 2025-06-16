@@ -117,6 +117,15 @@ public class DameZoneSkill3PL : MonoBehaviour
                 enemyMap2_1.TakeDamage(finalDamage);
                 return;
             }
+            //Minotaur
+            MinotaurEnemy minotaurController = other.GetComponent<MinotaurEnemy>();
+            if (minotaurController != null)
+            {
+
+                ShowTextDame(finalDamage);
+                minotaurController.TakeDamage(finalDamage);
+                return;
+            }
         }
     }
     public void ShowTextDame(float damage)

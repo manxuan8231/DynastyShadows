@@ -26,12 +26,19 @@ public class Skill2State : PlayerState
     public override void Update()
     {
         player.animator.SetBool("jumpLand", player.isGrounded && !player.wasGroundedLastFrame == true);
-        if (isMove == true)
+        if (isMove == true && player.isController == true)
         {
             Move();
             Jump();
-        }   
-        DashToNearestEnemyAndAttack();
+            DashToNearestEnemyAndAttack();
+        }
+        else
+        {
+            player.animator.SetBool("isWalking", false);
+            player.animator.SetBool("isRunning", false);
+
+        }
+       
       
     }
     public void Jump()
