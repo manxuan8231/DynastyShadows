@@ -12,7 +12,7 @@ public class DontDestroyPrefabs : MonoBehaviour
         {
           DontDestroyOnLoad(playerPre);
             SceneManager.sceneLoaded += OnScenceLoad;
-          SceneManager.LoadScene("vail");
+          SceneManager.LoadScene("Map2");
         }
     }
     public void OnScenceLoad( Scene scence, LoadSceneMode mod)
