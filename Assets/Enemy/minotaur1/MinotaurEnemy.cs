@@ -9,17 +9,23 @@ using UnityEngine.UI;
 public class MinotaurEnemy : MonoBehaviour
 {
     public Transform targetPlayer;//người chơi
+    public BoxCollider box;
     public float detectionRange = 10f;//phát hiện người chơi
     public float attackRange = 2f;// khoảng cách tấn công người chơi
     public Slider sliderHp;
     public float currentHealth = 100f;// máu hiện tại 
     public float maxHealth = 100f;// máu tối đa
     public bool isDead = false;// trạng thái chết của kẻ thù
+    //hit
+    private bool _isHit = false;       // có đang bị đánh không
+    private bool _canBeHit = true;     // dùng cooldown giữa các lần bị đánh
+    private int _hitIndex = 0;         // 0 = Hit1, 1 = Hit2
+
     //cooldown tấn công
     public float attackCooldown = 4f;// thời gian chờ giữa các đợt tấn công
     public float _lastAttackTime = -4f;// thời gian tấn công cuối cùng
-
-
+    //tham chieu
+    public DameZoneMinotaur damezone; 
     private Node _rootNode;// Cây hành vi gốc
     private Animator _animator;
     private NavMeshAgent _agent;
@@ -32,6 +38,8 @@ public class MinotaurEnemy : MonoBehaviour
         currentHealth = maxHealth; // Khởi tạo máu hiện tại bằng máu tối đa
         sliderHp.maxValue = currentHealth; // Thiết lập giá trị tối đa của thanh máu
         sliderHp.value = currentHealth; // Thiết lập giá trị hiện tại của thanh máu
+        box = GetComponent<BoxCollider>();
+        damezone = FindAnyObjectByType<DameZoneMinotaur>(); // Lấy tham chiếu đến DrakonitDameZone trong con của MinotaurEnemy
         SetupBehaviorTree();// thiết lập cây hành vi
     }
 
@@ -47,6 +55,28 @@ public class MinotaurEnemy : MonoBehaviour
         //xu ly die-------------------
         var isDead = new ConditionNode(() => currentHealth <= 0);// kiểm tra xem  đã chết hay chưa
         var deathAction = new ActionNode(PlayDeathAnimation);// hành động khi  chết
+
+        //xu ly hit------------------------
+         var isHit = new ConditionNode(IsHitEnemy);// kiểm tra xem có bị đánh hay không
+         var hitAction = new ActionNode(() =>
+        {
+            _agent.isStopped = true;
+
+            if (_hitIndex == 0)
+            {
+                _animator.SetTrigger("Hit1");
+                _hitIndex = 1;
+            }
+            else
+            {
+                _animator.SetTrigger("Hit2");
+                _hitIndex = 0;
+            }
+
+            _isHit = false; // reset trạng thái đã xử lý hit
+            return NodeState.SUCCESS;
+        });
+        // hành động khi bị đánh
 
         // xu ly di chuyển đến người chơi -----------------
         var isMove = new ConditionNode(ISPlayerMove);  
@@ -66,6 +96,8 @@ public class MinotaurEnemy : MonoBehaviour
         {
              //die
              new SequenceNode(new List<Node> { isDead, deathAction }),
+             //hit
+             new SequenceNode(new List<Node> { isHit, hitAction }),
              //move
              new SequenceNode(new List<Node> {isMove, moveToPlayerAction}),
              //Attack
@@ -124,19 +156,7 @@ public class MinotaurEnemy : MonoBehaviour
         _animator.SetBool("IsRunning", false);
         return NodeState.RUNNING;
     }
-    // chết----------------  
-    private NodeState PlayDeathAnimation()
-    {
-        if (isDead == false)
-        {
-            isDead = true; // đánh dấu là đã chết
-            _animator.SetTrigger("Die");
-            _agent.isStopped = true;
-            Debug.Log("Hilichurl đã chết");
-           
-        }
-        return NodeState.SUCCESS;// đã chết thành công
-    }
+    
     private NodeState Idle()
     {
         _agent.isStopped = true;
@@ -161,21 +181,73 @@ public class MinotaurEnemy : MonoBehaviour
         }
         return closestPlayer;
     }
+
+    // chết----------------  
+    private NodeState PlayDeathAnimation()
+    {
+        if (isDead == false)
+        {
+            isDead = true; // đánh dấu là đã chết
+            _animator.SetTrigger("Die");
+            _agent.isStopped = true;
+            box.enabled = false; // tắt collider để không va chạm với người chơi
+           
+            Debug.Log("Hilichurl đã chết");
+
+        }
+        return NodeState.SUCCESS;// đã chết thành công
+    }
     public void TakeDamage(float damage)
     {
         Debug.Log($"Minotaur nhận {damage} sát thương");
         currentHealth -= damage;
-        sliderHp.value = currentHealth; // Cập nhật thanh máu
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // Đảm bảo máu không âm
-        if (currentHealth <= 0)
+        sliderHp.value = currentHealth; // Cập nhật thanh máu
+       
+        if (currentHealth > 0)
         {
-           StartCoroutine(WaitAnimatorDie()); // Bắt đầu coroutine để xử lý animation chết
+            _isHit = true;
+            _canBeHit = false; // khóa đánh tiếp
+            StartCoroutine(HitCooldown()); // cooldown sau khi bị đánh
+        }
+        else 
+        {
+            StartCoroutine(WaitAnimatorDie()); // Bắt đầu coroutine để xử lý animation chết
         }
     }
+   
 
     public IEnumerator WaitAnimatorDie()
     {
+
         yield return new WaitForSeconds(2f); // Thời gian chờ để animation chết hoàn thành
+        currentHealth = maxHealth; // Đặt lại máu về tối đa
+        sliderHp.value = currentHealth; // Cập nhật thanh máu về giá trị tối đa
+        isDead = false; // Đặt lại trạng thái chết
+        _agent.isStopped = false;
+        box.enabled = true; // Bật lại collider để có thể va chạm với người chơi
+        yield return null;
         ObjPoolingManager.Instance.ReturnToPool("Minotaur1", gameObject); // Trả về pool sau khi animation chết hoàn thành
+    }
+    //hit------------------
+    private bool IsHitEnemy()
+    {
+        return _isHit && _canBeHit;
+    }
+    private IEnumerator HitCooldown()
+    {
+        yield return new WaitForSeconds(0.1f); // thời gian giữa các lần bị đánh
+        _canBeHit = true;
+    }
+
+    //damezone----------------
+    public void beginDame()
+    {
+        Debug.Log("Bắt đầu vùng sát thương của Drakonit");
+        damezone.beginDame(); // Bắt đầu vùng sát thương
+    }
+    public void endDame()
+    {
+        damezone.endDame(); // Kết thúc vùng sát thương
     }
 }

@@ -259,6 +259,14 @@ public class PlayerStatus : MonoBehaviour
                 enemyMap2_1.TakeDamage(amount);
                 return;
             }
+            MinotaurEnemy minotaurEnemy = enemy.GetComponent<MinotaurEnemy>();
+            if (minotaurEnemy != null)
+            {
+                audioSource.PlayOneShot(skill4Manager.soundReflectDame); // Phát âm thanh phản dame
+                ShowTextDame(amount);
+                minotaurEnemy.TakeDamage(amount);
+                return;
+            }
         }
        
        
@@ -345,7 +353,7 @@ public class PlayerStatus : MonoBehaviour
             expSlider.value = currentExp;
         }
 
-        if (levelText != null)
+        if (levelText != null)                      
         {
             for (int i = 0; i < levelText.Length; i++)
             {

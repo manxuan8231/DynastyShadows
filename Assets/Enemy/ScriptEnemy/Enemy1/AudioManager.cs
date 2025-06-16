@@ -5,6 +5,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource AudioSource;
     public AudioClip deathSound;
     public AudioClip attackSound;
+    public AudioClip punchSound; 
     public AudioClip hitSound;
  
     public AudioClip runSound;
@@ -27,13 +28,16 @@ public class AudioManager : MonoBehaviour
     {
         AudioSource.PlayOneShot(attackSound);
     }
+    public void PlayPunchSound()
+    {
+        AudioSource.PlayOneShot(punchSound);
+    }
     public void PlayHitSound()
     {
         AudioSource.PlayOneShot(hitSound);
     }
     public void PlayDeathSound()
     {
-        AudioSource.volume = 1;
         AudioSource.PlayOneShot(deathSound);
     }
 }
