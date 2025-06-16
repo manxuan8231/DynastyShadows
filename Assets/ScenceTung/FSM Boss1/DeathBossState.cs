@@ -24,21 +24,19 @@ public class DeathBossState : Boss1State
         {
             enemy.enabled = false;
             enemy.agent.isStopped = true;
-            enemy.agent.enabled = false;
-            GameObject.DontDestroyOnLoad(enemy.playerObjScence1);
+            enemy.agent.enabled = false;     
             enemy.StartCoroutine(dontDestroy(5));
-
-
 
         }
     }
     IEnumerator dontDestroy(float duration)
     {
+        enemy.boxCollider.enabled = false;
         enemy.anmt.SetTrigger("Death");
-        GameObject.Destroy(enemy.bossMap1,5f);  
         yield return new WaitForSeconds(duration);
+        enemy.timeLine.SetActive(true);
+        enemy.boss1.SetActive(false);
        
-
 
     }
 

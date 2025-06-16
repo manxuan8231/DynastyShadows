@@ -35,15 +35,16 @@ public class Boss1Controller : MonoBehaviour
     public GameObject skill3Prefabs;
     public GameObject skill4Prefabs;
     public Vector3 playerPos;
+    public GameObject timeLine;
 
 
 
     [Header("Object")]
-    public GameObject bossMap1;
     public DameZoneWeapon dameZoneWp;
-    public GameObject playerObjScence1;
-  
-    
+    public GameObject boss1;
+    public BoxCollider boxCollider;
+
+
     private void Awake()
     {
         InitializeComponents();
