@@ -28,17 +28,15 @@ public class DeathBossState : Boss1State
             GameObject.DontDestroyOnLoad(enemy.playerObjScence1);
             enemy.StartCoroutine(dontDestroy(5));
 
-
-
         }
     }
     IEnumerator dontDestroy(float duration)
     {
         enemy.anmt.SetTrigger("Death");
-        GameObject.Destroy(enemy.bossMap1,5f);  
         yield return new WaitForSeconds(duration);
+        enemy.timeLine.SetActive(true);
+        enemy.gameObject.SetActive(false);
        
-
 
     }
 

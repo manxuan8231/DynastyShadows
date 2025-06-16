@@ -35,6 +35,7 @@ public class Boss1Controller : MonoBehaviour
     public GameObject skill3Prefabs;
     public GameObject skill4Prefabs;
     public Vector3 playerPos;
+    public GameObject timeLine;
 
 
 
