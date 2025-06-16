@@ -27,7 +27,10 @@ public class MenuCode : MonoBehaviour
     {
         SceneManager.LoadScene(ReAndLog);
     }
-
+    public void PlayGame(string timeLime)
+    {
+        SceneManager.LoadScene(timeLime);
+    }
     public void Quit()
     {
         Application.Quit();
