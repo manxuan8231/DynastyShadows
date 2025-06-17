@@ -43,14 +43,14 @@ public class OpenTele : MonoBehaviour
             PlayerPrefs.Save();
         }
         // Bấm R để reset
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             PlayerPrefs.DeleteKey(teleportID);
             PlayerPrefs.Save();
             Debug.Log("Đã xóa dữ liệu teleport.");
         }
     }
-
+   
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
