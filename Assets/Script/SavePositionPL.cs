@@ -1,48 +1,60 @@
 ﻿using System.IO;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SavePositionPL : MonoBehaviour
 {
-    public GameObject player; // Tham chiếu đến đối tượng người chơi
+    public GameObject player; // Tham chiếu đến player
+    private string savePath;
+
+    // Dữ liệu vị trí player
+    [System.Serializable]
+    public class PlayerPosition
+    {
+        public float x;
+        public float y;
+        public float z;
+    }
+
     private void Start()
     {
-        if (player == null)
-        {
-            player = GameObject.FindWithTag("Player"); // Tìm đối tượng người chơi nếu chưa gán
-        }
-        LoadPosition(); // Khi game bắt đầu thì load vị trí nếu có
+        if (player == null) player = GameObject.FindWithTag("Player"); // Tự động tìm nếu chưa gán
+        savePath = Application.persistentDataPath + "/player_position.json";
+
+        LoadPosition(); // Load vị trí khi vào game
     }
 
     private void OnApplicationQuit()
     {
-        SavePosition(); // Khi thoát game thì lưu lại vị trí hiện tại
+        SavePosition(); // Lưu vị trí khi thoát game
     }
 
     public void SavePosition()
     {
         Vector3 pos = player.transform.position;
+        PlayerPosition data = new PlayerPosition
+        {
+            x = pos.x,
+            y = pos.y,
+            z = pos.z
+        };
 
-        PlayerPrefs.SetFloat("PlayerX", pos.x);
-        PlayerPrefs.SetFloat("PlayerY", pos.y);
-        PlayerPrefs.SetFloat("PlayerZ", pos.z);
+        string json = JsonUtility.ToJson(data, true);
+        File.WriteAllText(savePath, json);
 
-        PlayerPrefs.Save(); // Lưu lại 
+        Debug.Log("Đã lưu vị trí vào JSON: " + savePath);
     }
 
     public void LoadPosition()
     {
-       
-        if (PlayerPrefs.HasKey("PlayerX"))
+        if (File.Exists(savePath))
         {
-            float x = PlayerPrefs.GetFloat("PlayerX");
-            float y = PlayerPrefs.GetFloat("PlayerY");
-            float z = PlayerPrefs.GetFloat("PlayerZ");
+            string json = File.ReadAllText(savePath);
+            PlayerPosition data = JsonUtility.FromJson<PlayerPosition>(json);
 
-            Vector3 loadedPos = new Vector3(x, y, z);
+            Vector3 loadedPos = new Vector3(data.x, data.y, data.z);
             player.transform.position = loadedPos;
-           
-        }
-    }
 
+        }
+
+    }
 }

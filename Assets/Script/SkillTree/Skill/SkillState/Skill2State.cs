@@ -65,6 +65,7 @@ public class Skill2State : PlayerState
     }
     public override void Exit()
     {
+         player.skill2Manager.isHibitedIcon = false;    
         player.skill2Manager.isChangeSkill2 = false;
         isMove = true; // Đặt lại trạng thái di chuyển
         player.animator.runtimeAnimatorController = player.animatorDefauld; // Quay về bộ điều khiển hoạt hình mặc định

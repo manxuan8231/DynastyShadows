@@ -21,6 +21,7 @@ public class Skill1Manager : MonoBehaviour
     public Transform spawnPoint; // Vị trí spawn kỹ năng
                                  //tham chieu
     private PlayerControllerState playerController;
+    private PlayerStatus playerStatus;
 
     //unlock skill trong UI thi moi cho dung skill
     public bool isUnlockSkill1 = false;
@@ -32,6 +33,7 @@ public class Skill1Manager : MonoBehaviour
         iconSkill1.SetActive(false);
         isSkillCooldown = false;
         playerController = FindAnyObjectByType<PlayerControllerState>();
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
 
     }
     private void Update()
@@ -51,7 +53,8 @@ public class Skill1Manager : MonoBehaviour
             }
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !isSkillCooldown && isInputSkill1 == true && isUnlockSkill1 == true)
+        if (Input.GetKeyDown(KeyCode.Alpha1) && !isSkillCooldown && isInputSkill1 == true && isUnlockSkill1 == true 
+        && playerStatus.currentHp > 0)//phải có máu cooldown xong unlock skill mới dung
         {
             Debug.Log("Bắn kỹ năng đóng băng");
             textCoolDownSkill.enabled = true;

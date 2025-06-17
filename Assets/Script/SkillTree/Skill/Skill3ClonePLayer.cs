@@ -17,6 +17,7 @@ public class Skill3ClonePLayer : MonoBehaviour
 
     //tham chieu
     Skill3Manager skill3Manager;
+    PlayerStatus playerStatus;
     DameZoneSkill3PL dameZoneSkill3PL;
    
     void Start()
@@ -24,6 +25,7 @@ public class Skill3ClonePLayer : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         dameZoneSkill3PL= FindAnyObjectByType<DameZoneSkill3PL>();
         skill3Manager = FindAnyObjectByType<Skill3Manager>();
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
         animator = GetComponent<Animator>();
         agent.speed = speed;
         StartCoroutine(ReturnToPool());
@@ -32,7 +34,7 @@ public class Skill3ClonePLayer : MonoBehaviour
     void Update()
     {
         FindNearestEnemy();
-        
+        StartCoroutine(ReturnToPool()); 
         if (nearestEnemy != null)
         {
             float distanceToEnemy = Vector3.Distance(transform.position, nearestEnemy.position);
@@ -52,8 +54,13 @@ public class Skill3ClonePLayer : MonoBehaviour
                 
                 MoveToEnemy();
             }
-        }else{
+        }else
+        {
             animator.SetBool("Run", false);
+        }
+        if(playerStatus.currentHp <= 0)
+        {
+            ObjPoolingManager.Instance.ReturnToPool(skill3Manager.clonePLTag,gameObject);
         }
       
     }

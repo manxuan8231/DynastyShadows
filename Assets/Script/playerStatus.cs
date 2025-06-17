@@ -78,6 +78,7 @@ public class PlayerStatus : MonoBehaviour
     public GameObject effectStun;
     public AudioClip audioHit;
     public AudioClip audioStun;
+    public AudioClip audioDie;
     //tham chieu ------------------------------------------
     private PlayerControllerState playerController; // Tham chiếu đến PlayerController
     private ComboAttack comboAttack; // Tham chiếu đến ComboAttack
@@ -165,7 +166,9 @@ public class PlayerStatus : MonoBehaviour
     //hp
     public void TakeHealth(float amount ,GameObject enemy)//bị lấy hp
     {
-        currentHp -= amount;
+        if(currentHp > 0)
+        {
+            currentHp -= amount;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
         sliderHp.value = currentHp;
         textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
@@ -268,8 +271,13 @@ public class PlayerStatus : MonoBehaviour
                 return;
             }
         }
-       
-       
+        if(currentHp <= 0)
+        {
+           audioSource.PlayOneShot(audioDie);
+           playerController.ChangeState(new PlayerDieState(playerController));
+        }
+        }
+        
     }
     public void ShowTextDame(float damage)
     {
@@ -279,6 +287,7 @@ public class PlayerStatus : MonoBehaviour
         TextDamePopup popup = effectText.GetComponent<TextDamePopup>();
         if (popup != null)
         {
+          
             popup.Setup(damage);
         }
     }
