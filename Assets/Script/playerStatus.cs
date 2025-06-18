@@ -168,10 +168,11 @@ public class PlayerStatus : MonoBehaviour
     {
         if(currentHp > 0)
         {
+           
             currentHp -= amount;
-        currentHp = Mathf.Clamp(currentHp, 0, maxHp);
-        sliderHp.value = currentHp;
-        textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
+            currentHp = Mathf.Clamp(currentHp, 0, maxHp);
+            sliderHp.value = currentHp;
+            textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
         if (isStun == true && isHit == true) //nếu bị hit r thi đợi 1 giay ms cho tiep
         {    
             StartCoroutine(WaitHit(0.7f)); // gọi hàm WaitStun với thời gian 4 giây
@@ -273,8 +274,10 @@ public class PlayerStatus : MonoBehaviour
         }
         if(currentHp <= 0)
         {
-           audioSource.PlayOneShot(audioDie);
-           playerController.ChangeState(new PlayerDieState(playerController));
+           
+            audioSource.PlayOneShot(audioDie);
+            playerController.ChangeState(new PlayerDieState(playerController));
+          
         }
         }
         
@@ -485,7 +488,7 @@ public class PlayerStatus : MonoBehaviour
         playerController.isController = false;// lại điều khiển nhân vật
         yield return new WaitForSeconds(time);
         playerController.isController = true; // Bật lại điều khiển nhân vật
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
         isHit = true; // Bật lại trạng thái bị hit
     }
     void LevelUp()

@@ -8,12 +8,14 @@ public class PlayerDieState : PlayerState
     public override void Enter()
     {
         isDie = true; // Đặt biến isDie thành true khi vào trạng thái chết
+       
     }
 
     public override void Exit()
     {
         player.canvasLoad.SetActive(false);
         player.animator.SetTrigger("Hit"); // Đặt lại trạng thái hoạt hình về 
+       
     }
 
     public override void Update()

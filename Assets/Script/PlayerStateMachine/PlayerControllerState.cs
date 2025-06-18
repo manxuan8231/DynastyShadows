@@ -25,7 +25,7 @@ public class PlayerControllerState : MonoBehaviour
     public Animator animator;
     public AudioSource audioSource;
     public RigBuilder rigBuilder;
-
+      
     
     public bool isRunning = false;
     public bool isController = true;
@@ -43,6 +43,7 @@ public class PlayerControllerState : MonoBehaviour
     public Skill3Manager skill3Manager; //skill3 tham chieu
     public Skill1Manager skill1Manager; //skill1 tham chieu
     public Skill4Manager skill4Manager;// skill 4 tham chieu
+
 
   //trang thai animator
     public RuntimeAnimatorController animatorDefauld;//trang thai mac định
@@ -77,7 +78,8 @@ public class PlayerControllerState : MonoBehaviour
         canvasLoad.SetActive(false);
          rigBuilder = GetComponent<RigBuilder>();
         rigBuilder.enabled = false; // 
-        
+     
+
         // Gọi hàm ChangeState để chuyển sang trạng thái ban đầu
         ChangeState(new PlayerCurrentState(this));
     }
