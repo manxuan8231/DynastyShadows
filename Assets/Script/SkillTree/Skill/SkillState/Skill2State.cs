@@ -7,6 +7,7 @@ public class Skill2State : PlayerState
     public Skill2State(PlayerControllerState player) : base(player) { }
     public LayerMask enemyLayer = LayerMask.GetMask("Enemy"); // Layer của enemy
     private bool isMove = false;
+   
     private bool isAttack = true; // Biến để kiểm tra trạng thái tấn công
     private bool isChangeState = false; // Biến để kiểm tra trạng thái chuyển đổi
     public override void Enter()
@@ -132,7 +133,7 @@ public class Skill2State : PlayerState
         }
 
         // Nếu có enemy gần thì mới cho bấm chuột trái để dash
-        if (nearestEnemy != null && Input.GetMouseButtonDown(0) && isAttack == true && Cursor.visible == false)
+        if (nearestEnemy != null && Input.GetMouseButtonDown(0) && isAttack == true && Cursor.visible == false )
         {
             isAttack = false;
             isMove = false;

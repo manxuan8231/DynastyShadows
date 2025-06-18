@@ -77,7 +77,7 @@ public class Quest3 : MonoBehaviour
             pointerLinhCanh.SetActive(true);
             // Cho phép NPC nhận nhiệm vụ
             turnInQuest3.isContent = true;
-            turnInQuest3.isButtonF = true;
+            //turnInQuest3.isButtonF = true;
             StartCoroutine(WaitNiceQuest());// Hiện UI nhiệm vụ đẹp
             questNameText.text = $"Tới chổ Lính Canh trả nhiệm vụ";
         }       

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class QuestMainBacLam : MonoBehaviour
 {
+    public GameObject iconQuestMainBacLam;//icon cua bac lam
     public GameObject questPanel;// Panel hiển thị thông tin nhiệm vụ 
     public TextMeshProUGUI questNameText;// Tên nhiệm vụ
     public GameObject iconQuest; // Icon hiển thị nơi làm nhiệm vụ
@@ -12,7 +13,7 @@ public class QuestMainBacLam : MonoBehaviour
 
     public GameObject iconQuest2; // Icon hiển thị nơi làm nhiệm vụ
     public GameObject pointerEnemy;//mui ten chi duong den linh canh
-   
+   public BoxCollider boxCollider;//box collider cua linh canh b
     public float enemyCount = 0; // Biến đếm số lượng kẻ thù đã tiêu diệt
 
     public GameObject niceQuest; // Hiển thị thông báo hoàn thành nhiệm vụ
@@ -33,6 +34,7 @@ public class QuestMainBacLam : MonoBehaviour
       
 
         niceQuest.SetActive(false); // Ẩn thông báo hoàn thành nhiệm vụ 
+        boxCollider.enabled = false;
     }
     private void Update()
     {
@@ -51,16 +53,18 @@ public class QuestMainBacLam : MonoBehaviour
     }
 
     // Bắt đầu quest
-    public void StartQuestMainBacLam()
+    public void StartQuestMainBacLam()//la noi chuyen voi bac lam xong nhan nhiem vu nay
     {
         linhCanhB.enabled = true;
         iconQuest.SetActive(true);// Hiện icon nhiệm vụ trên bản đồ
         questPanel.SetActive(true);// Hiện panel nhiệm vụ
         pointerLinhCanhB.SetActive(true);// Hiện mũi tên chỉ đường đến Lính Canh B
+        iconQuestMainBacLam.SetActive(false);
+         boxCollider.enabled = true;
         questNameText.text = $"Đến chổ Lính Canh B";
     }
 
-    public void StartQuestLinhCanhB()
+    public void StartQuestLinhCanhB()//la noi chuyen voi linh canh b xong nhan nhiem vu nay
     {
        
         iconQuest2.SetActive(true);// Hiện icon nhiệm vụ trên bản đồ

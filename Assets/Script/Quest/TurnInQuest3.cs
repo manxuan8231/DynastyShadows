@@ -57,7 +57,7 @@ public class TurnInQuest3 : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && isButtonF)
+        if (Input.GetKeyDown(KeyCode.F) && isButtonF == true)
         {
             Cursor.lockState = CursorLockMode.None; // mở chuột
             Cursor.visible = true; // hiện chuột

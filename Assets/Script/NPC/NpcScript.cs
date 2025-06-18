@@ -8,6 +8,7 @@ public class NPCScript : MonoBehaviour
     public GameObject NPCPanel; // Panel hiển thị hội thoại
     public TextMeshProUGUI NPCName; // Tên của NPC
     public TextMeshProUGUI NPCContent; // Nội dung hội thoại
+   
     public enum QuestToStart { None, BacLam, Village, LinhCanh, MainBacLam ,LinhCanhB}
     public QuestToStart questToStart = QuestToStart.None;
 
@@ -176,6 +177,7 @@ public class NPCScript : MonoBehaviour
                 break;
             case QuestToStart.MainBacLam:
                 questMainBacLam.StartQuestMainBacLam();
+               
                 break;
             case QuestToStart.LinhCanhB:
                 questMainBacLam.StartQuestLinhCanhB();

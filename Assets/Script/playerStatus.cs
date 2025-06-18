@@ -499,8 +499,8 @@ public class PlayerStatus : MonoBehaviour
     }
     public void IncreasedGold(int value)
     {
-        gold += value;
-         goldQuantityTxt.text = value.ToString();
+         gold += value;
+         goldQuantityTxt.text = gold.ToString();
 
     }
 

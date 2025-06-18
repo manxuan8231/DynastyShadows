@@ -18,6 +18,7 @@ public class ThuongNhan : MonoBehaviour
 
     // Tham chiếu
     TurnInQuestThuongNhan turnInQuestThuongNhan; // Tham chiếu đến TurnInQuestThuongNhan
+    PlayerControllerState characterController;
     void Start()
     {
         scene1.Priority = 0;
@@ -26,6 +27,7 @@ public class ThuongNhan : MonoBehaviour
         turnInQuestThuongNhan =FindAnyObjectByType<TurnInQuestThuongNhan>(); // Lấy tham chiếu đến TurnInQuestThuongNhan
         animator = GetComponent<Animator>(); // Lấy tham chiếu đến Animator của NPC
         audioSource = GetComponent<AudioSource>(); // Lấy tham chiếu đến AudioSource của NPC
+        characterController = FindAnyObjectByType<PlayerControllerState>();
     }
 
    
@@ -52,6 +54,16 @@ public class ThuongNhan : MonoBehaviour
     }
     private IEnumerator WaitScene(float amount)
     {
+        //tat player
+        // Vô hiệu hóa các chức năng của nhân vật
+        characterController.enabled = false; // Vô hiệu hóa CharacterController
+        characterController.animator.SetBool("isWalking", false);
+        characterController.animator.SetBool("isRunning", false);
+        characterController.animator.enabled = false;    
+        UnityEngine.Cursor.visible = true; // Hiện chuột
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+
+
         scene1.Priority = 10;// Đặt priority của camera hiện tại
         yield return new WaitForSeconds(2f);// Chờ 0.5 giây để camera chuyển đổi
         textHelp.gameObject.SetActive(true);// Hiển thị text
@@ -61,6 +73,11 @@ public class ThuongNhan : MonoBehaviour
         
         yield return new WaitForSeconds(amount);// Chờ 2 giây
         scene1.Priority = 0;// Trả về priority ban đầu
+        
         textHelp.gameObject.SetActive(false);// Hiển thị text
+        characterController.enabled = true;
+        characterController.animator.enabled = true;
+        UnityEngine.Cursor.visible = false;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
     }
 }

@@ -24,11 +24,13 @@ public class TimeLineDesert : MonoBehaviour
     public string enemyTag; // Tag của kẻ thù dùng để gọi từ pool
     //goi ham
     private QuestDesert5 questDesert; // Quest Desert 
+  
     private PlayerControllerState characterController;
     void Start()
     {
         characterController = FindAnyObjectByType<PlayerControllerState>();
         questDesert = FindAnyObjectByType<QuestDesert5>(); // Lấy đối tượng QuestDesert5
+      
         effectDesert.SetActive(false); // Ẩn hiệu ứng sa mạc ban đầu
         panelContent.SetActive(false); // Ẩn panel nội dung ban đầu
         textContent.enabled = false; // Ẩn nội dung văn bản ban đầu
@@ -72,7 +74,7 @@ public class TimeLineDesert : MonoBehaviour
         characterController.enabled = false; // Vô hiệu hóa CharacterController
         characterController.animator.SetBool("isWalking", false);
         characterController.animator.SetBool("isRunning", false);
-       
+        characterController.animator.enabled = false;
         // Hiện chuột
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;
@@ -98,6 +100,7 @@ public class TimeLineDesert : MonoBehaviour
         yield return new WaitForSeconds(2.5f);//---------------------
         Destroy(effectDesert,40f);
         characterController.enabled = true; // bat CharacterController
+        characterController.animator.enabled = true;
         questDesert.StartQuestDesert5();
 
         // tat chuot
