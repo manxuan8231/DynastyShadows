@@ -71,13 +71,14 @@ public class Skill4State : PlayerState
             player.animator.SetBool("isRunning", false);
 
         }
-        
+         
     }
     public override void Exit() 
     {
         player.skill4Manager.isChangeStateSkill4 = false; //chuyen thanh false de ko chay lai skill4
         player.weaponSword.SetActive(false); // weapon khi chay skill4
         player.skill4Manager.ToggleSkill4(false); //tat model skill 4
+         player.skill4Manager.isHibitedIcon = false; // cam skill icon
         if (player.skill4Manager.isReflectDamage == true)
         {
           
@@ -240,7 +241,7 @@ public class Skill4State : PlayerState
         isMovement = true;//cho di chuyen
         yield return new WaitForSeconds(player.skill4Manager.timeSkill4); // Thời gian chờ 10 giây rồi chuyển trạng thái     
         player.animator.runtimeAnimatorController = player.animatorDefauld; // Trở về animator mặc định
-        player.skill4Manager.isHibitedIcon = false; //bat cam skill icon
+        player.skill4Manager.isHibitedIcon = false; // cam skill icon
         player.ChangeState(new PlayerCurrentState(player)); // Trở về trạng thái hiện tại
     }
 

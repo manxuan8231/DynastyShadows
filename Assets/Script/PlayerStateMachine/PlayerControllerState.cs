@@ -1,4 +1,5 @@
 ﻿
+using TMPro;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
@@ -31,16 +32,14 @@ public class PlayerControllerState : MonoBehaviour
     
     //cooldown roll
     public float rollColdownTime = -2f;
-   
-
     //goi ham tham chieu
     public PlayerStatus playerStatus;
     public ComboAttack comboAttack;
     public ThirdPersonOrbitCamera thirdPersonOrbitCamera;
     public EvenAnimator evenAnimator;
     //skill2 tham chieu
-    public Skill2Manager skill2Manager;
     public bool isRemoveClone = false;
+    public Skill2Manager skill2Manager;   
     public Skill3Manager skill3Manager; //skill3 tham chieu
     public Skill1Manager skill1Manager; //skill1 tham chieu
     public Skill4Manager skill4Manager;// skill 4 tham chieu
@@ -52,7 +51,11 @@ public class PlayerControllerState : MonoBehaviour
     // Trạng thái hiện tại                                              
     private PlayerState currentState;
     //weapon L
-    public GameObject weaponSword; 
+    public GameObject weaponSword;
+    //Die
+    public GameObject canvasLoad;
+
+   
     void Start()
     {
         if (controller.enabled == true)
@@ -71,8 +74,8 @@ public class PlayerControllerState : MonoBehaviour
         evenAnimator = FindAnyObjectByType<EvenAnimator>();
         weaponSword.SetActive(false);
         audioSource = GetComponent<AudioSource>();
-       
-        rigBuilder = GetComponent<RigBuilder>();
+        canvasLoad.SetActive(false);
+         rigBuilder = GetComponent<RigBuilder>();
         rigBuilder.enabled = false; // 
         
         // Gọi hàm ChangeState để chuyển sang trạng thái ban đầu
@@ -81,10 +84,9 @@ public class PlayerControllerState : MonoBehaviour
 
     void Update()
     {
-
         // Gọi hàm Updat của trạng thái hiện tại 
         currentState?.Update();
-
+      
     }
 
     // Hàm chuyển trạng thái
@@ -99,4 +101,5 @@ public class PlayerControllerState : MonoBehaviour
         return isGrounded;
     }
     
+  
 }

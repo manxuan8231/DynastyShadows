@@ -243,7 +243,7 @@ public class MinotaurEnemy : MonoBehaviour
     //damezone----------------
     public void beginDame()
     {
-        Debug.Log("Bắt đầu vùng sát thương của Drakonit");
+        Debug.Log("bat box dame");
         damezone.beginDame(); // Bắt đầu vùng sát thương
     }
     public void endDame()
