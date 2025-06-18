@@ -123,6 +123,7 @@ public class Boss1Controller : MonoBehaviour
     public void OnAttackComplete()
     {
         isAttacking = false;
+        isUsingSkill = false;
        
     }
 
@@ -130,6 +131,7 @@ public class Boss1Controller : MonoBehaviour
     public void OnSkillComplete()
     {
         isUsingSkill = false;
+        isAttacking = false;    
   
     }
 
