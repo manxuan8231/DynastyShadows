@@ -2745,12 +2745,23 @@ MonoBehaviour:
   detectionRange: 50
   attackRange: 4
   sliderHp: {fileID: 262763255590900266}
-  currentHealth: 500
-  maxHealth: 500
+  currentHealth: 400
+  maxHealth: 400
   isDead: 0
-  attackCooldown: 7
-  _lastAttackTime: -7
+  _parryCount: 0
+  _maxParryCount: 5
+  parrySound: {fileID: 8300000, guid: bf35ded7449474e4e9f672745567049e, type: 3}
+  attackCooldown: 6
+  _lastAttackTime: -6
+  expPrefab:
+  - {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
+  - {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
+  - {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
+  - {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
+  - {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
+  audioManager: {fileID: 3619254723274865757}
   damezone: {fileID: 0}
+  playerStatus: {fileID: 0}
 --- !u!195 &6596581995739455106
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4500,7 +4511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dameZoneCollider: {fileID: 8058209097801492897}
-  dame: 50
+  dame: 111
   tagPlayer: Player
   listDame: []
   enemy: {fileID: 4625867533300698779}

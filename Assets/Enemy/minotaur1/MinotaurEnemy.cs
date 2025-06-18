@@ -20,12 +20,20 @@ public class MinotaurEnemy : MonoBehaviour
     private bool _isHit = false;       // có đang bị đánh không
     private bool _canBeHit = true;     // dùng cooldown giữa các lần bị đánh
     private int _hitIndex = 0;         // 0 = Hit1, 1 = Hit2
-
+   //parry
+    public Coroutine _parryCoroutine;
+    public int _parryCount = 0;       // tích điểm parry
+    public int _maxParryCount = 5;       // tích điểm parry
+    public AudioClip parrySound;
     //cooldown tấn công
     public float attackCooldown = 4f;// thời gian chờ giữa các đợt tấn công
     public float _lastAttackTime = -4f;// thời gian tấn công cuối cùng
+    //spawn exp
+    public GameObject[] expPrefab;
     //tham chieu
+    public AudioManager audioManager;
     public DameZoneMinotaur damezone; 
+    public PlayerStatus playerStatus;
     private Node _rootNode;// Cây hành vi gốc
     private Animator _animator;
     private NavMeshAgent _agent;
@@ -34,12 +42,14 @@ public class MinotaurEnemy : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
+        audioManager = FindAnyObjectByType<AudioManager>();
         targetPlayer = FindClosestPlayer(); // Tìm người chơi gần nhất
         currentHealth = maxHealth; // Khởi tạo máu hiện tại bằng máu tối đa
         sliderHp.maxValue = currentHealth; // Thiết lập giá trị tối đa của thanh máu
         sliderHp.value = currentHealth; // Thiết lập giá trị hiện tại của thanh máu
         box = GetComponent<BoxCollider>();
         damezone = FindAnyObjectByType<DameZoneMinotaur>(); // Lấy tham chiếu đến DrakonitDameZone trong con của MinotaurEnemy
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
         SetupBehaviorTree();// thiết lập cây hành vi
     }
 
@@ -76,7 +86,17 @@ public class MinotaurEnemy : MonoBehaviour
             _isHit = false; // reset trạng thái đã xử lý hit
             return NodeState.SUCCESS;
         });
-        // hành động khi bị đánh
+       //parry
+        var isParry = new ConditionNode(() => _parryCount >= _maxParryCount);
+        var parryAction = new ActionNode(() =>
+        {
+           
+            //  _animator.SetTrigger("parry");
+            audioManager.AudioSource.PlayOneShot(parrySound);
+            playerStatus.TakeHealthStun(10);
+             _parryCount = 0;
+            return NodeState.SUCCESS;
+        });
 
         // xu ly di chuyển đến người chơi -----------------
         var isMove = new ConditionNode(ISPlayerMove);  
@@ -98,6 +118,8 @@ public class MinotaurEnemy : MonoBehaviour
              new SequenceNode(new List<Node> { isDead, deathAction }),
              //hit
              new SequenceNode(new List<Node> { isHit, hitAction }),
+             //parry
+             new SequenceNode(new List<Node> { isParry, parryAction }),
              //move
              new SequenceNode(new List<Node> {isMove, moveToPlayerAction}),
              //Attack
@@ -192,19 +214,26 @@ public class MinotaurEnemy : MonoBehaviour
             _agent.isStopped = true;
             box.enabled = false; // tắt collider để không va chạm với người chơi
            
-            Debug.Log("Hilichurl đã chết");
+            Debug.Log(" đã chết");
 
         }
         return NodeState.SUCCESS;// đã chết thành công
     }
     public void TakeDamage(float damage)
     {
+       
         Debug.Log($"Minotaur nhận {damage} sát thương");
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // Đảm bảo máu không âm
-        sliderHp.value = currentHealth; // Cập nhật thanh máu
-       
-        if (currentHealth > 0)
+        sliderHp.value = currentHealth; // Cập nhật thanh máu     
+        _parryCount++;
+        Debug.Log($"tích điểm parry: {_parryCount}");
+        if(_parryCoroutine != null)
+        {
+            StopCoroutine(_parryCoroutine);
+        }
+        _parryCoroutine = StartCoroutine(ResetParryAfterDelay(2f));//reset parry sau 2 giây
+        if (currentHealth > 0 )
         {
             _isHit = true;
             _canBeHit = false; // khóa đánh tiếp
@@ -214,13 +243,21 @@ public class MinotaurEnemy : MonoBehaviour
         {
             StartCoroutine(WaitAnimatorDie()); // Bắt đầu coroutine để xử lý animation chết
         }
+        
+        
     }
    
 
     public IEnumerator WaitAnimatorDie()
     {
-
+       
         yield return new WaitForSeconds(2f); // Thời gian chờ để animation chết hoàn thành
+         //spawn exp
+        for (int i = 0; i < expPrefab.Length; i++)
+        {
+            GameObject exp = Instantiate(expPrefab[i], transform.position, Quaternion.identity);
+            Destroy(exp, 5f);
+        }
         currentHealth = maxHealth; // Đặt lại máu về tối đa
         sliderHp.value = currentHealth; // Cập nhật thanh máu về giá trị tối đa
         isDead = false; // Đặt lại trạng thái chết
@@ -238,6 +275,13 @@ public class MinotaurEnemy : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f); // thời gian giữa các lần bị đánh
         _canBeHit = true;
+    }
+    //pary
+    private IEnumerator ResetParryAfterDelay(float delay)
+    {
+    yield return new WaitForSeconds(delay);
+    _parryCount = 0;
+    Debug.Log("Reset điểm parry do không bị đánh trong 2 giây");
     }
 
     //damezone----------------

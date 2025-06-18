@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.UI;
+
 public class OpenMap : MonoBehaviour
 {
     public GameObject mapUIConten;
     public GameObject mapUIBG;
     public AudioSource mapAudio;
     public AudioClip mapClip;
-
+    //scroll map
+    public ScrollRect scrollMap;
+    public float scrollMapVertical;
+    public float scrollMapHorizontal;
+ 
     //-------------------------------- cái nut ở dưới phải false ms cho bật map
     public GameObject panelSkillTree;//panel skill tree
     public GameObject imageBGButtonInven;//image bg button inven
@@ -64,6 +69,10 @@ public class OpenMap : MonoBehaviour
                 mapUIConten.SetActive(false);
                 mapUIBG.SetActive(false);
                
+        }
+        if(Input.GetKeyDown(KeyCode.M)){
+             scrollMap.verticalNormalizedPosition = scrollMapVertical; // Top
+             scrollMap.horizontalNormalizedPosition = scrollMapHorizontal; // Left (nếu dùng cuộn ngang)
         }
     }
 }
