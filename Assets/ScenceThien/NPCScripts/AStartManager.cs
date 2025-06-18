@@ -13,7 +13,7 @@ public class AStartManager : MonoBehaviour
     public List<PathFinding> GeneratePath(PathFinding start, PathFinding end)
     {
         List<PathFinding> openSet = new List<PathFinding>();
-        foreach(PathFinding n in FindObjectOfType<PathFinding>())
+        foreach(PathFinding n in FindObjectsByType<PathFinding>(FindObjectsSortMode.None))
         {
             n.gScore = float.MaxValue;
         }
