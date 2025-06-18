@@ -74,20 +74,20 @@ public class itemBuff : MonoBehaviour
     }
 
     //buff HP và mana
-    public void BuffHP(int health)
+    public void BuffHP(float health)
     {
+
         status.currentHp += health;
         status.sliderHp.value = status.currentHp;
         status.currentHp = Mathf.Clamp(status.currentHp, 0, status.sliderHp.maxValue); // Đảm bảo HP không vượt quá max HP
-        status.currentHp = status.sliderHp.maxValue; // Đảm bảo HP không vượt quá max HP
+     
     }
 
-    public void BuffMana(int mana)
+    public void BuffMana(float mana)
     {
         status.currentMana += mana;
-        status.sliderMana.value = mana;
+        status.sliderMana.value = status.currentMana;
         status.currentMana = Mathf.Clamp(status.currentMana, 0, status.sliderMana.maxValue); // Đảm bảo mana không vượt quá max mana
-        status.currentMana = status.sliderMana.maxValue; // Đảm bảo mana không vượt quá max mana
     }
 
     public void BuffAllStats(int stats,int crit,int critChance,int dame,float duration)
