@@ -7,10 +7,10 @@ public class ItemSO : ScriptableObject
 
     public string itemName;
     public StatToChange statToChange = new StatToChange();
-    public int amoutToChangeStat;
+    public float amoutToChangeStat;
 
     public AttributeChange attackState = new AttributeChange();
-    public int ammoutToChangeAttackState;
+    public float ammoutToChangeAttackState;
 
 
     public bool UseItem()
@@ -51,31 +51,31 @@ public class ItemSO : ScriptableObject
         {
             itemBuff itemBuff = GameObject.Find("Stats").GetComponent<itemBuff>();
 
-            itemBuff.BuffDameAndCrit(ammoutToChangeAttackState, 10, 15);
+            itemBuff.BuffDameAndCrit((int)ammoutToChangeAttackState, 10, 15);
             return true;
         }
         if (statToChange == StatToChange.buffAttack)
         {
             itemBuff itemBuff = GameObject.Find("Stats").GetComponent<itemBuff>();
-            itemBuff.PotionDameRage(ammoutToChangeAttackState, 10);
+            itemBuff.PotionDameRage((int)ammoutToChangeAttackState, 10);
             return true;
         }
         if (statToChange == StatToChange.buffCrit)
         {
             itemBuff itemBuff = GameObject.Find("Stats").GetComponent<itemBuff>();
-            itemBuff.BUffCrit(ammoutToChangeAttackState, 8);
+            itemBuff.BUffCrit((int)ammoutToChangeAttackState, 8);
             return true;
         }
         if (statToChange == StatToChange.BuffCritRate)
         {
             itemBuff itemBuff = GameObject.Find("Stats").GetComponent<itemBuff>();
-            itemBuff.PotionCritRate(ammoutToChangeAttackState, 8);
+            itemBuff.PotionCritRate((int)ammoutToChangeAttackState, 8);
             return true;
         }
         if(statToChange == StatToChange.buffAllStats)
         {
             itemBuff itemBuff = GameObject.Find("Stats").GetComponent<itemBuff>();
-            itemBuff.BuffAllStats(amoutToChangeStat, 85, 30, 30, 10);
+            itemBuff.BuffAllStats((int)amoutToChangeStat, 85, 30, 30, 10);
             return true;
         }
         if(statToChange == StatToChange.debuff1)
