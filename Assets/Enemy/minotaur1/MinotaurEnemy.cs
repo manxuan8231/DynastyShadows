@@ -34,12 +34,15 @@ public class MinotaurEnemy : MonoBehaviour
     public AudioManager audioManager;
     public DameZoneMinotaur damezone; 
     public PlayerStatus playerStatus;
+    private MinotaurEnemy minotaurEnemy;
+    //cây hành vi
     private Node _rootNode;// Cây hành vi gốc
-    private Animator _animator;
-    private NavMeshAgent _agent;
+    public Animator _animator;
+    public NavMeshAgent _agent;
 
     void Start()
     {
+         SetupBehaviorTree();// thiết lập cây hành vi
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
         audioManager = FindAnyObjectByType<AudioManager>();
@@ -50,7 +53,8 @@ public class MinotaurEnemy : MonoBehaviour
         box = GetComponent<BoxCollider>();
         damezone = FindAnyObjectByType<DameZoneMinotaur>(); // Lấy tham chiếu đến DrakonitDameZone trong con của MinotaurEnemy
         playerStatus = FindAnyObjectByType<PlayerStatus>();
-        SetupBehaviorTree();// thiết lập cây hành vi
+        minotaurEnemy = GetComponent<MinotaurEnemy>();
+       
     }
 
     void Update()
@@ -209,6 +213,7 @@ public class MinotaurEnemy : MonoBehaviour
     {
         if (isDead == false)
         {
+            
             isDead = true; // đánh dấu là đã chết
             _animator.SetTrigger("Die");
             _agent.isStopped = true;
@@ -241,6 +246,9 @@ public class MinotaurEnemy : MonoBehaviour
         }
         else 
         {
+            _animator.enabled = true;
+             _agent.enabled = true;
+            minotaurEnemy.enabled = true;
             StartCoroutine(WaitAnimatorDie()); // Bắt đầu coroutine để xử lý animation chết
         }
         

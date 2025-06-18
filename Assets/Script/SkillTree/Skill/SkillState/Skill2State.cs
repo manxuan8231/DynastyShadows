@@ -38,7 +38,12 @@ public class Skill2State : PlayerState
             player.animator.SetBool("isRunning", false);
 
         }
-       
+       if(Input.GetKeyDown(KeyCode.F))
+       {
+           
+            player.animator.SetBool("Run", false);
+        
+       }
       
     }
     public void Jump()
@@ -127,7 +132,7 @@ public class Skill2State : PlayerState
         }
 
         // Nếu có enemy gần thì mới cho bấm chuột trái để dash
-        if (nearestEnemy != null && Input.GetMouseButtonDown(0) && isAttack == true)
+        if (nearestEnemy != null && Input.GetMouseButtonDown(0) && isAttack == true && Cursor.visible == false)
         {
             isAttack = false;
             isMove = false;
@@ -151,7 +156,7 @@ public class Skill2State : PlayerState
             player.StartCoroutine(WaitForChangeState()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
         }
         // Nếu ko co enemy gần thì cung cho attack
-        if (Input.GetMouseButtonDown(0) && isAttack == true)
+        if (Input.GetMouseButtonDown(0) && isAttack == true && Cursor.visible == false)
         {
             isAttack = false;
             // Chạy animation chém

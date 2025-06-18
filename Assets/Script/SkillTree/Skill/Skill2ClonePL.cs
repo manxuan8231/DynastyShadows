@@ -17,9 +17,9 @@ public class Skill2ClonePL : MonoBehaviour
     void Update()
     {
         //click chuột để tạo hiệu ứng nổ
-        if (Input.GetMouseButtonDown(0) && skill2Manager.isExplosionSkill2 == true)
+        if (Input.GetMouseButtonDown(0) && skill2Manager.isExplosionSkill2 == true && Cursor.visible == false)
         {
-           transform.position = new Vector3(0f, 6f, 0f);
+            transform.position = new Vector3(0f, 6f, 0f);
             GameObject instan = Instantiate(effectExplotion, transform.position, Quaternion.identity);
             Destroy(instan, 2f);
         }
