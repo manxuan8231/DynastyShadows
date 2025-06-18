@@ -6,6 +6,9 @@ public class DontDestroyPrefabs : MonoBehaviour
     public GameObject playerPre;
     public Vector3 posNextScence = new Vector3(0, 0, 0);
 
+    
+
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
