@@ -4,91 +4,123 @@ using UnityEngine;
 
 public class QuestMainBacLam : MonoBehaviour
 {
-    public GameObject iconQuestMainBacLam;//icon cua bac lam
-    public GameObject questPanel;// Panel hiển thị thông tin nhiệm vụ 
-    public TextMeshProUGUI questNameText;// Tên nhiệm vụ
-    public GameObject iconQuest; // Icon hiển thị nơi làm nhiệm vụ
-    public GameObject pointerLinhCanhB;//mui ten chi duong den linh canh
-    public GameObject QuestDesert; // Hiển thị nhiệm vụ bất ngờ ở sa mạc
+    [Header("UI & Quest Elements")]
+    public GameObject iconQuestMainBacLam;
+    public GameObject questPanel;
+    public TextMeshProUGUI questNameText;
+    public GameObject iconQuest;
+    public GameObject pointerLinhCanhB;
+    public GameObject QuestDesert;
+    public GameObject iconQuest2;
+    public GameObject pointerEnemy;
+    public GameObject niceQuest;
 
-    public GameObject iconQuest2; // Icon hiển thị nơi làm nhiệm vụ
-    public GameObject pointerEnemy;//mui ten chi duong den linh canh
-   public BoxCollider boxCollider;//box collider cua linh canh b
-    public float enemyCount = 0; // Biến đếm số lượng kẻ thù đã tiêu diệt
+    [Header("Quest Logic")]
+    public float enemyCount = 0;
+    private bool questStarted = false;
+    private bool subQuestStarted = false;
+    private bool questCompleted = false;
 
-    public GameObject niceQuest; // Hiển thị thông báo hoàn thành nhiệm vụ
-    //tham chieu
+    [Header("References")]
     public NPCScript linhCanhB;
-    PlayerStatus playerStatus;
+    public BoxCollider boxCollider;
+    private PlayerStatus playerStatus;
+
     void Start()
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
+
+        // Disable all UI and quest markers at the beginning
         iconQuest.SetActive(false);
         questPanel.SetActive(false);
         pointerLinhCanhB.SetActive(false);
-        QuestDesert.SetActive(false); // Ẩn nhiệm vụ bất ngờ ở sa mạc
-
+        QuestDesert.SetActive(false);
         iconQuest2.SetActive(false);
-        linhCanhB.enabled = false; // Tắt script NPC để không tương tác được
         pointerEnemy.SetActive(false);
-      
-
-        niceQuest.SetActive(false); // Ẩn thông báo hoàn thành nhiệm vụ 
+        niceQuest.SetActive(false);
+        linhCanhB.enabled = false;
         boxCollider.enabled = false;
     }
-    private void Update()
-    {
-        //hoan thanh quest
-        if(enemyCount >= 1)
-        {
-            enemyCount = 0; // Reset số lượng kẻ thù đã tiêu diệt
-            pointerEnemy.SetActive(false); // Ẩn mũi tên chỉ đường đến kẻ thù
-            QuestDesert.SetActive(true); // Ẩn nhiệm vụ bất ngờ ở sa mạc
-            iconQuest2.SetActive(false); // Ẩn icon nhiệm vụ
-            questPanel.SetActive(false); // Ẩn panel nhiệm vụ
-            questNameText.text = ""; // Xóa tên nhiệm vụ
 
-            CompleteQuestMainBacLam();// Gọi hàm hoàn thành nhiệm vụ
+    void Update()
+    {
+        // Kiểm tra hoàn thành subquest nếu đang làm và chưa hoàn thành
+        if (subQuestStarted && !questCompleted && enemyCount >= 1)
+        {
+            CompleteQuestMainBacLam();
         }
     }
 
-    // Bắt đầu quest
-    public void StartQuestMainBacLam()//la noi chuyen voi bac lam xong nhan nhiem vu nay
+    /// <summary>
+    /// Bắt đầu nhiệm vụ chính từ NPC Bác Lâm
+    /// </summary>
+    public void StartQuestMainBacLam()
     {
+        if (questStarted) return;
+
+        questStarted = true;
+
         linhCanhB.enabled = true;
-        iconQuest.SetActive(true);// Hiện icon nhiệm vụ trên bản đồ
-        questPanel.SetActive(true);// Hiện panel nhiệm vụ
-        pointerLinhCanhB.SetActive(true);// Hiện mũi tên chỉ đường đến Lính Canh B
+        boxCollider.enabled = true;
+
+        iconQuest.SetActive(true);
+        questPanel.SetActive(true);
+        pointerLinhCanhB.SetActive(true);
         iconQuestMainBacLam.SetActive(false);
-         boxCollider.enabled = true;
-        questNameText.text = $"Đến chổ Lính Canh B";
+
+        questNameText.text = "Đến chỗ Lính Canh B";
     }
 
-    public void StartQuestLinhCanhB()//la noi chuyen voi linh canh b xong nhan nhiem vu nay
+    /// <summary>
+    /// Khi nói chuyện với Lính Canh B, bắt đầu nhiệm vụ phụ
+    /// </summary>
+    public void StartQuestLinhCanhB()
     {
-       
-        iconQuest2.SetActive(true);// Hiện icon nhiệm vụ trên bản đồ
+        if (subQuestStarted) return;
+
+        subQuestStarted = true;
+
+        iconQuest2.SetActive(true);
         iconQuest.SetActive(false);
-        pointerEnemy.SetActive(true);// Hiện mũi tên chỉ đường đến Lính Canh B
-       
-        questNameText.text = $"Tiêu diệt sinh vật ở khu đầm lầy";
+        pointerLinhCanhB.SetActive(false);
+        pointerEnemy.SetActive(true);
+
+        questNameText.text = "Tiêu diệt sinh vật ở khu đầm lầy";
     }
-    //hoan thanh quest
-    public void CompleteQuestMainBacLam()
-    {
-        StartCoroutine(WaitNiceQuest()); // Bắt đầu coroutine để hiển thị thông báo hoàn thành nhiệm vụ
-        //phần thưởng
-        playerStatus.IncreasedGold(1000); // Thêm vang cho người chơi
-    }
+
+    /// <summary>
+    /// Gọi khi tiêu diệt kẻ địch
+    /// </summary>
     public void UpdateKillEnemy(float amount)
     {
-        enemyCount += amount; // Cập nhật số lượng kẻ thù đã tiêu diệt
+        enemyCount += amount;
     }
 
+    /// <summary>
+    /// Hoàn thành toàn bộ nhiệm vụ chính
+    /// </summary>
+    private void CompleteQuestMainBacLam()
+    {
+        questCompleted = true;
+        enemyCount = 0;
+
+        pointerEnemy.SetActive(false);
+        QuestDesert.SetActive(true);
+        iconQuest2.SetActive(false);
+        questPanel.SetActive(false);
+        questNameText.text = "";
+
+        playerStatus.IncreasedGold(1000);
+        StartCoroutine(WaitNiceQuest());
+    }
+
+    /// <summary>
+    /// Hiện UI báo hoàn thành nhiệm vụ
+    /// </summary>
     private IEnumerator WaitNiceQuest()
     {
-        niceQuest.SetActive(true); // Hiện thông báo hoàn thành nhiệm vụ
-        yield return new WaitForSeconds(5f); // Chờ 2 giây
-        niceQuest.SetActive(false); // Ẩn thông báo hoàn thành nhiệm vụ
+        niceQuest.SetActive(true);
+        yield return new WaitForSeconds(5f);
+        niceQuest.SetActive(false);
     }
 }

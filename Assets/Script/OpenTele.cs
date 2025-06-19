@@ -1,27 +1,31 @@
-﻿using UnityEngine;
-using UnityEngine.Audio;
+﻿using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
 
 public class OpenTele : MonoBehaviour
 {
-    public GameObject imgTele;         // Panel Teleport
-    public GameObject buttonF;      // UI nhấn F
-    public string teleportID = "teleport_1"; // Đặt ID khác nhau nếu có nhiều cái
-
+    public GameObject imgTele;       // Panel Teleport
+    public GameObject buttonF;       // UI nhấn F
+    public string teleportID = "teleport_1"; // ID riêng cho mỗi teleport
 
     private bool isInRange = false;
-    public Collider colliderOpen; // Collider để kiểm tra va chạm
-
+    public Collider colliderOpen;
     public AudioSource audioSource;
-    public AudioClip soundF; // Âm thanh khi nhấn nút F
+    public AudioClip soundF;
+
+    private static string SavePath => Path.Combine(Application.persistentDataPath, "teleport_data.json");
+    private static TeleportSaveData saveData;
+
     void Start()
     {
-      
         imgTele.SetActive(false);
         buttonF.SetActive(false);
-        colliderOpen.enabled = true; // Bật collider để nhận va chạm
+        colliderOpen.enabled = true;
         audioSource = GetComponent<AudioSource>();
-        // Kiểm tra nếu đã lưu trạng thái mở
-        if (PlayerPrefs.GetInt(teleportID, 0) == 1)
+
+        LoadTeleportData();
+
+        if (saveData.unlockedTeleports.Contains(teleportID))
         {
             imgTele.SetActive(true);
             colliderOpen.enabled = false;
@@ -38,19 +42,22 @@ public class OpenTele : MonoBehaviour
             colliderOpen.enabled = false;
             imgTele.SetActive(true);
 
-            // Lưu trạng thái đã mở teleport
-            PlayerPrefs.SetInt(teleportID, 1);
-            PlayerPrefs.Save();
+            if (!saveData.unlockedTeleports.Contains(teleportID))
+            {
+                saveData.unlockedTeleports.Add(teleportID);
+                SaveTeleportData();
+            }
         }
-        // Bấm R để reset
+
+        // Reset toàn bộ teleport bằng Q
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            PlayerPrefs.DeleteKey(teleportID);
-            PlayerPrefs.Save();
+            File.Delete(SavePath);
+            saveData = new TeleportSaveData();
             Debug.Log("Đã xóa dữ liệu teleport.");
         }
     }
-   
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -61,11 +68,43 @@ public class OpenTele : MonoBehaviour
     }
 
     void OnTriggerExit(Collider other)
-    { 
+    {
         if (other.CompareTag("Player"))
         {
             buttonF.SetActive(false);
             isInRange = false;
         }
     }
+
+   
+
+    private void LoadTeleportData()
+    {
+        if (saveData != null) return;
+
+        if (File.Exists(SavePath))
+        {
+            string json = File.ReadAllText(SavePath);
+            saveData = JsonUtility.FromJson<TeleportSaveData>(json);
+        }
+        else
+        {
+            saveData = new TeleportSaveData();
+        }
+    }
+
+    private void SaveTeleportData()
+    {
+        string json = JsonUtility.ToJson(saveData, true);
+        File.WriteAllText(SavePath, json);
+    }
+
+
+
+    [System.Serializable]
+    public class TeleportSaveData
+    {
+    public List<string> unlockedTeleports = new List<string>();
+    }
+
 }
