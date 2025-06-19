@@ -32,6 +32,7 @@ public class PlayerControllerState : MonoBehaviour
     
     //cooldown roll
     public float rollColdownTime = -2f;
+   
     //goi ham tham chieu
     public PlayerStatus playerStatus;
     public ComboAttack comboAttack;
@@ -43,9 +44,10 @@ public class PlayerControllerState : MonoBehaviour
     public Skill3Manager skill3Manager; //skill3 tham chieu
     public Skill1Manager skill1Manager; //skill1 tham chieu
     public Skill4Manager skill4Manager;// skill 4 tham chieu
+    // Biến để lưu vị trí checkpoint
+    public Vector3 checkpointPosition;
 
-
-  //trang thai animator
+    //trang thai animator
     public RuntimeAnimatorController animatorDefauld;//trang thai mac định
     public RuntimeAnimatorController animatorSkill2;//trang thai skill2
     public RuntimeAnimatorController animatorSkill4;//trang thai skill4
@@ -59,9 +61,10 @@ public class PlayerControllerState : MonoBehaviour
    
     void Start()
     {
-        if (controller.enabled == true)
+        controller = GetComponent<CharacterController>();
+        if (!controller.enabled)
         {
-            controller = GetComponent<CharacterController>();
+            controller.enabled = true;
         }
         animator = GetComponent<Animator>();
         animator.runtimeAnimatorController = animatorDefauld; // Gán bộ điều khiển hoạt hình mặc định
@@ -76,10 +79,24 @@ public class PlayerControllerState : MonoBehaviour
         weaponSword.SetActive(false);
         audioSource = GetComponent<AudioSource>();
         canvasLoad.SetActive(false);
-         rigBuilder = GetComponent<RigBuilder>();
-        rigBuilder.enabled = false; // 
+        rigBuilder = GetComponent<RigBuilder>();
+        rigBuilder.enabled = false;
+        //vị trí checkpoint
+        if (PlayerPrefs.HasKey("CheckpointX"))
+        {
+            Debug.Log("luu vi tri khi spawnpoint trc");
+            float X = PlayerPrefs.GetFloat("CheckpointX");
+            float Y = PlayerPrefs.GetFloat("CheckpointY");
+            float Z = PlayerPrefs.GetFloat("CheckpointZ");
+            checkpointPosition = new Vector3(X, Y, Z);
+            transform.position = checkpointPosition; // Đặt vị trí của người chơi về vị trí checkpoint đã lưu
+        }
+        else
+        {
+            Debug.Log("lay vi tri cu");
+            checkpointPosition = transform.position; // Nếu không có checkpoint, sử dụng vị trí hiện tại
+        }
      
-
         // Gọi hàm ChangeState để chuyển sang trạng thái ban đầu
         ChangeState(new PlayerCurrentState(this));
     }
@@ -102,6 +119,17 @@ public class PlayerControllerState : MonoBehaviour
     {
         return isGrounded;
     }
-    
-  
+
+    // Gọi hàm này khi chạm checkpoint
+    public void SetCheckpoint(Vector3 position)
+    {
+        Debug.Log("da luu vi tri " + position);
+        checkpointPosition = position;
+        PlayerPrefs.SetFloat("CheckpointX", position.x);
+        PlayerPrefs.SetFloat("CheckpointY", position.y);
+        PlayerPrefs.SetFloat("CheckpointZ", position.z);
+        PlayerPrefs.Save();
+
+    }
+
 }

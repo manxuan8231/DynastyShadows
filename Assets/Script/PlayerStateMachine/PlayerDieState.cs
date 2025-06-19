@@ -30,18 +30,28 @@ public class PlayerDieState : PlayerState
     {
         isDie = false;
         player.animator.SetTrigger("die");
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        yield return new WaitForSeconds(4);//------------------------
-        player.canvasLoad.SetActive(true);  
-        yield return new WaitForSeconds(6f); // Thời gian chờ trước khi chuyển trạng thái --------------------     
-        player.playerStatus.currentHp = player.playerStatus.maxHp; // Đặt lại máu của người chơi về tối đa\
-        player.playerStatus.sliderHp.value = player.playerStatus.currentHp; // Cập nhật thanh máu
-        isDie = true;
+        yield return new WaitForSeconds(4);
+
+        player.canvasLoad.SetActive(true);
+        yield return new WaitForSeconds(2);
+
+        // Hồi máu
+        player.playerStatus.currentHp = player.playerStatus.maxHp;
+        player.playerStatus.sliderHp.value = player.playerStatus.currentHp;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         player.canvasLoad.SetActive(false);
-        player.ChangeState(new PlayerCurrentState(player)); // Quay lại trạng thái hiện tại
+        // Hồi sinh tại checkpoint
+        player.controller.enabled = false; // Tắt controller để tránh va chạm khi di chuyển
+        player.transform.position = player.checkpointPosition;
+        player.controller.enabled = true; // Bật lại controller
+        // Quay lại trạng thái bth
+        player.ChangeState(new PlayerCurrentState(player)); 
     }
+
 
 }

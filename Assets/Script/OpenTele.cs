@@ -4,7 +4,7 @@ public class OpenTele : MonoBehaviour
 {
     public GameObject imgTele;       // Panel Teleport
     public GameObject buttonF;       // UI nhấn F
-    public GameObject saveButton; // Nút “Lưu vị trí”
+  
 
     public string teleportID = "teleport_1"; // ID riêng cho mỗi teleport
 
@@ -16,8 +16,7 @@ public class OpenTele : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        saveButton.SetActive(false);
-
+       
         // Kiểm tra trạng thái đã lưu
         if (PlayerPrefs.GetInt(teleportID, 0) == 1)
         {
@@ -42,9 +41,16 @@ public class OpenTele : MonoBehaviour
             buttonF.SetActive(false);
             colliderOpen.enabled = false;
             imgTele.SetActive(true);
-            saveButton.SetActive(true); // hiện nút “Lưu vị trí”
-        }
+            Debug.Log("Đã save mở teleport");
+            PlayerPrefs.SetInt(teleportID, 1); // Lưu trạng thái đã mở teleport
+            PlayerPrefs.Save(); // Lưu thay đổi vào PlayerPrefs
 
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            Debug.Log("Xóa dữ liệu lưu trữ");
+            PlayerPrefs.DeleteAll(); // Xóa tất cả dữ liệu lưu trữ
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -65,34 +71,7 @@ public class OpenTele : MonoBehaviour
         }
     }
 
-    public void SaveTeleportPoint()
-    {
-        Transform player = GameObject.FindGameObjectWithTag("Player").transform;
-        Vector3 pos = player.position;
-
-        // Lưu vị trí
-        PlayerPrefs.SetFloat("saved_x", pos.x);
-        PlayerPrefs.SetFloat("saved_y", pos.y);
-        PlayerPrefs.SetFloat("saved_z", pos.z);
-        PlayerPrefs.SetString("current_teleport", teleportID);
-
-        // Tắt các teleport khác
-        foreach (var tele in FindObjectsOfType<OpenTele>())
-        {
-            if (tele != this)
-            {
-                tele.imgTele.SetActive(false);
-                tele.saveButton.SetActive(false);
-                tele.colliderOpen.enabled = true;
-                PlayerPrefs.SetInt(tele.teleportID, 0);
-            }
-        }
-
-        PlayerPrefs.SetInt(teleportID, 1);
-        PlayerPrefs.Save();
-
-        Debug.Log("Đã lưu vị trí tại teleport: " + teleportID);
-    }
+   
 
 
 }
