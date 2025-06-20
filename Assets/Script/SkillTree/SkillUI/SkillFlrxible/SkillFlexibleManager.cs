@@ -4,11 +4,12 @@ using UnityEngine.UI;
 
 public class SkillFlexibleManager : MonoBehaviour
 {
+    //hinh icon skill
     public Sprite skill1;
     public Sprite skill2;
     public Sprite skill3;
     public Sprite skill4;
-
+    //hien thị thông tin skill
     public GameObject previewPanel;
     public TextMeshProUGUI previewText;
     public TextMeshProUGUI contenSkill;
@@ -16,19 +17,24 @@ public class SkillFlexibleManager : MonoBehaviour
     public GameObject buttonUnlock;
     public GameObject buttonEquip;
     public GameObject buttonRemove;
-
+    // Slot icon và màu sắc nút
     public RawImage slotIcon; // Slot HUD
     public Image[] buttonIconColor;
     public Image[] skillBGs;
     private string currentSkillID = "";
     private string equippedSkillID = "";
-
-    public AudioSource skillAudioSource;
-    public AudioClip buttonClick;
-
     [Header("Tham chiếu")]
+    // Tham chiếu đến AudioSource và âm thanh
+    public AudioSource skillAudioSource;
+    public AudioClip buttonClick; 
     public PlayerStatus playerStatus;
+    //kiem tra xem kỹ năng đã mở khóa hay chưa
+    private bool isDongCung1Unlocked = false;
+    private bool isDongCung2Unlocked = false;
+    private bool isDongCung3Unlocked = false;
+    private bool isDongCung4Unlocked = false;
 
+    //biến số để theo dõi số lần nâng cấp kỹ năng
     public float turnInSkill1 = 0f;
 
     void Start()
@@ -88,16 +94,28 @@ public class SkillFlexibleManager : MonoBehaviour
         }
 
         // Cập nhật hiển thị nút Equip/Remove
-        if (equippedSkillID == currentSkillID)
+        if (IsSkillUnlocked(currentSkillID))
         {
-            buttonEquip.SetActive(false);
-            buttonRemove.SetActive(true);
+            if (equippedSkillID == currentSkillID)
+            {
+                buttonEquip.SetActive(false);
+                buttonRemove.SetActive(true);
+            }
+            else
+            {
+                buttonEquip.SetActive(true);
+                buttonRemove.SetActive(false);
+            }
+
+            buttonUnlock.SetActive(false); // Đã unlock rồi thì ẩn nút unlock
         }
         else
         {
-            buttonEquip.SetActive(true);
+            buttonEquip.SetActive(false);
             buttonRemove.SetActive(false);
+            buttonUnlock.SetActive(true); // Chưa unlock thì hiện unlock
         }
+
     }
 
     public void ClosePreview()
@@ -112,12 +130,17 @@ public class SkillFlexibleManager : MonoBehaviour
             case "DongCung1":
                 if(playerStatus.score > 2)
                 {
-                    Debug.Log("Đã mở khóa kỹ năng: DongCung1");
+                    isDongCung1Unlocked = true;
+                    playerStatus.score -= 2;
+                    UpdateScoreText();
                     ColorUnlockIcon();
+
                     buttonEquip.SetActive(true);
                     buttonRemove.SetActive(false);
+                    buttonUnlock.SetActive(false); // Ẩn nút sau khi mở
+
                 }
-              
+
                 break;
 
             case "DongCung2":
@@ -169,6 +192,7 @@ public class SkillFlexibleManager : MonoBehaviour
         {
             case "DongCung1":
                 slotIcon.texture = skill1.texture;
+
                 break;
             case "DongCung2":
                 slotIcon.texture = skill2.texture;
@@ -230,4 +254,17 @@ public class SkillFlexibleManager : MonoBehaviour
                 bg.enabled = false;
         }
     }
+    //kiểm tra xem kỹ năng đã mở khóa hay chưa
+    private bool IsSkillUnlocked(string id)
+    {
+        switch (id)
+        {
+            case "DongCung1": return isDongCung1Unlocked;
+            case "DongCung2": return isDongCung2Unlocked;
+            case "DongCung3": return isDongCung3Unlocked;
+            case "DongCung4": return isDongCung4Unlocked;
+        }
+        return false;
+    }
+
 }
