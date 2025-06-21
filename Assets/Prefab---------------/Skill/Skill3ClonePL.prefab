@@ -5136,6 +5136,37 @@ Transform:
   - {fileID: 2875499488757234238}
   m_Father: {fileID: 3720656447580618508}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &499170166539019290
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2231063621469992603}
+  m_Layer: 9
+  m_Name: firePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2231063621469992603
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499170166539019290}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.245, y: 0.598, z: 0.221}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1847448209971831587}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &563410071685636720
 GameObject:
   m_ObjectHideFlags: 0
@@ -16773,6 +16804,7 @@ Transform:
   - {fileID: 5664506079689774878}
   - {fileID: 4545765972495564631}
   - {fileID: 3687687968244416733}
+  - {fileID: 2231063621469992603}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &256680334051184096
@@ -16818,6 +16850,8 @@ MonoBehaviour:
   detectionRange: 70
   attackRange: 4
   attackCooldown: 6
+  fireBall: 0
+  skillUseHandler: {fileID: 0}
 --- !u!114 &-5533079187246399814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16831,17 +16865,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectAttack1: {fileID: 7205683468243238395}
-  effectAttack3: {fileID: 7803296669554608164}
-  effectAttackFly3: {fileID: 6750961984756994532}
   slashSound1: {fileID: 8300000, guid: 78bfd4df4e7b66641942dfc612ca3753, type: 3}
   slashSound2: {fileID: 8300000, guid: cc0863d1bdac8f3439ad7c22492167e8, type: 3}
+  effectAttack3: {fileID: 7803296669554608164}
   slashSound3: {fileID: 8300000, guid: 914611e5687d45d43b7f8f521d45f1ff, type: 3}
+  effectAttackFly3: {fileID: 6750961984756994532}
   slashSoundFly: {fileID: 0}
   effectChangeSkill4: {fileID: 0}
   positionSKill4: {fileID: 0}
   audioJump: {fileID: 0}
   audioRoll: {fileID: 0}
   audioMovemen: {fileID: 0}
+  fireBall: {fileID: 5228506700811681283, guid: 1afc37dacaf19a947b986ac804cdb706, type: 3}
+  firePoint: {fileID: 2231063621469992603}
 --- !u!195 &5890275434495508831
 NavMeshAgent:
   m_ObjectHideFlags: 0

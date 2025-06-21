@@ -97,7 +97,7 @@ public class MinotaurEnemy : MonoBehaviour
            
             //  _animator.SetTrigger("parry");
             audioManager.AudioSource.PlayOneShot(parrySound);
-            playerStatus.TakeHealthStun(10);
+           // playerStatus.TakeHealthStun(10);
              _parryCount = 0;
             return NodeState.SUCCESS;
         });

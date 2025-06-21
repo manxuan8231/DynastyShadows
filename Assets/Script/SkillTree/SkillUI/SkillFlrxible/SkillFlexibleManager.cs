@@ -1,9 +1,12 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SkillFlexibleManager : MonoBehaviour
 {
+   
+
     //hinh icon skill
     public Sprite skill1;
     public Sprite skill2;
@@ -59,7 +62,7 @@ public class SkillFlexibleManager : MonoBehaviour
 
         switch (iconID)
         {
-            case "DongCung1":
+            case "CauLua":
                 previewText.text = "Đông cứng - Cấp 1";
                 contenSkill.text = "Đông cứng kẻ địch 10 giây, hồi chiêu 50 giây.";
                 skillBGs[0].enabled = true;
@@ -127,7 +130,7 @@ public class SkillFlexibleManager : MonoBehaviour
     {
         switch (currentSkillID)
         {
-            case "DongCung1":
+            case "CauLua":
                 if(playerStatus.score > 2)
                 {
                     isDongCung1Unlocked = true;
@@ -190,9 +193,8 @@ public class SkillFlexibleManager : MonoBehaviour
     {
         switch (currentSkillID)
         {
-            case "DongCung1":
+            case "CauLua":
                 slotIcon.texture = skill1.texture;
-
                 break;
             case "DongCung2":
                 slotIcon.texture = skill2.texture;
@@ -207,10 +209,13 @@ public class SkillFlexibleManager : MonoBehaviour
 
         slotIcon.color = Color.white;
         equippedSkillID = currentSkillID;
+        playerStatus.equipSkillID = currentSkillID; // <== Gán vào PlayerStatus
 
         buttonEquip.SetActive(false);
         buttonRemove.SetActive(true);
     }
+
+
 
     public void RemoveSkill()
     {

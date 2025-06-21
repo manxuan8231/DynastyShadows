@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EvenAnimator : MonoBehaviour
 {
@@ -6,26 +6,31 @@ public class EvenAnimator : MonoBehaviour
     //effect slash
     [Header("EvenAttack--------------------------------")]
     [SerializeField] private GameObject effectAttack1;
-    //[SerializeField] private GameObject effectAttack2;
-    [SerializeField] private GameObject effectAttack3;
-    [SerializeField] private GameObject effectAttackFly3;
-    private AudioSource audioSource; //audio
     public AudioClip slashSound1;
+    //[SerializeField] private GameObject effectAttack2;
     public AudioClip slashSound2;
+    [SerializeField] private GameObject effectAttack3;
     public AudioClip slashSound3;
+    [SerializeField] private GameObject effectAttackFly3;
     public AudioClip slashSoundFly;
-
-    [Header("EvenSkill4--------------------------------")]
+ 
+    [Header("EvenSkill4Core--------------------------------")]
     [SerializeField] private GameObject effectChangeSkill4;
     [SerializeField] private Transform positionSKill4;
-    [Header("even audio---------------------------- ")]
-    //audio
+
+    [Header("even audio move---------------------------- ")]
     public AudioClip audioJump;
     public AudioClip audioRoll;
     public AudioClip audioMovemen;
-    //Goi ham
+
+    [Header("EvenSkill1EF----------------------------------")]
+    public GameObject fireBall;
+    public Transform firePoint;
+
+    //tham chieu 
     DameZone dameZone;
     ComboAttack comboAttack;
+    private AudioSource audioSource; //audio
     void Start()
     {
 
@@ -116,12 +121,30 @@ public class EvenAnimator : MonoBehaviour
 
     }
 
-    //skill4--------------------------------------------------------
+    //skill4Core--------------------------------------------------------
     public void StartEffectChangeSkill4()
     {
         GameObject effect = Instantiate(effectChangeSkill4, positionSKill4.position, transform.rotation);
         Destroy(effect, 1.3f);
     }
 
-   
+    //skill1EF---------------------------------------------------------
+    public void StartFireBall()
+    {
+       
+        Debug.Log("Dùng kỹ năng cầu lửa!");
+       
+        Vector3 custom = new Vector3(90, 0, 0); // Tạo một vector tùy chỉnh nếu cần
+        Quaternion fireballRotation = Quaternion.LookRotation(custom);
+        GameObject instan = Instantiate(fireBall, firePoint.position, fireballRotation);
+
+        Rigidbody rb = instan.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            Debug.Log("Bắn thành công");
+            rb.AddForce(firePoint.forward * 100, ForceMode.Impulse);
+        }
+        Destroy(instan, 5f); // Hủy sau 5 giây
+    }
+
 }

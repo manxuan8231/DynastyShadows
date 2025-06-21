@@ -43,7 +43,6 @@ public class PlayerStatus : MonoBehaviour
     public TextMeshProUGUI[] scoreText;
     public GameObject effectLevelUp;//effect level up
     
-    
     public int currentLevel = 1;        // Cấp hiện tại
     public float currentExp = 0f;         // EXP hiện tại
     private float expToNextLevel = 50f;        // EXP yêu cầu để lên cấp tiếp theo
@@ -73,12 +72,15 @@ public class PlayerStatus : MonoBehaviour
     //khoi tao------------------------------------------  
     private AudioSource audioSource;
    
-
     //efffect stun------------------------------------------
     public GameObject effectStun;
     public AudioClip audioHit;
     public AudioClip audioStun;
     public AudioClip audioDie;
+
+    //skill linh hoat-------------------------------------------
+    public string equipSkillID = "";
+
     //tham chieu ------------------------------------------
     private PlayerControllerState playerController; // Tham chiếu đến PlayerController
     private ComboAttack comboAttack; // Tham chiếu đến ComboAttack

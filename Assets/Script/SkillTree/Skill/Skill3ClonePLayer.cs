@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,15 +15,17 @@ public class Skill3ClonePLayer : MonoBehaviour
     private Transform nearestEnemy;
     private float lastAttackTime = -15f;
 
+   
     //tham chieu
     Skill3Manager skill3Manager;
     PlayerStatus playerStatus;
     DameZoneSkill3PL dameZoneSkill3PL;
-   
+    public SkillUseHandler skillUseHandler;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         dameZoneSkill3PL= FindAnyObjectByType<DameZoneSkill3PL>();
+        skillUseHandler = FindAnyObjectByType<SkillUseHandler>();
         skill3Manager = FindAnyObjectByType<Skill3Manager>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         animator = GetComponent<Animator>();
@@ -33,6 +35,7 @@ public class Skill3ClonePLayer : MonoBehaviour
 
     void Update()
     {
+      
         FindNearestEnemy();
         StartCoroutine(ReturnToPool()); 
         if (nearestEnemy != null)
@@ -62,7 +65,8 @@ public class Skill3ClonePLayer : MonoBehaviour
         {
             ObjPoolingManager.Instance.ReturnToPool(skill3Manager.clonePLTag,gameObject);
         }
-      
+        
+       
     }
 
     void FindNearestEnemy()
@@ -119,4 +123,11 @@ public class Skill3ClonePLayer : MonoBehaviour
     {
         dameZoneSkill3PL.endDame();
     }
+
+    // Trong Skill3ClonePLayer
+    public void PlaySkill1Anim()
+    {
+        animator.SetTrigger("Skill1EF");
+    }
+
 }
