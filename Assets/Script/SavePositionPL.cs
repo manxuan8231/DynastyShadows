@@ -18,9 +18,9 @@ public class SavePositionPL : MonoBehaviour
     private void Start()
     {
         if (player == null) player = GameObject.FindWithTag("Player"); // Tự động tìm nếu chưa gán
-        savePath = Application.persistentDataPath + "/player_position.json";
+        savePath = Application.persistentDataPath + "/player_position.json";// đường dẫn file lưu vị trí player
 
-        LoadPosition(); // Load vị trí khi vào game
+        //LoadPosition(); // Load vị trí khi vào game
     }
 
     private void OnApplicationQuit()

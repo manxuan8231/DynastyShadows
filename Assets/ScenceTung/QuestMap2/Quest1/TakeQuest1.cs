@@ -14,6 +14,7 @@ public class TakeQuest1 : MonoBehaviour
     private void Start()
     {
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
+        cinemachineBrain = FindAnyObjectByType<CinemachineBrain>();
     }
     private void OnTriggerEnter(Collider other)
     {
