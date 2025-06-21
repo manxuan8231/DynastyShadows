@@ -62,16 +62,16 @@ public class SkillFlexibleManager : MonoBehaviour
 
         switch (iconID)
         {
-            case "CauLua":
-                previewText.text = "Đông cứng - Cấp 1";
-                contenSkill.text = "Đông cứng kẻ địch 10 giây, hồi chiêu 50 giây.";
+            case "FireBall":
+                previewText.text = "Cầu lửa";
+                contenSkill.text = "Khi dùng kỹ năng này thì player sẽ bắn ra 3 cầu lửa nối tiếp combo có thời gian hồi chiêu 10 giây.";
                 skillBGs[0].enabled = true;
-                scoreUpgradeText.text = "/2";
+                scoreUpgradeText.text = "";
                 break;
 
-            case "DongCung2":
-                previewText.text = "Đông cứng - Cấp 2";
-                contenSkill.text = "Giảm hồi chiêu còn 35 giây.";
+            case "RainFire":
+                previewText.text = "Mưa lửa";
+                contenSkill.text = "Khi dùng kỹ năng thì người chơi sẽ bay lên thả các cầu lửa xuống gây sát thương vùng.";
                 skillBGs[1].enabled = true;
                 scoreUpgradeText.text = "/2";
                 break;
@@ -124,13 +124,14 @@ public class SkillFlexibleManager : MonoBehaviour
     public void ClosePreview()
     {
         previewPanel.SetActive(false);
+        HideAllHighlights();
     }
 
     public void UnlockSkill1()
     {
         switch (currentSkillID)
         {
-            case "CauLua":
+            case "FireBall":
                 if(playerStatus.score > 2)
                 {
                     isDongCung1Unlocked = true;
@@ -146,12 +147,10 @@ public class SkillFlexibleManager : MonoBehaviour
 
                 break;
 
-            case "DongCung2":
-                if (turnInSkill1 >= 1 && playerStatus.score >= 2)
+            case "RainFire":
+                if (playerStatus.score >= 2)
                 {
-                    Debug.Log("Đã mở khóa kỹ năng: DongCung2");
-                    ColorUnlockIcon();
-                    turnInSkill1 += 1;
+                    ColorUnlockIcon();                  
                     playerStatus.score -= 2;
                     UpdateScoreText();
                     buttonEquip.SetActive(true);
@@ -193,10 +192,10 @@ public class SkillFlexibleManager : MonoBehaviour
     {
         switch (currentSkillID)
         {
-            case "CauLua":
+            case "FireBall":
                 slotIcon.texture = skill1.texture;
                 break;
-            case "DongCung2":
+            case "RainFire":
                 slotIcon.texture = skill2.texture;
                 break;
             case "DongCung3":
@@ -231,8 +230,8 @@ public class SkillFlexibleManager : MonoBehaviour
         int index = -1;
         switch (currentSkillID)
         {
-            case "DongCung1": index = 0; break;
-            case "DongCung2": index = 1; break;
+            case "FireBall": index = 0; break;
+            case "RainFire": index = 1; break;
             case "DongCung3": index = 2; break;
             case "DongCung4": index = 3; break;
         }
@@ -264,8 +263,8 @@ public class SkillFlexibleManager : MonoBehaviour
     {
         switch (id)
         {
-            case "DongCung1": return isDongCung1Unlocked;
-            case "DongCung2": return isDongCung2Unlocked;
+            case "FireBall": return isDongCung1Unlocked;
+            case "RainFire": return isDongCung2Unlocked;
             case "DongCung3": return isDongCung3Unlocked;
             case "DongCung4": return isDongCung4Unlocked;
         }

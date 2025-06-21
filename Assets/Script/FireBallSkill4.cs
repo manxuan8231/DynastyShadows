@@ -16,7 +16,7 @@ public class FireBallSkill4 : MonoBehaviour
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         if (playerStatus != null)
         {
-            damage *= playerStatus.baseDamage;
+            damage *= playerStatus.baseDamage;//nhan len 5 lan
         }
         else
         {

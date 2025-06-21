@@ -14,8 +14,9 @@ public class Skill3ClonePLayer : MonoBehaviour
    
     private Transform nearestEnemy;
     private float lastAttackTime = -15f;
+    //combostep skill fireball
+    private int comboStep = 0;
 
-   
     //tham chieu
     Skill3Manager skill3Manager;
     PlayerStatus playerStatus;
@@ -125,9 +126,37 @@ public class Skill3ClonePLayer : MonoBehaviour
     }
 
     // Trong Skill3ClonePLayer
-    public void PlaySkill1Anim()
+    public void PlayFireBallAnim()
     {
-        animator.SetTrigger("Skill1EF");
+        if(comboStep == 0)
+        {
+            animator.SetTrigger("FireBall1");
+            comboStep = 1;
+        }
+        else if (comboStep == 1)
+        {
+            animator.SetTrigger("FireBall2");
+            comboStep = 2;
+        }
+        else if (comboStep == 2)
+        {
+            animator.SetTrigger("FireBall3");
+            comboStep = 0;
+        }
+       
+       
     }
+    public void PlayRainFireAnim()
+    {
+        StartCoroutine(WaitForGravity());
+        animator.SetTrigger("RainFire");
 
+    }
+    public IEnumerator WaitForGravity()
+    {
+        agent.enabled = false;
+        yield return new WaitForSeconds(3f);
+        agent.enabled = true;
+       
+    }
 }

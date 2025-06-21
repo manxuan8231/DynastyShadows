@@ -68,7 +68,8 @@ public class Skill2State : PlayerState
         player.wasGroundedLastFrame = player.isGrounded;
 
         player.velocity.y += player.gravity * Time.deltaTime;
-        player.controller.Move(player.velocity * Time.deltaTime);
+        if(player.controller.enabled == true)
+            player.controller.Move(player.velocity * Time.deltaTime);
     }
     public override void Exit()
     {

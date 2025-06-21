@@ -13,16 +13,6 @@ public class TextDamePopup : MonoBehaviour
     {
         text.text = damage.ToString();
 
-        
-        if (damage == 200 || damage == 400 || damage == 600)
-        {
-            text.color = Color.white; 
-        }
-        else
-        {
-            text.color = Color.yellow; 
-        }
-
         Destroy(gameObject, lifeTime);
         mainCamera = Camera.main;
     }

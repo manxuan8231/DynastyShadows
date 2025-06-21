@@ -24,8 +24,12 @@ public class EvenAnimator : MonoBehaviour
     public AudioClip audioMovemen;
 
     [Header("EvenSkill1EF----------------------------------")]
+    // Cầu lửa
     public GameObject fireBall;
     public Transform firePoint;
+    //mua lua
+    public GameObject rainFireBall;
+    public Transform rainFireBallPs;
 
     //tham chieu 
     DameZone dameZone;
@@ -134,7 +138,7 @@ public class EvenAnimator : MonoBehaviour
        
         Debug.Log("Dùng kỹ năng cầu lửa!");
        
-        Vector3 custom = new Vector3(90, 0, 0); // Tạo một vector tùy chỉnh nếu cần
+        Vector3 custom = new Vector3(90, 0, 0); 
         Quaternion fireballRotation = Quaternion.LookRotation(custom);
         GameObject instan = Instantiate(fireBall, firePoint.position, fireballRotation);
 
@@ -146,5 +150,11 @@ public class EvenAnimator : MonoBehaviour
         }
         Destroy(instan, 5f); // Hủy sau 5 giây
     }
-
+    public void StartRainFireBall()
+    {
+        Debug.Log("Dùng kỹ năng mưa lửa!");
+        GameObject instan = Instantiate(rainFireBall, rainFireBallPs.position, rainFireBallPs.rotation);
+       
+        Destroy(instan, 5f); // Hủy sau 5 giây
+    }
 }
