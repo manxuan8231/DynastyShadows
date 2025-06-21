@@ -89,40 +89,8 @@ public class EnemyHP2 : MonoBehaviour
           
         }
     }
-    public void TakeDamageHit(float damage)
-    {
-        if (enemy2.currentState == Enemy2.EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
-
-        currentHealth -= damage;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
-        sliderHp.value = currentHealth;
-
-
-
-        if (currentHealth > 0)
-        {
-
-
-            // Sau một thời gian nhỏ thì quay lại Run/Attack
-            Invoke(nameof(BackToChase), 0.5f);
-        }
-        else
-        {
-            currentHealth = 0;
-            enemy2.ChangeState(Enemy2.EnemyState.Death);
-            enemy2.agent.isStopped = true; // Dừng lại khi chết
-            DropItem();
-
-            // Hủy enemy sau 1.5 giây để animation kịp phát xong
-            if (knightD != null)
-            {
-                knightD.UpdateKillCount(1); // Gọi hàm cập nhật quest
-            }
-            ObjPoolingManager.Instance.ReturnToPool("Enemy2", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
-
-        }
-    }
+    
+    
 
 
 

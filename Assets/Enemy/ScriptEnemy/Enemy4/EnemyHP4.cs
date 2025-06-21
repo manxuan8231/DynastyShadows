@@ -66,9 +66,9 @@ public class EnemyHP4 : MonoBehaviour
 
         if (currentHealth > 0)
         {
-           
+            enemy4.ChangeState(Enemy4.EnemyState.GetHit);
             // Sau một thời gian nhỏ thì quay lại Run/Attack
-            Invoke(nameof(BackToChase), 0.5f);
+            Invoke(nameof(BackToChase), 0.2f);
         }
         else
         {
@@ -84,35 +84,7 @@ public class EnemyHP4 : MonoBehaviour
             ObjPoolingManager.Instance.ReturnToPool("Enemy4", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
         }
     }
-    public void TakeDamageHit(float damage)
-    {
-        if (enemy4.currentState == Enemy4.EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
-
-        currentHealth -= damage;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        sliderHp.value = currentHealth;
-
-
-
-        if (currentHealth > 0)
-        {
-            enemy4.ChangeState(Enemy4.EnemyState.GetHit);
-
-            // Sau một thời gian nhỏ thì quay lại Run/Attack
-            Invoke(nameof(BackToChase), 0.5f);
-        }
-        else
-        {
-            currentHealth = 0;
-            enemy4.ChangeState(Enemy4.EnemyState.Death);
-            enemy4.agent.isStopped = true; // Dừng lại khi chết
-            questDesert5.UpdateKillEnemy(1); // Cập nhật số lượng kẻ thù đã giết trong nhiệm vụ
-            DropItem();
-            // Hủy enemy sau 1.5 giây để animation kịp phát xong
-            Destroy(gameObject, 3f);
-        }
-    }
-    void BackToChase()
+        void BackToChase()
     {
         if (enemy4.currentState != Enemy4.EnemyState.Death)
         {
