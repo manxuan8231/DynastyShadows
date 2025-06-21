@@ -37,14 +37,14 @@ public class SkillUseHandler : MonoBehaviour
                     lastColldown = Time.time;
                 }
                 break;
-                case "DongCung2":
-                case "DongCung3":
-                case "DongCung4":
+            case "DongCung2":
+            case "DongCung3":
+            case "DongCung4":
 
-                default:
-                    Debug.Log("Chưa trang bị kỹ năng!");
-                    break;
-                }
+            default:
+            Debug.Log("Chưa trang bị kỹ năng!");
+                break;
+            }
         }
     public GameObject FindEnemy()
     {
