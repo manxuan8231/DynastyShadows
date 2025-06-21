@@ -19,7 +19,10 @@ public class TurnInQuest2Map2 : MonoBehaviour
     private bool isMoving = false;
     private bool isArrived = false;
     public GameObject canvasQuest;
-    void Start()
+    public GameObject activeQuest;
+    public GameObject quest2;
+
+        void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         anmt = GetComponent<Animator>();
@@ -48,6 +51,7 @@ public class TurnInQuest2Map2 : MonoBehaviour
             {
                 isArrived = true;
                 agent.ResetPath();
+                quest2.SetActive(false);
                 gameObject.SetActive(false); // Ẩn NPC sau khi đến nơi
             }
         }
@@ -57,7 +61,7 @@ public class TurnInQuest2Map2 : MonoBehaviour
         canvasText.SetActive(true);
         contentText.text = "Tôi đến để gửi tin cho lính gác ở đội 7.";
         isQuest2 = true;
-
+        activeQuest.SetActive(true);
         yield return new WaitForSeconds(2f);
 
         canvasContent.SetActive(false);
