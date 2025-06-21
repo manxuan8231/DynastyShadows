@@ -33,6 +33,7 @@ public class CamTrigger : MonoBehaviour
         transformQuest.SetActive(false);
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
         audioSource = GetComponent<AudioSource>();
+        cinemachineBrain = FindAnyObjectByType<CinemachineBrain>();
     }
 
     private void OnTriggerEnter(Collider other)

@@ -43,7 +43,7 @@ public class DameZoneHit : MonoBehaviour
             if (enemyHP2 != null)
             {
                 ShowTextDame(maxDame);
-                enemyHP2.TakeDamageHit(maxDame);
+               // enemyHP2.TakeDamageHit(maxDame);
                 return;
             }
 
@@ -51,7 +51,7 @@ public class DameZoneHit : MonoBehaviour
             if (enemyHP3 != null)
             {
                 ShowTextDame(maxDame);
-                enemyHP3.TakeDamageHit(maxDame);
+                //enemyHP3.TakeDamageHit(maxDame);
                 return;
             }
 
@@ -59,7 +59,7 @@ public class DameZoneHit : MonoBehaviour
             if (enemyHP4 != null)
             {
                 ShowTextDame(maxDame);
-                enemyHP4.TakeDamageHit(maxDame);
+                //enemyHP4.TakeDamageHit(maxDame);
                 return;
             }
         }
