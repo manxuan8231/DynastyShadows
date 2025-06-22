@@ -213,10 +213,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolRadius: 10
   waitTime: 2
-  talkDistance: 3
-  talkDuration: 3
+  talkDistance: 2
+  talkDuration: 5
+  movesBeforeTalking: 2
   dialoguePanel: {fileID: 1062423533}
   dialogueText: {fileID: 2137226109}
+  conversation: {fileID: 0}
 --- !u!195 &85754602
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -248,7 +250,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 85754598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfa50ac9a8ed8234ba3a7d5d317816f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 51d98ef483e503447aef7923a7a656f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &147325973
@@ -997,18 +999,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062423533}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 14.653496}
+  m_LocalScale: {x: 0.3062866, y: 0.3062866, z: 0.3062866}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2137226108}
-  m_Father: {fileID: 1521324388}
+  m_Father: {fileID: 2000552661}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0.000030517578}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1062423535
 MonoBehaviour:
@@ -1094,7 +1096,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6127395625895404759, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 31.77
+      value: 35.93
       objectReference: {fileID: 0}
     - target: {fileID: 6127395625895404759, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1152,7 +1154,7 @@ PrefabInstance:
       addedObject: {fileID: 2017004571}
     - targetCorrespondingSourceObject: {fileID: 6792327054025522797, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2017004570}
+      addedObject: {fileID: 2017004575}
   m_SourcePrefab: {fileID: 100100000, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
 --- !u!1 &1441638887
 GameObject:
@@ -2971,7 +2973,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4550624334826413047, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1062423534}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
 --- !u!1 &1521324384
@@ -3067,8 +3072,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1062423534}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3076,23 +3080,16 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!224 &2000552661 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4550624334826413047, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+  m_PrefabInstance: {fileID: 1508064175}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2017004569 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6792327054025522797, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
   m_PrefabInstance: {fileID: 1361067776}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2017004570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2017004569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfa50ac9a8ed8234ba3a7d5d317816f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!195 &2017004571
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3102,7 +3099,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2017004569}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -3129,10 +3126,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolRadius: 10
   waitTime: 2
-  talkDistance: 3
-  talkDuration: 3
+  talkDistance: 2
+  talkDuration: 5
+  movesBeforeTalking: 2
   dialoguePanel: {fileID: 1062423533}
   dialogueText: {fileID: 2137226109}
+  conversation: {fileID: 0}
+--- !u!114 &2017004575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017004569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51d98ef483e503447aef7923a7a656f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2030681157
 GameObject:
   m_ObjectHideFlags: 0
@@ -3403,7 +3414,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -588, y: 432}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2137226109

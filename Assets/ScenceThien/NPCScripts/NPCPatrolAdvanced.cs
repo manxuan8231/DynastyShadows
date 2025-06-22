@@ -18,6 +18,7 @@ public class NPCController : MonoBehaviour
     [Header("UI")]
     public GameObject dialoguePanel;
     public TMP_Text dialogueText;
+    public NPCConversation conversation;
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -25,6 +26,7 @@ public class NPCController : MonoBehaviour
     private bool isTalking = false;
     private bool isWaiting = false;
     private bool isSeekingConversation = false;
+    private bool hasTalkedWith = false;
 
     private int moveCount = 0;
 
@@ -32,6 +34,8 @@ public class NPCController : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        conversation = GetComponent<NPCConversation>();
+
 
         if (dialoguePanel != null)
             dialoguePanel.SetActive(false);
@@ -52,13 +56,9 @@ public class NPCController : MonoBehaviour
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             if (isSeekingConversation)
-            {
                 TryStartConversationWithNearbyNPC();
-            }
             else
-            {
                 StartCoroutine(WaitAndMove());
-            }
         }
     }
 
@@ -67,13 +67,13 @@ public class NPCController : MonoBehaviour
         if (moveCount >= movesBeforeTalking)
         {
             isSeekingConversation = true;
-            return; // dừng chọn điểm mới, chuẩn bị đi tìm NPC khác
+            GoToClosestNPC();
+            return;
         }
 
-        Vector3 randomDirection = Random.insideUnitSphere * patrolRadius;
-        randomDirection += transform.position;
+        Vector3 randomDirection = Random.insideUnitSphere * patrolRadius + transform.position;
 
-        if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, patrolRadius, 1))
+        if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, patrolRadius, NavMesh.AllAreas))
         {
             agent.SetDestination(hit.position);
             moveCount++;
@@ -118,38 +118,40 @@ public class NPCController : MonoBehaviour
 
         if (closestNPC != null)
         {
-            agent.SetDestination(closestNPC.transform.position);
+            Vector3 direction = (closestNPC.transform.position - transform.position).normalized;
+            float safeDistance = talkDistance * 0.9f; // dừng cách nhau 90% khoảng nói chuyện
+
+            Vector3 stopPosition = closestNPC.transform.position - direction * safeDistance;
+
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(stopPosition, out hit, 1f, NavMesh.AllAreas))
+            {
+                agent.SetDestination(hit.position);
+            }
         }
     }
+
 
     void TryStartConversationWithNearbyNPC()
     {
-        NPCController[] allNPCs = FindObjectsOfType<NPCController>();
-        foreach (var npc in allNPCs)
+        if (hasTalkedWith) return;
+
+        foreach (var npc in FindObjectsOfType<NPCController>())
         {
-            if (npc == this || npc.IsTalking()) continue;
+            if (npc == this || npc.IsTalking() || npc.hasTalkedWith) continue;
 
             float dist = Vector3.Distance(transform.position, npc.transform.position);
-            if (dist <= talkDistance && dist >= 1.5f)
+            if (dist <= talkDistance)
             {
+                // Bắt đầu hội thoại giữa hai NPC
                 isSeekingConversation = false;
                 moveCount = 0;
+                hasTalkedWith = true;
+                npc.hasTalkedWith = true;
 
-                TryStartConversation(npc);
-                npc.TryStartConversation(this);
+                StartCoroutine(ConversationRoutine(npc));
                 return;
             }
-        }
-
-        // Không tìm thấy → tiếp tục chọn NPC khác
-        GoToClosestNPC();
-    }
-
-    public void TryStartConversation(NPCController other)
-    {
-        if (!isTalking && !other.isTalking)
-        {
-            StartCoroutine(ConversationRoutine(other));
         }
     }
 
@@ -157,16 +159,14 @@ public class NPCController : MonoBehaviour
     {
         isTalking = true;
         agent.isStopped = true;
-        animator.SetFloat("Speed", 0f);
+        other.ReceiveConversation(this); // Cho NPC kia dừng lại
 
-        // Quay mặt về phía nhau
-        Vector3 lookDir = (other.transform.position - transform.position).normalized;
-        lookDir.y = 0f; // không thay đổi góc nhìn theo trục Y
-        if (lookDir != Vector3.zero)
-            transform.rotation = Quaternion.LookRotation(lookDir);
+        // Cả hai quay mặt về nhau
+        yield return StartCoroutine(RotateTowards(other.transform));
+        StartCoroutine(other.RotateTowards(transform)); // NPC kia cũng quay mặt lại
 
-        // Hiện UI
-        if (dialoguePanel != null && dialogueText != null)
+        // Hiện thoại
+        if (dialoguePanel && dialogueText)
         {
             dialoguePanel.SetActive(true);
             dialogueText.text = $"{gameObject.name}: Xin chào {other.gameObject.name}!";
@@ -174,17 +174,57 @@ public class NPCController : MonoBehaviour
 
         yield return new WaitForSeconds(talkDuration);
 
-        if (dialoguePanel != null)
+        if (dialoguePanel)
             dialoguePanel.SetActive(false);
 
+        isTalking = false;
+        hasTalkedWith = false;
         agent.isStopped = false;
         GetNewDestination();
-        isTalking = false;
+
+        other.EndConversation(); // Cho NPC kia tiếp tục di chuyển
     }
 
+    public void ReceiveConversation(NPCController from)
+    {
+        isTalking = true;
+        agent.isStopped = true;
+        animator.SetFloat("Speed", 0f);
+    }
+    public void BeginConversation()
+    {
+        isTalking = true;
+        agent.isStopped = true;
+        animator.SetFloat("Speed", 0f);
+    }
+    public void EndConversation()
+    {
+        isTalking = false;
+        hasTalkedWith = false;
+        agent.isStopped = false;
+        GetNewDestination();
+    }
+
+    public IEnumerator RotateTowards(Transform target)
+    {
+        float rotSpeed = 5f;
+        Vector3 dir = (target.position - transform.position).normalized;
+        dir.y = 0f;
+
+        Quaternion targetRot = Quaternion.LookRotation(dir);
+        float t = 0;
+
+        while (Quaternion.Angle(transform.rotation, targetRot) > 1f)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, t);
+            t += Time.deltaTime * rotSpeed;
+            yield return null;
+        }
+    }
 
     public bool IsTalking()
     {
         return isTalking;
     }
+
 }
