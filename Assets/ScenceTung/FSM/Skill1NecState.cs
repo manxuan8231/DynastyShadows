@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class Skill1NecState : INecState
 {
@@ -15,8 +16,8 @@ public class Skill1NecState : INecState
 
     public override void Update()
     {
-
-         if (enemy.necHp.curhp <= 7000 && !isTele  && enemy.isSkill1==false)
+        float distance = Vector3.Distance(enemy.transform.position, enemy.player.transform.position);
+        if (enemy.necHp.curhp <= 7000 && !isTele  && enemy.isSkill1==false && distance <= 100f)
         {
             enemy.audioManager.audioSource.PlayOneShot(enemy.audioManager.skill1Sound);
           

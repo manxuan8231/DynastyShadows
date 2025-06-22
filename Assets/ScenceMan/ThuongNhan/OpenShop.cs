@@ -36,7 +36,7 @@ public class OpenShop : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player") && turnInQuestThuongNhan.isOpenShop == true)
+        if(other.CompareTag("Player") && turnInQuestThuongNhan.isOpenShop == true)  
         {
             isButtonF = true; // Đặt biến isButtonF thành true khi người chơi vào vùng kích hoạt
             buttonF.SetActive(true); // Hiển thị nút F khi người chơi vào vùng kích hoạt

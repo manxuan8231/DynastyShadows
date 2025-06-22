@@ -8,7 +8,8 @@ public class Quest3 : MonoBehaviour
     public TextMeshProUGUI questNameText;// Tên nhiệm vụ
     public GameObject iconQuest; // Icon hiển thị nơi làm nhiệm vụ
     public GameObject pointerLinhCanh; //mui ten chi duong den linh canh
-    public GameObject niceQuest; // UI nhiệm vụ đẹp    
+    public GameObject niceQuest; // UI nhiệm vụ đẹp
+    public GameObject questPointer; // an chỉ dẫn nhiệm vụ linh canh
     // Quest linh canh
     private bool questVillageStarted = false;
 
@@ -55,7 +56,7 @@ public class Quest3 : MonoBehaviour
         questPanel.SetActive(true);
         
         SpawnEnemies();// Gọi hàm spawn enemy
-       
+        questPointer.SetActive(false); // Ẩn chỉ dẫn nhiệm vụ
         questNameText.text = $"Tiêu diệt yêu tinh {killEnemy}/{8}";
     }
     public void UpdateKillEnemy(int amount)

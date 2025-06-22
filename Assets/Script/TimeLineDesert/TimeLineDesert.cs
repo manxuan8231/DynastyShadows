@@ -10,7 +10,8 @@ public class TimeLineDesert : MonoBehaviour
     public CinemachineCamera scene2;//camera 2
   
     public GameObject effectDesert;//hieu ung bao cat
-
+    public GameObject pointer;//an chi dan vo tinh
+  
     public GameObject panelContent;
     public TextMeshProUGUI textContent;
 
@@ -30,7 +31,7 @@ public class TimeLineDesert : MonoBehaviour
     {
         characterController = FindAnyObjectByType<PlayerControllerState>();
         questDesert = FindAnyObjectByType<QuestDesert5>(); // Lấy đối tượng QuestDesert5
-      
+       
         effectDesert.SetActive(false); // Ẩn hiệu ứng sa mạc ban đầu
         panelContent.SetActive(false); // Ẩn panel nội dung ban đầu
         textContent.enabled = false; // Ẩn nội dung văn bản ban đầu
@@ -42,12 +43,16 @@ public class TimeLineDesert : MonoBehaviour
         if (isScene1Active == true)
         {
             isScene1Active = false; // Đặt cờ để hủy kích hoạt scene1
+            pointer.SetActive(false); // Ẩn chỉ dẫn nhiệm vụ
            
             StartCoroutine(WaitScene1());
         }
         else if(isScene2Active == true)
         {
+           
+          
             isScene2Active = false; // Đặt cờ để hủy kích hoạt scene2
+          
             StartCoroutine(WaitScene2());
         }
     }
@@ -75,6 +80,7 @@ public class TimeLineDesert : MonoBehaviour
         characterController.animator.SetBool("isWalking", false);
         characterController.animator.SetBool("isRunning", false);
         characterController.animator.enabled = false;
+
         // Hiện chuột
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;
@@ -123,11 +129,13 @@ public class TimeLineDesert : MonoBehaviour
         characterController.enabled = false; // Vô hiệu hóa CharacterController
         characterController.animator.SetBool("isWalking", false);
         characterController.animator.SetBool("isRunning", false);
+        characterController.animator.enabled = false; // Vô hiệu hóa Animator
         panelContent.SetActive(true); // Hiện panel nội dung
         textContent.enabled = true; // Hiện nội dung văn bản
         textContent.text = "Không ngờ ở đây lại có các dấu vết còn sót lại của con người.";
 
         yield return new WaitForSeconds(3f); // Chờ trong 3 giây
+        characterController.animator.enabled = true; 
         characterController.enabled = true; // Bật CharacterController
         Cursor.lockState = CursorLockMode.Locked; // Khóa chuột lại
         Cursor.visible = false; //an chuot

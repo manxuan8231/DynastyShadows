@@ -82,7 +82,7 @@ public class QuestDesert5 : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && isPlayer == true)
         {
-
+          
             isScene2 = true; // Đặt cờ để vào scene 2
         }
     }
@@ -112,20 +112,5 @@ public class QuestDesert5 : MonoBehaviour
         questNameText.text = $"Trả nhiệm vụ cho Lính Canh B"; // Hiển thị tên nhiệm vụ
     }
 
-    void SpawnEnemies()
-    {
-        int count = Mathf.Min(enemySpawnCount, spawnPoints.Length);
-
-        for (int i = 0; i < count; i++)
-        {
-            Vector3 spawnPos = spawnPoints[i].position;
-
-            GameObject enemy = ObjPoolingManager.Instance.GetEnemyFromPool(enemyTag, spawnPos);
-
-            if (enemy == null)
-            {
-                Debug.LogWarning("Enemy không đủ trong pool!");
-            }
-        }
-    }
+   
 }

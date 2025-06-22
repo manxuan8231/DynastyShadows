@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class MinotaurEnemy : MonoBehaviour
 {
     public Transform targetPlayer;//người chơi
+    public Vector3 startPosition;
     public BoxCollider box;
     public float detectionRange = 10f;//phát hiện người chơi
     public float attackRange = 2f;// khoảng cách tấn công người chơi
@@ -16,6 +17,7 @@ public class MinotaurEnemy : MonoBehaviour
     public float currentHealth = 100f;// máu hiện tại 
     public float maxHealth = 100f;// máu tối đa
     public bool isDead = false;// trạng thái chết của kẻ thù
+
     //hit
     private bool _isHit = false;       // có đang bị đánh không
     private bool _canBeHit = true;     // dùng cooldown giữa các lần bị đánh
@@ -54,7 +56,7 @@ public class MinotaurEnemy : MonoBehaviour
         damezone = FindAnyObjectByType<DameZoneMinotaur>(); // Lấy tham chiếu đến DrakonitDameZone trong con của MinotaurEnemy
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         minotaurEnemy = GetComponent<MinotaurEnemy>();
-       
+        startPosition = transform.position; // Lưu vị trí bắt đầu của MinotaurEnemy
     }
 
     void Update()
@@ -105,6 +107,9 @@ public class MinotaurEnemy : MonoBehaviour
         // xu ly di chuyển đến người chơi -----------------
         var isMove = new ConditionNode(ISPlayerMove);  
         var moveToPlayerAction = new ActionNode(MoveToPlayer);
+        // quay về vị trí ban đầu nếu người chơi ra khỏi tầm nhìn
+        var lostSight = new ConditionNode(PlayerOutOfSight);
+        var returnToStart = new ActionNode(ReturnToStartPosition);
 
         //xu ly tấn công người chơi---------------------
         var isPlayerInAttackRange = new ConditionNode(IsPlayerInAttackRange);// kiểm tra xem người chơi có trong khoảng tấn công hay không
@@ -118,22 +123,17 @@ public class MinotaurEnemy : MonoBehaviour
         // Cây hành vi gốc
         _rootNode = new SelectorNode(new List<Node>
         {
-             //die
-             new SequenceNode(new List<Node> { isDead, deathAction }),
-             //hit
-             new SequenceNode(new List<Node> { isHit, hitAction }),
-             //parry
-             new SequenceNode(new List<Node> { isParry, parryAction }),
-             //move
-             new SequenceNode(new List<Node> {isMove, moveToPlayerAction}),
-             //Attack
-             new SequenceNode(new List<Node> { isPlayerInAttackRange, isCooldownAttack, attackAction, waitAction, }),                                         
-              //idle
-             idleAction
-
+            new SequenceNode(new List<Node> { isDead, deathAction }),
+            new SequenceNode(new List<Node> { isHit, hitAction }),
+            new SequenceNode(new List<Node> { isParry, parryAction }),
+            new SequenceNode(new List<Node> { isMove, moveToPlayerAction }),
+            new SequenceNode(new List<Node> { isPlayerInAttackRange, isCooldownAttack, attackAction, waitAction }),
+            new SequenceNode(new List<Node> { lostSight, returnToStart }),
+            idleAction
         });
+
     }
-    //battle-----------------
+    //move-----------------
     private bool ISPlayerMove()// phát hiện người chơi
     {
         return targetPlayer != null && Vector3.Distance(transform.position, targetPlayer.position) <= detectionRange &&
@@ -150,6 +150,32 @@ public class MinotaurEnemy : MonoBehaviour
         return NodeState.RUNNING;
     }
 
+    //quay ve vị trí ban đầu
+    private bool PlayerOutOfSight()
+    {
+        if (targetPlayer == null) return true;
+
+        float distance = Vector3.Distance(transform.position, targetPlayer.position);
+
+        // Nếu player ra khỏi phạm vi detection → quay về liền
+        return distance > detectionRange;
+    }
+    private NodeState ReturnToStartPosition()
+    {
+        _agent.isStopped = false;
+        _animator.SetBool("IsRunning", true);
+        _agent.SetDestination(startPosition);
+
+        float distToStart = Vector3.Distance(transform.position, startPosition);
+
+        if (distToStart <= 3f)
+        {
+            _animator.SetBool("IsRunning", false);
+            return NodeState.SUCCESS;
+        }
+
+        return NodeState.RUNNING;
+    }
 
     //attack----------
     private bool IsPlayerInAttackRange()// khoảng cách tấn công người chơi

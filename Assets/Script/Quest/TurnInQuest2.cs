@@ -9,6 +9,7 @@ public class TurnInQuest2 : MonoBehaviour
     public TextMeshProUGUI NPCName; // Tên của NPC
     public TextMeshProUGUI NPCContent; // Nội dung hội thoại
     public GameObject iconMap; // Icon hiển thị trên bản đồ
+    
     public GameObject linhCanh;
     public GameObject thuongNhan;
     public GameObject niceQuestUI;

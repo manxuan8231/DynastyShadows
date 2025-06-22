@@ -92,7 +92,12 @@ public class Skill3ClonePLayer : MonoBehaviour
         if (nearestEnemy != null)
         { 
             animator.SetBool("Run", true);
-            agent.SetDestination(nearestEnemy.position);
+            if(agent.enabled == true)
+            {
+                // Di chuyển đến kẻ thù
+                agent.SetDestination(nearestEnemy.position);
+            }
+           
         }
     }
 

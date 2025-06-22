@@ -11,6 +11,7 @@ public class TurnInQuest : MonoBehaviour
     public GameObject iconMap; // Icon hiển thị trên bản đồ
     public GameObject niceQuestUI;
     public GameObject questThuongNhan;//làm xong nhiệm vụ của bác lâm thì mới suất hiện thuognw nhân
+    public GameObject questPointer; // Chỉ dẫn tới nhận nhiệm vụ đánh cá
     //trang thai
     public enum QuestToStart { None, BacLam, LinhCanh }
     public QuestToStart questToStart = QuestToStart.None;
@@ -147,12 +148,14 @@ public class TurnInQuest : MonoBehaviour
         switch(questToStart)
         {
             case QuestToStart.BacLam:
+                questPointer.SetActive(true); // Ẩn chỉ dẫn nhiệm vụ
                 quest1.questPanel.SetActive(false);// Ẩn icon quest trên bản đồ làm nhiệm vụ;
                 quest1.iconQuest.SetActive(false); //ần panel quest text la cai ben trai man hinh 
                 iconMap.SetActive(false); // Ẩn icon quest trên bản đồ
                 playerStatus.IncreasedGold(100); // Thêm kinh nghiệm cho người chơi
                 questThuongNhan.SetActive(true); // Hiện NPC ThuongNhan sau khi hoàn thành nhiệm vụ
                 StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 2 giây
+                quest1.questPointer2.SetActive(false); // Ẩn chỉ dẫn nhiệm vụ
                 Debug.Log("Phần thưởng đã nhận");
 
                 break;

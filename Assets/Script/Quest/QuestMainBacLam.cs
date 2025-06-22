@@ -14,7 +14,7 @@ public class QuestMainBacLam : MonoBehaviour
     public GameObject iconQuest2;
     public GameObject pointerEnemy;
     public GameObject niceQuest;
-
+    public GameObject questPointer;//ẩn đi khi bắt đầu nhiệm vụ
     [Header("Quest Logic")]
     public float enemyCount = 0;
     private bool questStarted = false;
@@ -67,7 +67,7 @@ public class QuestMainBacLam : MonoBehaviour
         questPanel.SetActive(true);
         pointerLinhCanhB.SetActive(true);
         iconQuestMainBacLam.SetActive(false);
-
+        questPointer.SetActive(false);
         questNameText.text = "Đến chỗ Lính Canh B";
     }
 

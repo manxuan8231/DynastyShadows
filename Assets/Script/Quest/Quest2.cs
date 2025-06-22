@@ -6,7 +6,7 @@ public class Quest2 : MonoBehaviour
     public GameObject questPanel;// Panel hiển thị thông tin nhiệm vụ 
     public TextMeshProUGUI questNameText;// Tên nhiệm vụ
     public GameObject iconQuest; // Icon hiển thị nơi làm nhiệm vụ
-   
+   public GameObject questPointer; // an chỉ dẫn nhiệm vụ đánh cá
     // Quest Village
     private bool questVillageStarted = false;
     public GameObject enemy; // Kẻ thù trong quest
@@ -33,6 +33,7 @@ public class Quest2 : MonoBehaviour
         questVillageStarted = true;
         iconQuest.SetActive(true);
         questPanel.SetActive(true);
+        questPointer.SetActive(false); // Ẩn chỉ dẫn nhiệm vụ
         questNameText.text = "Đến khu đánh cá điều tra về bọ yêu tinh quấy phá";
     }
     public void UpdateKillCount()

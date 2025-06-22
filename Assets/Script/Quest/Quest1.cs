@@ -6,7 +6,8 @@ public class Quest1 : MonoBehaviour
     public GameObject questPanel;
     public TextMeshProUGUI questNameText;
     public GameObject iconQuest; // Icon hiển thị nơi làm nhiệm vụ
-
+    public GameObject questPointer;//lan dau
+    public GameObject questPointer2; // toi tra nhệm vụ
     //// Các điểm xuất hiện kẻ thù
     public Transform[] spawnPoints; // Vị trí spawn sẵn
     public int enemySpawnCount; // Số enemy muốn spawn
@@ -44,6 +45,7 @@ public class Quest1 : MonoBehaviour
 
         iconQuest.SetActive(true);
         questPanel.SetActive(true);
+        questPointer.SetActive(false); // an chỉ dẫn nhiệm vụ
         questNameText.text = $"Tiêu diệt hết quái ở bãi gỗ của Bác Lâm {questBacLamKillCount}/5";
     }
 
@@ -59,6 +61,7 @@ public class Quest1 : MonoBehaviour
         if (questBacLamKillCount >= 5)
         {
             questBacLamCompleted = true;
+            questPointer2.SetActive(true); //  chỉ dẫn nhiệm vụ
             questNameText.text = "Tới chỗ Bác Lâm để trả nhiệm vụ!";
             iconQuest.SetActive(false); // Không còn mục tiêu trên bản đồ
          

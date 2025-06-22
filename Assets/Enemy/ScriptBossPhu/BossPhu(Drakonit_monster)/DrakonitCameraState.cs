@@ -51,6 +51,7 @@ public class DrakonitCameraState : DrakonitState
         characterController. animator.SetBool("isWalking", false);
         characterController.animator.SetBool("isRunning", false);
         audioManager.audioBackGround.enabled = true; // âm thanh nền
+        characterController.animator.enabled = false; // Vô hiệu hóa Animator của player
         //  Hiện chuột
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;
@@ -91,6 +92,7 @@ public class DrakonitCameraState : DrakonitState
         enemy.imgBietDanh.SetActive(false);// ẩn text biêt danh
         characterController.enabled = true; // Bật lại CharacterController
         comboAttack.enabled = true; // Kích hoạt lại ComboAttack cua player
+        characterController.animator.enabled = true; // Vô hiệu hóa Animator của player
         // khoa Hiện chuột
         UnityEngine.Cursor.visible = false;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;

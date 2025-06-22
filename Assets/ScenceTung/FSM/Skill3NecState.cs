@@ -18,7 +18,8 @@ public class Skill3NecState : INecState
 
         if (enemy.isSkill1 == true)
         {
-            if (Time.time >= skill3Timer + skill3Cooldown)
+            float distance = Vector3.Distance(enemy.transform.position, enemy.player.transform.position);
+            if (Time.time >= skill3Timer + skill3Cooldown && distance <= 100f)
             {
                 enemy.anmt.SetTrigger("Skill2");
                 enemy.transform.LookAt(enemy.player);
