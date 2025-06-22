@@ -39,6 +39,7 @@ public class TriggerQuest2 : MonoBehaviour
 
     IEnumerator Show()
     {
+        boxCollider.enabled = false; // Disable the box collider to prevent re-triggering   
         cam1.Priority = 11; // Set the camera priority to 11
         playerControllerState.animator.enabled = false; // Disable player animations
         playerControllerState.enabled = false; // Disable player controls
@@ -64,7 +65,6 @@ public class TriggerQuest2 : MonoBehaviour
         npcQuest.SetActive(true);
         contentQuest.text = "Hỗ trợ kỵ sĩ còn sống đẩy lùi đợt tấn công của dị thể";
         yield return new WaitForSeconds(1.5f);
-        boxCollider.enabled = false; // Disable the box collider to prevent re-triggering
 
     }
 }
