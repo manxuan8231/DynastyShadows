@@ -14,11 +14,13 @@ public class BossScript : MonoBehaviour
     public IdleState idleState;
     public ChaseState chaseState;
     public AttackState attackState;
-    public GetHitState getHitState;
     public DeathState deathState;
     public PhaseChangeState phase2State;
     public IdleCombatState idleCombatState;
     public BossAnimationData animationData;
+
+    public GameObject attackCollider;
+
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -28,7 +30,6 @@ public class BossScript : MonoBehaviour
         idleState = new IdleState(this);
         chaseState = new ChaseState(this);
         attackState = new AttackState(this);
-        getHitState = new GetHitState(this);
         deathState = new DeathState(this);
         phase2State = new PhaseChangeState(this);
         idleCombatState = new IdleCombatState(this);

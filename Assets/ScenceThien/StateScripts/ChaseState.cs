@@ -1,24 +1,34 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChaseState : BaseState
 {
     public ChaseState(BossScript boss) : base(boss) { }
-    private AudioBossManager audioBossManager;
+
     public override void EnterState()
     {
-        boss.anim.SetTrigger(boss.animationData.chase);
         boss.agent.isStopped = false;
+
+        boss.anim.ResetAllTriggers();
+        boss.anim.SetTrigger(boss.animationData.chase);
     }
 
     public override void UpdateState()
     {
-        boss.agent.SetDestination(boss.player.position);
         float dist = Vector3.Distance(boss.transform.position, boss.player.position);
 
+        // Di chuyển đến player
+        boss.agent.SetDestination(boss.player.position);
+
+        // Nếu gần đủ để tấn công
         if (dist <= boss.attackRange)
         {
-            boss.TransitionToState(boss.idleCombatState);
-            AudioBossManager.instance.PlaySFX("Chase");
+            boss.agent.isStopped = true;
+            boss.TransitionToState(boss.attackState);
         }
+    }
+
+    public override void ExitState()
+    {
+
     }
 }
