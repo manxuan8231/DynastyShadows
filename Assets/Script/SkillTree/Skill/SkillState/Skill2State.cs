@@ -27,7 +27,7 @@ public class Skill2State : PlayerState
 
     public override void Update()
     {
-        player.animator.SetBool("jumpLand", player.isGrounded && !player.wasGroundedLastFrame == true);
+       
         if (isMove == true && player.isController == true)
         {
             Move();
@@ -36,8 +36,7 @@ public class Skill2State : PlayerState
         }
         else
         {
-            player.animator.SetBool("isWalking", false);
-            player.animator.SetBool("isRunning", false);
+           
 
         }
        if(Input.GetKeyDown(KeyCode.F))
@@ -60,10 +59,9 @@ public class Skill2State : PlayerState
             player.playerStatus.TakeMana(50);
             player.velocity.y = Mathf.Sqrt(player.jumpHeight * -2f * player.gravity);
             player.audioSource.PlayOneShot(player.evenAnimator.audioJump);
-            player.animator.SetTrigger("jump");
+           
         }
-        //
-        player.animator.SetBool("jumpLand", player.isGrounded && !player.wasGroundedLastFrame == true);
+       
 
         player.wasGroundedLastFrame = player.isGrounded;
 
