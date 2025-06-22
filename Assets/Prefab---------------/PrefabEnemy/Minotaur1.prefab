@@ -2679,6 +2679,7 @@ GameObject:
   - component: {fileID: 6365342093382803807}
   - component: {fileID: 3619254723274865757}
   - component: {fileID: 4843101815042861315}
+  - component: {fileID: 6415174646990346438}
   m_Layer: 10
   m_Name: Minotaur1
   m_TagString: Enemy
@@ -2803,7 +2804,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 3.14, z: 1}
   m_Center: {x: 0, y: 1.54, z: 0}
@@ -2949,6 +2950,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!136 &6415174646990346438
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4625867533300698779}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.54
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.24, z: 0}
 --- !u!1 &4644225229257932715
 GameObject:
   m_ObjectHideFlags: 0

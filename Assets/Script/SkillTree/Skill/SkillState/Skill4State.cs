@@ -156,6 +156,7 @@ public class Skill4State : PlayerState
         player.wasGroundedLastFrame = player.isGrounded;
 
         player.velocity.y += player.gravity * Time.deltaTime;
+        if(player.controller.enabled) 
         player.controller.Move(player.velocity * Time.deltaTime);
     }
 

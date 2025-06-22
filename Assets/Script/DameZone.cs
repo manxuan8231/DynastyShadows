@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class DameZone : MonoBehaviour
 {
-    //effect hit
-    [SerializeField] private GameObject effectHit;
-    [SerializeField] private Transform tranFormHit;
+ 
 
    //hien dame effect
     public GameObject textDame;
@@ -32,8 +30,8 @@ public class DameZone : MonoBehaviour
             if (listDame.Contains(other)) return;
             float finalDamage = playerStatus.CalculateFinalDamage();
 
-                GameObject hitEffect = Instantiate(effectHit, tranFormHit.position, transform.rotation);
-                Destroy(hitEffect, 1f);
+               
+               
                 // Tìm script EnemyHP 
                 EnemyHP enemyHP = other.GetComponent<EnemyHP>();
                 if (enemyHP != null)
@@ -136,8 +134,7 @@ public class DameZone : MonoBehaviour
             if (listDame.Contains(other)) return;
             float finalDamage = playerStatus.CalculateFinalDamage();
 
-                GameObject hitEffect = Instantiate(effectHit, tranFormHit.position, transform.rotation);
-                Destroy(hitEffect, 1f);
+             
                 // Tìm script EnemyHP 
                 EnemyHP enemyHP = other.GetComponent<EnemyHP>();
                 if (enemyHP != null)

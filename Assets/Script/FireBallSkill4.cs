@@ -3,6 +3,7 @@
 public class FireBallSkill4 : MonoBehaviour
 {
     public GameObject impactEffect;       // Hiệu ứng va chạm
+    public Transform posi;
     public float destroyDelay = 2f;       // Thời gian hủy hiệu ứng
     public int damage = 5;                // Sát thương gốc
 
@@ -46,21 +47,21 @@ public class FireBallSkill4 : MonoBehaviour
             TryDealDamage(hitObj.GetComponent<EnemyMap2_HP>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<MinotaurEnemy>(), finalDamage);
 
-            SpawnImpact(other.transform.position); 
+            SpawnImpact(); 
             Destroy(gameObject);
         }
         else if (hitObj.layer == LayerMask.NameToLayer("Ground"))
         {
-            SpawnImpact(other.transform.position);
+            SpawnImpact();
             Destroy(gameObject);
         }
     }
 
-    void SpawnImpact(Vector3 position)
+    void SpawnImpact()
     {
         if (impactEffect != null)
         {
-            GameObject effect = Instantiate(impactEffect, position, Quaternion.identity);
+            GameObject effect = Instantiate(impactEffect, posi.position, Quaternion.identity);
             Destroy(effect, destroyDelay);
         }
     }
