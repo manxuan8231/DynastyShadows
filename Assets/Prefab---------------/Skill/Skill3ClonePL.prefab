@@ -16850,6 +16850,22 @@ MonoBehaviour:
   detectionRange: 70
   attackRange: 4
   attackCooldown: 6
+  skinnedMeshRenderers:
+  - {fileID: 6197337617800520565}
+  - {fileID: 3161620509577541690}
+  - {fileID: 3553429828028889512}
+  - {fileID: 8289453275156196853}
+  - {fileID: 8430950258229456483}
+  - {fileID: 7886760186216003242}
+  - {fileID: 57441202069284999}
+  - {fileID: 6295175296220011440}
+  - {fileID: 5913801182718965981}
+  - {fileID: 4447871825266446128}
+  - {fileID: 4530679720801892200}
+  - {fileID: 3944817713850432256}
+  - {fileID: 6888735548785003645}
+  - {fileID: 1368475727062025023}
+  - {fileID: 4984782410142098037}
   skillUseHandler: {fileID: 0}
 --- !u!114 &-5533079187246399814
 MonoBehaviour:
@@ -16872,6 +16888,8 @@ MonoBehaviour:
   slashSoundFly: {fileID: 0}
   effectChangeSkill4: {fileID: 0}
   positionSKill4: {fileID: 0}
+  effectSkill2: {fileID: 0}
+  positionSkill2: {fileID: 0}
   audioJump: {fileID: 0}
   audioRoll: {fileID: 0}
   audioMovemen: {fileID: 0}
@@ -16889,7 +16907,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 4
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

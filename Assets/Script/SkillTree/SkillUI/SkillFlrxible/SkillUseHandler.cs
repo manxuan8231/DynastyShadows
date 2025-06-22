@@ -94,27 +94,38 @@ public class SkillUseHandler : MonoBehaviour
                 break;
 
             default:
-                Debug.Log("Chưa trang bị kỹ năng!");
+               
                 break;
         }
 
-        // Hiển thị thanh và text cooldown
-        if (Time.time < lastColldown + cooldownTime)
-        {
-            float remainingTime = (lastColldown + cooldownTime) - Time.time;
-            float fillAmount = remainingTime / cooldownTime;
+        bool isOnCooldown = Time.time < lastColldown + cooldownTime;
+        bool isInCombo = comboStep > 0 && Time.time < comboTimer;
 
+        if (isOnCooldown || isInCombo)
+        {
             if (cooldownSlider != null)
-            {
-                cooldownSlider.gameObject.SetActive(true);
-                cooldownSlider.value = fillAmount;
-            }
+                cooldownSlider.gameObject.SetActive(isOnCooldown);
 
             if (cooldownText != null)
             {
                 cooldownText.gameObject.SetActive(true);
-                cooldownText.text = Mathf.CeilToInt(remainingTime).ToString() + "s";
 
+                if (isInCombo)
+                {
+                    float comboRemaining = comboTimer - Time.time;
+                    cooldownText.text = "" + comboRemaining.ToString("F1") + "s";
+                }
+                else if (isOnCooldown)
+                {
+                    float cooldownRemaining = (lastColldown + cooldownTime) - Time.time;
+                    cooldownText.text = Mathf.CeilToInt(cooldownRemaining).ToString() + "s";
+                }
+            }
+
+            if (cooldownSlider != null && isOnCooldown)
+            {
+                float fillAmount = ((lastColldown + cooldownTime) - Time.time) / cooldownTime;
+                cooldownSlider.value = fillAmount;
             }
         }
         else
@@ -122,6 +133,8 @@ public class SkillUseHandler : MonoBehaviour
             if (cooldownSlider != null) cooldownSlider.gameObject.SetActive(false);
             if (cooldownText != null) cooldownText.gameObject.SetActive(false);
         }
+
+
     }
 
 

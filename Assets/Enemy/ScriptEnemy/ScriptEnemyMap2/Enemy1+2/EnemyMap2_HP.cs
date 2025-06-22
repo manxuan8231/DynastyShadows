@@ -48,7 +48,8 @@ public class EnemyMap2_HP : MonoBehaviour
         sliderHp.value = currentHealth;
         if (currentHealth <= 0)
         {
-
+           
+            enemyMap2_1.agent.enabled = true; // Bật lại NavMeshAgent để có thể chơi animation chết
             enemyMap2_1.animator.enabled = true; // Bật animator để có thể chơi animation chết
             enemyMap2_1.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết
             enemyMap2_1.ChangeState(EnemyMap2_1.EnemyState.Death);

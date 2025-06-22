@@ -22,7 +22,7 @@ public class NecHp : MonoBehaviour
         controller = FindAnyObjectByType<NecController>();
         isAudioBgr = false;
     }
-
+   
     public void UpdateUI()
     {
         curhp = maxhp;
@@ -49,5 +49,17 @@ public class NecHp : MonoBehaviour
             triggerBox.enabled = true;
         }
     }
-    
+    public void TakeDamage()
+    {
+       
+        if (curhp <= 0)
+        {
+           
+                controller.anmt.enabled = true; // Bật animator để có thể chơi animation chết
+                controller.enabled = true; // Bật lại Enemy2 để có thể chơi animation chết
+                controller.agent.enabled = true; // Bật lại NavMeshAgent để có thể chơi animation chết
+            
+        }
+       
+    }
 }

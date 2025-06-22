@@ -11,7 +11,10 @@ public class Skill3ClonePLayer : MonoBehaviour
     public float detectionRange = 50f; 
     public float attackRange = 4f; 
     public float attackCooldown = 15f;
+   //skin
+   public SkinnedMeshRenderer[] skinnedMeshRenderers;
    
+    //bien luu tru enemy gan nhat
     private Transform nearestEnemy;
     private float lastAttackTime = -15f;
     //combostep skill fireball
@@ -21,6 +24,7 @@ public class Skill3ClonePLayer : MonoBehaviour
     Skill3Manager skill3Manager;
     PlayerStatus playerStatus;
     DameZoneSkill3PL dameZoneSkill3PL;
+    PlayerControllerState playerControllerState;
     public SkillUseHandler skillUseHandler;
     void Start()
     {
@@ -29,6 +33,7 @@ public class Skill3ClonePLayer : MonoBehaviour
         skillUseHandler = FindAnyObjectByType<SkillUseHandler>();
         skill3Manager = FindAnyObjectByType<Skill3Manager>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
         animator = GetComponent<Animator>();
         agent.speed = speed;
         StartCoroutine(ReturnToPool());
@@ -36,16 +41,16 @@ public class Skill3ClonePLayer : MonoBehaviour
 
     void Update()
     {
-      
+
         FindNearestEnemy();
-        StartCoroutine(ReturnToPool()); 
+        StartCoroutine(ReturnToPool());
         if (nearestEnemy != null)
         {
             float distanceToEnemy = Vector3.Distance(transform.position, nearestEnemy.position);
-            
+
             if (distanceToEnemy <= attackRange)
             {
-              
+
                 if (Time.time >= lastAttackTime + attackCooldown)
                 {
                     AttackEnemy();
@@ -55,21 +60,34 @@ public class Skill3ClonePLayer : MonoBehaviour
             }
             else
             {
-                
+
                 MoveToEnemy();
             }
-        }else
+        }
+        else
         {
             animator.SetBool("Run", false);
         }
-        if(playerStatus.currentHp <= 0)
+        if (playerStatus.currentHp <= 0)
         {
-            ObjPoolingManager.Instance.ReturnToPool(skill3Manager.clonePLTag,gameObject);
+            ObjPoolingManager.Instance.ReturnToPool(skill3Manager.clonePLTag, gameObject);
         }
-        
-       
+        //doi skin
+        if (playerControllerState.isSkinSkill3Clone == true)
+        {
+            for (int i = 0; i < skinnedMeshRenderers.Length; i++)
+            {
+                skinnedMeshRenderers[i].enabled = true;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < skinnedMeshRenderers.Length; i++)
+            {
+                skinnedMeshRenderers[i].enabled = false;
+            }
+        }
     }
-
     void FindNearestEnemy()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRange, enemyLayer);

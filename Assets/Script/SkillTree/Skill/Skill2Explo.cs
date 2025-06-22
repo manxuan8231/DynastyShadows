@@ -43,7 +43,7 @@ public class Skill2Explo : MonoBehaviour
             TryDealDamage(hitObj.GetComponent<EnemyMap2_HP>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<MinotaurEnemy>(), finalDamage);
             
-            Destroy(gameObject);
+            Destroy(gameObject,1f);
         }
        
     }

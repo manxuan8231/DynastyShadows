@@ -240,9 +240,11 @@ public class Skill4State : PlayerState
         isMovement = false;//
         yield return new WaitForSeconds(2f);
         isMovement = true;//cho di chuyen
+        player.isSkinSkill3Clone = true; //co sử dụng skill3 thi skin skill3 clone doi theo
         yield return new WaitForSeconds(player.skill4Manager.timeSkill4); // Thời gian chờ 10 giây rồi chuyển trạng thái     
         player.animator.runtimeAnimatorController = player.animatorDefauld; // Trở về animator mặc định
         player.skill4Manager.isHibitedIcon = false; // cam skill icon
+        player.isSkinSkill3Clone = false; 
         player.ChangeState(new PlayerCurrentState(player)); // Trở về trạng thái hiện tại
     }
 

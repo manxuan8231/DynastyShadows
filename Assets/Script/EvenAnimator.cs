@@ -14,9 +14,12 @@ public class EvenAnimator : MonoBehaviour
     [SerializeField] private GameObject effectAttackFly3;
     public AudioClip slashSoundFly;
  
-    [Header("EvenSkill4Core--------------------------------")]
+    [Header("EvenSkillCore--------------------------------")]
     [SerializeField] private GameObject effectChangeSkill4;
     [SerializeField] private Transform positionSKill4;
+    //skill2
+    [SerializeField] private GameObject effectSkill2;
+    [SerializeField] private Transform positionSkill2;
 
     [Header("even audio move---------------------------- ")]
     public AudioClip audioJump;
@@ -125,12 +128,36 @@ public class EvenAnimator : MonoBehaviour
 
     }
 
-    //skill4Core--------------------------------------------------------
+    //skillCore--------------------------------------------------------
     public void StartEffectChangeSkill4()
     {
         GameObject effect = Instantiate(effectChangeSkill4, positionSKill4.position, transform.rotation);
         Destroy(effect, 1.3f);
     }
+
+    public void StartEffectSkill2()
+    {
+        Vector3 dir = positionSkill2.forward;
+
+        // Tạo góc xoay theo hướng player đang nhìn
+        Quaternion baseRot = Quaternion.LookRotation(dir);
+
+        // Xoay thêm theo ý bạn
+        Quaternion customRot = baseRot * Quaternion.Euler(0, 0f, 90f);
+
+        GameObject effect = Instantiate(effectSkill2, positionSkill2.position, customRot);
+        Rigidbody rb = effect.GetComponent<Rigidbody>();
+
+        if (rb != null)
+        {
+            rb.AddForce(effect.transform.forward * 50, ForceMode.Impulse);
+        }
+
+        Destroy(effect, 5f);
+    }
+
+
+
 
     //skill1EF---------------------------------------------------------
     public void StartFireBall()

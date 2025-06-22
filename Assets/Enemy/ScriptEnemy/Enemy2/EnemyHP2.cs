@@ -76,6 +76,9 @@ public class EnemyHP2 : MonoBehaviour
         }
         else
         {
+            enemy2.animator.enabled = true; // Bật animator để có thể chơi animation chết
+            enemy2.enabled = true; // Bật lại Enemy2 để có thể chơi animation chết
+            enemy2.agent.enabled = true; // Bật lại NavMeshAgent để có thể chơi animation chết
             currentHealth = 0;
             enemy2.ChangeState(Enemy2.EnemyState.Death);
             enemy2.agent.isStopped = true; // Dừng lại khi chết

@@ -206,7 +206,9 @@ public class Boss1Controller : MonoBehaviour
         {
             skill4Prefabs.SetActive(false);
             this.enabled = false;
-            this.agent.enabled = false; 
+            this.agent.enabled = false;
+            anmt.enabled = true;
+
         }
         skill4Prefabs.SetActive(true);
         GameObject obj = Instantiate(skill4Prefabs,playerPos, Quaternion.identity);

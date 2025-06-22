@@ -21,7 +21,7 @@ public class NecController : MonoBehaviour
     public bool isSkill1 = false;
     public GameObject skill3;
     public bool isSKill3 = false;
-
+   
     public Vector3 playerPos;
     public DameZoneWeapon damezoneWP;
     public BoxCollider offDame;
@@ -35,6 +35,7 @@ public class NecController : MonoBehaviour
         damezoneWP = FindAnyObjectByType<DameZoneWeapon>();
         anmt = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        
         ChangState(new NecIdleState(this));
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
@@ -135,9 +136,15 @@ public class NecController : MonoBehaviour
         necHp.sliderHp.value = necHp.curhp;
         necHp.textHp.text = $"{necHp.curhp}/{necHp.maxhp}";
         Debug.Log("NecController TakeDame: " + necHp.curhp);
-        if(necHp.curhp <= 0)
+       
+        if (necHp.curhp <= 0)
         {
-            questDesert5.UpdateKillBoss(1);
+            necHp.TakeDamage();
+            if(questDesert5 != null)
+            {
+                questDesert5.UpdateKillBoss(1);
+            }
+           
         }
     }
     Transform FindClosestPlayer()

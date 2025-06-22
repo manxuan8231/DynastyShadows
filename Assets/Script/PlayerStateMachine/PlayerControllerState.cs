@@ -40,10 +40,12 @@ public class PlayerControllerState : MonoBehaviour
     public EvenAnimator evenAnimator;
     //skill2 tham chieu
     public bool isRemoveClone = false;
+    public bool isSkinSkill3Clone = false; //kiểm tra xem có sử dụng skin skill3 clone hay không
     public Skill2Manager skill2Manager;   
     public Skill3Manager skill3Manager; //skill3 tham chieu
     public Skill1Manager skill1Manager; //skill1 tham chieu
     public Skill4Manager skill4Manager;// skill 4 tham chieu
+     
     // Biến để lưu vị trí checkpoint
     public Vector3 checkpointPosition;
 

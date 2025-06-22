@@ -69,7 +69,10 @@ public class EnemyHP3 : MonoBehaviour
                     Invoke(nameof(BackToChase), 0.2f);
         }
         else
-        {           
+        {
+            enemy3.animator.enabled = true; // Bật animator để có thể chơi animation chết
+            enemy3.enabled = true; // Bật lại Enemy2 để có thể chơi animation chết
+            enemy3.agent.enabled = true; // Bật lại NavMeshAgent để có thể chơi animation chết
             currentHealth = 0;
             enemy3.ChangeState(Enemy3.EnemyState.Death);
             enemy3.agent.isStopped = true; // Dừng lại khi chết
