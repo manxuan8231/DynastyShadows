@@ -15,12 +15,23 @@ public class ChangedWedather : MonoBehaviour
     public bool isBtnOpen = false;
     public GameObject effect;
     public Material skybox;
+    public Material skyboxOgirnal;
+    public bool isAudioActive = false;
+    public bool isAudioDoneQuest = false;
+    public bool isDoneQuest3 = false;
+    public AudioSource AudioSource;
+    public AudioClip clip1;
+
+
 
     void Start()
     {
+
         turnInQuest2Map2 = FindAnyObjectByType<TurnInQuest2Map2>();
         boxCollider = GetComponent<BoxCollider>();
         _light = GameObject.Find("Directional Light(None)").GetComponent<Light>(); // Tìm ánh sáng trong cảnh
+        AudioSource = GetComponent<AudioSource>();
+
 
     }
     private void Update()
@@ -49,19 +60,47 @@ public class ChangedWedather : MonoBehaviour
     }
     IEnumerator changedWeather()
     {
-        yield return null;
+        yield return new WaitForSeconds(1f) ;
+        // 👉 THAY ĐỔI THỜI TIẾT
         _light.color = Color.black;
-        _light.intensity = 0.5f; // Giảm độ sáng của ánh sáng để tạo hiệu ứng thời tiết tối hơn
+        _light.intensity = 0.2f; // Giảm độ sáng của ánh sáng để tạo hiệu ứng thời tiết tối hơn
         RenderSettings.fog = true; // Bật sương mù
         RenderSettings.fogDensity = 0.01f; //tăng độ mờ của sương mù
         Debug.Log("Đã thay đổi thời tiết!"); // Thay đổi thời tiết ở đây
-                                             // 👉 ĐỔI SKYBOX
-        if (skybox != null)
+        
+        if (skybox != null)// 👉 ĐỔI SKYBOX
         {
             RenderSettings.skybox = skybox;
             DynamicGI.UpdateEnvironment(); // Cập nhật lighting để khớp Skybox mới
         }
+        if(!isAudioActive)
+        {
+            AudioSource.clip = clip1;
+            AudioSource.Play();
+            AudioSource.loop = true; // Đặt âm thanh lặp lại
+            isAudioActive = true; // Đặt cờ để biết âm thanh đã được phát
+        }
+        if (isAudioDoneQuest)
+        {
+            AudioSource.Stop(); // Dừng âm thanh nếu đã phát
+            isAudioDoneQuest = false; // Đặt lại cờ
+        }
+        yield return new WaitForSeconds(3f);
+        isDoneQuest3 = true; // Đặt cờ để biết nhiệm vụ đã hoàn thành
 
+    }
+
+    public void ChangedFirstWeather()
+    {
+        // 👉 THAY ĐỔI THỜI TIẾT
+        if (skyboxOgirnal != null)// 👉 ĐỔI SKYBOX
+        {
+            RenderSettings.skybox = skyboxOgirnal;
+            DynamicGI.UpdateEnvironment(); // Cập nhật lighting để khớp Skybox mới
+        }
+        _light.color = new Color(1, 0.6430022f, 0.1911765f,1);
+        _light.intensity = 1f; // Đặt độ sáng của ánh sáng về mức ban đầu
+        RenderSettings.fog = false; // Tắt sương mù
 
     }
 
