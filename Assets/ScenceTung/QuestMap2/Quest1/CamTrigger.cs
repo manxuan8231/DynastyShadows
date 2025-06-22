@@ -46,11 +46,10 @@ public class CamTrigger : MonoBehaviour
 
     IEnumerator CameraChanged()
     {
+        boxCollider.enabled = false;
         playerControllerState.enabled = false;
         playerControllerState.animator.enabled = false;
         canvasText.SetActive(true);
-
-       
         CinemachineBlendDefinition blendDefinition = new CinemachineBlendDefinition
         {
             Style = CinemachineBlendDefinition.Styles.Cut
@@ -75,7 +74,6 @@ public class CamTrigger : MonoBehaviour
         cam3.Priority = 0;
         yield return new WaitForSeconds(5f);
         cam4.Priority = 0;
-        boxCollider.enabled = false;
         playerControllerState.enabled = true;
         playerControllerState.animator.enabled = true;
         cam4.Priority = 0;

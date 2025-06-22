@@ -6,6 +6,7 @@ public class MissionPlay : MonoBehaviour
 {
     [Header("Bool")]
     //bool 
+    public bool isTimerActive = true; // Biến để kiểm tra xem đếm ngược thời gian có đang hoạt động hay không
     public bool isPlayText = false;
 
     [Header("Tham chiếu------------")]
@@ -45,7 +46,13 @@ public class MissionPlay : MonoBehaviour
             isPlayText = true;
             StartCoroutine(PlayQuestText());
         }
-       
+        if (Input.GetKeyDown(KeyCode.V)){
+            StartCoroutine(CountDownTimer());
+        }
+        {
+            
+        }
+
     }
 
     IEnumerator PlayQuestText()
@@ -61,6 +68,7 @@ public class MissionPlay : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         textHN.text = "Mình cần phải tìm cách giải quyết vấn đề này.";
         yield return new WaitForSeconds(1f);
+        canvasTextHN.SetActive(false); // Ẩn canvas text sau khi hoàn thành
         isPlayText = true; // Đặt cờ để biết nhiệm vụ đã hoàn thành
         yield return new WaitForSeconds(1f);
         StartCoroutine(CountDownTimer()); // Bắt đầu đếm ngược thời gian
@@ -78,6 +86,7 @@ public class MissionPlay : MonoBehaviour
 
     public void SuccessQuest()
     {
+        isTimerActive = false; // Dừng đếm ngược thời gian khi nhiệm vụ thành công
         StopCoroutine(CountDownTimer()); // Dừng đếm ngược thời gian nếu nhiệm vụ thành công
         canvasTimerCount.SetActive(false); // Ẩn canvas đếm ngược
         changedWedather.ChangedFirstWeather();
@@ -86,9 +95,10 @@ public class MissionPlay : MonoBehaviour
 
     public IEnumerator CountDownTimer()
     {
+        
         canvasTimerCount.SetActive(true); // Hiển thị canvas đếm ngược
         float timeRemaining = missionDuration;
-        while (timeRemaining > 0)
+        while (timeRemaining > 0 && isTimerActive)
         {
             timerText.text = "Thời gian còn lại: " + Mathf.Ceil(timeRemaining) + " giây";
             yield return new WaitForSeconds(1f);

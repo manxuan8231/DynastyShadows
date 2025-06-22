@@ -36,7 +36,11 @@ public class ChangedWedather : MonoBehaviour
     }
     private void Update()
     {
-        
+        if (isAudioDoneQuest)
+        {
+            AudioSource.Stop(); // Dừng âm thanh nếu đã phát
+            isAudioDoneQuest = false; // Đặt lại cờ
+        }
     }
 
    void OnTriggerStay(Collider other)
@@ -98,12 +102,31 @@ public class ChangedWedather : MonoBehaviour
             RenderSettings.skybox = skyboxOgirnal;
             DynamicGI.UpdateEnvironment(); // Cập nhật lighting để khớp Skybox mới
         }
-        _light.color = new Color(1, 0.6430022f, 0.1911765f,1);
-        _light.intensity = 1f; // Đặt độ sáng của ánh sáng về mức ban đầu
-        RenderSettings.fog = false; // Tắt sương mù
+        StartCoroutine(TimeLine());
 
     }
+   IEnumerator TimeLine() {
+        _light.color = new Color(1, 0.6430022f, 0.1911765f, 1);
+        _light.intensity = 0.2f; // Đặt độ sáng của ánh sáng về mức ban đầu
+        yield return new WaitForSeconds(0.5f);
+        _light.intensity = 0.35f; // Tăng độ sáng của ánh sáng
+        yield return new WaitForSeconds(0.5f);
+        _light.intensity = 0.5f; // Tăng độ sáng của ánh sáng
+        yield return new WaitForSeconds(0.5f);
+        _light.intensity = 0.7f; // Tăng độ sáng của ánh sáng
+        yield return new WaitForSeconds(0.5f);
+        _light.intensity = 1f; // Tăng độ sáng của ánh sáng
+        yield
+            return new WaitForSeconds(0.5f);
+        _light.intensity = 1.5f; // Tăng độ sáng của ánh sáng
+        yield return new WaitForSeconds(0.5f);
+        _light.intensity = 2f; // Tăng độ sáng của ánh sáng
+        RenderSettings.fog = false; // Tắt sương mù
+        isAudioActive = true;
 
+
+
+    }
 
 }
    
