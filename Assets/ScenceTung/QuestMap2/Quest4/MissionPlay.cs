@@ -15,8 +15,12 @@ public class MissionPlay : MonoBehaviour
     public ChangedWedather changedWedather; // Tham chiếu đến đối tượng ChangedWedather
 
     [Header("CanvasTextHN")]
-    public GameObject canvasTextHN;
+    public GameObject canvasTextHN4;
     public TMP_Text textHN;
+
+ 
+
+
 
     [Header("Quest")]
     public int countModel = 0; // Biến đếm số lượng mô hình đã hoàn thành
@@ -51,7 +55,8 @@ public class MissionPlay : MonoBehaviour
 
     IEnumerator PlayQuestText()
     {
-        canvasTextHN.SetActive(true);
+        DialogueControl.isCanvasBusy = true; // Đặt cờ để biết canvas đang bận
+        canvasTextHN4.SetActive(true);
         textHN.text = "Nghe nói khu chợ thường rất nhộn nhịp.";
         yield return new WaitForSeconds(1.5f);
         textHN.text = "Nhưng nơi này thì có vẻ không giống như thế cho lắm.";
@@ -62,7 +67,8 @@ public class MissionPlay : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         textHN.text = "Mình cần phải tìm cách giải quyết vấn đề này.";
         yield return new WaitForSeconds(1f);
-        canvasTextHN.SetActive(false); // Ẩn canvas text sau khi hoàn thành
+        canvasTextHN4.SetActive(false); // Ẩn canvas text sau khi hoàn thành
+        DialogueControl.isCanvasBusy = false; // Đặt cờ để biết canvas không còn bận nữa
         isPlayText = true; // Đặt cờ để biết nhiệm vụ đã hoàn thành
         yield return new WaitForSeconds(1f);
         StartCoroutine(CountDownTimer()); // Bắt đầu đếm ngược thời gian
@@ -117,11 +123,17 @@ public class MissionPlay : MonoBehaviour
     }
     IEnumerator DoneQuest()
     {
-        canvasTextHN.SetActive(true);
+        canvasTextHN4.SetActive(true);
         textHN.text = "Không khí ở đây trở nên thoải hơn rồi.";
         yield return new WaitForSeconds(1.5f);
         textHN.text = "Bầu trời cùng dần sáng trở lại.Thành công rồi!!";
         yield return new WaitForSeconds(1.5f);
-        canvasTextHN.SetActive(false); // Ẩn canvas text sau khi hoàn thành
+        canvasTextHN4.SetActive(false); // Ẩn canvas text sau khi hoàn thành
+        gameObject.SetActive(false); // Ẩn NPC sau khi hoàn thành nhiệm vụ
     }
+   
+}
+public static class DialogueControl
+{
+    public static bool isCanvasBusy = false;
 }

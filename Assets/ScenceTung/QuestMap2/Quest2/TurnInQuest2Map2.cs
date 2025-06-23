@@ -16,7 +16,8 @@ public class TurnInQuest2Map2 : MonoBehaviour
     public GameObject btnF;
     public GameObject turnInQuest;
     public Transform targetPos; // <-- Vị trí muốn NPC đi tới
-    
+    private bool isHandlingQuest = false; // Tránh spam nút F
+
     private bool isMoving = false;
     private bool isArrived = false;
     public GameObject canvasQuest;
@@ -38,13 +39,14 @@ public class TurnInQuest2Map2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isDone && !isMoving)
+        if (isDone && !isMoving && !isHandlingQuest)
         {
             canvasContent.SetActive(true);
             btnF.SetActive(true);
 
-            if (Input.GetKeyDown(KeyCode.F) && btnF.activeSelf)
+            if (Input.GetKeyDown(KeyCode.F) && btnF.activeSelf )
             {
+                isHandlingQuest = true;
                 btnF.SetActive(false);
                 StartCoroutine(DoneQuest());
                 turnInQuest.SetActive(false);
@@ -62,7 +64,7 @@ public class TurnInQuest2Map2 : MonoBehaviour
                 quest2.SetActive(false);
                 gameObject.SetActive(false); // Ẩn NPC sau khi đến nơi
             }
-            if(eventQuest < 80f && !eventQuestBool)
+            if(eventQuest < 200f && !eventQuestBool)
             {
               StartCoroutine(corotine());
             }
@@ -97,9 +99,20 @@ public class TurnInQuest2Map2 : MonoBehaviour
             isDone = true;
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            isDone = false;
+            canvasContent.SetActive(false);
+            btnF.SetActive(false);
+            turnInQuest.SetActive(true);
+        }
+    }
 
     IEnumerator corotine()
     {
+    
         eventQuestBool = true;
         audioSource.clip = clip1;
         audioSource.Play();
