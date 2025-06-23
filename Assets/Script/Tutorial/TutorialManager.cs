@@ -1,21 +1,45 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
     public GameObject tutorialPanelV1;
     public TMP_Text tutorialTextV1;
+    public GameObject tutorialPanelV2;
+    public TMP_Text tutorialTextV2;
+    //iconinput
+    public Image defautIcon;
+    public Sprite walkIcon;
+    public Sprite runIcon;
+    public Sprite jumpIcon;
+    public Sprite rollBackIcon;
+    public Sprite attackIcon;
 
     private int currentStep = 0;
     private bool[] stepCompleted;
 
-    private SlowMotionDodgeEvent slowMotion;
+    //bion để kiểm soát trạng thái của hướng dẫn
+    public bool isTutorialWalk = false;
+    public bool isTutorialRun = false; // Biến để kiểm soát trạng thái của hướng dẫn chạy
 
+    public bool isComplete = false; // Biến để kiểm soát trạng thái hoàn thành quest ne quai
+    //tham chieu
+    private SlowMotionDodgeEvent slowMotion;
+    private PlayerControllerState playerControllerState;
+    private AnimatorPanelTutorial animatorPanelTutorial;
     void Start()
     {
         stepCompleted = new bool[5];
-        ShowStep(0);
+        StartCoroutine(WaitShowStep(0));
         slowMotion = FindAnyObjectByType<SlowMotionDodgeEvent>();
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
+        animatorPanelTutorial = FindAnyObjectByType<AnimatorPanelTutorial>();
+        playerControllerState.isRun = false;
+        playerControllerState.isJump = false; // Đặt trạng thái lăn là false ban đầu
+        playerControllerState.isRollBack = false; // Đặt trạng thái lăn về sau là false ban đầu
+        playerControllerState.isAttack = false; // Đặt trạng thái tấn công là false ban đầu
     }
 
     void Update()
@@ -23,88 +47,126 @@ public class TutorialManager : MonoBehaviour
         switch (currentStep)
         {
             case 0:
-                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) 
-                    || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))//huong dan di chuyen
+                if (isTutorialWalk)//huong dan di chuyen a,d,s,w             
                 {
+                    //hoan thanh thi dc 
+                    playerControllerState.isRun = true;
                     stepCompleted[0] = true;
-                    ShowStep(1);
+
+                    StartCoroutine(WaitShowStep(1)); // Hiển thị bước tiếp theo sau 1 giây
                 }
                 break;
-
             case 1:
-                if (Input.GetKeyDown(KeyCode.LeftControl) &&
-                    (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) 
-                  || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))//huong dan lan ve phia trc
+                if (isTutorialRun)//huong dan chay nhanh shift
                 {
+                    playerControllerState.isJump = true; // Đặt trạng thái jump là true
                     stepCompleted[1] = true;
-                    ShowStep(2);
+                    StartCoroutine(WaitShowStep(2));
                 }
                 break;
-
             case 2:
-                if (Input.GetKeyDown(KeyCode.LeftControl))//huong dan lan ve phia sau
+                if (Input.GetKeyDown(KeyCode.Space))//huong dan nhay ve phia trc
                 {
+                    playerControllerState.isRollBack = true; // Đặt trạng thái rollback là true
                     stepCompleted[2] = true;
-                    ShowStep(3);
-                    tutorialPanelV1.SetActive(false); //ẩn panel chờ quái danh 
+                    StartCoroutine(WaitShowStep(3));
                 }
                 break;
 
             case 3:
-                // Khi cửa sổ né đòn đang mở, hiện panel ngay
-                if (slowMotion.isDodgeWindowActive && !tutorialPanelV1.activeSelf)//huong dan ne attack
+                if (Input.GetKeyDown(KeyCode.LeftControl))//huong dan lan ve phia sau
                 {
-                    tutorialPanelV1.SetActive(true);
-                    tutorialTextV1.text = "Chuẩn bị bị tấn công! Nhấn Ctrl để né!";
+                    if(!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
+                    {
+                        stepCompleted[3] = true;
+                        tutorialPanelV1.SetActive(false); // Ẩn panel hướng dẫn
+                        StartCoroutine(WaitShowStep(4)); // Hiển thị bước tiếp theo sau 1 giây
+
+                    }
+                    
+                }
+                break;
+            case 4:
+                if (slowMotion.isDodgeWindowActive && !tutorialPanelV1.activeSelf)
+                {
+                    tutorialPanelV1.SetActive(true);                 
+                    defautIcon.sprite = rollBackIcon;
+                  
                 }
 
-                // Khi người chơi né đúng
                 if (Input.GetKeyDown(KeyCode.LeftControl) && slowMotion.isDodgeWindowActive)
                 {
                     slowMotion.ResetTime();
-                    stepCompleted[3] = true;
-                    ShowStep(4);
+                    stepCompleted[4] = true;
+                    playerControllerState.isAttack = true;
+
+                    StartCoroutine(WaitShowStep(5));
+                }
+
+                // Nếu nguoi choi không né trong khoảng thời gian nhất định thi hoàn thành luôn :))
+                if (!slowMotion.isDodgeWindowActive && isComplete)
+                {
+                    slowMotion.ResetTime();
+                    stepCompleted[4] = true;
+                    playerControllerState.isAttack = true;
+
+                    StartCoroutine(WaitShowStep(5));
                 }
                 break;
+            case 5:
+                
+                if (Input.GetKeyDown(KeyCode.Mouse0))//attack 
+                {
+                    stepCompleted[5] = true;
+                    StartCoroutine(WaitShowStep(6));
+                }
 
-            case 4:
-                tutorialPanelV1.SetActive(true);
-                tutorialTextV1.text = "Hoàn thành hướng dẫn!";
                 break;
         }
     }
 
-    void ShowStep(int step)
-    {
-        currentStep = step;
 
-        // Các bước từ 0 den 2 sẽ hiển thị panel
-        if (step >= 0 && step <= 2)
-        {
-            tutorialPanelV1.SetActive(true);
-        }
+
+    public IEnumerator WaitShowStep(int step)
+    {
+        animatorPanelTutorial.animator.SetTrigger("Start");//chay animator tat
+        tutorialPanelV1.SetActive(false); // Ẩn panel trước khi hiển thị bước mới
+        yield return new WaitForSeconds(1f);
+        tutorialPanelV1.SetActive(true); 
+        currentStep = step;
 
         switch (step)
         {
             case 0:
-                tutorialTextV1.text = "Dùng W/A/S/D để di chuyển.";
+                tutorialTextV1.text = "Nhấn W/A/S/D để di chuyển.";
+                defautIcon.sprite = walkIcon;
                 break;
 
             case 1:
-                tutorialTextV1.text = "Nhấn Ctrl + W/A/S/D để lăn về phía trước.";
+                tutorialTextV1.text = "Nhấn Shift để chạy nhanh.";
+                defautIcon.sprite = runIcon;
                 break;
 
             case 2:
-                tutorialTextV1.text = "Nhấn Ctrl để lăn về phía sau.";
+                tutorialTextV1.text = "Nhấn Space để nhảy.";
+                defautIcon.sprite = jumpIcon;
                 break;
 
             case 3:
-                // để trong Update khi slowMotion kích hoạt
+                tutorialTextV1.text = "Nhấn Ctrl để lăn về phía sau.";
+                defautIcon.sprite = rollBackIcon;
+                
                 break;
-
-            case 4:
-                // Đã xử lý trong Update 
+            case 4:              
+                tutorialTextV1.text = "Nhấn Ctrl để né!";
+                defautIcon.sprite = rollBackIcon;
+                tutorialPanelV1.SetActive(false); // Ẩn panel trước khi hiển thị bước mới
+                break;
+            case 5:
+                tutorialTextV1.text = "Nhấn chuột trái để tấn công.";
+                defautIcon.sprite = attackIcon;
                 break;
         }
     }
+
 }

@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-
-
-
 public class PlayerCurrentState : PlayerState
 {
     public PlayerCurrentState(PlayerControllerState player) : base(player) { }
@@ -57,7 +54,7 @@ public class PlayerCurrentState : PlayerState
 
         if (inputDirection.magnitude >= 0.1f)
         {
-            bool canRun = Input.GetKey(KeyCode.LeftShift) && player.playerStatus.currentMana > 0;
+            bool canRun = Input.GetKey(KeyCode.LeftShift) && player.playerStatus.currentMana > 0 && player.isRun;
 
             // Nếu không đủ mana mà vẫn đè Shift → không được chạy
             if (!canRun && Input.GetKey(KeyCode.LeftShift))
@@ -113,7 +110,7 @@ public class PlayerCurrentState : PlayerState
         if (player.isGrounded && player.velocity.y < 0)
             player.velocity.y = -2f;
         //
-        if (Input.GetKeyDown(KeyCode.Space) && player.isGrounded && player.playerStatus.currentMana > 50)
+        if (Input.GetKeyDown(KeyCode.Space) && player.isGrounded && player.playerStatus.currentMana > 50 && player.isJump)
         {
            player.playerStatus.TakeMana(50);
            player.velocity.y = Mathf.Sqrt(player.jumpHeight * -2f * player.gravity);
@@ -134,21 +131,23 @@ public class PlayerCurrentState : PlayerState
 
     public void Roll()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl) &&
+        if (Input.GetKeyDown(KeyCode.LeftControl) && 
             player.isGrounded &&
             player.playerStatus.currentMana > 100 &&
-            Time.time >= player.rollColdownTime + 1f)
-        {
-            player.playerStatus.TakeMana(100);
-            player.audioSource.PlayOneShot(player.evenAnimator.audioRoll);
-
-          
+            Time.time >= player.rollColdownTime + 1f && player.isRollBack)
+        {         
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
+                player.playerStatus.TakeMana(100);
+                player.audioSource.PlayOneShot(player.evenAnimator.audioRoll);
+
                 player.animator.SetTrigger("Roll");
             }
-            else 
+            else if(!Input.GetKey(KeyCode.W) || !Input.GetKey(KeyCode.A) || !Input.GetKey(KeyCode.S) || !Input.GetKey(KeyCode.D))
             {
+                player.playerStatus.TakeMana(100);
+                player.audioSource.PlayOneShot(player.evenAnimator.audioRoll);
+
                 player.animator.SetTrigger("RollBack");
             }
 

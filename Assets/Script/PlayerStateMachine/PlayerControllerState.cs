@@ -25,8 +25,15 @@ public class PlayerControllerState : MonoBehaviour
     public Animator animator;
     public AudioSource audioSource;
     public RigBuilder rigBuilder;
-      
-    
+    [Header("Tutorial -------------------------------")]
+    public bool isRun;
+    public bool isJump;
+    public bool isRollBack;
+    public bool isAttack;
+   
+
+    [Header("-------------------------------")]
+    //bien kiem tra 
     public bool isRunning = false;
     public bool isController = true;
     

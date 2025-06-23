@@ -10,7 +10,7 @@ public class MinotaurEnemy : MonoBehaviour
 {
     public Transform targetPlayer;//người chơi
     public Vector3 startPosition;
-    public BoxCollider box;
+    public CapsuleCollider box;
     public float detectionRange = 10f;//phát hiện người chơi
     public float attackRange = 2f;// khoảng cách tấn công người chơi
     public Slider sliderHp;
@@ -54,7 +54,7 @@ public class MinotaurEnemy : MonoBehaviour
         currentHealth = maxHealth; // Khởi tạo máu hiện tại bằng máu tối đa
         sliderHp.maxValue = currentHealth; // Thiết lập giá trị tối đa của thanh máu
         sliderHp.value = currentHealth; // Thiết lập giá trị hiện tại của thanh máu
-        box = GetComponent<BoxCollider>();
+        box = GetComponent<CapsuleCollider>();
         damezone = FindAnyObjectByType<DameZoneMinotaur>(); // Lấy tham chiếu đến DrakonitDameZone trong con của MinotaurEnemy
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         minotaurEnemy = GetComponent<MinotaurEnemy>();
@@ -333,10 +333,16 @@ public class MinotaurEnemy : MonoBehaviour
     }
     public void TriggerDodge()
     {
+        if (slowMotionDodgeEvent.isOneSlow == false)
+        {
+            Debug.Log("");
+        }
         if (slowMotionDodgeEvent != null && !slowMotionDodgeEvent.isDodgeWindowActive && slowMotionDodgeEvent.isOneSlow == true)
         {
+            
             slowMotionDodgeEvent.isDodgeWindowActive = true;
         }
+      
     }
 
 }

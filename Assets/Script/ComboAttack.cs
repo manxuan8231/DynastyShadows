@@ -37,7 +37,7 @@ public class ComboAttack : MonoBehaviour
         {
             // Tấn công trên mặt đất
             if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime
-                && isAttack && playerStatus.currentMana > 50 && playerController.IsGrounded())
+                && isAttack && playerStatus.currentMana > 50 && playerController.IsGrounded() && playerController.isAttack)
             {
                 playerStatus.TakeMana(50);
                 OnAttack();
