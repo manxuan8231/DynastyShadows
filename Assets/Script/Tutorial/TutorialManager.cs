@@ -7,8 +7,7 @@ public class TutorialManager : MonoBehaviour
 {
     public GameObject tutorialPanelV1;
     public TMP_Text tutorialTextV1;
-    public GameObject tutorialPanelV2;
-    public TMP_Text tutorialTextV2;
+    
     //iconinput
     public Image defautIcon;
     public Sprite walkIcon;
@@ -31,11 +30,13 @@ public class TutorialManager : MonoBehaviour
     private AnimatorPanelTutorial animatorPanelTutorial;
     void Start()
     {
-        stepCompleted = new bool[5];
-        StartCoroutine(WaitShowStep(0));
         slowMotion = FindAnyObjectByType<SlowMotionDodgeEvent>();
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
         animatorPanelTutorial = FindAnyObjectByType<AnimatorPanelTutorial>();
+        stepCompleted = new bool[5];
+        StartCoroutine(WaitShowStep(0));
+
+        tutorialPanelV1.SetActive(false);
         playerControllerState.isRun = false;
         playerControllerState.isJump = false; // Đặt trạng thái lăn là false ban đầu
         playerControllerState.isRollBack = false; // Đặt trạng thái lăn về sau là false ban đầu
@@ -129,9 +130,9 @@ public class TutorialManager : MonoBehaviour
 
     public IEnumerator WaitShowStep(int step)
     {
-        animatorPanelTutorial.animator.SetTrigger("Start");//chay animator tat
+     
         tutorialPanelV1.SetActive(false); // Ẩn panel trước khi hiển thị bước mới
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f);    
         tutorialPanelV1.SetActive(true); 
         currentStep = step;
 
