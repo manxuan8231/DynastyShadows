@@ -8,12 +8,17 @@ public class ActiveQuest : MonoBehaviour
   public CinemachineCamera camTimeLine;
   public GameObject canvasTextHN;
   public TMP_Text textHN;
-    public BoxCollider boxCollider;
-    public PlayerControllerState playerControllerState;
- 
+  public BoxCollider boxCollider;
+  public PlayerControllerState playerControllerState;
+
+    //audio 
+    public AudioSource audioSource;
+    public AudioClip clip1;
+
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         boxCollider = GetComponent<BoxCollider>();
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
 
@@ -30,6 +35,9 @@ public class ActiveQuest : MonoBehaviour
     playerControllerState.enabled = false;
     playerControllerState.animator.enabled = false;
     camTimeLine.Priority = 11;
+    yield return new WaitForSeconds(1f);
+    audioSource.clip = clip1;
+    audioSource.Play();
     yield return new WaitForSeconds(1f);
     canvasTextHN.SetActive(true);
     textHN.text = "Sao lại có luồng khí như vậy?";

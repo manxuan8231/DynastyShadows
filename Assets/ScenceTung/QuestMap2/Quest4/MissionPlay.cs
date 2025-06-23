@@ -8,6 +8,7 @@ public class MissionPlay : MonoBehaviour
     //bool 
     public bool isTimerActive = true; // Biến để kiểm tra xem đếm ngược thời gian có đang hoạt động hay không
     public bool isPlayText = false;
+    public bool isQuest4Done = false;
 
     [Header("Tham chiếu------------")]
     public TeleToMarket teleToMarket; // Tham chiếu đến đối tượng TeleToMarket
@@ -45,14 +46,7 @@ public class MissionPlay : MonoBehaviour
         {
             isPlayText = true;
             StartCoroutine(PlayQuestText());
-        }
-        if (Input.GetKeyDown(KeyCode.V)){
-            StartCoroutine(CountDownTimer());
-        }
-        {
-            
-        }
-
+        } 
     }
 
     IEnumerator PlayQuestText()
@@ -90,6 +84,8 @@ public class MissionPlay : MonoBehaviour
         StopCoroutine(CountDownTimer()); // Dừng đếm ngược thời gian nếu nhiệm vụ thành công
         canvasTimerCount.SetActive(false); // Ẩn canvas đếm ngược
         changedWedather.ChangedFirstWeather();
+        StartCoroutine(DoneQuest()); // Bắt đầu hiển thị thông báo hoàn thành nhiệm vụ
+        isQuest4Done = true; // Đặt cờ để biết nhiệm vụ đã hoàn thành
     }
 
 
@@ -118,5 +114,14 @@ public class MissionPlay : MonoBehaviour
                 playerController.ChangeState(new PlayerDieState(playerController)); // Chuyển sang trạng thái chết
             }
         }
+    }
+    IEnumerator DoneQuest()
+    {
+        canvasTextHN.SetActive(true);
+        textHN.text = "Không khí ở đây trở nên thoải hơn rồi.";
+        yield return new WaitForSeconds(1.5f);
+        textHN.text = "Bầu trời cùng dần sáng trở lại.Thành công rồi!!";
+        yield return new WaitForSeconds(1.5f);
+        canvasTextHN.SetActive(false); // Ẩn canvas text sau khi hoàn thành
     }
 }

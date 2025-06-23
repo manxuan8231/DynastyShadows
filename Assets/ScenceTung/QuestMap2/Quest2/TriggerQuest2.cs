@@ -21,6 +21,7 @@ public class TriggerQuest2 : MonoBehaviour
     public BoxCollider boxCollider;
     public AudioSource audioSource;
     public AudioClip backGround;
+    public AudioClip dangerClip;
     private void Start()
     {
         playerControllerState = FindFirstObjectByType<PlayerControllerState>();
@@ -45,6 +46,8 @@ public class TriggerQuest2 : MonoBehaviour
         playerControllerState.enabled = false; // Disable player controls
         canvasText.SetActive(true); // Show the canvas text
         contentText.text = "Các binh sĩ ?!";
+        audioSource.clip = dangerClip; // Set the danger audio clip
+        audioSource.Play(); // Play the danger audio
         yield return new WaitForSeconds(2.5f);
         contentText.text = "Họ đang gặp nguy hiểm!!";
         yield return new WaitForSeconds(2.5f);
