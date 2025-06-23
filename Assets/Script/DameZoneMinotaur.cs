@@ -11,15 +11,19 @@ public class DameZoneMinotaur : MonoBehaviour
     public List<Collider> listDame = new List<Collider>();
     PlayerStatus playerStatus;
     public GameObject enemy;
+   
+
+   
     void Start()
     {
         dameZoneCollider.enabled = false;
-
+       
         GameObject playerObject = GameObject.Find("Stats");
         if (playerObject != null)
         {
             playerStatus = playerObject.GetComponent<PlayerStatus>();
         }
+       
     }
 
 
@@ -49,4 +53,5 @@ public class DameZoneMinotaur : MonoBehaviour
         listDame.Clear();//xóa
         dameZoneCollider.enabled = false;
     }
+   
 }

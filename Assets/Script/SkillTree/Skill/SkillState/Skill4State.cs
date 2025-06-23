@@ -124,7 +124,10 @@ public class Skill4State : PlayerState
             camRight.Normalize();
 
             Vector3 moveDir = camForward * inputDirection.z + camRight * inputDirection.x;
-            player.controller.Move(moveDir * speed * Time.deltaTime);
+            if (player.controller != null && player.controller.enabled == true)
+            {
+                player.controller.Move(moveDir * speed * Time.deltaTime);
+            }          
 
             player.transform.rotation = Quaternion.Slerp(player.transform.rotation, Quaternion.LookRotation(moveDir), 0.15f);
         }
@@ -162,12 +165,24 @@ public class Skill4State : PlayerState
 
     public void Roll()
     {
-
-        if (Input.GetKeyDown(KeyCode.LeftControl) && player.isGrounded && player.playerStatus.currentMana > 100 && Time.time >= player.rollColdownTime + 2f)
+        if (Input.GetKeyDown(KeyCode.LeftControl) &&
+            player.isGrounded &&
+            player.playerStatus.currentMana > 100 &&
+            Time.time >= player.rollColdownTime + 2f)
         {
             player.playerStatus.TakeMana(100);
             player.audioSource.PlayOneShot(player.evenAnimator.audioRoll);
-            player.animator.SetTrigger("Roll");
+
+
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+            {
+                player.animator.SetTrigger("Roll");
+            }
+            else
+            {
+                player.animator.SetTrigger("RollBack");
+            }
+
             player.rollColdownTime = Time.time;
         }
     }
@@ -187,7 +202,7 @@ public class Skill4State : PlayerState
             // Tấn công khi đang trên không
             if (Input.GetMouseButtonDown(0)
                 && isAttack && player.playerStatus.currentMana > 50 && !player.IsGrounded()
-                && Time.time >= coolDownAttackFly + 5)
+                && Time.time >= coolDownAttackFly + 1.5f)
             {
                 OnAttackFly();
                 coolDownAttackFly = Time.time;

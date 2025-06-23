@@ -2742,6 +2742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPlayer: {fileID: 0}
+  startPosition: {x: 0, y: 0, z: 0}
   box: {fileID: 0}
   detectionRange: 50
   attackRange: 4
@@ -2749,6 +2750,7 @@ MonoBehaviour:
   currentHealth: 300
   maxHealth: 300
   isDead: 0
+  stopPosi: 1
   _parryCount: 0
   _maxParryCount: 5
   parrySound: {fileID: 8300000, guid: bf35ded7449474e4e9f672745567049e, type: 3}
@@ -2760,9 +2762,12 @@ MonoBehaviour:
   - {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
   - {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
   - {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
+  - {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
+  - {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
   audioManager: {fileID: 3619254723274865757}
   damezone: {fileID: 0}
   playerStatus: {fileID: 0}
+  slowMotionDodgeEvent: {fileID: 0}
   _animator: {fileID: 0}
   _agent: {fileID: 0}
 --- !u!195 &6596581995739455106

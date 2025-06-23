@@ -134,12 +134,24 @@ public class PlayerCurrentState : PlayerState
 
     public void Roll()
     {
-
-        if (Input.GetKeyDown(KeyCode.LeftControl) && player.isGrounded && player.playerStatus.currentMana > 100 && Time.time >= player.rollColdownTime + 2f)
+        if (Input.GetKeyDown(KeyCode.LeftControl) &&
+            player.isGrounded &&
+            player.playerStatus.currentMana > 100 &&
+            Time.time >= player.rollColdownTime + 1f)
         {
-           player. playerStatus.TakeMana(100);
-           player. audioSource.PlayOneShot(player.evenAnimator.audioRoll);
-           player.animator.SetTrigger("Roll");
+            player.playerStatus.TakeMana(100);
+            player.audioSource.PlayOneShot(player.evenAnimator.audioRoll);
+
+          
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+            {
+                player.animator.SetTrigger("Roll");
+            }
+            else 
+            {
+                player.animator.SetTrigger("RollBack");
+            }
+
             player.rollColdownTime = Time.time;
         }
     }

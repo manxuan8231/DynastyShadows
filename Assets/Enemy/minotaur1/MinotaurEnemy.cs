@@ -21,6 +21,7 @@ public class MinotaurEnemy : MonoBehaviour
     //hit
     private bool _isHit = false;       // có đang bị đánh không
     private bool _canBeHit = true;     // dùng cooldown giữa các lần bị đánh
+   
     private int _hitIndex = 0;         // 0 = Hit1, 1 = Hit2
    //parry
     public Coroutine _parryCoroutine;
@@ -37,6 +38,7 @@ public class MinotaurEnemy : MonoBehaviour
     public DameZoneMinotaur damezone; 
     public PlayerStatus playerStatus;
     private MinotaurEnemy minotaurEnemy;
+    public SlowMotionDodgeEvent slowMotionDodgeEvent;
     //cây hành vi
     private Node _rootNode;// Cây hành vi gốc
     public Animator _animator;
@@ -56,6 +58,7 @@ public class MinotaurEnemy : MonoBehaviour
         damezone = FindAnyObjectByType<DameZoneMinotaur>(); // Lấy tham chiếu đến DrakonitDameZone trong con của MinotaurEnemy
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         minotaurEnemy = GetComponent<MinotaurEnemy>();
+        slowMotionDodgeEvent = FindAnyObjectByType<SlowMotionDodgeEvent>();
         startPosition = transform.position; // Lưu vị trí bắt đầu của MinotaurEnemy
     }
 
@@ -328,4 +331,12 @@ public class MinotaurEnemy : MonoBehaviour
     {
         damezone.endDame(); // Kết thúc vùng sát thương
     }
+    public void TriggerDodge()
+    {
+        if (slowMotionDodgeEvent != null && !slowMotionDodgeEvent.isDodgeWindowActive && slowMotionDodgeEvent.isOneSlow == true)
+        {
+            slowMotionDodgeEvent.isDodgeWindowActive = true;
+        }
+    }
+
 }
