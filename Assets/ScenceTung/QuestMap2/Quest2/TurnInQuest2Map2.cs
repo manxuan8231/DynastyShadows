@@ -25,9 +25,11 @@ public class TurnInQuest2Map2 : MonoBehaviour
     AudioSource audioSource;
     public AudioClip clip1;
     public bool eventQuestBool = false;
+    public AwardQuest awardQuest;
 
     void Start()
     {
+        awardQuest = FindFirstObjectByType<AwardQuest>();
         audioSource = GetComponent<AudioSource>();
         agent = GetComponent<NavMeshAgent>();
         anmt = GetComponent<Animator>();
@@ -73,6 +75,8 @@ public class TurnInQuest2Map2 : MonoBehaviour
         canvasText.SetActive(true);
         contentText.text = "Tôi đến để gửi tin cho lính gác ở đội 7.";
         isQuest2 = true;
+        yield return new WaitForSeconds(0.2f);
+        awardQuest.AwardQuest2();
         activeQuest.SetActive(true);
         yield return new WaitForSeconds(2f);
 
