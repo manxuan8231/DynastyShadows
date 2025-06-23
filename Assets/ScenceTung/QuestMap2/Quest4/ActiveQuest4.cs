@@ -16,6 +16,7 @@ public class ActiveQuest4 : MonoBehaviour
     public TMP_Text txtStateText;
     public Image imageIcon;
     public Sprite iconNiceQuest;
+    public TeleToMarket TeleToMarket;
 
 
     //tham chiếu đến các quest khác
@@ -32,8 +33,9 @@ public class ActiveQuest4 : MonoBehaviour
     void Start()
     {
         changedWedather = FindAnyObjectByType<ChangedWedather>();
-        questPoint.SetActive(false);    
-        
+        questPoint.SetActive(false);
+
+        TeleToMarket = FindAnyObjectByType<TeleToMarket>();
     }
 
     // Update is called once per frame
@@ -70,6 +72,7 @@ public class ActiveQuest4 : MonoBehaviour
         yield return new WaitForSeconds(5f);
         canvasNiceQuest.SetActive(false);
         questPoint.SetActive(true); // Kích hoạt điểm quest
+        TeleToMarket.boxCollider.enabled = true; // Bật lại collider để có thể kích hoạt dịch chuyển
 
     }
 }

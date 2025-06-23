@@ -28,6 +28,7 @@ public class MissionPlay : MonoBehaviour
     public GameObject canvasTimerCount;
     public float missionDuration = 10f; // Thời gian thực hiện nhiệm vụ (giây)
     public TMP_Text timerText;
+    public GameObject teleToBack;
     
 
     void Start()
@@ -92,6 +93,7 @@ public class MissionPlay : MonoBehaviour
         changedWedather.ChangedFirstWeather();
         StartCoroutine(DoneQuest()); // Bắt đầu hiển thị thông báo hoàn thành nhiệm vụ
         isQuest4Done = true; // Đặt cờ để biết nhiệm vụ đã hoàn thành
+        teleToBack.SetActive(true); // Kích hoạt đối tượng teleToBack
     }
 
 

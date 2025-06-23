@@ -31,6 +31,8 @@ public class NPCQuest : MonoBehaviour
     bool isSkip;
     bool isWriteSkip;
     public bool isContent;
+    public bool isActiveBtn = false;
+
     bool hasFinishedDialogue = false; // THÊM BIẾN NÀY
     bool hasPlayedTalkingAnim = false;
     public GameObject canvanQuest;
@@ -83,14 +85,14 @@ public class NPCQuest : MonoBehaviour
                 hasPlayedTalkingAnim = true;
             }
 
-            if (isOpen)
+            if (isOpen && !isActiveBtn)
             {
                 questionGameCanvas.SetActive(true);
                 btnF.SetActive(true);
 
                 if (Input.GetKeyDown(KeyCode.F) && isContent)
                 {
-
+                    isActiveBtn = true; // Đánh dấu nút đã được nhấn
                     isContent = false;
                     btnF.SetActive(false);
                     PanelContent.SetActive(true);
