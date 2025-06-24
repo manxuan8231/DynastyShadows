@@ -87,7 +87,7 @@ public class PlayerControllerState : MonoBehaviour
         rigBuilder = GetComponent<RigBuilder>();
         rigBuilder.enabled = false;
         //vị trí checkpoint
-       /* if (PlayerPrefs.HasKey("CheckpointX"))
+        if (PlayerPrefs.HasKey("CheckpointX"))
         {
             Debug.Log("luu vi tri khi spawnpoint trc");
             float X = PlayerPrefs.GetFloat("CheckpointX");
@@ -100,8 +100,8 @@ public class PlayerControllerState : MonoBehaviour
         {
             Debug.Log("lay vi tri cu");
             checkpointPosition = transform.position; // Nếu không có checkpoint, sử dụng vị trí hiện tại
-        }*/
-     
+        }
+
         // Gọi hàm ChangeState để chuyển sang trạng thái ban đầu
         ChangeState(new PlayerCurrentState(this));
     }
