@@ -1,5 +1,5 @@
-using UnityEngine;
-
+﻿using UnityEngine;
+using System.Collections;
 public class AttackState : BaseState
 {
     private float attackCooldown = 2f;
@@ -28,18 +28,32 @@ public class AttackState : BaseState
         }
 
         attackTimer += Time.deltaTime;
+
         if (attackTimer >= attackCooldown)
         {
-            string[] attackPool = boss.isPhase2
-                ? boss.animationData.attackPhase2
-                : boss.animationData.attackPhase1;
+            string attackAnim = boss.isPhase2
+                ? boss.animationData.attackPhase2[Random.Range(0, boss.animationData.attackPhase2.Length)]
+                : boss.animationData.attackPhase1[Random.Range(0, boss.animationData.attackPhase1.Length)];
 
-            string attackAnim = attackPool[Random.Range(0, attackPool.Length)];
             boss.anim.SetTrigger(attackAnim);
-
             AudioBossManager.instance?.PlaySFX("Attack");
+
+            // Bật collider đúng frame impact
+            boss.StartCoroutine(EnableColliderForHit(0.4f, 0.2f)); // ví dụ bật sau 0.4s, tắt sau 0.2s
 
             attackTimer = 0f;
         }
     }
+
+    private IEnumerator EnableColliderForHit(float delay, float duration)
+    {
+        yield return new WaitForSeconds(delay);
+
+        boss.attackCollider.SetActive(true);  // bật
+
+        yield return new WaitForSeconds(duration);
+
+        boss.attackCollider.SetActive(false); // tắt
+    }
+
 }
