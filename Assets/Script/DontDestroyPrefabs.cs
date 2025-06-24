@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class DontDestroyPrefabs : MonoBehaviour
@@ -18,9 +19,18 @@ public class DontDestroyPrefabs : MonoBehaviour
           SceneManager.LoadScene("Map2");
         }
     }
-    public void OnScenceLoad( Scene scence, LoadSceneMode mod)
+    public void OnScenceLoad(Scene scene, LoadSceneMode mode)
     {
-        playerPre.transform.position = posNextScence;
         SceneManager.sceneLoaded -= OnScenceLoad;
+        StartCoroutine(WaitAndSetPosition());
+    }
+
+    private IEnumerator WaitAndSetPosition()
+    {
+        yield return null; // chờ 1 frame
+        CharacterController cc = playerPre.GetComponent<CharacterController>();
+        cc.enabled = false; // tắt CharacterController để tránh lỗi khi đặt vị trí
+        playerPre.transform.position = posNextScence;
+        cc.enabled = true; // bật lại CharacterController
     }
 }
