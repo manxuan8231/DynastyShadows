@@ -39,6 +39,7 @@ public class MinotaurEnemy : MonoBehaviour
     public PlayerStatus playerStatus;
     private MinotaurEnemy minotaurEnemy;
     public SlowMotionDodgeEvent slowMotionDodgeEvent;
+    public TutorialManager tutorialManager;
     //cây hành vi
     private Node _rootNode;// Cây hành vi gốc
     public Animator _animator;
@@ -59,6 +60,7 @@ public class MinotaurEnemy : MonoBehaviour
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         minotaurEnemy = GetComponent<MinotaurEnemy>();
         slowMotionDodgeEvent = FindAnyObjectByType<SlowMotionDodgeEvent>();
+        tutorialManager = FindAnyObjectByType<TutorialManager>();
         startPosition = transform.position; // Lưu vị trí bắt đầu của MinotaurEnemy
     }
 
@@ -278,6 +280,11 @@ public class MinotaurEnemy : MonoBehaviour
             _animator.enabled = true;
              _agent.enabled = true;
             minotaurEnemy.enabled = true;
+            //hoan thanh huong dan 
+            if (tutorialManager != null) 
+            {
+                tutorialManager.UpdateEnemyTutorial(1);
+            }
             StartCoroutine(WaitAnimatorDie()); // Bắt đầu coroutine để xử lý animation chết
         }
         

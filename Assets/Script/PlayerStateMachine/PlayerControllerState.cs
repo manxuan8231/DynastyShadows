@@ -71,10 +71,6 @@ public class PlayerControllerState : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        if (!controller.enabled)
-        {
-            controller.enabled = true;
-        }
         animator = GetComponent<Animator>();
         animator.runtimeAnimatorController = animatorDefauld; // Gán bộ điều khiển hoạt hình mặc định
         playerStatus = FindAnyObjectByType<PlayerStatus>();

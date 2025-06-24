@@ -21,7 +21,7 @@ public class PlayerCurrentState : PlayerState
             Move();
             Jump();
             Roll();
-          
+            
             player.comboAttack.InputAttack();
             //skill2
             if (player.skill2Manager.isChangeSkill2)//để chuyển sang trạng thái skill2 animator

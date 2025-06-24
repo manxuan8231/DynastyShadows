@@ -7,7 +7,7 @@ public class SlowMotionDodgeEvent : MonoBehaviour
     private float dodgeTimer = 0f;
     public float maxDodgeTime = 2f;
     public bool isOneSlow = true;
-
+    //tham chieu
     public TutorialManager tutorialManager;
     private void Start()
     {
