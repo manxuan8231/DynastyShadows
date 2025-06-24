@@ -2675,7 +2675,6 @@ GameObject:
   - component: {fileID: 8836063046351342367}
   - component: {fileID: 164819791450035395}
   - component: {fileID: 6596581995739455106}
-  - component: {fileID: 3704990259017983516}
   - component: {fileID: 6365342093382803807}
   - component: {fileID: 3619254723274865757}
   - component: {fileID: 4843101815042861315}
@@ -2742,6 +2741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPlayer: {fileID: 0}
+  startPosition: {x: 0, y: 0, z: 0}
   box: {fileID: 0}
   detectionRange: 50
   attackRange: 4
@@ -2760,9 +2760,12 @@ MonoBehaviour:
   - {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
   - {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
   - {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
+  - {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
+  - {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
   audioManager: {fileID: 3619254723274865757}
   damezone: {fileID: 0}
   playerStatus: {fileID: 0}
+  slowMotionDodgeEvent: {fileID: 0}
   _animator: {fileID: 0}
   _agent: {fileID: 0}
 --- !u!195 &6596581995739455106
@@ -2787,27 +2790,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!65 &3704990259017983516
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4625867533300698779}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 1, y: 3.14, z: 1}
-  m_Center: {x: 0, y: 1.54, z: 0}
 --- !u!54 &6365342093382803807
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2965,7 +2947,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2

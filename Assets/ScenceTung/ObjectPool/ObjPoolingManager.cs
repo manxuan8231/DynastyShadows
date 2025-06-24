@@ -48,9 +48,11 @@ public class ObjPoolingManager : MonoBehaviour
             for (int i = 0; i < config.size; i++)
             {
                
-                GameObject obj = Instantiate(config.prefab, parentObj.transform); 
-                obj.SetActive(false);
-                objectPool.Enqueue(obj);
+                GameObject obj = Instantiate(config.prefab, parentObj.transform);
+                if (obj != null) {
+                    obj.SetActive(false);
+                    objectPool.Enqueue(obj);
+                }           
             }
 
             poolDictionary.Add(config.tag, objectPool);

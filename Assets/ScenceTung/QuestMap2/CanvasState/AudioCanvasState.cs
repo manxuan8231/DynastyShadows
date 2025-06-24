@@ -6,6 +6,7 @@ public class AudioCanvasState : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip doneQuest;
     public AudioClip newQuest;
+    public AudioClip award;
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -24,6 +25,11 @@ public class AudioCanvasState : MonoBehaviour
     public void PlayNewQuest()
     {
         audioSource.clip = newQuest;
+        audioSource.Play();
+    }
+    public void PlayAward()
+    {
+        audioSource.clip = award;
         audioSource.Play();
     }
 }

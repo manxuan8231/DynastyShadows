@@ -37,7 +37,7 @@ public class ComboAttack : MonoBehaviour
         {
             // Tấn công trên mặt đất
             if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime
-                && isAttack && playerStatus.currentMana > 50 && playerController.IsGrounded())
+                && isAttack && playerStatus.currentMana > 50 && playerController.IsGrounded() && playerController.isAttack)
             {
                 playerStatus.TakeMana(50);
                 OnAttack();
@@ -46,7 +46,7 @@ public class ComboAttack : MonoBehaviour
             // Tấn công khi đang trên không
             if (Input.GetMouseButtonDown(0)
                 && isAttack && playerStatus.currentMana > 50 && !playerController.IsGrounded()
-                && Time.time >= coolDownAttackFly + 5)
+                && Time.time >= coolDownAttackFly + 1.5f)
             {
                 OnAttackFly();
                 coolDownAttackFly = Time.time;

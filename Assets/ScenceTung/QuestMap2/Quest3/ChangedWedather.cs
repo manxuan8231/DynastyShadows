@@ -36,11 +36,7 @@ public class ChangedWedather : MonoBehaviour
     }
     private void Update()
     {
-        if (isAudioDoneQuest)
-        {
-            AudioSource.Stop(); // Dừng âm thanh nếu đã phát
-            isAudioDoneQuest = false; // Đặt lại cờ
-        }
+        
     }
 
    void OnTriggerStay(Collider other)
@@ -52,7 +48,7 @@ public class ChangedWedather : MonoBehaviour
             btnText.text = "F :Chạm";
 
         }
-        if (btnF.activeSelf && Input.GetKeyDown(KeyCode.F) && !isBtnOpen)
+        if (canvasContent.activeSelf && btnF.activeSelf && Input.GetKeyDown(KeyCode.F) && !isBtnOpen)
         {
             isBtnOpen = true; // Đặt cờ để biết nút đã được nhấn
             StartCoroutine(changedWeather());
@@ -123,6 +119,7 @@ public class ChangedWedather : MonoBehaviour
         _light.intensity = 2f; // Tăng độ sáng của ánh sáng
         RenderSettings.fog = false; // Tắt sương mù
         isAudioActive = true;
+        AudioSource.Stop(); // Dừng âm thanh nếu đã phát
 
 
 

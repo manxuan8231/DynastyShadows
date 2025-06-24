@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TeleToMarket : MonoBehaviour
@@ -11,8 +10,10 @@ public class TeleToMarket : MonoBehaviour
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack script
     public GameObject questPoint;
     public bool isTeleDone = false;
+    public BoxCollider boxCollider; // BoxCollider để kiểm tra va chạm
     private void Start()
     {
+        boxCollider.enabled = false;
         playerController = FindAnyObjectByType<PlayerControllerState>(); // Tìm đối tượng PlayerController trong scene
         comboAttack = FindAnyObjectByType<ComboAttack>(); // Tìm đối tượng ComboAttack trong scene
         if (player == null)
@@ -35,7 +36,8 @@ public class TeleToMarket : MonoBehaviour
             }
         }
     }
-    
+ 
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
@@ -47,6 +49,7 @@ public class TeleToMarket : MonoBehaviour
 
     IEnumerator TelePort()
     {
+        boxCollider.enabled = false; // Tắt collider để không thể kích hoạt lại dịch chuyển
         Time.timeScale = 1f;
         // Ẩn chuột khi tắt map
         Cursor.visible = false;
@@ -81,5 +84,7 @@ public class TeleToMarket : MonoBehaviour
         isTeleDone = true; // Đặt cờ để biết nhiệm vụ đã hoàn thành
         questPoint.SetActive(false); // Kích hoạt questPoint sau khi dịch chuyển
     }
+
+
 }
 

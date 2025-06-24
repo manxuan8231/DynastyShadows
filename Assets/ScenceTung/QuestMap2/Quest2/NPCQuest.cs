@@ -31,6 +31,8 @@ public class NPCQuest : MonoBehaviour
     bool isSkip;
     bool isWriteSkip;
     public bool isContent;
+    public bool isActiveBtn = false;
+
     bool hasFinishedDialogue = false; // THÊM BIẾN NÀY
     bool hasPlayedTalkingAnim = false;
     public GameObject canvanQuest;
@@ -38,7 +40,6 @@ public class NPCQuest : MonoBehaviour
     public GameObject turnInTheQuest; // trả nv
     public GameObject transformTurnInTheQuest;
     public GameObject trigger;
-
     Coroutine Coroutine;
     private void Start()
     {
@@ -84,13 +85,14 @@ public class NPCQuest : MonoBehaviour
                 hasPlayedTalkingAnim = true;
             }
 
-            if (isOpen)
+            if (isOpen && !isActiveBtn)
             {
                 questionGameCanvas.SetActive(true);
                 btnF.SetActive(true);
 
                 if (Input.GetKeyDown(KeyCode.F) && isContent)
                 {
+                    isActiveBtn = true; // Đánh dấu nút đã được nhấn
                     isContent = false;
                     btnF.SetActive(false);
                     PanelContent.SetActive(true);
@@ -160,7 +162,11 @@ public class NPCQuest : MonoBehaviour
     }
     private IEnumerator ReadContent()
     {
-
+        PlayerControllerState playerControllerState = FindFirstObjectByType<PlayerControllerState>();
+        playerControllerState.enabled = false; // Vô hiệu hóa điều khiển người chơi
+        playerControllerState.animator.enabled = false; // Vô hiệu hóa animator của người chơi
+        Cursor.lockState = CursorLockMode.None; // Mở khóa con trỏ chuột
+        Cursor.visible = true; // Hiển thị con trỏ chuột
         for (int i = 0; i < contentTextQuest.Length; i++)
         {
             contentText.text = "";
@@ -195,10 +201,8 @@ public class NPCQuest : MonoBehaviour
         turnInTheQuest.SetActive(true);
         transformTurnInTheQuest.SetActive(true);
         EndContent();
-        
-
-
     }
+  
     public void SkipBtn()
     {
         if (isTyping)
@@ -212,6 +216,11 @@ public class NPCQuest : MonoBehaviour
     }
     public void EndContent()
     {
+        PlayerControllerState playerControllerState = FindFirstObjectByType<PlayerControllerState>();
+        playerControllerState.enabled = true; // Bật lại điều khiển người chơi
+        playerControllerState.animator.enabled = true; // Bật lại animator của người chơi
+        Cursor.lockState = CursorLockMode.Locked; // Khóa con trỏ chuột
+        Cursor.visible = false; // Ẩn con trỏ chuột
         questionGameCanvas.SetActive(false);
         PanelContent.SetActive(false);
         hasFinishedDialogue = true; // Đánh dấu đã xong hội thoại

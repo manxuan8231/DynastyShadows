@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,15 +16,22 @@ public class TurnInQuest2Map2 : MonoBehaviour
     public GameObject btnF;
     public GameObject turnInQuest;
     public Transform targetPos; // <-- Vị trí muốn NPC đi tới
-    
+    private bool isHandlingQuest = false; // Tránh spam nút F
+
     private bool isMoving = false;
     private bool isArrived = false;
     public GameObject canvasQuest;
     public GameObject activeQuest;
     public GameObject quest2;
+    AudioSource audioSource;
+    public AudioClip clip1;
+    public bool eventQuestBool = false;
+    public AwardQuest awardQuest;
 
-        void Start()
+    void Start()
     {
+        awardQuest = FindFirstObjectByType<AwardQuest>();
+        audioSource = GetComponent<AudioSource>();
         agent = GetComponent<NavMeshAgent>();
         anmt = GetComponent<Animator>();
     }
@@ -31,13 +39,14 @@ public class TurnInQuest2Map2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isDone && !isMoving)
+        if (isDone && !isMoving && !isHandlingQuest)
         {
             canvasContent.SetActive(true);
             btnF.SetActive(true);
 
-            if (Input.GetKeyDown(KeyCode.F) && btnF.activeSelf)
+            if (Input.GetKeyDown(KeyCode.F) && btnF.activeSelf )
             {
+                isHandlingQuest = true;
                 btnF.SetActive(false);
                 StartCoroutine(DoneQuest());
                 turnInQuest.SetActive(false);
@@ -47,6 +56,7 @@ public class TurnInQuest2Map2 : MonoBehaviour
         if (isMoving && !isArrived)
         {
             float distance = Vector3.Distance(transform.position, targetPos.position);
+            float eventQuest = Vector3.Distance(transform.position, targetPos.position);
             if (distance < 1f)
             {
                 isArrived = true;
@@ -54,13 +64,21 @@ public class TurnInQuest2Map2 : MonoBehaviour
                 quest2.SetActive(false);
                 gameObject.SetActive(false); // Ẩn NPC sau khi đến nơi
             }
+            if(eventQuest < 200f && !eventQuestBool)
+            {
+              StartCoroutine(corotine());
+            }
         }
     }
     IEnumerator DoneQuest()
     {
+        
+      
         canvasText.SetActive(true);
         contentText.text = "Tôi đến để gửi tin cho lính gác ở đội 7.";
         isQuest2 = true;
+        yield return new WaitForSeconds(0.2f);
+        awardQuest.AwardQuest2();
         activeQuest.SetActive(true);
         yield return new WaitForSeconds(2f);
 
@@ -80,5 +98,29 @@ public class TurnInQuest2Map2 : MonoBehaviour
         {
             isDone = true;
         }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            isDone = false;
+            canvasContent.SetActive(false);
+            btnF.SetActive(false);
+            turnInQuest.SetActive(true);
+        }
+    }
+
+    IEnumerator corotine()
+    {
+    
+        eventQuestBool = true;
+        audioSource.clip = clip1;
+        audioSource.Play();
+        yield return new WaitForSeconds(1f);
+        canvasText.SetActive(true);
+        contentText.text = " Có tiếng gì vậy?? ";
+        yield return new WaitForSeconds(2f);
+        canvasText.SetActive(false);
+
     }
 }
