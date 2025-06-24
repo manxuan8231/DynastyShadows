@@ -37,12 +37,14 @@ public class TutorialManager : MonoBehaviour
     private PlayerControllerState playerControllerState;
     private AnimatorPanelTutorial animatorPanelTutorial;
     private InteractNPC interactNpc;
+    private PlayerStatus playerStatus;
     void Start()
     {
         slowMotion = FindAnyObjectByType<SlowMotionDodgeEvent>();
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
         animatorPanelTutorial = FindAnyObjectByType<AnimatorPanelTutorial>();
         interactNpc = FindAnyObjectByType<InteractNPC>();
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
 
         stepCompleted = new bool[10];
         StartCoroutine(WaitShowStep(0));
@@ -91,8 +93,9 @@ public class TutorialManager : MonoBehaviour
                     {                     
                         stepCompleted[3] = true;
                         tutorialEnemy.SetActive(true);
+                        playerStatus.currentMana = playerStatus.maxMana; // Reset mana khi hoàn thành bước này
                         StartCoroutine(WaitShowStep(4)); // Hiển thị bước tiếp theo sau 1 giây
-                     
+                        
                     }
                     
                 }
