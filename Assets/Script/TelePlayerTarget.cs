@@ -32,7 +32,7 @@ public class TelePlayerTarget : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Destroy(gameObject,0.2f); // Xóa đối tượng này khi người chơi va chạm
+           gameObject.SetActive(false); // Tắt đối tượng này khi người chơi va chạm
         }
     }
 }
