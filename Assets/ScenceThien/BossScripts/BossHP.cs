@@ -54,7 +54,6 @@ public class BossHP : MonoBehaviour
 
         if (currentHealth >= 0)
         {
-            bossScript.TransitionToState(bossScript.getHitState);
             StartCoroutine(ReturnToBattle(0.6f));
         }
         if(currentHealth == 0)

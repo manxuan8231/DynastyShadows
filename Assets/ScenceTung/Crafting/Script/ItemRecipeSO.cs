@@ -20,9 +20,7 @@ public class ItemTypeAndCount
 {
     public ItemSO itemOther;
     public int count;
-    public ItemTypeAndCount(ItemSO itemOthers, int count)
-    {
-        this.itemOther = itemOthers;
-        this.count = count;
-    }
+
+
 }
+
