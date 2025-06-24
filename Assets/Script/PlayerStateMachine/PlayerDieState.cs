@@ -46,9 +46,9 @@ public class PlayerDieState : PlayerState
         Cursor.visible = false;
         player.canvasLoad.SetActive(false);
         // Hồi sinh tại checkpoint
-        player.controller.enabled = false; // Tắt controller để tránh va chạm khi di chuyển
+       /* player.controller.enabled = false; // Tắt controller để tránh va chạm khi di chuyển
         player.transform.position = player.checkpointPosition;
-        player.controller.enabled = true; // Bật lại controller
+        player.controller.enabled = true; // Bật lại controller*/
         // Quay lại trạng thái bth
         player.ChangeState(new PlayerCurrentState(player)); 
     }

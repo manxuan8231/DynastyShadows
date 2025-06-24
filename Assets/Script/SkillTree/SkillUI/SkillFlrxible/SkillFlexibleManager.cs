@@ -66,21 +66,21 @@ public class SkillFlexibleManager : MonoBehaviour
                 previewText.text = "Cầu lửa";
                 contenSkill.text = "Khi dùng kỹ năng này thì player sẽ bắn ra 3 cầu lửa nối tiếp combo có thời gian hồi chiêu 10 giây.";
                 skillBGs[0].enabled = true;
-                scoreUpgradeText.text = "";
+                scoreUpgradeText.text = "/5";
                 break;
 
             case "RainFire":
                 previewText.text = "Mưa lửa";
                 contenSkill.text = "Khi dùng kỹ năng thì người chơi sẽ bay lên thả các cầu lửa xuống gây sát thương vùng.";
                 skillBGs[1].enabled = true;
-                scoreUpgradeText.text = "/2";
+                scoreUpgradeText.text = "/7";
                 break;
 
             case "DongCung3":
                 previewText.text = "Đông cứng - Cấp 3";
                 contenSkill.text = "Tăng thời gian đông cứng lên 20 giây.";
                 skillBGs[2].enabled = true;
-                scoreUpgradeText.text = "/2";
+                scoreUpgradeText.text = "/7";
                 break;
 
             case "DongCung4":
@@ -135,7 +135,7 @@ public class SkillFlexibleManager : MonoBehaviour
                 if(playerStatus.score > 2)
                 {
                     isDongCung1Unlocked = true;
-                    playerStatus.score -= 2;
+                    playerStatus.score -= 5;
                     UpdateScoreText();
                     ColorUnlockIcon();
 
@@ -151,7 +151,7 @@ public class SkillFlexibleManager : MonoBehaviour
                 if (playerStatus.score >= 2)
                 {
                     ColorUnlockIcon();                  
-                    playerStatus.score -= 2;
+                    playerStatus.score -= 7;
                     UpdateScoreText();
                     buttonEquip.SetActive(true);
                     buttonRemove.SetActive(false);
