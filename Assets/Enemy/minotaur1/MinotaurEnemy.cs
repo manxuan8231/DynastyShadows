@@ -342,7 +342,7 @@ public class MinotaurEnemy : MonoBehaviour
     {
         if (slowMotionDodgeEvent.isOneSlow == false)
         {
-            Debug.Log("");
+            Debug.Log("da gay dame");
         }
         if (slowMotionDodgeEvent != null && !slowMotionDodgeEvent.isDodgeWindowActive && slowMotionDodgeEvent.isOneSlow == true)
         {

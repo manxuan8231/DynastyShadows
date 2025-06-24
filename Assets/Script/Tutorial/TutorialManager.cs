@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using NUnit.Framework.Constraints;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -89,9 +90,9 @@ public class TutorialManager : MonoBehaviour
                     if(!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
                     {                     
                         stepCompleted[3] = true;
-                      
-                        StartCoroutine(WaitShowStep(4)); // Hiển thị bước tiếp theo sau 1 giây
                         tutorialEnemy.SetActive(true);
+                        StartCoroutine(WaitShowStep(4)); // Hiển thị bước tiếp theo sau 1 giây
+                     
                     }
                     
                 }
@@ -125,18 +126,22 @@ public class TutorialManager : MonoBehaviour
                 {
                     tutorialInteractNPC.SetActive(true);//bat box cho npc len
                     stepCompleted[5] = true;
+                    pointer1.SetActive(true);
                     StartCoroutine(WaitShowStep(6));
                 }
                 break;
-            case 6://tuong tac npc nhan nvu
-                if (interactNpc.isInteract == true) 
-                {                 
+            case 6:
+               
+                break;
+            case 7://tuong tac npc nhan nvu
+                if (interactNpc.isInteract == true)
+                {
                     tutorialPanelV1.SetActive(true);
-                   
+
                 }
                 if (interactNpc.isInteract == true && Input.GetKeyDown(KeyCode.LeftControl))
                 {
-                    
+
 
                 }
                 break;
@@ -188,8 +193,14 @@ public class TutorialManager : MonoBehaviour
                 tutorialTextV1.text = "Nhấn chuột trái để tấn công.";
                 defautIcon.sprite = attackIcon;
                 playerControllerState.isAttack = true;
+               
                 break;
             case 6:
+                tutorialTextV1.text = "Chạm vào vật phẩm để nhặt.";
+                defautIcon.enabled = false;
+                tutorialPanelV1.SetActive(false); // Ẩn panel trước khi hiển thị bước mới
+                break;
+            case 7:
                 tutorialTextV1.text = "Nhấn F để tương tác.";
                 defautIcon.sprite = interactNPC;
                 tutorialPanelV1.SetActive(false); // Ẩn panel trước khi hiển thị bước mới
