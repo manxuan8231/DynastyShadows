@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class Skill1NecState : INecState
 {
