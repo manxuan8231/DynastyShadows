@@ -24,7 +24,16 @@ public class CastRostbindSoul : MonoBehaviour
         targetEnemy = FindNearestEnemy(50f);
         if (targetEnemy != null)
         {
-            transform.position = targetEnemy.transform.position + new Vector3(0f, 2f, 0f);
+            Transform model = targetEnemy.transform.Find("Model");
+            if (model != null)
+            {
+                transform.position = model.position;
+            }
+            else
+            {
+                transform.position = targetEnemy.transform.position + new Vector3(0f, 1.5f, 0f);
+            }
+
             FreezeEnemy(targetEnemy);
             StartCoroutine(UnfreezeAfterDelay(targetEnemy, skill1Manager.timeSkill1));
         }

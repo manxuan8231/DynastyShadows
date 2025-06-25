@@ -26040,6 +26040,7 @@ RectTransform:
   - {fileID: 1308771671849158508}
   - {fileID: 5361500777040599098}
   - {fileID: 1782928221142507520}
+  - {fileID: 6108141332139626883}
   m_Father: {fileID: 1299485720379892913}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -26100,9 +26101,10 @@ MonoBehaviour:
   skill3Prefabs: {fileID: 1408583419077936356}
   skill4Prefabs: {fileID: 6293860345184501940, guid: 1df6f50c495f7434bbff8fb77301e3e5, type: 3}
   playerPos: {x: 0, y: 0, z: 0}
-  bossMap1: {fileID: 6250876062311799881}
+  timeLine: {fileID: 0}
   dameZoneWp: {fileID: 879461896813510355}
-  playerObjScence1: {fileID: 0}
+  boss1: {fileID: 0}
+  boxCollider: {fileID: 0}
 --- !u!195 &2297710122781629007
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -26562,6 +26564,37 @@ Transform:
   - {fileID: 9133792578107290230}
   - {fileID: 907785045853703866}
   - {fileID: 4932819275388619845}
+  m_Father: {fileID: 6390559527698073352}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3625893869758627305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6108141332139626883}
+  m_Layer: 10
+  m_Name: Model
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6108141332139626883
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3625893869758627305}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.1579252, y: 2.8584657, z: 7.4144583}
+  m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 6390559527698073352}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3638210806128538783

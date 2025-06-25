@@ -71,14 +71,14 @@ public class SkillFlexibleManager : MonoBehaviour
 
             case "RainFire":
                 previewText.text = "Mưa lửa";
-                contenSkill.text = "Khi dùng kỹ năng thì người chơi sẽ bay lên thả các cầu lửa xuống gây sát thương vùng.";
+                contenSkill.text = "Khi dùng kỹ năng thì người chơi sẽ bay lên thả các cầu lửa xuống gây sát thương vùng có thời gian hồi chiêu 10 giây.";
                 skillBGs[1].enabled = true;
                 scoreUpgradeText.text = "/7";
                 break;
 
-            case "DongCung3":
-                previewText.text = "Đông cứng - Cấp 3";
-                contenSkill.text = "Tăng thời gian đông cứng lên 20 giây.";
+            case "Slash":
+                previewText.text = "Trảm kích";
+                contenSkill.text = "Khi dùng kỹ năng này thì player sẽ lao tới chém 3 lần nối tiếp có thời gian hồi chiêu 10 giây.";
                 skillBGs[2].enabled = true;
                 scoreUpgradeText.text = "/7";
                 break;
@@ -136,9 +136,7 @@ public class SkillFlexibleManager : MonoBehaviour
                 {
                     isDongCung1Unlocked = true;
                     playerStatus.score -= 5;
-                    UpdateScoreText();
-                    ColorUnlockIcon();
-
+                    UpdateScoreText(); 
                     buttonEquip.SetActive(true);
                     buttonRemove.SetActive(false);
                     buttonUnlock.SetActive(false); // Ẩn nút sau khi mở
@@ -150,7 +148,7 @@ public class SkillFlexibleManager : MonoBehaviour
             case "RainFire":
                 if (playerStatus.score >= 2)
                 {
-                    ColorUnlockIcon();                  
+                    isDongCung2Unlocked = true;
                     playerStatus.score -= 7;
                     UpdateScoreText();
                     buttonEquip.SetActive(true);
@@ -159,12 +157,10 @@ public class SkillFlexibleManager : MonoBehaviour
                 }
                 break;
 
-            case "DongCung3":
-                if (turnInSkill1 >= 1 && playerStatus.score >= 2)
+            case "Slash":
+                if (playerStatus.score >= 2)
                 {
-                    Debug.Log("Đã mở khóa kỹ năng: DongCung3");
-                    ColorUnlockIcon();
-                    turnInSkill1 += 1;
+                    isDongCung3Unlocked = true;
                     playerStatus.score -= 2;
                     UpdateScoreText();
                     buttonEquip.SetActive(true);
@@ -174,10 +170,9 @@ public class SkillFlexibleManager : MonoBehaviour
                 break;
 
             case "DongCung4":
-                if (turnInSkill1 >= 3 && playerStatus.score >= 4)
+                if ( playerStatus.score >= 4)
                 {
-                    Debug.Log("Đã mở khóa kỹ năng: DongCung4");
-                    ColorUnlockIcon();
+                    isDongCung4Unlocked = true;
                     playerStatus.score -= 4;
                     UpdateScoreText();
                     buttonEquip.SetActive(true);
@@ -198,7 +193,7 @@ public class SkillFlexibleManager : MonoBehaviour
             case "RainFire":
                 slotIcon.texture = skill2.texture;
                 break;
-            case "DongCung3":
+            case "Slash":
                 slotIcon.texture = skill3.texture;
                 break;
             case "DongCung4":
@@ -265,7 +260,7 @@ public class SkillFlexibleManager : MonoBehaviour
         {
             case "FireBall": return isDongCung1Unlocked;
             case "RainFire": return isDongCung2Unlocked;
-            case "DongCung3": return isDongCung3Unlocked;
+            case "Slash": return isDongCung3Unlocked;
             case "DongCung4": return isDongCung4Unlocked;
         }
         return false;

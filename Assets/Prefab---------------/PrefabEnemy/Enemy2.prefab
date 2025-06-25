@@ -9390,6 +9390,37 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.6077256, y: -0.06527603, z: 0.043867826}
     m_Extent: {x: 0.062740564, y: 0.047538243, z: 0.026087625}
   m_DirtyAABB: 0
+--- !u!1 &4435637456333413593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3825404003769636386}
+  m_Layer: 10
+  m_Name: Model
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3825404003769636386
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4435637456333413593}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -63.580975, y: 1.5000012, z: -57.985847}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6880875616075374477}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4449930868647370994
 GameObject:
   m_ObjectHideFlags: 0
@@ -15307,6 +15338,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6936540213807691326}
+  - {fileID: 3825404003769636386}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2266160853280118360
@@ -15464,6 +15496,7 @@ MonoBehaviour:
   AudioSource: {fileID: 8010634348052185659}
   deathSound: {fileID: 8300000, guid: 1cd6501647cfab94bbed6932fb23af98, type: 3}
   attackSound: {fileID: 8300000, guid: e19acd47d85e80145aec196522ed4152, type: 3}
+  punchSound: {fileID: 0}
   hitSound: {fileID: 0}
   runSound: {fileID: 8300000, guid: 97b804372573f964588622f463e9662c, type: 3}
 --- !u!82 &8010634348052185659

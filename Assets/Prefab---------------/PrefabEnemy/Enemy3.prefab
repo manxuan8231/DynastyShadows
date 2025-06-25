@@ -1012,6 +1012,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8588680563471013864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2321694200951228540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6156333758557705764}
+  m_Layer: 10
+  m_Name: Model
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6156333758557705764
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2321694200951228540}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -61.907158, y: 1.499999, z: -57.506115}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1470547507743382557}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2435242349488111854
 GameObject:
   m_ObjectHideFlags: 0
@@ -2077,6 +2108,7 @@ Transform:
   - {fileID: 2396864757647248144}
   - {fileID: 4521687821535797827}
   - {fileID: 6468045529848569576}
+  - {fileID: 6156333758557705764}
   - {fileID: 5249243754611753042}
   - {fileID: 8588680563471013864}
   - {fileID: 127450250427605270}
@@ -2240,6 +2272,7 @@ MonoBehaviour:
   AudioSource: {fileID: 1356380372402944412}
   deathSound: {fileID: 0}
   attackSound: {fileID: 8300000, guid: 6c32a1228ec98c84a9e235b5cefd20fe, type: 3}
+  punchSound: {fileID: 0}
   hitSound: {fileID: 8300000, guid: a6d3d60a544e5cb44b86930347f50b0c, type: 3}
   runSound: {fileID: 8300000, guid: ecef98b3978a2e74a9d321197c9fc98e, type: 3}
 --- !u!82 &1356380372402944412

@@ -10,12 +10,14 @@ public class SkillUseHandler : MonoBehaviour
     public float cooldownTime = 10f;
     public Slider cooldownSlider;
     public TextMeshProUGUI cooldownText;
+    public LayerMask enemyLayer;
 
     // Fireball combo
     private int comboStep = 0;
     private float comboTimer = 0f;
-    public float comboWindow = 2f; // thời gian cho phép giữa các combo
+    public float comboWindow = 3f; // thời gian cho phép giữa các combo
     private float nextComboAllowedTime = 0f; // chỉ cho phép bấm combo tiếp theo sau thời gian này
+
 
     // Tham chiếu 
     public PlayerStatus playerStatus;
@@ -89,7 +91,52 @@ public class SkillUseHandler : MonoBehaviour
                     nextComboAllowedTime = Time.time + 0.7f;
                 }
                 break;
-            case "DongCung3":
+            case "Slash":
+                if (Input.GetKeyDown(KeyCode.R) && Time.time >= nextComboAllowedTime)
+                {
+                    if (Time.time < lastColldown + cooldownTime) return;
+
+                    StartCoroutine(WaitMove());
+                    FindEnemy();
+
+                    Vector3 dashDir = player.transform.forward;
+                    float dashDistance = 30f; // độ dài lướt tối đa
+
+                    // Raycast kiểm tra vật cản phía trước
+                    RaycastHit hit;
+                    Vector3 finalTargetPos = player.transform.position + dashDir * dashDistance;
+
+                    if (Physics.Raycast(player.transform.position, dashDir, out hit, dashDistance, LayerMask.GetMask("Ground")))
+                    {
+                        // Nếu trúng tường, chỉ dash tới trước tường một chút
+                        finalTargetPos = hit.point - dashDir * 0.5f;
+                    }
+
+                    // Lướt tới vị trí an toàn (trước tường nếu có)
+                    playerControllerState.StartCoroutine(DashToTarget(finalTargetPos, 0.25f));
+
+                    // Gọi animation combo
+                    playerControllerState.animator.SetTrigger("Slash");
+                    if (comboStep == 0)
+                    {
+                        comboStep = 1;
+                    }
+                    else if (comboStep == 1)
+                    {
+                        comboStep = 2;
+                    }
+                    else if (comboStep == 2)
+                    {
+                        comboStep = 0;
+                        lastColldown = Time.time;
+                    }
+
+                    comboTimer = Time.time + comboWindow;
+                    nextComboAllowedTime = Time.time + 0.7f;
+                }
+                break;
+
+
             case "DongCung4":
                 break;
 
@@ -134,7 +181,31 @@ public class SkillUseHandler : MonoBehaviour
             if (cooldownText != null) cooldownText.gameObject.SetActive(false);
         }
 
+       
 
+    }
+
+
+    IEnumerator DashToTarget(Vector3 targetPosition, float duration)
+    {
+        Vector3 startPos = player.transform.position;
+        float time = 0f;
+
+        playerControllerState.controller.enabled = false;
+        playerControllerState.controller.detectCollisions = false;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = time / duration;
+            playerControllerState.transform.position = Vector3.Lerp(startPos, targetPosition, t);
+            yield return null;
+        }
+
+        playerControllerState.transform.position = targetPosition;
+
+        playerControllerState.controller.detectCollisions = true;
+        playerControllerState.controller.enabled = true;
     }
 
 
@@ -178,6 +249,7 @@ public class SkillUseHandler : MonoBehaviour
 
         return closestEnemy;
     }
+    
 
     public IEnumerator WaitMove()
     {
@@ -192,5 +264,9 @@ public class SkillUseHandler : MonoBehaviour
         yield return new WaitForSeconds(3f);
         playerControllerState.controller.enabled = true;
         playerControllerState.gravity = -9.81f;
-    }   
+    }
+
+
+
+    
 }

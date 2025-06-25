@@ -5190,6 +5190,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 73065897147065097}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1993592039053927220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4757176351012843899}
+  m_Layer: 10
+  m_Name: Model
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4757176351012843899
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993592039053927220}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 14.698377, y: -6.7047486, z: 23.946934}
+  m_LocalScale: {x: 0.6385475, y: 0.6385475, z: 0.6385475}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5564229001412908931}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1998841897729558268
 GameObject:
   m_ObjectHideFlags: 0
@@ -7875,6 +7906,7 @@ MonoBehaviour:
   dame: 150
   tagPlayer: Player
   listDame: []
+  enemy: {fileID: 0}
 --- !u!1 &3015164208502416718
 GameObject:
   m_ObjectHideFlags: 0
@@ -20572,6 +20604,7 @@ Transform:
   m_LocalScale: {x: 3.1321084, y: 3.1321084, z: 3.1321084}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4757176351012843899}
   - {fileID: 829315826922230997}
   - {fileID: 4028053134713950158}
   - {fileID: 1419294204399279432}

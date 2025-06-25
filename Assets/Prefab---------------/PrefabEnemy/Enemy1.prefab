@@ -6749,6 +6749,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 706688369238702614}
+  - {fileID: 8307828119737424257}
   - {fileID: 7901166825761259826}
   - {fileID: 3073478905480690470}
   - {fileID: 6288431747093368390}
@@ -7014,6 +7015,7 @@ MonoBehaviour:
   AudioSource: {fileID: 3102012990240784325}
   deathSound: {fileID: 8300000, guid: 6e469aeaa11284f4a8ba001f9086894f, type: 3}
   attackSound: {fileID: 8300000, guid: bde9632d4faefa143a1964759b942f7e, type: 3}
+  punchSound: {fileID: 0}
   hitSound: {fileID: 8300000, guid: a6d3d60a544e5cb44b86930347f50b0c, type: 3}
   runSound: {fileID: 8300000, guid: de812b515a5c45d4fa030cf39e846e84, type: 3}
 --- !u!1 &7376977893704536894
@@ -8354,6 +8356,37 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.042647004, y: -0.10414323, z: 0.072073385}
     m_Extent: {x: 0.093254626, y: 0.06138784, z: 0.16389094}
   m_DirtyAABB: 0
+--- !u!1 &8631895119536366642
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8307828119737424257}
+  m_Layer: 10
+  m_Name: Model
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8307828119737424257
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8631895119536366642}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -36.45379, y: 1.4999993, z: -35.221478}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3515006912416960593}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8709246157458514259
 GameObject:
   m_ObjectHideFlags: 0

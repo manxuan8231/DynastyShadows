@@ -165,15 +165,17 @@ public class EvenAnimator : MonoBehaviour
        
         Debug.Log("Dùng kỹ năng cầu lửa!");
        
-        Vector3 custom = new Vector3(90, 0, 0); 
+        Vector3 custom = firePoint.forward;
         Quaternion fireballRotation = Quaternion.LookRotation(custom);
-        GameObject instan = Instantiate(fireBall, firePoint.position, fireballRotation);
+        // Xoay thêm theo ý bạn
+        Quaternion customRot = fireballRotation * Quaternion.Euler(0, 0f,180f);
+        GameObject instan = Instantiate(fireBall, firePoint.position, customRot);
 
         Rigidbody rb = instan.GetComponent<Rigidbody>();
         if (rb != null)
         {
             Debug.Log("Bắn thành công");
-            rb.AddForce(firePoint.forward * 100, ForceMode.Impulse);
+            rb.AddForce(instan.transform.forward * 100, ForceMode.Impulse);
         }
         Destroy(instan, 5f); // Hủy sau 5 giây
     }

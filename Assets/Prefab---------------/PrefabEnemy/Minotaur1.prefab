@@ -1896,6 +1896,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8066909529349261424}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3277352317781182283
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2458337480204107099}
+  m_Layer: 10
+  m_Name: Model
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2458337480204107099
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3277352317781182283}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.3356314, y: 0, z: -9.476086}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4919787570420862421}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3513872444972128271
 GameObject:
   m_ObjectHideFlags: 0
@@ -2700,6 +2731,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4282879937542974717}
+  - {fileID: 2458337480204107099}
   - {fileID: 2366160119887075945}
   - {fileID: 1927298384308727185}
   - {fileID: 1734711649124587436}
@@ -2766,6 +2798,7 @@ MonoBehaviour:
   damezone: {fileID: 0}
   playerStatus: {fileID: 0}
   slowMotionDodgeEvent: {fileID: 0}
+  tutorialManager: {fileID: 0}
   _animator: {fileID: 0}
   _agent: {fileID: 0}
 --- !u!195 &6596581995739455106
