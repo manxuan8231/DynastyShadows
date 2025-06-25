@@ -106,13 +106,13 @@ public class NPCDeathQuest : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         stateCanvas.SetActive(true); // Show the state canvas
         stateQuestion.text = "Bạn vừa nhận được nhiệm vụ mới!";
-        missionName.text = "Khám phá thị trấn!!";
+        missionName.text = "Tìm kiếm sự sống xung quanh thị trấn.";
         audioCanvasStatequest.PlayNewQuest(); // Play the quest complete audio
         missionIcon.sprite = newQuest;
         yield return new WaitForSeconds(1.5f);
         stateCanvas.SetActive(false);
         canvasQuest1.SetActive(true); // Show the quest canvas
-        contentQuest.text = "Nhiệm vụ: Khám phá thị trấn";
+        contentQuest.text = "Nhiệm vụ: Tìm kiếm sự sống xung quanh thị trấn.";
         isQuest1 = true; // Set the quest flag to true
         transformQuest.SetActive(true); // Activate the transform quest object
     }

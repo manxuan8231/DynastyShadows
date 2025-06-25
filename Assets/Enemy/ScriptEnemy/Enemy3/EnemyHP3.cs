@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -83,12 +84,15 @@ public class EnemyHP3 : MonoBehaviour
             if (questManager != null) 
                 questManager.UpdateQuestBacLam(1);
             if (thuongNhan != null)
-                thuongNhan.UpdateKillEnemy(1); //  Cập nhật số lượng kẻ thù đã tiêu diệt trong quest thuong nhan
-            ObjPoolingManager.Instance.ReturnToPool("Enemy3",gameObject); // Trả về pool thay vì Destroy để tái sử dụng
-            
+                thuongNhan.UpdateKillEnemy(1); //  Cập nhật số lượng kẻ thù đã tiêu diệt trong quest thuong nhan      
+            StartCoroutine(WaitDeath()); // Chờ 5 giây trước khi trả về pool
         }
     }
-    
+    IEnumerator WaitDeath()
+    {
+        yield return new WaitForSeconds(5f); // Chờ 5 giây trước khi trả về pool
+        ObjPoolingManager.Instance.ReturnToPool("Enemy3", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
+    }
     void BackToChase()
     {
         if (enemy3.currentState != Enemy3.EnemyState.Death)

@@ -45,13 +45,13 @@ public class TriggerQuest2 : MonoBehaviour
         playerControllerState.animator.enabled = false; // Disable player animations
         playerControllerState.enabled = false; // Disable player controls
         canvasText.SetActive(true); // Show the canvas text
-        contentText.text = "Các binh sĩ ?!";
+        contentText.text = "Ở đó hình như còn có người sống sót";
         audioSource.clip = dangerClip; // Set the danger audio clip
         audioSource.Play(); // Play the danger audio
         yield return new WaitForSeconds(2.5f);
-        contentText.text = "Họ đang gặp nguy hiểm!!";
+        contentText.text = "Nhưng sao lại có những sinh vật kì lạ lại giam giữ họ ?!";
         yield return new WaitForSeconds(2.5f);
-        contentText.text = "Tôi đến giúp các anh đây.Hãy cố lên!!!";
+        contentText.text = "Mình phải giải cứu mọi người đang bị chúng giam giữ...";
         yield return new WaitForSeconds(3f); // Wait for 3 seconds
         audioSource.clip = backGround; // Set the background audio clip
         audioSource.Play(); // Play the background audio
@@ -66,7 +66,7 @@ public class TriggerQuest2 : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         stateCanvas.SetActive(false); // Hide the state canvas
         npcQuest.SetActive(true);
-        contentQuest.text = "Hỗ trợ kỵ sĩ còn sống đẩy lùi đợt tấn công của dị thể";
+        contentQuest.text = "Giải cứu dân làng bị giam giữ!!!";
         yield return new WaitForSeconds(1.5f);
 
     }

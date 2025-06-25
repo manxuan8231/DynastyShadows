@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -88,12 +89,15 @@ public class EnemyHP2 : MonoBehaviour
             {
                 knightD.UpdateKillCount(1); // Gọi hàm cập nhật quest
             }
-          ObjPoolingManager.Instance.ReturnToPool("Enemy2", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
-          
+            StartCoroutine(WaitDeath()); // Chờ 5 giây trước khi trả về pool
         }
     }
-    
-    
+    IEnumerator WaitDeath()
+    {
+        yield return new WaitForSeconds(5f); // Thời gian chờ trước khi trả về pool
+        ObjPoolingManager.Instance.ReturnToPool("Enemy2", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
+    }
+
 
 
 
