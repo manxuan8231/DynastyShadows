@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -40,18 +41,14 @@ public class EnemyHP : MonoBehaviour
     }
     
 
-    // Update is called once per frame
-    void Update()
-    {
-     
-    }
+ 
    
     public void TakeDamage(float damage)
     {
         if (enemy1.currentState == Enemy1.EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
 
         currentHealth -= damage;
-       
+      
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         sliderHp.value = currentHealth;
         if (currentHealth <= 0)
@@ -73,8 +70,7 @@ public class EnemyHP : MonoBehaviour
                 Necboss.EnemyCount();
             }
 
-            ObjPoolingManager.Instance.ReturnToPool("Enemy1", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
-          
+                     StartCoroutine(WaitDeath()); // Chờ 5 giây trước khi trả về pool
 
 
         }
@@ -87,7 +83,11 @@ public class EnemyHP : MonoBehaviour
         
    
     }
-      
+    IEnumerator WaitDeath()
+    {
+        yield return new WaitForSeconds(5f); // Thời gian chờ trước khi trả về pool
+        ObjPoolingManager.Instance.ReturnToPool("Enemy1", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
+    }
     public void DropItem()
     {
         float rand = Random.Range(0f, 100f); // số ngẫu nhiên từ 0 đến 100
@@ -141,6 +141,7 @@ public class EnemyHP : MonoBehaviour
         }
         enemy1.ChangeState(Enemy1.EnemyState.Idle);
     }
+   
 
 }
 
