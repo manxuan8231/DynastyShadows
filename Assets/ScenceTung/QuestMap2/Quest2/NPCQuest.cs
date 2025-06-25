@@ -1,15 +1,18 @@
 ﻿using System.Collections;
-using System.Linq;
 using TMPro;
-
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
+
 
 public class NPCQuest : MonoBehaviour
 {
     public Animator animator;
     public NavMeshAgent agent;
     public EnemyMap2_1 enemyMap2_1;
+    public Transform player;
+    public Transform succesQuestPoint;
     public int killEnemy = 0;
     bool isHelp = false;
     public GameObject questionGameCanvas;
@@ -25,23 +28,36 @@ public class NPCQuest : MonoBehaviour
     bool isWriteSkip;
     public bool isContent;
     public bool isActiveBtn = false;
-    bool hasFinishedDialogue = false; // THÊM BIẾN NÀY
+   public bool hasFinishedDialogue = false; // THÊM BIẾN NÀY
     bool hasPlayedTalkingAnim = false;
-   
-    
+
+
     public GameObject trigger;
     Coroutine Coroutine;
     public bool isSitUp = false;
-    public bool isQuest2Complete = false;
     public GameObject canvasNameNPC;
-    
+    [Header("Nhiệm vụ")]
+    public GameObject canvasQuest;
+    public TMP_Text questText;
+
+    [Header("Trạng thái nhiệm vụ")]
+    public GameObject stateCanvas;
+    public TMP_Text stateText;
+    public TMP_Text missionName;
+    public Image iconState;
+    public Sprite spirteState;
+
+    public AudioCanvasState audioCanvasState;
+    public SuccesQuest2 succesQuest2;
     private void Start()
     {
+
         canvasNameNPC.SetActive(false); // Ẩn canvas tên NPC ban đầu
         isContent = true;
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-       
+        player = GameObject.FindGameObjectWithTag("Player").transform; // Tìm player trong scene
+        succesQuest2 = FindFirstObjectByType<SuccesQuest2>();
     }
 
     void Update()
@@ -49,15 +65,15 @@ public class NPCQuest : MonoBehaviour
         enemyMap2_1 = FindFirstObjectByType<EnemyMap2_1>();
         if (killEnemy >= 6 && !isSitUp)
         {
-            if(isSitUp == false)
+            if (isSitUp == false)
             {
                 animator.SetTrigger("SitUp");
                 isSitUp = true;
             }
-            Destroy(trigger);
+            trigger.SetActive(false); // Tắt trigger khi đã hoàn thành nhiệm vụ
             isHelp = true;
         }
-       
+
         if (isHelp && !hasFinishedDialogue)
         {
             if (isOpen && !isActiveBtn)
@@ -79,17 +95,28 @@ public class NPCQuest : MonoBehaviour
                     Coroutine = StartCoroutine(ReadContent());
                 }
             }
+
+        }
+        if (succesQuest2 != null && succesQuest2.isQuest2Complete)
+        {
+            MoveToDoneQuest();
+        }
+        // 🧯 Ngắt follow nếu đã có lệnh đi đến điểm hoàn thành
+        else if (hasFinishedDialogue)
+        {
+            FollowPlayer();
         }
 
 
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
             isOpen = true;
         }
         
+
     }
     private void OnTriggerExit(Collider other)
     {
@@ -100,7 +127,7 @@ public class NPCQuest : MonoBehaviour
     }
 
     // Tìm enemy gần nhất trong khoảng detectionRange
-   
+
     public void UpdateKillQuest()
     {
         killEnemy++;
@@ -143,7 +170,7 @@ public class NPCQuest : MonoBehaviour
         canvasNameNPC.SetActive(true); // Hiển thị canvas tên NPC sau khi kết thúc hội thoại
         EndContent();
     }
-  
+
     public void SkipBtn()
     {
         if (isTyping)
@@ -168,9 +195,53 @@ public class NPCQuest : MonoBehaviour
         if (Coroutine != null)
         {
             StopCoroutine(Coroutine);
-            
+
         }
+        canvasQuest.SetActive(true); // Hiển thị canvas nhiệm vụ
+        questText.text = "Nhiệm vụ:Đưa dân làng vào vùng an toàn !";
+        stateCanvas.SetActive(true); // Hiển thị canvas trạng thái nhiệm vụ
+        audioCanvasState.PlayNewQuest();
+        stateText.text = "Bạn vừa nhận nhiệm vụ mới !";
+        missionName.text = "Đưa dân làng vào vùng an toàn !";
+        iconState.sprite = spirteState; // Cập nhật biểu tượng trạng thái nhiệm vụ
+
 
     }
-   
+    
+    void FollowPlayer()
+    {
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        if (hasFinishedDialogue)
+        {
+            if (distanceToPlayer > 5f)
+            {
+                agent.SetDestination(player.position);
+                animator.SetTrigger("Walk");
+            }
+            else
+            {
+                agent.ResetPath();
+                animator.SetTrigger("Idle");
+            }
+        }
+    }
+    
+  public  void MoveToDoneQuest()
+    {
+        if(succesQuest2.isQuest2Complete == true)
+        {
+            float distanceToPoint = Vector3.Distance(transform.position, succesQuestPoint.position);
+            if(distanceToPoint > 1f)
+            {
+                agent.ResetPath(); // Reset path để tránh lỗi khi NPC đang di chuyển
+                agent.SetDestination(succesQuestPoint.position);
+                animator.SetTrigger("Walk");
+            }
+            else
+            {
+                gameObject.SetActive(false); // Tắt NPC khi đã đến điểm hoàn thành nhiệm vụ
+            }
+
+        }
+    }
 }

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.AI;
 
 public class EnemyQuest2 : MonoBehaviour
 {
@@ -11,7 +10,6 @@ public class EnemyQuest2 : MonoBehaviour
     public LayerMask playerMask;
     public LayerMask obstacleMask;
 
-    private NavMeshAgent agent;
     private bool playerInSight;
 
     public Transform[] spawnPoints; // Vị trí spawn sẵn
@@ -19,7 +17,10 @@ public class EnemyQuest2 : MonoBehaviour
     public string enemyTag; // Tag của enemy dùng để gọi từ pool
     public bool hasSpawned = false;
 
-
+    private void Start()
+    {
+        player = GameObject.FindWithTag("Player").transform; // Tìm player trong scene
+    }
 
     void Update()
     {

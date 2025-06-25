@@ -23,7 +23,12 @@ public class EnemyHP : MonoBehaviour
     public List<ItemDrop> itemDrops = new List<ItemDrop>();
     void OnEnable()
     {
-        ResetEnemy(); // Mỗi lần lấy từ pool ra thì reset lại
+        StartCoroutine(WaitThenReset());
+    }
+    IEnumerator WaitThenReset()
+    {
+        yield return null; // đợi 1 frame cho object "snap" lên NavMesh
+        ResetEnemy();
     }
     private void Awake()
     {
@@ -134,11 +139,12 @@ public class EnemyHP : MonoBehaviour
             enemy1.animator.Update(0f);
         }
 
-        if(enemy1.agent != null)
+        if (enemy1.agent != null && enemy1.agent.isOnNavMesh)
         {
             enemy1.agent.ResetPath();
             enemy1.agent.enabled = true;
         }
+
         enemy1.ChangeState(Enemy1.EnemyState.Idle);
     }
    
