@@ -24,13 +24,11 @@ public class CamTrigger : MonoBehaviour
     public Sprite missionSprite;
     public GameObject canvasQuest;
     public AudioCanvasState audioCanvasState;
-    public GameObject transformQuest;
     public BoxCollider boxCollider;
     public AudioSource audioSource;
     public AudioClip backGround;
     private void Start()
     {
-        transformQuest.SetActive(false);
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
         audioSource = GetComponent<AudioSource>();
         cinemachineBrain = FindAnyObjectByType<CinemachineBrain>();
@@ -93,7 +91,6 @@ public class CamTrigger : MonoBehaviour
         stateCanvas.SetActive(false);
         yield return new WaitForSeconds(1f);
         canvasQuest.SetActive(true);
-        transformQuest.SetActive(true);
         audioSource.Stop();
         Destroy(gameObject);
     }

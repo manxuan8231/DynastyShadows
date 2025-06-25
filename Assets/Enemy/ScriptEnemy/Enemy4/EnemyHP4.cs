@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -84,8 +84,13 @@ public class EnemyHP4 : MonoBehaviour
             }
             DropItem();
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
-            ObjPoolingManager.Instance.ReturnToPool("Enemy4", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
+            StartCoroutine(WaitDeath()); // Trả về pool thay vì Destroy để tái sử dụng
         }
+    }
+    IEnumerator WaitDeath()
+    {
+        yield return new WaitForSeconds(5f); // Chờ 5 giây trước khi trả về pool
+        ObjPoolingManager.Instance.ReturnToPool("Enemy4", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
     }
         void BackToChase()
     {

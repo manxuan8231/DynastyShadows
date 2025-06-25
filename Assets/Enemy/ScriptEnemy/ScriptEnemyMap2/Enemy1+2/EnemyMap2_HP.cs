@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyMap2_HP : MonoBehaviour
@@ -63,7 +64,7 @@ public class EnemyMap2_HP : MonoBehaviour
             {
                 npc.UpdateKillQuest(); // Đánh dấu đã giết được enemy
             }
-            ObjPoolingManager.Instance.ReturnToPool("EnemyMap2_2", gameObject);
+            StartCoroutine(WaitDeath());
         }
         if (currentHealth > 0)
         {
@@ -73,6 +74,11 @@ public class EnemyMap2_HP : MonoBehaviour
         }
 
 
+    }
+    IEnumerator WaitDeath()
+    {
+        yield return new WaitForSeconds(1.5f); // Chờ 1.5 giây trước khi trả về pool
+        ObjPoolingManager.Instance.ReturnToPool("EnemyMap2_2", gameObject);
     }
     void BackToChase()
     {

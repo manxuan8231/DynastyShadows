@@ -70,7 +70,7 @@ public class EnemyHP : MonoBehaviour
                 Necboss.EnemyCount();
             }
 
-                     StartCoroutine(WaitDeath()); // Chờ 5 giây trước khi trả về pool
+            StartCoroutine(WaitDeath()); // Chờ 5 giây trước khi trả về pool
 
 
         }

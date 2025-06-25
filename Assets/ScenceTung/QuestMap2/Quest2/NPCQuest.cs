@@ -7,13 +7,6 @@ using UnityEngine.AI;
 
 public class NPCQuest : MonoBehaviour
 {
-    public float detectionRange = 15f; // Khoảng cách thấy enemy
-    public float attackRange = 2f;     // Khoảng cách tấn công
-    public float attackCooldown = 1.5f;
-
-    private Transform targetEnemy;
-    private float lastAttackTime = 0f;
-
     public Animator animator;
     public NavMeshAgent agent;
     public EnemyMap2_1 enemyMap2_1;
@@ -32,59 +25,41 @@ public class NPCQuest : MonoBehaviour
     bool isWriteSkip;
     public bool isContent;
     public bool isActiveBtn = false;
-
     bool hasFinishedDialogue = false; // THÊM BIẾN NÀY
     bool hasPlayedTalkingAnim = false;
-    public GameObject canvanQuest;
-    public TMP_Text contentQuest;
-    public GameObject turnInTheQuest; // trả nv
-    public GameObject transformTurnInTheQuest;
+   
+    
     public GameObject trigger;
     Coroutine Coroutine;
+    public bool isSitUp = false;
+    public bool isQuest2Complete = false;
+    public GameObject canvasNameNPC;
+    
     private void Start()
     {
+        canvasNameNPC.SetActive(false); // Ẩn canvas tên NPC ban đầu
         isContent = true;
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        turnInTheQuest.SetActive(false);
-        transformTurnInTheQuest.SetActive(false);
+       
     }
 
     void Update()
     {
         enemyMap2_1 = FindFirstObjectByType<EnemyMap2_1>();
-        if (killEnemy >= 6)
+        if (killEnemy >= 6 && !isSitUp)
         {
+            if(isSitUp == false)
+            {
+                animator.SetTrigger("SitUp");
+                isSitUp = true;
+            }
             Destroy(trigger);
             isHelp = true;
         }
-        FindClosestEnemy();
-        if (targetEnemy != null)
-        {
-            float distance = Vector3.Distance(transform.position, targetEnemy.position);
-
-            if (distance <= attackRange)
-            {
-                StopMoving();
-                AttackEnemy();
-            }
-            else
-            {
-                MoveToTarget();
-            }
-        }
-        else
-        {
-            StopMoving();
-        }
+       
         if (isHelp && !hasFinishedDialogue)
         {
-            if (!hasPlayedTalkingAnim)
-            {
-                animator.SetTrigger("Talking");
-                hasPlayedTalkingAnim = true;
-            }
-
             if (isOpen && !isActiveBtn)
             {
                 questionGameCanvas.SetActive(true);
@@ -92,6 +67,11 @@ public class NPCQuest : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.F) && isContent)
                 {
+                    if (!hasPlayedTalkingAnim)
+                    {
+                        animator.SetTrigger("Talking");
+                        hasPlayedTalkingAnim = true; // Đánh dấu đã chơi animation Talking
+                    }
                     isActiveBtn = true; // Đánh dấu nút đã được nhấn
                     isContent = false;
                     btnF.SetActive(false);
@@ -120,42 +100,7 @@ public class NPCQuest : MonoBehaviour
     }
 
     // Tìm enemy gần nhất trong khoảng detectionRange
-    void FindClosestEnemy()
-    {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyMap2_2");
-
-        targetEnemy = enemies
-            .Where(e => Vector3.Distance(transform.position, e.transform.position) <= detectionRange)
-            .OrderBy(e => Vector3.Distance(transform.position, e.transform.position))
-            .Select(e => e.transform)
-            .FirstOrDefault();
-    }
-
-    void MoveToTarget()
-    {
-        if (targetEnemy != null)
-        {
-
-            agent.SetDestination(targetEnemy.position);
-            animator.SetTrigger("Run");
-        }
-    }
-
-    void StopMoving()
-    {
-        agent.ResetPath();
-        animator.ResetTrigger("Run");
-    }
-
-    void AttackEnemy()
-    {
-        if (Time.time - lastAttackTime >= attackCooldown)
-        {
-            lastAttackTime = Time.time;
-            animator.SetTrigger("Attack");
-
-        }
-    }
+   
     public void UpdateKillQuest()
     {
         killEnemy++;
@@ -170,12 +115,12 @@ public class NPCQuest : MonoBehaviour
         for (int i = 0; i < contentTextQuest.Length; i++)
         {
             contentText.text = "";
-            nameTxt.text = nameTextQuest.Length > i ? nameTextQuest[i] : "Đéo biết ai ??" ;
+            nameTxt.text = nameTextQuest.Length > i ? nameTextQuest[i] : "Đéo biết ai ??";
             isTyping = true;
             isWriteSkip = false;
             foreach (var content in contentTextQuest[i])
             {
-                if(isSkip)
+                if (isSkip)
                 {
                     contentText.text = contentTextQuest[i];
                     break;
@@ -193,13 +138,9 @@ public class NPCQuest : MonoBehaviour
                 yield return null;
             }
             isWriteSkip = false;
-        
+
         }
-        yield return new WaitForSeconds(1f);
-        canvanQuest.SetActive(true);
-        contentQuest.text = "Mang tin báo đến cho Người đưa tin";
-        turnInTheQuest.SetActive(true);
-        transformTurnInTheQuest.SetActive(true);
+        canvasNameNPC.SetActive(true); // Hiển thị canvas tên NPC sau khi kết thúc hội thoại
         EndContent();
     }
   
