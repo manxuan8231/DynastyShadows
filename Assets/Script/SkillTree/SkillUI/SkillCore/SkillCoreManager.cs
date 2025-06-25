@@ -83,7 +83,7 @@ public class SkillCoreManager : MonoBehaviour
                 {
                     panelSkill1.SetActive(false);//an panel neu du cap
                     previewText.text = "Đông cứng - Cấp 1";
-                    contenSkill.text = "Khi dùng skill có khả năng đông cứng kẻ địch trong 10 giây không gây sát thương có thời gian hồi chiêu là 50 giây.";
+                    contenSkill.text = "Khi dùng skill có khả năng đông cứng kẻ địch trong 5 giây không gây sát thương có thời gian hồi chiêu là 50 giây.";
                     skillBGs[0].enabled = true;
                     scoreUpgradeText.text = "/2";//so diem can de nang cap
                 }
@@ -122,7 +122,7 @@ public class SkillCoreManager : MonoBehaviour
                 if(turnInSkill1 >= 1)
                 {
                 previewText.text = "Đông cứng - Cấp 3";
-                contenSkill.text = "Tăng thời gian đông cứng kẻ địch trong 20 giây";
+                contenSkill.text = "Tăng thời gian đông cứng kẻ địch trong 10 giây";
                 skillBGs[2].enabled = true;
                  scoreUpgradeText.text = "/2";//so diem can de nang cap
                 }
@@ -501,7 +501,7 @@ public class SkillCoreManager : MonoBehaviour
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
                     //mo khoa de su dung
-                    skill1Manager.timeSkill1 = 20f;
+                    skill1Manager.timeSkill1 = 10f;
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
                 }
                 break;
