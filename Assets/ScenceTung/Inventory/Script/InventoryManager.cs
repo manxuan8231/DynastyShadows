@@ -109,23 +109,32 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-    public bool UseItem(string itemName)
+    public bool HasItem(ItemSO item, int amount)
     {
-        for (int i = 0; i < itemSOs.Length; i++)
-        {
-            if (itemSOs[i].itemName == itemName)
-            {
-                Debug.Log("Check đúng tên item");
-                bool usable = itemSOs[i].UseItem();
-               
-                return usable;
-              
-            }
-            
-        }
-        return false;
+        int total = 0;
 
+
+        foreach (var slot in itemSlot)
+        {
+            if (slot.itemName == item.itemName)
+            {
+                total += slot.quantity;
+                if (total >= amount) return true;
+            }
+        }
+
+        foreach (var slot in equipmentSlot)
+        {
+            if (slot.itemName == item.itemName)
+            {
+                total += slot.quantity;
+                if (total >= amount) return true;
+            }
+        }
+
+        return false;
     }
+
 
     public void DeselectedAllSLot()
     {
@@ -171,7 +180,62 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
+    public void RemoveItem(ItemSO itemSO, int amount)
+    {
+        int remaining = amount;
+
+        // Trừ trong itemSlot
+        foreach (var slot in itemSlot)
+        {
+            if (slot.itemName == itemSO.itemName && remaining > 0)
+            {
+                int taken = Mathf.Min(remaining, slot.quantity);
+                slot.quantity -= taken;
+                if (slot.quantity <= 0)
+                    slot.EmptySlot();
+                remaining -= taken;
+            }
+        }
+
+        // Trừ trong equipmentSlot nếu chưa đủ
+        foreach (var slot in equipmentSlot)
+        {
+            if (slot.itemName == itemSO.itemName && remaining > 0)
+            {
+                int taken = Mathf.Min(remaining, slot.quantity);
+                slot.quantity -= taken;
+                if (slot.quantity <= 0)
+                    slot.EmptySlot();
+                remaining -= taken;
+            }
+        }
+
+        Debug.Log($"Removed {amount} x {itemSO.itemName}");
+    }
+    public int AddItem(ItemSO itemSO, int quantity)
+    {
+        // Tự xác định itemType dựa vào tên hoặc nơi gọi (nếu cần). Nếu không, gán mặc định
+        ItemType itemType = ItemType.crafting; // Hoặc định nghĩa logic riêng nếu cần
+
+        return AddItem(itemSO.itemName, quantity, null, "", itemType); // null và "" là placeholder vì AddItem vẫn yêu cầu
+    }
+
+    public bool UseItem(string itemName)
+    {
+        for (int i = 0; i < itemSOs.Length; i++)
+        {
+            if (itemSOs[i].itemName == itemName)
+            {
+                Debug.Log("Check đúng tên item");
+                bool usable = itemSOs[i].UseItem(); // UseItem của ItemSO
+                return usable;
+            }
+        }
+        return false;
+    }
+
 }
+
 
 
 public enum ItemType

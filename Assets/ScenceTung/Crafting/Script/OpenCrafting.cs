@@ -2,15 +2,13 @@ using UnityEngine;
 
 public class OpenCrafting : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public GameObject craftingUI;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            craftingUI.SetActive(!craftingUI.activeSelf);
+        }
     }
 }
