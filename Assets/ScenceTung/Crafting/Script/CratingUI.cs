@@ -1,16 +1,40 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
-public class CratingUI : MonoBehaviour
+public class CraftingUI : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public Transform recipeListParent;
+    public GameObject recipeButtonPrefab;
+    public InventoryManager inventory;
+
     void Start()
     {
-        
+        PopulateRecipes();
     }
 
-    // Update is called once per frame
-    void Update()
+    void PopulateRecipes()
     {
-        
+        foreach (var recipe in CraftingManager.Instance.allRecipes)
+        {
+            GameObject buttonGO = Instantiate(recipeButtonPrefab, recipeListParent);
+            buttonGO.GetComponentInChildren<TMP_Text>().text = recipe.recipeName;
+
+            Button btn = buttonGO.GetComponent<Button>();
+            btn.onClick.AddListener(() => OnRecipeSelected(recipe));
+        }
+    }
+
+    void OnRecipeSelected(ItemRecipeSO recipe)
+    {
+        if (CraftingManager.Instance.CanCraft(recipe, inventory))
+        {
+            CraftingManager.Instance.Craft(recipe, inventory);
+            Debug.Log($"Crafted {recipe.recipeName}");
+        }
+        else
+        {
+            Debug.Log("Not enough materials!");
+        }
     }
 }
