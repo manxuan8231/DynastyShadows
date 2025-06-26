@@ -49,9 +49,9 @@ public class TriggerQuest2 : MonoBehaviour
         audioSource.clip = dangerClip; // Set the danger audio clip
         audioSource.Play(); // Play the danger audio
         yield return new WaitForSeconds(2.5f);
-        contentText.text = "Nhưng sao lại có những sinh vật kì lạ lại giam giữ họ ?!";
+        contentText.text = "Nhưng sao lại có những sinh vật kì lạ lại giam giữ hắn ?!";
         yield return new WaitForSeconds(2.5f);
-        contentText.text = "Mình phải giải cứu mọi người đang bị chúng giam giữ...";
+        contentText.text = "Mình phải giải cứu người đang bị chúng giam giữ...";
         yield return new WaitForSeconds(3f); // Wait for 3 seconds
         audioSource.clip = backGround; // Set the background audio clip
         audioSource.Play(); // Play the background audio
