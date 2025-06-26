@@ -145,7 +145,7 @@ public class EvenAnimator : MonoBehaviour
         // Tạo góc xoay theo hướng player đang nhìn
         Quaternion baseRot = Quaternion.LookRotation(dir);
 
-        // Xoay thêm theo ý bạn
+        // Xoay thêm theo ý 
         Quaternion customRot = baseRot * Quaternion.Euler(0, 0f, 90f);
 
         GameObject effect = Instantiate(effectSkill2, positionSkill2.position, customRot);
@@ -158,9 +158,6 @@ public class EvenAnimator : MonoBehaviour
 
         Destroy(effect, 5f);
     }
-
-
-
 
     //skillEF---------------------------------------------------------
     public void StartFireBall()
@@ -202,5 +199,46 @@ public class EvenAnimator : MonoBehaviour
     public void PlaySlash3Audio()
     {
         audioSource.PlayOneShot(slash3Audio);
+    }
+
+    public void StartEffectSlash1()
+    {
+        Vector3 dir = positionSkill2.forward;
+
+        // Tạo góc xoay theo hướng player đang nhìn
+        Quaternion baseRot = Quaternion.LookRotation(dir);
+
+        // Xoay thêm theo ý 
+        Quaternion customRot = baseRot * Quaternion.Euler(0, 0f, -50f);
+
+        GameObject effect = Instantiate(effectSkill2, positionSkill2.position, customRot);
+        Rigidbody rb = effect.GetComponent<Rigidbody>();
+
+        if (rb != null)
+        {
+            rb.AddForce(effect.transform.forward * 60, ForceMode.Impulse);
+        }
+
+        Destroy(effect, 5f);
+    }
+    public void StartEffectSlash2()
+    {
+        Vector3 dir = positionSkill2.forward;
+
+        // Tạo góc xoay theo hướng player đang nhìn
+        Quaternion baseRot = Quaternion.LookRotation(dir);
+
+        // Xoay thêm theo ý 
+        Quaternion customRot = baseRot * Quaternion.Euler(0, 0f, 0f);
+
+        GameObject effect = Instantiate(effectSkill2, positionSkill2.position, customRot);
+        Rigidbody rb = effect.GetComponent<Rigidbody>();
+
+        if (rb != null)
+        {
+            rb.AddForce(effect.transform.forward * 60, ForceMode.Impulse);
+        }
+
+        Destroy(effect, 5f);
     }
 }

@@ -170,6 +170,7 @@ public class Skill4State : PlayerState
             player.playerStatus.currentMana > 100 &&
             Time.time >= player.rollColdownTime + 2f)
         {
+            player.StartCoroutine(WaitTakeHeal());
             player.playerStatus.TakeMana(100);
             player.audioSource.PlayOneShot(player.evenAnimator.audioRoll);
 
@@ -263,5 +264,10 @@ public class Skill4State : PlayerState
         player.ChangeState(new PlayerCurrentState(player)); // Trở về trạng thái hiện tại
     }
 
-  
+    public IEnumerator WaitTakeHeal()
+    {
+        player.playerStatus.isTakeHeal = false;
+        yield return new WaitForSeconds(1f);
+        player.playerStatus.isTakeHeal = true;
+    }
 }

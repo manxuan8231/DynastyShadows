@@ -1670,6 +1670,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 448499299943425185}
     m_Position: {x: 270, y: 120, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 7683134479594892184}
+    m_Position: {x: 0, y: 0, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -1886,33 +1889,30 @@ AnimatorStateMachine:
     m_State: {fileID: -2793843529421933424}
     m_Position: {x: 390, y: 100, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 7683134479594892184}
-    m_Position: {x: 70, y: 120, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 3928446141590180023}
     m_Position: {x: 70, y: 120, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: 6671135336531958201}
-    m_Position: {x: 700, y: 100, z: 0}
+    m_Position: {x: 620, y: 100, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: -2139983929786246977}
-    m_Position: {x: 390, y: 0, z: 0}
+    m_Position: {x: 380, y: 10, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 8279519029717917609}
-    m_Position: {x: 390, y: 200, z: 0}
+    m_Position: {x: 390, y: 150, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 4742887927460886244}
-    m_Position: {x: 390, y: 290, z: 0}
+    m_Position: {x: 390, y: 210, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 5046958399896967289}
     m_Position: {x: 70, y: 120, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: -3069424610867234217}
-    m_Position: {x: 390, y: 380, z: 0}
+    m_Position: {x: 390, y: 270, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 7255856483593712854}
-    m_Position: {x: 70, y: 220, z: 0}
+    m_Position: {x: 80, y: 190, z: 0}
   m_AnyStateTransitions:
   - {fileID: -871386672714191785}
   - {fileID: 2077532899671252629}
@@ -1933,11 +1933,11 @@ AnimatorStateMachine:
   - {fileID: -313289287246810063}
   m_EntryTransitions: []
   m_StateMachineTransitions:
+  - first: {fileID: -2139983929786246977}
+    second: []
   - first: {fileID: 6671135336531958201}
     second:
     - {fileID: -2420277047513689301}
-  - first: {fileID: -2139983929786246977}
-    second: []
   - first: {fileID: 8279519029717917609}
     second:
     - {fileID: 2862221189059076595}

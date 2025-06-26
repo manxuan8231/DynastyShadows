@@ -34,6 +34,7 @@ public class PlayerStatus : MonoBehaviour
     public TextMeshProUGUI textHealth;
     public bool isHit = true; 
     public bool isStun = true; //kiểm tra stun hay không
+    public bool isTakeHeal = true; //kiểm tra co cho mat mau
     //hien dame effect
     public GameObject textDame;
     public Transform textTransform;
@@ -129,7 +130,7 @@ public class PlayerStatus : MonoBehaviour
         goldQuantityTxt.text = gold.ToString();
         UpdateUI();
         isReflectDamage = false;//khoi tao ban dau la false 
-
+        isTakeHeal = true; //khởi tạo trạng thái cho phép mất máu
     }
     //update lại toàn bộ
     public void UpdateUI()
@@ -171,9 +172,8 @@ public class PlayerStatus : MonoBehaviour
     //hp
     public void TakeHealth(float amount ,GameObject enemy)//bị lấy hp
     {
-        if(currentHp > 0)
-        {
-           
+        if(currentHp > 0 && isTakeHeal == true)
+        {          
             currentHp -= amount;
             currentHp = Mathf.Clamp(currentHp, 0, maxHp);
             sliderHp.value = currentHp;
@@ -287,6 +287,24 @@ public class PlayerStatus : MonoBehaviour
         }
         
     }
+    
+    public void TakeHealthStun(float amount)//bị lấy hp
+    {
+        if(currentHp > 0 && isTakeHeal == true)
+        {
+            currentHp -= amount;
+            currentHp = Mathf.Clamp(currentHp, 0, maxHp);
+            sliderHp.value = currentHp;
+            textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
+            if (isStun == true)
+            {
+                StartCoroutine(WaitStun(4f)); // gọi hàm WaitHit với thời gian 0.5 giây
+                audioSource.PlayOneShot(audioHit);
+            }
+        }
+         
+       
+    }
     public void ShowTextDame(float damage)
     {
         GameObject effectText = Instantiate(textDame, textTransform.position, Quaternion.identity);
@@ -295,22 +313,9 @@ public class PlayerStatus : MonoBehaviour
         TextDamePopup popup = effectText.GetComponent<TextDamePopup>();
         if (popup != null)
         {
-          
+
             popup.Setup(damage);
         }
-    }
-    public void TakeHealthStun(float amount)//bị lấy hp
-    {
-        currentHp -= amount;
-        currentHp = Mathf.Clamp(currentHp, 0, maxHp);
-        sliderHp.value = currentHp;
-        textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
-        if(isStun == true)
-        {
-            StartCoroutine(WaitStun(4f)); // gọi hàm WaitHit với thời gian 0.5 giây
-            audioSource.PlayOneShot(audioHit);
-        }           
-       
     }
     public void BuffHealth(float amount)
     {
