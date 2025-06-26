@@ -33,6 +33,10 @@ public class EvenAnimator : MonoBehaviour
     //mua lua
     public GameObject rainFireBall;
     public Transform rainFireBallPs;
+    //slash
+    public AudioClip slash1Audio;
+    public AudioClip slash2Audio;
+    public AudioClip slash3Audio;
 
     //tham chieu 
     DameZone dameZone;
@@ -134,7 +138,6 @@ public class EvenAnimator : MonoBehaviour
         GameObject effect = Instantiate(effectChangeSkill4, positionSKill4.position, transform.rotation);
         Destroy(effect, 1.3f);
     }
-
     public void StartEffectSkill2()
     {
         Vector3 dir = positionSkill2.forward;
@@ -159,7 +162,7 @@ public class EvenAnimator : MonoBehaviour
 
 
 
-    //skill1EF---------------------------------------------------------
+    //skillEF---------------------------------------------------------
     public void StartFireBall()
     {
        
@@ -185,5 +188,19 @@ public class EvenAnimator : MonoBehaviour
         GameObject instan = Instantiate(rainFireBall, rainFireBallPs.position, rainFireBallPs.rotation);
        
         Destroy(instan, 5f); // Hủy sau 5 giây
+    }
+
+    //skill slash
+    public void PlaySlash1Audio()
+    {
+        audioSource.PlayOneShot(slash1Audio);
+    }
+    public void PlaySlash2Audio()
+    {
+        audioSource.PlayOneShot(slash2Audio);
+    }
+    public void PlaySlash3Audio()
+    {
+        audioSource.PlayOneShot(slash3Audio);
     }
 }

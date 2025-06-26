@@ -252,7 +252,7 @@ public class Skill4State : PlayerState
     public IEnumerator WaitChangeState()
     {
 
-        isMovement = false;//
+        isMovement = false;
         yield return new WaitForSeconds(2f);
         isMovement = true;//cho di chuyen
         player.isSkinSkill3Clone = true; //co sử dụng skill3 thi skin skill3 clone doi theo

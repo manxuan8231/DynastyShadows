@@ -19,7 +19,8 @@ public class Skill3ClonePLayer : MonoBehaviour
     private float lastAttackTime = -15f;
     //combostep skill fireball
     private int comboStep = 0;
-
+    //slash
+    public GameObject auraSlash;
     //tham chieu
     Skill3Manager skill3Manager;
     PlayerStatus playerStatus;
@@ -37,6 +38,7 @@ public class Skill3ClonePLayer : MonoBehaviour
         animator = GetComponent<Animator>();
         agent.speed = speed;
         StartCoroutine(ReturnToPool());
+        auraSlash.SetActive (false); // ẩn hiệu ứng auraSlash ban đầu
     }
 
     void Update()
@@ -181,5 +183,68 @@ public class Skill3ClonePLayer : MonoBehaviour
         yield return new WaitForSeconds(3f);
         agent.enabled = true;
        
+    }
+    //skill slash
+    public void PlaySlashAnim()
+    {
+        FindNearestEnemy();
+        Vector3 dashDir = transform.forward;
+        float dashDistance = 30f; // độ dài lướt tối đa
+
+        // Raycast kiểm tra vật cản phía trước
+        RaycastHit hit;
+        Vector3 finalTargetPos = transform.position + dashDir * dashDistance;
+
+        if (Physics.Raycast(transform.position, dashDir, out hit, dashDistance, LayerMask.GetMask("Ground")))
+        {
+            // Nếu trúng tường, chỉ dash tới trước tường một chút
+            finalTargetPos = hit.point - dashDir * 0.5f;
+        }
+        StartCoroutine(DashToTarget(finalTargetPos, 0.25f));
+        if (comboStep == 0)
+        {
+             StartCoroutine( WaitForAuraFire());
+            animator.SetTrigger("Slash");
+            comboStep = 1;
+        }
+        else if (comboStep == 1)
+        {
+            StartCoroutine(WaitForAuraFire());
+            animator.SetTrigger("Slash2");
+            comboStep = 2;
+        }
+        else if (comboStep == 2)
+        {
+            StartCoroutine(WaitForAuraFire());
+            animator.SetTrigger("Slash3");
+            comboStep = 0;
+        }
+
+
+    }
+    IEnumerator DashToTarget(Vector3 targetPosition, float duration)
+    {
+        Vector3 startPos = transform.position;
+        float time = 0f;
+
+    
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = time / duration;
+            playerControllerState.transform.position = Vector3.Lerp(startPos, targetPosition, t);
+            yield return null;
+        }
+
+       transform.position = targetPosition;
+
+     
+    }
+    public IEnumerator WaitForAuraFire()
+    {
+        auraSlash.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        auraSlash.SetActive(false);
     }
 }
