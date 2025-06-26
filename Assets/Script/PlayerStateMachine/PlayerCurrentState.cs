@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 public class PlayerCurrentState : PlayerState
 {
     public PlayerCurrentState(PlayerControllerState player) : base(player) { }
@@ -134,19 +135,20 @@ public class PlayerCurrentState : PlayerState
         if (Input.GetKeyDown(KeyCode.LeftControl) && 
             player.isGrounded &&
             player.playerStatus.currentMana > 100 &&
-            Time.time >= player.rollColdownTime + 1f && player.isRollBack)
-        {         
+            Time.time >= player.rollColdownTime + 2f && player.isRollBack)
+        {
+            player.playerStatus.TakeMana(100);
+            player.audioSource.PlayOneShot(player.evenAnimator.audioRoll);
+            player.StartCoroutine(WaitTakeHeal()); // Bắt đầu đợi thời gian chờ trước khi cho phép nhân vật nhận hồi máu
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
-                player.playerStatus.TakeMana(100);
-                player.audioSource.PlayOneShot(player.evenAnimator.audioRoll);
+               
 
                 player.animator.SetTrigger("Roll");
             }
             else if(!Input.GetKey(KeyCode.W) || !Input.GetKey(KeyCode.A) || !Input.GetKey(KeyCode.S) || !Input.GetKey(KeyCode.D))
             {
-                player.playerStatus.TakeMana(100);
-                player.audioSource.PlayOneShot(player.evenAnimator.audioRoll);
+              
 
                 player.animator.SetTrigger("RollBack");
             }
@@ -154,7 +156,12 @@ public class PlayerCurrentState : PlayerState
             player.rollColdownTime = Time.time;
         }
     }
-
+    public IEnumerator WaitTakeHeal()
+    {
+        player.playerStatus.isTakeHeal = false;
+        yield return new WaitForSeconds(1f);
+        player.playerStatus.isTakeHeal = true;
+    }
 
     public override void Exit() {
         //tat ko cho phép nhap skill1 va skill3

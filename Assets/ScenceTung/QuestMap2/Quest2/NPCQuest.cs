@@ -126,7 +126,7 @@ public class NPCQuest : MonoBehaviour
             btnF.SetActive(false); // Ẩn nút F khi người chơi rời khỏi vùng trigger
         }
     }
-
+        
     // Tìm enemy gần nhất trong khoảng detectionRange
 
     public void UpdateKillQuest()
