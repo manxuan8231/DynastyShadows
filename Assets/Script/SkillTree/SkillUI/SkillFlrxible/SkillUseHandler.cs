@@ -17,7 +17,9 @@ public class SkillUseHandler : MonoBehaviour
     private float comboTimer = 0f;
     public float comboWindow = 3f; // thời gian cho phép giữa các combo
     private float nextComboAllowedTime = 0f; // chỉ cho phép bấm combo tiếp theo sau thời gian này
-
+    //slash
+    public GameObject auraSlash;
+   
 
     // Tham chiếu 
     public PlayerStatus playerStatus;
@@ -26,6 +28,8 @@ public class SkillUseHandler : MonoBehaviour
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
+        auraSlash.SetActive(false);
+       
     }
 
     void Update()
@@ -112,27 +116,32 @@ public class SkillUseHandler : MonoBehaviour
                         finalTargetPos = hit.point - dashDir * 0.5f;
                     }
 
-                    // Lướt tới vị trí an toàn (trước tường nếu có)
+                   
                     playerControllerState.StartCoroutine(DashToTarget(finalTargetPos, 0.25f));
 
-                    // Gọi animation combo
-                    playerControllerState.animator.SetTrigger("Slash");
+                   
                     if (comboStep == 0)
                     {
+                        StartCoroutine(WaitForAuraFire());
+                        playerControllerState.animator.SetTrigger("Slash");
                         comboStep = 1;
                     }
                     else if (comboStep == 1)
                     {
+                        StartCoroutine(WaitForAuraFire());
+                        playerControllerState.animator.SetTrigger("Slash2");
                         comboStep = 2;
                     }
                     else if (comboStep == 2)
                     {
+                        StartCoroutine(WaitForAuraFire());
+                        playerControllerState.animator.SetTrigger("Slash3");
                         comboStep = 0;
                         lastColldown = Time.time;
                     }
 
                     comboTimer = Time.time + comboWindow;
-                    nextComboAllowedTime = Time.time + 0.7f;
+                    nextComboAllowedTime = Time.time + 0.5f;
                 }
                 break;
 
@@ -184,7 +193,12 @@ public class SkillUseHandler : MonoBehaviour
        
 
     }
-
+    void ResetCombo()
+    {
+        Debug.Log("Combo hết thời gian, reset và cooldown");
+        comboStep = 0;
+        lastColldown = Time.time;
+    }
 
     IEnumerator DashToTarget(Vector3 targetPosition, float duration)
     {
@@ -209,12 +223,7 @@ public class SkillUseHandler : MonoBehaviour
     }
 
 
-    void ResetCombo()
-    {
-        Debug.Log("Combo hết thời gian, reset và cooldown");
-        comboStep = 0;
-        lastColldown = Time.time;
-    }
+   
 
     public GameObject FindEnemy()
     {
@@ -266,7 +275,18 @@ public class SkillUseHandler : MonoBehaviour
         playerControllerState.gravity = -9.81f;
     }
 
-
-
+    //skill slash
+    public IEnumerator WaitForAuraFire()
+    {
+        auraSlash.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        auraSlash.SetActive(false);
+    }
     
+    public IEnumerator WaitForBoxDame()
+    {
+
+        yield return new WaitForSeconds(0.5f);
+
+    }
 }
