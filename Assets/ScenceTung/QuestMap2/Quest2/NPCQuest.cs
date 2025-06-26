@@ -123,6 +123,7 @@ public class NPCQuest : MonoBehaviour
         if (other.tag == "Player")
         {
             isOpen = false;
+            btnF.SetActive(false); // Ẩn nút F khi người chơi rời khỏi vùng trigger
         }
     }
 
@@ -197,6 +198,14 @@ public class NPCQuest : MonoBehaviour
             StopCoroutine(Coroutine);
 
         }
+        StartCoroutine(NewQuest()); // Bắt đầu nhiệm vụ mới
+
+
+
+    }
+    IEnumerator NewQuest()
+    {
+        yield return new WaitForSeconds(1f); // Thời gian chờ trước khi hiển thị nhiệm vụ mới
         canvasQuest.SetActive(true); // Hiển thị canvas nhiệm vụ
         questText.text = "Nhiệm vụ:Đưa dân làng vào vùng an toàn !";
         stateCanvas.SetActive(true); // Hiển thị canvas trạng thái nhiệm vụ
@@ -204,10 +213,9 @@ public class NPCQuest : MonoBehaviour
         stateText.text = "Bạn vừa nhận nhiệm vụ mới !";
         missionName.text = "Đưa dân làng vào vùng an toàn !";
         iconState.sprite = spirteState; // Cập nhật biểu tượng trạng thái nhiệm vụ
-
-
+        yield return new WaitForSeconds(3f); // Thời gian hiển thị nhiệm vụ
+        stateCanvas.SetActive(false); // Ẩn canvas trạng thái nhiệm vụ sau khi hiển thị
     }
-    
     void FollowPlayer()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);

@@ -14,18 +14,16 @@ public class Item : MonoBehaviour
     [SerializeField]
     public string itemDescription;
 
-    private InventoryManager inventoryManager;
+    public InventoryManager inventoryManager;
     public ItemType itemType;
-    private EquipmentSOLibrary equipmentSOLibrary;
 
 
     void Start()
     {
         inventoryManager = GameObject.Find("CanvasInventory").GetComponent<InventoryManager>();
-        equipmentSOLibrary = GameObject.Find("CanvasInventory").GetComponent<EquipmentSOLibrary>();
 
     }
-
+  
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -39,9 +37,5 @@ public class Item : MonoBehaviour
                 quantity = leftOverItems;
         }
     }
-
-
-
-
 
 }
