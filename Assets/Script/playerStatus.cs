@@ -57,8 +57,11 @@ public class PlayerStatus : MonoBehaviour
     public float currentMana;
     public float maxMana ;
     public TextMeshProUGUI textMana;
-    private float lastTimeShiftRelease = -999f;
     private bool isHoldingShiftLastFrame = false;
+    private float lastTimeShiftRelease = 0f;
+
+    private float manaDepletedTime = -999f;
+    private bool isInCooldownAfterDepletion = false;
 
     //xu lý dame------------------------------------------
     public int criticalDamage = 100; // +600% damage khi crit
@@ -401,25 +404,44 @@ public class PlayerStatus : MonoBehaviour
         bool isHoldingShift = Input.GetKey(KeyCode.LeftShift);
         bool isMoving = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
 
+        // Khi Mana cạn → đánh dấu thời điểm
+        if (currentMana <= 0 && !isInCooldownAfterDepletion)
+        {
+            isInCooldownAfterDepletion = true;
+            manaDepletedTime = Time.time;
+        }
+
+        // Sau 2 giây thì cho phép nhấn Shift lại
+        if (isInCooldownAfterDepletion && Time.time >= manaDepletedTime + 1f)
+        {
+            isInCooldownAfterDepletion = false;
+        }
+
+        // Nếu ĐANG trong thời gian cấm nhấn Shift → cưỡng chế không cho chạy
+        if (isInCooldownAfterDepletion)
+        {
+            isHoldingShift = false; // ép luôn người chơi không thể dùng Shift để chạy
+        }
+
         // Nếu đang giữ Shift và đang di chuyển → trừ mana
         if (isHoldingShift && isMoving && currentMana > 0)
         {
-            TakeMana(100 * Time.deltaTime);
+            TakeMana(50 * Time.deltaTime);
         }
 
-        // Nếu vừa thả Shift  ghi lại thời điểm thả
+        // Nếu vừa thả Shift → ghi lại thời điểm thả
         if (isHoldingShiftLastFrame && !isHoldingShift)
         {
             lastTimeShiftRelease = Time.time;
         }
 
-        //  Nếu KHÔNG giữ Shift hồi mana sau 0.5s
+        // Nếu KHÔNG giữ Shift → hồi mana sau 0.5s
         if (!isHoldingShift && Time.time >= lastTimeShiftRelease + 0.5f)
         {
             BuffMana(100 * Time.deltaTime);
         }
 
-        // Nếu ĐANG giữ Shift nhưng KHÔNG di chuyển  cho phép hồi mana
+        // Nếu giữ Shift nhưng KHÔNG di chuyển → vẫn hồi mana
         if (isHoldingShift && !isMoving)
         {
             BuffMana(100 * Time.deltaTime);
@@ -430,7 +452,7 @@ public class PlayerStatus : MonoBehaviour
     }
 
 
-    
+
     // --- Nâng chỉ số ---
     public void UpCriticalHitDamage(int amount)
     {

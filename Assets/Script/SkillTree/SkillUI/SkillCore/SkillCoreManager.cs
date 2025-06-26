@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -66,7 +67,7 @@ public class SkillCoreManager : MonoBehaviour
         {
             panelSkill4.SetActive(false);//an panel neu du cap
         }
-        SimulateUnlockAllSkills(); //giả lập mở khóa tất cả kỹ năng (chỉ để test)
+        SimulateUnlockAllSkills(); //giả lập mở khóa tất cả kỹ năng
     }
     public void ShowPreview(string iconID)
     {
@@ -130,7 +131,7 @@ public class SkillCoreManager : MonoBehaviour
                 {
                     previewPanel.SetActive(false);
                 }    
-                if(skill1Manager.timeSkill1 == 20f)
+                if(skill1Manager.timeSkill1 == 10f)
                 {
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
                 }
@@ -902,12 +903,20 @@ public class SkillCoreManager : MonoBehaviour
         {
             Debug.Log("Đã nhấn Alt - Mở tất cả kỹ năng");
 
+            for (int i = 0; i < buttonIconColor.Length; i++)
+            {
+                if (buttonIconColor[i] != null)
+                {
+                    buttonIconColor[i].color = Color.white; // Đổi màu tất cả icon thành trắng
+                }
+            }
+            playerStatus.currentLevel = 30;
             // Đông Cung
             turnInSkill1 = 4;
             skill1Manager.isUnlockSkill1 = true;
             skill1Manager.iconSkill1.SetActive(true);
             skill1Manager.cooldownSkill = 35f;
-            skill1Manager.timeSkill1 = 20f;
+            skill1Manager.timeSkill1 = 10f;
             skill1Manager.isDamaged = true;
 
             // Thế Ảnh
