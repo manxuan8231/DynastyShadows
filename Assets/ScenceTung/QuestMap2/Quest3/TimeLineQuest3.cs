@@ -7,6 +7,7 @@ public class TimeLineQuest3 : MonoBehaviour
     public GameObject playerInGame;      // Player gameplay
     public GameObject playerTimeLine;    // Player trong cutscene
     public GameObject trigger;
+    public GameObject destroy;
     [Header("Timeline")]
     public PlayableDirector playableDirector;
 
@@ -51,7 +52,7 @@ public class TimeLineQuest3 : MonoBehaviour
         playerInGame.SetActive(true);
         playerTimeLine.SetActive(false);
         gameObject.SetActive(false); // Ẩn đối tượng sau khi timeline kết thúc
-
+        Destroy(destroy); // Hủy đối tượng destroy nếu cần thiết
     }
 
     private void OnDestroy()
