@@ -19,6 +19,7 @@ public class SuccesQuest2 : MonoBehaviour
     public Image iconState;
     public Sprite spirteState;
 
+    public GameObject canvasQuest;
 
     [Header("Tham chiếu ")]
     public AwardQuest awardQuest;
@@ -36,6 +37,7 @@ public class SuccesQuest2 : MonoBehaviour
             isQuest2Complete = true; // Đánh dấu nhiệm vụ đã hoàn thành
             nPCQuest.MoveToDoneQuest(); // Gọi hàm để NPC di chuyển đến vị trí hoàn thành nhiệm vụ
             awardQuest.AwardQuest2(); // Gọi hàm để thưởng nhiệm vụ
+            canvasQuest.SetActive(false); // Hiển thị canvas nhiệm vụ
         }
     }
   
