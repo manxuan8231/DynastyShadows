@@ -1,9 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ShowQuest : MonoBehaviour
 {
     public SuccesQuest2 quest2;
     public GameObject[] statue;
+    bool isSpawn = false;
 
     void Start()
     {
@@ -18,8 +19,9 @@ public class ShowQuest : MonoBehaviour
     }
     void MissionPlay()
     {
-        if (quest2.isQuest2Complete)
+        if (quest2.isQuest2Complete && !isSpawn)
         {
+            isSpawn = true; // Đánh dấu là đã spawn
             for (int i = 0; i < statue.Length; i++)
             {
                 statue[i].SetActive(true);

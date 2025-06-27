@@ -2,7 +2,6 @@
 using UnityEngine.AI;
 using TMPro;
 using System.Collections;
-using System.Collections.Generic;
 
 public class NPCController : MonoBehaviour
 {
@@ -100,7 +99,7 @@ public class NPCController : MonoBehaviour
 
     void GoToClosestNPC()
     {
-        NPCController[] allNPCs = FindObjectsOfType<NPCController>();
+        NPCController[] allNPCs = FindObjectsOfType<NPCController>(); 
         float closestDist = Mathf.Infinity;
         NPCController closestNPC = null;
 
@@ -119,7 +118,7 @@ public class NPCController : MonoBehaviour
         if (closestNPC != null)
         {
             Vector3 direction = (closestNPC.transform.position - transform.position).normalized;
-            float safeDistance = talkDistance * 0.9f; // dừng cách nhau 90% khoảng nói chuyện
+            float safeDistance = talkDistance * 0.9f; // Stop at 90% of the talk distance
 
             Vector3 stopPosition = closestNPC.transform.position - direction * safeDistance;
 

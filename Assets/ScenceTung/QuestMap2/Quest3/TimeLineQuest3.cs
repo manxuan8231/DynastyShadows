@@ -10,6 +10,7 @@ public class TimeLineQuest3 : MonoBehaviour
     public GameObject destroy;
     [Header("Timeline")]
     public PlayableDirector playableDirector;
+    public bool isQuest3Complete = false; // Biến này có thể dùng để kiểm tra trạng thái quest
 
     private bool hasPlayed = false; // Ngăn cho trigger chạy nhiều lần
 
@@ -37,7 +38,6 @@ public class TimeLineQuest3 : MonoBehaviour
             trigger.SetActive(true);           // Tắt trigger để không chạy lại
             playerInGame.SetActive(false);      // Ẩn player thật
             playerTimeLine.SetActive(true);     // Bật player giả
-
             playableDirector.Play();            // Play Timeline
         }
     }
@@ -47,11 +47,11 @@ public class TimeLineQuest3 : MonoBehaviour
         // Cập nhật vị trí player thật từ player timeline
         playerInGame.transform.position = playerTimeLine.transform.position;
         playerInGame.transform.rotation = playerTimeLine.transform.rotation;
-
         // Kết thúc cutscene, chơi tiếp
         playerInGame.SetActive(true);
         playerTimeLine.SetActive(false);
         gameObject.SetActive(false); // Ẩn đối tượng sau khi timeline kết thúc
+        isQuest3Complete = true; // Đánh dấu quest hoàn thành
         Destroy(destroy); // Hủy đối tượng destroy nếu cần thiết
     }
 

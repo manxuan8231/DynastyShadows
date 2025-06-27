@@ -121,7 +121,6 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
                 if (usable)
                 {
                 this.quantity -= 1;
-                inventoryManager.audioSource.PlayOneShot(inventoryManager.usingClip);
                 if (this.quantity <= 0)
                     {
 

@@ -14,7 +14,6 @@ public class InventoryManager : MonoBehaviour
     public ItemSO[] itemSOs;
     public AudioSource audioSource;
     public AudioClip selectedClip;
-    public AudioClip usingClip;
     // Update is called once per frame
     void Update()
     {
