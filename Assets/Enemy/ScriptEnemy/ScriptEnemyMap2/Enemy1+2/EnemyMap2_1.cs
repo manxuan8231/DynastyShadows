@@ -32,6 +32,7 @@ public class EnemyMap2_1 : MonoBehaviour
 
     //box dame
     public BoxCollider damageBox;
+    public DameZoneWeapon DameZoneWeapon;
 
     //goi ham
     EnemyHP enemyHP;
@@ -42,6 +43,7 @@ public class EnemyMap2_1 : MonoBehaviour
         player = FindClosestPlayer();
         enemyHP = FindAnyObjectByType<EnemyHP>();
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
+        DameZoneWeapon = FindAnyObjectByType<DameZoneWeapon>();
 
     }
     void Start()
@@ -173,11 +175,11 @@ public class EnemyMap2_1 : MonoBehaviour
     }
     public void EnableDamageBox()
     {
-        damageBox.enabled = true; // Bật box dame khi tấn công
+        DameZoneWeapon.beginDame(); // Bật box dame khi tấn công
     }
     public void DisableDamageBox()
     {
-        damageBox.enabled = false; // Tắt box dame khi không tấn công
+        DameZoneWeapon.endDame(); // Tắt box dame sau khi tấn công xong
     }
     Transform FindClosestPlayer()
     {
