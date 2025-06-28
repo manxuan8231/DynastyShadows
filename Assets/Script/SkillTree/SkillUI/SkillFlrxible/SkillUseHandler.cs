@@ -53,7 +53,7 @@ public class SkillUseHandler : MonoBehaviour
 
                     GameObject enemy = FindEnemy();
 
-                    foreach (Skill3ClonePLayer clone in FindObjectsOfType<Skill3ClonePLayer>())
+                    foreach (Skill3ClonePLayer clone in Object.FindObjectsByType<Skill3ClonePLayer>(FindObjectsSortMode.None))
                     {
                         clone.PlayFireBallAnim();
                     }
@@ -86,7 +86,7 @@ public class SkillUseHandler : MonoBehaviour
                     if (Time.time < lastColldown + cooldownTime) return;
                     StartCoroutine(WaitMove());
                     StartCoroutine(WaitForGraity());
-                    foreach (Skill3ClonePLayer clone in FindObjectsOfType<Skill3ClonePLayer>())
+                    foreach (Skill3ClonePLayer clone in Object.FindObjectsByType<Skill3ClonePLayer>(FindObjectsSortMode.None))
                     {
                         clone.PlayRainFireAnim();
                     }
@@ -99,7 +99,7 @@ public class SkillUseHandler : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.R) && Time.time >= nextComboAllowedTime)
                 {
                     if (Time.time < lastColldown + cooldownTime) return;
-                    foreach (Skill3ClonePLayer clone in FindObjectsOfType<Skill3ClonePLayer>())
+                    foreach (Skill3ClonePLayer clone in Object.FindObjectsByType<Skill3ClonePLayer>(FindObjectsSortMode.None))
                     {
                         clone.PlaySlashAnim();
                     }
@@ -149,7 +149,19 @@ public class SkillUseHandler : MonoBehaviour
                 break;
 
 
-            case "DongCung4":
+            case "Shield":
+                if (Input.GetKeyDown(KeyCode.R) && Time.time >= nextComboAllowedTime)
+                {
+                    if (Time.time < lastColldown + cooldownTime) return;                  
+                    foreach (Skill3ClonePLayer clone in Object.FindObjectsByType<Skill3ClonePLayer>(FindObjectsSortMode.None))
+                    {
+                        clone.PlayRainFireAnim();
+                    }
+
+                   
+                    lastColldown = Time.time;
+                    nextComboAllowedTime = Time.time + 0.7f;
+                }
                 break;
 
             default:
