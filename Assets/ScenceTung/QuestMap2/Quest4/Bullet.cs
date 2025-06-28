@@ -3,9 +3,15 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float speed = 20f;
-    public int damage = 20;
+    public int damage = 500;
     private Transform target;
 
+    private PlayerStatus playerStatus;
+    private void Start()
+    {
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
+        
+    }
     public void Seek(Transform _target)
     {
         target = _target;
@@ -30,10 +36,10 @@ public class Bullet : MonoBehaviour
 
     void HitTarget()
     {
-        // Gây damage
-        if (target.TryGetComponent<EnemyHP>(out var hp))
+        if (playerStatus != null)
         {
-            hp.TakeDamage(damage);
+            playerStatus.TakeHealth(damage,gameObject);
+            playerStatus.TakeHealShield(100);
         }
         Destroy(gameObject);
     }

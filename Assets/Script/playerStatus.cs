@@ -35,6 +35,13 @@ public class PlayerStatus : MonoBehaviour
     public bool isHit = true; 
     public bool isStun = true; //kiểm tra stun hay không
     public bool isTakeHeal = true; //kiểm tra co cho mat mau
+    //máu ảo
+    public GameObject shieldHealthObject; // Đối tượng chứa thanh máu ảo
+    public Slider healthShielSlider;
+    public float shieldHealth = 500f;
+    public float shieldMaxHealth = 500f;
+    public bool isShieldActive = false; // Kiểm tra trạng thái máu ảo có đang hoạt động hay không
+
     //hien dame effect
     public GameObject textDame;
     public Transform textTransform;
@@ -131,6 +138,8 @@ public class PlayerStatus : MonoBehaviour
         UpdateUI();
         isReflectDamage = false;//khoi tao ban dau la false 
         isTakeHeal = true; //khởi tạo trạng thái cho phép mất máu
+        isShieldActive = false; //khởi tạo trạng thái máu ảo là không hoạt động
+        shieldHealthObject.SetActive ( false);
     }
     //update lại toàn bộ
     public void UpdateUI()
@@ -172,7 +181,7 @@ public class PlayerStatus : MonoBehaviour
     //hp
     public void TakeHealth(float amount ,GameObject enemy)//bị lấy hp
     {
-        if(currentHp > 0 && isTakeHeal == true)
+        if(currentHp > 0 && isTakeHeal == true && isShieldActive == false)
         {          
             currentHp -= amount;
             currentHp = Mathf.Clamp(currentHp, 0, maxHp);
@@ -304,6 +313,17 @@ public class PlayerStatus : MonoBehaviour
         }
          
        
+    }
+
+    public void TakeHealShield(float amount)//máu ảo
+    {
+        if(isShieldActive == true)
+        {
+            shieldHealth -= amount;
+            healthShielSlider.value = shieldHealth;
+          
+        }
+      
     }
     public void ShowTextDame(float damage)
     {

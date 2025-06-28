@@ -19,15 +19,17 @@ public class SkillUseHandler : MonoBehaviour
     private float nextComboAllowedTime = 0f; // chỉ cho phép bấm combo tiếp theo sau thời gian này
     //slash
     public GameObject auraSlash;
-   
+    //shield
+    public GameObject shieldPrefab; // prefab của shield
 
     // Tham chiếu 
     public PlayerStatus playerStatus;
     public PlayerControllerState playerControllerState;
+   
     private void Start()
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
-        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();      
         auraSlash.SetActive(false);
        
     }
@@ -79,7 +81,6 @@ public class SkillUseHandler : MonoBehaviour
                     nextComboAllowedTime = Time.time + 0.7f;
                 }
                 break;
-
             case "RainFire":
                 if (Input.GetKeyDown(KeyCode.R) && Time.time >= nextComboAllowedTime)
                 {
@@ -147,18 +148,14 @@ public class SkillUseHandler : MonoBehaviour
                     nextComboAllowedTime = Time.time + 0.5f;
                 }
                 break;
-
-
             case "Shield":
                 if (Input.GetKeyDown(KeyCode.R) && Time.time >= nextComboAllowedTime)
                 {
-                    if (Time.time < lastColldown + cooldownTime) return;                  
-                    foreach (Skill3ClonePLayer clone in Object.FindObjectsByType<Skill3ClonePLayer>(FindObjectsSortMode.None))
-                    {
-                        clone.PlayRainFireAnim();
-                    }
-
-                   
+                    Debug.Log("Sử dụng Shield");
+                    if (Time.time < lastColldown + cooldownTime) return; 
+                    
+                    GameObject shield = Instantiate(shieldPrefab, player.transform.position, player.transform.rotation);
+                  
                     lastColldown = Time.time;
                     nextComboAllowedTime = Time.time + 0.7f;
                 }
@@ -304,4 +301,6 @@ public class SkillUseHandler : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
     }
+
+   
 }

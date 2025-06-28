@@ -29,6 +29,7 @@ public class DrakonitDameZone : MonoBehaviour
         {
            listDame.Add(other);
            playerStatus.TakeHealth(dame, enemy);
+            playerStatus.TakeHealShield(dame);
         }
     }
     private void OnTriggerStay(Collider other)//nếu ontrigger xử lấy ko kịp thì nó dô đây xử lý tiếp
@@ -37,6 +38,7 @@ public class DrakonitDameZone : MonoBehaviour
         {
             listDame.Add(other);
             playerStatus.TakeHealth(dame, enemy);
+            playerStatus.TakeHealShield(dame);
         }
     }
     public void beginDame()
