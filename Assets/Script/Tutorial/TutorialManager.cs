@@ -18,6 +18,7 @@ public class TutorialManager : MonoBehaviour
     public Sprite attackIcon;
     public Sprite interactNPC;//tuong tac huong dan
     public Sprite openMapIcon;
+    public Sprite invenIcon;
 
     private int currentStep = 0;
     private bool[] stepCompleted;
@@ -36,7 +37,7 @@ public class TutorialManager : MonoBehaviour
     //tham chieu
     private SlowMotionDodgeEvent slowMotion;
     private PlayerControllerState playerControllerState;
-    private AnimatorPanelTutorial animatorPanelTutorial;
+   
     private InteractNPC interactNpc;
     private PlayerStatus playerStatus;
     private OpenMap openMap;
@@ -44,7 +45,7 @@ public class TutorialManager : MonoBehaviour
     {
         slowMotion = FindAnyObjectByType<SlowMotionDodgeEvent>();
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
-        animatorPanelTutorial = FindAnyObjectByType<AnimatorPanelTutorial>();
+       
         interactNpc = FindAnyObjectByType<InteractNPC>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         openMap = FindAnyObjectByType<OpenMap>();
@@ -142,16 +143,22 @@ public class TutorialManager : MonoBehaviour
             case 7://tuong tac npc nhan nvu
                 if (interactNpc.isInteract == true)
                 {
-                    tutorialPanelV1.SetActive(true);
+                    tutorialPanelV1.SetActive(true); //hien panel khi cham npc
 
                 }
-                if (interactNpc.isInteract == true && Input.GetKeyDown(KeyCode.LeftControl))
+                if(interactNpc.isArrowTutoSkip == false)
                 {
-
-
+                   tutorialPanelV1.SetActive(false); //hien panel khi cham npc
+                }
+                if (interactNpc.isComplete)
+                {
+                    stepCompleted[7] = true;
+                    StartCoroutine(WaitShowStep(8)); // Hiển thị bước tiếp theo sau 1 giây
                 }
                 break;
-           
+            case 8://nvu khi nhat item thi chi bat inven len
+
+                break;
         }
     }
 
@@ -208,6 +215,11 @@ public class TutorialManager : MonoBehaviour
             case 7:
                 tutorialTextV1.text = "Nhấn F để tương tác.";
                 defautIcon.sprite = interactNPC;
+                tutorialPanelV1.SetActive(false); // Ẩn panel trước khi hiển thị bước mới
+                break;
+            case 8:
+                tutorialTextV1.text = "Bấm Tag để mở kho chứa.";
+                defautIcon.sprite = invenIcon;
                 tutorialPanelV1.SetActive(false); // Ẩn panel trước khi hiển thị bước mới
                 break;
 
