@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using UnityEngine.Android;
+﻿using System.Linq;
+using UnityEngine;
+
 
 [CreateAssetMenu(fileName = "ItemSO", menuName = "Inventory/Item")]
 public class ItemSO : ScriptableObject
@@ -11,8 +12,8 @@ public class ItemSO : ScriptableObject
 
     public AttributeChange attackState = new AttributeChange();
     public float ammoutToChangeAttackState;
-
-
+    public bool hasItemQuest = false;
+    public bool showSkill4 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 4 hay không
     public bool UseItem()
     {
         if (statToChange == StatToChange.health)
@@ -102,7 +103,51 @@ public class ItemSO : ScriptableObject
             debuff.Debuff4(2, 50, 10);
             return true;
         }
+        if (statToChange == StatToChange.itemQuest)
+        {
+
+            ItemSO cloned = Instantiate(this);
+            cloned.hasItemQuest = true;
+            cloned.showSkill4 = true;
+
+            SkillFlexibleManager manager = Resources.FindObjectsOfTypeAll<SkillFlexibleManager>()
+                .FirstOrDefault(x => x.gameObject.name == " Panel(Flexible Skill)");
+
+            if (manager != null)
+            {
+                manager.itemQuestUnlock = cloned;
+                Debug.Log("Gán clone ItemSO vào SkillFlexibleManager OK");
+            }
+            else
+            {
+                Debug.LogError("Không tìm thấy SkillFlexibleManager");
+            }
+
+            return true;
+
+
+
+        }
+        if (statToChange == StatToChange.itemQuest2)
+        {
+            ItemSO cloned = Instantiate(this);
+            cloned.hasItemQuest = true;
+            cloned.showSkill4 = true;
+            SkillFlexibleManager manager = Resources.FindObjectsOfTypeAll<SkillFlexibleManager>()
+                .FirstOrDefault(x => x.gameObject.name == " Panel(Flexible Skill)");
+            if (manager != null)
+            {
+                manager.itemQuestUnlock = cloned;
+                Debug.Log("Gán clone ItemSO vào SkillFlexibleManager OK");
+            }
+            else
+            {
+                Debug.LogError("Không tìm thấy SkillFlexibleManager");
+            }
+            return true;
+        }
         return false;
+        
     }
 
 
@@ -120,9 +165,9 @@ public class ItemSO : ScriptableObject
         debuff1,
         debuff2,
         debuff3,
-        debuff4
-
-
+        debuff4,
+        itemQuest,
+        itemQuest2
     }
 
 

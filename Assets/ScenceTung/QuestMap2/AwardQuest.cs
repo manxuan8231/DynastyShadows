@@ -1,5 +1,4 @@
-﻿using NUnit.Framework;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -19,14 +18,29 @@ public class AwardQuest : MonoBehaviour
     //award string quest
     public string awardQuest2_1 = "1000 EXP";
     public string awardQuest2_2 = "100 Vàng";
-    public string awardQuest2_3 = "Mảnh vật bảo hộ";
+    public string awardQuest2_3 = "Mảnh kĩ năng \" Khiên chắn \"";
     public Sprite iconSprite1;
+
+
+    //award quest 4
+    public string awardQuest4_1 = "2000 EXP";
+    public string awardQuest4_2 = "200 Vàng";
+    public string awardQuest4_3 = "Mảnh kĩ năng \" Truy tìm dấu l \"";
+    public Sprite iconSprite2;
+
     void Start()
     {
      playerStatus = FindAnyObjectByType<PlayerStatus>();
      InventoryManager = GameObject.Find("CanvasInventory").GetComponent<InventoryManager>();
     }
-      public void AwardQuest2()
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            AwardQuest4();
+        }
+    }
+    public void AwardQuest2()
     {
         StartCoroutine(CanvasQuest());
         playerStatus.currentExp += 1000;
@@ -42,6 +56,7 @@ public class AwardQuest : MonoBehaviour
         Debug.Log("Thưởng nhiệm vụ 2 thành công");  
 
     }    
+   
     IEnumerator CanvasQuest()
     {
         canvasAward.SetActive(true);
@@ -49,6 +64,31 @@ public class AwardQuest : MonoBehaviour
         stateQuestion.text = "Thưởng nhiệm vụ";
         award.text = $"Phần thưởng của bạn là: {awardQuest2_1} + {awardQuest2_2} + {awardQuest2_3} ";
         iconImage.sprite = iconSprite1;
+        yield return new WaitForSeconds(3f);
+        canvasAward.SetActive(false);
+    }
+    public void AwardQuest4()
+    {
+        StartCoroutine(CanvasQuest4());
+        playerStatus.currentExp += 2000;
+        playerStatus.expSlider.value = playerStatus.currentExp;
+        playerStatus.gold += 200;
+        playerStatus.goldQuantityTxt.text = playerStatus.gold.ToString();
+        InventoryManager.AddItem(itemQuests[1].itemPrefabsQuest.itemName,
+             itemQuests[1].itemPrefabsQuest.quantity,
+             itemQuests[1].itemPrefabsQuest.itemSprite,
+             itemQuests[1].itemPrefabsQuest.itemDescription,
+             itemQuests[1].itemPrefabsQuest.itemType
+         );
+        Debug.Log("Thưởng nhiệm vụ 4 thành công");
+    }
+    IEnumerator CanvasQuest4()
+    {
+        canvasAward.SetActive(true);
+        audioCanvasState.PlayAward();
+        stateQuestion.text = "Thưởng nhiệm vụ";
+        award.text = $"Phần thưởng của bạn là: {awardQuest4_1} + {awardQuest4_2} + {awardQuest4_3} ";
+        iconImage.sprite = iconSprite2;
         yield return new WaitForSeconds(3f);
         canvasAward.SetActive(false);
     }

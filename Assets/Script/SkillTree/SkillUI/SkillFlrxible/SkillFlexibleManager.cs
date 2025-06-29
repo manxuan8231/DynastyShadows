@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,6 +38,8 @@ public class SkillFlexibleManager : MonoBehaviour
     //biến số để theo dõi số lần nâng cấp kỹ năng
     public float turnInSkill1 = 0f;
 
+    public ItemSO itemQuestUnlock;
+    public ItemSO itemQuestUnlock2; // Biến để kiểm tra xem có hiển thị kỹ năng 4 hay không
     void Start()
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
@@ -49,7 +51,7 @@ public class SkillFlexibleManager : MonoBehaviour
         buttonRemove.SetActive(false);
         slotIcon.color = Color.clear; // Ẩn icon ban đầu
     }
-
+        
     public void ShowPreview(string iconID)
     {
         skillAudioSource.PlayOneShot(buttonClick);
@@ -83,13 +85,19 @@ public class SkillFlexibleManager : MonoBehaviour
                 break;
 
             case "Shield":
-                //điều kiện để mở khóa kỹ năng (làm ở đây)
-                previewText.text = "Khiên Chắn";
-                contenSkill.text = "Khi dùng kỹ năng này thì player sẽ được lớp giáp ảo gồm 500 máu và kháng tất cả hiệu ứng.";
-                skillBGs[3].enabled = true;
-                scoreUpgradeText.text = "/4";
+                if (itemQuestUnlock != null && itemQuestUnlock.showSkill4)
+                {
+                    previewText.text = "Khiên Chắn";
+                    contenSkill.text = "Khi dùng kỹ năng này thì player sẽ được lớp giáp ảo gồm 500 máu và kháng tất cả hiệu ứng.";
+                    skillBGs[3].enabled = true;
+                    scoreUpgradeText.text = "/4";
+                }
+                else
+                {
+                    previewPanel.SetActive(false); // Ẩn nếu chưa unlock
+                    Debug.LogWarning("ItemQuestUnlock đang null hoặc chưa được mở khóa");
+                }
                 break;
-
             default:
                 previewText.text = "Thông tin chưa cập nhật.";
                 contenSkill.text = "...";
@@ -170,7 +178,7 @@ public class SkillFlexibleManager : MonoBehaviour
                 break;
 
             case "Shield":
-                if ( playerStatus.score >= 4)
+                if ( playerStatus.score >= 4 && itemQuestUnlock.hasItemQuest)
                 {
                     isDongCung4Unlocked = true;
                     playerStatus.score -= 4;
