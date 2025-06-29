@@ -10,9 +10,11 @@ public class Turret : MonoBehaviour
     public Transform firePoint;
 
     private Transform currentTarget;
-
+    
     void Update()
     {
+        
+   
         if (fireCountdown <= 0f)
         {
             FindTarget();
@@ -56,7 +58,7 @@ public class Turret : MonoBehaviour
             bullet.Seek(currentTarget);
         }
     }
-
+   
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

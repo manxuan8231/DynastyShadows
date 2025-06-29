@@ -4,7 +4,7 @@ public class ShowQuest : MonoBehaviour
 {
     public SuccesQuest2 quest2;
     public GameObject[] statue;
-    bool isSpawn = false;
+    public bool isSpawn = false;
 
     void Start()
     {
