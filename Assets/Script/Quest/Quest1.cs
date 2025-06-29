@@ -22,17 +22,18 @@ public class Quest1 : MonoBehaviour
 
     // Tham chiếu
     TurnInQuest turnInQuest;
-
+    public InteractNPC interactNPC;
     void Start()
     {
         iconQuest.SetActive(false);
      
         questPanel.SetActive(false);
         turnInQuest = FindAnyObjectByType<TurnInQuest>();
+       
     }
     private void Update()
     {
-        
+        interactNPC = FindAnyObjectByType<InteractNPC>();
     }
     // Bắt đầu quest Bác Lâm
     public void StartQuestBacLam()
@@ -42,7 +43,9 @@ public class Quest1 : MonoBehaviour
         questBacLamStarted = true;
         questBacLamKillCount = 0;
         questBacLamCompleted = false;
-
+        if(interactNPC != null){
+            interactNPC.StartTutorialContent();// Bắt đầu hướng dẫn nội dung
+        }   
         iconQuest.SetActive(true);
         questPanel.SetActive(true);
         questPointer.SetActive(false); // an chỉ dẫn nhiệm vụ

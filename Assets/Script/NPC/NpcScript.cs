@@ -29,18 +29,19 @@ public class NPCScript : MonoBehaviour
     private bool isWaitingForNext = false;
     private bool isContent = true;
     private bool isButtonF = false;
+    
 
     private float lastSkipTime = 0f;
     private float skipCooldown = 0.2f;
 
-    // References
+    // tham chieu
     private PlayerControllerState playerController;
     private ComboAttack comboAttack;
     private Quest1 quest1;
     private Quest2 quest2;
     private Quest3 quest3;
     private QuestMainBacLam questMainBacLam;
-
+   
     void Start()
     {
         playerController = FindAnyObjectByType<PlayerControllerState>();
@@ -49,14 +50,17 @@ public class NPCScript : MonoBehaviour
         quest2 = FindAnyObjectByType<Quest2>();
         quest3 = FindAnyObjectByType<Quest3>();
         questMainBacLam = FindAnyObjectByType<QuestMainBacLam>();
+       
+
         audioSource = GetComponent<AudioSource>();
 
         NPCPanel.SetActive(false);
         buttonF.SetActive(false);
         buttonSkip.SetActive(false);
-
+       
         NPCName.text = "";
         NPCContent.text = "";
+       
     }
 
     void Update()
@@ -175,7 +179,8 @@ public class NPCScript : MonoBehaviour
         isContent = false;
         isButtonF = false;
         coroutine = null;
-
+       
+        
         switch (questToStart)
         {
             case QuestToStart.BacLam:
@@ -201,7 +206,7 @@ public class NPCScript : MonoBehaviour
         if (Time.time - lastSkipTime < skipCooldown) return;
         lastSkipTime = Time.time;
 
-        audioSource?.PlayOneShot(audioSkip);
+       
         HandleSkip();
     }
 
@@ -209,18 +214,10 @@ public class NPCScript : MonoBehaviour
     {
         if (isTyping || isWaitingForNext)
         {
+            audioSource?.PlayOneShot(audioSkip);
             skipPressed = true;
         }
     }
 
-    public void EndContent()
-    {
-        if (coroutine != null)
-        {
-            StopCoroutine(coroutine);
-            coroutine = null;
-        }
-
-        NPCPanel.SetActive(false);
-    }
+  
 }
