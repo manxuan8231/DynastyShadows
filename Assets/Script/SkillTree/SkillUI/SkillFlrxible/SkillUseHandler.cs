@@ -10,7 +10,7 @@ public class SkillUseHandler : MonoBehaviour
     public float cooldownTime = 10f;
     public Slider cooldownSlider;
     public TextMeshProUGUI cooldownText;
-    public LayerMask enemyLayer;
+   // public LayerMask enemyLayer;
 
     // Fireball combo
     private int comboStep = 0;
@@ -19,15 +19,17 @@ public class SkillUseHandler : MonoBehaviour
     private float nextComboAllowedTime = 0f; // chỉ cho phép bấm combo tiếp theo sau thời gian này
     //slash
     public GameObject auraSlash;
-   
+    //shield
+    public GameObject shieldPrefab; // prefab của shield
 
     // Tham chiếu 
     public PlayerStatus playerStatus;
     public PlayerControllerState playerControllerState;
+   
     private void Start()
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
-        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();      
         auraSlash.SetActive(false);
        
     }
@@ -53,7 +55,7 @@ public class SkillUseHandler : MonoBehaviour
 
                     GameObject enemy = FindEnemy();
 
-                    foreach (Skill3ClonePLayer clone in FindObjectsOfType<Skill3ClonePLayer>())
+                    foreach (Skill3ClonePLayer clone in Object.FindObjectsByType<Skill3ClonePLayer>(FindObjectsSortMode.None))
                     {
                         clone.PlayFireBallAnim();
                     }
@@ -79,14 +81,13 @@ public class SkillUseHandler : MonoBehaviour
                     nextComboAllowedTime = Time.time + 0.7f;
                 }
                 break;
-
             case "RainFire":
                 if (Input.GetKeyDown(KeyCode.R) && Time.time >= nextComboAllowedTime)
                 {
                     if (Time.time < lastColldown + cooldownTime) return;
                     StartCoroutine(WaitMove());
                     StartCoroutine(WaitForGraity());
-                    foreach (Skill3ClonePLayer clone in FindObjectsOfType<Skill3ClonePLayer>())
+                    foreach (Skill3ClonePLayer clone in Object.FindObjectsByType<Skill3ClonePLayer>(FindObjectsSortMode.None))
                     {
                         clone.PlayRainFireAnim();
                     }
@@ -99,7 +100,7 @@ public class SkillUseHandler : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.R) && Time.time >= nextComboAllowedTime)
                 {
                     if (Time.time < lastColldown + cooldownTime) return;
-                    foreach (Skill3ClonePLayer clone in FindObjectsOfType<Skill3ClonePLayer>())
+                    foreach (Skill3ClonePLayer clone in Object.FindObjectsByType<Skill3ClonePLayer>(FindObjectsSortMode.None))
                     {
                         clone.PlaySlashAnim();
                     }
@@ -147,9 +148,17 @@ public class SkillUseHandler : MonoBehaviour
                     nextComboAllowedTime = Time.time + 0.5f;
                 }
                 break;
-
-
-            case "DongCung4":
+            case "Shield":
+                if (Input.GetKeyDown(KeyCode.R) && Time.time >= nextComboAllowedTime)
+                {
+                    Debug.Log("Sử dụng Shield");
+                    if (Time.time < lastColldown + cooldownTime) return; 
+                    
+                    GameObject shield = Instantiate(shieldPrefab, player.transform.position, player.transform.rotation);
+                  
+                    lastColldown = Time.time;
+                    nextComboAllowedTime = Time.time + 0.7f;
+                }
                 break;
 
             default:
@@ -286,10 +295,5 @@ public class SkillUseHandler : MonoBehaviour
         auraSlash.SetActive(false);
     }
     
-    public IEnumerator WaitForBoxDame()
-    {
-
-        yield return new WaitForSeconds(0.5f);
-
-    }
+   
 }

@@ -17,6 +17,7 @@ public class TutorialManager : MonoBehaviour
     public Sprite rollBackIcon;
     public Sprite attackIcon;
     public Sprite interactNPC;//tuong tac huong dan
+    public Sprite openMapIcon;
 
     private int currentStep = 0;
     private bool[] stepCompleted;
@@ -38,6 +39,7 @@ public class TutorialManager : MonoBehaviour
     private AnimatorPanelTutorial animatorPanelTutorial;
     private InteractNPC interactNpc;
     private PlayerStatus playerStatus;
+    private OpenMap openMap;
     void Start()
     {
         slowMotion = FindAnyObjectByType<SlowMotionDodgeEvent>();
@@ -45,6 +47,7 @@ public class TutorialManager : MonoBehaviour
         animatorPanelTutorial = FindAnyObjectByType<AnimatorPanelTutorial>();
         interactNpc = FindAnyObjectByType<InteractNPC>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
+        openMap = FindAnyObjectByType<OpenMap>();
 
         stepCompleted = new bool[10];
         StartCoroutine(WaitShowStep(0));
@@ -57,6 +60,7 @@ public class TutorialManager : MonoBehaviour
         tutorialEnemy.SetActive(false);
         pointer1.SetActive(false);
         tutorialInteractNPC.SetActive(false);
+        openMap.isOpenMap = false;
     }
 
     void Update()
@@ -94,8 +98,7 @@ public class TutorialManager : MonoBehaviour
                         stepCompleted[3] = true;
                         tutorialEnemy.SetActive(true);
                         playerStatus.currentMana = playerStatus.maxMana; // Reset mana khi hoàn thành bước này
-                        StartCoroutine(WaitShowStep(4)); // Hiển thị bước tiếp theo sau 1 giây
-                        
+                        StartCoroutine(WaitShowStep(4)); // Hiển thị bước tiếp theo sau 1 giây                        
                     }
                     
                 }
@@ -111,17 +114,11 @@ public class TutorialManager : MonoBehaviour
                 {
                     slowMotion.ResetTime();
                     stepCompleted[4] = true;
-                    StartCoroutine(WaitShowStep(5));
-                }
+                    slowMotion.isOneSlow = false;//đánh dấu ko cho quai slow
+                    isComplete = true; // Đánh dấu là hoàn thành slow
 
-                // Nếu nguoi choi không né trong khoảng thời gian nhất định thi hoàn thành luôn :))
-                if (!slowMotion.isDodgeWindowActive && isComplete)
-                {
-                    slowMotion.ResetTime();
-                    stepCompleted[4] = true;
-                    playerControllerState.isAttack = true;
                     StartCoroutine(WaitShowStep(5));
-                }
+                }            
                 break;
 
             case 5://huong dan danh enemy
@@ -130,11 +127,17 @@ public class TutorialManager : MonoBehaviour
                     tutorialInteractNPC.SetActive(true);//bat box cho npc len
                     stepCompleted[5] = true;
                     pointer1.SetActive(true);
+                    openMap.isOpenMap = true;
                     StartCoroutine(WaitShowStep(6));
                 }
                 break;
-            case 6:
-               
+            case 6://huong dan bat map
+                if (Input.GetKeyDown(KeyCode.M))
+                {
+                    stepCompleted[6] = true;
+                    StartCoroutine(WaitShowStep(7));
+                }
+
                 break;
             case 7://tuong tac npc nhan nvu
                 if (interactNpc.isInteract == true)
@@ -148,6 +151,7 @@ public class TutorialManager : MonoBehaviour
 
                 }
                 break;
+           
         }
     }
 
@@ -195,19 +199,18 @@ public class TutorialManager : MonoBehaviour
             case 5:
                 tutorialTextV1.text = "Nhấn chuột trái để tấn công.";
                 defautIcon.sprite = attackIcon;
-                playerControllerState.isAttack = true;
-               
+                playerControllerState.isAttack = true;              
                 break;
             case 6:
-                tutorialTextV1.text = "Chạm vào vật phẩm để nhặt.";
-                defautIcon.enabled = false;
-                tutorialPanelV1.SetActive(false); // Ẩn panel trước khi hiển thị bước mới
+                tutorialTextV1.text = "Nhấn M để mở map.";
+                defautIcon.sprite = openMapIcon;
                 break;
             case 7:
                 tutorialTextV1.text = "Nhấn F để tương tác.";
                 defautIcon.sprite = interactNPC;
                 tutorialPanelV1.SetActive(false); // Ẩn panel trước khi hiển thị bước mới
                 break;
+
         }
     }
     

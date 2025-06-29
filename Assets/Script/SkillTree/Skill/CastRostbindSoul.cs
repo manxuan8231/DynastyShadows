@@ -5,7 +5,9 @@ using UnityEngine.AI;
 
 public class CastRostbindSoul : MonoBehaviour
 {
-   
+    private GameObject effectInstance;
+    private bool isDestroyed = false;
+
     public GameObject effectPrefab; // Hiệu ứng đóng băng
     public LayerMask enemyLayer; // Layer của enemy
     private GameObject targetEnemy;
@@ -24,15 +26,7 @@ public class CastRostbindSoul : MonoBehaviour
         targetEnemy = FindNearestEnemy(50f);
         if (targetEnemy != null)
         {
-            Transform model = targetEnemy.transform.Find("Model");
-            if (model != null)
-            {
-                transform.position = model.position;
-            }
-            else
-            {
-                transform.position = targetEnemy.transform.position + new Vector3(0f, 1.5f, 0f);
-            }
+            
 
             FreezeEnemy(targetEnemy);
             StartCoroutine(UnfreezeAfterDelay(targetEnemy, skill1Manager.timeSkill1));
@@ -40,6 +34,20 @@ public class CastRostbindSoul : MonoBehaviour
         else
         {
             Debug.Log("Không tìm thấy enemy gần.");
+            Destroy(gameObject);
+        }
+    }
+
+    private void Update()
+    {
+        // Nếu enemy bị tắt thì huỷ hiệu ứng và skill
+        if (!isDestroyed && targetEnemy != null && !targetEnemy.activeInHierarchy)
+        {
+            isDestroyed = true;
+
+            if (effectInstance != null)
+                Destroy(effectInstance);
+
             Destroy(gameObject);
         }
     }
@@ -66,12 +74,12 @@ public class CastRostbindSoul : MonoBehaviour
     private void FreezeEnemy(GameObject enemy)
     {
         Debug.Log("Enemy bị đóng băng: " + enemy.name);
-
         if (effectPrefab != null)
         {
             Vector3 instanPos = enemy.transform.position + new Vector3(0f, 2.4f, 0f);
-            Instantiate(effectPrefab, instanPos, Quaternion.identity, enemy.transform);
+            effectInstance = Instantiate(effectPrefab, instanPos, Quaternion.identity, enemy.transform);
         }
+
 
         NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
         if (agent != null) agent.enabled = false;
