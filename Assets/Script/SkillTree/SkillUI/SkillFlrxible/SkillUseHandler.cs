@@ -10,7 +10,7 @@ public class SkillUseHandler : MonoBehaviour
     public float cooldownTime = 10f;
     public Slider cooldownSlider;
     public TextMeshProUGUI cooldownText;
-    public LayerMask enemyLayer;
+   // public LayerMask enemyLayer;
 
     // Fireball combo
     private int comboStep = 0;
@@ -295,12 +295,5 @@ public class SkillUseHandler : MonoBehaviour
         auraSlash.SetActive(false);
     }
     
-    public IEnumerator WaitForBoxDame()
-    {
-
-        yield return new WaitForSeconds(0.5f);
-
-    }
-
    
 }

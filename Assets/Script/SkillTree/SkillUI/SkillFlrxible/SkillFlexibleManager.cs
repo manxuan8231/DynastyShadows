@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class SkillFlexibleManager : MonoBehaviour
 {
-   
-
     //hinh icon skill
     public Sprite skill1;
     public Sprite skill2;
@@ -85,9 +83,9 @@ public class SkillFlexibleManager : MonoBehaviour
                 break;
 
             case "Shield":
-                //điều kiện để mở khóa kỹ năng
+                //điều kiện để mở khóa kỹ năng (làm ở đây)
                 previewText.text = "Khiên Chắn";
-                contenSkill.text = "Khi dùng kỹ năng này thì player sẽ được lớp giáp ảo gồm 500 máu.";
+                contenSkill.text = "Khi dùng kỹ năng này thì player sẽ được lớp giáp ảo gồm 500 máu và kháng tất cả hiệu ứng.";
                 skillBGs[3].enabled = true;
                 scoreUpgradeText.text = "/4";
                 break;
@@ -240,6 +238,7 @@ public class SkillFlexibleManager : MonoBehaviour
                 bg.enabled = false;
         }
     }
+
     //kiểm tra xem kỹ năng đã mở khóa hay chưa
     private bool IsSkillUnlocked(string id)
     {

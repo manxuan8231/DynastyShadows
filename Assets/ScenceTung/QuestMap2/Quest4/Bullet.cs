@@ -39,7 +39,7 @@ public class Bullet : MonoBehaviour
         if (playerStatus != null)
         {
             playerStatus.TakeHealth(damage,gameObject);
-            playerStatus.TakeHealShield(100);
+            playerStatus.TakeHealShield(20);
         }
         Destroy(gameObject);
     }

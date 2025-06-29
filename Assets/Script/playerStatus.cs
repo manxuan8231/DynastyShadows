@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,9 +37,11 @@ public class PlayerStatus : MonoBehaviour
     //máu ảo
     public GameObject shieldHealthObject; // Đối tượng chứa thanh máu ảo
     public Slider healthShielSlider;
-    public float shieldHealth = 500f;
-    public float shieldMaxHealth = 500f;
+    public float shieldHealth = 100f;
+    public float shieldMaxHealth = 100f;
     public bool isShieldActive = false; // Kiểm tra trạng thái máu ảo có đang hoạt động hay không
+    public AudioClip shieldSound;
+
 
     //hien dame effect
     public GameObject textDame;
@@ -179,7 +180,7 @@ public class PlayerStatus : MonoBehaviour
     }
 
     //hp
-    public void TakeHealth(float amount ,GameObject enemy)//bị lấy hp
+    public void TakeHealth(float amount ,GameObject enemy)//bị lấy hp và đây là máu chính
     {
         if(currentHp > 0 && isTakeHeal == true && isShieldActive == false)
         {          
@@ -296,8 +297,7 @@ public class PlayerStatus : MonoBehaviour
         }
         
     }
-    
-    public void TakeHealthStun(float amount)//bị lấy hp
+    public void TakeHealthStun(float amount)//bị stun lấy hp
     {
         if(currentHp > 0 && isTakeHeal == true)
         {
@@ -314,17 +314,19 @@ public class PlayerStatus : MonoBehaviour
          
        
     }
-
-    public void TakeHealShield(float amount)//máu ảo
+    public void TakeHealShield(float amount)//máu ảo shield
     {
         if(isShieldActive == true)
         {
+            audioSource.PlayOneShot(shieldSound);
             shieldHealth -= amount;
             healthShielSlider.value = shieldHealth;
           
         }
       
     }
+
+
     public void ShowTextDame(float damage)
     {
         GameObject effectText = Instantiate(textDame, textTransform.position, Quaternion.identity);
@@ -423,7 +425,7 @@ public class PlayerStatus : MonoBehaviour
     }
 
 
-
+    //trừ mana và tăng mana
     public void RegenerateMana()
     {
         bool isHoldingShift = Input.GetKey(KeyCode.LeftShift);
