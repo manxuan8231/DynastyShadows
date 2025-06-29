@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
     public GameObject inventoryMenu;
     public GameObject inventoryLogo;
+    public GameObject craftingMenu;  
 
     public GameObject equipmentMenu;
     //gọi hàm
@@ -15,19 +15,17 @@ public class InventoryManager : MonoBehaviour
     public ItemSO[] itemSOs;
     public AudioSource audioSource;
     public AudioClip selectedClip;
-    public static class QuestItemRegistry
-    {
-        public static List<ItemSO> ClonedQuestItems = new List<ItemSO>();
-    }
     // Update is called once per frame
     void Update()
     {
-        audioSource = GameObject.Find("Inventory").GetComponent<AudioSource>();
+        audioSource = GameObject.Find("Inventory").GetComponent<AudioSource>(); 
         if (Input.GetButtonDown("Inventory"))
             Inventory();
         if (Input.GetButtonDown("EquipmentMenu"))
             EquipmentMenu();
 
+        if (Input.GetKeyDown(KeyCode.C)) // ← thêm dòng này
+            CraftingMenu();
     }
     void Inventory()
     {
@@ -72,9 +70,31 @@ public class InventoryManager : MonoBehaviour
             equipmentMenu.SetActive(true);
         }
     }
-    public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription, ItemType itemType)
+    void CraftingMenu()
     {
-        if (itemType == ItemType.consumable || itemType == ItemType.crafting || itemType == ItemType.ItemQuest)
+        if (craftingMenu.activeSelf)
+        {
+            Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            craftingMenu.SetActive(false);
+            inventoryMenu.SetActive(false);
+            equipmentMenu.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            craftingMenu.SetActive(true);
+            inventoryMenu.SetActive(false);
+            equipmentMenu.SetActive(false);
+        }
+    }
+
+    public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription,ItemType itemType  )
+    {
+        if(itemType == ItemType.consumable || itemType == ItemType.crafting)
         {
             // Implement your logic to add the item to the inventory
             Debug.Log("Item added: " + itemName + ", Quantity: " + quantity + "Sprite" + itemSprite);
@@ -255,7 +275,6 @@ public enum ItemType
     Accessory1,
     Accessory2,
     Accessory3,
-    ItemQuest,
     none
 
 }
