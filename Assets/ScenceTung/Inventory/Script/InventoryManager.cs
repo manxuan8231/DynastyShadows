@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
     public GameObject inventoryMenu;
     public GameObject inventoryLogo;
-   
+
     public GameObject equipmentMenu;
     //gọi hàm
     public ItemSlot[] itemSlot; // Array of item slots
@@ -14,10 +15,14 @@ public class InventoryManager : MonoBehaviour
     public ItemSO[] itemSOs;
     public AudioSource audioSource;
     public AudioClip selectedClip;
+    public static class QuestItemRegistry
+    {
+        public static List<ItemSO> ClonedQuestItems = new List<ItemSO>();
+    }
     // Update is called once per frame
     void Update()
     {
-        audioSource = GameObject.Find("Inventory").GetComponent<AudioSource>(); 
+        audioSource = GameObject.Find("Inventory").GetComponent<AudioSource>();
         if (Input.GetButtonDown("Inventory"))
             Inventory();
         if (Input.GetButtonDown("EquipmentMenu"))
@@ -67,9 +72,9 @@ public class InventoryManager : MonoBehaviour
             equipmentMenu.SetActive(true);
         }
     }
-    public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription,ItemType itemType  )
+    public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription, ItemType itemType)
     {
-        if(itemType == ItemType.consumable || itemType == ItemType.crafting)
+        if (itemType == ItemType.consumable || itemType == ItemType.crafting || itemType == ItemType.ItemQuest)
         {
             // Implement your logic to add the item to the inventory
             Debug.Log("Item added: " + itemName + ", Quantity: " + quantity + "Sprite" + itemSprite);
@@ -250,6 +255,7 @@ public enum ItemType
     Accessory1,
     Accessory2,
     Accessory3,
+    ItemQuest,
     none
 
 }

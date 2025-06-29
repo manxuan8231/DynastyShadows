@@ -123,6 +123,14 @@ public class DameZone : MonoBehaviour
                     minotaurController.TakeDamage(finalDamage);
                     return;
                 }
+                TurretHP turretHP = other.GetComponent<TurretHP>();
+            if (turretHP != null)
+            {
+                listDame.Add(other);// thêm collider vào danh sách
+                ShowTextDame(finalDamage);
+                turretHP.TakeDame(finalDamage);
+                return;
+            }
         }
         
     }
@@ -208,7 +216,15 @@ public class DameZone : MonoBehaviour
                     boss1HP.TakeDame((int)finalDamage);
                     return;
                 }
-            
+            TurretHP turretHP = other.GetComponent<TurretHP>();
+            if (turretHP != null)
+            {
+                listDame.Add(other);// thêm collider vào danh sách
+                ShowTextDame(finalDamage);
+                turretHP.TakeDame(finalDamage);
+                return;
+            }
+
         }
     }
     public void ShowTextDame(float damage)

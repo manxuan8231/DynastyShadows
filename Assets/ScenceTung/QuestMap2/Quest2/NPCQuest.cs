@@ -49,6 +49,7 @@ public class NPCQuest : MonoBehaviour
 
     public AudioCanvasState audioCanvasState;
     public SuccesQuest2 succesQuest2;
+    public GameObject obj;
     private void Start()
     {
 
@@ -248,6 +249,7 @@ public class NPCQuest : MonoBehaviour
             else
             {
                 gameObject.SetActive(false); // Tắt NPC khi đã đến điểm hoàn thành nhiệm vụ
+                obj.SetActive(false); // Tắt đối tượng khác nếu cần
             }
 
         }

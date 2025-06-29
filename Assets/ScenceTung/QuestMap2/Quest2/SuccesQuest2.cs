@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Threading.Tasks;
+﻿
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,6 +37,7 @@ public class SuccesQuest2 : MonoBehaviour
             nPCQuest.MoveToDoneQuest(); // Gọi hàm để NPC di chuyển đến vị trí hoàn thành nhiệm vụ
             awardQuest.AwardQuest2(); // Gọi hàm để thưởng nhiệm vụ
             canvasQuest.SetActive(false); // Hiển thị canvas nhiệm vụ
+            trigger.SetActive(true); // Tắt trigger để không chạy lại
         }
     }
   
