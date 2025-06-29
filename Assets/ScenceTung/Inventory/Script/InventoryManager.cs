@@ -5,7 +5,8 @@ public class InventoryManager : MonoBehaviour
 {
     public GameObject inventoryMenu;
     public GameObject inventoryLogo;
-   
+    public GameObject craftingMenu;  
+
     public GameObject equipmentMenu;
     //gọi hàm
     public ItemSlot[] itemSlot; // Array of item slots
@@ -23,6 +24,8 @@ public class InventoryManager : MonoBehaviour
         if (Input.GetButtonDown("EquipmentMenu"))
             EquipmentMenu();
 
+        if (Input.GetKeyDown(KeyCode.C)) // ← thêm dòng này
+            CraftingMenu();
     }
     void Inventory()
     {
@@ -67,6 +70,28 @@ public class InventoryManager : MonoBehaviour
             equipmentMenu.SetActive(true);
         }
     }
+    void CraftingMenu()
+    {
+        if (craftingMenu.activeSelf)
+        {
+            Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            craftingMenu.SetActive(false);
+            inventoryMenu.SetActive(false);
+            equipmentMenu.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            craftingMenu.SetActive(true);
+            inventoryMenu.SetActive(false);
+            equipmentMenu.SetActive(false);
+        }
+    }
+
     public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription,ItemType itemType  )
     {
         if(itemType == ItemType.consumable || itemType == ItemType.crafting)
