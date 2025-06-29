@@ -17,7 +17,7 @@ public class TutorialManager : MonoBehaviour
     public Sprite rollBackIcon;
     public Sprite attackIcon;
     public Sprite interactNPC;//tuong tac huong dan
-    public Sprite openMap;
+    public Sprite openMapIcon;
 
     private int currentStep = 0;
     private bool[] stepCompleted;
@@ -39,6 +39,7 @@ public class TutorialManager : MonoBehaviour
     private AnimatorPanelTutorial animatorPanelTutorial;
     private InteractNPC interactNpc;
     private PlayerStatus playerStatus;
+    private OpenMap openMap;
     void Start()
     {
         slowMotion = FindAnyObjectByType<SlowMotionDodgeEvent>();
@@ -46,6 +47,7 @@ public class TutorialManager : MonoBehaviour
         animatorPanelTutorial = FindAnyObjectByType<AnimatorPanelTutorial>();
         interactNpc = FindAnyObjectByType<InteractNPC>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
+        openMap = FindAnyObjectByType<OpenMap>();
 
         stepCompleted = new bool[10];
         StartCoroutine(WaitShowStep(0));
@@ -58,6 +60,7 @@ public class TutorialManager : MonoBehaviour
         tutorialEnemy.SetActive(false);
         pointer1.SetActive(false);
         tutorialInteractNPC.SetActive(false);
+        openMap.isOpenMap = false;
     }
 
     void Update()
@@ -124,6 +127,7 @@ public class TutorialManager : MonoBehaviour
                     tutorialInteractNPC.SetActive(true);//bat box cho npc len
                     stepCompleted[5] = true;
                     pointer1.SetActive(true);
+                    openMap.isOpenMap = true;
                     StartCoroutine(WaitShowStep(6));
                 }
                 break;
@@ -131,8 +135,7 @@ public class TutorialManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.M))
                 {
                     stepCompleted[6] = true;
-                    tutorialPanelV1.SetActive(false); // Ẩn panel trước khi hiển thị bước mới
-
+                    StartCoroutine(WaitShowStep(7));
                 }
 
                 break;
@@ -200,7 +203,7 @@ public class TutorialManager : MonoBehaviour
                 break;
             case 6:
                 tutorialTextV1.text = "Nhấn M để mở map.";
-                defautIcon.sprite = openMap;
+                defautIcon.sprite = openMapIcon;
                 break;
             case 7:
                 tutorialTextV1.text = "Nhấn F để tương tác.";

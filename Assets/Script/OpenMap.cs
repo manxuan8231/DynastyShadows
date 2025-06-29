@@ -7,6 +7,7 @@ public class OpenMap : MonoBehaviour
     public GameObject mapUIBG;
     public AudioSource mapAudio;
     public AudioClip mapClip;
+    public bool isOpenMap;
     //scroll map
     public ScrollRect scrollMap;
     public float scrollMapVertical;
@@ -38,7 +39,7 @@ public class OpenMap : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.M) && playerStatus.currentHp > 0 && panelSkillTree.activeSelf == false 
-        && imageBGButtonInven.activeSelf == false && EquipMentMenu.activeSelf == false)
+        && imageBGButtonInven.activeSelf == false && EquipMentMenu.activeSelf == false && isOpenMap)
         {
             if (mapUIConten.activeSelf)
             {
@@ -56,8 +57,8 @@ public class OpenMap : MonoBehaviour
                 mapAudio.PlayOneShot(mapClip);
                 mapUIConten.SetActive(true);
                 mapUIBG.SetActive(true);
-                
 
+                Time.timeScale = 0f;
                 // Hiện chuột khi mở map
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
