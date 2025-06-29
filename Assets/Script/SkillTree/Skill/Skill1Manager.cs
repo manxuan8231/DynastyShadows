@@ -43,33 +43,35 @@ public class Skill1Manager : MonoBehaviour
         {
             lastTimeSkill -= Time.deltaTime;
             cooldownSkilSlider.value = lastTimeSkill;
-            // Cập nhật text cooldown
             textCoolDownSkill.text = Mathf.FloorToInt(lastTimeSkill).ToString();
             if (lastTimeSkill <= 0f)
             {
                 isSkillCooldown = false;
-                textCoolDownSkill.enabled = false ;
+                textCoolDownSkill.enabled = false;
                 cooldownSkilSlider.gameObject.SetActive(false);
             }
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !isSkillCooldown && isInputSkill1 == true && isUnlockSkill1 == true 
-        && playerStatus.currentHp > 0)//phải có máu cooldown xong unlock skill mới dung
+
+        // Kiểm tra nếu có enemy trong bán kính 50f
+        bool isEnemyInRange = Physics.CheckSphere(transform.position, 50f, LayerMask.GetMask("Enemy"));
+
+        // Chỉ khi có enemy trong vùng và các điều kiện khác mới cho dùng skill
+        if (Input.GetKeyDown(KeyCode.Alpha1) && !isSkillCooldown && isInputSkill1 && isUnlockSkill1
+            && playerStatus.currentHp > 0 && isEnemyInRange)
         {
             Debug.Log("Bắn kỹ năng đóng băng");
             textCoolDownSkill.enabled = true;
-           
+
             // Tạo hiệu ứng kỹ năng
-           GameObject skill1 = Instantiate(skillPrefab, spawnPoint.position, spawnPoint.rotation);
-          // Destroy(skill1, timeSkill1);
-            
+            GameObject skill1 = Instantiate(skillPrefab, spawnPoint.position, spawnPoint.rotation);
+
             StartCoroutine(WaitRig());
 
             // Kích hoạt cooldown
             isSkillCooldown = true;
             lastTimeSkill = cooldownSkill;
 
-            // Kích hoạt và thiết lập Slider
             if (cooldownSkilSlider != null)
             {
                 cooldownSkilSlider.maxValue = cooldownSkill;
@@ -78,6 +80,7 @@ public class Skill1Manager : MonoBehaviour
             }
         }
     }
+
     private IEnumerator WaitRig()//cho chay animator
     {
         playerController.rigBuilder.enabled = true; // Bật RigBuilder để có thể chayj animator 

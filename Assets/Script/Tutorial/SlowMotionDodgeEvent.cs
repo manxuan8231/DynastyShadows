@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Analytics;
 
 public class SlowMotionDodgeEvent : MonoBehaviour
@@ -18,25 +19,23 @@ public class SlowMotionDodgeEvent : MonoBehaviour
     {
         if (isDodgeWindowActive)
         {
-            tutorialManager.tutorialPanelV1.SetActive(true);
-            isOneSlow = false;
+            tutorialManager.tutorialPanelV1.SetActive(true);         
             Time.timeScale = 0.1f;
             dodgeTimer += Time.unscaledDeltaTime;
 
             // Nếu quá thời gian mà chưa né thì thoát
             if (dodgeTimer >= maxDodgeTime)
             {           
-                ResetTime();
+               ResetTime();
             }
         }
     }
 
     public void ResetTime()
     {
-       
         isDodgeWindowActive = false;
         Time.timeScale = 1f;
         dodgeTimer = 0f;
-        tutorialManager.isComplete = true;
+       
     }
 }

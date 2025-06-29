@@ -56,7 +56,7 @@ public class OpenMap : MonoBehaviour
                 mapAudio.PlayOneShot(mapClip);
                 mapUIConten.SetActive(true);
                 mapUIBG.SetActive(true);
-                Time.timeScale = 0f;
+                
 
                 // Hiện chuột khi mở map
                 Cursor.visible = true;
