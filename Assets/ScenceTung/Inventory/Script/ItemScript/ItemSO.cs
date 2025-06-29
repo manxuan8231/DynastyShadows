@@ -128,6 +128,24 @@ public class ItemSO : ScriptableObject
 
 
         }
+        if (statToChange == StatToChange.itemQuest2)
+        {
+            ItemSO cloned = Instantiate(this);
+            cloned.hasItemQuest = true;
+            cloned.showSkill4 = true;
+            SkillFlexibleManager manager = Resources.FindObjectsOfTypeAll<SkillFlexibleManager>()
+                .FirstOrDefault(x => x.gameObject.name == " Panel(Flexible Skill)");
+            if (manager != null)
+            {
+                manager.itemQuestUnlock = cloned;
+                Debug.Log("Gán clone ItemSO vào SkillFlexibleManager OK");
+            }
+            else
+            {
+                Debug.LogError("Không tìm thấy SkillFlexibleManager");
+            }
+            return true;
+        }
         return false;
         
     }
@@ -148,7 +166,8 @@ public class ItemSO : ScriptableObject
         debuff2,
         debuff3,
         debuff4,
-        itemQuest
+        itemQuest,
+        itemQuest2
     }
 
 

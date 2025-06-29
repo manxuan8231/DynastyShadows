@@ -39,6 +39,7 @@ public class SkillFlexibleManager : MonoBehaviour
     public float turnInSkill1 = 0f;
 
     public ItemSO itemQuestUnlock;
+    public ItemSO itemQuestUnlock2; // Biến để kiểm tra xem có hiển thị kỹ năng 4 hay không
     void Start()
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
