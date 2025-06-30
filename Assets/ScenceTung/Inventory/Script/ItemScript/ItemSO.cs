@@ -112,8 +112,9 @@ public class ItemSO : ScriptableObject
 
             ItemSO cloned = Instantiate(this);
             cloned.showSkill4 = true;
+            cloned.hasItemQuest = true;
 
-            SkillFlexibleManager manager = Resources.FindObjectsOfTypeAll<SkillFlexibleManager>()
+    SkillFlexibleManager manager = Resources.FindObjectsOfTypeAll<SkillFlexibleManager>()
                 .FirstOrDefault(x => x.gameObject.name == " Panel(Flexible Skill)");
 
             if (manager != null)
