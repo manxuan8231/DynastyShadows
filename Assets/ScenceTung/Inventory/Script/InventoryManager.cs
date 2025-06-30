@@ -5,7 +5,7 @@ public class InventoryManager : MonoBehaviour
 {
     public GameObject inventoryMenu;
     public GameObject inventoryLogo;
-    public GameObject craftingMenu;  
+    public GameObject craftingMenu;
 
     public GameObject equipmentMenu;
     //gọi hàm
@@ -18,7 +18,7 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        audioSource = GameObject.Find("Inventory").GetComponent<AudioSource>(); 
+        audioSource = GameObject.Find("Inventory").GetComponent<AudioSource>();
         if (Input.GetButtonDown("Inventory"))
             Inventory();
         if (Input.GetButtonDown("EquipmentMenu"))
@@ -92,9 +92,9 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription,ItemType itemType  )
+    public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription, ItemType itemType)
     {
-        if(itemType == ItemType.consumable || itemType == ItemType.crafting)
+        if (itemType == ItemType.consumable || itemType == ItemType.crafting || itemType == ItemType.ItemQuest)
         {
             // Implement your logic to add the item to the inventory
             Debug.Log("Item added: " + itemName + ", Quantity: " + quantity + "Sprite" + itemSprite);
@@ -275,6 +275,7 @@ public enum ItemType
     Accessory1,
     Accessory2,
     Accessory3,
+    ItemQuest, // Thêm loại item cho nhiệm vụ
     none
 
 }

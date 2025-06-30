@@ -24,6 +24,7 @@ public class ActiveQuest4 : MonoBehaviour
     public bool hasFinishedDialogue = false; // THÊM BIẾN NÀY
     bool hasPlayedTalkingAnim = false;
     public bool isActiveQuest4 = false;
+    
 
     [Header("Trạng thái nhiệm vụ")]
     public GameObject stateCanvas;
@@ -35,9 +36,11 @@ public class ActiveQuest4 : MonoBehaviour
     [Header("Tham chiếu")]
     public AudioCanvasState audioCanvasState;
     Animator animator;
-
+    [Header("GameObject")]
+    public GameObject back;
     void Start()
     {
+        back.SetActive(false);
         animator = GetComponent<Animator>();
     }
 
@@ -143,6 +146,7 @@ public class ActiveQuest4 : MonoBehaviour
         hasFinishedDialogue = true; // Đánh dấu đã xong hội thoại
         isActiveQuest4 = true; // Đánh dấu nhiệm vụ 4 đã được kích hoạt
         animator.SetTrigger("Idle"); // Chuyển về trạng thái Idle sau khi kết thúc hội thoại
+        back.SetActive(true);
         if (Coroutine != null)
         {
             StopCoroutine(Coroutine);

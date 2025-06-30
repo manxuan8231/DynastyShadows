@@ -2,12 +2,13 @@
 
 public class TriggerQuest4 : MonoBehaviour
 {
-    public TimeLineQuest3 timeLineQuest3; // Reference to the TimeLineQuest3 script
+    public ActiveQuest4 activeQuest4;
     public GameObject[] objects;
     bool isSpawnQuest4 = false;
     void Start()
     {
-        timeLineQuest3 = FindAnyObjectByType<TimeLineQuest3>();
+        activeQuest4 = FindFirstObjectByType<ActiveQuest4>();
+       
     }
 
     // Update is called once per frame
@@ -18,7 +19,7 @@ public class TriggerQuest4 : MonoBehaviour
     }
     void MissionPlay()
     {
-        if (timeLineQuest3.isQuest3Complete && !isSpawnQuest4)
+        if (activeQuest4.isActiveQuest4== true && !isSpawnQuest4)
         {
             isSpawnQuest4 = true; // Đánh dấu là đã spawn
             for (int i = 0; i < objects.Length; i++)

@@ -12,6 +12,7 @@ public class SuccesQuest2 : MonoBehaviour
     public GameObject obj2;
     public GameObject obj3;
     public GameObject obj4;
+    public GameObject questPoint;
 
     public AudioCanvasState audioCanvasState;
     [Header("Trạng thái nhiệm vụ")]
@@ -46,6 +47,7 @@ public class SuccesQuest2 : MonoBehaviour
             obj2.SetActive(true); // Kích hoạt đối tượng 2
             obj3.SetActive(true); // Kích hoạt đối tượng 3
             obj4.SetActive(true); // Kích hoạt đối tượng 4
+            questPoint.SetActive(false); // Tắt quest point
         }
     }
   
