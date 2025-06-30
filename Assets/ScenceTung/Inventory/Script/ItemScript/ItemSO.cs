@@ -12,8 +12,12 @@ public class ItemSO : ScriptableObject
 
     public AttributeChange attackState = new AttributeChange();
     public float ammoutToChangeAttackState;
+    [Header("Bool Quest")] 
     public bool hasItemQuest = false;
     public bool showSkill4 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 4 hay không
+    //unlock skill 2
+    public bool hasItemQuest2 = false;
+    public bool showSkill5 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 5 hay không
     public bool UseItem()
     {
         if (statToChange == StatToChange.health)
@@ -107,7 +111,6 @@ public class ItemSO : ScriptableObject
         {
 
             ItemSO cloned = Instantiate(this);
-            cloned.hasItemQuest = true;
             cloned.showSkill4 = true;
 
             SkillFlexibleManager manager = Resources.FindObjectsOfTypeAll<SkillFlexibleManager>()
@@ -130,14 +133,15 @@ public class ItemSO : ScriptableObject
         }
         if (statToChange == StatToChange.itemQuest2)
         {
-            ItemSO cloned = Instantiate(this);
-            cloned.hasItemQuest = true;
-            cloned.showSkill4 = true;
+            Debug.Log("Item Quest 2");
+            ItemSO cloned2 = Instantiate(this);
+            cloned2.hasItemQuest2 = true;
+            cloned2.showSkill5 = true;
             SkillFlexibleManager manager = Resources.FindObjectsOfTypeAll<SkillFlexibleManager>()
                 .FirstOrDefault(x => x.gameObject.name == " Panel(Flexible Skill)");
             if (manager != null)
             {
-                manager.itemQuestUnlock = cloned;
+                manager.itemQuestUnlock2 = cloned2;
                 Debug.Log("Gán clone ItemSO vào SkillFlexibleManager OK");
             }
             else

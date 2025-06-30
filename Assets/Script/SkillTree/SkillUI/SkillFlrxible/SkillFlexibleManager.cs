@@ -43,7 +43,7 @@ public class SkillFlexibleManager : MonoBehaviour
     public float turnInSkill1 = 0f;
 
     public ItemSO itemQuestUnlock;
-    public ItemSO itemQuestUnlock2; // Biến để kiểm tra xem có hiển thị kỹ năng 4 hay không
+    public ItemSO itemQuestUnlock2; // Biến để kiểm tra xem có hiển thị kỹ năng 5hay không
     void Start()
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
@@ -103,10 +103,20 @@ public class SkillFlexibleManager : MonoBehaviour
                 }
                 break;
             case "Eye":
-                previewText.text = "Thần Nhãn";
-                contenSkill.text = "Khi dùng kỹ năng này sẽ giúp truy tìm dấu vết mà mắt thường khó nhìn thấy được và làm chậm những sinh vật sống.";
-                skillBGs[4].enabled = true;
-                scoreUpgradeText.text = "/7";
+                if(itemQuestUnlock2 != null && itemQuestUnlock2.showSkill5)
+                {
+                    previewText.text = "Thần Nhãn";
+                    contenSkill.text = "Khi dùng kỹ năng này sẽ giúp truy tìm dấu vết mà mắt thường khó nhìn thấy được và làm chậm những sinh vật sống.";
+                    skillBGs[4].enabled = true;
+                    scoreUpgradeText.text = "/7";
+                }
+                else
+                {
+                    previewPanel.SetActive(false); // Ẩn nếu chưa unlock
+                    Debug.LogWarning("ItemQuestUnlock2 đang null hoặc chưa được mở khóa");
+                    return;
+                }
+               
                 break;
 
             default:
