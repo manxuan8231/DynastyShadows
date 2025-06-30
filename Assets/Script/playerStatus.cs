@@ -96,6 +96,7 @@ public class PlayerStatus : MonoBehaviour
     //tham chieu ------------------------------------------
     private PlayerControllerState playerController; // Tham chiếu đến PlayerController
     private ComboAttack comboAttack; // Tham chiếu đến ComboAttack
+    private SliderHpDelay sliderHpDelay; 
     private Skill4Manager skill4Manager; // Tham chiếu đến Skill4Manager
     void Start()
     {     
@@ -131,6 +132,7 @@ public class PlayerStatus : MonoBehaviour
         playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         skill4Manager = FindAnyObjectByType<Skill4Manager>();
+        sliderHpDelay = FindAnyObjectByType<SliderHpDelay>();
         //tat hieu uung
         effectStun.SetActive(false);
         effectLevelUp.SetActive(false);
@@ -188,7 +190,8 @@ public class PlayerStatus : MonoBehaviour
             currentHp = Mathf.Clamp(currentHp, 0, maxHp);
             sliderHp.value = currentHp;
             textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
-        if (isStun == true && isHit == true) //nếu bị hit r thi đợi 1 giay ms cho tiep
+           
+            if (isStun == true && isHit == true) //nếu bị hit r thi đợi 1 giay ms cho tiep
         {    
             StartCoroutine(WaitHit(0.7f)); // gọi hàm WaitStun với thời gian 4 giây
             audioSource.PlayOneShot(audioHit); //phát âm thanh bị hit
