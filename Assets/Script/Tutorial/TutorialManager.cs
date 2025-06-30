@@ -19,6 +19,7 @@ public class TutorialManager : MonoBehaviour
     public Sprite interactNPC;//tuong tac huong dan
     public Sprite openMapIcon;
     public Sprite invenIcon;
+   
 
     private int currentStep = 0;
     private bool[] stepCompleted;
@@ -33,22 +34,27 @@ public class TutorialManager : MonoBehaviour
     //bion để kiểm soát trạng thái của hướng dẫn
     public bool isTutorialWalk = false;
     public bool isTutorialRun = false; // Biến để kiểm soát trạng thái của hướng dẫn chạy
+    public bool isTutorialInvenTab = false;//cho bật tag để bật inven
+    public bool isTutorialInvenConten = false;//hướng dẫn bên trong inven
+    public bool isCompleteInven = false; // Biến để kiểm soát trạng thái hoàn thành quest ne quai
     public bool isComplete = false; // Biến để kiểm soát trạng thái hoàn thành quest ne quai
     //tham chieu
     private SlowMotionDodgeEvent slowMotion;
     private PlayerControllerState playerControllerState;
-   
+    private InventoryManager inventoryManager;
     private InteractNPC interactNpc;
     private PlayerStatus playerStatus;
     private OpenMap openMap;
+    OpenSkillTree openSkillTree;
     void Start()
     {
         slowMotion = FindAnyObjectByType<SlowMotionDodgeEvent>();
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
-       
-        interactNpc = FindAnyObjectByType<InteractNPC>();
+        inventoryManager= FindAnyObjectByType<InventoryManager>();
+         interactNpc = FindAnyObjectByType<InteractNPC>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         openMap = FindAnyObjectByType<OpenMap>();
+        openSkillTree = FindAnyObjectByType<OpenSkillTree>();
 
         stepCompleted = new bool[10];
         StartCoroutine(WaitShowStep(0));
@@ -61,7 +67,12 @@ public class TutorialManager : MonoBehaviour
         tutorialEnemy.SetActive(false);
         pointer1.SetActive(false);
         tutorialInteractNPC.SetActive(false);
+        inventoryManager.isOpenInventory = false;
         openMap.isOpenMap = false;
+        isTutorialInvenTab = false;
+        isTutorialInvenConten = false;
+        isCompleteInven = false;
+        openSkillTree.isOpenSkillTree = false;
     }
 
     void Update()
@@ -157,7 +168,21 @@ public class TutorialManager : MonoBehaviour
                 }
                 break;
             case 8://nvu khi nhat item thi chi bat inven len
-
+                if (isTutorialInvenTab) 
+                {
+                    tutorialPanelV1.SetActive(true);
+                    
+                }
+                if(isTutorialInvenTab && Input.GetKeyDown(KeyCode.Tab))
+                {
+                    tutorialPanelV1.SetActive(false);
+                    isTutorialInvenConten = true;
+                }
+                if (isCompleteInven)//hoan thanh nv
+                {
+                    stepCompleted[8] = true;
+                    StartCoroutine(WaitShowStep(9));
+                }
                 break;
         }
     }
@@ -222,7 +247,11 @@ public class TutorialManager : MonoBehaviour
                 defautIcon.sprite = invenIcon;
                 tutorialPanelV1.SetActive(false); // Ẩn panel trước khi hiển thị bước mới
                 break;
-
+            case 9:
+                tutorialTextV1.text = "";
+                
+                tutorialPanelV1.SetActive(false); // Ẩn panel trước khi hiển thị bước mới
+                break;
         }
     }
     

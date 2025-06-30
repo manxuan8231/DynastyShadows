@@ -5,6 +5,7 @@ using UnityEngine.Audio;
 public class ManagerStatusInven : MonoBehaviour
 {
     public GameObject skillTree;
+    public GameObject linhHoat;
     public GameObject inven;
     public GameObject evipment;
     public GameObject iconButton;
@@ -35,6 +36,7 @@ public class ManagerStatusInven : MonoBehaviour
     {
         audioSource.PlayOneShot(clipClick);
         skillTree.SetActive(true);
+        linhHoat.SetActive(true);
         inven.SetActive(false);
         evipment.SetActive(false);
         iconButton.SetActive(false);

@@ -18,7 +18,7 @@ public class OpenSkillTree : MonoBehaviour
     public GameObject panelInven;
     public GameObject panelInvenEq;
     public GameObject buttonInven;
-
+    public bool isOpenSkillTree = true;
     public AudioSource audioSource; // Thêm biến AudioSource để phát âm thanh
     public AudioClip openSkillTreeSound; // Thêm biến AudioClip để chứa âm thanh mở Skill Tree
     public AudioClip clickButtonSound;
@@ -26,14 +26,14 @@ public class OpenSkillTree : MonoBehaviour
     {
            panelSkillTree.SetActive(false);
            flexibleSkill.SetActive(false);
-           coreTree.SetActive(false);
+           coreTree.SetActive(false);    
             audioSource = GetComponent<AudioSource>(); // Lấy AudioSource từ GameObject này
     }
 
    
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T)) // Nhấn phím T để mở/đóng Skill Tree
+        if (Input.GetKeyDown(KeyCode.T) && isOpenSkillTree) // Nhấn phím T để mở/đóng Skill Tree
         {
             bool willOpen = !panelSkillTree.activeSelf; // Trạng thái sau khi nhấn
 
