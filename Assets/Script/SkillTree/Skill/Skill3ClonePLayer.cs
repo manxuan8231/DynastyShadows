@@ -233,7 +233,7 @@ public class Skill3ClonePLayer : MonoBehaviour
         {
             time += Time.deltaTime;
             float t = time / duration;
-            playerControllerState.transform.position = Vector3.Lerp(startPos, targetPosition, t);
+            transform.position = Vector3.Lerp(startPos, targetPosition, t);
             yield return null;
         }
 
