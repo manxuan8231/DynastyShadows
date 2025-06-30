@@ -52,7 +52,7 @@ public class NPCQuest : MonoBehaviour
     public GameObject obj;
     private void Start()
     {
-
+        obj.SetActive(false); 
         canvasNameNPC.SetActive(false); // Ẩn canvas tên NPC ban đầu
         isContent = true;
         animator = GetComponent<Animator>();
@@ -194,6 +194,7 @@ public class NPCQuest : MonoBehaviour
         questionGameCanvas.SetActive(false);
         PanelContent.SetActive(false);
         hasFinishedDialogue = true; // Đánh dấu đã xong hội thoại
+        obj.SetActive(true); // Kích hoạt đối tượng khác nếu cần
         if (Coroutine != null)
         {
             StopCoroutine(Coroutine);

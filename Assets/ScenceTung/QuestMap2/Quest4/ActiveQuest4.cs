@@ -147,6 +147,8 @@ public class ActiveQuest4 : MonoBehaviour
         isActiveQuest4 = true; // Đánh dấu nhiệm vụ 4 đã được kích hoạt
         animator.SetTrigger("Idle"); // Chuyển về trạng thái Idle sau khi kết thúc hội thoại
         back.SetActive(true);
+        AwardQuest awardQuest = FindFirstObjectByType<AwardQuest>();
+        awardQuest.AwardQuest4(); // Gọi hàm để thưởng nhiệm vụ 4
         if (Coroutine != null)
         {
             StopCoroutine(Coroutine);
