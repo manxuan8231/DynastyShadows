@@ -26,9 +26,9 @@ public class DrakonitSkillState : DrakonitState
             return;
         }
         //cooldown skill
-        if (Time.time >= lastSkillTime + 5 && enemy.isSkill)
+        if (Time.time >= lastSkillTime + 7f && enemy.isSkill)
         {
-            int randomSkill = Random.Range(0, 3); // Chọn ngẫu nhiên kỹ năng từ 0 đến 1
+            int randomSkill = Random.Range(0, 2); // Chọn ngẫu nhiên kỹ năng từ 0 đến 1
             switch (randomSkill)
             {
                 case 0:
@@ -40,17 +40,9 @@ public class DrakonitSkillState : DrakonitState
                    
                     break;
                 case 1:
-                    Debug.Log("skill2");
-                    enemy.auraSkill2.SetActive(true); // Kích hoạt hiệu ứng kỹ năng 2
-                    enemy.StartCoroutine(WaitSkill()); //tắt hiệu ứng sau 2 giây                 
-                    enemy.animator.SetTrigger("Skill2");
-                  
-                    break;
-                case 2:
                     Debug.Log("skill3");
                     enemy.StartCoroutine(WaitSkill()); //tắt hiệu ứng sau 2 giây      
                     enemy.animator.SetTrigger("Skill3");
-                  
                     break;
             }
             lastSkillTime = Time.time; // Cập nhật thời gian kỹ năng đã sử dụng
@@ -69,7 +61,7 @@ public class DrakonitSkillState : DrakonitState
    {
         enemy.isAttack = false;
         enemy.animator.SetBool("Walking", false); // Dừng animation đi bộ
-        enemy.agent.isStopped = true; // ko di chuyển
+        enemy.agent.enabled = false; // ko di chuyển
 
         yield return new WaitForSeconds(1.5f); // Chờ 1 giây  để tắt aura 
         enemy.transform.LookAt(enemy.player); // Quay mặt về phía người chơi      
@@ -77,8 +69,10 @@ public class DrakonitSkillState : DrakonitState
         enemy.auraSkill2.SetActive(false); // Tắt hiệu ứng kỹ năng 2
 
         yield return new WaitForSeconds(4f); // Chờ 3 giây để cho di chuyển lại  
+        enemy.agent.enabled = true;
         enemy.ChangeState(new DrakonitChaseState(enemy)); // Chuyển sang trạng thái duoi theo
         enemy.isAttack = true;
     }
 
+   
 }

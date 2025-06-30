@@ -42,7 +42,7 @@ public class DrakonitChaseState : DrakonitState
             {
                 exitSkillTime = Time.time;
             }
-            if (Time.time >= exitSkillTime + 5f)
+            if (Time.time >= exitSkillTime + 2f)
             {               
                 enemy.ChangeState(new DrakonitSkillState(enemy));
                 return;

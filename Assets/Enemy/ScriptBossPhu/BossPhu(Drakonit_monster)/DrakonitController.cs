@@ -24,14 +24,14 @@ public class DrakonitController : MonoBehaviour
  
     //EffectSkill
     public GameObject skillEffect1; // Hiệu ứng kỹ năng 1
-    public GameObject skillEffect2; // Hiệu ứng kỹ năng 2
+   
     public GameObject skillEffect3; // Hiệu ứng kỹ năng 3
     public GameObject auraSkill1;
     public GameObject auraSkill2;
 
     //vi tri spawn effect
     public Transform effectSpawnPointSkill1; // Vị trí spawn hiệu ứng 1
-    public Transform effectSpawnPointSkill2; // Vị trí spawn hiệu ứng 2
+  
     public Transform effectSpawnPointSkill3; // Vị trí spawn hiệu ứng 3
 
     //effect Attacl
@@ -123,6 +123,8 @@ public class DrakonitController : MonoBehaviour
         currentHp = Mathf.Clamp(currentHp, 0, maxHp); // Đảm bảo máu không âm và không vượt quá tối đa
         if (currentHp <= 0)
         {
+
+            Destroy(gameObject);
             enemy.blockZone.SetActive(false); // voo hiệu hóa vùng chặn
             animator.enabled = true; // Bật animator để có thể chơi animation chết
             enemy.enabled = true; // Bật lại DrakonitController để có thể chơi animation chết
@@ -132,8 +134,7 @@ public class DrakonitController : MonoBehaviour
              if (questMainBacLam != null) { 
             questMainBacLam.UpdateKillEnemy(1);// cập nhật số lượng kẻ thù đã giết
             }
-             animator.SetTrigger("Death");
-             Destroy(gameObject,5f);
+             animator.SetTrigger("Death");            
            // ChangeState(new DrakonitDeathState(this));
         }
     }
@@ -145,12 +146,6 @@ public class DrakonitController : MonoBehaviour
     {
         Quaternion rotation = Quaternion.LookRotation(transform.forward);
         GameObject effect = Instantiate(skillEffect1, effectSpawnPointSkill1.position, rotation);
-        Destroy(effect, 3f); // Hủy hiệu ứng sau 2 giây
-    }
-    public void SpawnEffectSkill2()
-    {
-        Quaternion rotation = Quaternion.LookRotation(transform.forward); 
-        GameObject effect = Instantiate(skillEffect2, effectSpawnPointSkill2.position, rotation);
         Destroy(effect, 3f); // Hủy hiệu ứng sau 2 giây
     }
     public void SpawnEffectSkill3()

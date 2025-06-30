@@ -25,11 +25,12 @@ public class SkillUseHandler : MonoBehaviour
     // Tham chiếu 
     public PlayerStatus playerStatus;
     public PlayerControllerState playerControllerState;
-   
+    public Skill5Eye skill5Eye;
     private void Start()
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
-        playerControllerState = FindAnyObjectByType<PlayerControllerState>();      
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
+        skill5Eye = FindAnyObjectByType<Skill5Eye>();
         auraSlash.SetActive(false);
        
     }
@@ -160,7 +161,16 @@ public class SkillUseHandler : MonoBehaviour
                     nextComboAllowedTime = Time.time + 0.7f;
                 }
                 break;
-
+            case "Eye":
+                if (Input.GetKeyDown(KeyCode.R) && Time.time >= nextComboAllowedTime)
+                {
+                    Debug.Log("Sử dụng mat than");
+                    if (Time.time < lastColldown + cooldownTime) return;
+                    skill5Eye.isInputSkill = true;//bat skill
+                    lastColldown = Time.time;
+                    nextComboAllowedTime = Time.time + 0.7f;
+                }
+                break;
             default:
                
                 break;

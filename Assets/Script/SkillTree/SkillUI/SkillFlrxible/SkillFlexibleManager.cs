@@ -10,6 +10,8 @@ public class SkillFlexibleManager : MonoBehaviour
     public Sprite skill2;
     public Sprite skill3;
     public Sprite skill4;
+    public Sprite skill5;
+
     //hien thị thông tin skill
     public GameObject previewPanel;
     public TextMeshProUGUI previewText;
@@ -24,16 +26,18 @@ public class SkillFlexibleManager : MonoBehaviour
     public Image[] skillBGs;
     private string currentSkillID = "";
     private string equippedSkillID = "";
-    [Header("Tham chiếu")]
+   
     // Tham chiếu đến AudioSource và âm thanh
     public AudioSource skillAudioSource;
     public AudioClip buttonClick; 
     public PlayerStatus playerStatus;
+
     //kiem tra xem kỹ năng đã mở khóa hay chưa
     private bool isDongCung1Unlocked = false;
     private bool isDongCung2Unlocked = false;
     private bool isDongCung3Unlocked = false;
     private bool isDongCung4Unlocked = false;
+    private bool isDongCung5Unlocked = false;
 
     //biến số để theo dõi số lần nâng cấp kỹ năng
     public float turnInSkill1 = 0f;
@@ -98,6 +102,13 @@ public class SkillFlexibleManager : MonoBehaviour
                     Debug.LogWarning("ItemQuestUnlock đang null hoặc chưa được mở khóa");
                 }
                 break;
+            case "Eye":
+                previewText.text = "Thần Nhãn";
+                contenSkill.text = "Khi dùng kỹ năng này sẽ giúp truy tìm dấu vết mà mắt thường khó nhìn thấy được và làm chậm những sinh vật sống.";
+                skillBGs[4].enabled = true;
+                scoreUpgradeText.text = "/7";
+                break;
+
             default:
                 previewText.text = "Thông tin chưa cập nhật.";
                 contenSkill.text = "...";
@@ -188,6 +199,17 @@ public class SkillFlexibleManager : MonoBehaviour
                     buttonUnlock.SetActive(false);
                 }
                 break;
+            case "Eye":
+                if (playerStatus.score >= 4)
+                {
+                    isDongCung5Unlocked = true;
+                    playerStatus.score -= 4;
+                    UpdateScoreText();
+                    buttonEquip.SetActive(true);
+                    buttonRemove.SetActive(false);
+                    buttonUnlock.SetActive(false);
+                }
+                break;
         }
     }
 
@@ -206,6 +228,9 @@ public class SkillFlexibleManager : MonoBehaviour
                 break;
             case "Shield":
                 slotIcon.texture = skill4.texture;
+                break;
+            case "Eye":
+                slotIcon.texture = skill5.texture;
                 break;
         }
 
@@ -256,6 +281,7 @@ public class SkillFlexibleManager : MonoBehaviour
             case "RainFire": return isDongCung2Unlocked;
             case "Slash": return isDongCung3Unlocked;
             case "Shield": return isDongCung4Unlocked;
+            case "Eye": return isDongCung5Unlocked;
         }
         return false;
     }
