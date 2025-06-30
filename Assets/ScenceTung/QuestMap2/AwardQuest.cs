@@ -1,5 +1,4 @@
-﻿using NUnit.Framework;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -19,14 +18,21 @@ public class AwardQuest : MonoBehaviour
     //award string quest
     public string awardQuest2_1 = "1000 EXP";
     public string awardQuest2_2 = "100 Vàng";
-    public string awardQuest2_3 = "Mảnh vật bảo hộ";
+    public string awardQuest2_3 = "Mảnh kĩ năng \" Khiên chắn \"";
     public Sprite iconSprite1;
     void Start()
     {
      playerStatus = FindAnyObjectByType<PlayerStatus>();
      InventoryManager = GameObject.Find("CanvasInventory").GetComponent<InventoryManager>();
     }
-      public void AwardQuest2()
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            AwardQuest2();
+        }
+    }
+    public void AwardQuest2()
     {
         StartCoroutine(CanvasQuest());
         playerStatus.currentExp += 1000;
