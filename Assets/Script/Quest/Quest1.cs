@@ -23,13 +23,14 @@ public class Quest1 : MonoBehaviour
     // Tham chiếu
     TurnInQuest turnInQuest;
     public InteractNPC interactNPC;
+    TutorialManager tutorialManager;
     void Start()
     {
         iconQuest.SetActive(false);
      
         questPanel.SetActive(false);
         turnInQuest = FindAnyObjectByType<TurnInQuest>();
-       
+       tutorialManager = FindAnyObjectByType<TutorialManager>();
     }
     private void Update()
     {
@@ -72,6 +73,7 @@ public class Quest1 : MonoBehaviour
             // Cho phép NPC nhận nhiệm vụ
             turnInQuest.isContent = true;
             turnInQuest.isButtonF = true;
+            tutorialManager.isTutorialInvenTab = true;//cho phep bat huong dan
         }
     }
 

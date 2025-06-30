@@ -4,20 +4,17 @@ using System.Collections.Generic;
 
 public class Skill5Eye : MonoBehaviour
 {
-    public GameObject panelDisplay;
-    public Material material; // Material mới để áp dụng
+    public GameObject panelDisplay;  
     public string targetLayerName = "Interactable"; // Layer đối tượng highlight
+    public GameObject iconPrefab; // Prefab UI
+    public Canvas uiCanvas;       // Gắn canvas chính
     public float searchRadius = 30f;
-
-    private GameObject currentTarget;
-    private Material originalMaterial; // Material gốc
     public bool isInputSkill; // Cờ bật kỹ năng
 
     // Biến làm chậm enemy
-    private Animator slowedEnemyAnimator;
-    private float originalAnimSpeed;
     private List<Animator> slowedAnimators = new List<Animator>();
-
+    private List<GameObject> spawnedIcons = new List<GameObject>();
+    private List<Transform> trackedTargets = new List<Transform>();
     void Start()
     {
         panelDisplay.SetActive(false);
@@ -28,8 +25,31 @@ public class Skill5Eye : MonoBehaviour
         if (isInputSkill)
         {
             StartCoroutine(WaitOffSkill());
+            isInputSkill = false;
         }
+
+        // Cập nhật vị trí icon theo object
+        for (int i = 0; i < spawnedIcons.Count; i++)
+        {
+            if (spawnedIcons[i] != null && trackedTargets[i] != null)
+            {
+                Vector3 screenPos = Camera.main.WorldToScreenPoint(trackedTargets[i].position + Vector3.up * 2.2f);
+
+                // Ẩn icon nếu đối tượng ra sau lưng camera
+                if (screenPos.z > 0)
+                {
+                    spawnedIcons[i].SetActive(true);
+                    spawnedIcons[i].transform.position = screenPos;
+                }
+                else
+                {
+                    spawnedIcons[i].SetActive(false); // Tắt icon nếu ở sau camera
+                }
+            }
+        }
+
     }
+
 
     public IEnumerator WaitOffSkill()
     {
@@ -53,18 +73,6 @@ public class Skill5Eye : MonoBehaviour
     {
         panelDisplay.SetActive(false);
 
-        // Trả lại material ban đầu
-        if (currentTarget != null && originalMaterial != null)
-        {
-            Renderer rend = currentTarget.GetComponent<Renderer>();
-            if (rend != null)
-            {
-                rend.material = originalMaterial;
-            }
-
-            currentTarget = null;
-            originalMaterial = null;
-        }
 
         // Trả lại tốc độ Animator 
         foreach (Animator anim in slowedAnimators)
@@ -74,6 +82,12 @@ public class Skill5Eye : MonoBehaviour
                 anim.speed = 1f;
             }
         }
+        foreach (GameObject icon in spawnedIcons)
+        {
+            if (icon != null) Destroy(icon);
+        }
+        spawnedIcons.Clear();
+        trackedTargets.Clear();
         slowedAnimators.Clear();
 
     }
@@ -83,31 +97,17 @@ public class Skill5Eye : MonoBehaviour
         int layerMask = LayerMask.GetMask(targetLayerName);
         Collider[] hits = Physics.OverlapSphere(transform.position, searchRadius, layerMask);
 
-        float closestDistance = Mathf.Infinity;
-        GameObject closestObject = null;
-
         foreach (Collider hit in hits)
         {
-            float dist = Vector3.Distance(transform.position, hit.transform.position);
-            if (dist < closestDistance)
-            {
-                closestDistance = dist;
-                closestObject = hit.gameObject;
-            }
-        }
+            GameObject obj = hit.gameObject;
+            Transform target = obj.transform;
 
-        if (closestObject != null)
-        {
-            currentTarget = closestObject;
-
-            Renderer rend = currentTarget.GetComponent<Renderer>();
-            if (rend != null)
-            {
-                originalMaterial = rend.material;
-                rend.material = material;
-            }
+            GameObject icon = Instantiate(iconPrefab, uiCanvas.transform);
+            spawnedIcons.Add(icon);
+            trackedTargets.Add(target);
         }
     }
+
 
     public void SlowEnemiesInArea()
     {

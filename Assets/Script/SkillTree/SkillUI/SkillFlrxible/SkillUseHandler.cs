@@ -21,7 +21,8 @@ public class SkillUseHandler : MonoBehaviour
     public GameObject auraSlash;
     //shield
     public GameObject shieldPrefab; // prefab của shield
-
+    //sounds
+    public AudioClip eyeSound;
     // Tham chiếu 
     public PlayerStatus playerStatus;
     public PlayerControllerState playerControllerState;
@@ -166,6 +167,7 @@ public class SkillUseHandler : MonoBehaviour
                 {
                     Debug.Log("Sử dụng mat than");
                     if (Time.time < lastColldown + cooldownTime) return;
+                    playerControllerState.audioSource.PlayOneShot(eyeSound);
                     skill5Eye.isInputSkill = true;//bat skill
                     lastColldown = Time.time;
                     nextComboAllowedTime = Time.time + 0.7f;

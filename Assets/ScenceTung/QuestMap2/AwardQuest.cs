@@ -37,6 +37,7 @@ public class AwardQuest : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.U))
         {
+            AwardQuest2();
             AwardQuest4();
         }
     }

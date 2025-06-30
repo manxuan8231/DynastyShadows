@@ -57,7 +57,7 @@ public class TextQuest4 : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         canvasContentQuest.SetActive(true);
         contentTextQuest.text = "Đi tìm Trưởng mục Lương.";
-        stateCanvas.SetActive(true);
+        stateCanvas.SetActive(true);                                
         audioCanvasState.PlayNewQuest();
         stateText.text = "Bạn vừa nhận được nhiệm vụ mới";
         missionName.text = "Đi tìm Trưởng mục Lương";

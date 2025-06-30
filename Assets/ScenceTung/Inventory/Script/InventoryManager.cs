@@ -8,6 +8,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject craftingMenu;
 
     public GameObject equipmentMenu;
+    public bool isOpenInventory = true;
     //gọi hàm
     public ItemSlot[] itemSlot; // Array of item slots
     public EquipmentSlot[] equipmentSlot; // Array of equipment slots
@@ -15,13 +16,14 @@ public class InventoryManager : MonoBehaviour
     public ItemSO[] itemSOs;
     public AudioSource audioSource;
     public AudioClip selectedClip;
-    // Update is called once per frame
+
+  
     void Update()
     {
         audioSource = GameObject.Find("Inventory").GetComponent<AudioSource>();
-        if (Input.GetButtonDown("Inventory"))
+        if (Input.GetButtonDown("Inventory") && isOpenInventory)
             Inventory();
-        if (Input.GetButtonDown("EquipmentMenu"))
+        if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory)
             EquipmentMenu();
 
         if (Input.GetKeyDown(KeyCode.C)) // ← thêm dòng này

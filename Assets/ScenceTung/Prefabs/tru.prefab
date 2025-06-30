@@ -1124,7 +1124,7 @@ GameObject:
   - component: {fileID: 5605440481337502241}
   m_Layer: 10
   m_Name: tru
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1197,6 +1197,7 @@ MonoBehaviour:
   maxHealth: 500
   model: {fileID: 963014765511928211}
   effect: {fileID: 8871317905292204297}
+  boxCollider: {fileID: 3175963411740350571}
 --- !u!65 &3175963411740350571
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16093,9 +16094,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6273166743627226825}
     m_Modifications:
+    - target: {fileID: 299294641580072937, guid: 3dd50886582244645be87adb42aa8528, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657495895223766232, guid: 3dd50886582244645be87adb42aa8528, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4994997792314849709, guid: 3dd50886582244645be87adb42aa8528, type: 3}
       propertyPath: m_Name
       value: Ground AOE explosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 4994997792314849709, guid: 3dd50886582244645be87adb42aa8528, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6759794185557706511, guid: 3dd50886582244645be87adb42aa8528, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16136,6 +16149,14 @@ PrefabInstance:
     - target: {fileID: 6759794185557706511, guid: 3dd50886582244645be87adb42aa8528, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8559804873008720192, guid: 3dd50886582244645be87adb42aa8528, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8568243489525741279, guid: 3dd50886582244645be87adb42aa8528, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
