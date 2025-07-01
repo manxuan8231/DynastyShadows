@@ -124,13 +124,21 @@ public class DameZone : MonoBehaviour
                     return;
                 }
                 TurretHP turretHP = other.GetComponent<TurretHP>();
-            if (turretHP != null)
-            {
+                if (turretHP != null)
+                {
                 listDame.Add(other);// thêm collider vào danh sách
                 ShowTextDame(finalDamage);
                 turretHP.TakeDame(finalDamage);
                 return;
-            }
+                }
+                DragonRed dragonRed = other.GetComponent<DragonRed>();
+                if (dragonRed != null)
+                {
+                listDame.Add(other);// thêm collider vào danh sách
+                ShowTextDame(finalDamage);
+                dragonRed.TakeDame(finalDamage);
+                return;
+                }   
         }
         
     }
@@ -222,6 +230,14 @@ public class DameZone : MonoBehaviour
                 listDame.Add(other);// thêm collider vào danh sách
                 ShowTextDame(finalDamage);
                 turretHP.TakeDame(finalDamage);
+                return;
+            }
+            DragonRed dragonRed = other.GetComponent<DragonRed>();
+            if (dragonRed != null)
+            {
+                listDame.Add(other);// thêm collider vào danh sách
+                ShowTextDame(finalDamage);
+                dragonRed.TakeDame(finalDamage);
                 return;
             }
 
