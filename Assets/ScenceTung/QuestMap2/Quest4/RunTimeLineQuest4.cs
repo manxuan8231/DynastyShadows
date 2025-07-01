@@ -1,4 +1,4 @@
-﻿using Unity.VisualScripting;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -10,6 +10,9 @@ public class RunTimeLineQuest4 : MonoBehaviour
     public GameObject boss;
     public int activeTimeLine = 0; // Biến để xác định xem timeline có được kích hoạt hay không
     public PlayableDirector playableDirector;
+    [Header("canvas")]
+    public GameObject canvasQuest;
+    public TMP_Text content;
     void Start()
     {
         if (playerInGame == null)
@@ -38,6 +41,7 @@ public class RunTimeLineQuest4 : MonoBehaviour
         // Kết thúc cutscene, chơi tiếp
         playerInGame.SetActive(true);
         playerTimeLine.SetActive(false);
+        content.text = "Tiêu diệt \" Rồng đỏ \" ";
         gameObject.SetActive(false); // Ẩn đối tượng sau khi timeline kết thúc
         boss.SetActive(true); // Kích hoạt boss sau khi timeline kết thúc
     }

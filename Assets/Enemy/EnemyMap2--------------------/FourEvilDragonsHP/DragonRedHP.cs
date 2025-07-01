@@ -18,8 +18,11 @@ public class DragonRedHP : MonoBehaviour
     private bool isArmorRegenerating = false; // Biến để kiểm tra xem giáp ảo 
     public bool isStunned = false;//chỉ cho chạy animator 1 lần
 
+    //tich diem de phan khang
+    public int strugglePoint = 0;
     //tham chieu
     private DragonRed dragonRed; // Tham chiếu đến script DragonRed
+    public TimeLineBossDragonDead timeLine;
     void Start()
     {
         dragonRed = FindAnyObjectByType<DragonRed>(); // Tìm đối tượng DragonRed trong cảnh
@@ -33,6 +36,7 @@ public class DragonRedHP : MonoBehaviour
         sliderArmor.maxValue = maxArmor;
         sliderArmor.value = currentArmor;
         isStunned = false;
+        timeLine = FindAnyObjectByType<TimeLineBossDragonDead>(); // Tìm đối tượng TimeLineBossDragonDead trong cảnh
     }
 
     
@@ -45,8 +49,10 @@ public class DragonRedHP : MonoBehaviour
     {
         if (currentArmor > 0)
         {
+           
             currentArmor -= amount; // Giảm giáp ảo
             UpdateUI();
+            strugglePoint++;
         }
         if (currentArmor <= 0)
         {
@@ -54,7 +60,7 @@ public class DragonRedHP : MonoBehaviour
             UpdateUI();
             if (currentHp <= 0)
             {
-               Destroy(gameObject); 
+                timeLine.Run();
 
             }
         }
@@ -113,4 +119,5 @@ public class DragonRedHP : MonoBehaviour
         isArmorRegenerating = false; // Cho phép lần hồi tiếp theo
         UpdateUI();
     }
+   
 }
