@@ -22,6 +22,7 @@ public class DragonRedHP : MonoBehaviour
     public int strugglePoint = 0;
     //tham chieu
     private DragonRed dragonRed; // Tham chiếu đến script DragonRed
+    public TimeLineBossDragonDead timeLine;
     void Start()
     {
         dragonRed = FindAnyObjectByType<DragonRed>(); // Tìm đối tượng DragonRed trong cảnh
@@ -35,6 +36,7 @@ public class DragonRedHP : MonoBehaviour
         sliderArmor.maxValue = maxArmor;
         sliderArmor.value = currentArmor;
         isStunned = false;
+        timeLine = FindAnyObjectByType<TimeLineBossDragonDead>(); // Tìm đối tượng TimeLineBossDragonDead trong cảnh
     }
 
     
@@ -58,7 +60,7 @@ public class DragonRedHP : MonoBehaviour
             UpdateUI();
             if (currentHp <= 0)
             {
-               Destroy(gameObject); 
+                timeLine.Run();
 
             }
         }
