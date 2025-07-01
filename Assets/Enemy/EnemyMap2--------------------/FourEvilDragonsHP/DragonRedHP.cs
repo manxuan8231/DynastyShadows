@@ -18,6 +18,8 @@ public class DragonRedHP : MonoBehaviour
     private bool isArmorRegenerating = false; // Biến để kiểm tra xem giáp ảo 
     public bool isStunned = false;//chỉ cho chạy animator 1 lần
 
+    //tich diem de phan khang
+    public int strugglePoint = 0;
     //tham chieu
     private DragonRed dragonRed; // Tham chiếu đến script DragonRed
     void Start()
@@ -45,8 +47,10 @@ public class DragonRedHP : MonoBehaviour
     {
         if (currentArmor > 0)
         {
+           
             currentArmor -= amount; // Giảm giáp ảo
             UpdateUI();
+            strugglePoint++;
         }
         if (currentArmor <= 0)
         {
@@ -113,4 +117,5 @@ public class DragonRedHP : MonoBehaviour
         isArmorRegenerating = false; // Cho phép lần hồi tiếp theo
         UpdateUI();
     }
+   
 }
