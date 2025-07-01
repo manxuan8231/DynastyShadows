@@ -25,8 +25,11 @@ public class TextQuest4 : MonoBehaviour
     public GameObject destroy;
     public GameObject questpoint;
 
+    [Header("Collider")]
+    public BoxCollider boxCollider;
     private void Start()
     {
+        boxCollider = GetComponent<BoxCollider>();
         questpoint.SetActive(false); // Đảm bảo questpoint không hiển thị ban đầu
     }
     private void Update()
@@ -65,6 +68,9 @@ public class TextQuest4 : MonoBehaviour
         yield return new WaitForSeconds(2f);
         questpoint.SetActive(true); // Kích hoạt questpoint
         stateCanvas.SetActive(false);
+        TextQuest4 text = FindAnyObjectByType<TextQuest4>();
+        text.enabled = false;
+        boxCollider.enabled = false; // Vô hiệu hóa collider sau khi hoàn thành nhiệm vụ
 
 
     }
