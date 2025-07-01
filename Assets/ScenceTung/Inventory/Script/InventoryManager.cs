@@ -5,7 +5,7 @@ public class InventoryManager : MonoBehaviour
 {
     public GameObject inventoryMenu;
     public GameObject inventoryLogo;
-    public GameObject craftingMenu;
+
 
     public GameObject equipmentMenu;
     public bool isOpenInventory = true;
@@ -26,8 +26,6 @@ public class InventoryManager : MonoBehaviour
         if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory)
             EquipmentMenu();
 
-        if (Input.GetKeyDown(KeyCode.C)) // ← thêm dòng này
-            CraftingMenu();
     }
     void Inventory()
     {
@@ -70,27 +68,6 @@ public class InventoryManager : MonoBehaviour
             inventoryMenu.SetActive(false);
             inventoryLogo.SetActive(true);
             equipmentMenu.SetActive(true);
-        }
-    }
-    void CraftingMenu()
-    {
-        if (craftingMenu.activeSelf)
-        {
-            Time.timeScale = 1f;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            craftingMenu.SetActive(false);
-            inventoryMenu.SetActive(false);
-            equipmentMenu.SetActive(false);
-        }
-        else
-        {
-            Time.timeScale = 0f;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            craftingMenu.SetActive(true);
-            inventoryMenu.SetActive(false);
-            equipmentMenu.SetActive(false);
         }
     }
 
