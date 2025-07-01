@@ -94,17 +94,21 @@ public class Skill5Eye : MonoBehaviour
 
     public void FindObject()
     {
-        int layerMask = LayerMask.GetMask(targetLayerName);
-        Collider[] hits = Physics.OverlapSphere(transform.position, searchRadius, layerMask);
+        //int layerMask = LayerMask.GetMask(targetLayerName);
+        Collider[] hits = Physics.OverlapSphere(transform.position, searchRadius);
 
         foreach (Collider hit in hits)
         {
-            GameObject obj = hit.gameObject;
-            Transform target = obj.transform;
+            if (hit.CompareTag("Enemy"))
+            {
+                GameObject obj = hit.gameObject;
+                Transform target = obj.transform;
 
-            GameObject icon = Instantiate(iconPrefab, uiCanvas.transform);
-            spawnedIcons.Add(icon);
-            trackedTargets.Add(target);
+                GameObject icon = Instantiate(iconPrefab, uiCanvas.transform);
+                spawnedIcons.Add(icon);
+                trackedTargets.Add(target);
+            }
+            
         }
     }
 

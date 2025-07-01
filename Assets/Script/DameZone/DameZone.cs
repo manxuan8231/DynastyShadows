@@ -11,7 +11,6 @@ public class DameZone : MonoBehaviour
     public Transform textTransform;
     //
     public Collider dameZoneCollider;
-    public string[] tagEnemy;
     public List<Collider> listDame = new List<Collider>();
 
     //ke thua
