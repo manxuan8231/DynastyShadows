@@ -14,6 +14,9 @@ public class ActiveQuest4 : MonoBehaviour
     public string[] contentTextQuest;
     public string[] nameTextQuest;
     Coroutine Coroutine;
+
+    public GameObject canvasQuest;
+   
     [Header("Bool")]
     bool isOpen;
     bool isTyping;
@@ -149,6 +152,7 @@ public class ActiveQuest4 : MonoBehaviour
         back.SetActive(true);
         AwardQuest awardQuest = FindFirstObjectByType<AwardQuest>();
         awardQuest.AwardQuest4(); // Gọi hàm để thưởng nhiệm vụ 4
+        canvasQuest.SetActive(false);
         if (Coroutine != null)
         {
             StopCoroutine(Coroutine);

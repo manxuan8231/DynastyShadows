@@ -15,7 +15,6 @@ public class TurretHP : MonoBehaviour
 
     void Start()
     {
-        Turret = GameObject.Find("tru").GetComponent<Turret>();
         effect.SetActive(false);
         currentHealth = maxHealth;
         sliderHp.maxValue = currentHealth;
