@@ -98,8 +98,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 1, y: 997}
-  m_SizeDelta: {x: 592.9668, y: 32}
+  m_AnchoredPosition: {x: 1, y: 1001}
+  m_SizeDelta: {x: 552.6, y: 24.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &859600596590161482
 MonoBehaviour:
@@ -679,8 +679,10 @@ GameObject:
   - component: {fileID: 5229575793997616486}
   - component: {fileID: 538552206537652801}
   - component: {fileID: 3608774944898538544}
+  - component: {fileID: 2118559985542928316}
   - component: {fileID: 7879363964139646464}
   - component: {fileID: 2123140461818607587}
+  - component: {fileID: 2401497156273683432}
   m_Layer: 10
   m_Name: Red(Dragon)
   m_TagString: Untagged
@@ -743,16 +745,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   detectionRangePL: 100
+  stopDistance: 16
   moveSpeed: 3.5
+  attackCooldown: 4
+  lastAttackTime: -4
+  navMeshAgent: {fileID: 2401497156273683432}
+  animator: {fileID: 538552206537652801}
+--- !u!114 &2118559985542928316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645739450123298902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb73a66219ed4b944bb9730d2fa69c44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   sliderHp: {fileID: 7893916978538489574}
   textHp: {fileID: 3950991723470561901}
   currentHp: 0
-  maxHp: 10000
+  maxHp: 222
   sliderArmor: {fileID: 859600596590161482}
   currentArmor: 0
   maxArmor: 11
-  navMeshAgent: {fileID: 0}
-  animator: {fileID: 538552206537652801}
+  isStunned: 0
 --- !u!54 &7879363964139646464
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -776,7 +794,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -803,6 +821,28 @@ CapsuleCollider:
   m_Height: 6.708703
   m_Direction: 2
   m_Center: {x: 0, y: 1.93, z: 0.5219641}
+--- !u!195 &2401497156273683432
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645739450123298902}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1665188617123361752
 GameObject:
   m_ObjectHideFlags: 0
