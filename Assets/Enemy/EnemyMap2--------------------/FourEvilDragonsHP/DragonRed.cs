@@ -9,7 +9,11 @@ public class DragonRed : MonoBehaviour
 {
     public GameObject player;// người chơi
     public float detectionRangePL = 100f;//phat hien nguoi choi
+    public float stopDistance = 14f; // Khoảng cách dừng di chuyển khi đến gần người chơi
     public float moveSpeed = 3.5f; // Tốc độ di chuyển của rồng đỏ
+    //attackcooldown
+    public float attackCooldown = 2f; // Thời gian chờ giữa các đợt tấn công
+    public float lastAttackTime = -2f; // Thời gian của lần tấn công cuối cùng
     //hp
     public Slider sliderHp;//máu
     public TextMeshProUGUI textHp;
@@ -52,22 +56,77 @@ public class DragonRed : MonoBehaviour
 
     void Update()
     {
+        Stun();//stun sau khi bi  het giap
+        MoveToPlayer();
+        Attack();
+
+    }
+
+
+    //stun sau khi bi  het giap
+    public void Stun()
+    {
+        if(currentArmor <= 0)//neu giáp ảo <= 0 thì choáng
+        {
+            if (!isStunned) // Chỉ cho phép chạy hành động này một lần
+            {
+                isStunned = true; // Đánh dấu là đã bị choáng
+                animator.SetTrigger("Stun"); 
+                animator.SetBool("IsWalking", false); // Tắt hành động di chuyển trong Animator
+                navMeshAgent.isStopped = true; 
+              
+            }
+        }
+        if(currentArmor > 0)//nếu giáp ảo > 0 thì không choáng nữa
+        {
+            if (isStunned) // Chỉ cho phép chạy hành động này một lần
+            {
+                Debug.Log("het stun");  
+                isStunned = false; // Nếu giáp còn, không choáng nữa
+                animator.SetTrigger("Idle");
+
+                navMeshAgent.isStopped = false;
+            }
+            
+        }
         // Kiểm tra nếu giáp ảo đã hết và chưa bắt đầu hồi phục
         if (currentArmor <= 0 && !isArmorRegenerating)
         {
             isArmorRegenerating = true;
             StartCoroutine(WaitRegenerateArmor()); // Bắt đầu Coroutine để hồi phục giáp ảo
         }
-      
-        
+    }
+    // Di chuyển rồng đỏ về phía người chơi nếu trong phạm vi phát hiện
+    public void MoveToPlayer()
+    {
+        if (isStunned) return; //Không di chuyển khi đang stun
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position); // Tính khoảng cách đến người chơi
+        if (distanceToPlayer <= detectionRangePL && distanceToPlayer > stopDistance)
+        {
+            navMeshAgent.SetDestination(player.transform.position); // Di chuyển đến vị trí của người chơi
+            animator.SetBool("IsWalking", true); // Kích hoạt hành động di chuyển trong Animator
+        }
+        else
+        {
+            navMeshAgent.ResetPath(); // Dừng di chuyển nếu không còn trong phạm vi phát hiện
+            animator.SetBool("IsWalking", false); // Tắt hành động di chuyển trong Animator
+        }
     }
 
-   
+    public void Attack()
+    {
+        if (isStunned) return; //Không di chuyển khi đang stun
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        if(distanceToPlayer <= stopDistance && Time.time >= lastAttackTime + attackCooldown)
+        {
+            animator.SetTrigger("AttackHand"); // Kích hoạt hành động tấn công trong Animator         
+            lastAttackTime = Time.time; // Cập nhật thời gian của lần tấn công cuối cùng
+        }
+    }
 
+    
 
-
-
-    //ham lay hp
+    //ham lay hp----------------------------
     public void TakeDame(float amount)
     {
         if(currentArmor > 0)
