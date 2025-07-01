@@ -43,6 +43,8 @@ public class SkillFlexibleManager : MonoBehaviour
     public float turnInSkill1 = 0f;
 
     public ItemSO itemQuestUnlock;
+    public int activeSkillUnlock = 0;
+
     public ItemSO itemQuestUnlock2; // Biến để kiểm tra xem có hiển thị kỹ năng 5hay không
     void Start()
     {
@@ -89,7 +91,7 @@ public class SkillFlexibleManager : MonoBehaviour
                 break;
 
             case "Shield":
-                if (itemQuestUnlock != null && itemQuestUnlock.showSkill4)
+                if (itemQuestUnlock != null && itemQuestUnlock.showSkill4 && activeSkillUnlock == 3)
                 {
                     previewText.text = "Khiên Chắn";
                     contenSkill.text = "Khi dùng kỹ năng này thì player sẽ được lớp giáp ảo gồm 500 máu và kháng tất cả hiệu ứng.";
