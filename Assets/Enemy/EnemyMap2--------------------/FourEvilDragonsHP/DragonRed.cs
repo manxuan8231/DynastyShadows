@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public class DragonRed : MonoBehaviour
 {
     public GameObject player;// người chơi
-   
+    public float detectionRangePL = 100f;//phat hien nguoi choi
+    public float moveSpeed = 3.5f; // Tốc độ di chuyển của rồng đỏ
     //hp
     public Slider sliderHp;//máu
     public TextMeshProUGUI textHp;
@@ -25,13 +26,10 @@ public class DragonRed : MonoBehaviour
     public NavMeshAgent navMeshAgent;
     public Animator animator;
 
-    //cây hành vi
-    private Node _rootNode;// Cây hành vi gốc
-  
-
+    
     void Start()
     {
-        SetupBehaviorTree();// thiết lập cây hành vi
+       
         navMeshAgent = GetComponent<NavMeshAgent>(); // Lấy NavMeshAgent từ đối tượng này
         animator = GetComponent<Animator>(); // Lấy Animator từ đối tượng này
         // Cập nhật thanh máu
@@ -44,6 +42,12 @@ public class DragonRed : MonoBehaviour
         sliderArmor.maxValue = maxArmor;
         sliderArmor.value = currentArmor;
         isStunned = false;
+
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player"); // Tìm người chơi trong cảnh        
+        }
+        
     }
 
     void Update()
@@ -54,48 +58,16 @@ public class DragonRed : MonoBehaviour
             isArmorRegenerating = true;
             StartCoroutine(WaitRegenerateArmor()); // Bắt đầu Coroutine để hồi phục giáp ảo
         }
-        _rootNode?.Evaluate();
+      
         
     }
 
-    private void SetupBehaviorTree()
-    {
-        var isNoArmor = new ConditionNode(()=> currentArmor <= 0);//kiểm tra giáp ảo hết chưa mới cho phép giảm máu
-        var actionStun = new ActionNode(() =>
-        {
-            if (!isStunned)
-            {
-                animator.SetBool("Stun", true);
-                isStunned = true;
-            }
-            return NodeState.SUCCESS;
-        }); // chạy animator stun
-        var isArmorRestored = new ConditionNode(() => currentArmor > 0); // kiểm tra giáp ảo hoi chua
-        var actionUnsStun = new ActionNode(() =>
-        {
-            if (isStunned)
-            {
-                animator.SetBool("Stun", false); // Dừng hành động stun trong Animator
-                isStunned = false; // Đặt lại trạng thái stun
-            }
-           
-            return NodeState.SUCCESS; // Trả về thành công khi dừng hành động stun
-        });
-
-        // Cây hành vi gốc
-        _rootNode = new SelectorNode(new List<Node>
-        {
-            new SequenceNode(new List<Node> { isNoArmor, actionStun }),
-            new SequenceNode(new List<Node> { isArmorRestored, actionUnsStun }),
-        });
-
-    }  
+   
 
 
 
 
-
-
+    //ham lay hp
     public void TakeDame(float amount)
     {
         if(currentArmor > 0)
@@ -114,6 +86,7 @@ public class DragonRed : MonoBehaviour
             }
         }
     }
+    //cap nhap UI slider 
     public void UpdateUI()
     {
         // Cập nhật thanh máu      
@@ -128,7 +101,8 @@ public class DragonRed : MonoBehaviour
        
     }
 
-    public IEnumerator WaitRegenerateArmor()//khi het giap thi bat dau doi 10f r hoi phuc
+    //khi het giap thi bat dau doi 10f r hoi phuc
+    public IEnumerator WaitRegenerateArmor()
     {
         yield return new WaitForSeconds(10f); // Thời gian chờ 5 giây
         currentArmor = maxArmor; // Đặt lại giáp ảo về giá trị tối đa
