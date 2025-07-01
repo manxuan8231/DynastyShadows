@@ -19,7 +19,7 @@ public class DraKonitDameSkill2 : MonoBehaviour
         {
 
             playerStatus.TakeHealth(damagePerSecond * Time.deltaTime, gameObject); // Gây sát thương theo thời gian      
-
+            playerStatus.TakeHealShield(111);
         }
     }
 }
