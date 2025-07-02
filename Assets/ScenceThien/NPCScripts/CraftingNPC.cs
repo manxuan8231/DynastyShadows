@@ -19,7 +19,7 @@ public class CraftingNPC : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.transform.position);
         isPlayerInRange = distance <= interactionDistance;
 
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.C))
         {
             OpenCraftingMenu();
         }
