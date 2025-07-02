@@ -11,8 +11,9 @@ public class Skill2ClonePL : MonoBehaviour
     {
         skill2Manager = FindAnyObjectByType<Skill2Manager>();
         isClick = true;
+      
         //đợi để khỏi tạo hiệu ứng nổ
-        if(skill2Manager.isExplosionSkill2 == true)
+        if (skill2Manager.isExplosionSkill2 == true)
             StartCoroutine(WaitEffect(skill2Manager.timeSkill2));
     }
 
@@ -34,5 +35,7 @@ public class Skill2ClonePL : MonoBehaviour
         transform.position = new Vector3(0f, 6f, 0f);
         GameObject instan = Instantiate(effectExplotion, transform.position, Quaternion.identity);
         Destroy(instan, 2f);
+        Destroy(gameObject); // Loại bỏ đối tượng này sau khi hiệu ứng nổ đã được tạo
     }
+  
 }

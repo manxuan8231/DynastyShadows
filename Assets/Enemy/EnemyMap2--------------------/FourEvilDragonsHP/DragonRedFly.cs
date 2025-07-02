@@ -117,22 +117,25 @@ public class DragonRedFly : MonoBehaviour
             dragonRed.animator.SetBool("FlyForWard", false);
             isFlipToPlayer = true;
              //dợi tan cong
-             yield return new WaitForSeconds(3f); 
+             yield return new WaitForSeconds(2f); 
             isAttackFly = true; // Bật trạng thái tấn công bay
 
-            yield return new WaitForSeconds(6f);
+            yield return new WaitForSeconds(5f);
             isAttackFly = false;
         }
 
-       
-        dragonRed.animator.SetTrigger("FlyLand");
-        dragonRed.navMeshAgent.speed = 10f; // Trả về tốc độ bình thường
-        evenAnimatorDraRed.effectFlame.SetActive(false);
-        isFly = false;
-        isFlyingToTargets = false;
-        dragonRed.isAttack = true;
-        dragonRed.isMove = true;
-        dragonRed.isFlipAllowed = true;
+        if (isFly)
+        {
+            dragonRed.animator.SetTrigger("FlyLand");
+            dragonRed.navMeshAgent.speed = 10f; // Trả về tốc độ bình thường
+            evenAnimatorDraRed.effectFlame.SetActive(false);
+            isFly = false;
+            isFlyingToTargets = false;
+            dragonRed.isAttack = true;
+            dragonRed.isMove = true;
+            dragonRed.isFlipAllowed = true;
+        }        
+        
     }
 
 
