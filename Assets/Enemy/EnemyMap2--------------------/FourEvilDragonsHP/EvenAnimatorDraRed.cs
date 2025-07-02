@@ -7,8 +7,9 @@ public class EvenAnimatorDraRed : MonoBehaviour
     public GameObject effectFlame;
     public GameObject effectAttack3;
     //attack fly
-    public GameObject fireBallPrefab;
-    public Transform effectPosition;
+    public GameObject fireBallPrefabShoter;
+    public Transform posiFireShooterLeft;
+    public Transform posiFireShooterRight;
     //box dame
     public GameObject boxDame3;
    
@@ -62,7 +63,9 @@ public class EvenAnimatorDraRed : MonoBehaviour
     //rainFireBall
     public void FireBallRain()
     {
-        GameObject fireBall = Instantiate(fireBallPrefab, effectPosition.position, Quaternion.identity);
-        Destroy(fireBall, 5f); // Hủy sau 5 giây
+        GameObject fireBallL = Instantiate(fireBallPrefabShoter, posiFireShooterLeft.position, transform.rotation);
+        GameObject fireBallR = Instantiate(fireBallPrefabShoter, posiFireShooterRight.position, transform.rotation);
+        Destroy(fireBallL, 5f);
+        Destroy(fireBallR, 5f);
     }
 }

@@ -38,6 +38,7 @@ public class SlashCrystal : MonoBehaviour
             TryDealDamage(hitObj.GetComponent<Boss1Controller>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<EnemyMap2_HP>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<MinotaurEnemy>(), finalDamage);
+            TryDealDamage(hitObj.GetComponent<DragonRedHP>(), finalDamage);
             GameObject effHit = Instantiate(effectHit, textTransform.position, Quaternion.identity);
             Destroy(effHit, 1f); // Hủy hiệu ứng sau 1 giây
             Destroy(gameObject,0.7f);
@@ -89,6 +90,9 @@ public class SlashCrystal : MonoBehaviour
                 break;
             case MinotaurEnemy m:
                 m.TakeDamage((int)dmg);
+                break;
+            case DragonRedHP dr:
+                dr.TakeDame((int)dmg);
                 break;
         }
     }
