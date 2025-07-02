@@ -17,7 +17,7 @@ public class DragonRed : MonoBehaviour
     public float attackCooldown = 2f;
     public float lastAttackTime = -2f;
     public int stepAttack = 0;
-
+   
     // Tham chiếu
     public CapsuleCollider conllider;
     public NavMeshAgent navMeshAgent;
@@ -52,11 +52,11 @@ public class DragonRed : MonoBehaviour
         {
             if (navMeshAgent.enabled == false) return; 
             navMeshAgent.SetDestination(player.transform.position);
-            if(dragonRedHP.strugglePoint < 5)
+            if(dragonRedHP.currentHp > 2000)
             {
                 animator.SetBool("IsWalking", true);
             }
-            else if(dragonRedHP.strugglePoint >= 5)
+            else if(dragonRedHP.currentHp <= 2000)
             {
                 animator.SetBool("IsRunning", true);
             }

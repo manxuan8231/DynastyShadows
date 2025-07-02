@@ -127,6 +127,7 @@ public class DragonRedFly : MonoBehaviour
         if (isFly)
         {
             dragonRed.animator.SetTrigger("FlyLand");
+        }
             dragonRed.navMeshAgent.speed = 10f; // Trả về tốc độ bình thường
             evenAnimatorDraRed.effectFlame.SetActive(false);
             isFly = false;
@@ -134,10 +135,11 @@ public class DragonRedFly : MonoBehaviour
             dragonRed.isAttack = true;
             dragonRed.isMove = true;
             dragonRed.isFlipAllowed = true;
-        }        
+            isAttackFly = false;
+               
         
     }
-
+     
 
    
 }
