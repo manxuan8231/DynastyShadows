@@ -3,6 +3,7 @@ using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour
 {
+    DameZoneKnightHorse damezoneHorse;
     [Header("Detection & Attack")]
     public float detectionRange = 10f;
     public float attackRange = 2f;
@@ -19,6 +20,8 @@ public class enemyAI : MonoBehaviour
 
     void Start()
     {
+        damezoneHorse = FindAnyObjectByType<DameZoneKnightHorse>();
+
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
@@ -82,13 +85,6 @@ public class enemyAI : MonoBehaviour
     void Attack()
     {
         animator.SetTrigger("Attack");
-
-        // Gây sát thương nếu Player còn sống
-        TurretHP playerHealth = player.GetComponent<TurretHP>();
-        if (playerHealth != null)
-        {
-            playerHealth.TakeDame(10f); // Có thể chỉnh lượng sát thương
-        }
     }
 
 
@@ -117,4 +113,11 @@ public class enemyAI : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, stopDistance);
     }
+
+    public void startDame()
+    {
+        damezoneHorse.beginDame();
+    }
+    public void endDame() 
+    {  damezoneHorse.endDame();}
 }
