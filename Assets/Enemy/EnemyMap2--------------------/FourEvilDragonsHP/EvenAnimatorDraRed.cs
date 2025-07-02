@@ -7,15 +7,18 @@ public class EvenAnimatorDraRed : MonoBehaviour
     public GameObject effectFlame;
     public GameObject effectAttack3;
     //box dame
+   
     public GameObject boxDame3;
     //vi tri
     public Transform effectPosition;
 
     //tham chieu
     DrakonitDameZone drakonitDameZone;
+    
     void Start()
     {
         drakonitDameZone = FindAnyObjectByType<DrakonitDameZone>();
+       
         effectFlame.SetActive(false);
         boxDame3.SetActive(false);
     }
@@ -23,7 +26,7 @@ public class EvenAnimatorDraRed : MonoBehaviour
     
     void Update()
     {
-        
+       
     }
     public void PlayEffectFlame()
     {
@@ -46,10 +49,12 @@ public class EvenAnimatorDraRed : MonoBehaviour
     public void BeginDame3()
     {
         boxDame3.SetActive(true);
+       
     }
     public void EndDame3()
     {
-       
+        
         boxDame3.SetActive(false);
     }
+
 }

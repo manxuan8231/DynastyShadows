@@ -9,24 +9,27 @@ public class DragonRed : MonoBehaviour
     public float stopDistance = 14f;
     public float moveSpeed = 3.5f;
 
-    private bool isMove = true;
-    private bool isFlipAllowed = true;
-    private bool isAttack = true;
+    public bool isMove = true;
+    public bool isFlipAllowed = true;
+    public bool isAttack = true;
+    
     // Cooldown tấn công
     public float attackCooldown = 2f;
     public float lastAttackTime = -2f;
     public int stepAttack = 0;
-   
+
     // Tham chiếu
+    public CapsuleCollider conllider;
     public NavMeshAgent navMeshAgent;
     public Animator animator;
     private DragonRedHP dragonRedHP;
-
+     private DragonRedFly dragonRedFly;
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         dragonRedHP = FindAnyObjectByType<DragonRedHP>();
+        dragonRedFly = FindAnyObjectByType<DragonRedFly>();
 
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player");
@@ -34,34 +37,48 @@ public class DragonRed : MonoBehaviour
 
     void Update()
     {
+        
         MoveToPlayer();
         Attack();
-        FlyAndDashBack();
+       
     }
     //walk den player
     public void MoveToPlayer()
     {
         if (dragonRedHP.isStunned) return;
-
+        if(dragonRedFly.isFly) return; // Nếu đang bay thì không di chuyển
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
         if (distanceToPlayer <= detectionRangePL && distanceToPlayer > stopDistance && isMove)
         {
+            if (navMeshAgent.enabled == false) return; 
             navMeshAgent.SetDestination(player.transform.position);
-            animator.SetBool("IsWalking", true);
+            if(dragonRedHP.strugglePoint < 5)
+            {
+                animator.SetBool("IsWalking", true);
+            }
+            else if(dragonRedHP.strugglePoint >= 5)
+            {
+                animator.SetBool("IsRunning", true);
+            }
+                
         }
         else
         {
+            if(navMeshAgent.enabled == false) return; 
             navMeshAgent.ResetPath();
             animator.SetBool("IsWalking", false);
+            animator.SetBool("IsRunning", false);
         }
     }
     //tan cong 
     public void Attack()
     {
         if (dragonRedHP.isStunned) return;
-        if(isAttack == false) return;
-        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        if(!isAttack) return;    
+        if (dragonRedFly.isFly) return; // Nếu đang bay thì không di chuyển
 
+
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
         // Nếu đang trong cooldown và được phép flip thì xoay mặt về phía player
         if (Time.time < lastAttackTime + attackCooldown && isFlipAllowed)
         {
@@ -73,6 +90,7 @@ public class DragonRed : MonoBehaviour
 
         if (distanceToPlayer <= stopDistance && Time.time >= lastAttackTime + attackCooldown)
         {
+            animator.SetBool("IsWalking", false);
             isMove = false;
             isFlipAllowed = false;
             StartCoroutine(WaitToFlipBack()); // Sau khi đánh xong thì mới cho xoay lại sau 4 giây
@@ -88,11 +106,13 @@ public class DragonRed : MonoBehaviour
             {
                 stepAttack = 2;
                 animator.SetTrigger("AttackHand");
+                StartCoroutine(WaitTakeOffBox(3f)); //  để tránh va chạm
             }
             else if (stepAttack == 2)
             {
                 stepAttack = 0;
                 animator.SetTrigger("AttackFlame");
+               
             }
 
             lastAttackTime = Time.time;
@@ -105,103 +125,26 @@ public class DragonRed : MonoBehaviour
            
         }
     }
-    //fly rồi lùi ra sau
-    public void FlyAndDashBack()
-    {
-        if (dragonRedHP.isStunned) return;
-
-        if (dragonRedHP.strugglePoint >= 5)
-        {
-            isAttack = false; // Ngừng tấn công
-            animator.SetBool("Fly",true); // Chạy animation bay lên
-            isMove = false;
-            isFlipAllowed = false;
-            StartCoroutine(FlyUpThenRetreat());
-        }
-    }
-
+   
     public IEnumerator WaitToFlipBack()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4f);
         isFlipAllowed = true;
     }
 
     public IEnumerator WaitMoveToPlayer()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2f);
         isMove = true;
     }
-    private IEnumerator FlyUpThenRetreat()
+   
+    //tat bat box
+    public IEnumerator WaitTakeOffBox(float time)
     {
-        animator.SetBool("Fly", false);
-        navMeshAgent.enabled = false;
-
-        Vector3 startPos = transform.position;
-        Vector3 flyUpPos = startPos + Vector3.up * 5f;
-
-        float duration = 1f;
-        float time = 0f;
-
-        // Bay lên
-        while (time < duration)
-        {
-            transform.position = Vector3.Lerp(startPos, flyUpPos, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-        transform.position = flyUpPos;
-
-        yield return new WaitForSeconds(2f); // Giữ trên không
-
-        // Lùi về phía sau khi đang bay
-        Vector3 retreatPos = flyUpPos - transform.forward * 10f;
-        time = 0f;
-        while (time < duration)
-        {
-            transform.position = Vector3.Lerp(flyUpPos, retreatPos, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-        transform.position = retreatPos;
-
-      
-        animator.SetBool("FlyBack", true);
-
-        // (Tuỳ chọn) Hạ xuống lại mặt đất sau khi animation FlyBack chạy
-        yield return new WaitForSeconds(41f); // chờ animation FlyBack một chút
-        animator.SetBool("FlyBack", false);
-        Vector3 groundPos = new Vector3(retreatPos.x, startPos.y, retreatPos.z);
-        time = 0f;
-        while (time < duration)
-        {
-            transform.position = Vector3.Lerp(retreatPos, groundPos, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-        transform.position = groundPos;
-
-        // Bật lại NavMesh và di chuyển
-        navMeshAgent.enabled = true;
-        StartCoroutine(WaitToFlipBack());
+        conllider.enabled = false;
+        yield return new WaitForSeconds(time);
+        conllider.enabled = true;
     }
 
-
-
-    public IEnumerator DashToTarget(Vector3 targetPosition, float duration)
-    {
-        Vector3 startPos = transform.position;
-        float time = 0f;
-        navMeshAgent.enabled = false;
-
-        while (time < duration)
-        {
-            time += Time.deltaTime;
-            float t = time / duration;
-            transform.position = Vector3.Lerp(startPos, targetPosition, t);
-            yield return null;
-        }
-
-        transform.position = targetPosition;
-        navMeshAgent.enabled = true;
-    }
+   
 }
