@@ -126,6 +126,14 @@ public class DameZoneSkill3PL : MonoBehaviour
                 minotaurController.TakeDamage(finalDamage);
                 return;
             }
+            DragonRedHP dragonRedHP = other.GetComponent<DragonRedHP>();
+            if (dragonRedHP != null)
+            {
+
+                ShowTextDame(finalDamage);
+                dragonRedHP.TakeDame(finalDamage);
+                return;
+            }
         }
     }
     public void ShowTextDame(float damage)
