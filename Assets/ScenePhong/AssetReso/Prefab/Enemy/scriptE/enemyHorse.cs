@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour
 {
-    DameZoneKnightHorse damezoneHorse;
+   public DameZoneKnightHorse damezoneHorse;
     [Header("Detection & Attack")]
     public float detectionRange = 10f;
     public float attackRange = 2f;
@@ -84,6 +84,7 @@ public class enemyAI : MonoBehaviour
 
     void Attack()
     {
+        transform.LookAt(player);
         animator.SetTrigger("Attack");
     }
 
@@ -114,10 +115,11 @@ public class enemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, stopDistance);
     }
 
-    public void startDame()
+    public void StartDame()
     {
+        Debug.Log("StartDame");
         damezoneHorse.beginDame();
     }
-    public void endDame() 
+    public void EndDame() 
     {  damezoneHorse.endDame();}
 }

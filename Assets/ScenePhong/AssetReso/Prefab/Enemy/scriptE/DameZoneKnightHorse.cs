@@ -43,6 +43,7 @@ public class DameZoneKnightHorse : MonoBehaviour
     }
     public void beginDame()
     {
+        Debug.Log("beginDame");
         listDame.Clear();
         dameZoneCollider.enabled = true;
     }
