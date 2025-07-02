@@ -13,14 +13,18 @@ public class EnemyMap2_HP : MonoBehaviour
     EnemyMap2_1 enemyMap2_1;
     public BoxCollider boxDame;
     public NPCQuest npc;
-
+    public ActiveStartTimeLine6 activeStartTimeLine6;
     void OnEnable()
     {
+
         ResetEnemy(); // Mỗi lần lấy từ pool ra thì reset lại
+
     }
     private void Awake()
     {
+
         npc = FindFirstObjectByType<NPCQuest>();
+        activeStartTimeLine6 = FindFirstObjectByType<ActiveStartTimeLine6>();
         enemyMap2_1 = GetComponent<EnemyMap2_1>();
     }
     void Start()
@@ -63,6 +67,10 @@ public class EnemyMap2_HP : MonoBehaviour
             if (npc != null)
             {
                 npc.UpdateKillQuest(); // Đánh dấu đã giết được enemy
+            }
+            if (activeStartTimeLine6 != null)
+            {
+                activeStartTimeLine6.Count(); // Bật timeline 6
             }
             StartCoroutine(WaitDeath());
         }

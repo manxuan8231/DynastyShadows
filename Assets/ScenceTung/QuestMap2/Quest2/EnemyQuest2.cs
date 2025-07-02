@@ -27,7 +27,6 @@ public class EnemyQuest2 : MonoBehaviour
         DetectPlayer();
         if (playerInSight)
         {
-            Debug.Log("mẫn ngu");
             if (!hasSpawned)
             {
                 SpawnEnemies();
