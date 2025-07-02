@@ -15,7 +15,8 @@ public class DragonRedFly : MonoBehaviour
     public float lastAttackTime = -8f; // Thời gian tấn công cuối cùng
     public float timeToDash = 10f; 
     public float rangePosi = 0.1f;
-    private bool isAttackFly = false; // Kiểm tra xem có đang tấn công hay không
+    public float stepAttack = 0; // Biến để theo dõi bước tấn công
+    public bool isAttackFly = false; // Kiểm tra xem có đang tấn công hay không
     // Tham chiếu
     private DragonRedHP dragonRedHP;
     private DragonRed dragonRed;
@@ -54,7 +55,9 @@ public class DragonRedFly : MonoBehaviour
         
         if (dragonRedHP.strugglePoint >= 5 && isFlyTakeOff)
         {
+
             dragonRed.animator.SetTrigger("FlyTakeOff"); // Animation bay lên
+            isFly = true;
             dragonRed.isAttack = false;
             dragonRed.isMove = false;
             dragonRed.isFlipAllowed = false;
@@ -68,8 +71,19 @@ public class DragonRedFly : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(transform.position, dragonRed.player.transform.position);
         if (isAttackFly && Time.time >= lastAttackTime + cooldownAttack && distanceToPlayer <= 70f) 
         {
-            isFlipToPlayer = false; // Tắt trạng thái flip khi tấn công bay
-            dragonRed.animator.SetTrigger("FlyFlame");
+            if(stepAttack==0)
+            {
+                stepAttack++;
+                dragonRed.animator.SetTrigger("FlyFlame");
+            }
+            else if (stepAttack == 1)
+            {
+                stepAttack--;
+                dragonRed.navMeshAgent.speed = 50f;
+                dragonRed.animator.SetTrigger("FlyGlide");
+            }
+           
+
             lastAttackTime = Time.time; // Cập nhật thời gian tấn công cuối cùng
         }
         if (isAttackFly)
@@ -117,7 +131,7 @@ public class DragonRedFly : MonoBehaviour
             dragonRed.animator.SetBool("FlyForWard", false);
             isFlipToPlayer = true;
              //dợi tan cong
-             yield return new WaitForSeconds(2f); 
+             yield return new WaitForSeconds(1f); 
             isAttackFly = true; // Bật trạng thái tấn công bay
 
             yield return new WaitForSeconds(5f);
