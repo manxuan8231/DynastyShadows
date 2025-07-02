@@ -14,6 +14,7 @@ public class TimeLineBossDragonDead : MonoBehaviour
     public AwardQuest awardQuest; // Tham chiếu đến script AwardQuest
     public GameObject objDestroy;
     public Light _light;
+    public NPCDialogueController npc;
     [Header("canvas")]
     public GameObject canvasQuest;
     public TMP_Text content;
@@ -22,14 +23,17 @@ public class TimeLineBossDragonDead : MonoBehaviour
     public TMP_Text missionName;
     public Image iconState;
     public Sprite spirteState;
+    [Header("gameobject")]
+    public GameObject back;
     void Start()
     {
         if (playerInGame == null)
             playerInGame = GameObject.FindWithTag("Player"); // tìm theo tag cho dễ quản lý
         awardQuest = FindAnyObjectByType<AwardQuest>(); // Tìm kiếm đối tượng AwardQuest trong scene
         _light = GameObject.Find("Directional Light(None)").GetComponent<Light>(); // Tìm kiếm ánh sáng trong scene
+        npc = FindAnyObjectByType<NPCDialogueController>(); // Tìm kiếm NPCDialogueController trong scene
     }
-
+   
     public void Run()
     {
              boss.SetActive(false); // Kích hoạt boss sau khi timeline kết thúc
@@ -68,6 +72,8 @@ public class TimeLineBossDragonDead : MonoBehaviour
         stateCanvas.SetActive(false); // Ẩn canvas trạng thái
         awardQuest.AwardQuest2(); // Gọi hàm để thưởng nhiệm vụ 4
         yield return new WaitForSeconds(1f); // Chờ 1 giây trước khi ẩn canvas nhiệm vụ
+        back.SetActive(true); // Kích hoạt nút quay lại
+        npc.currentStage = QuestStage.Quest5InProgress;
         gameObject.SetActive(false); // Ẩn đối tượng sau khi timeline kết thúc
 
     }
