@@ -12,6 +12,7 @@ public class ActiveQuest6 : MonoBehaviour
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack script
     public bool isTeleDone = false;
     public GameObject Point;
+    public bool isActiveQuest6 = false;
     void Start()
     {
          npcDialogueController = FindAnyObjectByType<NPCDialogueController>();
@@ -44,7 +45,6 @@ public class ActiveQuest6 : MonoBehaviour
         if (npcDialogueController.currentStage == QuestStage.NotStarted)
         {
             Point.SetActive(false); // Hiện điểm quest nếu nhiệm vụ chưa bắt đầu
-            Debug.Log("Nhiệm vụ thì ko có làm cc à ?");
             return;
         }
         if (npcDialogueController.currentStage == QuestStage.Quest6InProgress)
@@ -99,6 +99,8 @@ public class ActiveQuest6 : MonoBehaviour
             loadingPanel.SetActive(false);
         yield return new WaitForSeconds(1f);
         isTeleDone = true; // Đặt cờ để biết nhiệm vụ đã hoàn thành
+        yield return new WaitForSeconds(3f);
+        isActiveQuest6 = true; 
         gameObject.SetActive(false); // Ẩn đối tượng này sau khi hoàn thành nhiệm vụ
     }
 
