@@ -6,11 +6,14 @@ public class EvenAnimatorDraRed : MonoBehaviour
     public GameObject effectAttack1;
     public GameObject effectFlame;
     public GameObject effectAttack3;
+    //attack fly
+    public GameObject fireBallPrefabShoter;
+    public Transform posiFireShooterLeft;
+    public Transform posiFireShooterRight;
     //box dame
-   
     public GameObject boxDame3;
-    //vi tri
-    public Transform effectPosition;
+   
+   
 
     //tham chieu
     DrakonitDameZone drakonitDameZone;
@@ -28,6 +31,7 @@ public class EvenAnimatorDraRed : MonoBehaviour
     {
        
     }
+    // Hiệu ứng lua
     public void PlayEffectFlame()
     {
         effectFlame.SetActive(true);
@@ -36,7 +40,7 @@ public class EvenAnimatorDraRed : MonoBehaviour
     {
         effectFlame.SetActive(false);
     }
-
+    //attack
     public void BeginDame()
     {
         drakonitDameZone.beginDame();
@@ -56,5 +60,12 @@ public class EvenAnimatorDraRed : MonoBehaviour
         
         boxDame3.SetActive(false);
     }
-
+    //rainFireBall
+    public void FireBallRain()
+    {
+        GameObject fireBallL = Instantiate(fireBallPrefabShoter, posiFireShooterLeft.position, transform.rotation);
+        GameObject fireBallR = Instantiate(fireBallPrefabShoter, posiFireShooterRight.position, transform.rotation);
+        Destroy(fireBallL, 5f);
+        Destroy(fireBallR, 5f);
+    }
 }

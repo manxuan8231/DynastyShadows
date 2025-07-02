@@ -49,22 +49,22 @@ public class DragonRedHP : MonoBehaviour
     {
         if (currentArmor > 0)
         {
-           
-            currentArmor -= amount; // Giảm giáp ảo
-            UpdateUI();
+            currentArmor -= amount;
             strugglePoint++;
         }
-        if (currentArmor <= 0)
+        else
         {
-            currentHp -= amount; // Nếu giáp ảo hết, giảm máu
-            UpdateUI();
-            if (currentHp <= 0)
-            {
-                timeLine.Run();
+            currentHp -= amount;
+        }
 
-            }
+        UpdateUI();
+
+        if (currentHp <= 0)
+        {
+            timeLine.Run();
         }
     }
+
     //cap nhap UI slider 
     public void UpdateUI()
     {

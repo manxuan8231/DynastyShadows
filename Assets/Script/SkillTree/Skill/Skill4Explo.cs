@@ -42,7 +42,7 @@ public class Skill4Explo : MonoBehaviour
             TryDealDamage(hitObj.GetComponent<Boss1Controller>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<EnemyMap2_HP>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<MinotaurEnemy>(), finalDamage);
-
+            TryDealDamage(hitObj.GetComponent<DragonRedHP>(), finalDamage);
 
         }
 
@@ -85,6 +85,9 @@ public class Skill4Explo : MonoBehaviour
                 break;
             case MinotaurEnemy minotaur:
                 minotaur.TakeDamage((int)dmg);
+                break;
+            case DragonRedHP dragonRed:
+                dragonRed.TakeDame((int)dmg);
                 break;
         }
     }
