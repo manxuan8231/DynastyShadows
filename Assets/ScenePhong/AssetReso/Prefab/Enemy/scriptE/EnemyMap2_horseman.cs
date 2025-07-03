@@ -31,7 +31,7 @@ public class EnemyMap2_horseman : MonoBehaviour
 
     //box dame
     public BoxCollider damageBox;
-    public DameZoneWeapon DameZoneWeapon;
+    public DameWeaponHorseMan dameWeaponHorseMan;
 
     //goi ham
     EnemyHorseManHP enemyHorseManHP;
@@ -42,7 +42,7 @@ public class EnemyMap2_horseman : MonoBehaviour
         player = FindClosestPlayer();
         enemyHorseManHP = FindAnyObjectByType<EnemyHorseManHP>();
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
-        DameZoneWeapon = FindAnyObjectByType<DameZoneWeapon>();
+        dameWeaponHorseMan = FindAnyObjectByType<DameWeaponHorseMan>();
 
     }
     void Start()
@@ -174,11 +174,11 @@ public class EnemyMap2_horseman : MonoBehaviour
     }
     public void BatDamageBox()
     {
-        DameZoneWeapon.beginDame(); // Bật box dame khi tấn công
+        dameWeaponHorseMan.beginDame(); // Bật box dame khi tấn công
     }
     public void TatDamageBox()
     {
-        DameZoneWeapon.endDame(); // Tắt box dame sau khi tấn công xong
+        dameWeaponHorseMan.endDame(); // Tắt box dame sau khi tấn công xong
     }
     Transform FindClosestPlayer()
     {
@@ -201,7 +201,7 @@ public class EnemyMap2_horseman : MonoBehaviour
     public IEnumerator Waitingforflip()
     {
         transform.LookAt(player);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.05f);
         animator.SetTrigger("Attack");
     }
 }
