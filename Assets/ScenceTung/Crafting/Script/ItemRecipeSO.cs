@@ -18,7 +18,7 @@ public enum RecipeType
 [System.Serializable]
 public class ItemTypeAndCount
 {
-    public ItemSO itemOther;
+    public EquipmentSO itemOther;
     public int count;
 
 

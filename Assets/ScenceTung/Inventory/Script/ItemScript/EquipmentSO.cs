@@ -15,7 +15,7 @@ public class EquipmentSO : ScriptableObject
     public Vector2Int critChanceRange;
 
     [SerializeField]
-    private Sprite itemSprite;
+    public Sprite itemSprite;
     private bool hasGeneratedStats = false;
 
 

@@ -112,7 +112,7 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-    public bool HasItem(ItemSO item, int amount)
+    public bool HasItem(EquipmentSO item, int amount)
     {
         int total = 0;
 
@@ -183,7 +183,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
-    public void RemoveItem(ItemSO itemSO, int amount)
+    public void RemoveItem(EquipmentSO itemSO, int amount)
     {
         int remaining = amount;
 
@@ -215,7 +215,7 @@ public class InventoryManager : MonoBehaviour
 
         Debug.Log($"Removed {amount} x {itemSO.itemName}");
     }
-    public int AddItem(ItemSO itemSO, int quantity)
+    public int AddItem(EquipmentSO itemSO, int quantity)
     {
         // Tự xác định itemType dựa vào tên hoặc nơi gọi (nếu cần). Nếu không, gán mặc định
         ItemType itemType = ItemType.crafting; // Hoặc định nghĩa logic riêng nếu cần

@@ -4,7 +4,6 @@ using UnityEngine;
 public class CraftingManager : MonoBehaviour
 {
     public static CraftingManager Instance;
-
     public List<ItemRecipeSO> allRecipes;
 
     private void Awake()
@@ -21,6 +20,7 @@ public class CraftingManager : MonoBehaviour
                 return false;
         }
         return true;
+        
     }
 
     public void Craft(ItemRecipeSO recipe, InventoryManager inventory)
@@ -41,5 +41,4 @@ public class CraftingManager : MonoBehaviour
 
         Debug.Log($"Crafted {recipe.recipeName} successfully!");
     }
-
 }
