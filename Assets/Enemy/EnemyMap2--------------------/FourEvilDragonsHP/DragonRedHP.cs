@@ -83,43 +83,46 @@ public class DragonRedHP : MonoBehaviour
         }
     }
 
-   
+
     //stun sau khi bi  het giap
     public void Stun()
     {
-        if (currentArmor <= 0)//neu giáp ảo <= 0 thì choáng
+        if (currentArmor <= 0)
         {
-            
-            if (!isStunned) 
+            if (!isStunned)
             {
+                isStunned = true;
+
+                // Reset rồi mới Set để đảm bảo trigger hoạt động lại
+                dragonRed.animator.ResetTrigger("Stun");
                 dragonRed.animator.SetTrigger("Stun");
+
                 dragonRed.animator.SetBool("IsWalking", false);
                 dragonRed.navMeshAgent.isStopped = true;
-                isStunned = true;
-               
-               
-              
-
             }
         }
-        if (currentArmor > 0)//nếu giáp ảo > 0 thì không choáng nữa
+        else
         {
-            if (isStunned) 
+            if (isStunned)
             {
+                isStunned = false;
+
                 Debug.Log("het stun");
-                isStunned = false; 
+
+                dragonRed.animator.ResetTrigger("Idle");
                 dragonRed.animator.SetTrigger("Idle");
+
                 dragonRed.navMeshAgent.isStopped = false;
             }
-
         }
-        
+
         if (currentArmor <= 0 && !isArmorRegenerating)
         {
             isArmorRegenerating = true;
-            StartCoroutine(WaitRegenerateArmor()); 
+            StartCoroutine(WaitRegenerateArmor());
         }
     }
+
     //khi het giap thi bat dau doi 10f r hoi phuc
     public void ManaFly()
     {
