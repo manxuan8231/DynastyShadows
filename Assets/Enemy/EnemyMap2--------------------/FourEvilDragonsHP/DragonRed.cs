@@ -43,11 +43,7 @@ public class DragonRed : MonoBehaviour
         
         MoveToPlayer();
         Attack();
-        if(isTurnColi == true)
-        {
-            isTurnColi = false;
-            StartCoroutine(WaitTakeOffBox(3f)); //  để tránh va chạm
-        }
+       
         
     }
     //walk den player
@@ -60,11 +56,11 @@ public class DragonRed : MonoBehaviour
         {
             if (navMeshAgent.enabled == false) return; 
             navMeshAgent.SetDestination(player.transform.position);
-            if(dragonRedHP.currentHp > 2000)
+            if(dragonRedHP.currentHp > 6000)
             {
                 animator.SetBool("IsWalking", true);
             }
-            else if(dragonRedHP.currentHp <= 2000)
+            else if(dragonRedHP.currentHp <= 6000)
             {
                 animator.SetBool("IsRunning", true);
             }
@@ -148,13 +144,6 @@ public class DragonRed : MonoBehaviour
         isMove = true;
     }
    
-    //tat bat box
-    public IEnumerator WaitTakeOffBox(float time)
-    {
-        conllider.enabled = false;
-        yield return new WaitForSeconds(time);
-        conllider.enabled = true;
-    }
 
    
 }

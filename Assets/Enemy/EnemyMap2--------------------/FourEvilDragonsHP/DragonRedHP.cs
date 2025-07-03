@@ -92,12 +92,13 @@ public class DragonRedHP : MonoBehaviour
             
             if (!isStunned) 
             {
+                dragonRed.animator.SetTrigger("Stun");
+                dragonRed.animator.SetBool("IsWalking", false);
+                dragonRed.navMeshAgent.isStopped = true;
                 isStunned = true;
                
-                dragonRed. animator.SetTrigger("Stun");
-                dragonRed. animator.SetBool("IsWalking", false);
-                dragonRed. navMeshAgent.isStopped = true;
-                dragonRed.isTurnColi = true;
+               
+              
 
             }
         }
