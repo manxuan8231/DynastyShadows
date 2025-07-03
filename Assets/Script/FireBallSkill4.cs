@@ -46,7 +46,7 @@ public class FireBallSkill4 : MonoBehaviour
             TryDealDamage(hitObj.GetComponent<Boss1Controller>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<EnemyMap2_HP>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<MinotaurEnemy>(), finalDamage);
-
+            TryDealDamage(hitObj.GetComponent<DragonRedHP>(), finalDamage);
             SpawnImpact(); 
             Destroy(gameObject);
         }
@@ -96,6 +96,7 @@ public class FireBallSkill4 : MonoBehaviour
             case Boss1Controller b1: b1.TakeDame((int)dmg); break;
             case EnemyMap2_HP em: em.TakeDamage((int)dmg); break;
             case MinotaurEnemy me: me.TakeDamage((int)dmg); break;
+            case DragonRedHP me: me.TakeDame((int)dmg); break;
         }
     }
 }

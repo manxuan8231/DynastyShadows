@@ -97,6 +97,7 @@ public class DragonRedHP : MonoBehaviour
                 dragonRed. animator.SetTrigger("Stun");
                 dragonRed. animator.SetBool("IsWalking", false);
                 dragonRed. navMeshAgent.isStopped = true;
+                dragonRed.isTurnColi = true;
 
             }
         }

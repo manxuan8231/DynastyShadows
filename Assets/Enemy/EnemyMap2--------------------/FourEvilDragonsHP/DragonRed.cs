@@ -12,7 +12,7 @@ public class DragonRed : MonoBehaviour
     public bool isMove = true;
     public bool isFlipAllowed = true;
     public bool isAttack = true;
-    
+    public bool isTurnColi = false;
     // Cooldown tấn công
     public float attackCooldown = 2f;
     public float lastAttackTime = -2f;
@@ -35,6 +35,7 @@ public class DragonRed : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player");
+        isTurnColi = false;
     }
 
     void Update()
@@ -42,7 +43,12 @@ public class DragonRed : MonoBehaviour
         
         MoveToPlayer();
         Attack();
-       
+        if(isTurnColi == true)
+        {
+            isTurnColi = false;
+            StartCoroutine(WaitTakeOffBox(3f)); //  để tránh va chạm
+        }
+        
     }
     //walk den player
     public void MoveToPlayer()
@@ -110,7 +116,7 @@ public class DragonRed : MonoBehaviour
               
                 stepAttack = 2;
                 animator.SetTrigger("AttackHand");
-               // StartCoroutine(WaitTakeOffBox(3f)); //  để tránh va chạm
+              
             }
             else if (stepAttack == 2)
             {
