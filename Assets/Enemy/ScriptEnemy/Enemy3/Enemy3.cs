@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEngine.AI;
+﻿using Pathfinding;
+using UnityEngine;
 
 public class Enemy3 : MonoBehaviour
 {
@@ -12,12 +12,12 @@ public class Enemy3 : MonoBehaviour
         Death
     }
     public EnemyState currentState;
-    [SerializeField] public NavMeshAgent agent;
+    public AIPath aiPath; // Sử dụng AIPath để di chuyển
     [SerializeField] public Transform player;
     public Vector3 firstPos;
     [SerializeField] public Animator animator;
     public string currentTrigger;
-
+    public float distanceFirstPos = 0.2f;
     //khoảng cách
     public float radius = 20f;
     public float attackRange = 2f;
@@ -34,19 +34,14 @@ public class Enemy3 : MonoBehaviour
     public BoxCollider damageBox;
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        aiPath = GetComponent<AIPath>();
         animator = GetComponent<Animator>();
         firstPos = transform.position;
         enemyHP3 = FindAnyObjectByType<EnemyHP3>();
         player = FindClosestPlayer();
         damageBox.enabled = false; // Tắt box dame khi bắt đầu
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
-    }
-    void Start()
-    {
-      
-        
-    }                                                                   
+    }                                                             
 
     // Update is called once per frame
     void Update()
@@ -84,15 +79,28 @@ public class Enemy3 : MonoBehaviour
 
         if (distToPlayer < radius )
         {
-         if ( agent.enabled)
-            agent.SetDestination(player.position); // Đuổi theo player
+            aiPath.destination = player.position; // Chạy về phía player
+            aiPath.canSearch = true; // Bật tìm đường
+            aiPath.canMove = true; // Bật di chuyển
+            aiPath.endReachedDistance = attackRange; // Khoảng cách kết thúc đường đi
+            if (distToPlayer <= attackRange)
+            {
+                ChangeState(EnemyState.Attack); // Nếu tới gần đủ thì chuyển sang tấn công
+            }
+            else
+            {
+                ChangeState(EnemyState.Run); // Nếu chưa tới thì vẫn chạy
+            }
+
         }
         else
         {
             // Nếu player ra khỏi phạm vi, quay lại chỗ cũ
             float backDist = Vector3.Distance(transform.position, firstPos);
-            agent.SetDestination(firstPos);
-
+            aiPath.destination = firstPos; // Quay về vị trí ban đầu
+            aiPath.canSearch = true; // Bật tìm đường
+            aiPath.canMove = true; // Bật di chuyển
+            aiPath.endReachedDistance = distanceFirstPos; // Khoảng cách kết thúc đường đi về vị trí ban đầu
             if (backDist < 0.2f)
             {
                 ChangeState(EnemyState.Idle); // Về tới nơi thì Idle lại
@@ -110,15 +118,11 @@ public class Enemy3 : MonoBehaviour
             animator.SetTrigger("Attack");
             attackTimer = 0f; // Reset thời gian tấn công
         }
-        if(agent.enabled)
-        agent.isStopped = true; // Dừng lại khi tấn công
+        
         float dist = Vector3.Distance(transform.position, player.position);
         if (dist > attackRange + 1f)
         {
-            if (agent.enabled)
-            {
-                agent.isStopped = false;
-            }
+           
             attackTimer = 0f; //nếu như player đi xa
             ChangeState(EnemyState.Run);
         }
@@ -137,14 +141,20 @@ public class Enemy3 : MonoBehaviour
             case EnemyState.Idle:
                 animator.SetTrigger("Idle");
                 currentTrigger = "Idle";
+                aiPath.canMove = false; // ❌ DỪNG DI CHUYỂN
+                aiPath.canSearch = false; // ❌ DỪNG TÌM ĐƯỜNG
                 break;
             case EnemyState.Run:
                 animator.SetTrigger("Run");
                 currentTrigger = "Run";
+                aiPath.canMove = true; // ✅ BẬT DI CHUYỂN
+                aiPath.canSearch = true; // ✅ BẬT TÌM ĐƯỜNG
                 break;
             case EnemyState.Attack:
                 animator.SetTrigger("Attack");
                 currentTrigger = "Attack";
+                aiPath.canMove = false; // ❌ DỪNG DI CHUYỂN
+                aiPath.canSearch = false; // ❌ DỪNG TÌM ĐƯỜNG
                 break;
             case EnemyState.GetHit:
             
@@ -154,6 +164,8 @@ public class Enemy3 : MonoBehaviour
             case EnemyState.Death:
                 animator.SetTrigger("Death");
                 currentTrigger = "Death";
+                aiPath.canMove = false; // ❌ DỪNG DI CHUYỂN
+                aiPath.canSearch = false; // ❌ DỪNG TÌM ĐƯỜNG
                 break;
         }
     }

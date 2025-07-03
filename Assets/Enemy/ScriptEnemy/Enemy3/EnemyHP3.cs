@@ -75,10 +75,9 @@ public class EnemyHP3 : MonoBehaviour
         {
             enemy3.animator.enabled = true; // Bật animator để có thể chơi animation chết
             enemy3.enabled = true; // Bật lại Enemy2 để có thể chơi animation chết
-            enemy3.agent.enabled = true; // Bật lại NavMeshAgent để có thể chơi animation chết
+         
             currentHealth = 0;
             enemy3.ChangeState(Enemy3.EnemyState.Death);
-            enemy3.agent.isStopped = true; // Dừng lại khi chết
             DropItem();
             // Hủy enemy sau 1.5 giây để animation kịp phát xong
             
@@ -127,12 +126,7 @@ public class EnemyHP3 : MonoBehaviour
             enemy3.animator.Rebind();        // Khôi phục tất cả trạng thái mặc định ban đầu
             enemy3.animator.Update(0f);      // Đảm bảo không bị đứng hình ở frame cũ
         }
-        // Reset trạng thái di chuyển
-        if (enemy3.agent != null)
-        {
-            enemy3.agent.ResetPath();
-            enemy3.agent.enabled = true;
-        }
+       
 
     }
 }
