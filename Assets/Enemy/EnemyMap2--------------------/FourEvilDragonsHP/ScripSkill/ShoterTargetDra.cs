@@ -8,7 +8,7 @@ public class ShoterTargetDra : MonoBehaviour
     public float currentHp;
 
     public GameObject bulletPrefab; // Prefab đạn sẽ bắn
-   
+    public Transform transforms;
     public float bulletSpeed = 20f;
     public string targetTag = "Enemy"; // Tag của đối tượng sẽ bị bắn
 
@@ -38,7 +38,7 @@ public class ShoterTargetDra : MonoBehaviour
         if (nearestEnemy == null) return;
 
         // Tạo đạn
-        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        GameObject bullet = Instantiate(bulletPrefab, transforms.position, Quaternion.identity);
 
         // Tính hướng bay đến enemy
         Vector3 direction = (nearestEnemy.transform.position - transform.position).normalized;
@@ -47,7 +47,8 @@ public class ShoterTargetDra : MonoBehaviour
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.linearVelocity = direction * bulletSpeed;
+            rb.velocity = direction * bulletSpeed;
+
         }
     }
 
