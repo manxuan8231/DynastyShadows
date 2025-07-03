@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EnemyMap2_horseman : MonoBehaviour
 {
@@ -30,7 +31,7 @@ public class EnemyMap2_horseman : MonoBehaviour
 
     //box dame
     public BoxCollider damageBox;
-    public DameZoneWeapon DameZoneWeapon;
+    public DameWeaponHorseMan dameWeaponHorseMan;
 
     //goi ham
     EnemyHorseManHP enemyHorseManHP;
@@ -41,7 +42,7 @@ public class EnemyMap2_horseman : MonoBehaviour
         player = FindClosestPlayer();
         enemyHorseManHP = FindAnyObjectByType<EnemyHorseManHP>();
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
-        DameZoneWeapon = FindAnyObjectByType<DameZoneWeapon>();
+        dameWeaponHorseMan = FindAnyObjectByType<DameWeaponHorseMan>();
 
     }
     void Start()
@@ -104,14 +105,12 @@ public class EnemyMap2_horseman : MonoBehaviour
 
     public void Attack()
     {
-        transform.LookAt(player);
-
         attackTimer += Time.deltaTime;
         if (attackTimer >= attackCooldown)
         {
             // Thực hiện tấn công
             Debug.Log("Attack");
-            animator.SetTrigger("Attack");
+            StartCoroutine(Waitingforflip());
             attackTimer = 0f; // Reset thời gian tấn công
             agent.isStopped = true; // Dừng lại khi tấn công
 
@@ -175,11 +174,11 @@ public class EnemyMap2_horseman : MonoBehaviour
     }
     public void BatDamageBox()
     {
-        DameZoneWeapon.beginDame(); // Bật box dame khi tấn công
+        dameWeaponHorseMan.beginDame(); // Bật box dame khi tấn công
     }
     public void TatDamageBox()
     {
-        DameZoneWeapon.endDame(); // Tắt box dame sau khi tấn công xong
+        dameWeaponHorseMan.endDame(); // Tắt box dame sau khi tấn công xong
     }
     Transform FindClosestPlayer()
     {
@@ -198,5 +197,11 @@ public class EnemyMap2_horseman : MonoBehaviour
         }
 
         return closest;
+    }
+    public IEnumerator Waitingforflip()
+    {
+        transform.LookAt(player);
+        yield return new WaitForSeconds(0.05f);
+        animator.SetTrigger("Attack");
     }
 }

@@ -76,9 +76,9 @@ public class EnemyHorseManHP : MonoBehaviour
         }
         if (currentHealth > 0)
         {
-            enemyMap2_horseman.ChangeState(EnemyMap2_horseman.EnemyState.Die);
+            enemyMap2_horseman.ChangeState(EnemyMap2_horseman.EnemyState.GetHit);
             // Sau một thời gian nhỏ thì quay lại Run/Attack
-            Invoke(nameof(BackToChase), 0.2f);
+            Invoke(nameof(BackToChase), 1f);
         }
 
 
