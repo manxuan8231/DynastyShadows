@@ -7,6 +7,8 @@ public class ItemSO : ScriptableObject
 {
 
     public string itemName;
+    [Header("Hiển thị UI")]
+    public Sprite itemSprite;
     public StatToChange statToChange = new StatToChange();
     public float amoutToChangeStat;
 
@@ -18,6 +20,8 @@ public class ItemSO : ScriptableObject
     //unlock skill 2
     public bool hasItemQuest2 = false;
     public bool showSkill5 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 5 hay không
+
+
     public bool UseItem()
     {
         if (statToChange == StatToChange.health)
