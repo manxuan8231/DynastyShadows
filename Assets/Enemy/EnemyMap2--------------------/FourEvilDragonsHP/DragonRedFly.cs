@@ -47,8 +47,15 @@ public class DragonRedFly : MonoBehaviour
         FlyTrigger();
         AttackFly();
         FlipToPlayer();
-
-       
+        //neu ko bay du vi tri thi tu xuong khi het mana
+        if(dragonRedHP.currentMana <= 0)
+        {
+            StartCoroutine(WaitTurnOffFly(7));
+        }
+        //het giap thi tat fly
+        if (dragonRedHP.currentArmor <= 0) {
+            StartCoroutine(WaitTurnOffFly(1));
+        }
     }
 
     // Kích hoạt bay khi du điều kiện
@@ -168,6 +175,28 @@ public class DragonRedFly : MonoBehaviour
         }
     }
      
+    IEnumerator WaitTurnOffFly(float time)//neu loi ko xuong thi goi ham nay
+    {
+        yield return new WaitForSeconds(time);
+        if (dragonRedHP.currentMana <= 0)
+        {
+            if (isFly)
+            {
+                dragonRed.animator.SetTrigger("FlyLand");
+                isFly = false;
+            }
+            yield return new WaitForSeconds(2f); // Thời gian hạ cánh
+            dragonRed.navMeshAgent.speed = 10f; // Trả về tốc độ bình thường
+            evenAnimatorDraRed.EndEffectFlame();//tat hiệu ứng lửa
 
+
+            isFlyingToTargets = false;
+            dragonRed.isAttack = true;
+            dragonRed.isMove = true;
+            dragonRed.isFlipAllowed = true;
+            isAttackFly = false;
+            isFlyTakeOff = true;
+        }
+    }
    
 }

@@ -138,6 +138,13 @@ public class DameZone : MonoBehaviour
                 dragonRedHP.TakeDame(finalDamage);
                 return;
             }
+            ShoterTargetDra shoterTarget = other.GetComponent<ShoterTargetDra>();
+            if (shoterTarget != null) {
+                listDame.Add(other);
+                ShowTextDame(finalDamage);
+                shoterTarget.TakeDamage(finalDamage);
+                return ;
+            }
         }
         
     }
@@ -239,7 +246,14 @@ public class DameZone : MonoBehaviour
                 dragonRedHP.TakeDame(finalDamage);
                 return;
             }
-
+            ShoterTargetDra shoterTarget = other.GetComponent<ShoterTargetDra>();
+            if (shoterTarget != null)
+            {
+                listDame.Add(other);
+                ShowTextDame(finalDamage);
+                shoterTarget.TakeDamage(finalDamage);
+                return;
+            }
         }
     }
     public void ShowTextDame(float damage)
