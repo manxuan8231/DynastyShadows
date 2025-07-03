@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EnemyMap2_horseman : MonoBehaviour
 {
@@ -104,14 +105,12 @@ public class EnemyMap2_horseman : MonoBehaviour
 
     public void Attack()
     {
-        transform.LookAt(player);
-
         attackTimer += Time.deltaTime;
         if (attackTimer >= attackCooldown)
         {
             // Thực hiện tấn công
             Debug.Log("Attack");
-            animator.SetTrigger("Attack");
+            StartCoroutine(Waitingforflip());
             attackTimer = 0f; // Reset thời gian tấn công
             agent.isStopped = true; // Dừng lại khi tấn công
 
@@ -198,5 +197,11 @@ public class EnemyMap2_horseman : MonoBehaviour
         }
 
         return closest;
+    }
+    public IEnumerator Waitingforflip()
+    {
+        transform.LookAt(player);
+        yield return new WaitForSeconds(0.5f);
+        animator.SetTrigger("Attack");
     }
 }
