@@ -6,7 +6,7 @@ using UnityEngine;
 public class DameZoneKnightHorse : MonoBehaviour
 {
     public Collider dameZoneCollider;
-    public float dame = 50f;
+    public float dame = 100f;
     public string tagPlayer;
     public List<Collider> listDame = new List<Collider>();
     PlayerStatus playerStatus;

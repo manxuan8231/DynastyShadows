@@ -3,15 +3,17 @@ using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour
 {
-   public DameZoneKnightHorse damezoneHorse;
+    public DameZoneKnightHorse damezoneHorse;
+
     [Header("Detection & Attack")]
     public float detectionRange = 10f;
     public float attackRange = 2f;
     public float attackCooldown = 1.5f;
-    public float stopDistance = 1.8f; // 👉 khoảng cách dừng lại gần Player (để không áp sát hoàn toàn)
+    public float stopDistance = 1.8f;
 
     [Header("References")]
-    public Transform player; // Kéo Player vào hoặc tự tìm theo tag
+    [Tooltip("Không cần gán thủ công, sẽ tự tìm Player theo tag")]
+    private Transform player;
     public LayerMask raycastMask;
 
     private NavMeshAgent agent;
@@ -25,20 +27,16 @@ public class enemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
-        if (player == null)
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
         {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
-            {
-                player = playerObj.transform;
-            }
-            else
-            {
-                Debug.LogError("Không tìm thấy GameObject có tag 'Player'");
-            }
+            player = playerObj.transform;
+        }
+        else
+        {
+            Debug.LogError("Không tìm thấy GameObject có tag 'Player'");
         }
 
-        // (Tuỳ game: Nếu không dùng Layer Collision thì có thể bỏ dòng sau)
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"));
     }
 
@@ -81,13 +79,11 @@ public class enemyAI : MonoBehaviour
         }
     }
 
-
     void Attack()
     {
         transform.LookAt(player);
         animator.SetTrigger("Attack");
     }
-
 
     bool CanSeePlayer()
     {
@@ -104,7 +100,6 @@ public class enemyAI : MonoBehaviour
         return false;
     }
 
-    // 🔍 Tùy chọn: vẽ phạm vi detection/attack trong Scene
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
@@ -120,6 +115,9 @@ public class enemyAI : MonoBehaviour
         Debug.Log("StartDame");
         damezoneHorse.beginDame();
     }
-    public void EndDame() 
-    {  damezoneHorse.endDame();}
+
+    public void EndDame()
+    {
+        damezoneHorse.endDame();
+    }
 }
