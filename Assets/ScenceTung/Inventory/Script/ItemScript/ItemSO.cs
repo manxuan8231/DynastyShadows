@@ -7,6 +7,8 @@ public class ItemSO : ScriptableObject
 {
 
     public string itemName;
+    [Header("Hiển thị UI")]
+    public Sprite itemSprite;
     public StatToChange statToChange = new StatToChange();
     public float amoutToChangeStat;
 
@@ -18,6 +20,8 @@ public class ItemSO : ScriptableObject
     //unlock skill 2
     public bool hasItemQuest2 = false;
     public bool showSkill5 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 5 hay không
+
+
     public bool UseItem()
     {
         if (statToChange == StatToChange.health)
@@ -113,13 +117,13 @@ public class ItemSO : ScriptableObject
             ItemSO cloned = Instantiate(this);
             cloned.showSkill4 = true;
             cloned.hasItemQuest = true;
-
     SkillFlexibleManager manager = Resources.FindObjectsOfTypeAll<SkillFlexibleManager>()
                 .FirstOrDefault(x => x.gameObject.name == " Panel(Flexible Skill)");
 
             if (manager != null)
             {
                 manager.itemQuestUnlock = cloned;
+                manager.activeSkillUnlock ++; // Cập nhật biến activeSkillUnlock
                 Debug.Log("Gán clone ItemSO vào SkillFlexibleManager OK");
             }
             else

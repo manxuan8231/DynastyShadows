@@ -1,0 +1,149 @@
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class DragonRed : MonoBehaviour
+{
+    public GameObject player;
+    public float detectionRangePL = 100f;
+    public float stopDistance = 14f;
+    public float moveSpeed = 3.5f;
+
+    public bool isMove = true;
+    public bool isFlipAllowed = true;
+    public bool isAttack = true;
+    public bool isTurnColi = false;
+    // Cooldown tấn công
+    public float attackCooldown = 2f;
+    public float lastAttackTime = -2f;
+    public int stepAttack = 0;
+    
+    // Tham chiếu
+    public CapsuleCollider conllider;
+    public NavMeshAgent navMeshAgent;
+    public Animator animator;
+    private DragonRedHP dragonRedHP;
+    private DragonRedFly dragonRedFly;
+    public AudioSource audioSource; // Thêm AudioSource để phát âm thanh
+    public AudioClip biteSound; // Âm thanh cắn
+    void Start()
+    {
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        dragonRedHP = FindAnyObjectByType<DragonRedHP>();
+        dragonRedFly = FindAnyObjectByType<DragonRedFly>();
+        audioSource = GetComponent<AudioSource>();
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player");
+        isTurnColi = false;
+    }
+
+    void Update()
+    {
+        
+        MoveToPlayer();
+        Attack();
+       
+        
+    }
+    //walk den player
+    public void MoveToPlayer()
+    {
+        if (dragonRedHP.isStunned) return;
+        if(dragonRedFly.isFly) return; // Nếu đang bay thì không di chuyển
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        if (distanceToPlayer <= detectionRangePL && distanceToPlayer > stopDistance && isMove)
+        {
+            if (navMeshAgent.enabled == false) return; 
+            navMeshAgent.SetDestination(player.transform.position);
+            if(dragonRedHP.currentHp > 6000)
+            {
+                animator.SetBool("IsWalking", true);
+            }
+            else if(dragonRedHP.currentHp <= 6000)
+            {
+                animator.SetBool("IsRunning", true);
+            }
+                
+        }
+        else
+        {
+            if(navMeshAgent.enabled == false) return; 
+            navMeshAgent.ResetPath();
+            animator.SetBool("IsWalking", false);
+            animator.SetBool("IsRunning", false);
+        }
+    }
+    //tan cong 
+    public void Attack()
+    {
+        if (dragonRedHP.isStunned) return;
+        if(!isAttack) return;    
+        if (dragonRedFly.isFly) return; // Nếu đang bay thì không di chuyển
+
+
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        // Nếu đang trong cooldown và được phép flip thì xoay mặt về phía player
+        if (Time.time < lastAttackTime + attackCooldown && isFlipAllowed)
+        {
+            Vector3 direction = (player.transform.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+            return;
+        }
+
+        if (distanceToPlayer <= stopDistance && Time.time >= lastAttackTime + attackCooldown)
+        {
+            animator.SetBool("IsWalking", false);
+            isMove = false;
+            isFlipAllowed = false;
+            StartCoroutine(WaitToFlipBack()); // Sau khi đánh xong thì mới cho xoay lại sau 4 giây                  
+            // Combo attack logic
+            if (stepAttack == 0)
+            {
+               
+                stepAttack = 1;
+                audioSource.PlayOneShot(biteSound); // Phát âm thanh cắns
+                animator.SetTrigger("BasicAttack");
+                
+            }
+            else if (stepAttack == 1)
+            {
+              
+                stepAttack = 2;
+                animator.SetTrigger("AttackHand");
+              
+            }
+            else if (stepAttack == 2)
+            {
+                stepAttack = 0;
+                animator.SetTrigger("AttackFlame");
+               
+            }
+
+            lastAttackTime = Time.time;
+        }
+
+        // Nếu người chơi ra khỏi phạm vi thì reset combo và đợi mới được di chuyển lại
+        if (distanceToPlayer > stopDistance)
+        {
+            StartCoroutine(WaitMoveToPlayer());
+           
+        }
+    }
+    
+    public IEnumerator WaitToFlipBack()
+    {
+        yield return new WaitForSeconds(4f);
+        isFlipAllowed = true;
+    }
+
+    public IEnumerator WaitMoveToPlayer()
+    {
+        yield return new WaitForSeconds(2f);
+        isMove = true;
+    }
+   
+
+   
+}

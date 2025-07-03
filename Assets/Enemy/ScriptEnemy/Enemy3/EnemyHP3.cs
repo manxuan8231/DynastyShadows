@@ -15,7 +15,7 @@ public class EnemyHP3 : MonoBehaviour
     Enemy3 enemy3;
     Quest1 questManager; // Tham chiếu đến QuestManager
     ThuongNhan thuongNhan; // Tham chiếu đến ThuongNhan
-                           //box nhận dame                      
+    ActiveStartTimeLine6 activeStartTimeLine6;                                  
     public BoxCollider boxDame;
     void OnEnable()
     {
@@ -24,7 +24,9 @@ public class EnemyHP3 : MonoBehaviour
     private void Awake()
     {
         enemy3 = GetComponent<Enemy3>();
+        activeStartTimeLine6 = FindFirstObjectByType<ActiveStartTimeLine6>(); // Lấy tham chiếu đến ActiveStartTimeLine6
     }
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -85,6 +87,10 @@ public class EnemyHP3 : MonoBehaviour
                 questManager.UpdateQuestBacLam(1);
             if (thuongNhan != null)
                 thuongNhan.UpdateKillEnemy(1); //  Cập nhật số lượng kẻ thù đã tiêu diệt trong quest thuong nhan      
+            if (activeStartTimeLine6 != null)
+            {
+                activeStartTimeLine6.Count(); // Bật timeline 6
+            }
             StartCoroutine(WaitDeath()); // Chờ 5 giây trước khi trả về pool
         }
     }

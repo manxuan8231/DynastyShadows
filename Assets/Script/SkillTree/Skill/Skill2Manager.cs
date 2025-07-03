@@ -83,8 +83,6 @@ public class Skill2Manager : MonoBehaviour
         {
             prohibitedIcon.SetActive(false); // Ẩn biểu tượng cấm sử dụng skill 2
         }
-
-
     }
 
     // Kích hoạt kỹ năng phân thân

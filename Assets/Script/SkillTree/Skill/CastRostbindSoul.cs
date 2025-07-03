@@ -182,6 +182,13 @@ public class CastRostbindSoul : MonoBehaviour
                 minotaurController.TakeDamage(dame);
                 return;
             }
+            DragonRedHP dragonRedHP = enemy.GetComponent<DragonRedHP>();
+            if (dragonRedHP != null)
+            {
+                ShowTextDame(dame);
+                dragonRedHP.TakeDame(dame);
+                return;
+            }
         }
     }
 

@@ -7,16 +7,16 @@ public class Skill4Explo : MonoBehaviour
 
 
     public float damage = 1000f;
-
+    CameraShake cameraShake; // Biến để lưu trữ đối tượng CameraShake
     void Start()
     {
-
+        cameraShake = FindAnyObjectByType<CameraShake>(); // Tìm đối tượng CameraShake trong cảnh
     }
 
 
     void Update()
     {
-
+        cameraShake.Shake(); // Gọi hàm Shake từ CameraShake để tạo hiệu ứng rung camera
     }
     public void OnTriggerEnter(Collider other)
     {
@@ -42,7 +42,7 @@ public class Skill4Explo : MonoBehaviour
             TryDealDamage(hitObj.GetComponent<Boss1Controller>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<EnemyMap2_HP>(), finalDamage);
             TryDealDamage(hitObj.GetComponent<MinotaurEnemy>(), finalDamage);
-
+            TryDealDamage(hitObj.GetComponent<DragonRedHP>(), finalDamage);
 
         }
 
@@ -85,6 +85,9 @@ public class Skill4Explo : MonoBehaviour
                 break;
             case MinotaurEnemy minotaur:
                 minotaur.TakeDamage((int)dmg);
+                break;
+            case DragonRedHP dragonRed:
+                dragonRed.TakeDame((int)dmg);
                 break;
         }
     }

@@ -24266,9 +24266,10 @@ GameObject:
   - component: {fileID: 4450505234803237129}
   - component: {fileID: 4728104871513566576}
   - component: {fileID: 6399395559184250018}
+  - component: {fileID: 4000395514122633157}
   m_Layer: 0
   m_Name: Sword 1
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24338,3 +24339,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4000395514122633157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9213013303485917383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcba3229947e0ca45bce465d12813d63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: Kiem 1
+  quantity: 1
+  itemSprite: {fileID: 21300000, guid: 4ad16adfdf2d1a441879a598de742eb6, type: 3}
+  itemDescription: 100 damage
+  inventoryManager: {fileID: 0}
+  itemType: 6

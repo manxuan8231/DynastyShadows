@@ -71,7 +71,14 @@ public class Skill4State : PlayerState
             player.animator.SetBool("isRunning", false);
 
         }
-         
+        if (player.animator.enabled == false)
+        {
+            //skill4
+            player.animator.runtimeAnimatorController = player.animatorDefauld; // Trở về animator mặc định
+            player.skill4Manager.isHibitedIcon = false; // cam skill icon
+            player.isSkinSkill3Clone = false;
+            player.ChangeState(new PlayerCurrentState(player)); // Trở về trạng thái hiện tại
+        }
     }
     public override void Exit() 
     {

@@ -45,7 +45,13 @@ public class Skill2State : PlayerState
             player.animator.SetBool("Run", false);
         
        }
-      
+        if (player.animator.enabled == false) {
+            //skill2
+            player.animator.runtimeAnimatorController = player.animatorDefauld; // Trở về animator mặc định
+            player.skill2Manager.isHibitedIcon = false; // cam skill icon
+           
+            player.ChangeState(new PlayerCurrentState(player)); // Trở về trạng thái hiện tại
+        }
     }
     public void Jump()
     {

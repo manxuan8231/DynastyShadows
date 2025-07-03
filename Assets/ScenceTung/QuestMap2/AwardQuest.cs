@@ -35,11 +35,11 @@ public class AwardQuest : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            AwardQuest2();
-            AwardQuest4();
-        }
+        //if (Input.GetKeyDown(KeyCode.U))
+        //{
+        //    AwardQuest2();
+        //    AwardQuest4();
+        //}
     }
     public void AwardQuest2()
     {
