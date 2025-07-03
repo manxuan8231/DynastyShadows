@@ -9739,6 +9739,7 @@ GameObject:
   - component: {fileID: 417910605057485413}
   - component: {fileID: 4242362643515010386}
   - component: {fileID: 508459965911513571}
+  - component: {fileID: 2420382298133907428}
   m_Layer: 0
   m_Name: FireTim
   m_TagString: Untagged
@@ -14623,10 +14624,26 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2420382298133907428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3759611216565310457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf9f99b562aa8144b9dff2cba53f6a17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpeed: 20
+  targetTag: DragonRed
+  effectEx: {fileID: 358637981425055526, guid: 8eb503696b886e04faff8fc0f480d473, type: 3}
+  posiEffect: {fileID: 3957655388295835464}
 --- !u!1 &4623136752017943200
 GameObject:
   m_ObjectHideFlags: 0

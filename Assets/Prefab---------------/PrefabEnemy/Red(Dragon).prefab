@@ -6152,6 +6152,37 @@ Transform:
   - {fileID: 6198085353972453929}
   m_Father: {fileID: 8451273692432197386}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2157672526901530029
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3816625072647954282}
+  m_Layer: 10
+  m_Name: tagDra
+  m_TagString: DragonRed
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3816625072647954282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157672526901530029}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5311824839269892017}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2178418464356818274
 GameObject:
   m_ObjectHideFlags: 0
@@ -25608,6 +25639,7 @@ Transform:
   - {fileID: 8451273692432197386}
   - {fileID: 7348719057194052199}
   - {fileID: 83309503122395893}
+  - {fileID: 3816625072647954282}
   m_Father: {fileID: 5340651423887613629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8432475634878874114
@@ -25847,7 +25879,7 @@ GameObject:
   - component: {fileID: 2754913883739175698}
   m_Layer: 10
   m_Name: BoxCl
-  m_TagString: Untagged
+  m_TagString: DragonRed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25937,7 +25969,7 @@ MonoBehaviour:
   maxHp: 7000
   sliderArmor: {fileID: 859600596590161482}
   currentArmor: 0
-  maxArmor: 3333
+  maxArmor: 3000
   isStunned: 0
   sliderMana: {fileID: 695019214709260472}
   currentMana: 0

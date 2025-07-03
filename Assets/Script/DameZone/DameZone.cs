@@ -146,6 +146,14 @@ public class DameZone : MonoBehaviour
                 enemyHorseManHP.TakeDamage(finalDamage);
                 return;
             }
+            ShoterTargetDra sh = other.GetComponent<ShoterTargetDra>();
+            if (sh != null)
+            {
+                listDame.Add(other);
+                ShowTextDame(finalDamage);
+                sh.TakeDamage(finalDamage);
+                return;
+            }
         }
         
     }
@@ -253,6 +261,14 @@ public class DameZone : MonoBehaviour
                 listDame.Add(other);// thêm collider vào danh sách
                 ShowTextDame(finalDamage);
                 enemyHorseManHP.TakeDamage(finalDamage);
+                return;
+            }
+            ShoterTargetDra sh = other.GetComponent<ShoterTargetDra>();
+            if (sh != null)
+            {
+                listDame.Add(other);
+                ShowTextDame(finalDamage);
+                sh.TakeDamage(finalDamage);
                 return;
             }
         }
