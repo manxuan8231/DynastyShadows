@@ -104,12 +104,11 @@ public class EnemyMap2_horseman : MonoBehaviour
 
     public void Attack()
     {
-        
+        transform.LookAt(player);
 
         attackTimer += Time.deltaTime;
         if (attackTimer >= attackCooldown)
         {
-            transform.LookAt(player);
             // Thực hiện tấn công
             Debug.Log("Attack");
             animator.SetTrigger("Attack");

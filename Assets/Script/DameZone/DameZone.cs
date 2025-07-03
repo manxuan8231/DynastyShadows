@@ -138,12 +138,13 @@ public class DameZone : MonoBehaviour
                 dragonRedHP.TakeDame(finalDamage);
                 return;
             }
-            ShoterTargetDra shoterTarget = other.GetComponent<ShoterTargetDra>();
-            if (shoterTarget != null) {
-                listDame.Add(other);
+            EnemyHorseManHP enemyHorseManHP = other.GetComponent<EnemyHorseManHP>();
+            if (enemyHorseManHP != null)
+            {
+                listDame.Add(other);// thêm collider vào danh sách
                 ShowTextDame(finalDamage);
-                shoterTarget.TakeDamage(finalDamage);
-                return ;
+                enemyHorseManHP.TakeDamage(finalDamage);
+                return;
             }
         }
         
@@ -246,12 +247,12 @@ public class DameZone : MonoBehaviour
                 dragonRedHP.TakeDame(finalDamage);
                 return;
             }
-            ShoterTargetDra shoterTarget = other.GetComponent<ShoterTargetDra>();
-            if (shoterTarget != null)
+            EnemyHorseManHP enemyHorseManHP = other.GetComponent<EnemyHorseManHP>();
+            if (enemyHorseManHP != null)
             {
-                listDame.Add(other);
+                listDame.Add(other);// thêm collider vào danh sách
                 ShowTextDame(finalDamage);
-                shoterTarget.TakeDamage(finalDamage);
+                enemyHorseManHP.TakeDamage(finalDamage);
                 return;
             }
         }
