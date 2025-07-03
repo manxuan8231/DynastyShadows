@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class enemyAI : MonoBehaviour
+public class enemyHorse : MonoBehaviour
 {
     public DameZoneKnightHorse damezoneHorse;
 
