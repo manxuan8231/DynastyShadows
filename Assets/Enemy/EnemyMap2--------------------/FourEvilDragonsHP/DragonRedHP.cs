@@ -17,16 +17,24 @@ public class DragonRedHP : MonoBehaviour
     public float maxArmor = 5000;
     private bool isArmorRegenerating = false; // Biến để kiểm tra xem giáp ảo 
     public bool isStunned = false;//chỉ cho chạy animator 1 lần
+    //mana fly
+    public Slider sliderMana; //mana
+    public float currentMana;
+    public float maxMana = 1000;
 
     //tich diem de phan khang
     public int strugglePoint = 0;
     //tham chieu
     private DragonRed dragonRed; // Tham chiếu đến script DragonRed
+    private DragonRedFly dragonRedFly; // Tham chiếu đến script DragonRedFly
+    
     public TimeLineBossDragonDead timeLine;
     void Start()
     {
         dragonRed = FindAnyObjectByType<DragonRed>(); // Tìm đối tượng DragonRed trong cảnh
-        // Cập nhật thanh máu
+        dragonRedFly=FindAnyObjectByType<DragonRedFly>(); // Tìm đối tượng DragonRedFly trong cảnh
+      
+        // Cập nhật thanh máu                                               
         currentHp = maxHp;
         sliderHp.maxValue = maxHp;
         sliderHp.value = currentHp;
@@ -36,13 +44,21 @@ public class DragonRedHP : MonoBehaviour
         sliderArmor.maxValue = maxArmor;
         sliderArmor.value = currentArmor;
         isStunned = false;
+        //mana
+       
+        sliderMana.maxValue = maxMana;
+        sliderMana.value = currentMana;
+
         timeLine = FindAnyObjectByType<TimeLineBossDragonDead>(); // Tìm đối tượng TimeLineBossDragonDead trong cảnh
     }
 
-    
+
     void Update()
     {
         Stun(); //stun sau khi bi  het giap
+        ManaFly();
+        
+
     }
     //ham lay hp----------------------------
     public void TakeDame(float amount)
@@ -50,11 +66,13 @@ public class DragonRedHP : MonoBehaviour
         if (currentArmor > 0)
         {
             currentArmor -= amount;
-            strugglePoint++;
+         
+         
         }
         else
         {
             currentHp -= amount;
+           
         }
 
         UpdateUI();
@@ -65,53 +83,76 @@ public class DragonRedHP : MonoBehaviour
         }
     }
 
-    //cap nhap UI slider 
-    public void UpdateUI()
-    {
-        // Cập nhật thanh máu      
-        currentHp = Mathf.Clamp(currentHp, 0, maxHp); // Đảm bảo máu không vượt quá giới hạn
-        sliderHp.maxValue = maxHp;
-        sliderHp.value = currentHp;
-        textHp.text = $"{currentHp}/{maxHp}";
-        // Cập nhật thanh giáp       
-        currentArmor = Mathf.Clamp(currentArmor, 0, maxArmor); // Đảm bảo giáp không vượt quá giới hạn
-        sliderArmor.maxValue = maxArmor;
-        sliderArmor.value = currentArmor;
-
-    }
+   
     //stun sau khi bi  het giap
     public void Stun()
     {
         if (currentArmor <= 0)//neu giáp ảo <= 0 thì choáng
         {
-            if (!isStunned) // Chỉ cho phép chạy hành động này một lần
+            
+            if (!isStunned) 
             {
-                isStunned = true; // Đánh dấu là đã bị choáng
+                isStunned = true;
+               
                 dragonRed. animator.SetTrigger("Stun");
-                dragonRed. animator.SetBool("IsWalking", false); // Tắt hành động di chuyển trong Animator
+                dragonRed. animator.SetBool("IsWalking", false);
                 dragonRed. navMeshAgent.isStopped = true;
 
             }
         }
         if (currentArmor > 0)//nếu giáp ảo > 0 thì không choáng nữa
         {
-            if (isStunned) // Chỉ cho phép chạy hành động này một lần
+            if (isStunned) 
             {
                 Debug.Log("het stun");
-                isStunned = false; // Nếu giáp còn, không choáng nữa
+                isStunned = false; 
                 dragonRed.animator.SetTrigger("Idle");
                 dragonRed.navMeshAgent.isStopped = false;
             }
 
         }
-        // Kiểm tra nếu giáp ảo đã hết và chưa bắt đầu hồi phục
+        
         if (currentArmor <= 0 && !isArmorRegenerating)
         {
             isArmorRegenerating = true;
-            StartCoroutine(WaitRegenerateArmor()); // Bắt đầu Coroutine để hồi phục giáp ảo
+            StartCoroutine(WaitRegenerateArmor()); 
         }
     }
     //khi het giap thi bat dau doi 10f r hoi phuc
+    public void ManaFly()
+    {
+        if(isStunned) return; // Nếu đang choáng thì không thực hiện hồi phục mana
+        if (dragonRedFly.isFly)//dg bay thi tru mana
+        {
+            currentMana -= Time.deltaTime * 10f;
+            UpdateUI();
+        }
+        else
+        {
+            currentMana += Time.deltaTime * 50f;
+           
+            UpdateUI();
+        }
+    }
+    //cap nhap UI slider 
+    public void UpdateUI()
+    {
+        
+
+        // Cập nhật thanh máu      
+        currentHp = Mathf.Clamp(currentHp, 0, maxHp); // Đảm bảo máu không vượt quá giới hạn
+        sliderHp.maxValue = maxHp;
+        sliderHp.value = currentHp;
+        textHp.text = $"{currentHp}/{maxHp}";
+        
+        // Cập nhật thanh giáp       
+        currentArmor = Mathf.Clamp(currentArmor, 0, maxArmor); // Đảm bảo giáp không vượt quá giới hạn
+        sliderArmor.maxValue = maxArmor;
+        sliderArmor.value = currentArmor;
+        //mana
+        currentMana = Mathf.Clamp(currentMana, 0, maxMana); // Đảm bảo giáp không vượt quá giới hạn
+        sliderMana.value = currentMana; // thanh mana
+    }
     public IEnumerator WaitRegenerateArmor()
     {
         yield return new WaitForSeconds(10f); // Thời gian chờ 5 giây

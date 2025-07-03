@@ -8,15 +8,18 @@ public class SlashAuraSkill : MonoBehaviour
     public GameObject effectHit;
 
     public float damage = 100f;
+
+    //tham chieu 
+    CameraShake cameraShake;
     void Start()
     {
-
+        cameraShake = FindAnyObjectByType<CameraShake>(); // Tìm đối tượng CameraShake trong cảnh
     }
 
 
     void Update()
     {
-
+        cameraShake.Shake(); // Gọi hàm Shake từ CameraShake để thực hiện rung camera
     }
     public void OnTriggerEnter(Collider other)
     {

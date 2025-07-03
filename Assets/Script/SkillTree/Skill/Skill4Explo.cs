@@ -7,16 +7,16 @@ public class Skill4Explo : MonoBehaviour
 
 
     public float damage = 1000f;
-
+    CameraShake cameraShake; // Biến để lưu trữ đối tượng CameraShake
     void Start()
     {
-
+        cameraShake = FindAnyObjectByType<CameraShake>(); // Tìm đối tượng CameraShake trong cảnh
     }
 
 
     void Update()
     {
-
+        cameraShake.Shake(); // Gọi hàm Shake từ CameraShake để tạo hiệu ứng rung camera
     }
     public void OnTriggerEnter(Collider other)
     {

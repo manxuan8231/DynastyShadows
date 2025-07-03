@@ -12,16 +12,21 @@ public class EvenAnimatorDraRed : MonoBehaviour
     public Transform posiFireShooterRight;
     //box dame
     public GameObject boxDame3;
-   
+    //sound
+    public AudioClip stunSound; // Âm thanh choáng
+    public AudioClip flameSound;
    
 
     //tham chieu
     DrakonitDameZone drakonitDameZone;
-    
+    DragonRed dragonRed;
+    DragonRedHP dragonRedHp;
     void Start()
     {
         drakonitDameZone = FindAnyObjectByType<DrakonitDameZone>();
-       
+        dragonRed = FindAnyObjectByType<DragonRed>();
+        dragonRedHp = FindAnyObjectByType<DragonRedHP>();
+
         effectFlame.SetActive(false);
         boxDame3.SetActive(false);
     }
@@ -29,15 +34,21 @@ public class EvenAnimatorDraRed : MonoBehaviour
     
     void Update()
     {
-       
+       if(dragonRedHp.currentArmor <= 0)//nếu dg choáng thì tắt lửa
+        {
+            EndEffectFlame();
+        }
     }
     // Hiệu ứng lua
     public void PlayEffectFlame()
     {
+        dragonRed.audioSource.PlayOneShot(flameSound); // Phát âm thanh lửa
         effectFlame.SetActive(true);
     }
     public void EndEffectFlame()
     {
+        dragonRed.audioSource.clip = flameSound;
+        dragonRed.audioSource.Stop(); // Dừng âm thanh lửa
         effectFlame.SetActive(false);
     }
     //attack
@@ -67,5 +78,11 @@ public class EvenAnimatorDraRed : MonoBehaviour
         GameObject fireBallR = Instantiate(fireBallPrefabShoter, posiFireShooterRight.position, transform.rotation);
         Destroy(fireBallL, 5f);
         Destroy(fireBallR, 5f);
+    }
+
+    //am thanh
+    public void PlayStunSound()
+    {
+        dragonRed.audioSource.PlayOneShot(stunSound); // Phát âm thanh choáng
     }
 }

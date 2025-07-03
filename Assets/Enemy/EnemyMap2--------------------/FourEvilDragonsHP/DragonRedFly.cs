@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 
 public class DragonRedFly : MonoBehaviour
 {
@@ -17,7 +19,8 @@ public class DragonRedFly : MonoBehaviour
     public float rangePosi = 0.1f;
     public float stepAttack = 0; // Biến để theo dõi bước tấn công
     public bool isAttackFly = false; // Kiểm tra xem có đang tấn công hay không
-    // Tham chiếu
+   
+    // Tham chiếu  
     private DragonRedHP dragonRedHP;
     private DragonRed dragonRed;
     private EvenAnimatorDraRed evenAnimatorDraRed;
@@ -53,9 +56,11 @@ public class DragonRedFly : MonoBehaviour
     {
         if (dragonRedHP.isStunned) return;
         
-        if (dragonRedHP.strugglePoint >= 5 && isFlyTakeOff)
+        if (dragonRedHP.currentMana >= dragonRedHP.maxMana && isFlyTakeOff)
         {
-
+            
+           
+          
             dragonRed.animator.SetTrigger("FlyTakeOff"); // Animation bay lên
             isFly = true;
             dragonRed.isAttack = false;
@@ -71,16 +76,20 @@ public class DragonRedFly : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(transform.position, dragonRed.player.transform.position);
         if (isAttackFly && Time.time >= lastAttackTime + cooldownAttack && distanceToPlayer <= 70f) 
         {
-            if(stepAttack==0)
+            dragonRedHP.currentMana -= 150; // Giảm mana khi tấn công\
+            dragonRedHP.UpdateUI(); // Cập nhật UI mana
+            if (stepAttack==0)
             {
                 stepAttack++;
                 dragonRed.animator.SetTrigger("FlyFlame");
+                
             }
             else if (stepAttack == 1)
             {
                 stepAttack--;
-                dragonRed.navMeshAgent.speed = 50f;
+                dragonRed.navMeshAgent.speed = 50f;             
                 dragonRed.animator.SetTrigger("FlyGlide");
+               
             }
            
 
@@ -101,6 +110,7 @@ public class DragonRedFly : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 15f);
 
     }
+   
     IEnumerator StartFlyingAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -137,21 +147,25 @@ public class DragonRedFly : MonoBehaviour
             yield return new WaitForSeconds(5f);
             isAttackFly = false;
         }
-
-        if (isFly)
+        if(dragonRedHP.currentMana <= 0)
         {
-            dragonRed.animator.SetTrigger("FlyLand");
-        }
+            if (isFly)
+            {
+                dragonRed.animator.SetTrigger("FlyLand");
+                isFly = false;
+            }
+            yield return new WaitForSeconds(2f); // Thời gian hạ cánh
             dragonRed.navMeshAgent.speed = 10f; // Trả về tốc độ bình thường
-            evenAnimatorDraRed.effectFlame.SetActive(false);
-            isFly = false;
+            evenAnimatorDraRed.EndEffectFlame();//tat hiệu ứng lửa
+
+
             isFlyingToTargets = false;
             dragonRed.isAttack = true;
             dragonRed.isMove = true;
             dragonRed.isFlipAllowed = true;
             isAttackFly = false;
-               
-        
+            isFlyTakeOff = true;
+        }
     }
      
 

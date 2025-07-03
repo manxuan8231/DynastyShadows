@@ -17,20 +17,22 @@ public class DragonRed : MonoBehaviour
     public float attackCooldown = 2f;
     public float lastAttackTime = -2f;
     public int stepAttack = 0;
-   
+    
     // Tham chiếu
     public CapsuleCollider conllider;
     public NavMeshAgent navMeshAgent;
     public Animator animator;
     private DragonRedHP dragonRedHP;
-     private DragonRedFly dragonRedFly;
+    private DragonRedFly dragonRedFly;
+    public AudioSource audioSource; // Thêm AudioSource để phát âm thanh
+    public AudioClip biteSound; // Âm thanh cắn
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         dragonRedHP = FindAnyObjectByType<DragonRedHP>();
         dragonRedFly = FindAnyObjectByType<DragonRedFly>();
-
+        audioSource = GetComponent<AudioSource>();
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player");
     }
@@ -93,20 +95,22 @@ public class DragonRed : MonoBehaviour
             animator.SetBool("IsWalking", false);
             isMove = false;
             isFlipAllowed = false;
-            StartCoroutine(WaitToFlipBack()); // Sau khi đánh xong thì mới cho xoay lại sau 4 giây
-            dragonRedHP.strugglePoint++;// Tăng điểm vật lộn khi tấn công
+            StartCoroutine(WaitToFlipBack()); // Sau khi đánh xong thì mới cho xoay lại sau 4 giây                  
             // Combo attack logic
             if (stepAttack == 0)
             {
+               
                 stepAttack = 1;
+                audioSource.PlayOneShot(biteSound); // Phát âm thanh cắns
                 animator.SetTrigger("BasicAttack");
                 
             }
             else if (stepAttack == 1)
             {
+              
                 stepAttack = 2;
                 animator.SetTrigger("AttackHand");
-                StartCoroutine(WaitTakeOffBox(3f)); //  để tránh va chạm
+               // StartCoroutine(WaitTakeOffBox(3f)); //  để tránh va chạm
             }
             else if (stepAttack == 2)
             {
@@ -125,7 +129,7 @@ public class DragonRed : MonoBehaviour
            
         }
     }
-   
+    
     public IEnumerator WaitToFlipBack()
     {
         yield return new WaitForSeconds(4f);

@@ -4,7 +4,7 @@ public class DameFireShoter : MonoBehaviour
 {
     public float dame = 500f;
     PlayerStatus playerStatus;
-
+    CameraShake cameraShake; // Biến để lưu trữ CameraShake
     public GameObject fireEffect; // Hiệu ứng lửa
 
     void Start()
@@ -15,6 +15,7 @@ public class DameFireShoter : MonoBehaviour
             playerStatus = gameObject.GetComponent<PlayerStatus>();
 
         }
+        cameraShake = FindAnyObjectByType<CameraShake>(); // Tìm đối tượng CameraShake trong scene
     }
 
 
@@ -35,7 +36,7 @@ public class DameFireShoter : MonoBehaviour
                     GameObject effectInstance = Instantiate(fireEffect, transform.position, Quaternion.identity);
                     Destroy(effectInstance, 2f); // Hủy hiệu ứng sau 2 giây
                 }
-               
+                cameraShake.Shake();
                 Destroy(gameObject);
             }
         }
@@ -47,6 +48,7 @@ public class DameFireShoter : MonoBehaviour
                 GameObject effectInstance = Instantiate(fireEffect, transform.position, Quaternion.identity);
                 Destroy(effectInstance, 2f); // Hủy hiệu ứng sau 2 giây
             }
+            cameraShake.Shake();
             Destroy(gameObject); // Hủy đối tượng này sau khi chạm đất
         }
 

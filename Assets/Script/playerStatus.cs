@@ -96,7 +96,7 @@ public class PlayerStatus : MonoBehaviour
     //tham chieu ------------------------------------------
     private PlayerControllerState playerController; // Tham chiếu đến PlayerController
     private ComboAttack comboAttack; // Tham chiếu đến ComboAttack
-    private SliderHpDelay sliderHpDelay; 
+  
     private Skill4Manager skill4Manager; // Tham chiếu đến Skill4Manager
     void Start()
     {     
@@ -132,7 +132,7 @@ public class PlayerStatus : MonoBehaviour
         playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         skill4Manager = FindAnyObjectByType<Skill4Manager>();
-        sliderHpDelay = FindAnyObjectByType<SliderHpDelay>();
+      
         //tat hieu uung
         effectStun.SetActive(false);
         effectLevelUp.SetActive(false);
@@ -179,6 +179,7 @@ public class PlayerStatus : MonoBehaviour
        
         UpdateUI(); // Cập nhật UI mỗi frame
         RegenerateMana();//hoi mana
+       
     }
 
     //hp
