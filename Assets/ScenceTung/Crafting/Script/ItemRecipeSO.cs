@@ -19,6 +19,7 @@ public enum RecipeType
 public class ItemTypeAndCount
 {
     public EquipmentSO itemOther;
+    public ItemSO item;
     public int count;
 
 

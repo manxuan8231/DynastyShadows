@@ -16,7 +16,7 @@ public class CraftingManager : MonoBehaviour
     {
         foreach (var input in recipe.input)
         {
-            if (!inventory.HasItem(input.itemOther, input.count))
+            if (!inventory.HasItem(input.itemOther, input.item, input.count))
                 return false;
         }
         return true;
@@ -30,7 +30,7 @@ public class CraftingManager : MonoBehaviour
         // Remove required items
         foreach (var input in recipe.input)
         {
-            inventory.RemoveItem(input.itemOther, input.count);
+            inventory.RemoveItem(input.itemOther, input.item, input.count);
         }
 
         // Add crafted result

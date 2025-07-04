@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: Han Bang Bao
   m_EditorClassIdentifier: 
   recipeName: Han Bang Bao
-  recipeType: 0
+  recipeType: 1
   input:
-  - itemOther: {fileID: 11400000, guid: 121123785bb24f64ebf07999b27a76d9, type: 2}
-    count: 2
+  - itemOther: {fileID: 0}
+    item: {fileID: 11400000, guid: 643a6075db82c70498246f00e7fd802a, type: 2}
+    count: 1
+  - itemOther: {fileID: 0}
+    item: {fileID: 11400000, guid: 3a27ddf763118c4488f25f429a03443a, type: 2}
+    count: 1
   output:
   - itemOther: {fileID: 11400000, guid: e95e17aaa06c9bb4d8d955fdb040c243, type: 2}
+    item: {fileID: 0}
     count: 1
