@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: Anh Anh Lan
   m_EditorClassIdentifier: 
   recipeName: Anh Anh Lan
-  recipeType: 0
+  recipeType: 1
   input:
-  - itemOther: {fileID: 11400000, guid: 3bdbbad93a894704cb84e4a74360f91f, type: 2}
-    count: 2
+  - itemOther: {fileID: 0}
+    item: {fileID: 11400000, guid: 0c26d4e23654aa046bb7883aa995ce04, type: 2}
+    count: 1
+  - itemOther: {fileID: 0}
+    item: {fileID: 11400000, guid: ab419a7f3b6cd2e4aabebce53efe4e8c, type: 2}
+    count: 1
   output:
   - itemOther: {fileID: 11400000, guid: 9592921cc2682154d8e26c01082ddcf4, type: 2}
+    item: {fileID: 0}
     count: 1
