@@ -7019,7 +7019,7 @@ GameObject:
   - component: {fileID: 4056509553554891172}
   - component: {fileID: 6083481784399313810}
   m_Layer: 10
-  m_Name: Base mesh
+  m_Name: HorseMan
   m_TagString: EnemyHorseMan
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7035,7 +7035,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 632.5852, y: -0.000009536743, z: 371.01605}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8392138695078124057}
@@ -7082,11 +7082,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  agent: {fileID: 0}
+  aiPath: {fileID: 0}
   player: {fileID: 0}
   firstPos: {x: 0, y: 0, z: 0}
   animator: {fileID: 3831249750044724104}
   currentTrigger: 
+  playerAnimator: {fileID: 0}
+  dodgeDistance: 3
+  dodgeChance: 0.5
   radius: 20
   attackRange: 5
   attackCooldown: 5
@@ -7155,6 +7158,7 @@ MonoBehaviour:
   sliderHp: {fileID: 3323347010468628743}
   currentHealth: 0
   maxHealth: 2000
+  isTakedame: 0
   expPrefab: {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
   boxDame: {fileID: 2834035890462549249}
   npc: {fileID: 0}
