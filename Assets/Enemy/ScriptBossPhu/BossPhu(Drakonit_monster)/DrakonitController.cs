@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 
 // Script điều khiển hành vi của enemy Drakonit bằng State Machine
-public class DrakonitController : MonoBehaviour
+public class DrakonitController : MonoBehaviour,IDamageable
 {
     // Các biến điều chỉnh trong Inspector
     public float chaseRange = 100f;   //khoan cach thay player
@@ -115,7 +115,7 @@ public class DrakonitController : MonoBehaviour
         currentState.Enter();     // Kích hoạt trạng thái mới
     }
 
-    public void TakeDame(float amount)
+    public void TakeDamage(float amount)
     {
         currentHp -= amount; // Giảm máu hiện tại
         sliderHp.value = currentHp; // Cập nhật thanh máu

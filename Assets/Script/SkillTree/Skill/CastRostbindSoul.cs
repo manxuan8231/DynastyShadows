@@ -134,7 +134,7 @@ public class CastRostbindSoul : MonoBehaviour
             {
 
                 ShowTextDame(dame);
-                drakonitController.TakeDame(dame);
+                drakonitController.TakeDamage(dame);
                 return;
             }
             //boss ork
@@ -153,7 +153,7 @@ public class CastRostbindSoul : MonoBehaviour
                 Debug.Log("Đã trúng NecController");
 
                 ShowTextDame(dame);
-                necController.TakeDame(dame);
+                necController.TakeDamage(dame);
                 return;
             }
             //boss chinh map 1
@@ -162,7 +162,7 @@ public class CastRostbindSoul : MonoBehaviour
             {
 
                 ShowTextDame(dame);
-                boss1HP.TakeDame((int)dame);
+                boss1HP.TakeDamage((int)dame);
                 return;
             }
             //enemy map 2 1 + 2

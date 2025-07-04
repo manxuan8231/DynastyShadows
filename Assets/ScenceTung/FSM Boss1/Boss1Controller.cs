@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Boss1Controller : MonoBehaviour
+public class Boss1Controller : MonoBehaviour,IDamageable
 {
     [Header("State Management")]
     public Boss1State currentState;
@@ -106,10 +106,7 @@ public class Boss1Controller : MonoBehaviour
         }
         currentState?.Update();
         playerPos = player.transform.position;
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            TakeDame(1000);
-        }
+       
     }
 
     public void ChangState(Boss1State newState)
@@ -218,9 +215,9 @@ public class Boss1Controller : MonoBehaviour
 
 
     }
-    public void TakeDame(int damage)
+    public void TakeDamage(float damage)
     {
-        hp.currHp -= damage;
+        hp.currHp -= (int)damage;
 
         hp.currHp = Mathf.Clamp(hp.currHp, 0, hp.maxHp);
         hp.sliderHP.value = hp.currHp;

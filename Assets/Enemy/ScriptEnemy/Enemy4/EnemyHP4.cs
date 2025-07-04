@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyHP4 : MonoBehaviour
+public class EnemyHP4 : MonoBehaviour, IDamageable
 {
     //xử lý máu
     public Slider sliderHp;

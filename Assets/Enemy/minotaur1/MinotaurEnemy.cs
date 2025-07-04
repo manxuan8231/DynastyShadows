@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class MinotaurEnemy : MonoBehaviour
+public class MinotaurEnemy : MonoBehaviour, IDamageable
 {
     public Transform targetPlayer;//người chơi
     public Vector3 startPosition;

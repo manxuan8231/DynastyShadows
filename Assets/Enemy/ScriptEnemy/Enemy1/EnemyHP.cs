@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class EnemyHP : MonoBehaviour
+public class EnemyHP : MonoBehaviour,IDamageable
 {
     //xử lý máu
     [SerializeField] public Slider sliderHp;

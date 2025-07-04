@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-public class BossHP : MonoBehaviour
+public class BossHP : MonoBehaviour, IDamageable
 {
     public Slider sliderHp;
     public float currentHealth;

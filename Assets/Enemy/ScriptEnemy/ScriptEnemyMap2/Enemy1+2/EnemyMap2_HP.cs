@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyMap2_HP : MonoBehaviour
+public class EnemyMap2_HP : MonoBehaviour, IDamageable
 {
     //xử lý máu
     [SerializeField] public Slider sliderHp;

@@ -242,7 +242,7 @@ public class PlayerStatus : MonoBehaviour
             {
                 audioSource.PlayOneShot(skill4Manager.soundReflectDame); // Phát âm thanh phản dame
                 ShowTextDame(amount);
-                drakonitController.TakeDame(amount);
+                drakonitController.TakeDamage(amount);
                 return;
             }
             //boss ork
@@ -261,7 +261,7 @@ public class PlayerStatus : MonoBehaviour
                 Debug.Log("Đã trúng NecController");
                 audioSource.PlayOneShot(skill4Manager.soundReflectDame); // Phát âm thanh phản dame
                 ShowTextDame(amount);
-                necController.TakeDame(amount);
+                necController.TakeDamage(amount);
                 return;
             }
             //boss chinh map 1
@@ -270,7 +270,7 @@ public class PlayerStatus : MonoBehaviour
             {
                 audioSource.PlayOneShot(skill4Manager.soundReflectDame); // Phát âm thanh phản dame
                 ShowTextDame(amount);
-                boss1HP.TakeDame((int)amount);
+                boss1HP.TakeDamage((int)amount);
                 return;
             }
             //enemy map 2 1 + 2

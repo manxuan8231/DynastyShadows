@@ -67,16 +67,16 @@ public class FireBall : MonoBehaviour
                 hp4.TakeDamage((int)dmg);
                 break;
             case DrakonitController d:
-                d.TakeDame((int)dmg);
+                d.TakeDamage((int)dmg);
                 break;
             case BossHP b:
                 b.TakeDamage((int)dmg);
                 break;
             case NecController n:
-                n.TakeDame((int)dmg);
+                n.TakeDamage((int)dmg);
                 break;
             case Boss1Controller b1:
-                b1.TakeDame((int)dmg);
+                b1.TakeDamage((int)dmg);
                 break;
             case EnemyMap2_HP em2:
                 em2.TakeDamage((int)dmg);

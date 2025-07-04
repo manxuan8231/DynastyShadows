@@ -37,6 +37,7 @@ public class DragonRed : MonoBehaviour
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player");
         isTurnColi = false;
+        isAttack = false;
     }
 
     void Update()
@@ -50,8 +51,10 @@ public class DragonRed : MonoBehaviour
     //walk den player
     public void MoveToPlayer()
     {
+        if (isAttack) return;
         if (dragonRedHP.isStunned) return;
         if(dragonRedFly.isFly) return; // Nếu đang bay thì không di chuyển
+        FlipToPlayer();
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
         if (distanceToPlayer <= detectionRangePL && distanceToPlayer > stopDistance && isMove)
         {
@@ -79,42 +82,36 @@ public class DragonRed : MonoBehaviour
     public void Attack()
     {
         if (dragonRedHP.isStunned) return;
-        if(!isAttack) return;    
-        if (dragonRedFly.isFly) return; // Nếu đang bay thì không di chuyển
-
-
-        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
        
-
+        if (dragonRedFly.isFly) return; // Nếu đang bay thì không di chuyển
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
         if (distanceToPlayer <= stopDistance && Time.time >= lastAttackTime + attackCooldown)
         {
             animator.SetBool("IsWalking", false);
             isMove = false;
-         
-            StartCoroutine(WaitToFlipBack()); // Sau khi đánh xong thì mới cho xoay lại sau 4 giây                  
+            StartCoroutine(WaitForAttack()); //dung de true false isattack
             // Combo attack logic
             if (stepAttack == 0)
             {
-               
+
                 stepAttack = 1;
                 audioSource.PlayOneShot(biteSound); // Phát âm thanh cắns
                 animator.SetTrigger("BasicAttack");
-                
+
             }
             else if (stepAttack == 1)
             {
-              
+
                 stepAttack = 2;
                 animator.SetTrigger("AttackHand");
-              
+
             }
             else if (stepAttack == 2)
             {
                 stepAttack = 0;
                 animator.SetTrigger("AttackFlame");
-               
-            }
 
+            }
             lastAttackTime = Time.time;
         }
 
@@ -126,19 +123,25 @@ public class DragonRed : MonoBehaviour
         }
     }
     
-    public IEnumerator WaitToFlipBack()
+    public void FlipToPlayer()
     {
         Vector3 directionToPlayer = player.transform.position - transform.position;
         directionToPlayer.y = 0; // Đặt y về 0 để chỉ xoay trên mặt phẳng ngang
         Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
-        yield return new WaitForSeconds(3f);
-     
+      
+       
     }
-
+    public IEnumerator WaitForAttack()
+    {
+        isAttack = true;
+        yield return new WaitForSeconds(4f);
+        isAttack = false;
+      
+    }
     public IEnumerator WaitMoveToPlayer()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(3f);
         isMove = true;
        
     }

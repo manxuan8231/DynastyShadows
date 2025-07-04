@@ -5784,7 +5784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   detectionRangePL: 150
-  stopDistance: 18
+  stopDistance: 20
   moveSpeed: 5
   isMove: 1
   isAttack: 1
@@ -5793,7 +5793,7 @@ MonoBehaviour:
   lastAttackTime: -7
   stepAttack: 0
   conllider: {fileID: 8426940853764538971}
-  aiPath: {fileID: 0}
+  aiPath: {fileID: 8779261787124055001}
   animator: {fileID: 538552206537652801}
   audioSource: {fileID: 3815888528827670434}
   biteSound: {fileID: 8300000, guid: 76025703b75eb864cb169d486e674318, type: 3}
@@ -5838,7 +5838,7 @@ MonoBehaviour:
   cooldownAttack: 7
   lastAttackTime: -7
   timeToDash: 5
-  rangePosi: 11
+  rangePosi: 20
   stepAttack: 0
   isAttackFly: 0
 --- !u!195 &2401497156273683432
@@ -6025,7 +6025,7 @@ MonoBehaviour:
   rotationSpeed: 360
   slowdownDistance: 0.6
   pickNextWaypointDist: 2
-  endReachedDistance: 0.6
+  endReachedDistance: 20
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0

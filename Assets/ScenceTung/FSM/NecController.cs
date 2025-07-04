@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-public class NecController : MonoBehaviour
+public class NecController : MonoBehaviour, IDamageable
 {
     public INecState currentState;
     public Animator anmt;
@@ -128,7 +128,7 @@ public class NecController : MonoBehaviour
     {
         damezoneWP.endDame();
     }
-    public void TakeDame(float damage)
+    public void TakeDamage(float damage)
     {
         necHp.curhp -= damage;
 

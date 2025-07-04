@@ -77,7 +77,7 @@ public class DameZoneSkill3PL : MonoBehaviour
             {
               
                 ShowTextDame(finalDamage);
-                drakonitController.TakeDame(finalDamage);
+                drakonitController.TakeDamage(finalDamage);
                 return;
             }
             //boss ork
@@ -96,7 +96,7 @@ public class DameZoneSkill3PL : MonoBehaviour
                 Debug.Log("Đã trúng NecController");
                
                 ShowTextDame(finalDamage);
-                necController.TakeDame(finalDamage);
+                necController.TakeDamage(finalDamage);
                 return;
             }
             //boss chinh map 1
@@ -105,7 +105,7 @@ public class DameZoneSkill3PL : MonoBehaviour
             {
                
                 ShowTextDame(finalDamage);
-                boss1HP.TakeDame((int)finalDamage);
+                boss1HP.TakeDamage((int)finalDamage);
                 return;
             }
             //enemy map 2 1 + 2
