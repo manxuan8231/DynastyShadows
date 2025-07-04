@@ -95,7 +95,7 @@ public class SlashAuraSkill : MonoBehaviour
                 m.TakeDamage((int)dmg);
                 break;
             case DragonRedHP dr:
-                dr.TakeDame((int)dmg);
+                dr.TakeDamage((int)dmg);
                 break;
         }
     }

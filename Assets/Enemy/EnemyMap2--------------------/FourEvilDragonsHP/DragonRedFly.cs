@@ -1,9 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Audio;
+
 
 public class DragonRedFly : MonoBehaviour
 {
@@ -62,7 +60,7 @@ public class DragonRedFly : MonoBehaviour
     public void FlyTrigger()
     {
         if (dragonRedHP.isStunned) return;
-        
+      
         if (dragonRedHP.currentMana >= dragonRedHP.maxMana && isFlyTakeOff)
         {
             
@@ -72,8 +70,8 @@ public class DragonRedFly : MonoBehaviour
             isFly = true;
             dragonRed.isAttack = false;
             dragonRed.isMove = false;
-            dragonRed.isFlipAllowed = false;
-
+           
+            evenAnimatorDraRed.EndEffectFlame();//tat hiệu ứng lửa
             isFlyTakeOff = false;// Đảm bảo chỉ bay lên một lần
             StartCoroutine(StartFlyingAfterDelay(4f));
         }
@@ -94,7 +92,7 @@ public class DragonRedFly : MonoBehaviour
             else if (stepAttack == 1)
             {
                 stepAttack--;
-                dragonRed.navMeshAgent.speed = 50f;             
+                dragonRed.aiPath.maxSpeed = 15f;             
                 dragonRed.animator.SetTrigger("FlyGlide");
                
             }
@@ -102,10 +100,10 @@ public class DragonRedFly : MonoBehaviour
 
             lastAttackTime = Time.time; // Cập nhật thời gian tấn công cuối cùng
         }
-        if (isAttackFly)
+        if (isAttackFly && distanceToPlayer >= 16)
         {
                    
-            dragonRed.navMeshAgent.SetDestination(dragonRed.player.transform.position); // Di chuyển đến vị trí tấn công
+            dragonRed.aiPath.destination = dragonRed.player.transform.position; // Di chuyển đến vị trí tấn công
         }
     }
     public void FlipToPlayer()
@@ -129,7 +127,7 @@ public class DragonRedFly : MonoBehaviour
         }
     }
 
-    IEnumerator FlyToTargets()
+    IEnumerator FlyToTargets()//di qua cac diem 
     {
         foreach (Transform target in posiTarget)
         {
@@ -137,10 +135,10 @@ public class DragonRedFly : MonoBehaviour
             {
                 dragonRed.animator.SetBool("FlyForWard", true); 
                 //transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * 25);
-                dragonRed.navMeshAgent.speed = 60f; // Tốc độ bay
-                if (dragonRed.navMeshAgent.enabled == true)
+                dragonRed.aiPath.maxSpeed = 20f; // Tốc độ bay
+                if (dragonRed.aiPath.enabled == true)
                 {
-                    dragonRed.navMeshAgent.SetDestination(target.position);
+                    dragonRed.aiPath.destination = target.position;
                 }            
                 yield return null;
             }
@@ -153,7 +151,9 @@ public class DragonRedFly : MonoBehaviour
 
             yield return new WaitForSeconds(5f);
             isAttackFly = false;
+            isFlipToPlayer = false;
         }
+
         if(dragonRedHP.currentMana <= 0)
         {
             if (isFly)
@@ -162,14 +162,14 @@ public class DragonRedFly : MonoBehaviour
                 isFly = false;
             }
             yield return new WaitForSeconds(2f); // Thời gian hạ cánh
-            dragonRed.navMeshAgent.speed = 10f; // Trả về tốc độ bình thường
+            dragonRed.aiPath.maxSpeed = 10f; // Trả về tốc độ bình thường
             evenAnimatorDraRed.EndEffectFlame();//tat hiệu ứng lửa
 
 
             isFlyingToTargets = false;
             dragonRed.isAttack = true;
             dragonRed.isMove = true;
-            dragonRed.isFlipAllowed = true;
+          
             isAttackFly = false;
             isFlyTakeOff = true;
         }
@@ -186,14 +186,14 @@ public class DragonRedFly : MonoBehaviour
                 isFly = false;
             }
             yield return new WaitForSeconds(2f); // Thời gian hạ cánh
-            dragonRed.navMeshAgent.speed = 10f; // Trả về tốc độ bình thường
+            dragonRed.aiPath.maxSpeed = 10f; // Trả về tốc độ bình thường
             evenAnimatorDraRed.EndEffectFlame();//tat hiệu ứng lửa
 
 
             isFlyingToTargets = false;
             dragonRed.isAttack = true;
             dragonRed.isMove = true;
-            dragonRed.isFlipAllowed = true;
+          
             isAttackFly = false;
             isFlyTakeOff = true;
         }

@@ -96,7 +96,7 @@ public class FireBallSkill4 : MonoBehaviour
             case Boss1Controller b1: b1.TakeDame((int)dmg); break;
             case EnemyMap2_HP em: em.TakeDamage((int)dmg); break;
             case MinotaurEnemy me: me.TakeDamage((int)dmg); break;
-            case DragonRedHP me: me.TakeDame((int)dmg); break;
+            case DragonRedHP me: me.TakeDamage((int)dmg); break;
         }
     }
 }

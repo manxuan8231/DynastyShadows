@@ -16,7 +16,7 @@ public class EvenAnimatorDraRed : MonoBehaviour
     public AudioClip stunSound; // Âm thanh choáng
     public AudioClip flameSound;
     public AudioClip flySound;
-
+    public AudioClip attack3Sound; // Âm thanh tấn công 3
     //tham chieu
     DrakonitDameZone drakonitDameZone;
     DragonRed dragonRed;
@@ -81,6 +81,10 @@ public class EvenAnimatorDraRed : MonoBehaviour
     }
 
     //am thanh
+    public void PlayAttack3()
+    {
+        dragonRed.audioSource.PlayOneShot(attack3Sound); // Phát âm thanh cắn
+    }
     public void PlayStunSound()
     {
         dragonRed.audioSource.PlayOneShot(stunSound); // Phát âm thanh choáng

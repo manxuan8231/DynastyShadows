@@ -81,7 +81,7 @@ public class BulletTargetDra : MonoBehaviour
             if (dr != null)
             {
                 Debug.Log("lay mau");
-                dr.TakeDame(1000);
+                dr.TakeDamage(1000);
                 Destroy(gameObject);
             }
            

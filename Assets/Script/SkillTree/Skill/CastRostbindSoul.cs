@@ -186,7 +186,7 @@ public class CastRostbindSoul : MonoBehaviour
             if (dragonRedHP != null)
             {
                 ShowTextDame(dame);
-                dragonRedHP.TakeDame(dame);
+                dragonRedHP.TakeDamage(dame);
                 return;
             }
         }

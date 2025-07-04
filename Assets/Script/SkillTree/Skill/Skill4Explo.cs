@@ -87,7 +87,7 @@ public class Skill4Explo : MonoBehaviour
                 minotaur.TakeDamage((int)dmg);
                 break;
             case DragonRedHP dragonRed:
-                dragonRed.TakeDame((int)dmg);
+                dragonRed.TakeDamage((int)dmg);
                 break;
         }
     }

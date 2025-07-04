@@ -131,7 +131,7 @@ public class DameZoneSkill3PL : MonoBehaviour
             {
 
                 ShowTextDame(finalDamage);
-                dragonRedHP.TakeDame(finalDamage);
+                dragonRedHP.TakeDamage(finalDamage);
                 return;
             }
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Pathfinding;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,7 +11,7 @@ public class DragonRed : MonoBehaviour
     public float moveSpeed = 3.5f;
 
     public bool isMove = true;
-    public bool isFlipAllowed = true;
+
     public bool isAttack = true;
     public bool isTurnColi = false;
     // Cooldown tấn công
@@ -20,7 +21,7 @@ public class DragonRed : MonoBehaviour
     
     // Tham chiếu
     public CapsuleCollider conllider;
-    public NavMeshAgent navMeshAgent;
+    public AIPath aiPath;
     public Animator animator;
     private DragonRedHP dragonRedHP;
     private DragonRedFly dragonRedFly;
@@ -28,7 +29,7 @@ public class DragonRed : MonoBehaviour
     public AudioClip biteSound; // Âm thanh cắn
     void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        aiPath = GetComponent<AIPath>();
         animator = GetComponent<Animator>();
         dragonRedHP = FindAnyObjectByType<DragonRedHP>();
         dragonRedFly = FindAnyObjectByType<DragonRedFly>();
@@ -54,8 +55,8 @@ public class DragonRed : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
         if (distanceToPlayer <= detectionRangePL && distanceToPlayer > stopDistance && isMove)
         {
-            if (navMeshAgent.enabled == false) return; 
-            navMeshAgent.SetDestination(player.transform.position);
+            if (aiPath.enabled == false) return;
+            aiPath.destination = player.transform.position;
             if(dragonRedHP.currentHp > 6000)
             {
                 animator.SetBool("IsWalking", true);
@@ -68,13 +69,13 @@ public class DragonRed : MonoBehaviour
         }
         else
         {
-            if(navMeshAgent.enabled == false) return; 
-            navMeshAgent.ResetPath();
+            if(aiPath.enabled == false) return;
+           
             animator.SetBool("IsWalking", false);
             animator.SetBool("IsRunning", false);
         }
     }
-    //tan cong 
+    //tan cong  
     public void Attack()
     {
         if (dragonRedHP.isStunned) return;
@@ -83,20 +84,13 @@ public class DragonRed : MonoBehaviour
 
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-        // Nếu đang trong cooldown và được phép flip thì xoay mặt về phía player
-        if (Time.time < lastAttackTime + attackCooldown && isFlipAllowed)
-        {
-            Vector3 direction = (player.transform.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-            return;
-        }
+       
 
         if (distanceToPlayer <= stopDistance && Time.time >= lastAttackTime + attackCooldown)
         {
             animator.SetBool("IsWalking", false);
             isMove = false;
-            isFlipAllowed = false;
+         
             StartCoroutine(WaitToFlipBack()); // Sau khi đánh xong thì mới cho xoay lại sau 4 giây                  
             // Combo attack logic
             if (stepAttack == 0)
@@ -124,7 +118,7 @@ public class DragonRed : MonoBehaviour
             lastAttackTime = Time.time;
         }
 
-        // Nếu người chơi ra khỏi phạm vi thì reset combo và đợi mới được di chuyển lại
+        // Nếu người chơi ra khỏi phạm vi thì doi 2f ms cho di chuyen
         if (distanceToPlayer > stopDistance)
         {
             StartCoroutine(WaitMoveToPlayer());
@@ -134,14 +128,19 @@ public class DragonRed : MonoBehaviour
     
     public IEnumerator WaitToFlipBack()
     {
-        yield return new WaitForSeconds(4f);
-        isFlipAllowed = true;
+        Vector3 directionToPlayer = player.transform.position - transform.position;
+        directionToPlayer.y = 0; // Đặt y về 0 để chỉ xoay trên mặt phẳng ngang
+        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+        yield return new WaitForSeconds(3f);
+     
     }
 
     public IEnumerator WaitMoveToPlayer()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
         isMove = true;
+       
     }
    
 

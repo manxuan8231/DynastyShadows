@@ -2,9 +2,12 @@
 
 public class ThirdPersonOrbitCamera : MonoBehaviour
 {
-    public Transform target;        // Camera LookAt target (thường là player)
-    public Transform player;        // Player cần flip
+    public Transform target;
+    public Transform player;
     public Vector3 offset = new Vector3(0, 2, -5);
+    private Vector3 defaultOffset;
+    private Vector3 currentOffset;
+
     public float sensitivityX = 4f;
     public float sensitivityY = 2f;
     public float minYAngle = -35f;
@@ -14,17 +17,23 @@ public class ThirdPersonOrbitCamera : MonoBehaviour
     private float currentY = 10f;
     private bool cursorVisible = false;
 
-    public bool flipCamera = false; // Cho phép flip liên tục khi true
+    public bool flipCamera = false;
+
+    public LayerMask groundLayer;
+    public float cameraCollisionBuffer = 0.2f;
+    public float smoothSpeed = 10f; // tốc độ mượt
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        defaultOffset = offset;
+        currentOffset = offset;
     }
 
     void LateUpdate()
     {
-        // Toggle chuột bằng phím L
         if (Input.GetKeyDown(KeyCode.L))
         {
             cursorVisible = !cursorVisible;
@@ -32,7 +41,6 @@ public class ThirdPersonOrbitCamera : MonoBehaviour
             Cursor.lockState = cursorVisible ? CursorLockMode.None : CursorLockMode.Locked;
         }
 
-        // Xử lý xoay camera bằng chuột
         if (Cursor.lockState == CursorLockMode.Locked)
         {
             currentX += Input.GetAxis("Mouse X") * sensitivityX;
@@ -40,17 +48,33 @@ public class ThirdPersonOrbitCamera : MonoBehaviour
             currentY = Mathf.Clamp(currentY, minYAngle, maxYAngle);
         }
 
-        // Tính toán vị trí và hướng nhìn camera
         Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
-        Vector3 desiredPosition = target.position + rotation * offset;
-        transform.position = desiredPosition;
+
+        Vector3 desiredCameraPos = target.position + rotation * defaultOffset;
+        Vector3 direction = desiredCameraPos - target.position;
+        float maxDistance = defaultOffset.magnitude;
+
+        // Kiểm tra va chạm
+        if (Physics.Raycast(target.position, direction.normalized, out RaycastHit hit, maxDistance + cameraCollisionBuffer, groundLayer))
+        {
+            float hitDistance = Mathf.Clamp(hit.distance - cameraCollisionBuffer, 0.5f, maxDistance);
+            Vector3 hitOffset = direction.normalized * hitDistance;
+
+            // Lerp từ currentOffset đến hitOffset (mượt)
+            currentOffset = Vector3.Lerp(currentOffset, hitOffset, Time.deltaTime * smoothSpeed);
+        }
+        else
+        {
+            // Lerp từ currentOffset về offset gốc
+            currentOffset = Vector3.Lerp(currentOffset, defaultOffset, Time.deltaTime * smoothSpeed);
+        }
+
+        transform.position = target.position + rotation * currentOffset;
         transform.LookAt(target.position + Vector3.up * 1.5f);
 
-       
         if (flipCamera && player != null)
         {
-            player.rotation = Quaternion.Euler(0, currentX, 0); // Xoay cả X và Y
+            player.rotation = Quaternion.Euler(0, currentX, 0);
         }
-       
     }
 }

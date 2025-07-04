@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class DragonRedHP : MonoBehaviour
+public class DragonRedHP : MonoBehaviour,IDamageable
 {
     //hp
     public Slider sliderHp;//máu
@@ -61,7 +61,7 @@ public class DragonRedHP : MonoBehaviour
 
     }
     //ham lay hp----------------------------
-    public void TakeDame(float amount)
+    public void TakeDamage(float amount)
     {
         if (currentArmor > 0)
         {
@@ -98,7 +98,7 @@ public class DragonRedHP : MonoBehaviour
                 dragonRed.animator.SetTrigger("Stun");
 
                 dragonRed.animator.SetBool("IsWalking", false);
-                dragonRed.navMeshAgent.isStopped = true;
+                dragonRed.aiPath.isStopped = true;
             }
         }
         else
@@ -112,7 +112,7 @@ public class DragonRedHP : MonoBehaviour
                 dragonRed.animator.ResetTrigger("Idle");
                 dragonRed.animator.SetTrigger("Idle");
 
-                dragonRed.navMeshAgent.isStopped = false;
+                dragonRed.aiPath.isStopped = false;
             }
         }
 

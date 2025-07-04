@@ -23,256 +23,38 @@ public class DameZone : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        GameObject hitObj = other.gameObject;
-        if (hitObj.layer == LayerMask.NameToLayer("Enemy"))
-          {
-            if (listDame.Contains(other)) return;
-            float finalDamage = playerStatus.CalculateFinalDamage();
-
-               
-               
-                // Tìm script EnemyHP 
-                EnemyHP enemyHP = other.GetComponent<EnemyHP>();
-                if (enemyHP != null)
-                {
-                    listDame.Add(other);// thêm collider vào danh sách
-                    ShowTextDame(finalDamage);
-                    enemyHP.TakeDamage(finalDamage);
-                    return;
-                }
-
-                EnemyHP2 enemyHP2 = other.GetComponent<EnemyHP2>();
-                if (enemyHP2 != null)
-                {
-                    listDame.Add(other);// thêm collider vào danh sách
-                    ShowTextDame(finalDamage);
-                    enemyHP2.TakeDamage(finalDamage);
-                    return;
-                }
-
-                EnemyHP3 enemyHP3 = other.GetComponent<EnemyHP3>();
-                if (enemyHP3 != null)
-                {
-                    listDame.Add(other);// thêm collider vào danh sách
-                    ShowTextDame(finalDamage);
-                    enemyHP3.TakeDamage(finalDamage);
-                    return;
-                }
-
-                EnemyHP4 enemyHP4 = other.GetComponent<EnemyHP4>();
-                if (enemyHP4 != null)
-                {
-                    listDame.Add(other);// thêm collider vào danh sách
-                    ShowTextDame(finalDamage);
-                    enemyHP4.TakeDamage(finalDamage);
-                    return;
-                }
-                //boss drakonit
-                DrakonitController drakonitController = other.GetComponent<DrakonitController>();
-                if (drakonitController != null)
-                {
-                    listDame.Add(other);// thêm collider vào danh sách
-                    ShowTextDame(finalDamage);
-                    drakonitController.TakeDame(finalDamage);
-                    return;
-                }
-                //boss ork
-                BossHP bossHP = other.GetComponent<BossHP>();
-                if (bossHP != null)
-                {
-                    listDame.Add(other);
-                    ShowTextDame(finalDamage);
-                    bossHP.TakeDamage(finalDamage);
-                    return;
-                }
-                //boss sa mac
-                NecController necController = other.GetComponent<NecController>();
-                if (necController != null)
-                {
-                    Debug.Log("Đã trúng NecController");
-                    listDame.Add(other);
-                    ShowTextDame(finalDamage);
-                    necController.TakeDame(finalDamage);
-                    return;
-                }
-                //boss chinh map 1
-                Boss1Controller boss1HP = other.GetComponent<Boss1Controller>();
-                if (boss1HP != null)
-                {
-                    listDame.Add(other);
-                    ShowTextDame(finalDamage);
-                    boss1HP.TakeDame((int)finalDamage);
-                    return;
-                }
-                //enemy map 2 1 + 2
-                EnemyMap2_HP enemyMap2_1 = other.GetComponent<EnemyMap2_HP>();
-                if (enemyMap2_1 != null)
-                {
-                    listDame.Add(other);// thêm collider vào danh sách
-                    ShowTextDame(finalDamage);
-                    enemyMap2_1.TakeDamage(finalDamage);
-                    return;
-                }
-                //Minotaur
-                MinotaurEnemy minotaurController = other.GetComponent<MinotaurEnemy>();
-                if (minotaurController != null)
-                {
-                    listDame.Add(other);// thêm collider vào danh sách
-                    ShowTextDame(finalDamage);
-                    minotaurController.TakeDamage(finalDamage);
-                    return;
-                }
-                TurretHP turretHP = other.GetComponent<TurretHP>();
-                if (turretHP != null)
-                {
-                listDame.Add(other);// thêm collider vào danh sách
-                ShowTextDame(finalDamage);
-                turretHP.TakeDame(finalDamage);
-                return;
-                }
-            DragonRedHP dragonRedHP = other.GetComponent<DragonRedHP>();
-            if (dragonRedHP != null)
-            {
-                listDame.Add(other);// thêm collider vào danh sách
-                ShowTextDame(finalDamage);
-                dragonRedHP.TakeDame(finalDamage);
-                return;
-            }
-            EnemyHorseManHP enemyHorseManHP = other.GetComponent<EnemyHorseManHP>();
-            if (enemyHorseManHP != null)
-            {
-                listDame.Add(other);// thêm collider vào danh sách
-                ShowTextDame(finalDamage);
-                enemyHorseManHP.TakeDamage(finalDamage);
-                return;
-            }
-            ShoterTargetDra sh = other.GetComponent<ShoterTargetDra>();
-            if (sh != null)
-            {
-                listDame.Add(other);
-                ShowTextDame(finalDamage);
-                sh.TakeDamage(finalDamage);
-                return;
-            }
-        }
-        
+        TryApplyDamage(other);
     }
-    private void OnTriggerStay(Collider other)//nếu ontrigger xử lấy ko kịp thì nó dô đây xử lý tiếp
+
+    private void OnTriggerStay(Collider other)
+    {
+        TryApplyDamage(other);
+    }
+    private void TryApplyDamage(Collider other)
     {
         GameObject hitObj = other.gameObject;
-        if (hitObj.layer == LayerMask.NameToLayer("Enemy"))
-            {
-            if (listDame.Contains(other)) return;
-            float finalDamage = playerStatus.CalculateFinalDamage();
+        if (hitObj.layer != LayerMask.NameToLayer("Enemy")) return;
+        if (listDame.Contains(other)) return;
 
-             
-                // Tìm script EnemyHP 
-                EnemyHP enemyHP = other.GetComponent<EnemyHP>();
-                if (enemyHP != null)
-                {
-                    listDame.Add(other);// thêm collider vào danh sách
-                    ShowTextDame(finalDamage);
-                    enemyHP.TakeDamage(finalDamage);
-                    return;
-                }
+        float finalDamage = playerStatus.CalculateFinalDamage();
 
-                EnemyHP2 enemyHP2 = other.GetComponent<EnemyHP2>();
-                if (enemyHP2 != null)
-                {
-                    listDame.Add(other);// thêm collider vào danh sách
-                    ShowTextDame(finalDamage);
-                    enemyHP2.TakeDamage(finalDamage);
-                    return;
-                }
-
-                EnemyHP3 enemyHP3 = other.GetComponent<EnemyHP3>();
-                if (enemyHP3 != null)
-                {
-                    listDame.Add(other);// thêm collider vào danh sách
-                    ShowTextDame(finalDamage);
-                    enemyHP3.TakeDamage(finalDamage);
-                    return;
-                }
-
-                EnemyHP4 enemyHP4 = other.GetComponent<EnemyHP4>();
-                if (enemyHP4 != null)
-                {
-                    listDame.Add(other);// thêm collider vào danh sách
-                    ShowTextDame(finalDamage);
-                    enemyHP4.TakeDamage(finalDamage);
-                    return;
-                }
-                //boss drakonit
-                DrakonitController drakonitController = other.GetComponent<DrakonitController>();
-                if (drakonitController != null)
-                {
-                    listDame.Add(other);// thêm collider vào danh sách
-                    ShowTextDame(finalDamage);
-                    drakonitController.TakeDame(finalDamage);
-                    return;
-                }
-                //boss ork
-                BossHP bossHP = other.GetComponent<BossHP>();
-                if (bossHP != null)
-                {
-                    listDame.Add(other);
-                    ShowTextDame(finalDamage);
-                    bossHP.TakeDamage(finalDamage);
-                    return;
-                }
-                //boss sa mac
-                NecController necController = other.GetComponent<NecController>();
-                if (necController != null)
-                {
-                    Debug.Log("Đã trúng NecController");
-                    listDame.Add(other);
-                    ShowTextDame(finalDamage);
-                    necController.TakeDame(finalDamage);
-                    return;
-                }
-                //boss chinh map 1
-                Boss1Controller boss1HP = other.GetComponent<Boss1Controller>();
-                if (boss1HP != null)
-                {
-                    listDame.Add(other);
-                    ShowTextDame(finalDamage);
-                    boss1HP.TakeDame((int)finalDamage);
-                    return;
-                }
-            TurretHP turretHP = other.GetComponent<TurretHP>();
-            if (turretHP != null)
-            {
-                listDame.Add(other);// thêm collider vào danh sách
-                ShowTextDame(finalDamage);
-                turretHP.TakeDame(finalDamage);
-                return;
-            }
-            DragonRedHP dragonRedHP = other.GetComponent<DragonRedHP>();
-            if (dragonRedHP != null)
-            {
-                listDame.Add(other);// thêm collider vào danh sách
-                ShowTextDame(finalDamage);
-                dragonRedHP.TakeDame(finalDamage);
-                return;
-            }
-            EnemyHorseManHP enemyHorseManHP = other.GetComponent<EnemyHorseManHP>();
-            if (enemyHorseManHP != null)
-            {
-                listDame.Add(other);// thêm collider vào danh sách
-                ShowTextDame(finalDamage);
-                enemyHorseManHP.TakeDamage(finalDamage);
-                return;
-            }
-            ShoterTargetDra sh = other.GetComponent<ShoterTargetDra>();
-            if (sh != null)
-            {
-                listDame.Add(other);
-                ShowTextDame(finalDamage);
-                sh.TakeDamage(finalDamage);
-                return;
-            }
+        IDamageable damageable = other.GetComponent<IDamageable>();
+        if (damageable != null)
+        {
+            listDame.Add(other);
+            ShowTextDame(finalDamage);
+            damageable.TakeDamage(finalDamage);
+        }
+        //cua phong cui
+        if (other.CompareTag("EnemyHorseMan")) return;     
+        EnemyMap2_horseman enemy = other.GetComponent<EnemyMap2_horseman>();
+        if (enemy != null)
+        {
+            Debug.Log("goi trydodge cua phong lo");
+            //enemy.TryDodge(); // Gọi hành vi né đòn
         }
     }
+
     public void ShowTextDame(float damage)
     {
         GameObject effectText = Instantiate(textDame, textTransform.position, Quaternion.identity);

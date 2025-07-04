@@ -85,7 +85,7 @@ public class FireBall : MonoBehaviour
                 m.TakeDamage((int)dmg);
                 break;
                     case DragonRedHP dr:
-                dr.TakeDame((int)dmg);
+                dr.TakeDamage((int)dmg);
                 break;
         }
     }
