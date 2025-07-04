@@ -2,12 +2,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyHorseManHP : MonoBehaviour
+public class EnemyHorseManHP : MonoBehaviour,IDamageable
 {
     //xử lý máu
     [SerializeField] public Slider sliderHp;
     [SerializeField] public float currentHealth;
     [SerializeField] public float maxHealth = 2000f;
+    public bool isTakedame;
     //drop exp
     [SerializeField] public GameObject expPrefab;
     EnemyMap2_horseman enemyMap2_horseman;
@@ -46,7 +47,7 @@ public class EnemyHorseManHP : MonoBehaviour
     public void TakeDamage(float damage)
     {
         if (enemyMap2_horseman.currentState == EnemyMap2_horseman.EnemyState.Die) return; // Nếu chết rồi thì bỏ qua
-
+        if (!isTakedame) return;
         currentHealth -= damage;
 
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);

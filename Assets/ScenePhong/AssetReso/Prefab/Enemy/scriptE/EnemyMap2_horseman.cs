@@ -22,6 +22,8 @@ public class EnemyMap2_horseman : MonoBehaviour
     public Vector3 firstPos;
     public Animator animator;
     public string currentTrigger;
+    public Animator playerAnimator;
+
 
     public float dodgeDistance = 3f;
     public float dodgeChance = 0.5f; // 50% né đòn
@@ -46,6 +48,7 @@ public class EnemyMap2_horseman : MonoBehaviour
     {
         aiPath = GetComponent<AIPath>();
         animator = GetComponent<Animator>();
+        playerAnimator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
         player = FindClosestPlayer();
         enemyHorseManHP = FindAnyObjectByType<EnemyHorseManHP>();
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
@@ -71,6 +74,7 @@ public class EnemyMap2_horseman : MonoBehaviour
                     ChangeState(EnemyState.Walk);
                 }
                 break;
+
             case EnemyState.Walk:
 
                 float dist = Vector3.Distance(transform.position, player.position);
@@ -86,7 +90,6 @@ public class EnemyMap2_horseman : MonoBehaviour
             case EnemyState.Attack:
                 Attack();
                 break;
-
         }
     }
     void Walk()
@@ -133,6 +136,8 @@ public class EnemyMap2_horseman : MonoBehaviour
 
     //------------------------------------------------------------------------
     //------------------------------------------------------------------------
+
+
     public void TryDodge()
     {
         if (isDodging || currentState == EnemyState.Die || currentState == EnemyState.Dodge)
@@ -141,35 +146,48 @@ public class EnemyMap2_horseman : MonoBehaviour
         float dist = Vector3.Distance(transform.position, player.position);
         if (dist <= dodgeDistance && Random.value < dodgeChance)
         {
-            StartCoroutine(DoDodgeBack());
+            Vector3 dodgeDir = GetDodgeDirection();
+            StartCoroutine(DoDodge(dodgeDir));
         }
     }
 
-    IEnumerator DoDodgeBack()
+    Vector3 GetDodgeDirection()
     {
+        return transform.right; // luôn né sang trái
+    }
+
+    IEnumerator DoDodge(Vector3 direction)
+    {
+        enemyHorseManHP.isTakedame = false;
         isDodging = true;
         aiPath.isStopped = true;
 
-        ChangeState(EnemyState.Dodge);
-        transform.LookAt(player); // Đảm bảo enemy quay mặt về player trước khi lùi
+        ChangeState(EnemyState.Dodge); // Gọi animation né
+        float distanceDodged = 0f;
+        float dodgeSpeed = 17f; // tốc độ né
+        float maxDodgeDistance = 4f; // khoảng cách né mong muốn
+        Vector3 startPos = transform.position;
 
-        Vector3 dodgeDirection = -transform.forward;
-        float duration = 0.4f;
-        float speed = 4f;
-        float timer = 0f;
-
-        while (timer < duration)
+        // Né đến khi đi đủ khoảng cách mong muốn
+        while (distanceDodged < maxDodgeDistance)
         {
-            transform.position += dodgeDirection * speed * Time.deltaTime;
-            timer += Time.deltaTime;
+            Vector3 move = direction * dodgeSpeed * Time.deltaTime;
+            transform.position += move;
+            distanceDodged = Vector3.Distance(startPos, transform.position);
             yield return null;
         }
 
+        // Chờ thêm một chút cho animation né hoàn thành
+        yield return new WaitForSeconds(0.5f); // thời gian tùy chỉnh theo clip
+
+        enemyHorseManHP.isTakedame = true;
         isDodging = false;
         aiPath.isStopped = false;
 
-        ChangeState(EnemyState.Walk); // Trở lại trạng thái đi sau khi né
+        ChangeState(EnemyState.Walk);
     }
+
+
 
     //------------------------------------------------------------------------
     //------------------------------------------------------------------------
@@ -258,7 +276,7 @@ public class EnemyMap2_horseman : MonoBehaviour
     public IEnumerator Waitingforflip()
     {
         transform.LookAt(player);
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.02f);
         animator.SetTrigger("Attack");
     }
 }
