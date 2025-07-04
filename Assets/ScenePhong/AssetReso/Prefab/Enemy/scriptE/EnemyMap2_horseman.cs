@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Pathfinding;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyMap2_horseman : MonoBehaviour
@@ -10,15 +12,20 @@ public class EnemyMap2_horseman : MonoBehaviour
         Attack,
         GetHit,
         Skill1,
-        Die
+        Die,
+        Dodge
     }
     public EnemyState currentState;
 
-    [SerializeField] public UnityEngine.AI.NavMeshAgent agent;
-    [SerializeField] public Transform player;
-    [SerializeField] public Vector3 firstPos;
-    [SerializeField] public Animator animator;
-    [SerializeField] public string currentTrigger;
+    public AIPath aiPath;
+    public Transform player;
+    public Vector3 firstPos;
+    public Animator animator;
+    public string currentTrigger;
+
+    public float dodgeDistance = 3f;
+    public float dodgeChance = 0.5f; // 50% né đòn
+    private bool isDodging = false;
 
     //khoảng cách
     public float radius = 20f;
@@ -37,7 +44,7 @@ public class EnemyMap2_horseman : MonoBehaviour
     EnemyHorseManHP enemyHorseManHP;
     private void Awake()
     {
-        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        aiPath = GetComponent<AIPath>();
         animator = GetComponent<Animator>();
         player = FindClosestPlayer();
         enemyHorseManHP = FindAnyObjectByType<EnemyHorseManHP>();
@@ -88,13 +95,13 @@ public class EnemyMap2_horseman : MonoBehaviour
 
         if (distToPlayer < radius)
         {
-            agent.SetDestination(player.position); // Đuổi theo player
+            aiPath.destination = player.position; // Đuổi theo player
         }
         else
         {
             // Nếu player ra khỏi phạm vi, quay lại chỗ cũ
             float backDist = Vector3.Distance(transform.position, firstPos);
-            agent.SetDestination(firstPos);
+            aiPath.destination = firstPos;
 
             if (backDist < 0.2f)
             {
@@ -112,17 +119,60 @@ public class EnemyMap2_horseman : MonoBehaviour
             Debug.Log("Attack");
             StartCoroutine(Waitingforflip());
             attackTimer = 0f; // Reset thời gian tấn công
-            agent.isStopped = true; // Dừng lại khi tấn công
+            aiPath.isStopped = true; // Dừng lại khi tấn công
 
         }
         float dist = Vector3.Distance(transform.position, player.position);
         if (dist > attackRange + 1f)
         {
-            agent.isStopped = false;
+            aiPath.isStopped = false;
             attackTimer = 0f; //nếu như player đi xa
             ChangeState(EnemyState.Walk);
         }
     }
+
+    //------------------------------------------------------------------------
+    //------------------------------------------------------------------------
+    public void TryDodge()
+    {
+        if (isDodging || currentState == EnemyState.Die || currentState == EnemyState.Dodge)
+            return;
+
+        float dist = Vector3.Distance(transform.position, player.position);
+        if (dist <= dodgeDistance && Random.value < dodgeChance)
+        {
+            StartCoroutine(DoDodgeBack());
+        }
+    }
+
+    IEnumerator DoDodgeBack()
+    {
+        isDodging = true;
+        aiPath.isStopped = true;
+
+        ChangeState(EnemyState.Dodge);
+        transform.LookAt(player); // Đảm bảo enemy quay mặt về player trước khi lùi
+
+        Vector3 dodgeDirection = -transform.forward;
+        float duration = 0.4f;
+        float speed = 4f;
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            transform.position += dodgeDirection * speed * Time.deltaTime;
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        isDodging = false;
+        aiPath.isStopped = false;
+
+        ChangeState(EnemyState.Walk); // Trở lại trạng thái đi sau khi né
+    }
+
+    //------------------------------------------------------------------------
+    //------------------------------------------------------------------------
 
     public void ChangeState(EnemyState newState)
     {
@@ -143,8 +193,8 @@ public class EnemyMap2_horseman : MonoBehaviour
                 currentTrigger = "Walk";
                 break;
             case EnemyState.Attack:
-                if (agent.enabled == false) return; // Nếu agent không hoạt động thì không tấn công
-                agent.isStopped = true; // Dừng lại khi tấn công 
+                if (aiPath.enabled == false) return; // Nếu agent không hoạt động thì không tấn công
+                aiPath.isStopped = true; // Dừng lại khi tấn công 
                 animator.SetTrigger("Attack");
                 currentTrigger = "Attack";
                 break;
@@ -160,6 +210,11 @@ public class EnemyMap2_horseman : MonoBehaviour
                 animator.SetTrigger("Die");
                 currentTrigger = "Die";
                 break;
+            case EnemyState.Dodge:
+                animator.SetTrigger("Dodge"); // Tạo trigger "Dodge" trong Animator
+                currentTrigger = "Dodge";
+                break;
+
         }
     }
 
@@ -171,6 +226,8 @@ public class EnemyMap2_horseman : MonoBehaviour
         animator.ResetTrigger("GetHit");
         animator.ResetTrigger("Die");
         animator.ResetTrigger("Skill1");
+        animator.ResetTrigger("Dodge");
+
     }
     public void BatDamageBox()
     {
