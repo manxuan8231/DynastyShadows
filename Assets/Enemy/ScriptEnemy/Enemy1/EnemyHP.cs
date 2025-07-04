@@ -61,7 +61,6 @@ public class EnemyHP : MonoBehaviour,IDamageable
 
             enemy1.animator.enabled = true; // Bật animator để có thể chơi animation chết
             enemy1.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết
-            enemy1.ChangeState(Enemy1.EnemyState.Death);
             enemy1.agent.isStopped = true; // Dừng lại khi chết
             boxDame.enabled = false;
             DropItem(); // Gọi hàm rơi đồ
@@ -76,6 +75,8 @@ public class EnemyHP : MonoBehaviour,IDamageable
             }
 
             StartCoroutine(WaitDeath()); // Chờ 5 giây trước khi trả về pool
+            enemy1.ChangeState(Enemy1.EnemyState.Death);
+
 
 
         }

@@ -488,13 +488,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 755258540525722263}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.537, y: 0, z: -1.5226275e-11}
+  m_LocalRotation: {x: -0.7063407, y: 0.00040439705, z: 0.000672719, w: 0.70787174}
+  m_LocalPosition: {x: 0.5364494, y: 0.0015175543, z: -0.0029492823}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3048885826434844809}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.878, y: -9.896, z: 9.984}
 --- !u!137 &6862570695621398498
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -693,7 +693,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4433178868938814568}
   - component: {fileID: 458886184954246440}
-  - component: {fileID: 6745112480268477759}
+  - component: {fileID: 7128222021302842125}
   m_Layer: 10
   m_Name: BN_ R_ Hand
   m_TagString: Untagged
@@ -737,7 +737,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.43, z: 2.32}
   m_Center: {x: 0, y: 0, z: 0.75}
---- !u!114 &6745112480268477759
+--- !u!114 &7128222021302842125
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -746,9 +746,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 846176412842985887}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2953f53a64237d145922d518c0063229, type: 3}
+  m_Script: {fileID: 11500000, guid: ab679efc8234e6c429ab4a2499f78b85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dameZoneCollider: {fileID: 458886184954246440}
+  dame: 25
+  tagPlayer: Player
+  listDame: []
   enemy: {fileID: 1490556876819131900}
 --- !u!1 &894392299631514336
 GameObject:
@@ -1028,10 +1032,11 @@ GameObject:
   - component: {fileID: 3048885826434844809}
   - component: {fileID: 951643368604944589}
   - component: {fileID: 6780965030975161230}
-  - component: {fileID: 7769977221082248970}
   - component: {fileID: 4378717723244579194}
   - component: {fileID: 7741572806538795856}
   - component: {fileID: 6635899489422951303}
+  - component: {fileID: 516224213492335900}
+  - component: {fileID: 1260675238282451679}
   m_Layer: 10
   m_Name: EnemyMap2(1)
   m_TagString: EnemyMap2_1
@@ -1047,8 +1052,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1490556876819131900}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.254536, y: -0.0000019073486, z: 71.31793}
+  m_LocalRotation: {x: -0.0013975909, y: -0.0009832684, z: -0.00024494345, w: 0.99999857}
+  m_LocalPosition: {x: 42.90046, y: -0.00457716, z: 61.815765}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1057,7 +1062,7 @@ Transform:
   - {fileID: 6801028222485626774}
   - {fileID: 1909256359294089981}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.16, y: -0.113, z: -0.028}
 --- !u!95 &951643368604944589
 Animator:
   serializedVersion: 7
@@ -1093,38 +1098,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  agent: {fileID: 0}
+  ai: {fileID: 0}
   player: {fileID: 0}
   firstPos: {x: 0, y: 0, z: 0}
   animator: {fileID: 0}
   currentTrigger: 
+  endDistance: 0.2
   radius: 50
   attackRange: 5
   attackCooldown: 10
   damageBox: {fileID: 458886184954246440}
-  DameZoneWeapon: {fileID: 0}
---- !u!195 &7769977221082248970
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1490556876819131900}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 6
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  DameZoneWeapon: {fileID: 7128222021302842125}
 --- !u!65 &4378717723244579194
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1191,6 +1175,77 @@ MonoBehaviour:
   expPrefab: {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
   boxDame: {fileID: 4378717723244579194}
   npc: {fileID: 0}
+  activeStartTimeLine6: {fileID: 0}
+--- !u!114 &516224213492335900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490556876819131900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
+--- !u!114 &1260675238282451679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490556876819131900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
+  radius: 0.5
+  height: 2
+  canMove: 1
+  maxSpeed: 5
+  gravity: {x: NaN, y: NaN, z: NaN}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  centerOffsetCompatibility: NaN
+  repathRateCompatibility: NaN
+  canSearchCompability: 0
+  orientation: 0
+  enableRotation: 1
+  autoRepath:
+    mode: 2
+    interval: 0.5
+    sensitivity: 10
+    maximumInterval: 2
+    visualizeSensitivity: 0
+  targetCompatibility: {fileID: 0}
+  maxAcceleration: -2.5
+  rotationSpeed: 360
+  slowdownDistance: 0.6
+  pickNextWaypointDist: 2
+  endReachedDistance: 0.2
+  alwaysDrawGizmos: 0
+  slowWhenNotFacingTarget: 1
+  whenCloseToDestination: 0
+  constrainInsideGraph: 0
 --- !u!1 &1591205054371501649
 GameObject:
   m_ObjectHideFlags: 0
