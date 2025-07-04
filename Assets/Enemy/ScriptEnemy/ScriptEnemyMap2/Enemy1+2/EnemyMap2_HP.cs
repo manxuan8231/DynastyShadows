@@ -86,6 +86,7 @@ public class EnemyMap2_HP : MonoBehaviour, IDamageable
     {
         yield return new WaitForSeconds(5f); // Chờ 1.5 giây trước khi trả về pool
         ObjPoolingManager.Instance.ReturnToPool("EnemyMap2_1", gameObject);
+        enemyMap2_1.hasFirstPos = false; // Đặt lại hasFirstPos để có thể spawn lại
     }
     void BackToChase()
     {

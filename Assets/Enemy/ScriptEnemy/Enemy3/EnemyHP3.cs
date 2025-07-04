@@ -17,10 +17,7 @@ public class EnemyHP3 : MonoBehaviour, IDamageable
     ThuongNhan thuongNhan; // Tham chiếu đến ThuongNhan
     ActiveStartTimeLine6 activeStartTimeLine6;                                  
     public BoxCollider boxDame;
-    void OnEnable()
-    {
-        ResetEnemy(); // Mỗi lần lấy từ pool ra thì reset lại
-    }
+   
     private void Awake()
     {
         enemy3 = GetComponent<Enemy3>();
@@ -98,6 +95,7 @@ public class EnemyHP3 : MonoBehaviour, IDamageable
     {
         yield return new WaitForSeconds(5f); // Chờ 5 giây trước khi trả về pool
         ObjPoolingManager.Instance.ReturnToPool("Enemy3", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
+        enemy3.hasFirstPos = false; // Đặt lại hasFirstPos để có thể spawn lại
     }
     void BackToChase()
     {
@@ -115,24 +113,5 @@ public class EnemyHP3 : MonoBehaviour, IDamageable
         }
     }
 
-    void ResetEnemy()
-    {
-        currentHealth = maxHealth;
-        sliderHp.maxValue = currentHealth;
-        sliderHp.value = currentHealth;
-
-        boxDame.enabled = true;
-        if (enemy3.animator != null)
-        {
-            enemy3.animator.Rebind();        // Khôi phục tất cả trạng thái mặc định ban đầu
-            enemy3.animator.Update(0f);      // Đảm bảo không bị đứng hình ở frame cũ
-        }
-        // Reset trạng thái di chuyển
-        if (enemy3.agent != null)
-        {
-            enemy3.agent.ResetPath();
-            enemy3.agent.enabled = true;
-        }
-
-    }
+    
 }

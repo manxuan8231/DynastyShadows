@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy1 : MonoBehaviour
+public class Enemy1 : EnemyBase
 {
   
     public enum EnemyState
@@ -16,7 +16,6 @@ public class Enemy1 : MonoBehaviour
 
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public Transform player;
-    [SerializeField] public Vector3 firstPos;
     [SerializeField] public Animator animator;
     [SerializeField] public string currentTrigger;
 
@@ -54,6 +53,12 @@ public class Enemy1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (!hasFirstPos && gameObject.activeSelf)
+        {
+            firstPos = transform.position; // Lưu vị trí ban đầu
+            hasFirstPos = true; // Đánh dấu đã lưu vị trí ban đầu
+        }
         player = FindClosestPlayer(); 
 
         switch (currentState)
@@ -200,5 +205,23 @@ public class Enemy1 : MonoBehaviour
 
         return closest;
     }
+    public override void ResetEnemy()
+    {
+        // 👇 Toàn bộ logic reset như trong EnemyHP4.ResetEnemy() hiện tại
+        currentState = EnemyState.Idle;
 
+        if (animator != null)
+        {
+            animator.Rebind();
+            animator.Update(0f);
+        }
+
+        if (agent != null)
+        {
+            agent.ResetPath();
+            agent.enabled = true;
+        }
+
+        // Có thể reset thêm gì đó nếu cần (disable box, reset timer,...)
+    }
 }

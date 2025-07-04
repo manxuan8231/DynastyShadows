@@ -75,7 +75,7 @@ public class ObjPoolingManager : MonoBehaviour
             obj.transform.SetParent(parentDictionary[tag]); // Gắn vào parent đúng loại
             obj.transform.position = position;
             obj.SetActive(true);
-            
+           
             return obj;
         }
         else

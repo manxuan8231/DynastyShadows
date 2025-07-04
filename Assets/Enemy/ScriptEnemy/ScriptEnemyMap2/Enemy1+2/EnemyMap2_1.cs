@@ -20,6 +20,7 @@ public class EnemyMap2_1 : MonoBehaviour
     [SerializeField] public Animator animator;
     [SerializeField] public string currentTrigger;
     [SerializeField] float endDistance = 0.2f;
+    public bool hasFirstPos = false;
     //khoảng cách
     public float radius = 20f;
     public float attackRange = 2f;
@@ -56,6 +57,12 @@ public class EnemyMap2_1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (!hasFirstPos && gameObject.activeSelf)
+        {
+            firstPos = transform.position; // Lưu vị trí ban đầu
+            hasFirstPos = true; // Đánh dấu đã lưu vị trí ban đầu
+        }
         player = FindClosestPlayer(); // Tìm player gần nhất
         switch (currentState)
         {
