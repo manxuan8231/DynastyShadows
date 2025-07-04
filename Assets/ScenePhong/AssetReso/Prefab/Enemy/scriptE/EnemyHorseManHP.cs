@@ -54,12 +54,12 @@ public class EnemyHorseManHP : MonoBehaviour
         if (currentHealth <= 0)
         {
 
-            enemyMap2_horseman.agent.enabled = true; // Bật lại NavMeshAgent để có thể chơi animation chết
+            enemyMap2_horseman.aiPath.enabled = true; // Bật lại NavMeshAgent để có thể chơi animation chết
             enemyMap2_horseman.animator.enabled = true; // Bật animator để có thể chơi animation chết
             enemyMap2_horseman.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết
             enemyMap2_horseman.ChangeState(EnemyMap2_horseman.EnemyState.Die);
 
-            enemyMap2_horseman.agent.isStopped = true; // Dừng lại khi chết
+            enemyMap2_horseman.aiPath.isStopped = true; // Dừng lại khi chết
 
             boxDame.enabled = false;
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
@@ -118,10 +118,10 @@ public class EnemyHorseManHP : MonoBehaviour
             enemyMap2_horseman.animator.Update(0f);
         }
 
-        if (enemyMap2_horseman.agent != null)
+        if (enemyMap2_horseman.aiPath != null)
         {
-            enemyMap2_horseman.agent.ResetPath();
-            enemyMap2_horseman.agent.enabled = true;
+            enemyMap2_horseman.aiPath.canMove = false;
+            enemyMap2_horseman.aiPath.enabled = true;
         }
         enemyMap2_horseman.ChangeState(EnemyMap2_horseman.EnemyState.Idle);
     }
