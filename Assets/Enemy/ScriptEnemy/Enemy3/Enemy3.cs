@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy3 : MonoBehaviour
+public class Enemy3 : EnemyBase
 {
     public enum EnemyState
     {
@@ -14,7 +14,6 @@ public class Enemy3 : MonoBehaviour
     public EnemyState currentState;
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public Transform player;
-    public Vector3 firstPos;
     [SerializeField] public Animator animator;
     public string currentTrigger;
 
@@ -32,25 +31,26 @@ public class Enemy3 : MonoBehaviour
 
     //box damage
     public BoxCollider damageBox;
+    
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        firstPos = transform.position;
         enemyHP3 = FindAnyObjectByType<EnemyHP3>();
         player = FindClosestPlayer();
         damageBox.enabled = false; // Tắt box dame khi bắt đầu
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
     }
-    void Start()
-    {
-      
-        
-    }                                                                   
+
 
     // Update is called once per frame
     void Update()
     {
+        if (!hasFirstPos && gameObject.activeSelf)
+        {
+            firstPos = transform.position; // Lưu vị trí ban đầu
+            hasFirstPos = true; // Đánh dấu đã lưu vị trí ban đầu
+        }
         player = FindClosestPlayer(); // Tìm player gần nhất
         switch (currentState)
         {
@@ -97,6 +97,7 @@ public class Enemy3 : MonoBehaviour
             {
                 ChangeState(EnemyState.Idle); // Về tới nơi thì Idle lại
             }
+           
         }
     }
 
@@ -135,12 +136,16 @@ public class Enemy3 : MonoBehaviour
         switch (newState)
         {
             case EnemyState.Idle:
-                animator.SetTrigger("Idle");
-                currentTrigger = "Idle";
+               
+                    animator.SetTrigger("Idle");
+                    currentTrigger = "Idle";
+                
                 break;
             case EnemyState.Run:
-                animator.SetTrigger("Run");
-                currentTrigger = "Run";
+               
+                    animator.SetTrigger("Run");
+                    currentTrigger = "Run";
+                
                 break;
             case EnemyState.Attack:
                 animator.SetTrigger("Attack");
@@ -192,6 +197,26 @@ public class Enemy3 : MonoBehaviour
         }
 
         return closest;
+    }
+
+    public override void ResetEnemy()
+    {
+        // 👇 Toàn bộ logic reset như trong EnemyHP4.ResetEnemy() hiện tại
+        currentState = EnemyState.Idle;
+
+        if (animator != null)
+        {
+            animator.Rebind();
+            animator.Update(0f);
+        }
+
+        if (agent != null)
+        {
+            agent.ResetPath();
+            agent.enabled = true;
+        }
+
+        // Có thể reset thêm gì đó nếu cần (disable box, reset timer,...)
     }
 }
 

@@ -1,15 +1,13 @@
-﻿using System.Collections;
+﻿using Pathfinding;
+using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.UI;
 
 
 public class NPCQuest : MonoBehaviour
 {
     public Animator animator;
-    public NavMeshAgent agent;
     public EnemyMap2_1 enemyMap2_1;
     public Transform player;
     public Transform succesQuestPoint;
@@ -50,15 +48,16 @@ public class NPCQuest : MonoBehaviour
     public AudioCanvasState audioCanvasState;
     public SuccesQuest2 succesQuest2;
     public GameObject obj;
+    AIPath aiPath;
     private void Start()
     {
         obj.SetActive(false); 
         canvasNameNPC.SetActive(false); // Ẩn canvas tên NPC ban đầu
         isContent = true;
         animator = GetComponent<Animator>();
-        agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").transform; // Tìm player trong scene
         succesQuest2 = FindFirstObjectByType<SuccesQuest2>();
+        aiPath = GetComponent<AIPath>();
     }
 
     void Update()
@@ -225,12 +224,13 @@ public class NPCQuest : MonoBehaviour
         {
             if (distanceToPlayer > 5f)
             {
-                agent.SetDestination(player.position);
+                aiPath.canSearch = true; // Bật AIPath để NPC có thể di chuyển
+                aiPath.canMove = true; // Bật di chuyển
+                aiPath.destination = player.position; // Di chuyển đến vị trí của người chơi
                 animator.SetTrigger("Walk");
             }
             else
             {
-                agent.ResetPath();
                 animator.SetTrigger("Idle");
             }
         }
@@ -243,8 +243,9 @@ public class NPCQuest : MonoBehaviour
             float distanceToPoint = Vector3.Distance(transform.position, succesQuestPoint.position);
             if(distanceToPoint > 1f)
             {
-                agent.ResetPath(); // Reset path để tránh lỗi khi NPC đang di chuyển
-                agent.SetDestination(succesQuestPoint.position);
+                aiPath.canSearch = true; // Bật AIPath để NPC có thể di chuyển
+                aiPath.canMove = true; // Bật di chuyển
+                aiPath.destination = succesQuestPoint.position; // Di chuyển đến điểm hoàn thành nhiệm vụ
                 animator.SetTrigger("Walk");
             }
             else

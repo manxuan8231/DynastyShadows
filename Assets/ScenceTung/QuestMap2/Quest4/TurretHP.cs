@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TurretHP : MonoBehaviour
+public class TurretHP : MonoBehaviour,IDamageable
 {
     //xử lý máu
     [SerializeField] public Slider sliderHp;
@@ -21,7 +21,7 @@ public class TurretHP : MonoBehaviour
         sliderHp.value = currentHealth;
     }
 
-   public void TakeDame(float damage)
+   public void TakeDamage(float damage)
     {
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);

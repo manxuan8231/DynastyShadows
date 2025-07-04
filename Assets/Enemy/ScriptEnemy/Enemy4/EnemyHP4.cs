@@ -113,6 +113,7 @@ public class EnemyHP4 : MonoBehaviour, IDamageable
         currentHealth = maxHealth;
         sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
+        enemy4.firstPos = transform.position; // Reset vị trí ban đầu
 
         boxDame.enabled = true;
         if (enemy4.animator != null)

@@ -21,15 +21,7 @@ public class EnemyHP : MonoBehaviour,IDamageable
     //box nhận dame
     public BoxCollider boxDame;
     public List<ItemDrop> itemDrops = new List<ItemDrop>();
-    void OnEnable()
-    {
-        StartCoroutine(WaitThenReset());
-    }
-    IEnumerator WaitThenReset()
-    {
-        yield return null; // đợi 1 frame cho object "snap" lên NavMesh
-        ResetEnemy();
-    }
+  
     private void Awake()
     {
         enemy1 = GetComponent<Enemy1>();
@@ -61,7 +53,6 @@ public class EnemyHP : MonoBehaviour,IDamageable
 
             enemy1.animator.enabled = true; // Bật animator để có thể chơi animation chết
             enemy1.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết
-            enemy1.ChangeState(Enemy1.EnemyState.Death);
             enemy1.agent.isStopped = true; // Dừng lại khi chết
             boxDame.enabled = false;
             DropItem(); // Gọi hàm rơi đồ
@@ -76,6 +67,8 @@ public class EnemyHP : MonoBehaviour,IDamageable
             }
 
             StartCoroutine(WaitDeath()); // Chờ 5 giây trước khi trả về pool
+            enemy1.ChangeState(Enemy1.EnemyState.Death);
+
 
 
         }
@@ -92,7 +85,9 @@ public class EnemyHP : MonoBehaviour,IDamageable
     {
         yield return new WaitForSeconds(5f); // Thời gian chờ trước khi trả về pool
         ObjPoolingManager.Instance.ReturnToPool("Enemy1", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
+        enemy1.hasFirstPos = false; // Đặt lại hasFirstPos để có thể spawn lại
     }
+
     public void DropItem()
     {
         float rand = Random.Range(0f, 100f); // số ngẫu nhiên từ 0 đến 100
@@ -125,28 +120,7 @@ public class EnemyHP : MonoBehaviour,IDamageable
         }
     }
 
-    void ResetEnemy()
-    {
-       
-        currentHealth = maxHealth;
-        sliderHp.maxValue = currentHealth;
-        sliderHp.value = currentHealth;
-        
-        boxDame.enabled = true;
-        if (enemy1.animator != null)
-        {
-            enemy1.animator.Rebind();        // Khôi phục tất cả trạng thái mặc định ban đầu
-            enemy1.animator.Update(0f);
-        }
-
-        if (enemy1.agent != null && enemy1.agent.isOnNavMesh)
-        {
-            enemy1.agent.ResetPath();
-            enemy1.agent.enabled = true;
-        }
-
-        enemy1.ChangeState(Enemy1.EnemyState.Idle);
-    }
+    
    
 
 }

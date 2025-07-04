@@ -54,12 +54,9 @@ public class EnemyMap2_HP : MonoBehaviour, IDamageable
         if (currentHealth <= 0)
         {
            
-            enemyMap2_1.agent.enabled = true; // Bật lại NavMeshAgent để có thể chơi animation chết
             enemyMap2_1.animator.enabled = true; // Bật animator để có thể chơi animation chết
             enemyMap2_1.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết
-            enemyMap2_1.ChangeState(EnemyMap2_1.EnemyState.Death);
            
-            enemyMap2_1.agent.isStopped = true; // Dừng lại khi chết
                   
             boxDame.enabled = false;
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
@@ -73,6 +70,8 @@ public class EnemyMap2_HP : MonoBehaviour, IDamageable
                 activeStartTimeLine6.Count(); // Bật timeline 6
             }
             StartCoroutine(WaitDeath());
+            enemyMap2_1.ChangeState(EnemyMap2_1.EnemyState.Death);
+
         }
         if (currentHealth > 0)
         {
@@ -85,8 +84,9 @@ public class EnemyMap2_HP : MonoBehaviour, IDamageable
     }
     IEnumerator WaitDeath()
     {
-        yield return new WaitForSeconds(1.5f); // Chờ 1.5 giây trước khi trả về pool
-        ObjPoolingManager.Instance.ReturnToPool("EnemyMap2_2", gameObject);
+        yield return new WaitForSeconds(5f); // Chờ 1.5 giây trước khi trả về pool
+        ObjPoolingManager.Instance.ReturnToPool("EnemyMap2_1", gameObject);
+        enemyMap2_1.hasFirstPos = false; // Đặt lại hasFirstPos để có thể spawn lại
     }
     void BackToChase()
     {
@@ -118,11 +118,6 @@ public class EnemyMap2_HP : MonoBehaviour, IDamageable
             enemyMap2_1.animator.Update(0f);
         }
 
-        if (enemyMap2_1.agent != null)
-        {
-            enemyMap2_1.agent.ResetPath();
-            enemyMap2_1.agent.enabled = true;
-        }
         enemyMap2_1.ChangeState(EnemyMap2_1.EnemyState.Idle);
     }
 
