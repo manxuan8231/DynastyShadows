@@ -34,7 +34,7 @@ public class EnemyCruTank : MonoBehaviour
 
     //box dame
     public BoxCollider damageBox;
-    public DameWeaponCruTank dameZoneCruTank;
+    public DameWeaponCruTank dameCruTank;
 
     //goi ham
     EnemyCruTankHP enemyCruTankHP;
@@ -45,7 +45,7 @@ public class EnemyCruTank : MonoBehaviour
         player = FindClosestPlayer();
         enemyCruTankHP = FindAnyObjectByType<EnemyCruTankHP>();
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
-        dameZoneCruTank = FindAnyObjectByType<DameWeaponCruTank>();
+        dameCruTank = FindAnyObjectByType<DameWeaponCruTank>();
 
     }
     void Start()
@@ -184,11 +184,11 @@ public class EnemyCruTank : MonoBehaviour
     }
     public void BatDamageBox()
     {
-        dameZoneCruTank.beginDame(); // Bật box dame khi tấn công
+        dameCruTank.beginDame(); // Bật box dame khi tấn công
     }
     public void TatDamageBox()
     {
-        dameZoneCruTank.endDame(); // Tắt box dame sau khi tấn công xong
+        dameCruTank .endDame(); // Tắt box dame sau khi tấn công xong
     }
     Transform FindClosestPlayer()
     {
@@ -213,5 +213,6 @@ public class EnemyCruTank : MonoBehaviour
         transform.LookAt(player);
         yield return new WaitForSeconds(0.02f);
         animator.SetTrigger("Attack");
+
     }
 }

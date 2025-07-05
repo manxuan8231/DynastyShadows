@@ -34,7 +34,7 @@ public class EnemyCruTankHP : MonoBehaviour,IDamageable
         sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
         enemyCruTank = GetComponent<EnemyCruTank>();
-
+        isTakedame = true;
     }
 
 
