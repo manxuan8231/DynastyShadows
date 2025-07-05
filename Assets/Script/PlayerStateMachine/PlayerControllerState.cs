@@ -44,7 +44,7 @@ public class PlayerControllerState : MonoBehaviour
     //goi ham tham chieu
     public PlayerStatus playerStatus;
     public ComboAttack comboAttack;
-    public ThirdPersonOrbitCamera thirdPersonOrbitCamera;
+    public CameraFollow thirdPersonOrbitCamera;
     public EvenAnimator evenAnimator;
     //skill2 tham chieu
     public bool isRemoveClone = false;
@@ -58,7 +58,7 @@ public class PlayerControllerState : MonoBehaviour
     public Vector3 checkpointPosition;
 
     //trang thai animator
-    public RuntimeAnimatorController animatorDefauld;//trang thai mac định
+   public RuntimeAnimatorController animatorDefauld;//trang thai mac định
     public RuntimeAnimatorController animatorSkill2;//trang thai skill2
     public RuntimeAnimatorController animatorSkill4;//trang thai skill4
     // Trạng thái hiện tại                                              
@@ -79,7 +79,7 @@ public class PlayerControllerState : MonoBehaviour
         skill2Manager = FindAnyObjectByType<Skill2Manager>();
         skill3Manager = FindAnyObjectByType<Skill3Manager>();
         skill4Manager = FindAnyObjectByType<Skill4Manager>();
-        thirdPersonOrbitCamera = FindAnyObjectByType<ThirdPersonOrbitCamera>();
+        thirdPersonOrbitCamera = FindAnyObjectByType<CameraFollow>();
         evenAnimator = FindAnyObjectByType<EvenAnimator>();
         weaponSword.SetActive(false);
         audioSource = GetComponent<AudioSource>();

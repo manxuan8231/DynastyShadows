@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ThirdPersonOrbitCamera : MonoBehaviour
+public class CameraFollow : MonoBehaviour
 {
     public Transform target;
     public Transform player;
@@ -19,9 +19,9 @@ public class ThirdPersonOrbitCamera : MonoBehaviour
 
     public bool flipCamera = false;
 
-    public LayerMask groundLayer;
-    public float cameraCollisionBuffer = 0.2f;
-    public float smoothSpeed = 10f; // tốc độ mượt
+    public LayerMask enemyLayer;
+    public float detectEnemyRange = 10f; // Phạm vi phát hiện enemy
+
 
     void Start()
     {
@@ -54,20 +54,7 @@ public class ThirdPersonOrbitCamera : MonoBehaviour
         Vector3 direction = desiredCameraPos - target.position;
         float maxDistance = defaultOffset.magnitude;
 
-        // Kiểm tra va chạm
-        if (Physics.Raycast(target.position, direction.normalized, out RaycastHit hit, maxDistance + cameraCollisionBuffer, groundLayer))
-        {
-            float hitDistance = Mathf.Clamp(hit.distance - cameraCollisionBuffer, 0.5f, maxDistance);
-            Vector3 hitOffset = direction.normalized * hitDistance;
-
-            // Lerp từ currentOffset đến hitOffset (mượt)
-            currentOffset = Vector3.Lerp(currentOffset, hitOffset, Time.deltaTime * smoothSpeed);
-        }
-        else
-        {
-            // Lerp từ currentOffset về offset gốc
-            currentOffset = Vector3.Lerp(currentOffset, defaultOffset, Time.deltaTime * smoothSpeed);
-        }
+       
 
         transform.position = target.position + rotation * currentOffset;
         transform.LookAt(target.position + Vector3.up * 1.5f);
@@ -76,5 +63,40 @@ public class ThirdPersonOrbitCamera : MonoBehaviour
         {
             player.rotation = Quaternion.Euler(0, currentX, 0);
         }
+        DetectAndFaceClosestEnemy();
+
     }
+
+    void DetectAndFaceClosestEnemy()
+    {
+        Collider[] enemiesInRange = Physics.OverlapSphere(player.position, detectEnemyRange, enemyLayer);
+
+        if (enemiesInRange.Length == 0) return;
+
+        Transform closestEnemy = null;
+        float closestDist = Mathf.Infinity;
+
+        foreach (Collider enemy in enemiesInRange)
+        {
+            float dist = Vector3.Distance(player.position, enemy.transform.position);
+            if (dist < closestDist)
+            {
+                closestDist = dist;
+                closestEnemy = enemy.transform;
+            }
+        }
+
+        if (closestEnemy != null)
+        {
+            // Xoay player về phía enemy
+            Vector3 direction = closestEnemy.position - player.position;
+            direction.y = 0;
+            if (direction != Vector3.zero)
+            {
+                Quaternion lookRotation = Quaternion.LookRotation(direction);
+                player.rotation = Quaternion.Slerp(player.rotation, lookRotation, Time.deltaTime * 5f);
+            }
+        }
+    }
+
 }

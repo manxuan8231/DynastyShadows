@@ -18,8 +18,9 @@ public class Skill4State : PlayerState
     
     public override void Enter()
     {
-      
-        player.animator.runtimeAnimatorController = player.animatorSkill4;//chay animator skill 4 khi bat dau
+
+         player.animator.runtimeAnimatorController = player.animatorSkill4;//chay animator skill 4 khi bat dau
+       
         player.animator.SetTrigger("Change");
         player.weaponSword.SetActive(true); //tat weapon khi chay skill4
         player.skill4Manager.isHibitedIcon=true; //bat cam skill icon

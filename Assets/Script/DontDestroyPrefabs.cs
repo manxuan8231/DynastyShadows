@@ -18,6 +18,7 @@ public class DontDestroyPrefabs : MonoBehaviour
         {
             //skill4
             player.animator.runtimeAnimatorController = player.animatorDefauld; // Trở về animator mặc định
+            player.animator.SetTrigger("Skill4State");
             player.skill4Manager.isHibitedIcon = false; // cam skill icon
             player.isSkinSkill3Clone = false;
             //skill2
@@ -35,6 +36,7 @@ public class DontDestroyPrefabs : MonoBehaviour
         {
             //skill4
             player.animator.runtimeAnimatorController = player.animatorDefauld; // Trở về animator mặc định
+            player.animator.SetTrigger("Skill4");
             player.skill4Manager.isHibitedIcon = false; // cam skill icon
             player.isSkinSkill3Clone = false;
             //skill2
