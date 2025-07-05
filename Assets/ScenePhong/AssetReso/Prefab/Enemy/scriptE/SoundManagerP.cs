@@ -29,6 +29,10 @@ public class AudioManagerP : MonoBehaviour
     {
         AudioSource.PlayOneShot(parrySound);
     }
+    public void PlayAttackSound()
+    {
+        AudioSource.PlayOneShot(attackSound);
+    }
     public void PlayPunchSound()
     {
         AudioSource.PlayOneShot(punchSound);
