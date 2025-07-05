@@ -112,7 +112,7 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-    public bool HasItem(EquipmentSO item, ItemSO item1, int amount)
+    public bool HasItem(EquipmentSO item, ItermShopData item1, int amount)
     {
         int total = 0;
 
@@ -183,7 +183,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
-    public void RemoveItem(EquipmentSO itemSO, ItemSO item, int amount)
+    public void RemoveItem(EquipmentSO itemSO, ItermShopData item, int amount)
     {
         int remaining = amount;
 
