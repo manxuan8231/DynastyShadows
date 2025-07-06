@@ -79,7 +79,7 @@ public class EnemyHorseManHP : MonoBehaviour,IDamageable
         {
             enemyMap2_horseman.ChangeState(EnemyMap2_horseman.EnemyState.GetHit);
             // Sau một thời gian nhỏ thì quay lại Run/Attack
-            Invoke(nameof(BackToChase), 1f);
+            Invoke(nameof(BackToChase), 2f);
         }
 
 
