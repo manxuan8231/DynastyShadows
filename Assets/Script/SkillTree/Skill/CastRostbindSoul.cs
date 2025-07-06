@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class CastRostbindSoul : MonoBehaviour
 {
+   
     private GameObject effectInstance;
     private bool isDestroyed = false;
 
@@ -91,103 +92,15 @@ public class CastRostbindSoul : MonoBehaviour
         if (ai != null) ai.enabled = false;
 
         // láy mau enemy sau khi mở khóa
-        if (skill1Manager.isDamaged == true) 
+        if (skill1Manager.isDamaged == true)
         {
-            float dame = status.baseDamage * 1f + status.criticalDamage / 100f;
-            EnemyHP enemyHP = enemy.GetComponent<EnemyHP>();
-            if (enemyHP != null)//mở khóa kỹ năng mới cho mất máu
+            float dame = 2000f;
+            IDamageable damageable = enemy.GetComponent<IDamageable>();//goi interface
+            if (damageable != null) 
             {
-
-                ShowTextDame(dame);
-                enemyHP.TakeDamage(dame);
-                return;
-            }
-            EnemyHP2 enemyHP2 = enemy.GetComponent<EnemyHP2>();
-            if (enemyHP2 != null)
-            {
-
-                ShowTextDame(dame);
-                enemyHP2.TakeDamage(dame);
-                return;
-            }
-
-            EnemyHP3 enemyHP3 = enemy.GetComponent<EnemyHP3>();
-            if (enemyHP3 != null)
-            {
-
-                ShowTextDame(dame);
-                enemyHP3.TakeDamage(dame);
-                return;
-            }
-
-            EnemyHP4 enemyHP4 = enemy.GetComponent<EnemyHP4>();
-            if (enemyHP4 != null)
-            {
-
-                ShowTextDame(dame);
-                enemyHP4.TakeDamage(dame);
-                return;
-            }
-            //boss drakonit
-            DrakonitController drakonitController = enemy.GetComponent<DrakonitController>();
-            if (drakonitController != null)
-            {
-
-                ShowTextDame(dame);
-                drakonitController.TakeDamage(dame);
-                return;
-            }
-            //boss ork
-            BossHP bossHP = enemy.GetComponent<BossHP>();
-            if (bossHP != null)
-            {
-
-                ShowTextDame(dame);
-                bossHP.TakeDamage(dame);
-                return;
-            }
-            //boss sa mac
-            NecController necController = enemy.GetComponent<NecController>();
-            if (necController != null)
-            {
-                Debug.Log("Đã trúng NecController");
-
-                ShowTextDame(dame);
-                necController.TakeDamage(dame);
-                return;
-            }
-            //boss chinh map 1
-            Boss1Controller boss1HP = enemy.GetComponent<Boss1Controller>();
-            if (boss1HP != null)
-            {
-
-                ShowTextDame(dame);
-                boss1HP.TakeDamage((int)dame);
-                return;
-            }
-            //enemy map 2 1 + 2
-            EnemyMap2_HP enemyMap2_1 = enemy.GetComponent<EnemyMap2_HP>();
-            if (enemyMap2_1 != null)
-            {
-
-                ShowTextDame(dame);
-                enemyMap2_1.TakeDamage(dame);
-                return;
-            }
-            //Minotaur
-            MinotaurEnemy minotaurController = enemy.GetComponent<MinotaurEnemy>();
-            if (minotaurController != null)
-            {
-                ShowTextDame(dame);
-                minotaurController.TakeDamage(dame);
-                return;
-            }
-            DragonRedHP dragonRedHP = enemy.GetComponent<DragonRedHP>();
-            if (dragonRedHP != null)
-            {
-                ShowTextDame(dame);
-                dragonRedHP.TakeDamage(dame);
-                return;
+              
+                damageable.TakeDamage(dame);
+               
             }
         }
     }
@@ -215,15 +128,5 @@ public class CastRostbindSoul : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void ShowTextDame(float damage)
-    {
-        GameObject effectText = Instantiate(textDame, textTransform.position, Quaternion.identity);
-        Destroy(effectText, 0.5f);
-        // Truyền dame vào prefab
-        TextDamePopup popup = effectText.GetComponent<TextDamePopup>();
-        if (popup != null)
-        {
-            popup.Setup(damage);
-        }
-    }
+   
 }

@@ -36,17 +36,10 @@ public class FireBallSkill4 : MonoBehaviour
             float finalDamage = damage;
 
             // Gọi hàm gây damage
-            TryDealDamage(hitObj.GetComponent<EnemyHP>(), finalDamage);
-            TryDealDamage(hitObj.GetComponent<EnemyHP2>(), finalDamage);
-            TryDealDamage(hitObj.GetComponent<EnemyHP3>(), finalDamage);
-            TryDealDamage(hitObj.GetComponent<EnemyHP4>(), finalDamage);
-            TryDealDamage(hitObj.GetComponent<DrakonitController>(), finalDamage);
-            TryDealDamage(hitObj.GetComponent<BossHP>(), finalDamage);
-            TryDealDamage(hitObj.GetComponent<NecController>(), finalDamage);
-            TryDealDamage(hitObj.GetComponent<Boss1Controller>(), finalDamage);
-            TryDealDamage(hitObj.GetComponent<EnemyMap2_HP>(), finalDamage);
-            TryDealDamage(hitObj.GetComponent<MinotaurEnemy>(), finalDamage);
-            TryDealDamage(hitObj.GetComponent<DragonRedHP>(), finalDamage);
+           IDamageable damageable = other.GetComponent<IDamageable>();
+            if (damageable != null) { 
+            damageable.TakeDamage(finalDamage);
+            }
             SpawnImpact(); 
             Destroy(gameObject);
         }
@@ -78,25 +71,5 @@ public class FireBallSkill4 : MonoBehaviour
         }
     }
 
-    void TryDealDamage(object target, float dmg)
-    {
-        if (target == null) return;
-
-        ShowTextDame(dmg);
-
-        switch (target)
-        {
-            case EnemyHP hp: hp.TakeDamage((int)dmg); break;
-            case EnemyHP2 hp2: hp2.TakeDamage((int)dmg); break;
-            case EnemyHP3 hp3: hp3.TakeDamage((int)dmg); break;
-            case EnemyHP4 hp4: hp4.TakeDamage((int)dmg); break;
-            case DrakonitController d: d.TakeDamage((int)dmg); break;
-            case BossHP b: b.TakeDamage((int)dmg); break;
-            case NecController n: n.TakeDamage((int)dmg); break;
-            case Boss1Controller b1: b1.TakeDamage((int)dmg); break;
-            case EnemyMap2_HP em: em.TakeDamage((int)dmg); break;
-            case MinotaurEnemy me: me.TakeDamage((int)dmg); break;
-            case DragonRedHP me: me.TakeDamage((int)dmg); break;
-        }
-    }
+   
 }

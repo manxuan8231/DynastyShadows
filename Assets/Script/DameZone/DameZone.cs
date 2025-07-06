@@ -45,12 +45,10 @@ public class DameZone : MonoBehaviour
             ShowTextDame(finalDamage);
             damageable.TakeDamage(finalDamage);
         }
-        //cua phong cui
+        //cua phong 
         if (!other.CompareTag("EnemyHorseMan")) return;     
-        EnemyMap2_horseman enemy = other.GetComponent<EnemyMap2_horseman>();
-        if (enemy != null)
-        {
-            Debug.Log("goi trydodge cua phong lo");
+        if (other.TryGetComponent<EnemyMap2_horseman>(out var enemy))
+        {           
             enemy.TryDodge(); // Gọi hành vi né đòn
         }
     }

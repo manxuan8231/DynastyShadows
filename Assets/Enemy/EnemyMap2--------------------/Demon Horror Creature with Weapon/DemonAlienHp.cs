@@ -55,15 +55,19 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
     }
     public void TakeDamage(float damage)
     {
-        if (!isTakeDamage) return;
+        if (currentHp <= 0 && !isTakeDamage) return;
+        
         demonAlien.scoreTele++;
         if(currentArmor > 0)
         {
             currentArmor -= damage;
+            currentArmor = Mathf.Clamp(currentArmor, 0f, maxArmor);
         }
         else
-        {         
+        {
+           
             currentHp -= damage;
+            currentHp = Mathf.Clamp(currentHp, 0f, maxHp);
             demonAlien.animator.SetTrigger("getDamage");
         }
         UpdateUI();
@@ -73,14 +77,14 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
         //hp
         hpSlider.value = currentHp;
         textHp.text = $"{currentHp}/{maxHp}";
-        currentHp = Mathf.Clamp(currentHp, 0f, maxHp);
+       
        
         //Mana
         manaSlider.value = currentMana;
         currentMana = Mathf.Clamp(currentMana, 0f, maxMana);
         //armor
         armorSlider.value = currentArmor;
-        currentArmor = Mathf.Clamp(currentArmor, 0f,maxArmor);
+       
     }
 
     public void ResetArmor()

@@ -1,5 +1,6 @@
 ﻿using Pathfinding;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -7,7 +8,7 @@ public class DemonAlien : MonoBehaviour
 {
     public enum EnemyState
     {
-       idle, targetPl,attack,flee,skill,teleBack
+       idle, targetPl,attack,flee,skill,
     }
     public EnemyState currentState;
     [Header("---------Thong so tinh khoan cach--------")]
@@ -15,10 +16,14 @@ public class DemonAlien : MonoBehaviour
     public float stopRange = 2f; 
     public float detectionRange = 100f; // Khoảng cách phát hiện người chơi
 
-    [Header("--------Attack Cooldown-----------")]
+    [Header("--------Cooldown-----------")]
     public float coolDownAttack = 10f; // Thời gian hồi chiêu tấn công
     public float lastAttackTime = -10f; 
     public float stepAttack = 0;
+    //skill
+    public float coolDownSkill = 10f; // Thời gian hồi chiêu tấn công
+    public float lastSkillTime = -10f;
+    public float stepSkill = 0;
 
     [Header("--------------Thong so de tele-----------")]
     public float scoreTele = 0;
@@ -42,17 +47,8 @@ public class DemonAlien : MonoBehaviour
     
     void Update()
     {
-        //neu yeu mau thi chay tron
-        if (demonAlienHp.currentHp <= demonAlienHp.maxHp * 0.3f) //mau be hon 20%
-        {
-            ChangerState(EnemyState.flee);
-        }
-        //neu du diem thi tele
-        if (scoreTele >= scoreMaxTele) 
-        { 
-            scoreTele = scoreMaxTele;
-        }
-
+        FleeToPlayer();
+        Tele();
         //cap nhap cac trnag thai
         switch (currentState)
         {
@@ -63,22 +59,26 @@ public class DemonAlien : MonoBehaviour
                     ChangerState(EnemyState.targetPl);
                 }
                 break;
-            case EnemyState.targetPl://
+            case EnemyState.targetPl:
                 TargetPlayer();
                 break;
-            case EnemyState.attack://
+            case EnemyState.attack:
                 Attack();
                 break;
             case EnemyState.flee://chay tron
                 FleeFromPlayer();
                 break;
-
+            case EnemyState.skill:
+                Skill();    
+                break;
+                
         }
     }
     public void ChangerState(EnemyState stateNew)//dung de chuyen trang thai 
     {
         currentState = stateNew;
-        switch (currentState) { 
+        switch (currentState) 
+        { 
             case EnemyState.idle:
                 break;
             case EnemyState.targetPl:
@@ -86,31 +86,51 @@ public class DemonAlien : MonoBehaviour
             case EnemyState.attack:
                 break;
             case EnemyState.flee://chay tron
-
+                break;
+            case EnemyState.skill:             
                 break;
         }
     }
 
 
     //------------------------cac ham chuc nang----------
+    //gan nhat player
+    Transform FindClosestPlayer()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        Transform closest = null;
+        float minDistance = Mathf.Infinity;
+
+        foreach (GameObject go in players)
+        {
+            float dist = Vector3.Distance(transform.position, go.transform.position);
+            if (dist < minDistance)
+            {
+                minDistance = dist;
+                closest = go.transform;
+            }
+        }
+
+        return closest;
+    }
 
     //thay player thi run hoac walk
     public void TargetPlayer()
     {
+       
         float dist = Vector3.Distance(transform.position, player.transform.position);
         if (dist <= detectionRange && dist > stopRange)
         {
             aiPath.destination = player.position;// di chuyen thang toi player
-            if (dist >= 20) // Khoảng cách xa hơn 30 thì chạy
+            if (dist >= 15) // Khoảng cách xa hơn 15 thì chạy
             {
                
                 aiPath.maxSpeed = 15f; 
-
                 animator.SetBool("isWalking", false);
                 animator.SetBool("isRunning", true);
 
             }
-            else if(dist < 19)
+            else if(dist < 14)
             {
                     aiPath.maxSpeed = 5f; // Tốc độ walk
                     animator.SetBool("isRunning", false);
@@ -167,10 +187,21 @@ public class DemonAlien : MonoBehaviour
         }
        
     }
-   //skill
-   public void Skill()
+    //skill
+    public void Skill()
     {
+        aiPath.canMove = false;
+        if (Time.time >= lastSkillTime + coolDownSkill) 
+        {
+            if (stepSkill == 0)
+            {
+                animator.SetTrigger("short");
+            }
+            StartCoroutine(WaitChangerStateTarget(7f));
 
+            lastSkillTime = Time.time;    
+        }
+     
     }
     //flip
     public void FlipToPlayer()
@@ -195,31 +226,71 @@ public class DemonAlien : MonoBehaviour
             ChangerState(EnemyState.idle);
         }
     }
-
-
-    //gan nhat player
-    Transform FindClosestPlayer()
+    //tele
+    public void Tele()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        Transform closest = null;
-        float minDistance = Mathf.Infinity;
-
-        foreach (GameObject go in players)
+        if (scoreTele >= scoreMaxTele)
         {
-            float dist = Vector3.Distance(transform.position, go.transform.position);
-            if (dist < minDistance)
-            {
-                minDistance = dist;
-                closest = go.transform;
-            }
-        }
+            scoreTele = 0;
+            demonAlienHp.currentArmor = demonAlienHp.maxArmor;//hoi lai giap
+            demonAlienHp.UpdateUI();
+            StartCoroutine(WaitCanMoveAndChangerSkill(2f));//tam dung canmove và đợi 2f dùng skill
+            animator.SetTrigger("comeOut");
+            // Tính hướng ngược với player
+            Vector3 directionAway = (transform.position - player.position).normalized;
+            Vector3 targetPos = transform.position + directionAway * 30f;
 
-        return closest;
+            // Tìm vị trí gần nhất trên Graph
+            NNInfo nodeInfo = AstarPath.active.GetNearest(targetPos, NNConstraint.Default);
+
+            if (nodeInfo.node != null && nodeInfo.node.Walkable)
+            {
+                transform.position = nodeInfo.position;
+                Debug.Log("Đã teleport đến: " + nodeInfo.position);
+            }
+            else
+            {
+                Debug.LogWarning("Không tìm được vị trí hợp lệ để teleport.");
+            }
+            
+        }
     }
+
+    //chay tron neu mau be hon 30%
+    public void FleeToPlayer()
+    {
+        if (demonAlienHp.currentHp <= demonAlienHp.maxHp * 0.3f) //mau be hon 20%
+        {
+            ChangerState(EnemyState.flee);
+        }
+    }
+    
+   
 
     //chuyen trang thai cua cac ham-----------------
     public void StartAttack()
     {
         ChangerState(EnemyState.attack);
+    }
+    public void StartTargetPL()
+    {
+        ChangerState(EnemyState.targetPl);
+    }
+
+    //IEnumerator-------------------------------
+    public IEnumerator WaitCanMoveAndChangerSkill(float secont)//dùng để tắt canmove và sử dụng skill sau secon
+    {
+        aiPath.canMove = false;
+        yield return new WaitForSeconds(secont);
+        aiPath.canMove = true;
+        ChangerState(EnemyState.skill);
+        
+    }
+    public IEnumerator WaitChangerStateTarget(float secont)
+    {
+       
+        yield return new WaitForSeconds(secont);
+        aiPath.canMove = true;
+        ChangerState(EnemyState.targetPl);
     }
 }

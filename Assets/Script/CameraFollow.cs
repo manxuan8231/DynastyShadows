@@ -17,10 +17,7 @@ public class CameraFollow : MonoBehaviour
     private float currentY = 10f;
     private bool cursorVisible = false;
 
-    public bool flipCamera = false;
-
-    public LayerMask enemyLayer;
-    public float detectEnemyRange = 10f; // Phạm vi phát hiện enemy
+   
 
 
     void Start()
@@ -59,44 +56,10 @@ public class CameraFollow : MonoBehaviour
         transform.position = target.position + rotation * currentOffset;
         transform.LookAt(target.position + Vector3.up * 1.5f);
 
-        if (flipCamera && player != null)
-        {
-            player.rotation = Quaternion.Euler(0, currentX, 0);
-        }
-        DetectAndFaceClosestEnemy();
-
+        
+       
     }
 
-    void DetectAndFaceClosestEnemy()
-    {
-        Collider[] enemiesInRange = Physics.OverlapSphere(player.position, detectEnemyRange, enemyLayer);
-
-        if (enemiesInRange.Length == 0) return;
-
-        Transform closestEnemy = null;
-        float closestDist = Mathf.Infinity;
-
-        foreach (Collider enemy in enemiesInRange)
-        {
-            float dist = Vector3.Distance(player.position, enemy.transform.position);
-            if (dist < closestDist)
-            {
-                closestDist = dist;
-                closestEnemy = enemy.transform;
-            }
-        }
-
-        if (closestEnemy != null)
-        {
-            // Xoay player về phía enemy
-            Vector3 direction = closestEnemy.position - player.position;
-            direction.y = 0;
-            if (direction != Vector3.zero)
-            {
-                Quaternion lookRotation = Quaternion.LookRotation(direction);
-                player.rotation = Quaternion.Slerp(player.rotation, lookRotation, Time.deltaTime * 5f);
-            }
-        }
-    }
+   
 
 }

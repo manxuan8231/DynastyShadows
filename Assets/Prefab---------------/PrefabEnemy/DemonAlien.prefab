@@ -3038,6 +3038,9 @@ MonoBehaviour:
   coolDownAttack: 7
   lastAttackTime: -7
   stepAttack: 0
+  coolDownSkill: 10
+  lastSkillTime: -10
+  stepSkill: 0
   scoreTele: 0
   scoreMaxTele: 5
   animator: {fileID: 6238170512753964505}
@@ -3077,7 +3080,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34fb4cd792acf0b489c2777bf44375f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tagBullet: BulletAlien
+  spawnBulletPosi: {fileID: 3450518063712063831}
+  speed: 100
   cameraShake: {fileID: 0}
+  demonAlien: {fileID: 0}
 --- !u!136 &5550371637265088954
 CapsuleCollider:
   m_ObjectHideFlags: 0

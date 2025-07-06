@@ -65,13 +65,13 @@ public class DragonRedHP : MonoBehaviour,IDamageable
         if (currentArmor > 0)
         {
             currentArmor -= amount;
-         
-         
+            currentArmor = Mathf.Clamp(currentArmor, 0, maxArmor); // Đảm bảo giáp không vượt quá giới hạn
+
         }
         else
         {
             currentHp -= amount;
-           
+            currentHp = Mathf.Clamp(currentHp, 0, maxHp); // Đảm bảo máu không vượt quá giới hạn
         }
 
         UpdateUI();
@@ -144,17 +144,17 @@ public class DragonRedHP : MonoBehaviour,IDamageable
         
 
         // Cập nhật thanh máu      
-        currentHp = Mathf.Clamp(currentHp, 0, maxHp); // Đảm bảo máu không vượt quá giới hạn
+       
         sliderHp.maxValue = maxHp;
         sliderHp.value = currentHp;
         textHp.text = $"{currentHp}/{maxHp}";
         
         // Cập nhật thanh giáp       
-        currentArmor = Mathf.Clamp(currentArmor, 0, maxArmor); // Đảm bảo giáp không vượt quá giới hạn
+       
         sliderArmor.maxValue = maxArmor;
         sliderArmor.value = currentArmor;
         //mana
-        currentMana = Mathf.Clamp(currentMana, 0, maxMana); // Đảm bảo giáp không vượt quá giới hạn
+       
         sliderMana.value = currentMana; // thanh mana
     }
     public IEnumerator WaitRegenerateArmor()
