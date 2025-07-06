@@ -25,7 +25,7 @@ public class DemonAlien : MonoBehaviour
     public float coolDownSkill = 10f; // Thời gian hồi chiêu tấn công
     public float lastSkillTime = -10f;
     public float stepSkill = 0;
-
+    public float timeUseSkill = 0;
     [Header("--------------Thong so de tele-----------")]
     public float scoreTele = 0;
     public float scoreMaxTele = 5;
@@ -198,14 +198,16 @@ public class DemonAlien : MonoBehaviour
             if (stepSkill == 0)
             {
                 stepSkill++;
-                animator.SetTrigger("short");
+                animator.SetTrigger("telePathic");
+                timeUseSkill = 7f;
             }
             else if(stepSkill == 1)
             {
                 stepSkill = 0f;
-                animator.SetTrigger("telePathic");              
+                animator.SetTrigger("short");
+                timeUseSkill = 5.5f;
             }
-            StartCoroutine(WaitChangerStateTarget(7f));
+            StartCoroutine(WaitChangerStateTarget(timeUseSkill));
 
             lastSkillTime = Time.time;    
         }
@@ -240,6 +242,7 @@ public class DemonAlien : MonoBehaviour
         if (scoreTele >= scoreMaxTele)
         {
             scoreTele = 0;
+            evenAlien.audioSource.PlayOneShot(evenAlien.teleClip);
             demonAlienHp.currentArmor = demonAlienHp.maxArmor;//hoi lai giap
             demonAlienHp.UpdateUI();
             StartCoroutine(WaitCanMoveAndChangerSkill(2f));//tam dung canmove và đợi 2f dùng skill
