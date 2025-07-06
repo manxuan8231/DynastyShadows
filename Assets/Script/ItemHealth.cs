@@ -1,16 +1,16 @@
-﻿using UnityEngine;
+﻿using Pathfinding;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class ItemHealth : MonoBehaviour
 {
     PlayerStatus playerStatus;
     public Transform player;
-    public NavMeshAgent agent;
+    AIPath aiPath;
     void Start()
     {
         GameObject gameObject = GameObject.Find("Stats");
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        agent = GetComponent<NavMeshAgent>();
         if (gameObject != null)
         {
             playerStatus = gameObject.GetComponent<PlayerStatus>();
@@ -20,15 +20,15 @@ public class ItemHealth : MonoBehaviour
         {
             player = playerObj.transform;
         }
-        
+        aiPath = FindAnyObjectByType<AIPath>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
           
-            agent.SetDestination(player.transform.position);
-        
+        aiPath.destination = player.position; // Cập nhật vị trí đến player
     }
     public void OnTriggerEnter(Collider other)
     {

@@ -729,11 +729,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  agent: {fileID: 0}
+  ai: {fileID: 0}
   player: {fileID: 0}
   firstPos: {x: 0, y: 0, z: 0}
   animator: {fileID: 0}
   currentTrigger: 
+  endDistance: 0.2
+  hasFirstPos: 0
   radius: 50
   attackRange: 5
   attackCooldown: 10
@@ -823,7 +825,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sliderHp: {fileID: 4816832534300981994}
   currentHealth: 0
-  maxHealth: 1500
+  maxHealth: 1200
   expPrefab: {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
   boxDame: {fileID: 3004276441645898759}
   npc: {fileID: 0}

@@ -14,11 +14,13 @@ public class ActiveStartTimeLine6 : MonoBehaviour
     [Header("canvas")]
     public GameObject canvasQuest;
     public TMP_Text content;
+    NPCDialogueController npcDialogueController;
 
     void Start()
     {
         if (playerInGame == null)
             playerInGame = GameObject.FindWithTag("Player"); // tìm theo tag cho dễ quản lý
+        npcDialogueController = FindAnyObjectByType<NPCDialogueController>();
     }
 
     // Update is called once per frame
@@ -29,17 +31,21 @@ public class ActiveStartTimeLine6 : MonoBehaviour
 
     public void Count()
     {
-        enemyCount++;
-        if (enemyCount == 20)
+        if(npcDialogueController.currentStage == QuestStage.Quest6InProgress)
         {
+            enemyCount++;
+            if (enemyCount == 20)
+            {
 
-            // Bắt đầu cutscene
-            Debug.Log("Kích hoạt timeline Quest 6");
-            playerInGame.SetActive(false); // Ẩn player thật
-            timeLine.SetActive(true); // Bật timeline
-            playableDirector.Play(); // Chạy timeline
-            playableDirector.stopped += OnTimelineFinished; // Đăng ký sự kiện khi timeline kết thúc
+                // Bắt đầu cutscene
+                Debug.Log("Kích hoạt timeline Quest 6");
+                playerInGame.SetActive(false); // Ẩn player thật
+                timeLine.SetActive(true); // Bật timeline
+                playableDirector.Play(); // Chạy timeline
+                playableDirector.stopped += OnTimelineFinished; // Đăng ký sự kiện khi timeline kết thúc
+            }
         }
+        
     }
     private void OnTimelineFinished(PlayableDirector director)
     {
