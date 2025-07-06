@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Unity.VisualScripting.FlowStateWidget;
 
 public class DemonAlienHp : MonoBehaviour,IDamageable
 {
@@ -23,9 +24,11 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
     private bool isArmorBroken = false;
     //tham chieu
     private DemonAlien demonAlien;
+    private EvenAlien evenAlien;
     void Start()
     {
         demonAlien = FindAnyObjectByType<DemonAlien>();
+        evenAlien = FindAnyObjectByType<EvenAlien>();   
         //hp
          currentHp = maxHp;
         hpSlider.maxValue = maxHp;
@@ -71,6 +74,7 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
             demonAlien.animator.SetTrigger("getDamage");
         }
         UpdateUI();
+        evenAlien.effectShort.SetActive(false);//tat effect short khi bi danh
     }
     public void UpdateUI()
     {

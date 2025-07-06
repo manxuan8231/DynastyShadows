@@ -579,6 +579,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 524148648710998072, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 524148648710998072, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 672957026329310846, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 672957026329310846, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1135131587496904773, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615429774779050792, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4147767676504852487, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.3275537
@@ -2330,9 +2354,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2098053938556048948, guid: 400aa2075a09bde4fbaefc148402bb5a, type: 3}
+      propertyPath: stopRange
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446311850290364844, guid: 400aa2075a09bde4fbaefc148402bb5a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446311850290364844, guid: 400aa2075a09bde4fbaefc148402bb5a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4218978300017008486, guid: 400aa2075a09bde4fbaefc148402bb5a, type: 3}
       propertyPath: m_Name
       value: DemonAlien
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967511337823831488, guid: 400aa2075a09bde4fbaefc148402bb5a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5967511337823831488, guid: 400aa2075a09bde4fbaefc148402bb5a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6196749817210911269, guid: 400aa2075a09bde4fbaefc148402bb5a, type: 3}
+      propertyPath: effectShort
+      value: 
+      objectReference: {fileID: 1424118245802375608}
+    - target: {fileID: 7728907484319633247, guid: 400aa2075a09bde4fbaefc148402bb5a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7728907484319633247, guid: 400aa2075a09bde4fbaefc148402bb5a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7880026435989929931, guid: 400aa2075a09bde4fbaefc148402bb5a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2488,6 +2544,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2122571346}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1424118245802375608 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2423899969748465529, guid: 400aa2075a09bde4fbaefc148402bb5a, type: 3}
+  m_PrefabInstance: {fileID: 1915674584}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

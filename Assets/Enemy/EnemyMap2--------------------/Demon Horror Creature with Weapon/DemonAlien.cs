@@ -2,6 +2,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Unity.VisualScripting.FlowStateWidget;
 
 
 public class DemonAlien : MonoBehaviour
@@ -34,13 +35,14 @@ public class DemonAlien : MonoBehaviour
     public Animator animator;
     public AIPath aiPath;
     private DemonAlienHp demonAlienHp;
+    private EvenAlien evenAlien;
     void Start()
     {
         animator = GetComponent<Animator>();
         player = FindClosestPlayer();
         demonAlienHp = FindAnyObjectByType<DemonAlienHp>();
         aiPath = GetComponent<AIPath>();
-      
+        evenAlien = FindAnyObjectByType<EvenAlien>();
         currentState = EnemyState.idle;
     }
 
@@ -195,7 +197,13 @@ public class DemonAlien : MonoBehaviour
         {
             if (stepSkill == 0)
             {
+                stepSkill++;
                 animator.SetTrigger("short");
+            }
+            else if(stepSkill == 1)
+            {
+                stepSkill = 0f;
+                animator.SetTrigger("telePathic");              
             }
             StartCoroutine(WaitChangerStateTarget(7f));
 
@@ -238,7 +246,7 @@ public class DemonAlien : MonoBehaviour
             animator.SetTrigger("comeOut");
             // Tính hướng ngược với player
             Vector3 directionAway = (transform.position - player.position).normalized;
-            Vector3 targetPos = transform.position + directionAway * 30f;
+            Vector3 targetPos = transform.position + directionAway * 45f;
 
             // Tìm vị trí gần nhất trên Graph
             NNInfo nodeInfo = AstarPath.active.GetNearest(targetPos, NNConstraint.Default);
@@ -289,8 +297,9 @@ public class DemonAlien : MonoBehaviour
     public IEnumerator WaitChangerStateTarget(float secont)
     {
        
-        yield return new WaitForSeconds(secont);
+        yield return new WaitForSeconds(secont);     
         aiPath.canMove = true;
         ChangerState(EnemyState.targetPl);
+        evenAlien.effectShort.SetActive(false);
     }
 }
