@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewItemRecipe", menuName = "Crafting/Item Recipe", order = 1)]
@@ -8,6 +9,7 @@ public class ItemRecipeSO : ScriptableObject
 
     public ItemTypeAndCount[] input;
     public ItemTypeAndCount[] output;
+    public int coinCost;
 }
 public enum RecipeType
 {
@@ -19,7 +21,7 @@ public enum RecipeType
 public class ItemTypeAndCount
 {
     public EquipmentSO itemOther;
-    public ItemSO item;
+    public ItermShopData item;
     public int count;
 
 

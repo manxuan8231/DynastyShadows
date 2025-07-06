@@ -11,6 +11,7 @@ public class CraftingUI : MonoBehaviour
     public Image[] outputImages;
     public TMP_Text recipeNameText;
     public Button craftButton;
+    private PlayerStatus playerStatus;
 
     private InventoryManager inventory;
     private ItemRecipeSO selectedRecipe;
@@ -18,8 +19,10 @@ public class CraftingUI : MonoBehaviour
     private void Start()
     {
         inventory = GameObject.Find("CanvasInventory").GetComponent<InventoryManager>();
+        playerStatus = GameObject.FindWithTag("Player").GetComponent<PlayerStatus>();
         PopulateRecipes();
     }
+
 
     void PopulateRecipes()
     {
@@ -63,15 +66,16 @@ public class CraftingUI : MonoBehaviour
                 outputImages[i].gameObject.SetActive(false);
             }
         }
+        craftButton.interactable = CraftingManager.Instance.CanCraft(recipe, inventory, playerStatus);
 
-        craftButton.interactable = CraftingManager.Instance.CanCraft(recipe, inventory);
     }
 
     public void OnCraftButtonPressed()
     {
         if (selectedRecipe != null)
         {
-            CraftingManager.Instance.Craft(selectedRecipe, inventory);
+            CraftingManager.Instance.Craft(selectedRecipe, inventory, playerStatus);
+
             OnRecipeSelected(selectedRecipe); // Refresh UI
         }
     }
