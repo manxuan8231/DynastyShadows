@@ -79,7 +79,7 @@ public class EnemyCruTankHP : MonoBehaviour,IDamageable
         {
             enemyCruTank.ChangeState(EnemyCruTank.EnemyState.GetHit);
             // Sau một thời gian nhỏ thì quay lại Run/Attack
-            Invoke(nameof(BackToChase), 1f);
+            Invoke(nameof(BackToChase), 2f);
         }
 
 
