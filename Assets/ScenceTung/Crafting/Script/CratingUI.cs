@@ -15,6 +15,7 @@ public class CraftingUI : MonoBehaviour
 
     private InventoryManager inventory;
     private ItemRecipeSO selectedRecipe;
+    public TMP_Text coinCostText;
 
     private void Start()
     {
@@ -68,6 +69,9 @@ public class CraftingUI : MonoBehaviour
         }
         craftButton.interactable = CraftingManager.Instance.CanCraft(recipe, inventory, playerStatus);
 
+        if (coinCostText != null)
+            coinCostText.text = "Cost: " + recipe.coinCost.ToString() + " coins";
+ 
     }
 
     public void OnCraftButtonPressed()
