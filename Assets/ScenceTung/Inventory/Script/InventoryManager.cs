@@ -217,7 +217,7 @@ public class InventoryManager : MonoBehaviour
     }
     public int AddItem(EquipmentSO itemSO, int quantity)
     {
-        // Gán đúng kiểu
+       
         ItemType itemType = ItemType.weapon; 
 
         return AddItem(
