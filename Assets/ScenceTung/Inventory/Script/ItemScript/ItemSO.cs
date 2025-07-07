@@ -155,8 +155,12 @@ public class ItemSO : ScriptableObject
             }
             return true;
         }
+        if (statToChange == StatToChange.itemQuest6)
+        {
+           Debug.Log("Item Quest 6");
+            return true;
+        }
         return false;
-        
     }
 
 
@@ -176,7 +180,8 @@ public class ItemSO : ScriptableObject
         debuff3,
         debuff4,
         itemQuest,
-        itemQuest2
+        itemQuest2,
+        itemQuest6,
     }
 
 
