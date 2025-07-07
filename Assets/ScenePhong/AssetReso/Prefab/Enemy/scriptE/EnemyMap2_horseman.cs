@@ -22,7 +22,6 @@ public class EnemyMap2_horseman : MonoBehaviour
     public Vector3 firstPos;
     public Animator animator;
     public string currentTrigger;
-    public Animator playerAnimator;
 
 
     public float dodgeDistance = 3f;
@@ -48,9 +47,9 @@ public class EnemyMap2_horseman : MonoBehaviour
     {
         aiPath = GetComponent<AIPath>();
         animator = GetComponent<Animator>();
-        playerAnimator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
         player = FindClosestPlayer();
         enemyHorseManHP = FindAnyObjectByType<EnemyHorseManHP>();
+        enemyHorseManHP = GetComponent<EnemyHorseManHP>();
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
         dameWeaponHorseMan = FindAnyObjectByType<DameWeaponHorseMan>();
 
@@ -76,24 +75,44 @@ public class EnemyMap2_horseman : MonoBehaviour
                 break;
 
             case EnemyState.Walk:
-
                 float dist = Vector3.Distance(transform.position, player.position);
+
                 if (dist <= attackRange)
                 {
                     ChangeState(EnemyState.Attack);
                 }
+                else if (dist > radius)
+                {
+                    // Nếu player đã ra khỏi bán kính phát hiện → quay về Idle
+                    ChangeState(EnemyState.Idle);
+                }
                 else
                 {
-                    Walk();
+                    Walk(); // Vẫn trong tầm phát hiện nhưng chưa tới tầm đánh → tiếp tục đuổi
                 }
                 break;
+
             case EnemyState.Attack:
-                Attack();
+                float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+                if (distanceToPlayer > attackRange)
+                {
+                    // Nếu player chạy ra khỏi tầm tấn công → quay lại đuổi
+                    ChangeState(EnemyState.Walk);
+                }
+                else
+                {
+                    Attack();
+                }
                 break;
         }
+
     }
     void Walk()
     {
+        if (!aiPath.enabled || aiPath.isStopped)
+            aiPath.isStopped = false;
+
+
         float distToPlayer = Vector3.Distance(transform.position, player.position);
 
         if (distToPlayer < radius)
@@ -158,6 +177,9 @@ public class EnemyMap2_horseman : MonoBehaviour
 
     IEnumerator DoDodge(Vector3 direction)
     {
+        if (enemyHorseManHP != null && enemyHorseManHP.boxDame != null)
+            enemyHorseManHP.boxDame.enabled = false;
+
         enemyHorseManHP.isTakedame = false;
         isDodging = true;
         aiPath.isStopped = true;
@@ -167,10 +189,12 @@ public class EnemyMap2_horseman : MonoBehaviour
         float dodgeSpeed = 17f; // tốc độ né
         float maxDodgeDistance = 4f; // khoảng cách né mong muốn
         Vector3 startPos = transform.position;
+        transform.LookAt(player);
 
         // Né đến khi đi đủ khoảng cách mong muốn
         while (distanceDodged < maxDodgeDistance)
         {
+            transform.LookAt(player);
             Vector3 move = direction * dodgeSpeed * Time.deltaTime;
             transform.position += move;
             distanceDodged = Vector3.Distance(startPos, transform.position);
@@ -178,11 +202,14 @@ public class EnemyMap2_horseman : MonoBehaviour
         }
 
         // Chờ thêm một chút cho animation né hoàn thành
-        yield return new WaitForSeconds(0.5f); // thời gian tùy chỉnh theo clip
+        yield return new WaitForSeconds(0.1f); // thời gian tùy chỉnh theo clip
 
         enemyHorseManHP.isTakedame = true;
         isDodging = false;
         aiPath.isStopped = false;
+
+        if (enemyHorseManHP != null && enemyHorseManHP.boxDame != null)
+            enemyHorseManHP.boxDame.enabled = true;
 
         ChangeState(EnemyState.Walk);
     }
@@ -206,7 +233,7 @@ public class EnemyMap2_horseman : MonoBehaviour
                 currentTrigger = "Idle";
                 break;
             case EnemyState.Walk:
-
+                aiPath.isStopped = false;
                 animator.SetTrigger("Walk");
                 currentTrigger = "Walk";
                 break;

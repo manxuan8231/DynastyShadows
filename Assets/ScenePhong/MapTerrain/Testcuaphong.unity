@@ -29275,15 +29275,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1854356816699776757, guid: e883f921da5bb584ab45716e6ebbd907, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1854356816699776757, guid: e883f921da5bb584ab45716e6ebbd907, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2766699212160151714, guid: e883f921da5bb584ab45716e6ebbd907, type: 3}
       propertyPath: m_Name
       value: Crusader tank
+      objectReference: {fileID: 0}
+    - target: {fileID: 2766699212160151714, guid: e883f921da5bb584ab45716e6ebbd907, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8000444569143914494, guid: e883f921da5bb584ab45716e6ebbd907, type: 3}
       propertyPath: m_LocalPosition.x
@@ -34477,6 +34481,10 @@ PrefabInstance:
     - target: {fileID: 2809663873366283760, guid: 6f42242e3db371e4680d4cdfd2051348, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3313005103242702046, guid: 6f42242e3db371e4680d4cdfd2051348, type: 3}
+      propertyPath: attackCooldown
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6166421302087362550, guid: 6f42242e3db371e4680d4cdfd2051348, type: 3}
       propertyPath: m_Name
