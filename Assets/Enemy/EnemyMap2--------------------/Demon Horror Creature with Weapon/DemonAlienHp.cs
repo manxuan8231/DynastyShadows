@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using Pathfinding;
+using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static Unity.VisualScripting.FlowStateWidget;
@@ -23,12 +25,14 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
     public bool isTakeDamage = true;
     private bool isArmorBroken = false;
     //tham chieu
+    public Collider colliTakeDame;
     private DemonAlien demonAlien;
     private EvenAlien evenAlien;
     void Start()
     {
         demonAlien = FindAnyObjectByType<DemonAlien>();
-        evenAlien = FindAnyObjectByType<EvenAlien>();   
+        evenAlien = FindAnyObjectByType<EvenAlien>();  
+        colliTakeDame = GetComponent<Collider>();
         //hp
          currentHp = maxHp;
         hpSlider.maxValue = maxHp;
@@ -44,6 +48,7 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
         armorSlider.value = currentArmor;
         isTakeDamage = true;
         isArmorBroken = false;
+        
     }
 
     
@@ -54,7 +59,11 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
             isArmorBroken = true;
             Invoke(nameof(ResetArmor), 10);
         }
-       
+        if (currentHp <= 0f)//t muon goi lien tuc ok
+        {
+
+            demonAlien.ChangerState(DemonAlien.EnemyState.Die);
+        }
     }
     public void TakeDamage(float damage)
     {
@@ -74,7 +83,8 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
             demonAlien.animator.SetTrigger("getDamage");
             if (currentHp <= 0f) 
             {
-                demonAlien.ChangerState(DemonAlien.EnemyState.die);
+               
+                demonAlien.ChangerState(DemonAlien.EnemyState.Die);
             }
         }
         UpdateUI();
@@ -86,7 +96,7 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
     {
         //hp
         hpSlider.value = currentHp;
-        textHp.text = $"{currentHp}/{maxHp}";
+        textHp.text = $"{(int)currentHp}/{maxHp}";
        
        
         //Mana

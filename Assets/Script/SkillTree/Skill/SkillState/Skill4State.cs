@@ -204,6 +204,18 @@ public class Skill4State : PlayerState
             if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime
                 && isAttack && player.playerStatus.currentMana > 50 && player.IsGrounded())
             {
+                Transform enemy = player.GetNearestEnemy();
+                if (enemy != null)
+                {
+                    Vector3 direction = (enemy.position -player. transform.position).normalized;
+                    direction.y = 0; // chỉ xoay theo trục Y
+
+                    if (direction != Vector3.zero)
+                    {
+                        Quaternion targetRotation = Quaternion.LookRotation(direction);
+                       player. transform.rotation = targetRotation; // hoặc dùng Slerp nếu muốn mượt
+                    }
+                }
                 player.playerStatus.TakeMana(50);
                 OnAttack();
             }

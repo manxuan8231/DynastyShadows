@@ -76,10 +76,11 @@ public class EvenAlien : MonoBehaviour
     //ban dan
     public void ShootBullet()
     {
-        
-        demonAlien.transform.LookAt(demonAlien.player.position);
-        Vector3 spawn = spawnBulletPosi.position;
+        Vector3 targetPos = demonAlien.player.position;
+        targetPos.y = demonAlien.transform.position.y;
+        demonAlien.transform.LookAt(targetPos);
 
+        Vector3 spawn = spawnBulletPosi.position;
         // Lấy viên đạn từ pool
         GameObject bullet = ObjPoolingManager.Instance.GetEnemyFromPool(tagBullet, spawn);
         
