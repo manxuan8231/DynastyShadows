@@ -28,6 +28,11 @@ public class AwardQuest : MonoBehaviour
     public string awardQuest4_3 = "Mảnh kĩ năng \" Truy tìm dấu l \"";
     public Sprite iconSprite2;
 
+    //Award Quest 6
+    public string awardQuest6_1 = "3000 EXP";   
+    public string awardQuest6_2 = "300 Vàng";
+    public string awardQuest6_3 = " Mảnh vật bị nguyền rủa";
+    public Sprite iconSprite3;
     void Start()
     {
      playerStatus = FindAnyObjectByType<PlayerStatus>();
@@ -35,11 +40,11 @@ public class AwardQuest : MonoBehaviour
     }
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.U))
-        //{
-        //    AwardQuest2();
-        //    AwardQuest4();
-        //}
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+          
+            AwardQuest6();
+        }
     }
     public void AwardQuest2()
     {
@@ -93,6 +98,31 @@ public class AwardQuest : MonoBehaviour
         yield return new WaitForSeconds(3f);
         canvasAward.SetActive(false);
     }
+    public void AwardQuest6()
+    {
+        StartCoroutine(CanvasQuest6());
+        playerStatus.currentExp += 3000;
+        playerStatus.expSlider.value = playerStatus.currentExp;
+        playerStatus.gold += 300;
+        playerStatus.goldQuantityTxt.text = playerStatus.gold.ToString();
+        InventoryManager.AddItem(itemQuests[2].itemPrefabsQuest.itemName,
+             itemQuests[2].itemPrefabsQuest.quantity,
+             itemQuests[2].itemPrefabsQuest.itemSprite,
+             itemQuests[2].itemPrefabsQuest.itemDescription,
+             itemQuests[2].itemPrefabsQuest.itemType
+         );
+        Debug.Log("Thưởng nhiệm vụ 6 thành công");
+    }
+    IEnumerator CanvasQuest6()
+    {
+        canvasAward.SetActive(true);
+        audioCanvasState.PlayAward();
+        stateQuestion.text = "Thưởng nhiệm vụ";
+        award.text = $"Phần thưởng của bạn là: {awardQuest6_1} + {awardQuest6_2} + {awardQuest6_3} ";
+        iconImage.sprite = iconSprite3;
+        yield return new WaitForSeconds(3f);
+        canvasAward.SetActive(false);
+    }   
 }
 [System.Serializable]
 public class ItemQuest

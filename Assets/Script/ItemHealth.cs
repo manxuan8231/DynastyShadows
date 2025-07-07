@@ -6,7 +6,7 @@ public class ItemHealth : MonoBehaviour
 {
     PlayerStatus playerStatus;
     public Transform player;
-    AIPath aiPath;
+   public AIPath aiPath;
     void Start()
     {
         GameObject gameObject = GameObject.Find("Stats");
@@ -27,7 +27,9 @@ public class ItemHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-          
+
+        aiPath.canSearch = true; // Bật tìm kiếm để AIPath có thể tìm đường đến player
+        aiPath.canMove = true; // Bật di chuyển để AIPath có thể di chuyển đến player
         aiPath.destination = player.position; // Cập nhật vị trí đến player
     }
     public void OnTriggerEnter(Collider other)
