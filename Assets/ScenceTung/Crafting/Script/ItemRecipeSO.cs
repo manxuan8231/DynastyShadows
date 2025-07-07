@@ -4,13 +4,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewItemRecipe", menuName = "Crafting/Item Recipe", order = 1)]
 public class ItemRecipeSO : ScriptableObject
 {
-   public string recipeName;
-   public RecipeType recipeType;
+    public string recipeName;
+    public RecipeType recipeType;
 
-    public ItemTypeAndCount[] input;
-    public ItemTypeAndCount[] output;
+    public InputItemData[] input;
+    public OutputItemData[] output;
+
     public int coinCost;
 }
+
 public enum RecipeType
 {
     Weapon,
@@ -18,12 +20,17 @@ public enum RecipeType
     MiscellaneousItem
 }
 [System.Serializable]
-public class ItemTypeAndCount
+public class InputItemData
 {
-    public EquipmentSO itemOther;
     public ItermShopData item;
     public int count;
-
-
 }
+
+[System.Serializable]
+public class OutputItemData
+{
+    public EquipmentSO item;
+    public int count;
+}
+
 

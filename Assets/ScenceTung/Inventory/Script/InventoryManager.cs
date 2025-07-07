@@ -112,7 +112,7 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-    public bool HasItem(EquipmentSO item, ItermShopData item1, int amount)
+    public bool HasItem(ItermShopData item, int amount)
     {
         int total = 0;
 
@@ -183,14 +183,14 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
-    public void RemoveItem(EquipmentSO itemSO, ItermShopData item, int amount)
+    public void RemoveItem(ItermShopData item, int amount)
     {
         int remaining = amount;
 
         // Trừ trong itemSlot
         foreach (var slot in itemSlot)
         {
-            if (slot.itemName == itemSO.itemName && remaining > 0)
+            if (slot.itemName == item.itemName && remaining > 0)
             {
                 int taken = Mathf.Min(remaining, slot.quantity);
                 slot.quantity -= taken;
@@ -203,7 +203,7 @@ public class InventoryManager : MonoBehaviour
         // Trừ trong equipmentSlot nếu chưa đủ
         foreach (var slot in equipmentSlot)
         {
-            if (slot.itemName == itemSO.itemName && remaining > 0)
+            if (slot.itemName == item.itemName && remaining > 0)
             {
                 int taken = Mathf.Min(remaining, slot.quantity);
                 slot.quantity -= taken;
@@ -213,15 +213,22 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        Debug.Log($"Removed {amount} x {itemSO.itemName}");
+        Debug.Log($"Removed {amount} x {item.itemName}");
     }
     public int AddItem(EquipmentSO itemSO, int quantity)
     {
-        // Tự xác định itemType dựa vào tên hoặc nơi gọi (nếu cần). Nếu không, gán mặc định
-        ItemType itemType = ItemType.crafting; // Hoặc định nghĩa logic riêng nếu cần
+        // Gán đúng kiểu
+        ItemType itemType = ItemType.weapon; 
 
-        return AddItem(itemSO.itemName, quantity, null, "", itemType); // null và "" là placeholder vì AddItem vẫn yêu cầu
+        return AddItem(
+            itemSO.itemName,
+            quantity,
+            itemSO.itemSprite,
+            "Equipment", 
+            itemType
+        );
     }
+
 
     public bool UseItem(string itemName)
     {

@@ -11,7 +11,6 @@ public class CraftingUI : MonoBehaviour
     public Image[] outputImages;
     public TMP_Text recipeNameText;
     public Button craftButton;
-    private PlayerStatus playerStatus;
 
     private InventoryManager inventory;
     private ItemRecipeSO selectedRecipe;
@@ -20,8 +19,8 @@ public class CraftingUI : MonoBehaviour
     private void Start()
     {
         inventory = GameObject.Find("CanvasInventory").GetComponent<InventoryManager>();
-        playerStatus = GameObject.FindWithTag("Player").GetComponent<PlayerStatus>();
         PopulateRecipes();
+
     }
 
 
@@ -44,9 +43,10 @@ public class CraftingUI : MonoBehaviour
 
         for (int i = 0; i < inputImages.Length; i++)
         {
-            if (i < recipe.input.Length && recipe.input[i].itemOther != null)
+            if (i < recipe.input.Length && recipe.input[i].item != null)
             {
-                inputImages[i].sprite = recipe.input[i].itemOther.itemSprite;
+                inputImages[i].sprite = recipe.input[i].item.itemIcon;
+
                 inputImages[i].gameObject.SetActive(true);
             }
             else
@@ -57,9 +57,9 @@ public class CraftingUI : MonoBehaviour
 
         for (int i = 0; i < outputImages.Length; i++)
         {
-            if (i < recipe.output.Length && recipe.output[i].itemOther != null)
+            if (i < recipe.output.Length && recipe.output[i].item != null)
             {
-                outputImages[i].sprite = recipe.output[i].itemOther.itemSprite;
+                outputImages[i].sprite = recipe.output[i].item.itemSprite;
                 outputImages[i].gameObject.SetActive(true);
             }
             else
@@ -67,20 +67,19 @@ public class CraftingUI : MonoBehaviour
                 outputImages[i].gameObject.SetActive(false);
             }
         }
-        craftButton.interactable = CraftingManager.Instance.CanCraft(recipe, inventory, playerStatus);
+        craftButton.interactable = CraftingManager.Instance.CanCraft(recipe, inventory);
 
         if (coinCostText != null)
             coinCostText.text = "Cost: " + recipe.coinCost.ToString() + " coins";
- 
+
     }
 
     public void OnCraftButtonPressed()
     {
         if (selectedRecipe != null)
         {
-            CraftingManager.Instance.Craft(selectedRecipe, inventory, playerStatus);
-
-            OnRecipeSelected(selectedRecipe); // Refresh UI
+            CraftingManager.Instance.Craft(selectedRecipe, inventory);
+            OnRecipeSelected(selectedRecipe); // 🔄 cập nhật lại UI
         }
     }
 }
