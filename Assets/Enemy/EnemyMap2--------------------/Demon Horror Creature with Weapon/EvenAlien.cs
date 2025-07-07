@@ -7,23 +7,27 @@ public class EvenAlien : MonoBehaviour
 {
 
     //shoot ban dan
-    public string tagBullet;
+    public GameObject bulletPrefab;
     public Transform spawnBulletPosi;
     public float speed = 100f;
     public GameObject effectShort;
     //telepathic la skill hut
     public GameObject telePathic;
     //nem bong
-    public GameObject effectBall;
+    public GameObject ballPrefab;
+    
 
     //sound clip
     public AudioClip attackLClip;
     public AudioClip attackRClip;
     public AudioClip teleClip;
+    public AudioClip dieClip;
+    public AudioClip runClip;
     //tham chieu
     private CameraShake cameraShake;
     private DemonAlien demonAlien;
     private DameZoneAttackAlien dameZoneAttackAlien;
+    private DemonAlienHp demonAlienHp;
     private DameZoneBall dameZoneBall;
     public AudioSource audioSource;
     void Start()
@@ -31,11 +35,12 @@ public class EvenAlien : MonoBehaviour
         cameraShake = FindAnyObjectByType<CameraShake>();
         demonAlien = FindAnyObjectByType<DemonAlien >();
         dameZoneAttackAlien = FindAnyObjectByType   <DameZoneAttackAlien >();
+        demonAlienHp = FindAnyObjectByType<DemonAlienHp>();
         dameZoneBall = FindAnyObjectByType<DameZoneBall >();
         audioSource = GetComponent<AudioSource>();
         effectShort.SetActive(false);
         telePathic.SetActive(false);
-        effectBall.SetActive(false);
+        
     }
 
     
@@ -76,18 +81,21 @@ public class EvenAlien : MonoBehaviour
     //ban dan
     public void ShootBullet()
     {
+        if (demonAlienHp.currentMana < 30) return;//mana be hon 30 thi ko cho
         Vector3 targetPos = demonAlien.player.position;
         targetPos.y = demonAlien.transform.position.y;
         demonAlien.transform.LookAt(targetPos);
 
         Vector3 spawn = spawnBulletPosi.position;
         // Lấy viên đạn từ pool
-        GameObject bullet = ObjPoolingManager.Instance.GetEnemyFromPool(tagBullet, spawn);
-        
+        GameObject bullet = Instantiate(bulletPrefab, spawn, Quaternion.identity);
+
         Vector3 rota = transform.forward;
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.linearVelocity = rota * speed;
+        Destroy(bullet, 10f);
         effectShort.SetActive(true);
+        demonAlienHp.currentMana -= 30;
     }
     public void EndEffectShort()
     {
@@ -111,11 +119,23 @@ public class EvenAlien : MonoBehaviour
     //nem bong effect
     public void StartEffectBall()
     {
-        effectBall.SetActive(true);
+        Vector3 targetPos = demonAlien.player.position;
+        targetPos.y = demonAlien.transform.position.y;
+        demonAlien.transform.LookAt(targetPos);
+        GameObject ins = Instantiate(ballPrefab,transform.position, transform.rotation);
+        Destroy(ins,4f);
 
     }
-    public void EndEffectBall()
+
+    //die
+    public void PlaySoundDie()
     {
-        effectBall.SetActive(false);
+        audioSource.PlayOneShot(dieClip);
+    }
+   
+    //run
+    public void PlaySoundRun()
+    {
+        audioSource.PlayOneShot(runClip);
     }
 }

@@ -59,11 +59,9 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
             isArmorBroken = true;
             Invoke(nameof(ResetArmor), 10);
         }
-        if (currentHp <= 0f)//t muon goi lien tuc ok
-        {
-
-            demonAlien.ChangerState(DemonAlien.EnemyState.Die);
-        }
+        currentMana += 50 * Time.deltaTime;
+        currentMana = Mathf.Clamp(currentMana, 0f, maxMana);
+        UpdateUI();
     }
     public void TakeDamage(float damage)
     {
@@ -82,15 +80,17 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
             currentHp = Mathf.Clamp(currentHp, 0f, maxHp);
             demonAlien.animator.SetTrigger("getDamage");
             if (currentHp <= 0f) 
-            {
-               
+            {             
                 demonAlien.ChangerState(DemonAlien.EnemyState.Die);
             }
+            evenAlien.EndEffectShort();//tat effect short khi bi danh
+            evenAlien.EndTelePathic();
         }
         UpdateUI();
-        evenAlien.EndEffectShort();//tat effect short khi bi danh
-        evenAlien.EndTelePathic();
-        evenAlien.EndEffectBall();
+        TeleHit();//khi dg dung skill ma bi danh thi tele
+
+
+
     }
     public void UpdateUI()
     {
@@ -101,7 +101,7 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
        
         //Mana
         manaSlider.value = currentMana;
-        currentMana = Mathf.Clamp(currentMana, 0f, maxMana);
+      
         //armor
         armorSlider.value = currentArmor;
        
@@ -112,5 +112,24 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
         currentArmor = maxArmor;
         isArmorBroken = false; // reset lại trạng thái
         UpdateUI(); 
+    }
+
+    public void TeleHit()
+    {
+        if (demonAlien.isSkillTele)
+        {
+            Vector3 directionAway = -demonAlien.player.forward;
+            Vector3 targetPos = transform.position + directionAway * 45f;
+
+            // Tìm vị trí gần nhất trên Graph
+            NNInfo nodeInfo = AstarPath.active.GetNearest(targetPos, NNConstraint.Default);
+
+            if (nodeInfo.node != null && nodeInfo.node.Walkable)
+            {
+                transform.position = nodeInfo.position;
+
+            }
+            currentMana -= 300;
+        }
     }
 }

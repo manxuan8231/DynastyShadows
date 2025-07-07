@@ -3451,9 +3451,6 @@ PrefabInstance:
       addedObject: {fileID: 2169678078684981714}
     - targetCorrespondingSourceObject: {fileID: -1412480292825225888, guid: c3d73ba06daaeef40b556c623d33fc02, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5363332414256296238}
-    - targetCorrespondingSourceObject: {fileID: -1412480292825225888, guid: c3d73ba06daaeef40b556c623d33fc02, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3450518063712063831}
     - targetCorrespondingSourceObject: {fileID: -1412480292825225888, guid: c3d73ba06daaeef40b556c623d33fc02, type: 3}
       insertIndex: -1
@@ -3552,6 +3549,7 @@ MonoBehaviour:
   lastSkillTime: -10
   stepSkill: 0
   timeUseSkill: 0
+  isSkillTele: 0
   scoreTele: 0
   scoreMaxTele: 5
   animator: {fileID: 6238170512753964505}
@@ -3571,14 +3569,15 @@ MonoBehaviour:
   hpSlider: {fileID: 7534238424893407610}
   textHp: {fileID: 6157902687174559548}
   currentHp: 0
-  maxHp: 5000
+  maxHp: 2000
   armorSlider: {fileID: 5531461603243111673}
   currentArmor: 0
-  maxArmor: 1000
+  maxArmor: 500
   manaSlider: {fileID: 7026045476332852576}
   currentMana: 0
   maxMana: 1000
   isTakeDamage: 1
+  colliTakeDame: {fileID: 5550371637265088954}
 --- !u!114 &6196749817210911269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3591,15 +3590,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34fb4cd792acf0b489c2777bf44375f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagBullet: BulletAlien
+  bulletPrefab: {fileID: 4023057318676852024, guid: de25b7e0b4f2db245be9ce67d0037554, type: 3}
   spawnBulletPosi: {fileID: 3450518063712063831}
   speed: 100
   effectShort: {fileID: 2423899969748465529}
   telePathic: {fileID: 2169678078685417874}
-  effectBall: {fileID: 6841712359709374413}
-  attackLClip: {fileID: 0}
+  ballPrefab: {fileID: 4278049375149980293, guid: 61f616aa9046fbf4b9572c4f80842703, type: 3}
+  attackLClip: {fileID: 8300000, guid: 73017b89818a6d94dbcfcbf06d14b718, type: 3}
   attackRClip: {fileID: 8300000, guid: f99332239b1f9b4469bad9db9f7cc0d2, type: 3}
   teleClip: {fileID: 8300000, guid: b1c8d4eda74cf5d43a06324c451a3837, type: 3}
+  dieClip: {fileID: 8300000, guid: 6905b51963381d34cb60e0addd923be6, type: 3}
+  runClip: {fileID: 8300000, guid: 4d6f9ef662a06c148bdbf92d8972618f, type: 3}
   audioSource: {fileID: 1118696818821346741}
 --- !u!136 &5550371637265088954
 CapsuleCollider:
@@ -3818,74 +3819,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1001 &8669253596854048853
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4365037161541183155}
-    m_Modifications:
-    - target: {fileID: 2791604027616604056, guid: a318a1e98a4b8884bab4b0fd7478e8c7, type: 3}
-      propertyPath: m_Name
-      value: FireTargetPL(Alien)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2791604027616604056, guid: a318a1e98a4b8884bab4b0fd7478e8c7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3612170973783452027, guid: a318a1e98a4b8884bab4b0fd7478e8c7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.00009141358
-      objectReference: {fileID: 0}
-    - target: {fileID: 3612170973783452027, guid: a318a1e98a4b8884bab4b0fd7478e8c7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.0021021755
-      objectReference: {fileID: 0}
-    - target: {fileID: 3612170973783452027, guid: a318a1e98a4b8884bab4b0fd7478e8c7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.00006156311
-      objectReference: {fileID: 0}
-    - target: {fileID: 3612170973783452027, guid: a318a1e98a4b8884bab4b0fd7478e8c7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.6897709
-      objectReference: {fileID: 0}
-    - target: {fileID: 3612170973783452027, guid: a318a1e98a4b8884bab4b0fd7478e8c7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.18026571
-      objectReference: {fileID: 0}
-    - target: {fileID: 3612170973783452027, guid: a318a1e98a4b8884bab4b0fd7478e8c7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.42009795
-      objectReference: {fileID: 0}
-    - target: {fileID: 3612170973783452027, guid: a318a1e98a4b8884bab4b0fd7478e8c7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.56146073
-      objectReference: {fileID: 0}
-    - target: {fileID: 3612170973783452027, guid: a318a1e98a4b8884bab4b0fd7478e8c7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -46.089
-      objectReference: {fileID: 0}
-    - target: {fileID: 3612170973783452027, guid: a318a1e98a4b8884bab4b0fd7478e8c7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -32.94
-      objectReference: {fileID: 0}
-    - target: {fileID: 3612170973783452027, guid: a318a1e98a4b8884bab4b0fd7478e8c7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -63.954
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a318a1e98a4b8884bab4b0fd7478e8c7, type: 3}
---- !u!4 &5363332414256296238 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3612170973783452027, guid: a318a1e98a4b8884bab4b0fd7478e8c7, type: 3}
-  m_PrefabInstance: {fileID: 8669253596854048853}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6841712359709374413 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2791604027616604056, guid: a318a1e98a4b8884bab4b0fd7478e8c7, type: 3}
-  m_PrefabInstance: {fileID: 8669253596854048853}
-  m_PrefabAsset: {fileID: 0}

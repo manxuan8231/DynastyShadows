@@ -1,13 +1,14 @@
 ﻿using Pathfinding;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 
 public class DemonAlien : MonoBehaviour
 {
     public enum EnemyState
     {
-      None, Idle, TargetPl, Attack, Flee, Skill, Die
+      None, Idle, TargetPl, Attack, Flee, Skill, Anger, Die
     }
     public EnemyState currentState;
     [Header("---------Thong so tinh khoan cach--------")]
@@ -24,6 +25,7 @@ public class DemonAlien : MonoBehaviour
     public float lastSkillTime = -10f;
     public float stepSkill = 0;
     public float timeUseSkill = 0;
+    public bool isSkillTele = false;//neu dang dung skill ma bi danh thi tele
     [Header("--------------Thong so de tele-----------")]
     public float scoreTele = 0;
     public float scoreMaxTele = 5;
@@ -75,6 +77,9 @@ public class DemonAlien : MonoBehaviour
             case EnemyState.Skill:
                 Skill();    
                 break;
+            case EnemyState.Anger:
+                
+                break;
             case EnemyState.Die:         
                 
                 break;
@@ -83,6 +88,7 @@ public class DemonAlien : MonoBehaviour
     }
     public void ChangerState(EnemyState stateNew)//dung de chuyen trang thai 
     {
+        if (currentState == stateNew) return;
         currentState = stateNew;
         switch (currentState) 
         { 
@@ -95,6 +101,7 @@ public class DemonAlien : MonoBehaviour
             case EnemyState.Flee://chay tron
                 break;
             case EnemyState.Skill:             
+    
                 break;
             case EnemyState.Die:
                 Death();
@@ -127,39 +134,58 @@ public class DemonAlien : MonoBehaviour
     //thay player thi run hoac walk
     public void TargetPlayer()
     {
-       
         float dist = Vector3.Distance(transform.position, player.transform.position);
+
+        
+        if (dist > 50f)
+        {
+            // Hướng sau lưng player
+            Vector3 behindPlayer = player.position - player.forward * 6f;
+
+            // Tìm node hợp lệ gần vị trí sau lưng
+            NNInfo nodeInfo = AstarPath.active.GetNearest(behindPlayer, NNConstraint.Default);
+
+            if (nodeInfo.node != null && nodeInfo.node.Walkable)
+            {
+                transform.position = nodeInfo.position;
+            }
+
+            return; 
+        }
+
+        // Nếu trong vùng phát hiện và còn khoảng cách
         if (dist <= detectionRange && dist > stopRange)
         {
-            aiPath.destination = player.position;// di chuyen thang toi player
-            if (dist >= 15) // Khoảng cách xa hơn 15 thì chạy
+            aiPath.destination = player.position;
+
+            if (dist >= 15f)
             {
-               
-                aiPath.maxSpeed = 15f; 
+                aiPath.maxSpeed = 15f;
                 animator.SetBool("isWalking", false);
                 animator.SetBool("isRunning", true);
-
             }
-            else if(dist < 14)
+            else if (dist < 14f)
             {
-                    aiPath.maxSpeed = 5f; // Tốc độ walk
-                    animator.SetBool("isRunning", false);
-                    animator.SetBool("isWalking", true);          
+                aiPath.maxSpeed = 5f;
+                animator.SetBool("isRunning", false);
+                animator.SetBool("isWalking", true);
             }
         }
         else
         {
-            aiPath.destination = transform.position; // Dừng lại nếu không có player
+            aiPath.destination = transform.position;
             animator.SetBool("isRunning", false);
             animator.SetBool("isWalking", false);
             ChangerState(EnemyState.Attack);
         }
+
         if (!playerControllerState.controller.enabled)
         {
             playerControllerState.controller.enabled = true;
         }
     }
-   
+
+
     //Attack
     public void Attack()
     {
@@ -173,7 +199,7 @@ public class DemonAlien : MonoBehaviour
                 
                 stepAttack = 1;
                 animator.SetTrigger("punch1"); // Kích hoạt animation tấn công1              
-               
+                demonAlienHp.currentMana -= 400;
               
             }
             else if (stepAttack == 1)
@@ -181,16 +207,16 @@ public class DemonAlien : MonoBehaviour
                
                 stepAttack = 2;
                 animator.SetTrigger("punch2"); // Kích hoạt animation tấn công1
-               
-               
+                demonAlienHp.currentMana -= 400;
+
             }
             else if (stepAttack == 2)
             {
                 
                 stepAttack = 0;
                 animator.SetTrigger("punch3");
-              
-               
+                demonAlienHp.currentMana -= 400;
+
             }
             lastAttackTime = Time.time; // Cập nhật thời gian tấn công cuối cùng
           
@@ -207,12 +233,12 @@ public class DemonAlien : MonoBehaviour
         aiPath.canMove = false;
         if (Time.time >= lastSkillTime + coolDownSkill) 
         {
-            if (stepSkill == 0)
+            if (stepSkill == 0 && demonAlienHp.currentMana >= 30)
             {
                 stepSkill++;
                 animator.SetTrigger("short");//ban 
                 timeUseSkill = 7f;//thgian de doi qua trnag thai target
-                scoreMaxTele += 3;
+                scoreMaxTele += 3;             
             }
             else if(stepSkill == 1)
             {
@@ -221,12 +247,13 @@ public class DemonAlien : MonoBehaviour
                 timeUseSkill = 4f;
                 scoreMaxTele += 3;
             }
-            else if (stepSkill == 2)
+            else if (stepSkill == 2 && demonAlienHp.currentMana > 0)
             {
-                stepSkill = 0f;
+                stepSkill = 0;
                 animator.SetTrigger("throw");//la Skill nem bong
                 timeUseSkill = 8f;
-                scoreMaxTele -= 5;
+                scoreMaxTele -= 6;
+                demonAlienHp.currentMana -= 600;
             }
             StartCoroutine(WaitChangerStateTarget(timeUseSkill));
 
@@ -277,7 +304,7 @@ public class DemonAlien : MonoBehaviour
         {
             scoreTele = 0;
             evenAlien.audioSource.PlayOneShot(evenAlien.teleClip);
-           
+            demonAlienHp.currentArmor += 300;
             demonAlienHp.UpdateUI();
             StartCoroutine(WaitCanMoveAndChangerSkill(2f));//tam dung canmove và đợi 2f dùng Skill
             animator.SetTrigger("comeOut");
@@ -291,11 +318,6 @@ public class DemonAlien : MonoBehaviour
             if (nodeInfo.node != null && nodeInfo.node.Walkable)
             {
                 transform.position = nodeInfo.position;
-                Debug.Log("Đã teleport đến: " + nodeInfo.position);
-            }
-            else
-            {
-                Debug.LogWarning("Không tìm được vị trí hợp lệ để teleport.");
             }
             
         }
@@ -313,19 +335,9 @@ public class DemonAlien : MonoBehaviour
     //die
     public void Death()
     {
-        if (!animator.enabled)
-        {
-            animator.enabled = true;
-        }
-        if (aiPath.enabled)
-        {
-            aiPath.enabled = false;
-        }
-       
-        aiPath.enabled = false;
-        demonAlienHp.isTakeDamage = false;
         demonAlienHp.colliTakeDame.enabled = false;
         animator.SetTrigger("die");
+        Destroy(gameObject,2);
     }
 
     //chuyen trang thai cua cac ham-----------------
@@ -349,10 +361,11 @@ public class DemonAlien : MonoBehaviour
     }
     public IEnumerator WaitChangerStateTarget(float secont)
     {
-       
+        isSkillTele = true;
         yield return new WaitForSeconds(secont);     
         aiPath.canMove = true;
         ChangerState(EnemyState.TargetPl);
         evenAlien.effectShort.SetActive(false);
+        isSkillTele = false;
     }
 }
