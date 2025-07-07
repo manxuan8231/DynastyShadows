@@ -22,7 +22,7 @@ public class EnemyMap2_horseman : MonoBehaviour
     public Vector3 firstPos;
     public Animator animator;
     public string currentTrigger;
-
+    public bool isChayMotLan;
 
     public float dodgeDistance = 3f;
     public float dodgeChance = 0.5f; // 50% né đòn
@@ -92,17 +92,8 @@ public class EnemyMap2_horseman : MonoBehaviour
                 }
                 break;
 
-            case EnemyState.Attack:
-                float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-                if (distanceToPlayer > attackRange)
-                {
-                    // Nếu player chạy ra khỏi tầm tấn công → quay lại đuổi
-                    ChangeState(EnemyState.Walk);
-                }
-                else
-                {
-                    Attack();
-                }
+            case EnemyState.Attack: 
+                Attack();
                 break;
         }
 
@@ -111,8 +102,7 @@ public class EnemyMap2_horseman : MonoBehaviour
     {
         if (!aiPath.enabled || aiPath.isStopped)
             aiPath.isStopped = false;
-
-
+        isChayMotLan = true;
         float distToPlayer = Vector3.Distance(transform.position, player.position);
 
         if (distToPlayer < radius)
@@ -147,9 +137,14 @@ public class EnemyMap2_horseman : MonoBehaviour
         float dist = Vector3.Distance(transform.position, player.position);
         if (dist > attackRange + 1f)
         {
+            if(isChayMotLan)
+            {
+                isChayMotLan = false;
+                Invoke(nameof(EnemyState.Walk), 3f);
+            }
             aiPath.isStopped = false;
             attackTimer = 0f; //nếu như player đi xa
-            ChangeState(EnemyState.Walk);
+            /*ChangeState(EnemyState.Walk);*/
         }
     }
 
@@ -221,6 +216,14 @@ public class EnemyMap2_horseman : MonoBehaviour
 
     public void ChangeState(EnemyState newState)
     {
+        // Không cho chuyển sang Walk nếu đang chạy animation Attack
+        if (newState == EnemyState.Walk)
+        {
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("Attack") && stateInfo.normalizedTime < 1.0f)
+                return;
+        }
+
         if (currentState == newState) return; // Tránh spam trigger nếu không đổi trạng thái
 
         currentState = newState;
@@ -239,7 +242,7 @@ public class EnemyMap2_horseman : MonoBehaviour
                 break;
             case EnemyState.Attack:
                 if (aiPath.enabled == false) return; // Nếu agent không hoạt động thì không tấn công
-                aiPath.isStopped = true; // Dừng lại khi tấn công 
+                aiPath.isStopped = true; // Dừng lại khi tấn công
                 animator.SetTrigger("Attack");
                 currentTrigger = "Attack";
                 break;
