@@ -39,6 +39,18 @@ public class ComboAttack : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime
                 && isAttack && playerStatus.currentMana > 50 && playerController.IsGrounded() && playerController.isAttack)
             {
+                Transform enemy = playerController.GetNearestEnemy();
+                if (enemy != null)
+                {
+                    Vector3 direction = (enemy.position - playerController.transform.position).normalized;
+                    direction.y = 0; // chỉ xoay theo trục Y
+
+                    if (direction != Vector3.zero)
+                    {
+                        Quaternion targetRotation = Quaternion.LookRotation(direction);
+                        playerController.transform.rotation = targetRotation; // hoặc dùng Slerp nếu muốn mượt
+                    }
+                }
                 playerStatus.TakeMana(50);
                 OnAttack();
             }
@@ -64,8 +76,9 @@ public class ComboAttack : MonoBehaviour
     void OnAttack()
     {
         // Kiểm tra có được phép tấn công tiếp không
-        if (Time.time < nextAttackTime)
-            return;
+        if (Time.time < nextAttackTime) return;
+
+        
 
         // Chỉ tăng comboStep nếu cooldown đã hết
         if (comboStep == 0)

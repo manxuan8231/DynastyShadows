@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Pathfinding;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -79,6 +80,7 @@ public class CastRostbindSoul : MonoBehaviour
         {
             Vector3 instanPos = enemy.transform.position + new Vector3(0f, 2.4f, 0f);
             effectInstance = Instantiate(effectPrefab, instanPos, Quaternion.identity, enemy.transform);
+            Destroy(effectInstance,5f);
         }
 
 
@@ -90,6 +92,10 @@ public class CastRostbindSoul : MonoBehaviour
 
         MonoBehaviour ai = enemy.GetComponent<MonoBehaviour>();
         if (ai != null) ai.enabled = false;
+
+        AIPath aIPath = enemy.GetComponent<AIPath>();
+        if(aIPath != null) aIPath.enabled = false;
+
 
         // láy mau enemy sau khi mở khóa
         if (skill1Manager.isDamaged == true)
@@ -118,7 +124,8 @@ public class CastRostbindSoul : MonoBehaviour
         MonoBehaviour ai = enemy.GetComponent<MonoBehaviour>();
         if (ai != null) ai.enabled = true;
 
-        Debug.Log("Enemy hoạt động lại");
+        AIPath aIPath = enemy.GetComponent<AIPath>();
+        if (aIPath != null) aIPath.enabled = true;
     }
 
     private IEnumerator UnfreezeAfterDelay(GameObject enemy, float delay)
@@ -126,6 +133,7 @@ public class CastRostbindSoul : MonoBehaviour
         yield return new WaitForSeconds(delay);
         UnfreezeEnemy(enemy);
         Destroy(gameObject);
+     
     }
 
    

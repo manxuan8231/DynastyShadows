@@ -14,6 +14,7 @@ public class PlayerControllerState : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
+    public LayerMask enemyLayer;
     //cham dat
     public Vector3 velocity;
     public bool isGrounded;
@@ -133,6 +134,40 @@ public class PlayerControllerState : MonoBehaviour
         PlayerPrefs.SetFloat("CheckpointZ", position.z);
         PlayerPrefs.Save();
 
+    }
+
+    //khi pl bi an thi chay
+    void OnDisable()
+    {
+        //skill4
+        animator.runtimeAnimatorController = animatorDefauld; // Trở về animator mặc định
+        animator.SetTrigger("Skill4State");
+        skill4Manager.isHibitedIcon = false; // cam skill icon
+        isSkinSkill3Clone = false;
+        //skill2
+        skill2Manager.isHibitedIcon = false; // Bỏ cấm sử dụng skill 2
+        ChangeState(new PlayerCurrentState(this)); // Trở về trạng thái hiện tại
+    }
+
+    //tinh toan tim enemy gan nhat
+   public Transform GetNearestEnemy()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, 10, enemyLayer);
+
+        float minDist = Mathf.Infinity;
+        Transform closest = null;
+
+        foreach (Collider col in hits)
+        {
+            float dist = Vector3.Distance(transform.position, col.transform.position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = col.transform;
+            }
+        }
+
+        return closest;
     }
 
 }

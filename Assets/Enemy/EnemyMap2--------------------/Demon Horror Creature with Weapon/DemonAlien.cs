@@ -7,7 +7,7 @@ public class DemonAlien : MonoBehaviour
 {
     public enum EnemyState
     {
-       idle, targetPl,attack,flee,skill,die
+      None, Idle, TargetPl, Attack, Flee, Skill, Die
     }
     public EnemyState currentState;
     [Header("---------Thong so tinh khoan cach--------")]
@@ -19,7 +19,7 @@ public class DemonAlien : MonoBehaviour
     public float coolDownAttack = 10f; // Thời gian hồi chiêu tấn công
     public float lastAttackTime = -10f; 
     public float stepAttack = 0;
-    //skill
+    //Skill
     public float coolDownSkill = 10f; // Thời gian hồi chiêu tấn công
     public float lastSkillTime = -10f;
     public float stepSkill = 0;
@@ -44,39 +44,39 @@ public class DemonAlien : MonoBehaviour
         aiPath = GetComponent<AIPath>();
         evenAlien = FindAnyObjectByType<EvenAlien>();
         playerControllerState = FindAnyObjectByType <PlayerControllerState>();  
-        currentState = EnemyState.idle;
+        currentState = EnemyState.Idle;
     }
 
     
     void Update()
     {
+        if (currentState == EnemyState.Die) return;
         FleeToPlayer();
         Tele();
         //cap nhap cac trnag thai
         switch (currentState)
         {
-            case EnemyState.idle://idle
+            case EnemyState.Idle://Idle
                 float distance = Vector3.Distance(player.transform.position, transform.position);
                 if (distance <= detectionRange)
                 {
-                    ChangerState(EnemyState.targetPl);
+                    ChangerState(EnemyState.TargetPl);
                 }
                 break;
-            case EnemyState.targetPl:
+            case EnemyState.TargetPl:
                 TargetPlayer();
                 break;
-            case EnemyState.attack:
+            case EnemyState.Attack:
                 Attack();
                 break;
-            case EnemyState.flee://chay tron
+            case EnemyState.Flee://chay tron
                 FleeFromPlayer();
                 break;
-            case EnemyState.skill:
+            case EnemyState.Skill:
                 Skill();    
                 break;
-            case EnemyState.die:         
-                aiPath.isStopped = false;
-
+            case EnemyState.Die:         
+                
                 break;
 
         }
@@ -86,27 +86,18 @@ public class DemonAlien : MonoBehaviour
         currentState = stateNew;
         switch (currentState) 
         { 
-            case EnemyState.idle:
+            case EnemyState.Idle:
                 break;
-            case EnemyState.targetPl:
+            case EnemyState.TargetPl:
                 break;
-            case EnemyState.attack:
+            case EnemyState.Attack:
                 break;
-            case EnemyState.flee://chay tron
+            case EnemyState.Flee://chay tron
                 break;
-            case EnemyState.skill:             
+            case EnemyState.Skill:             
                 break;
-            case EnemyState.die:
-                if (!animator.enabled) { 
-                    animator.enabled = true;
-                }
-                if (aiPath.enabled)
-                {
-                    aiPath.enabled = false;
-                }
-                
-                animator.SetTrigger("die");
-
+            case EnemyState.Die:
+                Death();
                 break;
         }
     }
@@ -161,7 +152,7 @@ public class DemonAlien : MonoBehaviour
             aiPath.destination = transform.position; // Dừng lại nếu không có player
             animator.SetBool("isRunning", false);
             animator.SetBool("isWalking", false);
-            ChangerState(EnemyState.attack);
+            ChangerState(EnemyState.Attack);
         }
         if (!playerControllerState.controller.enabled)
         {
@@ -169,7 +160,7 @@ public class DemonAlien : MonoBehaviour
         }
     }
    
-    //attack
+    //Attack
     public void Attack()
     {
         FlipToPlayer();
@@ -206,11 +197,11 @@ public class DemonAlien : MonoBehaviour
         }
         else if (dist > stopRange) 
         {
-            ChangerState(EnemyState.targetPl);
+            ChangerState(EnemyState.TargetPl);
         }
        
     }
-    //skill
+    //Skill
     public void Skill()
     {
         aiPath.canMove = false;
@@ -221,18 +212,21 @@ public class DemonAlien : MonoBehaviour
                 stepSkill++;
                 animator.SetTrigger("short");//ban 
                 timeUseSkill = 7f;//thgian de doi qua trnag thai target
+                scoreMaxTele += 3;
             }
             else if(stepSkill == 1)
             {
                 stepSkill++;            
-                animator.SetTrigger("telePathic");//la skill hut player lai
+                animator.SetTrigger("telePathic");//la Skill hut player lai
                 timeUseSkill = 4f;
+                scoreMaxTele += 3;
             }
             else if (stepSkill == 2)
             {
                 stepSkill = 0f;
-                animator.SetTrigger("throw");//la skill nem bong
+                animator.SetTrigger("throw");//la Skill nem bong
                 timeUseSkill = 8f;
+                scoreMaxTele -= 5;
             }
             StartCoroutine(WaitChangerStateTarget(timeUseSkill));
 
@@ -254,13 +248,26 @@ public class DemonAlien : MonoBehaviour
     {      
        
         Vector3 runDirection = (transform.position - player.position).normalized;   
-        Vector3 fleeTarget = transform.position + runDirection * 20f;
+        Vector3 FleeTarget = transform.position + runDirection * 40f;
         aiPath.maxSpeed = 15;
-        aiPath.destination = fleeTarget;  
-        animator.SetBool("isRunning", true);
+
+        float distance = Vector3.Distance(transform.position, player.position);
+        if (distance >= 50)
+        {
+            FlipToPlayer();
+            animator.SetBool("isRunning", false);
+            demonAlienHp.currentHp += 40 * Time.deltaTime;
+            demonAlienHp.UpdateUI();
+        }
+        else if(distance < 50)
+        {
+            aiPath.destination = FleeTarget;
+            animator.SetBool("isRunning", true);
+           
+        }
         if (demonAlienHp.currentHp > demonAlienHp.maxHp * 0.3f) //lon hon 20%
-        { 
-            ChangerState(EnemyState.idle);
+        {
+            ChangerState(EnemyState.Idle);
         }
     }
     //tele
@@ -270,9 +277,9 @@ public class DemonAlien : MonoBehaviour
         {
             scoreTele = 0;
             evenAlien.audioSource.PlayOneShot(evenAlien.teleClip);
-            demonAlienHp.currentArmor = demonAlienHp.maxArmor;//hoi lai giap
+           
             demonAlienHp.UpdateUI();
-            StartCoroutine(WaitCanMoveAndChangerSkill(2f));//tam dung canmove và đợi 2f dùng skill
+            StartCoroutine(WaitCanMoveAndChangerSkill(2f));//tam dung canmove và đợi 2f dùng Skill
             animator.SetTrigger("comeOut");
             // Tính hướng ngược với player
             Vector3 directionAway = (transform.position - player.position).normalized;
@@ -297,31 +304,47 @@ public class DemonAlien : MonoBehaviour
     //chay tron neu mau be hon 30%
     public void FleeToPlayer()
     {
-        if (demonAlienHp.currentHp <= demonAlienHp.maxHp * 0.3f) //mau be hon 20%
+        if (demonAlienHp.currentHp <= demonAlienHp.maxHp * 0.2f) //20%
         {
-            ChangerState(EnemyState.flee);
+            ChangerState(EnemyState.Flee);
         }
     }
     
-   
+    //die
+    public void Death()
+    {
+        if (!animator.enabled)
+        {
+            animator.enabled = true;
+        }
+        if (aiPath.enabled)
+        {
+            aiPath.enabled = false;
+        }
+       
+        aiPath.enabled = false;
+        demonAlienHp.isTakeDamage = false;
+        demonAlienHp.colliTakeDame.enabled = false;
+        animator.SetTrigger("die");
+    }
 
     //chuyen trang thai cua cac ham-----------------
     public void StartAttack()
     {
-        ChangerState(EnemyState.attack);
+        ChangerState(EnemyState.Attack);
     }
-    public void StartTargetPL()
+    public void StartTargetPl()
     {
-        ChangerState(EnemyState.targetPl);
+        ChangerState(EnemyState.TargetPl);
     }
 
     //IEnumerator-------------------------------
-    public IEnumerator WaitCanMoveAndChangerSkill(float secont)//dùng để tắt canmove và sử dụng skill sau secon
+    public IEnumerator WaitCanMoveAndChangerSkill(float secont)//dùng để tắt canmove và sử dụng Skill sau secon
     {
         aiPath.canMove = false;
         yield return new WaitForSeconds(secont);
         aiPath.canMove = true;
-        ChangerState(EnemyState.skill);
+        ChangerState(EnemyState.Skill);
         
     }
     public IEnumerator WaitChangerStateTarget(float secont)
@@ -329,7 +352,7 @@ public class DemonAlien : MonoBehaviour
        
         yield return new WaitForSeconds(secont);     
         aiPath.canMove = true;
-        ChangerState(EnemyState.targetPl);
+        ChangerState(EnemyState.TargetPl);
         evenAlien.effectShort.SetActive(false);
     }
 }
