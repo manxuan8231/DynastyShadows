@@ -7,7 +7,7 @@ public class DemonAlien : MonoBehaviour
 {
     public enum EnemyState
     {
-       idle, targetPl,attack,flee,skill,
+       idle, targetPl,attack,flee,skill,die
     }
     public EnemyState currentState;
     [Header("---------Thong so tinh khoan cach--------")]
@@ -34,6 +34,8 @@ public class DemonAlien : MonoBehaviour
     public AIPath aiPath;
     private DemonAlienHp demonAlienHp;
     private EvenAlien evenAlien;
+    private PlayerControllerState playerControllerState;
+   
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -41,6 +43,7 @@ public class DemonAlien : MonoBehaviour
         demonAlienHp = FindAnyObjectByType<DemonAlienHp>();
         aiPath = GetComponent<AIPath>();
         evenAlien = FindAnyObjectByType<EvenAlien>();
+        playerControllerState = FindAnyObjectByType <PlayerControllerState>();  
         currentState = EnemyState.idle;
     }
 
@@ -71,7 +74,11 @@ public class DemonAlien : MonoBehaviour
             case EnemyState.skill:
                 Skill();    
                 break;
-                
+            case EnemyState.die:         
+                aiPath.isStopped = false;
+
+                break;
+
         }
     }
     public void ChangerState(EnemyState stateNew)//dung de chuyen trang thai 
@@ -88,6 +95,18 @@ public class DemonAlien : MonoBehaviour
             case EnemyState.flee://chay tron
                 break;
             case EnemyState.skill:             
+                break;
+            case EnemyState.die:
+                if (!animator.enabled) { 
+                    animator.enabled = true;
+                }
+                if (aiPath.enabled)
+                {
+                    aiPath.enabled = false;
+                }
+                
+                animator.SetTrigger("die");
+
                 break;
         }
     }
@@ -144,6 +163,10 @@ public class DemonAlien : MonoBehaviour
             animator.SetBool("isWalking", false);
             ChangerState(EnemyState.attack);
         }
+        if (!playerControllerState.controller.enabled)
+        {
+            playerControllerState.controller.enabled = true;
+        }
     }
    
     //attack
@@ -196,14 +219,20 @@ public class DemonAlien : MonoBehaviour
             if (stepSkill == 0)
             {
                 stepSkill++;
-                animator.SetTrigger("telePathic");
-                timeUseSkill = 7f;
+                animator.SetTrigger("short");//ban 
+                timeUseSkill = 7f;//thgian de doi qua trnag thai target
             }
             else if(stepSkill == 1)
             {
+                stepSkill++;            
+                animator.SetTrigger("telePathic");//la skill hut player lai
+                timeUseSkill = 4f;
+            }
+            else if (stepSkill == 2)
+            {
                 stepSkill = 0f;
-                animator.SetTrigger("short");
-                timeUseSkill = 5.5f;
+                animator.SetTrigger("throw");//la skill nem bong
+                timeUseSkill = 8f;
             }
             StartCoroutine(WaitChangerStateTarget(timeUseSkill));
 

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FireTargetPL : MonoBehaviour
 {
@@ -9,10 +9,10 @@ public class FireTargetPL : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        // Xoay v�ng quanh 
+        // Xoay vòng quanh 
         foreach (GameObject fire in firePrefab)
         {
             if (fire != null)

@@ -1,18 +1,22 @@
-﻿using Unity.VisualScripting;
+﻿using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 
 public class EvenAlien : MonoBehaviour
 {
 
-    //shoot
+    //shoot ban dan
     public string tagBullet;
     public Transform spawnBulletPosi;
     public float speed = 100f;
     public GameObject effectShort;
-    //telepathic
+    //telepathic la skill hut
     public GameObject telePathic;
-    //sound
+    //nem bong
+    public GameObject effectBall;
+
+    //sound clip
     public AudioClip attackLClip;
     public AudioClip attackRClip;
     public AudioClip teleClip;
@@ -31,6 +35,7 @@ public class EvenAlien : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         effectShort.SetActive(false);
         telePathic.SetActive(false);
+        effectBall.SetActive(false);
     }
 
     
@@ -50,6 +55,7 @@ public class EvenAlien : MonoBehaviour
     {
         dameZoneAttackAlien.EndDame();
     }
+
     //dameattak right ball
     public void BeginDameRight()
     {
@@ -62,7 +68,7 @@ public class EvenAlien : MonoBehaviour
         dameZoneBall.EndDame();
     }
 
-    //rung cam
+    //rung camera
     public void ShakeCamera()
     {
         cameraShake.Shake();
@@ -101,5 +107,14 @@ public class EvenAlien : MonoBehaviour
 
     }
 
-    
+    //nem bong effect
+    public void StartEffectBall()
+    {
+        effectBall.SetActive(true);
+
+    }
+    public void EndEffectBall()
+    {
+        effectBall.SetActive(false);
+    }
 }

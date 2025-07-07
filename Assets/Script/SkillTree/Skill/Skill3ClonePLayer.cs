@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using Pathfinding;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Skill3ClonePLayer : MonoBehaviour
 {
     public NavMeshAgent agent;
+    public AIPath aiPath;
     public Animator animator;
     public LayerMask enemyLayer;
     public float speed = 5f;
@@ -13,7 +15,8 @@ public class Skill3ClonePLayer : MonoBehaviour
     public float attackCooldown = 15f;
    //skin
    public SkinnedMeshRenderer[] skinnedMeshRenderers;
-   
+    private bool isUsingNavMesh = true; // mặc định là NavMesh
+
     //bien luu tru enemy gan nhat
     private Transform nearestEnemy;
     private float lastAttackTime = -15f;
@@ -29,7 +32,14 @@ public class Skill3ClonePLayer : MonoBehaviour
     public SkillUseHandler skillUseHandler;
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        if(agent == null)
+        {
+            agent = GetComponent<NavMeshAgent>();
+        }
+       if(aiPath == null)
+        {
+            aiPath = GetComponent<AIPath>();
+        }
         dameZoneSkill3PL= FindAnyObjectByType<DameZoneSkill3PL>();
         skillUseHandler = FindAnyObjectByType<SkillUseHandler>();
         skill3Manager = FindAnyObjectByType<Skill3Manager>();
@@ -39,6 +49,28 @@ public class Skill3ClonePLayer : MonoBehaviour
         agent.speed = speed;
         StartCoroutine(ReturnToPool());
         auraSlash.SetActive (false); // ẩn hiệu ứng auraSlash ban đầu
+                                     // Kiểm tra có NavMesh ở vị trí hiện tại không
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(transform.position, out hit, 2f, NavMesh.AllAreas))
+        {
+            isUsingNavMesh = true;
+            agent.enabled = true;
+            aiPath.enabled = false;
+        }
+        else
+        {
+            isUsingNavMesh = false;
+            agent.enabled = false;
+            aiPath.enabled = true;
+        }
+
+        // Nếu xài AIPath thì setup tốc độ
+        aiPath.maxSpeed = speed;
+
+        // Ẩn slash ban đầu
+        auraSlash.SetActive(false);
+
+        StartCoroutine(ReturnToPool());
     }
 
     void Update()
@@ -110,16 +142,20 @@ public class Skill3ClonePLayer : MonoBehaviour
     public void MoveToEnemy()
     {
         if (nearestEnemy != null)
-        { 
+        {
             animator.SetBool("Run", true);
-            if(agent.enabled == true)
+
+            if (isUsingNavMesh && agent.enabled)
             {
-                // Di chuyển đến kẻ thù
                 agent.SetDestination(nearestEnemy.position);
             }
-           
+            else if (!isUsingNavMesh && aiPath.enabled)
+            {
+                aiPath.destination = nearestEnemy.position;
+            }
         }
     }
+
 
     public void AttackEnemy()
     {
@@ -179,11 +215,19 @@ public class Skill3ClonePLayer : MonoBehaviour
     }
     public IEnumerator WaitForGravity()
     {
-        agent.enabled = false;
+        if (isUsingNavMesh)
+            agent.enabled = false;
+        else
+            aiPath.enabled = false;
+
         yield return new WaitForSeconds(3f);
-        agent.enabled = true;
-       
+
+        if (isUsingNavMesh)
+            agent.enabled = true;
+        else
+            aiPath.enabled = true;
     }
+
     //skill slash
     public void PlaySlashAnim()
     {
@@ -227,7 +271,11 @@ public class Skill3ClonePLayer : MonoBehaviour
         Vector3 startPos = transform.position;
         float time = 0f;
 
-    
+        // Tạm tắt di chuyển AI
+        if (isUsingNavMesh)
+            agent.enabled = false;
+        else
+            aiPath.enabled = false;
 
         while (time < duration)
         {
@@ -237,10 +285,15 @@ public class Skill3ClonePLayer : MonoBehaviour
             yield return null;
         }
 
-       transform.position = targetPosition;
+        transform.position = targetPosition;
 
-     
+        // Bật lại di chuyển AI
+        if (isUsingNavMesh)
+            agent.enabled = true;
+        else
+            aiPath.enabled = true;
     }
+
     public IEnumerator WaitForAuraFire()
     {
         auraSlash.SetActive(true);

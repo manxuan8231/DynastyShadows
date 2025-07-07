@@ -6,6 +6,7 @@ public class TelePathic : MonoBehaviour
     public GameObject player;               // Tham chiếu đến Player
     public float moveSpeed = 5f;            // Tốc độ dịch chuyển
     private bool isTeleporting = false;
+    public float dame = 20f;
     // Tham chiếu
     private PlayerControllerState playerControllerState;
     private PlayerStatus playerStatus;
@@ -50,8 +51,8 @@ public class TelePathic : MonoBehaviour
         {
             
             playerControllerState.controller.enabled = false;
-            playerStatus.TakeHealth(30,gameObject);
-            playerStatus.TakeHealShield(20);
+            playerStatus.TakeHealth(dame, gameObject);
+            playerStatus.TakeHealShield(dame);
            
             isTeleporting = true;
         }

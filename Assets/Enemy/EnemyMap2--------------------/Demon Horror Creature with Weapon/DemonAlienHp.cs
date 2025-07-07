@@ -44,7 +44,7 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
         armorSlider.value = currentArmor;
         isTakeDamage = true;
         isArmorBroken = false;
-}
+    }
 
     
     void Update()
@@ -72,9 +72,15 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
             currentHp -= damage;
             currentHp = Mathf.Clamp(currentHp, 0f, maxHp);
             demonAlien.animator.SetTrigger("getDamage");
+            if (currentHp <= 0f) 
+            {
+                demonAlien.ChangerState(DemonAlien.EnemyState.die);
+            }
         }
         UpdateUI();
-        evenAlien.effectShort.SetActive(false);//tat effect short khi bi danh
+        evenAlien.EndEffectShort();//tat effect short khi bi danh
+        evenAlien.EndTelePathic();
+        evenAlien.EndEffectBall();
     }
     public void UpdateUI()
     {
