@@ -183,7 +183,7 @@ public class PlayerStatus : MonoBehaviour
     }
 
     //hp
-    public void TakeHealth(float amount ,GameObject enemy)//bị lấy hp và đây là máu chính
+    public void TakeHealth(float amount ,GameObject enemy, string animName)//bị lấy hp và đây là máu chính
     {
         if(currentHp > 0 && isTakeHeal == true && isShieldActive == false)
         {          
@@ -192,10 +192,11 @@ public class PlayerStatus : MonoBehaviour
             sliderHp.value = currentHp;
             textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
            
-            if (isStun == true && isHit == true) //nếu bị hit r thi đợi 1 giay ms cho tiep
-        {    
-            StartCoroutine(WaitHit(0.7f)); // gọi hàm WaitStun với thời gian 4 giây
-            audioSource.PlayOneShot(audioHit); //phát âm thanh bị hit
+        if (isStun == true && isHit == true) //nếu bị hit r thi đợi 1 giay ms cho tiep
+        {
+                playerController.animator.SetTrigger(animName);
+                StartCoroutine(WaitHit(0.3f)); // gọi hàm hit với thời gian 0.7 giây
+                 audioSource.PlayOneShot(audioHit);
         }
         //tim enemy de phan dame
         if (enemy != null && isReflectDamage == true) 
@@ -539,11 +540,11 @@ public class PlayerStatus : MonoBehaviour
     private IEnumerator WaitHit(float time)
     {
         isHit = false; // Tắt trạng thái bị hit
-        playerController.animator.SetTrigger("Hit"); // bật animator hit
+      
         playerController.isController = false;// lại điều khiển nhân vật
         yield return new WaitForSeconds(time);
         playerController.isController = true; // Bật lại điều khiển nhân vật
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.1f);
         isHit = true; // Bật lại trạng thái bị hit
     }
     void LevelUp()

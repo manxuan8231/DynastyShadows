@@ -26,7 +26,7 @@ public class DameWeaponHorseMan : MonoBehaviour
         if (other.CompareTag(tagPlayer) && !listDame.Contains(other))
         {
             listDame.Add(other);
-            playerStatus.TakeHealth(dame, enemy);
+            playerStatus.TakeHealth(dame, enemy, "HitRight");
             playerStatus.TakeHealShield(dame);
         }
     }
@@ -35,7 +35,7 @@ public class DameWeaponHorseMan : MonoBehaviour
         if (other.gameObject.CompareTag(tagPlayer) && !listDame.Contains(other))
         {
             listDame.Add(other);
-            playerStatus.TakeHealth(dame, enemy);
+            playerStatus.TakeHealth(dame, enemy, "HitRight");
             playerStatus.TakeHealShield(dame);
         }
     }
