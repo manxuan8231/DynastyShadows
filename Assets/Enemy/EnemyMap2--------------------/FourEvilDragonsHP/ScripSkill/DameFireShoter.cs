@@ -29,7 +29,7 @@ public class DameFireShoter : MonoBehaviour
         {
             if (playerStatus != null)
             {
-                playerStatus.TakeHealth(dame, gameObject);
+                playerStatus.TakeHealth(dame, gameObject, "HitBack");
                 // Hiển thị hiệu ứng lửa
                 if (fireEffect != null)
                 {

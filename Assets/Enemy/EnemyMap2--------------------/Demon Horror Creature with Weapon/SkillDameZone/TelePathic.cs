@@ -51,7 +51,7 @@ public class TelePathic : MonoBehaviour
         {
             
             playerControllerState.controller.enabled = false;
-            playerStatus.TakeHealth(dame, gameObject);
+            playerStatus.TakeHealth(dame, gameObject, "Hit");
             playerStatus.TakeHealShield(dame);
            
             isTeleporting = true;

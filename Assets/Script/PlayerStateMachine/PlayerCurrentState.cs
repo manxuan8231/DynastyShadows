@@ -137,6 +137,7 @@ public class PlayerCurrentState : PlayerState
             player.playerStatus.currentMana > 100 &&
             Time.time >= player.rollColdownTime + 2f && player.isRollBack)
         {
+            
             player.playerStatus.TakeMana(100);
             player.audioSource.PlayOneShot(player.evenAnimator.audioRoll);
             player.StartCoroutine(WaitTakeHeal()); // Bắt đầu đợi thời gian chờ trước khi cho phép nhân vật nhận hồi máu
@@ -148,8 +149,20 @@ public class PlayerCurrentState : PlayerState
             }
             else if(!Input.GetKey(KeyCode.W) || !Input.GetKey(KeyCode.A) || !Input.GetKey(KeyCode.S) || !Input.GetKey(KeyCode.D))
             {
-              
 
+                //flip
+                Transform enemy = player.GetNearestEnemy();
+                if (enemy != null)
+                {
+                    Vector3 direction = (enemy.position - player.transform.position).normalized;
+                    direction.y = 0; // chỉ xoay theo trục Y
+
+                    if (direction != Vector3.zero)
+                    {
+                        Quaternion targetRotation = Quaternion.LookRotation(direction);
+                        player.transform.rotation = targetRotation; // hoặc dùng Slerp nếu muốn mượt
+                    }
+                }
                 player.animator.SetTrigger("RollBack");
             }
 
