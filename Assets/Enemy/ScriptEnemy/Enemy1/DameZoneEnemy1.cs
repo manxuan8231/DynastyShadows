@@ -14,7 +14,7 @@ public class DameZoneEnemy1 : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerStatus.TakeHealth(50, enemy);
+            playerStatus.TakeHealth(50, enemy, "HitLeft");
             playerStatus.TakeHealShield(50);
             Debug.Log("Player hit by enemy");
         }

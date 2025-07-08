@@ -12,7 +12,7 @@ public class BossAttackCollider : MonoBehaviour
             PlayerStatus playerStatus = other.GetComponent<PlayerStatus>();
             if (playerStatus != null)
             {
-                playerStatus.TakeHealth(damage, boss.gameObject);
+                playerStatus.TakeHealth(damage, boss.gameObject, "HitBack");
                 Debug.Log($"💥 Boss {boss.name} hit player with {damage} damage!");
             }
         }
