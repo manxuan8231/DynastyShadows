@@ -14,6 +14,7 @@ public class AutoEnvironmentMusic : MonoBehaviour
         }
     }
 
+    [System.Obsolete]
     void Update()
     {
         if (myAudio == null) return;
