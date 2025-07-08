@@ -10,35 +10,40 @@ public enum QuestStage
     Quest5Completed,
     Quest6InProgress,
     Quest6Completed,
+    Quest7Stage1,
+    Quest7Stage2,
+    Quest7Stage3,
+    Quest7Completed
 
 
 }
 public class NPCDialogueController : MonoBehaviour
 {
-    [Header("Data")]
+    [Header("-----------------Data-----------------")]
     public DialogueData dialogueDataQuest5; // Dialogue cho quest 5
-    [Header("Content UI")]
+    public DialogueData dialogueDataQuest7; // Dialogue cho quest 6
+    [Header("-----------------Content UI-----------------")]
     public GameObject questionGameCanvas;
     public TMP_Text nameTxt;
     public TMP_Text contentText;
     public GameObject btnF;
     public GameObject PanelContent;
-    [Header("Quest UI")]
+    [Header("-----------------Quest UI-----------------")]
     public GameObject canvasQuest;
     public TMP_Text questContent;
 
-    [Header("State UI")]
+    [Header("-----------------State UI-----------------")]
     public GameObject stateCanvas;
     public TMP_Text stateText;
     public TMP_Text missionName;
     public Image iconState;
 
-    [Header("Other")]
+    [Header("-----------------Other-----------------")]
     Animator animator;
     Coroutine Coroutine;
     public AudioCanvasState audioCanvasState;
     public QuestStage currentStage;
-    [Header("Bool")]
+    [Header("-----------------Bool-----------------")]
     bool isOpen;
     bool isTyping;
     bool isSkip;
@@ -47,6 +52,10 @@ public class NPCDialogueController : MonoBehaviour
     public bool isActiveBtn = false;
     public bool hasFinishedDialogue = false;
     bool hasPlayedTalkingAnim = false;
+
+    [Header("-----------------quest items-----------------")]
+    public GameObject destinationQuest;
+    public GameObject back;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -93,7 +102,9 @@ public class NPCDialogueController : MonoBehaviour
         {
             case QuestStage.Quest5InProgress:
                 return dialogueDataQuest5;
-          
+            case QuestStage.Quest7Stage1:
+                return dialogueDataQuest7;
+
             default:
                 return null;
         }
@@ -114,8 +125,17 @@ public class NPCDialogueController : MonoBehaviour
                 Debug.Log("Quest 6 In Progress");
                 break;
             case QuestStage.Quest6Completed:
+                canvasQuest.SetActive(true);
+                questContent.text = "Gặp trưởng mục Lương";
                 Debug.Log("Quest 6 Completed");
                 break;
+            case QuestStage.Quest7Stage1:
+                Debug.Log("Quest 7 Stage1");
+                break;
+            case QuestStage.Quest7Completed:
+                Debug.Log("Quest 7 Completed");
+                break;
+
             default:
                 // Không có hành động nào khác
                 break;
@@ -219,8 +239,13 @@ public class NPCDialogueController : MonoBehaviour
         HandleQuestProgression();
         StartCoroutine(ShowQuestState(currentDialogue));
         StartCoroutine(ShowQuestContent(currentDialogue));
-    }
-   
+        if (currentStage == QuestStage.Quest7Stage1)
+        {
+            destinationQuest.SetActive(true);
+            back.SetActive(true);
+            currentStage = QuestStage.Quest7Stage2; // Chuyển sang giai đoạn tiếp theo của quest 7
+        }
+    }   
     IEnumerator ShowQuestState(DialogueData dialogue)
     {
         stateCanvas.SetActive(true);

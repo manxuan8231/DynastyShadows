@@ -1,7 +1,6 @@
 ﻿using Pathfinding;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 
 
 public class DemonAlien : MonoBehaviour
@@ -349,6 +348,10 @@ public class DemonAlien : MonoBehaviour
             SpawnEnemies();
             hasSpawned = true;
         }
+        NPCDialogueController npc = FindFirstObjectByType<NPCDialogueController>();
+        npc.currentStage = QuestStage.Quest6Completed;
+        AwardQuest award = FindFirstObjectByType<AwardQuest>();
+        award.AwardQuest6();
         Destroy(gameObject,4f);
     }
 
