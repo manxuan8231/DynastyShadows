@@ -59,6 +59,8 @@ public class EnemyMap2_HP : MonoBehaviour, IDamageable
            
                   
             boxDame.enabled = false;
+            enemyMap2_1.ai.canSearch = false;
+            enemyMap2_1.ai.canMove = false; // Tắt di chuyển khi chết
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
 
             if (npc != null)

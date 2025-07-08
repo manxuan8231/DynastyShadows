@@ -234,15 +234,21 @@ public class EnemyMap2_horseman : MonoBehaviour
             case EnemyState.Idle:
                 animator.SetTrigger("Idle");
                 currentTrigger = "Idle";
+                aiPath.isStopped = true; // Dừng lại khi Idle
+                aiPath.canSearch = false; // Tắt tìm kiếm khi Idle
+                aiPath.canMove = false; // Dừng di chuyển khi ở trạng thái Idle
                 break;
             case EnemyState.Walk:
                 aiPath.isStopped = false;
+                aiPath.canSearch = true; // Bật tìm kiếm khi đi
+                aiPath.canMove = true; // Bật di chuyển khi ở trạng thái Walk
                 animator.SetTrigger("Walk");
                 currentTrigger = "Walk";
                 break;
             case EnemyState.Attack:
-                if (aiPath.enabled == false) return; // Nếu agent không hoạt động thì không tấn công
-                aiPath.isStopped = true; // Dừng lại khi tấn công
+                aiPath.isStopped = true; // Dừng lại khi tấn công   
+                aiPath.canMove = false; // Tắt di chuyển khi tấn công
+                aiPath.canSearch = false; // Tắt tìm kiếm khi tấn công
                 animator.SetTrigger("Attack");
                 currentTrigger = "Attack";
                 break;
