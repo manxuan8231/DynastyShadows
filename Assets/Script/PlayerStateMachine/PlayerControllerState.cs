@@ -149,8 +149,9 @@ public class PlayerControllerState : MonoBehaviour
         //skill2
         skill2Manager.isHibitedIcon = false; // Bỏ cấm sử dụng skill 2
         ChangeState(new PlayerCurrentState(this)); // Trở về trạng thái hiện tại
-     
-        
+        //skill1                                                                                    
+        rigBuilder.enabled = false; // Tắt RigBuilder sau khi hoàn thành
+
     }
    
     //tinh toan tim enemy gan nhat

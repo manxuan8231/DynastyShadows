@@ -16,7 +16,7 @@ public class CurrentStateAssa : AssasinState
         if (dis < enemy.stopRange)
         {
            
-            enemy.aiPath.destination = enemy.transform.position; // Dừng lại
+          //  enemy.aiPath.destination = enemy.transform.position;
             enemy.animator.SetBool("isRunForward", false);
             enemy.animator.SetBool("isWalkForward", false);
         }

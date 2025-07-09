@@ -149,7 +149,7 @@ public class Skill4State : PlayerState
 
     public void Jump()
     {
-        player.isGrounded = Physics.CheckSphere(player.groundCheck.position, player.groundDistance, player.groundMask);
+        player.isGrounded = Physics.CheckSphere(player.groundCheck.position, player.groundDistance, player.groundMask | LayerMask.GetMask("Obstacle"));
 
         if (player.isGrounded && player.velocity.y < 0)
             player.velocity.y = -2f;

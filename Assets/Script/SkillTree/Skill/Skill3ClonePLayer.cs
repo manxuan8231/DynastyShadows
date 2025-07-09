@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Skill3ClonePLayer : MonoBehaviour
 {
+    public GameObject player;
     public NavMeshAgent agent;
     public AIPath aiPath;
     public Animator animator;
@@ -32,6 +33,10 @@ public class Skill3ClonePLayer : MonoBehaviour
     public SkillUseHandler skillUseHandler;
     void Start()
     {
+        if(player == null)
+        {
+            player = GameObject.FindWithTag("Player");
+        }
         if(agent == null)
         {
             agent = GetComponent<NavMeshAgent>();
@@ -121,6 +126,10 @@ public class Skill3ClonePLayer : MonoBehaviour
                 skinnedMeshRenderers[i].enabled = false;
             }
         }
+        if (!player.activeSelf)
+        {
+            Destroy(gameObject);
+        }
     }
     void FindNearestEnemy()
     {
@@ -171,7 +180,7 @@ public class Skill3ClonePLayer : MonoBehaviour
            
         }
     }
-   public  IEnumerator ReturnToPool()
+    public  IEnumerator ReturnToPool()
     {
         yield return new WaitForSeconds(skill3Manager.timeSkill3);
         ObjPoolingManager.Instance.ReturnToPool(skill3Manager.clonePLTag,gameObject);

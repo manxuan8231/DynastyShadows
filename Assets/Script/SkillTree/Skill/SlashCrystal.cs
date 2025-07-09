@@ -38,7 +38,7 @@ public class SlashCrystal : MonoBehaviour
             Destroy(effHit, 1f); // Hủy hiệu ứng sau 1 giây
             Destroy(gameObject,0.7f);
         }
-        else if(hitObj.layer == LayerMask.NameToLayer("Ground"))
+        else if(hitObj.layer == LayerMask.NameToLayer("Ground") || hitObj.layer == LayerMask.NameToLayer("Obstacle")) 
         {
             Debug.Log("Ground da cham");
             GameObject effHit = Instantiate(effectHit, textTransform.position, Quaternion.identity);

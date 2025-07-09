@@ -115,8 +115,8 @@ public class SkillUseHandler : MonoBehaviour
                     // Raycast kiểm tra vật cản phía trước
                     RaycastHit hit;
                     Vector3 finalTargetPos = player.transform.position + dashDir * dashDistance;
-
-                    if (Physics.Raycast(player.transform.position, dashDir, out hit, dashDistance, LayerMask.GetMask("Ground")))
+                    LayerMask mask = LayerMask.GetMask("Ground") | LayerMask.GetMask("Obstacle");
+                    if (Physics.Raycast(player.transform.position, dashDir, out hit, dashDistance, mask))
                     {
                         // Nếu trúng tường, chỉ dash tới trước tường một chút
                         finalTargetPos = hit.point - dashDir * 0.5f;
@@ -306,9 +306,14 @@ public class SkillUseHandler : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         auraSlash.SetActive(false);
     }
-    public void OnDisable()
+    public void OnDisable()//tat skill khi play tat
     {
+        //skillslash
         auraSlash.SetActive(false);
+        playerControllerState.controller.detectCollisions = true;
+        playerControllerState.controller.enabled = true;
+        //skilleye
+        skill5Eye.EndMaterial();
     }
 
 }
