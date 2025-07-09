@@ -8,8 +8,12 @@ public class CraftingUI : MonoBehaviour
     public Transform recipeButtonParent;
 
     public Image[] inputImages;
+    public TMP_Text[] inputAmountTexts;
+
     public Image[] outputImages;
     public TMP_Text recipeNameText;
+    public TMP_Text[] outputAmountTexts;
+
     public Button craftButton;
 
     private InventoryManager inventory;
@@ -46,14 +50,23 @@ public class CraftingUI : MonoBehaviour
             if (i < recipe.input.Length && recipe.input[i].item != null)
             {
                 inputImages[i].sprite = recipe.input[i].item.itemIcon;
-
                 inputImages[i].gameObject.SetActive(true);
+
+                // Gán text số lượng
+                if (inputAmountTexts != null && i < inputAmountTexts.Length)
+                {
+                    inputAmountTexts[i].text = $"{recipe.input[i].count}x {recipe.input[i].item.itemName}";
+                    inputAmountTexts[i].gameObject.SetActive(true);
+                }
             }
             else
             {
                 inputImages[i].gameObject.SetActive(false);
+                if (inputAmountTexts != null && i < inputAmountTexts.Length)
+                    inputAmountTexts[i].gameObject.SetActive(false);
             }
         }
+
 
         for (int i = 0; i < outputImages.Length; i++)
         {
@@ -61,16 +74,26 @@ public class CraftingUI : MonoBehaviour
             {
                 outputImages[i].sprite = recipe.output[i].item.itemSprite;
                 outputImages[i].gameObject.SetActive(true);
+
+                // Gán text số lượng và tên
+                if (outputAmountTexts != null && i < outputAmountTexts.Length)
+                {
+                    outputAmountTexts[i].text = $"{recipe.output[i].count}x {recipe.output[i].item.itemName}";
+                    outputAmountTexts[i].gameObject.SetActive(true);
+                }
             }
             else
             {
                 outputImages[i].gameObject.SetActive(false);
+                if (outputAmountTexts != null && i < outputAmountTexts.Length)
+                    outputAmountTexts[i].gameObject.SetActive(false);
             }
         }
+
+
         craftButton.interactable = CraftingManager.Instance.CanCraft(recipe, inventory);
 
-        if (coinCostText != null)
-            coinCostText.text = "Cost: " + recipe.coinCost.ToString() + " coins";
+
 
     }
 
