@@ -55,6 +55,8 @@ public class NPCDialogueController : MonoBehaviour
 
     [Header("-----------------quest items-----------------")]
     public GameObject destinationQuest;
+    public GameObject back;
+    
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -246,7 +248,9 @@ public class NPCDialogueController : MonoBehaviour
         if (currentStage == QuestStage.Quest7Stage1)
         {
             destinationQuest.SetActive(true);
+            back.SetActive(true);
             currentStage = QuestStage.Quest7Stage2; // Chuyển sang giai đoạn tiếp theo của quest 7
+            HandleQuestProgression();
         }
     }   
     IEnumerator ShowQuestState(DialogueData dialogue)

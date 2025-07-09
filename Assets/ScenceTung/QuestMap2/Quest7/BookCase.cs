@@ -29,7 +29,7 @@ public class BookCase : MonoBehaviour
 
     private void Update()
     {
-        if(npcDialogueController.currentStage == QuestStage.Quest7Stage1)
+        if(npcDialogueController.currentStage == QuestStage.Quest7Stage2)
         {
             if (isCanOpen && !isActiveBtn)
             {
