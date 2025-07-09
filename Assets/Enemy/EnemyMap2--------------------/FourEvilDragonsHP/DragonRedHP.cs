@@ -133,7 +133,7 @@ public class DragonRedHP : MonoBehaviour,IDamageable
         }
         else
         {
-            currentMana += Time.deltaTime * 50f;
+            currentMana += Time.deltaTime * 30f;
            
             UpdateUI();
         }

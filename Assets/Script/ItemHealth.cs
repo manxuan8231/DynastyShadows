@@ -20,7 +20,7 @@ public class ItemHealth : MonoBehaviour
         {
             player = playerObj.transform;
         }
-        aiPath = FindAnyObjectByType<AIPath>();
+        aiPath = GetComponent<AIPath>();
 
     }
 

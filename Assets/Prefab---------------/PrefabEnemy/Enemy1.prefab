@@ -6821,10 +6821,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a490796783c317940be7a6fc6f83826e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstPos: {x: 0, y: 0, z: 0}
+  hasFirstPos: 0
   currentState: 0
   agent: {fileID: 0}
   player: {fileID: 0}
-  firstPos: {x: 0, y: 0, z: 0}
   animator: {fileID: 0}
   currentTrigger: 
   radius: 40
@@ -6849,12 +6850,18 @@ MonoBehaviour:
   expPrefab: {fileID: 3764830160674803608, guid: b1bcf35c720dee34681cc2ae225e0d63, type: 3}
   boxDame: {fileID: 564998064837071077}
   itemDrops:
+  - itemPrefabs: {fileID: 5291522689699843963, guid: 36f7d015661a55242aacd6019b576bcc, type: 3}
+    dropRate: 5
+  - itemPrefabs: {fileID: 7400218591019526321, guid: 2c762da9e2ae13f48a6e3b3c80c60b21, type: 3}
+    dropRate: 10
+  - itemPrefabs: {fileID: 6158464862128916321, guid: d1341e2181458044bad431ca998933e0, type: 3}
+    dropRate: 15
   - itemPrefabs: {fileID: 6949369660476216111, guid: edbadfa9451536244b60e5fea7eac06f, type: 3}
-    dropRate: 40
-  - itemPrefabs: {fileID: 3556544607577041345, guid: 8123dc4d2da0ba749bf7428194bd0166, type: 3}
-    dropRate: 40
-  - itemPrefabs: {fileID: 377432316260766231, guid: 39b0a3ee1fafb1245a9baec04558eed3, type: 3}
     dropRate: 20
+  - itemPrefabs: {fileID: 3556544607577041345, guid: 8123dc4d2da0ba749bf7428194bd0166, type: 3}
+    dropRate: 100
+  - itemPrefabs: {fileID: 377432316260766231, guid: 39b0a3ee1fafb1245a9baec04558eed3, type: 3}
+    dropRate: 100
 --- !u!65 &564998064837071077
 BoxCollider:
   m_ObjectHideFlags: 0

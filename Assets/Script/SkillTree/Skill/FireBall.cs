@@ -23,7 +23,7 @@ public class FireBall : MonoBehaviour
         GameObject hitObj = other.gameObject;
 
         // Nếu trúng Enemy
-        if (hitObj.layer == LayerMask.NameToLayer("Enemy") || hitObj.layer == LayerMask.NameToLayer("Ground"))
+        if (hitObj.layer == LayerMask.NameToLayer("Enemy") || hitObj.layer == LayerMask.NameToLayer("Ground") || hitObj.layer == LayerMask.NameToLayer("Obstacle"))
         {
             Debug.Log("enemy da cham");
             float finalDamage = damage;
