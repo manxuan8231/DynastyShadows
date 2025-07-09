@@ -36,6 +36,8 @@ public class BookCase : MonoBehaviour
     {
         if(npcDialogueController.currentStage == QuestStage.Quest7Stage2)
         {
+            back.SetActive(true);
+
             if (isCanOpen && !isActiveBtn)
             {
                 canvasInteraction.SetActive(true);
@@ -57,7 +59,6 @@ public class BookCase : MonoBehaviour
     {
         if(other.tag == "Player" )
         {
-            back.SetActive(true);
             isCanOpen = true;   
         }
     }
