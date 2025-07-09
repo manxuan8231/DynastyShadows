@@ -2179,11 +2179,17 @@ MonoBehaviour:
   maxHealth: 500
   textDame: {fileID: 5085320511852087896, guid: 04cb7c0da45d2264a8424a9f852cd721, type: 3}
   itemDrops:
+  - itemPrefabs: {fileID: 3737652088878091752, guid: 975dc045e3bdc7848bc07edaf89f89ac, type: 3}
+    dropRate: 5
+  - itemPrefabs: {fileID: 3158878820509642847, guid: b965ad0bb5974214f8313b177d6447d9, type: 3}
+    dropRate: 10
+  - itemPrefabs: {fileID: 3456779135938157788, guid: 478e8e51442922c4a8d147ae204bac5f, type: 3}
+    dropRate: 15
   - itemPrefabs: {fileID: 6949369660476216111, guid: edbadfa9451536244b60e5fea7eac06f, type: 3}
-    dropRate: 40
+    dropRate: 20
   - itemPrefabs: {fileID: 3556544607577041345, guid: 8123dc4d2da0ba749bf7428194bd0166, type: 3}
-    dropRate: 40
-  - itemPrefabs: {fileID: 5086117468069538023, guid: f7b1bf1d193e22b429198adf9316dc5d, type: 3}
+    dropRate: 20
+  - itemPrefabs: {fileID: 377432316260766231, guid: 39b0a3ee1fafb1245a9baec04558eed3, type: 3}
     dropRate: 20
   boxDame: {fileID: 8405635012370133318}
 --- !u!114 &6628073100637010743
@@ -2198,10 +2204,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b204b078ce5da47aefa2239d82b11c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstPos: {x: 0, y: 0, z: 0}
+  hasFirstPos: 0
   currentState: 0
   agent: {fileID: 3135703809965122265}
   player: {fileID: 0}
-  firstPos: {x: 0, y: 0, z: 0}
   animator: {fileID: 1361526878552351645}
   currentTrigger: 
   radius: 40
