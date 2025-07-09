@@ -44,6 +44,7 @@ public class NPCDialogueController : MonoBehaviour
     [Header("-----------------Other-----------------")]
     Animator animator;
     Coroutine Coroutine;
+    public GameObject market;
     
     public AudioCanvasState audioCanvasState;
     public QuestStage currentStage;
@@ -266,7 +267,7 @@ public class NPCDialogueController : MonoBehaviour
        
         if (currentStage == QuestStage.Quest7Stage1)
         {
-           
+            market.SetActive(true); // Kích hoạt market khi quest 7 bắt đầu
             currentStage = QuestStage.Quest7Stage2; // Chuyển sang giai đoạn tiếp theo của quest 7
             HandleQuestProgression();
         }

@@ -15,6 +15,7 @@ public class ActiveStartTimeLine6 : MonoBehaviour
     public TMP_Text content;
     NPCDialogueController npcDialogueController;
 
+    public int startTimeLine = 0;
     void Start()
     {
         if (playerInGame == null)
@@ -33,7 +34,7 @@ public class ActiveStartTimeLine6 : MonoBehaviour
         if(npcDialogueController.currentStage == QuestStage.Quest6InProgress)
         {
             enemyCount++;
-            if (enemyCount == 20)
+            if (enemyCount == startTimeLine)
             {
 
                 // Bắt đầu cutscene

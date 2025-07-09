@@ -20,10 +20,12 @@ public class BookCase : MonoBehaviour
     public bool isCanOpen = false;
     bool isContent = false;
     public bool isActiveBtn = false;
+    public GameObject back;
 
     [Header("Tham chiếu")]
     public NPCDialogueController npcDialogueController;
     public AwardQuest AwardQuest;
+    
     private void Start()
     {
         npcDialogueController = FindAnyObjectByType<NPCDialogueController>();
@@ -55,6 +57,7 @@ public class BookCase : MonoBehaviour
     {
         if(other.tag == "Player" )
         {
+            back.SetActive(true);
             isCanOpen = true;   
         }
     }
