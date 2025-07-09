@@ -1,5 +1,6 @@
 ﻿using Pathfinding;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 
@@ -43,6 +44,13 @@ public class DemonAlien : MonoBehaviour
     public int enemySpawnCount; // Số enemy muốn spawn
     public string enemyTag; // Tag của enemy dùng để gọi từ pool
     public bool hasSpawned = false;
+
+
+    [Header("------Other------")]
+    public GameObject back;
+    public GameObject canvasQuest;
+    public TMP_Text contentQuest;
+    public GameObject safeZone;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -350,8 +358,13 @@ public class DemonAlien : MonoBehaviour
         }
         NPCDialogueController npc = FindFirstObjectByType<NPCDialogueController>();
         npc.currentStage = QuestStage.Quest6Completed;
+        npc.HandleQuestProgression();
         AwardQuest award = FindFirstObjectByType<AwardQuest>();
         award.AwardQuest6();
+        back.SetActive(true);
+        safeZone.SetActive(true);
+        canvasQuest.SetActive(true);
+        contentQuest.text = "Tìm trưởng mục Lương";
         Destroy(gameObject,4f);
     }
 

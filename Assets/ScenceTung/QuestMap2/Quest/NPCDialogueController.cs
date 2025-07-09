@@ -46,7 +46,7 @@ public class NPCDialogueController : MonoBehaviour
     [Header("-----------------Bool-----------------")]
     bool isOpen;
     bool isTyping;
-    bool isSkip;
+    public bool isSkip;
     bool isWriteSkip;
     public bool isContent = true;
     public bool isActiveBtn = false;
@@ -55,7 +55,6 @@ public class NPCDialogueController : MonoBehaviour
 
     [Header("-----------------quest items-----------------")]
     public GameObject destinationQuest;
-    public GameObject back;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -109,7 +108,7 @@ public class NPCDialogueController : MonoBehaviour
                 return null;
         }
     }
-    private void HandleQuestProgression()
+    public void HandleQuestProgression()
     {
         switch (currentStage)
         {
@@ -125,9 +124,7 @@ public class NPCDialogueController : MonoBehaviour
                 Debug.Log("Quest 6 In Progress");
                 break;
             case QuestStage.Quest6Completed:
-                canvasQuest.SetActive(true);
-                questContent.text = "Gặp trưởng mục Lương";
-                Debug.Log("Quest 6 Completed");
+                StartCoroutine(Quest6Done());
                 break;
             case QuestStage.Quest7Stage1:
                 Debug.Log("Quest 7 Stage1");
@@ -147,6 +144,13 @@ public class NPCDialogueController : MonoBehaviour
         Debug.Log("Quest 6 In Progress");
         currentStage = QuestStage.Quest6InProgress;
         
+    }
+    IEnumerator Quest6Done()
+    {
+        yield return new WaitForSeconds(2f);
+        Debug.Log("Quest 6 Completed");
+        currentStage = QuestStage.Quest7Stage1;
+        isContent = true;
     }
   
     private void OnTriggerEnter(Collider other)
@@ -242,7 +246,6 @@ public class NPCDialogueController : MonoBehaviour
         if (currentStage == QuestStage.Quest7Stage1)
         {
             destinationQuest.SetActive(true);
-            back.SetActive(true);
             currentStage = QuestStage.Quest7Stage2; // Chuyển sang giai đoạn tiếp theo của quest 7
         }
     }   

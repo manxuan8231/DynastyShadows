@@ -33,6 +33,12 @@ public class AwardQuest : MonoBehaviour
     public string awardQuest6_2 = "300 Vàng";
     public string awardQuest6_3 = " Mảnh vật bị nguyền rủa";
     public Sprite iconSprite3;
+
+    //Item Quest 7 
+    public string awardQuest7_1 = "5000 EXP";
+    public string awardQuest7_2 = "500 Vàng";
+    public string awardQuest7_3 = "Sách \"Thánh Ngôn \"";
+    public Sprite iconSprite4;
     void Start()
     {
      playerStatus = FindAnyObjectByType<PlayerStatus>();
@@ -40,12 +46,12 @@ public class AwardQuest : MonoBehaviour
     }
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.U))
-        //{
+        if (Input.GetKeyDown(KeyCode.U))
+        {
 
-        //    AwardQuest2();
-        //    AwardQuest6();
-        //}
+            AwardQuest7();
+            AwardQuest6();
+        }
     }
     public void AwardQuest2()
     {
@@ -123,7 +129,33 @@ public class AwardQuest : MonoBehaviour
         iconImage.sprite = iconSprite3;
         yield return new WaitForSeconds(3f);
         canvasAward.SetActive(false);
-    }   
+    }
+
+    public void AwardQuest7()
+    {
+        StartCoroutine(CanvasQuest7());
+        playerStatus.currentExp += 5000;
+        playerStatus.expSlider.value = playerStatus.currentExp;
+        playerStatus.gold += 500;
+        playerStatus.goldQuantityTxt.text = playerStatus.gold.ToString();
+        InventoryManager.AddItem(itemQuests[3].itemPrefabsQuest.itemName,
+             itemQuests[3].itemPrefabsQuest.quantity,
+             itemQuests[3].itemPrefabsQuest.itemSprite,
+             itemQuests[3].itemPrefabsQuest.itemDescription,
+             itemQuests[3].itemPrefabsQuest.itemType
+         );
+        Debug.Log("Thưởng nhiệm vụ 7 thành công");
+    }
+    IEnumerator CanvasQuest7()
+    {
+        canvasAward.SetActive(true);
+        audioCanvasState.PlayAward();
+        stateQuestion.text = "Thưởng nhiệm vụ";
+        award.text = $"Phần thưởng của bạn là: {awardQuest7_1} + {awardQuest7_2} + {awardQuest7_3} ";
+        iconImage.sprite = iconSprite4;
+        yield return new WaitForSeconds(3f);
+        canvasAward.SetActive(false);
+    }
 }
 [System.Serializable]
 public class ItemQuest
