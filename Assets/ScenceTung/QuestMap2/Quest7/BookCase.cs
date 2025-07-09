@@ -12,6 +12,9 @@ public class BookCase : MonoBehaviour
     public GameObject canvasInteraction;
     public GameObject btnF;
 
+    public GameObject canvasQuestGame;
+    public TMP_Text questGameContent;
+
     [Header("Book Settings")]
     public bool isHasbook = false;
     public bool isCanOpen = false;
@@ -64,7 +67,7 @@ public class BookCase : MonoBehaviour
         }
     }
 
-    IEnumerator HasBook()
+    IEnumerator HasBook()   
     {
         isContent = true;
         isActiveBtn = true;
@@ -72,10 +75,13 @@ public class BookCase : MonoBehaviour
         canvasQuest.SetActive(true);
         questContent.text = "Đây rồi ! chính là cuốn sách này";
         npcDialogueController.currentStage = QuestStage.Quest7Stage3;
-        npcDialogueController.HandleQuestProgression();
+        npcDialogueController.HandleQuestProgression();     
         AwardQuest.AwardQuest7();
         yield return new WaitForSeconds(2f);
         canvasQuest.SetActive(false);
+        canvasQuestGame.SetActive(true);
+        questGameContent.text = "Mang về cho trưởng mục Lương ";
+
 
     }
     IEnumerator NoBook()

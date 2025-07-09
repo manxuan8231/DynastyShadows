@@ -13,6 +13,7 @@ public enum QuestStage
     Quest7Stage1,
     Quest7Stage2,
     Quest7Stage3,
+    Quest7Stage4,
     Quest7Completed
 
 
@@ -22,6 +23,8 @@ public class NPCDialogueController : MonoBehaviour
     [Header("-----------------Data-----------------")]
     public DialogueData dialogueDataQuest5; // Dialogue cho quest 5
     public DialogueData dialogueDataQuest7; // Dialogue cho quest 6
+    public DialogueData dialogueDataQuest7Stage3; // Dialogue cho quest 7
+    public DialogueData dialogueDataQuest7Stage4; // Dialogue cho quest 7 stage 4
     [Header("-----------------Content UI-----------------")]
     public GameObject questionGameCanvas;
     public TMP_Text nameTxt;
@@ -41,6 +44,7 @@ public class NPCDialogueController : MonoBehaviour
     [Header("-----------------Other-----------------")]
     Animator animator;
     Coroutine Coroutine;
+    
     public AudioCanvasState audioCanvasState;
     public QuestStage currentStage;
     [Header("-----------------Bool-----------------")]
@@ -53,9 +57,7 @@ public class NPCDialogueController : MonoBehaviour
     public bool hasFinishedDialogue = false;
     bool hasPlayedTalkingAnim = false;
 
-    [Header("-----------------quest items-----------------")]
-    public GameObject destinationQuest;
-    public GameObject back;
+   
     
     void Start()
     {
@@ -64,10 +66,10 @@ public class NPCDialogueController : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.J))
-        {
-            HandleQuestProgression();
-        }
+        //if(Input.GetKeyDown(KeyCode.J))
+        //{
+        //    HandleQuestProgression();
+        //}
 
         if (currentStage == QuestStage.NotStarted) return;
 
@@ -105,7 +107,10 @@ public class NPCDialogueController : MonoBehaviour
                 return dialogueDataQuest5;
             case QuestStage.Quest7Stage1:
                 return dialogueDataQuest7;
-
+            case QuestStage.Quest7Stage3:
+                return dialogueDataQuest7Stage3;
+            case QuestStage.Quest7Stage4:
+                return dialogueDataQuest7Stage4; // Assuming you want to use the same data for stage 4
             default:
                 return null;
         }
@@ -136,6 +141,11 @@ public class NPCDialogueController : MonoBehaviour
                 break;
             case QuestStage.Quest7Stage3:
                 Debug.Log("Stage 3");
+                isContent = true;
+             
+                break;
+            case QuestStage.Quest7Stage4:
+                Debug.Log("Stage 4");
                 break;
             case QuestStage.Quest7Completed:
                 Debug.Log("Quest 7 Completed");
@@ -215,7 +225,7 @@ public class NPCDialogueController : MonoBehaviour
 
             isWriteSkip = false;
         }
-
+       
         EndContent();
     }
 
@@ -249,14 +259,32 @@ public class NPCDialogueController : MonoBehaviour
         // Xử lý chuyển đổi quest stage
         DialogueData currentDialogue = GetCurrentDialogueData();
         HandleQuestProgression();
-        StartCoroutine(ShowQuestState(currentDialogue));
         StartCoroutine(ShowQuestContent(currentDialogue));
+        StartCoroutine(ShowQuestState(currentDialogue));
+        
+
+       
         if (currentStage == QuestStage.Quest7Stage1)
         {
-            destinationQuest.SetActive(true);
-            back.SetActive(true);
+           
             currentStage = QuestStage.Quest7Stage2; // Chuyển sang giai đoạn tiếp theo của quest 7
             HandleQuestProgression();
+        }
+
+   
+        if (currentStage == QuestStage.Quest7Stage3)
+        {
+            stateCanvas.SetActive(false);
+            canvasQuest.SetActive(false);
+            isContent = false;
+           
+        }
+        if(currentStage == QuestStage.Quest7Stage4)
+        {
+            canvasQuest.SetActive(false);
+            AwardQuest awardQuest = FindAnyObjectByType<AwardQuest>();
+            awardQuest.AwardQuest2();
+           
         }
     }   
     IEnumerator ShowQuestState(DialogueData dialogue)
@@ -275,5 +303,6 @@ public class NPCDialogueController : MonoBehaviour
         questContent.text = dialogue.contentQuestGame;
         yield return new WaitForSeconds(2.5f);
     }
+
 }
    
