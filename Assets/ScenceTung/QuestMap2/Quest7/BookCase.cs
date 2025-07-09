@@ -20,10 +20,12 @@ public class BookCase : MonoBehaviour
     public bool isCanOpen = false;
     bool isContent = false;
     public bool isActiveBtn = false;
+    public GameObject back;
 
     [Header("Tham chiếu")]
     public NPCDialogueController npcDialogueController;
     public AwardQuest AwardQuest;
+    
     private void Start()
     {
         npcDialogueController = FindAnyObjectByType<NPCDialogueController>();
@@ -34,6 +36,8 @@ public class BookCase : MonoBehaviour
     {
         if(npcDialogueController.currentStage == QuestStage.Quest7Stage2)
         {
+            back.SetActive(true);
+
             if (isCanOpen && !isActiveBtn)
             {
                 canvasInteraction.SetActive(true);

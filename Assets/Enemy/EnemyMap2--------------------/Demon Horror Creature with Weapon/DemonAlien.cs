@@ -49,6 +49,7 @@ public class DemonAlien : MonoBehaviour
     [Header("------Other------")]
     public GameObject canvasQuest;
     public TMP_Text contentQuest;
+    public GameObject back;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -58,6 +59,8 @@ public class DemonAlien : MonoBehaviour
         evenAlien = FindAnyObjectByType<EvenAlien>();
         playerControllerState = FindAnyObjectByType <PlayerControllerState>();  
         currentState = EnemyState.Idle;
+
+        back.SetActive(false);
     }
 
     
@@ -359,7 +362,7 @@ public class DemonAlien : MonoBehaviour
         npc.HandleQuestProgression();
         AwardQuest award = FindFirstObjectByType<AwardQuest>();
         award.AwardQuest6();
-       
+       back.SetActive(true);
         canvasQuest.SetActive(true);
         contentQuest.text = "Tìm trưởng mục Lương";
         Destroy(gameObject,4f);
