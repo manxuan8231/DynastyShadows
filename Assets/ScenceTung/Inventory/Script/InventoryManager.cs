@@ -215,19 +215,18 @@ public class InventoryManager : MonoBehaviour
 
         Debug.Log($"Removed {amount} x {item.itemName}");
     }
-    public int AddItem(EquipmentSO itemSO, int quantity)
+    public int AddItem(EquipmentSO itemSO, int quantity, ItemType type)
     {
-       
-        ItemType itemType = ItemType.weapon; 
-
         return AddItem(
             itemSO.itemName,
             quantity,
             itemSO.itemSprite,
-            "Equipment", 
-            itemType
+            "Equipment",
+            type
         );
     }
+
+
 
 
     public bool UseItem(string itemName)

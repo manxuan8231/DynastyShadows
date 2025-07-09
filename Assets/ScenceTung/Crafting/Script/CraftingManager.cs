@@ -48,13 +48,7 @@ public class CraftingManager : MonoBehaviour
 
         foreach (var output in recipe.output)
         {
-            if (output.item == null)
-            {
-                Debug.LogError($"Output item is NULL in recipe: {recipe.recipeName}");
-                continue;
-            }
-            Debug.Log($"Thêm {output.count} x {output.item.itemName} vào inventory");
-            inventory.AddItem(output.item, output.count);
+            inventory.AddItem(output.item, output.count, output.type); // type ở đây là ItemType
         }
 
     }

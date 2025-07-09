@@ -1,24 +1,17 @@
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewItemRecipe", menuName = "Crafting/Item Recipe", order = 1)]
 public class ItemRecipeSO : ScriptableObject
 {
     public string recipeName;
-    public RecipeType recipeType;
+    public ItemType recipeType;
 
     public InputItemData[] input;
     public OutputItemData[] output;
 
-    public int coinCost;
 }
 
-public enum RecipeType
-{
-    Weapon,
-    Armor,
-    MiscellaneousItem
-}
 [System.Serializable]
 public class InputItemData
 {
@@ -31,6 +24,8 @@ public class OutputItemData
 {
     public EquipmentSO item;
     public int count;
+    public ItemType type; // ✅ Dùng trực tiếp ItemType để chính xác (body, head, v.v.)
 }
+
 
 
