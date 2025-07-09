@@ -49,7 +49,7 @@ public class SkillUseHandler : MonoBehaviour
         switch (skillID)
         {
             case "FireBall":
-                if (Input.GetKeyDown(KeyCode.R) && Time.time >= nextComboAllowedTime)
+                if (Input.GetKeyDown(KeyCode.R) && playerControllerState.isController && Time.time >= nextComboAllowedTime)
                 {
                     if (Time.time < lastColldown + cooldownTime) return;
 
@@ -84,7 +84,7 @@ public class SkillUseHandler : MonoBehaviour
                 }
                 break;
             case "RainFire":
-                if (Input.GetKeyDown(KeyCode.R) && Time.time >= nextComboAllowedTime)
+                if (Input.GetKeyDown(KeyCode.R) && playerControllerState.isController && Time.time >= nextComboAllowedTime)
                 {
                     if (Time.time < lastColldown + cooldownTime) return;
                     StartCoroutine(WaitMove());
@@ -99,7 +99,7 @@ public class SkillUseHandler : MonoBehaviour
                 }
                 break;
             case "Slash":
-                if (Input.GetKeyDown(KeyCode.R) && Time.time >= nextComboAllowedTime)
+                if (Input.GetKeyDown(KeyCode.R) && playerControllerState.isController && Time.time >= nextComboAllowedTime)
                 {
                     if (Time.time < lastColldown + cooldownTime) return;
                     foreach (Skill3ClonePLayer clone in Object.FindObjectsByType<Skill3ClonePLayer>(FindObjectsSortMode.None))
@@ -151,7 +151,7 @@ public class SkillUseHandler : MonoBehaviour
                 }
                 break;
             case "Shield":
-                if (Input.GetKeyDown(KeyCode.R) && Time.time >= nextComboAllowedTime)
+                if (Input.GetKeyDown(KeyCode.R) && playerControllerState.isController && Time.time >= nextComboAllowedTime)
                 {
                     Debug.Log("Sử dụng Shield");
                     if (Time.time < lastColldown + cooldownTime) return; 
@@ -163,7 +163,7 @@ public class SkillUseHandler : MonoBehaviour
                 }
                 break;
             case "Eye":
-                if (Input.GetKeyDown(KeyCode.R) && Time.time >= nextComboAllowedTime)
+                if (Input.GetKeyDown(KeyCode.R) && playerControllerState.isController && Time.time >= nextComboAllowedTime)
                 {
                     Debug.Log("Sử dụng mat than");
                     if (Time.time < lastColldown + cooldownTime) return;

@@ -26,9 +26,10 @@ public class Skill4Manager : MonoBehaviour
    public AudioClip soundReflectDame; // Âm thanh phản dame
     //tham chieu
     public PlayerStatus playerStatus;
-   
+   private PlayerControllerState playerControllerState;
     void Start()
     {
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         isHibitedIcon = false; // Khởi tạo trạng thái không cấm sử dụng skill 4
         textCoolDownSkill.enabled = false;
@@ -54,7 +55,8 @@ public class Skill4Manager : MonoBehaviour
         if (remainingCooldown <= 0) { 
         textCoolDownSkill.enabled = false;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4) && Time.time >= lastCoolDown + coolDownTime && isUnlockSkill4 == true && isInputSkill4 == true) 
+        if (Input.GetKeyDown(KeyCode.Alpha4) && Time.time >= lastCoolDown + coolDownTime && isUnlockSkill4 == true && isInputSkill4 == true && 
+            playerControllerState.isController) 
         {
             sliderCoolDown.enabled = true; // Bật slider khi nhấn phím 4
             textCoolDownSkill.enabled = true;

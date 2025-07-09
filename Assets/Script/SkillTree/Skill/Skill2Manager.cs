@@ -45,7 +45,8 @@ public class Skill2Manager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha2) && !isSkillActive && isUnlockSkill2 == true && isInputSkill2 == true)
+        if (Input.GetKeyDown(KeyCode.Alpha2) && !isSkillActive && isUnlockSkill2 == true && isInputSkill2 == true 
+            && playerControllerState.isController)
         {
            
             ActivateCloneSkill();

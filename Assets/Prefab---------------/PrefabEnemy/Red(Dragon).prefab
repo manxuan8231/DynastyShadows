@@ -25948,6 +25948,7 @@ GameObject:
   - component: {fileID: 790384437238549084}
   - component: {fileID: 8426940853764538971}
   - component: {fileID: 5331562666302995382}
+  - component: {fileID: 8250346789007022727}
   - component: {fileID: 2754913883739175698}
   m_Layer: 10
   m_Name: BoxCl
@@ -26023,6 +26024,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &8250346789007022727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9126948160946827085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680db3deab3e4da49a699ff2eaf0732b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2754913883739175698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26038,14 +26051,14 @@ MonoBehaviour:
   sliderHp: {fileID: 7893916978538489574}
   textHp: {fileID: 8714429213621750070}
   currentHp: 0
-  maxHp: 3000
+  maxHp: 5000
   sliderArmor: {fileID: 859600596590161482}
   currentArmor: 0
-  maxArmor: 1111
+  maxArmor: 3000
   isStunned: 0
   sliderMana: {fileID: 695019214709260472}
   currentMana: 0
-  maxMana: 1300
+  maxMana: 850
   strugglePoint: 0
   timeLine: {fileID: 0}
 --- !u!1 &9160192994507052938

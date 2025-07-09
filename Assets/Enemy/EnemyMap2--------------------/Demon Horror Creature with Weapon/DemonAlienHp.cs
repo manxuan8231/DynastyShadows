@@ -5,10 +5,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using static Unity.VisualScripting.FlowStateWidget;
 
-public class DemonAlienHp : MonoBehaviour,IDamageable
+public class DemonAlienHp : MonoBehaviour, IDamageable
 {
     //hp
-  
+
     public Slider hpSlider;
     public TextMeshProUGUI textHp;
     public float currentHp = 0f;
@@ -31,10 +31,10 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
     void Start()
     {
         demonAlien = FindAnyObjectByType<DemonAlien>();
-        evenAlien = FindAnyObjectByType<EvenAlien>();  
+        evenAlien = FindAnyObjectByType<EvenAlien>();
         colliTakeDame = GetComponent<Collider>();
         //hp
-         currentHp = maxHp;
+        currentHp = maxHp;
         hpSlider.maxValue = maxHp;
         hpSlider.value = currentHp;
         textHp.text = $"{currentHp}/{maxHp}";
@@ -43,44 +43,43 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
         manaSlider.maxValue = maxMana;
         manaSlider.value = currentMana;
         //armor
-        currentArmor = maxArmor;    
+        currentArmor = maxArmor;
         armorSlider.maxValue = currentArmor;
         armorSlider.value = currentArmor;
         isTakeDamage = true;
         isArmorBroken = false;
-        
+
     }
 
-    
+
     void Update()
     {
         if (currentArmor <= 0 && !isArmorBroken)
-        {       
+        {
             isArmorBroken = true;
             Invoke(nameof(ResetArmor), 10);
         }
-        currentMana += 50 * Time.deltaTime;
-        currentMana = Mathf.Clamp(currentMana, 0f, maxMana);
-        UpdateUI();
+        ManaRecover();
+        TurnOnController();
     }
     public void TakeDamage(float damage)
     {
         if (currentHp <= 0 && !isTakeDamage) return;
-        
+
         demonAlien.scoreTele++;
-        if(currentArmor > 0)
+        if (currentArmor > 0)
         {
             currentArmor -= damage;
             currentArmor = Mathf.Clamp(currentArmor, 0f, maxArmor);
         }
         else
         {
-           
+
             currentHp -= damage;
             currentHp = Mathf.Clamp(currentHp, 0f, maxHp);
             demonAlien.animator.SetTrigger("getDamage");
-            if (currentHp <= 0f) 
-            {             
+            if (currentHp <= 0f)
+            {
                 demonAlien.ChangerState(DemonAlien.EnemyState.Die);
             }
             evenAlien.EndEffectShort();//tat effect short khi bi danh
@@ -97,23 +96,33 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
         //hp
         hpSlider.value = currentHp;
         textHp.text = $"{(int)currentHp}/{maxHp}";
-       
-       
+
+
         //Mana
         manaSlider.value = currentMana;
-      
+
         //armor
         armorSlider.value = currentArmor;
-       
+
     }
 
+    //hoi giap
     public void ResetArmor()
     {
         currentArmor = maxArmor;
         isArmorBroken = false; // reset lại trạng thái
-        UpdateUI(); 
+        UpdateUI();
     }
 
+    //hoi mana dan
+    public void ManaRecover()
+    {
+        currentMana += 50 * Time.deltaTime;
+        currentMana = Mathf.Clamp(currentMana, 0f, maxMana);
+        UpdateUI();
+    }
+
+    //khi bi danh thi tele
     public void TeleHit()
     {
         if (demonAlien.isSkillTele)
@@ -130,6 +139,16 @@ public class DemonAlienHp : MonoBehaviour,IDamageable
 
             }
             currentMana -= 300;
+        }
+    }
+
+    //khi het mau thi bat animator va controller de ko loi skill1 cua pl
+    public void TurnOnController()
+    {
+        if (currentHp <= 0)
+        {
+            demonAlien.animator.enabled = true;
+            demonAlien.enabled = true;
         }
     }
 }

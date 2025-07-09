@@ -58,7 +58,7 @@ public class Skill1Manager : MonoBehaviour
 
         // Chỉ khi có enemy trong vùng và các điều kiện khác mới cho dùng skill
         if (Input.GetKeyDown(KeyCode.Alpha1) && !isSkillCooldown && isInputSkill1 && isUnlockSkill1
-            && playerStatus.currentHp > 0 && isEnemyInRange)
+            && playerStatus.currentHp > 0 && isEnemyInRange && playerController.isController)
         {
             Debug.Log("Bắn kỹ năng đóng băng");
             textCoolDownSkill.enabled = true;

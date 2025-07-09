@@ -3540,7 +3540,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   player: {fileID: 0}
-  stopRange: 5
+  stopRange: 5.5
   detectionRange: 100
   coolDownAttack: 7
   lastAttackTime: -7
@@ -3554,6 +3554,14 @@ MonoBehaviour:
   scoreMaxTele: 5
   animator: {fileID: 6238170512753964505}
   aiPath: {fileID: 6684132594685334785}
+  spawnPoints: []
+  enemySpawnCount: 0
+  enemyTag: 
+  hasSpawned: 0
+  back: {fileID: 0}
+  canvasQuest: {fileID: 0}
+  contentQuest: {fileID: 0}
+  safeZone: {fileID: 0}
 --- !u!114 &3067433496024708341
 MonoBehaviour:
   m_ObjectHideFlags: 0
