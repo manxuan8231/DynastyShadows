@@ -1,3 +1,4 @@
+﻿using Pathfinding;
 using UnityEngine;
 
 public class CurrentStateAssa : AssasinState
@@ -10,13 +11,33 @@ public class CurrentStateAssa : AssasinState
     }
     public override void Update()
     {
-        if (enemy.distancePLAndEnemy <= 100f) 
+       float dis = Vector3.Distance(enemy.transform.position,enemy.player.transform.position);
+
+        if (dis < enemy.stopRange)
         {
            
-            enemy.animator.SetBool("isWalkForward", true);
+            enemy.aiPath.destination = enemy.transform.position; // Dừng lại
+            enemy.animator.SetBool("isRunForward", false);
+            enemy.animator.SetBool("isWalkForward", false);
+        }
+        else if (dis < 40f)
+        {
+           
+            enemy.aiPath.maxSpeed = 5f;
             enemy.aiPath.destination = enemy.player.transform.position;
+            enemy.animator.SetBool("isRunForward", false);
+            enemy.animator.SetBool("isWalkForward", true);
+        }
+        else // >= 40f
+        {
+            
+            enemy.aiPath.maxSpeed = 20f;
+            enemy.aiPath.destination = enemy.player.transform.position;
+            enemy.animator.SetBool("isRunForward", true);
+            enemy.animator.SetBool("isWalkForward", false);
         }
     }
+
     public override void Exit()
     {
        

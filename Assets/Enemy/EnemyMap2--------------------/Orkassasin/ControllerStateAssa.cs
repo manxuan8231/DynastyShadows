@@ -8,7 +8,7 @@ public class ControllerStateAssa : MonoBehaviour
     private AssasinState currentState;
     public GameObject player;
     public float playerRange = 100f;
-    public float distancePLAndEnemy;
+    public float stopRange = 4f;
 
     //tham chieu
     public AIPath aiPath;
@@ -33,8 +33,5 @@ public class ControllerStateAssa : MonoBehaviour
         currentState = newState;  // Gán trạng thái mới
         currentState.Enter();     // Kích hoạt trạng thái mới
     }
-    public void DistancePLAndEnemy()
-    {
-        distancePLAndEnemy = Vector3.Distance(transform.position, player.transform.position);
-    }
+   
 }
