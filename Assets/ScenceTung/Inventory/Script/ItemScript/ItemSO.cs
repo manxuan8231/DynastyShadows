@@ -21,9 +21,11 @@ public class ItemSO : ScriptableObject
     public bool hasItemQuest2 = false;
     public bool showSkill5 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 5 hay không
 
+   
 
     public bool UseItem()
     {
+        NPCDialogueController npcDialogueController = FindAnyObjectByType<NPCDialogueController>();
         if (statToChange == StatToChange.health)
         {
             
@@ -155,14 +157,18 @@ public class ItemSO : ScriptableObject
             }
             return true;
         }
-        if (statToChange == StatToChange.itemQuest6)
+        if (statToChange == StatToChange.itemQuest6 && npcDialogueController.currentStage == QuestStage.Quest7Stage4)
         {
-           Debug.Log("Item Quest 6");
+            npcDialogueController.isContent = true;
             return true;
         }
-        if (statToChange == StatToChange.itemQuest7)
+        if (statToChange == StatToChange.itemQuest7 && npcDialogueController.currentStage == QuestStage.Quest7Stage3)
         {
-            Debug.Log("Item Quest 7");
+           
+            npcDialogueController.currentStage = QuestStage.Quest7Stage4;
+            npcDialogueController.HandleQuestProgression();
+            
+
             return true;
         }
         return false;
