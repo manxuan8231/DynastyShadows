@@ -45,6 +45,7 @@ public class PlayerControllerState : MonoBehaviour
     public ComboAttack comboAttack;
     public CameraFollow thirdPersonOrbitCamera;
     public EvenAnimator evenAnimator;
+  
     //skill2 tham chieu
     public bool isRemoveClone = false;
     public bool isSkinSkill3Clone = false; //kiểm tra xem có sử dụng skin skill3 clone hay không
@@ -57,7 +58,7 @@ public class PlayerControllerState : MonoBehaviour
     public Vector3 checkpointPosition;
 
     //trang thai animator
-   public RuntimeAnimatorController animatorDefauld;//trang thai mac định
+    public RuntimeAnimatorController animatorDefauld;//trang thai mac định
     public RuntimeAnimatorController animatorSkill2;//trang thai skill2
     public RuntimeAnimatorController animatorSkill4;//trang thai skill4
     // Trạng thái hiện tại                                              
@@ -78,6 +79,7 @@ public class PlayerControllerState : MonoBehaviour
         skill2Manager = FindAnyObjectByType<Skill2Manager>();
         skill3Manager = FindAnyObjectByType<Skill3Manager>();
         skill4Manager = FindAnyObjectByType<Skill4Manager>();
+       
         thirdPersonOrbitCamera = FindAnyObjectByType<CameraFollow>();
         evenAnimator = FindAnyObjectByType<EvenAnimator>();
         weaponSword.SetActive(false);
@@ -138,7 +140,7 @@ public class PlayerControllerState : MonoBehaviour
 
     //khi pl bi an thi chay
     void OnDisable()
-    {
+    {  
         //skill4
         animator.runtimeAnimatorController = animatorDefauld; // Trở về animator mặc định
         animator.SetTrigger("Skill4State");
@@ -147,10 +149,12 @@ public class PlayerControllerState : MonoBehaviour
         //skill2
         skill2Manager.isHibitedIcon = false; // Bỏ cấm sử dụng skill 2
         ChangeState(new PlayerCurrentState(this)); // Trở về trạng thái hiện tại
+     
+        
     }
-
+   
     //tinh toan tim enemy gan nhat
-   public Transform GetNearestEnemy()
+    public Transform GetNearestEnemy()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, 10, enemyLayer);
 

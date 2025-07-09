@@ -306,6 +306,9 @@ public class SkillUseHandler : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         auraSlash.SetActive(false);
     }
-    
-   
+    public void OnDisable()
+    {
+        auraSlash.SetActive(false);
+    }
+
 }
