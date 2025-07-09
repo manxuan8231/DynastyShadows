@@ -122,7 +122,7 @@ public class Skill2State : PlayerState
     // Hàm dash đến enemy gần nhất và tấn công
     void DashToNearestEnemyAndAttack()
     {
-        float searchRadius = 50f; // Tầm tìm enemy
+        float searchRadius = 50f;
         GameObject nearestEnemy = null;
         float minDistance = Mathf.Infinity;
 
@@ -141,41 +141,43 @@ public class Skill2State : PlayerState
             }
         }
 
-        // Nếu có enemy gần thì mới cho bấm chuột trái để dash
-        if (nearestEnemy != null && Input.GetMouseButtonDown(0) && isAttack == true && Cursor.visible == false )
+        // Nếu có enemy gần thì cho phép dash
+        if (nearestEnemy != null && Input.GetMouseButtonDown(0) && isAttack == true && Cursor.visible == false)
         {
             isAttack = false;
             isMove = false;
-            player.controller.enabled = false; // Tắt controller để tránh va chạm
+            player.controller.enabled = false;
 
-            Vector3 targetPos = nearestEnemy.transform.position;
-            Vector3 dashDir = (targetPos - player.transform.position).normalized;
+            // Chỉ dash theo mặt phẳng ngang (X-Z), giữ nguyên Y của player
+            Vector3 playerPos = player.transform.position;
+            Vector3 enemyPos = nearestEnemy.transform.position;
+            enemyPos.y = playerPos.y; // Giữ nguyên Y
 
-            Vector3 offset = new Vector3(0, 1f, 0); // Thêm 2 đơn vị độ cao
-            player.StartCoroutine(DashToTarget(targetPos + dashDir * -2f + offset, 0.3f));
+            Vector3 dashDir = (enemyPos - playerPos).normalized;
+            Vector3 dashTarget = enemyPos + dashDir * -2f; // Dash cách enemy một chút
 
+            player.StartCoroutine(DashToTarget(dashTarget, 0.3f));
 
-
-            // Quay mặt về enemy
+            // Quay mặt về enemy (trục Y)
             player.transform.rotation = Quaternion.LookRotation(dashDir);
 
-            // Chạy animation chém
+            // Chạy animation
             player.animator.SetTrigger("Attack");
-            player.isRemoveClone = true; // Đặt cờ để loại bỏ phân thân nếu có
-            player.controller.enabled = true; // Bật lại controller
-            player.StartCoroutine(WaitForChangeState()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
+            player.isRemoveClone = true;
+            player.controller.enabled = true;
+            player.StartCoroutine(WaitForChangeState());
         }
-        // Nếu ko co enemy gần thì cung cho attack
+
+        // Nếu không có enemy thì vẫn cho chém bình thường
         if (Input.GetMouseButtonDown(0) && isAttack == true && Cursor.visible == false)
         {
             isAttack = false;
-            // Chạy animation chém
             player.animator.SetTrigger("Attack");
-            player.isRemoveClone = true; // Đặt cờ để loại bỏ phân thân nếu có
-          
-            player.StartCoroutine(WaitForChangeState()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
+            player.isRemoveClone = true;
+            player.StartCoroutine(WaitForChangeState());
         }
     }
+
     // Hàm dash đến vị trí mục tiêu
     IEnumerator DashToTarget(Vector3 targetPosition, float duration)
     {
