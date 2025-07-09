@@ -131,6 +131,12 @@ public class NPCDialogueController : MonoBehaviour
             case QuestStage.Quest7Stage1:
                 Debug.Log("Quest 7 Stage1");
                 break;
+            case QuestStage.Quest7Stage2:
+                Debug.Log("Stage 2");
+                break;
+            case QuestStage.Quest7Stage3:
+                Debug.Log("Stage 3");
+                break;
             case QuestStage.Quest7Completed:
                 Debug.Log("Quest 7 Completed");
                 break;

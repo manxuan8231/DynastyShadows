@@ -71,7 +71,8 @@ public class BookCase : MonoBehaviour
         canvasInteraction.SetActive(false);
         canvasQuest.SetActive(true);
         questContent.text = "Đây rồi ! chính là cuốn sách này";
-        npcDialogueController.currentStage = QuestStage.Quest7Stage2;
+        npcDialogueController.currentStage = QuestStage.Quest7Stage3;
+        npcDialogueController.HandleQuestProgression();
         AwardQuest.AwardQuest7();
         yield return new WaitForSeconds(2f);
         canvasQuest.SetActive(false);
