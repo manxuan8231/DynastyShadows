@@ -1,7 +1,7 @@
 ﻿using Pathfinding;
 using System.Collections;
+using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 
 
 public class DemonAlien : MonoBehaviour
@@ -37,7 +37,20 @@ public class DemonAlien : MonoBehaviour
     private DemonAlienHp demonAlienHp;
     private EvenAlien evenAlien;
     private PlayerControllerState playerControllerState;
-   
+
+
+    [Header("SKill dead")]
+    public Transform[] spawnPoints; // Vị trí spawn sẵn
+    public int enemySpawnCount; // Số enemy muốn spawn
+    public string enemyTag; // Tag của enemy dùng để gọi từ pool
+    public bool hasSpawned = false;
+
+
+    [Header("------Other------")]
+    public GameObject back;
+    public GameObject canvasQuest;
+    public TMP_Text contentQuest;
+    public GameObject safeZone;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -337,7 +350,22 @@ public class DemonAlien : MonoBehaviour
     {
         demonAlienHp.colliTakeDame.enabled = false;
         animator.SetTrigger("die");
-        Destroy(gameObject,2);
+        aiPath.canMove = false;
+        if (!hasSpawned)
+        {
+            SpawnEnemies();
+            hasSpawned = true;
+        }
+        NPCDialogueController npc = FindFirstObjectByType<NPCDialogueController>();
+        npc.currentStage = QuestStage.Quest6Completed;
+        npc.HandleQuestProgression();
+        AwardQuest award = FindFirstObjectByType<AwardQuest>();
+        award.AwardQuest6();
+        back.SetActive(true);
+        safeZone.SetActive(true);
+        canvasQuest.SetActive(true);
+        contentQuest.text = "Tìm trưởng mục Lương";
+        Destroy(gameObject,4f);
     }
 
     //chuyen trang thai cua cac ham-----------------
@@ -367,5 +395,22 @@ public class DemonAlien : MonoBehaviour
         ChangerState(EnemyState.TargetPl);
         evenAlien.effectShort.SetActive(false);
         isSkillTele = false;
+    }
+    void SpawnEnemies()
+    {
+        int count = Mathf.Min(enemySpawnCount, spawnPoints.Length);
+
+        for (int i = 0; i < count; i++)
+        {
+            Vector3 spawnPos = spawnPoints[i].position;
+
+            GameObject enemy = ObjPoolingManager.Instance.GetEnemyFromPool(enemyTag, spawnPos);
+
+            if (enemy == null)
+            {
+                Debug.LogWarning("Enemy không đủ trong pool!");
+            }
+        }
+
     }
 }

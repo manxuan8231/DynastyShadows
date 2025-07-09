@@ -138,23 +138,25 @@ public class EnemyCruTank : MonoBehaviour
         {
             case EnemyState.Idle:
                 animator.SetTrigger("Idle");
-                currentTrigger = "Idle";
+                currentTrigger = "Idle"; 
+                aiPath.canMove = false; // Dừng di chuyển khi ở trạng thái Idle
+                aiPath.canSearch = false; // Dừng tìm kiếm khi ở trạng thái Idle
                 break;
             case EnemyState.Walk:
 
                 animator.SetTrigger("Walk");
                 currentTrigger = "Walk";
+                aiPath.canMove = true; // Bật di chuyển khi ở trạng thái Walk
+                aiPath.canSearch = true; // Bật tìm kiếm khi ở trạng thái Walk
                 break;
             case EnemyState.Attack:
                 if (aiPath.enabled == false) return; // Nếu agent không hoạt động thì không tấn công
                 aiPath.isStopped = true; // Dừng lại khi tấn công 
+                aiPath.canMove = false; // Dừng di chuyển khi ở trạng thái Attack
+                aiPath.canSearch = false; // Dừng tìm kiếm khi ở trạng thái AttackAq
                 animator.SetTrigger("Attack");
                 currentTrigger = "Attack";
-                break;
-            case EnemyState.Skill1:
-                animator.SetTrigger("Skill1");
-                currentTrigger = "Skill1";
-                break;
+                break;        
             case EnemyState.GetHit:
                 animator.SetTrigger("GetHit");
                 currentTrigger = "GetHit";
@@ -163,10 +165,7 @@ public class EnemyCruTank : MonoBehaviour
                 animator.SetTrigger("Die");
                 currentTrigger = "Die";
                 break;
-            case EnemyState.Dodge:
-                animator.SetTrigger("Dodge"); // Tạo trigger "Dodge" trong Animator
-                currentTrigger = "Dodge";
-                break;
+           
 
         }
     }

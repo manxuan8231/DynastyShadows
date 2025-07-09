@@ -58,7 +58,6 @@ public class EnemyHorseManHP : MonoBehaviour,IDamageable
             enemyMap2_horseman.aiPath.enabled = true; // Bật lại NavMeshAgent để có thể chơi animation chết
             enemyMap2_horseman.animator.enabled = true; // Bật animator để có thể chơi animation chết
             enemyMap2_horseman.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết
-            enemyMap2_horseman.ChangeState(EnemyMap2_horseman.EnemyState.Die);
 
             enemyMap2_horseman.aiPath.isStopped = true; // Dừng lại khi chết
 
@@ -73,7 +72,10 @@ public class EnemyHorseManHP : MonoBehaviour,IDamageable
             {
                 activeStartTimeLine6.Count(); // Bật timeline 6
             }
+            enemyMap2_horseman.ChangeState(EnemyMap2_horseman.EnemyState.Die);
+
             StartCoroutine(WaitDeath());
+
         }
         if (currentHealth > 0)
         {
@@ -87,7 +89,7 @@ public class EnemyHorseManHP : MonoBehaviour,IDamageable
     IEnumerator WaitDeath()
     {
         yield return new WaitForSeconds(1.5f); // Chờ 1.5 giây trước khi trả về pool
-        ObjPoolingManager.Instance.ReturnToPool("EnemyMap2_horseman", gameObject);
+        ObjPoolingManager.Instance.ReturnToPool("EnemyHorseMan", gameObject);
     }
     void BackToChase()
     {
