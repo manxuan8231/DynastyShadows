@@ -8,7 +8,7 @@ public class AttackStateAssa : AssasinState
    
     public override void Enter()
     {
-       
+        enemy.aiPath.maxSpeed = 7f;
     }
 
     public override void Exit()
@@ -51,6 +51,7 @@ public class AttackStateAssa : AssasinState
         else if(distan > 3 && distan < 10)
         {
             MoveBackRightLeft();
+            
         }
 
         else if (distan >= 10)//neu di qua 8f thi chuyen trang thai
@@ -58,26 +59,50 @@ public class AttackStateAssa : AssasinState
             enemy.ChangeState(new CurrentStateAssa(enemy));
         }
     }
-   
+
 
     public void MoveBackRightLeft()
     {
-        FlipToPlayer();
+        FlipToPlayer(); // Xoay mặt về player
         enemy.aiPath.enableRotation = false;
-        Vector3 backDir = (enemy.transform.position - enemy.player.transform.position).normalized;
 
-        // Tính vị trí cần lùi về
-        float backDistance = 4f;
-        Vector3 targetPos = enemy.transform.position + backDir * backDistance * 7f;
+        // Tính hướng forward (hướng từ enemy → player)
+        Vector3 forward = (enemy.player.transform.position - enemy.transform.position).normalized;
+        forward.y = 0f;
 
-        // Gán vị trí đó cho AIPath
+        Vector3 right = Vector3.Cross(Vector3.up, forward).normalized;
+        Vector3 chosenDir = Vector3.zero;
+
+        float moveDistance = 5f;//met
+
+        switch (enemy.stepAttack)
+        {
+            case 0: 
+                chosenDir = -forward;
+                enemy.animator.SetBool("isMoveBack", true);
+                enemy.animator.SetBool("isMoveLeft", false);
+                enemy.animator.SetBool("isMoveRight", false);
+                break;
+
+            case 1:
+                chosenDir = -right;
+                enemy.animator.SetBool("isMoveBack", false);
+                enemy.animator.SetBool("isMoveLeft", true);
+                enemy.animator.SetBool("isMoveRight", false);
+                break;
+
+            case 2: 
+                chosenDir = right;
+                enemy.animator.SetBool("isMoveBack", false);
+                enemy.animator.SetBool("isMoveLeft", false);
+                enemy.animator.SetBool("isMoveRight", true);
+                break;
+        }
+
+        Vector3 targetPos = enemy.transform.position + chosenDir * moveDistance;
         enemy.aiPath.destination = targetPos;
-       
-        // Gắn animator nếu cần
-        enemy.animator.SetBool("isMoveBack", true);
-        enemy.animator.SetBool("isMoveLeft", false);
-        enemy.animator.SetBool("isMoveRight", false);
     }
+
     public IEnumerator WaitCanMove(float second)
    {
         enemy.aiPath.canMove = false;

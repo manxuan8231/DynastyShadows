@@ -20,13 +20,14 @@ public class ControllerStateAssa : MonoBehaviour
     //tham chieu
     public AIPath aiPath;
     public Animator animator;
-
+    private EvenAnimatorAssa evenAnimatorAssa;
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
+       
         aiPath = GetComponent<AIPath>();
         animator = GetComponent<Animator>();
-       
+        evenAnimatorAssa = FindAnyObjectByType<EvenAnimatorAssa>();
         ChangeState(new CurrentStateAssa(this));
     }
     private void Update()

@@ -195,7 +195,7 @@ public class PlayerStatus : MonoBehaviour
         if (isStun == true && isHit == true) //nếu bị hit r thi đợi 1 giay ms cho tiep
         {
                 playerController.animator.SetTrigger(animName);
-                StartCoroutine(WaitHit(0.3f)); // gọi hàm hit với thời gian 0.7 giây
+                StartCoroutine(WaitHit(0.1f)); // gọi hàm hit với thời gian 0.7 giây
                  audioSource.PlayOneShot(audioHit);
         }
         //tim enemy de phan dame
