@@ -58,10 +58,10 @@ public class TimeLineBossDragonDead : MonoBehaviour
     }
     IEnumerator ChangedWeather()
     {
-        _light.color = Color.white;
         yield return new WaitForSeconds(0.5f); // Thay đổi màu sắc ánh sáng sau 1 giây
         _light.intensity = 0.5f; // Giảm độ sáng của ánh sáng
         yield return new WaitForSeconds(0.5f); // Chờ thêm 1 giây
+        _light.color = Color.white;
         canvasQuest.SetActive(true); // Hiển thị canvas nhiệm vụ
         content.text = "Trở về khu an toàn !"; // Cập nhật nội dung nhiệm vụ
         stateCanvas.SetActive(true); // Hiển thị canvas trạng thái

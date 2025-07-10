@@ -46,12 +46,12 @@ public class AwardQuest : MonoBehaviour
     }
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.U))
-        //{
+        if (Input.GetKeyDown(KeyCode.U))
+        {
 
-        //    AwardQuest7();
-        //    AwardQuest6();
-        //}
+            AwardQuest2();
+            AwardQuest6();
+        }
     }
     public void AwardQuest2()
     {
