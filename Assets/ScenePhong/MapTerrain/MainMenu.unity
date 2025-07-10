@@ -5795,7 +5795,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1271272198}
   - {fileID: 808582807}
   - {fileID: 1042199500}
   - {fileID: 1982607447}
@@ -7053,6 +7052,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1271272198}
+  - component: {fileID: 1271272200}
   - component: {fileID: 1271272199}
   m_Layer: 0
   m_Name: Mainmusic
@@ -7070,11 +7070,11 @@ Transform:
   m_GameObject: {fileID: 1271272197}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -171.24162, y: 111.71796, z: -545.2638}
-  m_LocalScale: {x: 9.353073, y: 9.353073, z: 9.353074}
+  m_LocalPosition: {x: -18.308594, y: 12.944519, z: 31.702179}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 650846832}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1271272199
 AudioSource:
@@ -7173,6 +7173,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1271272200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271272197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7fc2f9e483c01f489849566f91a913d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allowedScenes:
+  - MainMenu
+  - ReAndLog
+  - Registant
+  - Login
 --- !u!1 &1333751366
 GameObject:
   m_ObjectHideFlags: 0
@@ -9235,6 +9252,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 662221211}
+  - {fileID: 1271272198}
   - {fileID: 1005304378}
   - {fileID: 1865481290}
   - {fileID: 428882877}
