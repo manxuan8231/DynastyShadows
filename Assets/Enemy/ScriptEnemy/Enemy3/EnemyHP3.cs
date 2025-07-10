@@ -36,16 +36,12 @@ public class EnemyHP3 : MonoBehaviour, IDamageable
     }
     public void DropItem()
     {
-        float rand = Random.Range(0f, 100f); // số ngẫu nhiên từ 0 đến 100
-        float cumulative = 0f;
-
         foreach (ItemDrop item in itemDrops)
         {
-            cumulative += item.dropRate;
-            if (rand <= cumulative)
+            float chance = item.dropRate / 100f;
+            if (Random.value <= chance) // randon ra số từ 0 đến 1
             {
                 Instantiate(item.itemPrefabs, transform.position + Vector3.up, Quaternion.identity);
-                return;
             }
         }
     }

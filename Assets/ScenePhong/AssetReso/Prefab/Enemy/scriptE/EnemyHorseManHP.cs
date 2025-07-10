@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,7 @@ public class EnemyHorseManHP : MonoBehaviour,IDamageable
     public BoxCollider boxDame;
     public NPCQuest npc;
     public ActiveStartTimeLine6 activeStartTimeLine6;
+    public List<ItemDrop> itemDrops = new List<ItemDrop>();
     void OnEnable()
     {
 
@@ -43,7 +45,17 @@ public class EnemyHorseManHP : MonoBehaviour,IDamageable
     {
 
     }
-
+    public void DropItem()
+    {
+        foreach (ItemDrop item in itemDrops)
+        {
+            float chance = item.dropRate / 100f;
+            if (Random.value <= chance) // randon ra số từ 0 đến 1
+            {
+                Instantiate(item.itemPrefabs, transform.position + Vector3.up, Quaternion.identity);
+            }
+        }
+    }
     public void TakeDamage(float damage)
     {
         if (enemyMap2_horseman.currentState == EnemyMap2_horseman.EnemyState.Die) return; // Nếu chết rồi thì bỏ qua
@@ -54,7 +66,7 @@ public class EnemyHorseManHP : MonoBehaviour,IDamageable
         sliderHp.value = currentHealth;
         if (currentHealth <= 0)
         {
-
+            DropItem();
             enemyMap2_horseman.aiPath.enabled = true; // Bật lại NavMeshAgent để có thể chơi animation chết
             enemyMap2_horseman.animator.enabled = true; // Bật animator để có thể chơi animation chết
             enemyMap2_horseman.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết

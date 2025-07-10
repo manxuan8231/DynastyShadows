@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,7 @@ public class EnemyMap2_HP : MonoBehaviour, IDamageable
     public BoxCollider boxDame;
     public NPCQuest npc;
     public ActiveStartTimeLine6 activeStartTimeLine6;
+    public List<ItemDrop> itemDrops = new List<ItemDrop>();
     void OnEnable()
     {
 
@@ -53,7 +55,7 @@ public class EnemyMap2_HP : MonoBehaviour, IDamageable
         sliderHp.value = currentHealth;
         if (currentHealth <= 0)
         {
-           
+            DropItem();
             enemyMap2_1.animator.enabled = true; // Bật animator để có thể chơi animation chết
             enemyMap2_1.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết
            
@@ -122,7 +124,17 @@ public class EnemyMap2_HP : MonoBehaviour, IDamageable
 
         enemyMap2_1.ChangeState(EnemyMap2_1.EnemyState.Idle);
     }
-
+    public void DropItem()
+    {
+        foreach (ItemDrop item in itemDrops)
+        {
+            float chance = item.dropRate / 100f;
+            if (Random.value <= chance) // randon ra số từ 0 đến 1
+            {
+                Instantiate(item.itemPrefabs, transform.position + Vector3.up, Quaternion.identity);
+            }
+        }
+    }
 
 }
 
