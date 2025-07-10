@@ -242,6 +242,24 @@ public class InventoryManager : MonoBehaviour
         }
         return false;
     }
+    public int GetItemCount(string itemName)
+    {
+        int total = 0;
+
+        foreach (var slot in itemSlot)
+        {
+            if (slot.itemName == itemName)
+                total += slot.quantity;
+        }
+
+        foreach (var slot in equipmentSlot)
+        {
+            if (slot.itemName == itemName)
+                total += slot.quantity;
+        }
+
+        return total;
+    }
 
 }
 

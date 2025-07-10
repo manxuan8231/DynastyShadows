@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class CraftingUI : MonoBehaviour
 {
-    public GameObject recipeButtonPrefab;
-    public Transform recipeButtonParent;
+    public GameObject recipeSlotPrefab; // Drag prefab ở inspector
+    public Transform recipeSlotParent;  // Content của ScrollView
 
     public Image[] inputImages;
     public TMP_Text[] inputAmountTexts;
@@ -27,16 +27,24 @@ public class CraftingUI : MonoBehaviour
 
     }
 
-
     void PopulateRecipes()
     {
         foreach (var recipe in CraftingManager.Instance.allRecipes)
         {
-            GameObject buttonObj = Instantiate(recipeButtonPrefab, recipeButtonParent);
-            buttonObj.GetComponentInChildren<TMP_Text>().text = recipe.recipeName;
-            buttonObj.GetComponent<Button>().onClick.AddListener(() => OnRecipeSelected(recipe));
+            GameObject slot = Instantiate(recipeSlotPrefab, recipeSlotParent);
+
+            // Lấy hình ảnh output để hiển thị trong recipe slot
+            if (recipe.output.Length > 0 && recipe.output[0].item != null)
+            {
+                Image iconImage = slot.transform.Find("Image").GetComponent<Image>();
+
+                iconImage.sprite = recipe.output[0].item.itemSprite;
+            }
+
+            slot.GetComponent<Button>().onClick.AddListener(() => OnRecipeSelected(recipe));
         }
     }
+
 
     public void OnRecipeSelected(ItemRecipeSO recipe)
     {
@@ -55,7 +63,12 @@ public class CraftingUI : MonoBehaviour
                 // Gán text số lượng
                 if (inputAmountTexts != null && i < inputAmountTexts.Length)
                 {
-                    inputAmountTexts[i].text = $"{recipe.input[i].count}x {recipe.input[i].item.itemName}";
+                    int playerAmount = inventory.GetItemCount(recipe.input[i].item.itemName);
+                    string coloredText = playerAmount >= recipe.input[i].count
+                        ? $"<color=white>{playerAmount}/{recipe.input[i].count}</color>"
+                        : $"<color=red>{playerAmount}/{recipe.input[i].count}</color>";
+                    inputAmountTexts[i].text = $"{coloredText} {recipe.input[i].item.itemName}";
+
                     inputAmountTexts[i].gameObject.SetActive(true);
                 }
             }
