@@ -6,9 +6,16 @@ public class ControllerStateAssa : MonoBehaviour
 {
     // Trạng thái hiện tại
     private AssasinState currentState;
+    //tim pl va thong so 
     public GameObject player;
     public float playerRange = 100f;
     public float stopRange = 4f;
+
+    //cooldown attack current   
+    public float coolDownAttack = 4f;
+    public float lastAttackTime = -4f;
+    public float stepAttack = 0f;
+
 
     //tham chieu
     public AIPath aiPath;
@@ -19,12 +26,12 @@ public class ControllerStateAssa : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         aiPath = GetComponent<AIPath>();
         animator = GetComponent<Animator>();
-
+       
         ChangeState(new CurrentStateAssa(this));
     }
     private void Update()
     {
-        
+       
         currentState?.Update();
     }
     public void ChangeState(AssasinState newState)
@@ -33,5 +40,6 @@ public class ControllerStateAssa : MonoBehaviour
         currentState = newState;  // Gán trạng thái mới
         currentState.Enter();     // Kích hoạt trạng thái mới
     }
-   
+    
+
 }
