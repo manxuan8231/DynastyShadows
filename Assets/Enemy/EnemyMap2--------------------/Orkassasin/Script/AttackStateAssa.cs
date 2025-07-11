@@ -42,7 +42,7 @@ public class AttackStateAssa : AssasinState
             }
             else if (enemy.stepAttack == 2)
             {
-                enemy.stepAttack = 0;
+                enemy.stepAttack = 0f;
                 enemy.animator.SetTrigger("Attack3");
                 enemy.StartCoroutine(WaitCanMove(1.5f));
             }
@@ -54,10 +54,11 @@ public class AttackStateAssa : AssasinState
             
         }
 
-        else if (distan >= 10)//neu di qua 8f thi chuyen trang thai
+        else if (distan >= 10)//lon hon 10 thi chay toi
         {
-            enemy.ChangeState(new CurrentStateAssa(enemy));
+            enemy.ChangeState(new CurrentStateAssa(enemy));//trang thai skill dash
         }
+        
     }
 
 
@@ -82,6 +83,7 @@ public class AttackStateAssa : AssasinState
                 enemy.animator.SetBool("isMoveBack", true);
                 enemy.animator.SetBool("isMoveLeft", false);
                 enemy.animator.SetBool("isMoveRight", false);
+                enemy.animator.SetBool("isWalkForward", false);
                 break;
 
             case 1:
@@ -89,6 +91,7 @@ public class AttackStateAssa : AssasinState
                 enemy.animator.SetBool("isMoveBack", false);
                 enemy.animator.SetBool("isMoveLeft", true);
                 enemy.animator.SetBool("isMoveRight", false);
+                enemy.animator.SetBool("isWalkForward", false);
                 break;
 
             case 2: 
@@ -96,6 +99,7 @@ public class AttackStateAssa : AssasinState
                 enemy.animator.SetBool("isMoveBack", false);
                 enemy.animator.SetBool("isMoveLeft", false);
                 enemy.animator.SetBool("isMoveRight", true);
+                enemy.animator.SetBool("isWalkForward", false);
                 break;
         }
 
@@ -104,11 +108,11 @@ public class AttackStateAssa : AssasinState
     }
 
     public IEnumerator WaitCanMove(float second)
-   {
+    {
         enemy.aiPath.canMove = false;
         yield return new WaitForSeconds(second);
         enemy.aiPath.canMove = true;
-   }
+    }
 
 
     public void FlipToPlayer()
