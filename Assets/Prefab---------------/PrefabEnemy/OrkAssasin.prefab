@@ -394,7 +394,7 @@ RectTransform:
   m_Father: {fileID: 2681154564990371595}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 46.914673, y: -1.7117004}
   m_SizeDelta: {x: 0.1277, y: -3.4234}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7207,7 +7207,7 @@ RectTransform:
   m_Father: {fileID: 7453263771917091469}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 47.002026, y: -3.9990005}
   m_SizeDelta: {x: 0.0844, y: -17.4656}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -15254,7 +15254,7 @@ RectTransform:
   m_Father: {fileID: 663488720494131683}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 50.001907, y: -3.9990015}
   m_SizeDelta: {x: 0.0842, y: -17.4656}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -16427,7 +16427,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4592798397736577097
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16736,6 +16736,7 @@ MonoBehaviour:
   aiPath: {fileID: 8584610362545481285}
   animator: {fileID: 4460130270687352755}
   boxTakeDame: {fileID: 8575939121448038429}
+  evenAnimatorAssa: {fileID: 0}
 --- !u!114 &1597135625031075781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16748,6 +16749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55a9e4ce524d73d4ea921998eab404c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shadowPrefab: {fileID: 22047853079194988, guid: 4603ae55ac3efce4a9776cd39796a30b, type: 3}
   dameZoneLeftAssa: {fileID: 0}
   dameZoneRightAssa: {fileID: 0}
 --- !u!114 &4543734327944694380
@@ -16762,6 +16764,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ce995faad03df45be7a2805c4f4dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sliderHp: {fileID: 9220046899104010394}
+  textHp: {fileID: 649843374480616857}
+  curentHp: 0
+  maxHp: 10000
+  controllerStateAssa: {fileID: 0}
 --- !u!54 &8630238947427770154
 Rigidbody:
   m_ObjectHideFlags: 0

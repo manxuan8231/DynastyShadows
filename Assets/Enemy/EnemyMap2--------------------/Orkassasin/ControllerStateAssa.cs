@@ -28,11 +28,13 @@ public class ControllerStateAssa : MonoBehaviour
     public AIPath aiPath;
     public Animator animator;
     public Collider boxTakeDame;
+    public EvenAnimatorAssa evenAnimatorAssa;
     // Trạng thái hiện tại
     private AssasinState currentState;
     private void Start()
     {
-        player = GameObject.FindWithTag("Player");     
+        player = GameObject.FindWithTag("Player");
+        evenAnimatorAssa = FindAnyObjectByType<EvenAnimatorAssa>();
         aiPath = GetComponent<AIPath>();
         animator = GetComponent<Animator>();
       

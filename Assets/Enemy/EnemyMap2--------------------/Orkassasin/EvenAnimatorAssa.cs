@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class EvenAnimatorAssa : MonoBehaviour
 {
-  
-        //tham chieu
+    //ao anh
+    public GameObject shadowPrefab; 
+    //tham chieu
     public DameZoneLeftAssa dameZoneLeftAssa;
     public DameZoneRightAssa dameZoneRightAssa;
     void Start()
@@ -45,5 +46,12 @@ public class EvenAnimatorAssa : MonoBehaviour
     public void EndDameBack()
     {
         dameZoneRightAssa.EndDameBack();
+    }
+
+    //tao bong
+    public void StartShadow()
+    {
+        GameObject instan = Instantiate(shadowPrefab,transform.position,transform.rotation);
+        
     }
 }

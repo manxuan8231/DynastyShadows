@@ -23,8 +23,8 @@ public class CurrentStateAssa : AssasinState
             enemy.aiPath.destination = enemy.transform.position;
             enemy.animator.SetBool("isRunForward", false);
             enemy.animator.SetBool("isWalkForward", false);
-           // enemy.ChangeState(new AttackStateAssa(enemy));//chuyen trang thai attack
-            enemy.ChangeState(new SkillKnifeStateAssa(enemy));//skill dao
+            enemy.ChangeState(new AttackStateAssa(enemy));//chuyen trang thai attack
+                                
         }
         else if (dis < 40f)//be hon 40 di bo
         {
@@ -33,6 +33,7 @@ public class CurrentStateAssa : AssasinState
             enemy.aiPath.destination = enemy.player.transform.position;
             enemy.animator.SetBool("isRunForward", false);
             enemy.animator.SetBool("isWalkForward", true);
+            SkillKnife();//bat skill knife
         }
         else//lon hon 40 run
         {
@@ -42,12 +43,13 @@ public class CurrentStateAssa : AssasinState
             enemy.animator.SetBool("isRunForward", true);
             enemy.animator.SetBool("isWalkForward", false);
         }
-        SkillKnife();
+     
 
     }
+
     public void SkillKnife()
     {
-        // Kích hoạt kỹ năng tự động khi thấy player
+        // Kích hoạt kỹ năng 
         if (Time.time >= enemy.lastAutoSkillTime + enemy.autoSkillCooldown)
         {
             enemy.animator.SetTrigger("Knife");
@@ -56,7 +58,6 @@ public class CurrentStateAssa : AssasinState
         }
 
     }
-
     private IEnumerator ActivateAutoSkill()//kich hoat skill dao
     {
         if (enemy.autoSkillKnife != null)
@@ -66,6 +67,7 @@ public class CurrentStateAssa : AssasinState
             enemy.autoSkillKnife.SetActive(false);
         }
     }
+
 
 
 
