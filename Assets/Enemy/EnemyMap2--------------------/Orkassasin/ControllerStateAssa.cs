@@ -1,11 +1,9 @@
 ﻿using Pathfinding;
-using System.IO;
 using UnityEngine;
 
 public class ControllerStateAssa : MonoBehaviour
 {
-    // Trạng thái hiện tại
-    private AssasinState currentState;
+    
     //tim pl va thong so 
     public GameObject player;
     public float playerRange = 100f;
@@ -16,18 +14,29 @@ public class ControllerStateAssa : MonoBehaviour
     public float lastAttackTime = -4f;
     public float stepAttack = 0f;
 
+    //skill knife kich hoat khi thay player 
+    public GameObject autoSkillKnife;
+    public float autoSkillCooldown = 120f; // 2 phút
+    public float lastAutoSkillTime = -120f;
+    public float autoSkillDuration = 10f;
 
+    //skill dash va tao bong
+    public float cooldownSkillDash = 4f;
+    public float lastTimeSkillDash = -4f;
+    public float randomMoveSkillDash;
     //tham chieu
     public AIPath aiPath;
     public Animator animator;
-    private EvenAnimatorAssa evenAnimatorAssa;
+    public Collider boxTakeDame;
+    // Trạng thái hiện tại
+    private AssasinState currentState;
     private void Start()
     {
-        player = GameObject.FindWithTag("Player");
-       
+        player = GameObject.FindWithTag("Player");     
         aiPath = GetComponent<AIPath>();
         animator = GetComponent<Animator>();
-        evenAnimatorAssa = FindAnyObjectByType<EvenAnimatorAssa>();
+      
+        autoSkillKnife.SetActive(false);
         ChangeState(new CurrentStateAssa(this));
     }
     private void Update()

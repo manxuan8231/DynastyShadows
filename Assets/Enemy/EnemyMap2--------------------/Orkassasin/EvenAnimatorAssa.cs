@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EvenAnimatorAssa : MonoBehaviour
 {
-    public GameObject Knife;//skill xuoay dao
+  
         //tham chieu
     public DameZoneLeftAssa dameZoneLeftAssa;
     public DameZoneRightAssa dameZoneRightAssa;
@@ -12,7 +12,7 @@ public class EvenAnimatorAssa : MonoBehaviour
         dameZoneLeftAssa = FindAnyObjectByType<DameZoneLeftAssa>();
         dameZoneRightAssa = FindAnyObjectByType <DameZoneRightAssa>();
 
-        Knife.SetActive(false);
+       
     }
 
     
