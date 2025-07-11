@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEngine.Audio; // Quan trọng để sử dụng AudioMixerGroup
+using UnityEngine.Audio;
 
 [RequireComponent(typeof(AudioSource))]
 public class UIButtonSoundManager : MonoBehaviour
@@ -15,37 +15,29 @@ public class UIButtonSoundManager : MonoBehaviour
     public AudioClip playClickSound;
 
     [Header("Audio Mixer Group")]
-    public AudioMixerGroup mixerGroup; // <-- thêm Mixer Group
+    public AudioMixerGroup mixerGroup;
+
+    private AudioSource sharedAudioSource;
 
     void Start()
     {
-        // Tìm tất cả Button trong GameObject con
-        Button[] buttons = GetComponentsInChildren<Button>();
+        // Dùng AudioSource dùng chung
+        sharedAudioSource = GetComponent<AudioSource>();
+        sharedAudioSource.playOnAwake = false;
+        if (mixerGroup != null)
+            sharedAudioSource.outputAudioMixerGroup = mixerGroup;
 
+        // Gắn âm thanh cho mỗi nút
+        Button[] buttons = GetComponentsInChildren<Button>();
         foreach (Button btn in buttons)
         {
+            var handler = btn.gameObject.AddComponent<UIButtonSoundHandler>();
             string btnName = btn.gameObject.name;
 
-            // Thêm AudioSource nếu chưa có
-            AudioSource source = btn.gameObject.GetComponent<AudioSource>();
-            if (source == null)
-                source = btn.gameObject.AddComponent<AudioSource>();
-
-            // Gán mixer group (nếu có)
-            if (mixerGroup != null)
-                source.outputAudioMixerGroup = mixerGroup;
-
-            // Tạo handler và gán âm tương ứng
-            UIButtonSoundHandler handler = btn.gameObject.AddComponent<UIButtonSoundHandler>();
-
             if (btnName == "Play")
-            {
-                handler.Setup(source, playHoverSound, playClickSound);
-            }
+                handler.Setup(sharedAudioSource, playHoverSound, playClickSound);
             else
-            {
-                handler.Setup(source, hoverSound, clickSound);
-            }
+                handler.Setup(sharedAudioSource, hoverSound, clickSound);
         }
     }
 
@@ -60,7 +52,6 @@ public class UIButtonSoundManager : MonoBehaviour
             audioSource = source;
             hoverSound = hover;
             clickSound = click;
-            audioSource.playOnAwake = false;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -75,5 +66,4 @@ public class UIButtonSoundManager : MonoBehaviour
                 audioSource.PlayOneShot(clickSound);
         }
     }
-
 }
