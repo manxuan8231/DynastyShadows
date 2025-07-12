@@ -4,18 +4,16 @@ using UnityEngine.UI;
 
 public class AssasinHp : MonoBehaviour,IDamageable
 {
+    [Header("Hp")]
     public Slider sliderHp;
     public TextMeshProUGUI textHp;
     public float curentHp;
     public float maxHp = 10000f;
+    [Header("tranh ne ")]
+    public float scoreDodge = 0f;
     //tham chieu
     public ControllerStateAssa controllerStateAssa;
-    public void TakeDamage(float damage)
-    {
-        curentHp -= damage;
-        curentHp = Mathf.Clamp(curentHp, 0, maxHp);
-        UpdateUI();
-    }
+  
 
     void Start()
     {
@@ -33,7 +31,13 @@ public class AssasinHp : MonoBehaviour,IDamageable
         {
             controllerStateAssa.ChangeState(new SkillKnifeStateAssa(controllerStateAssa));//trang thai skill dash    
         }
-        
+
+    }
+    public void TakeDamage(float damage)
+    {
+        curentHp -= damage;
+        curentHp = Mathf.Clamp(curentHp, 0, maxHp);
+        UpdateUI();
     }
     void UpdateUI()
     {

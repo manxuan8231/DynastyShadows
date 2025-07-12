@@ -1,4 +1,4 @@
-﻿using Pathfinding;
+﻿
 using System.Collections;
 using UnityEngine;
 
@@ -25,6 +25,7 @@ public class AttackStateAssa : AssasinState
         if (distan <= 4 && Time.time >= enemy.lastAttackTime + enemy.coolDownAttack)
         {
             FlipToPlayer();
+            
             enemy.aiPath.enableRotation = true;
            
             if (enemy.stepAttack == 0)
@@ -61,10 +62,10 @@ public class AttackStateAssa : AssasinState
         
     }
 
-
     public void MoveBackRightLeft()
     {
         FlipToPlayer(); // Xoay mặt về player
+        
         enemy.aiPath.enableRotation = false;
 
         // Tính hướng forward (hướng từ enemy → player)
@@ -74,7 +75,7 @@ public class AttackStateAssa : AssasinState
         Vector3 right = Vector3.Cross(Vector3.up, forward).normalized;
         Vector3 chosenDir = Vector3.zero;
 
-        float moveDistance = 5f;//met
+        float moveDistance = 10f;//met
 
         switch (enemy.stepAttack)
         {
@@ -127,5 +128,7 @@ public class AttackStateAssa : AssasinState
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         enemy.transform.rotation = lookRotation;
     }
+    
+
 
 }

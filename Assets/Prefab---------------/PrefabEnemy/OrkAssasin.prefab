@@ -16653,9 +16653,7 @@ GameObject:
   - component: {fileID: 4460130270687352755}
   - component: {fileID: 6998247887347402706}
   - component: {fileID: 1597135625031075781}
-  - component: {fileID: 4543734327944694380}
   - component: {fileID: 8630238947427770154}
-  - component: {fileID: 8575939121448038429}
   - component: {fileID: 2200709615950255377}
   - component: {fileID: 8584610362545481285}
   m_Layer: 10
@@ -16735,7 +16733,7 @@ MonoBehaviour:
   randomMoveSkillDash: 0
   aiPath: {fileID: 8584610362545481285}
   animator: {fileID: 4460130270687352755}
-  boxTakeDame: {fileID: 8575939121448038429}
+  boxTakeDame: {fileID: 0}
   evenAnimatorAssa: {fileID: 0}
 --- !u!114 &1597135625031075781
 MonoBehaviour:
@@ -16752,23 +16750,6 @@ MonoBehaviour:
   shadowPrefab: {fileID: 22047853079194988, guid: 4603ae55ac3efce4a9776cd39796a30b, type: 3}
   dameZoneLeftAssa: {fileID: 0}
   dameZoneRightAssa: {fileID: 0}
---- !u!114 &4543734327944694380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5686811050784615843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17ce995faad03df45be7a2805c4f4dc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sliderHp: {fileID: 9220046899104010394}
-  textHp: {fileID: 649843374480616857}
-  curentHp: 0
-  maxHp: 10000
-  controllerStateAssa: {fileID: 0}
 --- !u!54 &8630238947427770154
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16796,27 +16777,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &8575939121448038429
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5686811050784615843}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1.8, z: 1}
-  m_Center: {x: 0, y: 1.04, z: 0}
 --- !u!114 &2200709615950255377
 MonoBehaviour:
   m_ObjectHideFlags: 0

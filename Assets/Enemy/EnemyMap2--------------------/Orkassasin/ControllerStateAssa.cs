@@ -1,7 +1,8 @@
 ﻿using Pathfinding;
+using System.Collections;
 using UnityEngine;
 
-public class ControllerStateAssa : MonoBehaviour
+public class ControllerStateAssa : MonoBehaviour,DodgeOnEnemyInterface
 {
     
     //tim pl va thong so 
@@ -52,6 +53,19 @@ public class ControllerStateAssa : MonoBehaviour
         currentState = newState;  // Gán trạng thái mới
         currentState.Enter();     // Kích hoạt trạng thái mới
     }
-    
+
+    public void TryDodgeAttack()
+    {
+        if (!aiPath.canMove) return;
+
+        float chanceToDodge = 0.9f;
+        if (Random.value <= chanceToDodge)
+        {
+            animator.SetTrigger("dodge");
+        }
+    }
+
+   
+
 
 }

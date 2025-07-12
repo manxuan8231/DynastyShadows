@@ -183,7 +183,7 @@ public class PlayerStatus : MonoBehaviour
     }
 
     //hp
-    public void TakeHealth(float amount ,GameObject enemy, string animName)//bị lấy hp và đây là máu chính
+    public void TakeHealth(float amount ,GameObject enemy, string animName)
     {
         if(currentHp > 0 && isTakeHeal == true && isShieldActive == false)
         {          
@@ -195,7 +195,7 @@ public class PlayerStatus : MonoBehaviour
         if (isStun == true && isHit == true) //nếu bị hit r thi đợi 1 giay ms cho tiep
         {
                 playerController.animator.SetTrigger(animName);
-                StartCoroutine(WaitHit(0.1f)); // gọi hàm hit với thời gian 0.7 giây
+                StartCoroutine(WaitHit(0.5f)); //tgian di chuyen dc va bi hit
                  audioSource.PlayOneShot(audioHit);
         }
         //tim enemy de phan dame
@@ -544,7 +544,6 @@ public class PlayerStatus : MonoBehaviour
         playerController.isController = false;// lại điều khiển nhân vật
         yield return new WaitForSeconds(time);
         playerController.isController = true; // Bật lại điều khiển nhân vật
-        yield return new WaitForSeconds(0.1f);
         isHit = true; // Bật lại trạng thái bị hit
     }
     void LevelUp()

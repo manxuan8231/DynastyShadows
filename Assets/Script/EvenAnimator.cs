@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class EvenAnimator : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class EvenAnimator : MonoBehaviour
     public AudioClip slash1Audio;
     public AudioClip slash2Audio;
     public AudioClip slash3Audio;
-
+    public LayerMask layerEnemy;
     //tham chieu 
     DameZone dameZone;
     ComboAttack comboAttack;
@@ -241,4 +242,20 @@ public class EvenAnimator : MonoBehaviour
 
         Destroy(effect, 5f);
     }
+
+    //tránh né của enemy khi player chuẩn bị đánh
+    void OnAttackStart()
+    {
+       
+        Collider[] enemies = Physics.OverlapSphere(transform.position, 6f, layerEnemy);
+        foreach (var col in enemies)
+        {
+            var dodge = col.GetComponent<DodgeOnEnemyInterface>();
+            if (dodge != null)
+            {
+                dodge.TryDodgeAttack();
+            }
+        }
+    }
+
 }
