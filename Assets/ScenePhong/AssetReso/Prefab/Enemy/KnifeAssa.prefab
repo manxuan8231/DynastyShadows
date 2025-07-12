@@ -9737,7 +9737,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.47819844, y: 0.5058195, z: 0.4932309, w: 0.5217242}
   m_LocalPosition: {x: 658.25, y: 1.5300095, z: 627.41925}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 5, y: 6, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9217637767264306349}
@@ -10004,8 +10004,8 @@ Transform:
   m_GameObject: {fileID: 9173998045070550255}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.085, z: 0.0134}
-  m_LocalScale: {x: 1.0527266, y: 0.46214876, z: 1.9470155}
+  m_LocalPosition: {x: -0, y: -0.0725, z: 0.0134}
+  m_LocalScale: {x: 0.3086065, y: 0.059358716, z: 0.98827916}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 590296081267611082}
@@ -10204,7 +10204,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0.19607843}
@@ -10851,7 +10851,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 40
+      scalar: 100
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -12236,7 +12236,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -14803,14 +14803,14 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
-  m_MaxParticleSize: 0.5
+  m_MaxParticleSize: 1
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
-  m_LengthScale: 2
+  m_LengthScale: 2.5
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_ShadowBias: 0
