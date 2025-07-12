@@ -7,8 +7,8 @@ public class AssasinHp : MonoBehaviour,IDamageable
     [Header("Hp")]
     public Slider sliderHp;
     public TextMeshProUGUI textHp;
-    public float curentHp;
-    public float maxHp = 10000f;
+    public int curentHp;
+    public int maxHp = 10000;
     [Header("tranh ne ")]
     public float scoreDodge = 0f;
     //tham chieu
@@ -35,7 +35,7 @@ public class AssasinHp : MonoBehaviour,IDamageable
     }
     public void TakeDamage(float damage)
     {
-        curentHp -= damage;
+        curentHp -= (int)damage;
         curentHp = Mathf.Clamp(curentHp, 0, maxHp);
         UpdateUI();
     }
