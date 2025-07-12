@@ -29,10 +29,11 @@ public class AssasinHp : MonoBehaviour,IDamageable
     
     void Update()
     {
-        if (curentHp <= maxHp * 0.8) 
+        if (curentHp <= maxHp * 0.8)
         {
             controllerStateAssa.ChangeState(new SkillKnifeStateAssa(controllerStateAssa));//trang thai skill dash    
         }
+        
     }
     void UpdateUI()
     {

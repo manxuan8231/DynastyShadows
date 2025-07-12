@@ -141,32 +141,36 @@ public class Skill2State : PlayerState
             }
         }
 
+       
         // Nếu có enemy gần thì cho phép dash
         if (nearestEnemy != null && Input.GetMouseButtonDown(0) && isAttack == true && Cursor.visible == false)
         {
-            isAttack = false;
-            isMove = false;
-            player.controller.enabled = false;
-
-            // Chỉ dash theo mặt phẳng ngang (X-Z), giữ nguyên Y của player
+            // Giữ nguyên Y của player
             Vector3 playerPos = player.transform.position;
             Vector3 enemyPos = nearestEnemy.transform.position;
-            enemyPos.y = playerPos.y; // Giữ nguyên Y
+            enemyPos.y = playerPos.y;
 
             Vector3 dashDir = (enemyPos - playerPos).normalized;
-            Vector3 dashTarget = enemyPos + dashDir * -2f; // Dash cách enemy một chút
+            Vector3 dashTarget = enemyPos + dashDir * -3f; // Dash cách enemy một chút
+            Vector3 y = player.transform.position + Vector3.up * 2f;
+            // Check nếu có tường chắn giữa player và dashTarget
+            LayerMask mask = LayerMask.GetMask("Ground") | LayerMask.GetMask("Obstacle") | LayerMask.GetMask("Wall");
+            if (!Physics.Linecast(y, dashTarget, mask)) 
+            {
+                isAttack = false;
+                isMove = false;
+                player.controller.enabled = false;
 
-            player.StartCoroutine(DashToTarget(dashTarget, 0.3f));
+                player.StartCoroutine(DashToTarget(dashTarget, 0.3f));
 
-            // Quay mặt về enemy (trục Y)
-            player.transform.rotation = Quaternion.LookRotation(dashDir);
-
-            // Chạy animation
-            player.animator.SetTrigger("Attack");
-            player.isRemoveClone = true;
-            player.controller.enabled = true;
-            player.StartCoroutine(WaitForChangeState());
+                player.transform.rotation = Quaternion.LookRotation(dashDir);
+                player.animator.SetTrigger("Attack");
+                player.isRemoveClone = true;
+                player.controller.enabled = true;
+                player.StartCoroutine(WaitForChangeState());
+            }         
         }
+
 
         // Nếu không có enemy thì vẫn cho chém bình thường
         if (Input.GetMouseButtonDown(0) && isAttack == true && Cursor.visible == false)

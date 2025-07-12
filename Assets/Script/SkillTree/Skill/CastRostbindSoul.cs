@@ -100,7 +100,7 @@ public class CastRostbindSoul : MonoBehaviour
         // láy mau enemy sau khi mở khóa
         if (skill1Manager.isDamaged == true)
         {
-            float dame = 2000f;
+            float dame = 500f;
             IDamageable damageable = enemy.GetComponent<IDamageable>();//goi interface
             if (damageable != null) 
             {

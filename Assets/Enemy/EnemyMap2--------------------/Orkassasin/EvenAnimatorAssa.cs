@@ -5,7 +5,8 @@ public class EvenAnimatorAssa : MonoBehaviour
 {
     //ao anh
     public GameObject shadowPrefab; 
-    //tham chieu
+
+    [Header("Tham Chieu")]
     public DameZoneLeftAssa dameZoneLeftAssa;
     public DameZoneRightAssa dameZoneRightAssa;
     void Start()
