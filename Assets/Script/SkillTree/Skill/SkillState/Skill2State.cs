@@ -221,10 +221,7 @@ public class Skill2State : PlayerState
         }
        
     }
-
-   
-
-    IEnumerator WaitForMove()
+    public  IEnumerator WaitForMove()
     {
         yield return new WaitForSeconds(0.4f); // Thời gian chờ trước khi chuyển về trạng thái hiện tại
         isMove = true; // Đặt lại trạng thái di chuyển
