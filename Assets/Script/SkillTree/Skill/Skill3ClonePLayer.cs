@@ -69,7 +69,7 @@ public class Skill3ClonePLayer : MonoBehaviour
             aiPath.enabled = true;
         }
 
-        // Nếu xài AIPath thì setup tốc độ
+       
         aiPath.maxSpeed = speed;
 
         // Ẩn slash ban đầu
@@ -105,6 +105,8 @@ public class Skill3ClonePLayer : MonoBehaviour
         }
         else
         {
+            agent.enabled = false;
+            aiPath.enabled = false;           
             animator.SetBool("Run", false);
         }
         if (playerStatus.currentHp <= 0)
@@ -150,10 +152,12 @@ public class Skill3ClonePLayer : MonoBehaviour
 
     public void MoveToEnemy()
     {
-        if (nearestEnemy != null)
+        float dis = Vector3.Distance(transform.position, nearestEnemy.position);
+        if (nearestEnemy != null && dis <= 50)
         {
             animator.SetBool("Run", true);
-
+            agent.enabled = true;
+            aiPath.enabled = true;
             if (isUsingNavMesh && agent.enabled)
             {
                 agent.SetDestination(nearestEnemy.position);
@@ -162,6 +166,10 @@ public class Skill3ClonePLayer : MonoBehaviour
             {
                 aiPath.destination = nearestEnemy.position;
             }
+        }
+        else
+        {
+            animator.SetBool("Run", false);
         }
     }
 

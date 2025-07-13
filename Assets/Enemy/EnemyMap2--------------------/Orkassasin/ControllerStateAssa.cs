@@ -63,7 +63,7 @@ public class ControllerStateAssa : MonoBehaviour,DodgeOnEnemyInterface
         currentState.Enter();     // Kích hoạt trạng thái mới
     }
 
-    public void TryDodgeAttack()
+    public void TryDodgeAttack()//ne tranh đòn tấn công của player và chuyển trạng thái sang dodge
     {
         if (!aiPath.canMove) return;
 
@@ -71,6 +71,7 @@ public class ControllerStateAssa : MonoBehaviour,DodgeOnEnemyInterface
         if (Random.value <= chanceToDodge)
         {
             animator.SetTrigger("dodge");
+            ChangeState(new DodgeComboStateAssa(this)); // Chuyển sang trạng thái né đòn
         }
     }
 

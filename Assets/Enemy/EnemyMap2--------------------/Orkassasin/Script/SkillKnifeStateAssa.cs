@@ -221,7 +221,7 @@ public class SkillKnifeStateAssa : AssasinState
 
         // Chuyển sang trạng thái khác sau animation
         yield return new WaitForSeconds(1f); 
-        enemy.ChangeState(new CurrentStateAssa(enemy));
+        enemy.ChangeState(new CurrentStateAssa(enemy));// chuyển về trạng thái hiện tại
     }
     public IEnumerator WaitWalkBack()//dợi đi lùi r ms cho sử dụng skill 
     {
@@ -236,7 +236,7 @@ public class SkillKnifeStateAssa : AssasinState
         enemy.aiPath.enableRotation = true;
         int layerNew = LayerMask.NameToLayer("InvisibleAssasin");
         SetLayerRecursively(enemy.gameObject, layerNew);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         enemy.isMoveBack = false; 
     }
     public IEnumerator WaitOffAuraDash()

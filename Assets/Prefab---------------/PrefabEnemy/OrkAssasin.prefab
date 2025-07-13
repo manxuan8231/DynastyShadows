@@ -10501,7 +10501,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -10725,7 +10725,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -11846,8 +11846,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shadowPrefab: {fileID: 22047853079194988, guid: 4603ae55ac3efce4a9776cd39796a30b, type: 3}
+  knifePrefab: {fileID: 5811440823405434003, guid: 3a1f9f19c3bf2ea41bd602ecc6fe4bfb, type: 3}
+  knifeSpawnPoint: {fileID: 2175980124814703704}
   dameZoneLeftAssa: {fileID: 0}
   dameZoneRightAssa: {fileID: 0}
+  controllerStateAssa: {fileID: 0}
 --- !u!114 &3174322786434243569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13443,7 +13446,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

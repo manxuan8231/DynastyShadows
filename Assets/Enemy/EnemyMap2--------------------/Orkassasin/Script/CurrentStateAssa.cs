@@ -1,4 +1,5 @@
 ﻿
+using Pathfinding;
 using System.Collections;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ public class CurrentStateAssa : AssasinState
     }
     public override void Update()
     {
-        RunSkillDashInHp();
+       
        float dis = Vector3.Distance(enemy.transform.position,enemy.player.transform.position);
 
         if (dis < enemy.stopRange)//khoan cach dừng và attack
@@ -44,7 +45,7 @@ public class CurrentStateAssa : AssasinState
             enemy.animator.SetBool("isRunForward", true);
             enemy.animator.SetBool("isWalkForward", false);
         }
-     
+        RunSkillDashInHp();
 
     }
     public void RunSkillDashInHp()//khi mau assasin be hon 80 thì chạy skill dash
@@ -76,6 +77,7 @@ public class CurrentStateAssa : AssasinState
         }
     }
 
+   
 
 
 
