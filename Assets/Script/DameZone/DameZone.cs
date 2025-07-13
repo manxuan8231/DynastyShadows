@@ -33,7 +33,10 @@ public class DameZone : MonoBehaviour
     private void TryApplyDamage(Collider other)
     {
         GameObject hitObj = other.gameObject;
-        if (hitObj.layer != LayerMask.NameToLayer("Enemy")) return;
+        LayerMask allowedLayers = (1 << LayerMask.NameToLayer("Enemy")) | (1 << LayerMask.NameToLayer("InvisibleAssasin"));
+        if ((allowedLayers & (1 << other.gameObject.layer)) == 0) return;
+
+
         if (listDame.Contains(other)) return;
 
         float finalDamage = playerStatus.CalculateFinalDamage();

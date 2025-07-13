@@ -5,7 +5,7 @@ using UnityEngine;
 public class CurrentStateAssa : AssasinState
 {
     public CurrentStateAssa(ControllerStateAssa enemy) : base(enemy) { }
-   
+  
     public override void Enter()
     {
         enemy.aiPath.maxSpeed = 5f;
@@ -16,6 +16,7 @@ public class CurrentStateAssa : AssasinState
     }
     public override void Update()
     {
+        RunSkillDashInHp();
        float dis = Vector3.Distance(enemy.transform.position,enemy.player.transform.position);
 
         if (dis < enemy.stopRange)//khoan cach dừng và attack
@@ -46,7 +47,14 @@ public class CurrentStateAssa : AssasinState
      
 
     }
-
+    public void RunSkillDashInHp()//khi mau assasin be hon 80 thì chạy skill dash
+    {
+        if (enemy.assasinHp.curentHp <= enemy.assasinHp.maxHp * 0.8 && enemy.isRunSkillDashInHp)
+        {
+            enemy.isRunSkillDashInHp = false;
+            enemy.ChangeState(new SkillKnifeStateAssa(enemy));//trang thai skill dash    
+        }
+    }
     public void SkillKnife()
     {
         // Kích hoạt kỹ năng 

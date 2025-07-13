@@ -47,7 +47,10 @@ public class Skill5Eye : MonoBehaviour
                 }
             }
         }
-
+        if (Input.GetKeyUp(KeyCode.Alpha0))
+        {
+            isInputSkill = true;
+        }
     }
 
 
@@ -55,9 +58,10 @@ public class Skill5Eye : MonoBehaviour
     {
         StartMaterial(); // Bật kỹ năng
         isInputSkill = false;
-
-        yield return new WaitForSeconds(7f);
-
+        Camera.main.cullingMask |= (1 << LayerMask.NameToLayer("InvisibleAssasin")); // Hiện lại layer mặc định
+        
+        yield return new WaitForSeconds(6f);
+        Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("InvisibleAssasin")); // Ẩn layer mặc định
         EndMaterial(); // Kết thúc kỹ năng
     }
 
@@ -66,7 +70,6 @@ public class Skill5Eye : MonoBehaviour
         panelDisplay.SetActive(true);
 
         FindObject();        // Tìm và highlight object
-        SlowEnemiesInArea();
     }
 
     public void EndMaterial()
@@ -113,22 +116,6 @@ public class Skill5Eye : MonoBehaviour
     }
 
 
-    public void SlowEnemiesInArea()
-    {
-        int enemyLayer = LayerMask.GetMask("Enemy");
-        Collider[] enemies = Physics.OverlapSphere(transform.position, searchRadius, enemyLayer);
-
-        slowedAnimators.Clear(); // Xóa danh sách cũ
-
-        foreach (Collider enemy in enemies)
-        {
-            Animator anim = enemy.GetComponent<Animator>();
-            if (anim != null)
-            {
-                slowedAnimators.Add(anim);
-                anim.speed = 0.2f; // Làm chậm
-            }
-        }
-    }
+   
 
 }

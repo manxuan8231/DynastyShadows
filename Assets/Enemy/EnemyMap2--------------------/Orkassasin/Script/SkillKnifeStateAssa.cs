@@ -1,8 +1,7 @@
-﻿using Pathfinding;
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 public class SkillKnifeStateAssa : AssasinState
 {
@@ -11,7 +10,7 @@ public class SkillKnifeStateAssa : AssasinState
 
     public override void Enter()
     {
-      
+       enemy.StartCoroutine(WaitWalkBack());
     }
 
     public override void Exit()
@@ -19,11 +18,18 @@ public class SkillKnifeStateAssa : AssasinState
         enemy.animator.SetBool("isMoveLeft", false);
         enemy.animator.SetBool("isMoveRight", false);
         enemy.animator.SetBool("isWalkForward", false);
+        enemy.animator.SetBool("isMoveBack", false);
+        int layerDefaul = LayerMask.NameToLayer("Enemy");
+        SetLayerRecursively(enemy.gameObject, layerDefaul);
     }
 
     public override void Update()
-    {
+    {   
+       
+    
         FlipToPlayer();
+        
+        if (enemy.isMoveBack) return;
         float dis = Vector3.Distance(enemy.transform.position, enemy.player.transform.position);
         if (dis <= 10 && Time.time >= enemy.lastTimeSkillDash + enemy.cooldownSkillDash)
         {
@@ -45,6 +51,7 @@ public class SkillKnifeStateAssa : AssasinState
                 chosenDir = -right;
                 enemy.animator.SetBool("isMoveLeft", true);
                 enemy.animator.SetBool("isMoveRight", false);
+                enemy.animator.SetBool("isMoveBack", false);
                 enemy.animator.SetBool("isWalkForward", false);
             }
             else if(enemy.randomMoveSkillDash == 1)
@@ -52,6 +59,7 @@ public class SkillKnifeStateAssa : AssasinState
                 chosenDir = right;
                 enemy.animator.SetBool("isMoveRight", true);
                 enemy.animator.SetBool("isWalkForward", false);
+                enemy.animator.SetBool("isMoveBack", false);
                 enemy.animator.SetBool("isMoveLeft", false);
                
             }
@@ -65,6 +73,7 @@ public class SkillKnifeStateAssa : AssasinState
             enemy.animator.SetBool("isWalkForward", true);
             enemy.animator.SetBool("isMoveRight", false);
             enemy.animator.SetBool("isMoveLeft", false);
+            enemy.animator.SetBool("isMoveBack", false);
             enemy.aiPath.maxSpeed = 20f;
             enemy.aiPath.destination = enemy.player.transform.position;
         }
@@ -86,10 +95,23 @@ public class SkillKnifeStateAssa : AssasinState
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         enemy.transform.rotation = lookRotation;
     }
+
    
 
-    //ienu
-  
+    //nếu muốn đổi layer của gameobject và tất cả con của nó thì kêu hàm này kem theo
+    void SetLayerRecursively(GameObject obj, int newLayer)
+    {
+        if (obj == null) return;
+
+        obj.layer = newLayer;
+
+        foreach (Transform child in obj.transform)
+        {
+            if (child == null) continue;
+            SetLayerRecursively(child.gameObject, newLayer);
+        }
+    }
+    //IEnumera
     public IEnumerator WaitDash()
     {
         GameObject[] shadows = GameObject.FindGameObjectsWithTag("ShadowAssa");
@@ -101,7 +123,7 @@ public class SkillKnifeStateAssa : AssasinState
         {       
             enemy.animator.SetTrigger("WaitDash");
             yield return new WaitForSeconds(0.3f);
-            enemy.evenAnimatorAssa.StartShadow(); // fallback tạo ảo ảnh nếu chưa đủ
+            enemy.evenAnimatorAssa.StartShadow(); //  tạo ảo ảnh nếu chưa đủ
             Vector3 direction = (enemy.player.transform.position - enemy.transform.position).normalized;
             Vector3 final = enemy.transform.position + direction * 20f;
             enemy.StartCoroutine(DashCaculator(final, 0.2f));
@@ -138,6 +160,7 @@ public class SkillKnifeStateAssa : AssasinState
                 break;
             }
 
+           enemy.StartCoroutine( WaitOffAuraDash());
             enemy.transform.position = nextPos;
             yield return null;
         }
@@ -200,6 +223,31 @@ public class SkillKnifeStateAssa : AssasinState
         yield return new WaitForSeconds(1f); 
         enemy.ChangeState(new CurrentStateAssa(enemy));
     }
-
+    public IEnumerator WaitWalkBack()//dợi đi lùi r ms cho sử dụng skill 
+    {
+        enemy.isMoveBack = true;
+        enemy.aiPath.enableRotation = false;
+        Vector3 back = (enemy.transform.position - enemy.player.transform.position).normalized;
+        Vector3 final = enemy.transform.position + back * 10f;
+        enemy.animator.SetBool("isMoveBack", true);
+        enemy.aiPath.destination = final;
+       
+        yield return new WaitForSeconds(2f);
+        enemy.aiPath.enableRotation = true;
+        int layerNew = LayerMask.NameToLayer("InvisibleAssasin");
+        SetLayerRecursively(enemy.gameObject, layerNew);
+        yield return new WaitForSeconds(1f);
+        enemy.isMoveBack = false; 
+    }
+    public IEnumerator WaitOffAuraDash()
+    {
+        int layerDefau = LayerMask.NameToLayer("Enemy");
+        SetLayerRecursively(enemy.gameObject, layerDefau);
+        enemy.auraDash.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        enemy.auraDash.SetActive(false);
+        int layerNew = LayerMask.NameToLayer("InvisibleAssasin");
+        SetLayerRecursively(enemy.gameObject, layerNew);
+    }
 
 }

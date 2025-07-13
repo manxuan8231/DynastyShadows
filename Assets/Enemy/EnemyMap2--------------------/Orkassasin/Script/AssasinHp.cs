@@ -27,10 +27,7 @@ public class AssasinHp : MonoBehaviour,IDamageable
     
     void Update()
     {
-        if (curentHp <= maxHp * 0.8)
-        {
-            controllerStateAssa.ChangeState(new SkillKnifeStateAssa(controllerStateAssa));//trang thai skill dash    
-        }
+       
 
     }
     public void TakeDamage(float damage)
@@ -38,6 +35,7 @@ public class AssasinHp : MonoBehaviour,IDamageable
         curentHp -= (int)damage;
         curentHp = Mathf.Clamp(curentHp, 0, maxHp);
         UpdateUI();
+       
     }
     void UpdateUI()
     {

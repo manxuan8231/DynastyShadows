@@ -22,24 +22,33 @@ public class ControllerStateAssa : MonoBehaviour,DodgeOnEnemyInterface
     public float autoSkillDuration = 10f;
 
     //skill dash va tao bong
+    public GameObject auraDash;
     public float cooldownSkillDash = 4f;
     public float lastTimeSkillDash = -4f;
     public float randomMoveSkillDash;
+
+    //bien kiem tra
+    public bool isMoveBack = true; // Biến để kiểm tra trạng thái di chuyển lùi
+    public bool isRunSkillDashInHp = true;//biến để kiểm tra trạng thái chạy skill dash khi máu assasin dưới 80% 1 lan
+
     //tham chieu
     public AIPath aiPath;
     public Animator animator;
     public Collider boxTakeDame;
     public EvenAnimatorAssa evenAnimatorAssa;
+    public AssasinHp assasinHp;
     // Trạng thái hiện tại
     private AssasinState currentState;
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
         evenAnimatorAssa = FindAnyObjectByType<EvenAnimatorAssa>();
+        assasinHp = FindAnyObjectByType<AssasinHp>();
         aiPath = GetComponent<AIPath>();
         animator = GetComponent<Animator>();
       
         autoSkillKnife.SetActive(false);
+        auraDash.SetActive(false);
         ChangeState(new CurrentStateAssa(this));
     }
     private void Update()
