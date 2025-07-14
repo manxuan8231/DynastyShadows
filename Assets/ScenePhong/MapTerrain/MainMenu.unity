@@ -9527,6 +9527,7 @@ GameObject:
   m_Component:
   - component: {fileID: 970721415}
   - component: {fileID: 970721414}
+  - component: {fileID: 970721417}
   - component: {fileID: 970721416}
   m_Layer: 0
   m_Name: UIAudioManager
@@ -9667,6 +9668,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &970721417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970721413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7fc2f9e483c01f489849566f91a913d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allowedScenes:
+  - MainMenu
+  - ReAndLog
+  - Registant
+  - Login
 --- !u!1 &976129443
 GameObject:
   m_ObjectHideFlags: 0
