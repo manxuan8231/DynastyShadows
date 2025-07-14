@@ -29,7 +29,7 @@ public class DameZoneRightAssa : MonoBehaviour
         if (other.CompareTag(tagPlayer) && !listDame.Contains(other))
         {
             listDame.Add(other);
-            playerStatus.TakeHealth(dame, enemy, hitAnimationTrigger);
+            playerStatus.TakeHealth(dame, enemy, hitAnimationTrigger, 0.2f);
             playerStatus.TakeHealShield(dame);
         }
     }
@@ -38,7 +38,7 @@ public class DameZoneRightAssa : MonoBehaviour
         if (other.gameObject.CompareTag(tagPlayer) && !listDame.Contains(other))
         {
             listDame.Add(other);
-            playerStatus.TakeHealth(dame, enemy, hitAnimationTrigger);
+            playerStatus.TakeHealth(dame, enemy, hitAnimationTrigger, 0.2f);
             playerStatus.TakeHealShield(dame);
         }
     }

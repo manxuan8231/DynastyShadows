@@ -38,7 +38,7 @@ public class Bullet : MonoBehaviour
     {
         if (playerStatus != null)
         {
-            playerStatus.TakeHealth(damage,gameObject, "HitBack");
+            playerStatus.TakeHealth(damage,gameObject, "HitBack", 1);
             playerStatus.TakeHealShield(20);
         }
         Destroy(gameObject);

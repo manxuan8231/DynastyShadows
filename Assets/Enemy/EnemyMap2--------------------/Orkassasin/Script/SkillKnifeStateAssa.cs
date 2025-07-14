@@ -153,11 +153,13 @@ public class SkillKnifeStateAssa : AssasinState
         Vector3 dashDir = (targetPosition - startPos).normalized;
         float dashDistance = Vector3.Distance(startPos, targetPosition);
 
-        LayerMask mask = LayerMask.GetMask("Ground", "Obstacle");
-
+        LayerMask mask = LayerMask.GetMask("Ground", "Obstacle","Wall");
+        float afterImageTimer = 0f;
+        float afterImageInterval = 0.05f;
         while (time < duration)
         {
             time += Time.deltaTime;
+            afterImageTimer += Time.deltaTime;
             float t = time / duration;
 
             Vector3 nextPos = Vector3.Lerp(startPos, targetPosition, t);
@@ -170,7 +172,12 @@ public class SkillKnifeStateAssa : AssasinState
             {
                 break;
             }
-           enemy.evenAnimatorAssa.CreateAsterImg();// tạo hình ảnh sau khi dash
+            if(afterImageTimer >= afterImageInterval)
+            {
+                enemy.evenAnimatorAssa.CreateAsterImg();// tạo hình ảnh sau khi dash
+                afterImageTimer = 0f;
+            }
+          
 
             enemy.transform.position = nextPos;
             yield return null;

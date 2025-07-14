@@ -46,7 +46,7 @@ public class DameBallTarget : MonoBehaviour, IDamageable
         if (other.gameObject.CompareTag("Player"))
         {
             
-                status.TakeHealth(100,gameObject,"HitBack");
+                status.TakeHealth(100,gameObject,"HitBack",1);
                 status.TakeHealShield(20);
                 Destroy(gameObject);
 

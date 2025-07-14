@@ -13,7 +13,14 @@ public class PlayerCurrentState : PlayerState
         player.skill2Manager.isInputSkill2 = true;
 
     }
-
+    public override void Exit()
+    {
+        //tat ko cho phép nhap skill1 va skill3
+        player.skill3Manager.isInputSkill3 = false;
+        player.skill1Manager.isInputSkill1 = false;
+        player.skill4Manager.isInputSkill4 = false;
+        player.skill2Manager.isInputSkill2 = false;
+    }
     public override void Update()
     {
         player.animator.SetBool("jumpLand", player.isGrounded && !player.wasGroundedLastFrame == true);//để đây đụng đất thì true liên tục
@@ -164,6 +171,13 @@ public class PlayerCurrentState : PlayerState
                         player.transform.rotation = targetRotation; // hoặc dùng Slerp nếu muốn mượt
                     }
                 }
+
+                // Dash lùi về phía sau
+                Vector3 backward = -player.transform.forward * 5f;
+                Vector3 targetPosition = player.transform.position + backward;
+                targetPosition.y = player.transform.position.y;
+
+                player.StartCoroutine(DashCaculator(targetPosition, 0.2f));//dash ra sau 
                 player.animator.SetTrigger("RollBack");
             }
 
@@ -177,11 +191,55 @@ public class PlayerCurrentState : PlayerState
         player.playerStatus.isTakeHeal = true;
     }
 
-    public override void Exit() {
-        //tat ko cho phép nhap skill1 va skill3
-        player.skill3Manager.isInputSkill3 = false;
-        player.skill1Manager.isInputSkill1 = false;
-        player.skill4Manager.isInputSkill4 = false;
-        player.skill2Manager.isInputSkill2 = false;
+    public IEnumerator DashCaculator(Vector3 targetPosition, float duration)
+    {
+        Vector3 startPos = player.transform.position;
+        float time = 0f;
+
+        player.controller.enabled = false; // Tắt controller trong lúc dash
+
+        Vector3 dashDir = (targetPosition - startPos).normalized;
+     
+        LayerMask mask = LayerMask.GetMask("Ground", "Obstacle", "Wall");
+             
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            
+            float t = time / duration;
+            Vector3 nextPos = Vector3.Lerp(startPos, targetPosition, t);
+            nextPos.y = startPos.y;
+
+            Vector3 rayOrigin = player.transform.position + Vector3.up * 2f;
+            Debug.DrawRay(rayOrigin, dashDir * 5f, Color.green, 0.1f);
+
+            if (Physics.Raycast(rayOrigin, dashDir, out RaycastHit hit, 1f, mask))
+            {
+                break;
+            }
+
+           
+
+            player.transform.position = nextPos;
+            yield return null;
+        }
+
+        // Bật lại AI sau dash hoặc khi bị cản
+        player.controller.enabled = true; // Bật lại controller sau khi dash xong
+    }
+
+
+    //slowmotion
+    public IEnumerator SlowMotionDash()
+    {
+        Time.timeScale = 0.2f;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale; // cần để FixedUpdate không bị bug
+
+
+        yield return new WaitForSecondsRealtime(0.2f);
+
+
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
     }
 }

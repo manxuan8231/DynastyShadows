@@ -49,12 +49,15 @@ public class TutorialInven : MonoBehaviour
             //cho mo inven va skill tree
             inventoryManager.isOpenInventory = true;
             openSkillTree.isOpenSkillTree = true;
+           
         }
         //chay cac step img 
         if (panelTutoInven.activeSelf && index == 1)
         {
             rawImage.texture = step1;
             textConten.text = "Click chuột trái dô đây để mở kho chứa các vật phẩm có thể uống được.";
+            Cursor.lockState = CursorLockMode.None; // Unlock the cursor
+            Cursor.visible = true; // Show the cursor
         }
         if (panelTutoInven.activeSelf && index == 2)
         {
@@ -126,6 +129,8 @@ public class TutorialInven : MonoBehaviour
             panelTutoInven.SetActive(false);
             textConten.text = "";
           tutorialManager.isCompleteInven=true;//danh dau hoan thanh tuto
+            Cursor.lockState = CursorLockMode.Locked; // Unlock the cursor
+            Cursor.visible = false; // Show the cursor
         }
     }
     public void StartSkip() //skip qua

@@ -25,6 +25,7 @@ public class DodgeComboStateAssa : AssasinState
         // Dash lùi khỏi player
         Vector3 dirAwayFromPlayer = (enemy.transform.position - enemy.player.transform.position).normalized;
         Vector3 dashBackPos = enemy.transform.position + dirAwayFromPlayer * 20f;
+        dashBackPos.y = enemy.transform.position.y; // giữ nguyên độ cao
         yield return enemy.StartCoroutine(DashCaculator(dashBackPos, 0.2f));
 
         // Phóng dao
@@ -33,27 +34,33 @@ public class DodgeComboStateAssa : AssasinState
 
         //Dịch chuyển tới trước mặt player 
         Vector3 dirToPlayer = (enemy.player.transform.position - enemy.transform.position).normalized;
-        Vector3 attackPosFront = enemy.player.transform.position - dirToPlayer * 4f;
-        enemy.transform.position = attackPosFront;
+        Vector3 attackFronPl = enemy.player.transform.position - dirToPlayer * 4f;//tinh toan trc mat pl 4m
+        attackFronPl.y = enemy.transform.position.y; // giữ nguyên độ cao
+        enemy.transform.position = attackFronPl;
 
         enemy.animator.SetTrigger("attack11");
         yield return new WaitForSeconds(1f);
 
         // dash sang phải 
+        
         Vector3 right = enemy.transform.right;
         Vector3 dashRightPos = enemy.transform.position + right * 20f;
+        dashRightPos.y = enemy.transform.position.y; // giữ nguyên độ cao
         yield return enemy.StartCoroutine(DashCaculator(dashRightPos, 0.2f));
 
         // Phóng dao 
         enemy.animator.SetTrigger("knifeThrower");
         yield return new WaitForSeconds(1f);
 
-        //  Quay lại trước mặt player 
-        enemy.transform.position = attackPosFront;
+        //  tan cong ben phai pl      
+        Vector3 rightOfPlayer = enemy.player.transform.right * 4f;
+        Vector3 targetPosition = enemy.player.transform.position - rightOfPlayer;
+        targetPosition.y = enemy.transform.position.y; // giữ nguyên độ cao
+        enemy.transform.position = targetPosition;
         enemy.animator.SetTrigger("attack16");
         yield return new WaitForSeconds(1f);
 
-        //dash qua trai
+        //dash qua trai      
         Vector3 left = -enemy.transform.right ;
         Vector3 final = enemy.transform.position + left * 20f;
         yield return enemy.StartCoroutine(DashCaculator(final, 0.2f));
@@ -77,13 +84,18 @@ public class DodgeComboStateAssa : AssasinState
         Vector3 dashDir = (targetPosition - startPos).normalized;
         float dashDistance = Vector3.Distance(startPos, targetPosition);
 
-        LayerMask mask = LayerMask.GetMask("Ground", "Obstacle");
+        LayerMask mask = LayerMask.GetMask("Ground", "Obstacle", "Wall");
+
+        // Thời gian tạo ảnh mỗi 0.4 giây
+        float afterImageTimer = 0f;
+        float afterImageInterval = 0.05f;
 
         while (time < duration)
         {
             time += Time.deltaTime;
-            float t = time / duration;
+            afterImageTimer += Time.deltaTime;
 
+            float t = time / duration;
             Vector3 nextPos = Vector3.Lerp(startPos, targetPosition, t);
             nextPos.y = startPos.y;
 
@@ -95,7 +107,13 @@ public class DodgeComboStateAssa : AssasinState
                 break;
             }
 
-           
+            // Chỉ tạo ảnh nếu đã đủ thời gian
+            if (afterImageTimer >= afterImageInterval)
+            {
+                enemy.evenAnimatorAssa.CreateAsterImg();
+                afterImageTimer = 0f;
+            }
+
             enemy.transform.position = nextPos;
             yield return null;
         }
@@ -104,6 +122,7 @@ public class DodgeComboStateAssa : AssasinState
         enemy.aiPath.enabled = true;
         enemy.boxTakeDame.enabled = true;
     }
+
     public void FlipToPlayer()
     {
         Vector3 direction = enemy.player.transform.position - enemy.transform.position;

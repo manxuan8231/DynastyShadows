@@ -26,7 +26,7 @@ public class DameZoneWeapon : MonoBehaviour
         if (other.CompareTag(tagPlayer) && !listDame.Contains(other))
         {
             listDame.Add(other);
-            playerStatus.TakeHealth(dame, enemy, "HitLeft");
+            playerStatus.TakeHealth(dame, enemy, "HitLeft", 1);
             playerStatus.TakeHealShield(dame);
         }
     }
@@ -35,7 +35,7 @@ public class DameZoneWeapon : MonoBehaviour
         if (other.gameObject.CompareTag(tagPlayer) && !listDame.Contains(other))
         {
             listDame.Add(other);
-            playerStatus.TakeHealth(dame, enemy, "HitLeft");
+            playerStatus.TakeHealth(dame, enemy, "HitLeft", 1);
             playerStatus.TakeHealShield(dame);
         }
     }
