@@ -331,7 +331,7 @@ public class PlayerStatus : MonoBehaviour
       
     }
 
-
+     
     public void ShowTextDame(float damage)
     {
         GameObject effectText = Instantiate(textDame, textTransform.position, Quaternion.identity);
