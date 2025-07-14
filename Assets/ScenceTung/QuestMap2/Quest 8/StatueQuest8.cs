@@ -22,7 +22,7 @@ public class StatueQuest8 : MonoBehaviour
         laserLine.enabled = false;
         currentDamage = damagePerSecond;
 
-        playerStatus = FindAnyObjectByType<PlayerStatus>();
+        playerStatus = GameObject.Find("Stats").GetComponent<PlayerStatus>();
     }
 
     void Update()
