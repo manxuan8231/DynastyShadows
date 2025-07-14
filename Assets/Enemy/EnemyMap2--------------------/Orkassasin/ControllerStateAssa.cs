@@ -26,10 +26,11 @@ public class ControllerStateAssa : MonoBehaviour,DodgeOnEnemyInterface
     public float cooldownSkillDash = 4f;
     public float lastTimeSkillDash = -4f;
     public float randomMoveSkillDash;
-
+    
     //bien kiem tra
-    public bool isMoveBack = true; // Biến để kiểm tra trạng thái di chuyển lùi
+    public bool isWaitMoveBack = false; // Biến để kiểm tra trạng thái di chuyển lùi cuar skill invi khi false thi ms cho chay skill
     public bool isRunSkillDashInHp = true;//biến để kiểm tra trạng thái chạy skill dash khi máu assasin dưới 80% 1 lan
+    public bool isSkillDash = false;
 
     //tham chieu
     public AIPath aiPath;
@@ -49,6 +50,8 @@ public class ControllerStateAssa : MonoBehaviour,DodgeOnEnemyInterface
       
         autoSkillKnife.SetActive(false);
         auraDash.SetActive(false);
+
+        isWaitMoveBack = false;
         ChangeState(new CurrentStateAssa(this));
     }
     private void Update()
@@ -63,11 +66,11 @@ public class ControllerStateAssa : MonoBehaviour,DodgeOnEnemyInterface
         currentState.Enter();     // Kích hoạt trạng thái mới
     }
 
-    public void TryDodgeAttack()//ne tranh đòn tấn công của player và chuyển trạng thái sang dodge
+    public void TryDodgeAttack()//ne tranh đòn tấn công của pl và chuyển trạng thái sang dodge
     {
-        if (!aiPath.canMove) return;
+        if (!aiPath.canMove || isSkillDash) return;
 
-        float chanceToDodge = 0.9f;
+        float chanceToDodge = 0.6f;
         if (Random.value <= chanceToDodge)
         {
             animator.SetTrigger("dodge");
@@ -75,7 +78,6 @@ public class ControllerStateAssa : MonoBehaviour,DodgeOnEnemyInterface
         }
     }
 
-   
-
+    
 
 }

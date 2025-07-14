@@ -5,6 +5,12 @@ public class EvenAnimatorAssa : MonoBehaviour
 {
     //ao anh
     public GameObject shadowPrefab;
+
+    //ao anh sau khi dash
+    [Header("Tao anh khi dash")]
+    public GameObject dashAfterImg;//prefab hình ảnh sau khi dash
+    public float afterImgDuration = 0.5f; // Thời gian tồn tại 
+   
     //phong dao
     public GameObject knifePrefab;
     public Transform knifeSpawnPoint;
@@ -79,6 +85,16 @@ public class EvenAnimatorAssa : MonoBehaviour
 
            
         }
+    }
+
+    //tao hinh anh khi dash
+    public void CreateAsterImg()
+    {
+    
+            GameObject afterImg = Instantiate(dashAfterImg, transform.position, transform.rotation);
+            Destroy(afterImg, afterImgDuration);
+          
+        
     }
 
 }

@@ -1,5 +1,4 @@
 ﻿
-using Pathfinding;
 using System.Collections;
 using UnityEngine;
 
@@ -10,6 +9,7 @@ public class CurrentStateAssa : AssasinState
     public override void Enter()
     {
         enemy.aiPath.maxSpeed = 5f;
+        enemy.aiPath.enableRotation = true;
     }
     public override void Exit()
     {
@@ -77,8 +77,5 @@ public class CurrentStateAssa : AssasinState
         }
     }
 
-   
-
-
-
+  
 }
