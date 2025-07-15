@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+public enum HealthState
+{
+   Full,
+   At30,
+   At70
+}
 public class StatueQuestHP : MonoBehaviour,IDamageable
 {
     public float currentHealth ;
@@ -9,8 +15,7 @@ public class StatueQuestHP : MonoBehaviour,IDamageable
     public Transform[] spawnPoints; // Vị trí spawn sẵn
     public int enemySpawnCount; // Số enemy muốn spawn
     public string enemyTag; // Tag của enemy dùng để gọi từ pool
-    public bool hasSpawned = false;
-
+    private HealthState healthState = HealthState.Full;
 
     void Start()
     {
@@ -34,11 +39,18 @@ public class StatueQuestHP : MonoBehaviour,IDamageable
         {
             Destroy(gameObject, 3f); // Hủy đối tượng khi máu về 0
         }
-        if (currentHealth <= maxHealth * 0.3f && !hasSpawned)
+        if (currentHealth <= maxHealth * 0.7f && healthState == HealthState.Full)
         {
             SpawnEnemies();
-            hasSpawned = true; // Đánh dấu đã spawn
-            Debug.Log("Đã spawn enemy khi máu về 30%");
+            Debug.Log("Đã spawn enemy khi máu về 70%");
+            healthState = HealthState.At70; // Cập nhật trạng thái
+        }
+        if (currentHealth <= maxHealth * 0.3f && healthState == HealthState.At70)
+        {
+            Debug.Log("Máu đã xuống dưới 30%");
+            // Thực hiện hành động khác nếu cần
+            SpawnEnemies(); // Có thể spawn thêm nếu cần
+            healthState = HealthState.At30; // Cập nhật trạng thái
         }
     }
     void SpawnEnemies()
