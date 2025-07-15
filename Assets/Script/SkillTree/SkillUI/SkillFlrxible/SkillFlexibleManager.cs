@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SkillFlexibleManager : MonoBehaviour
 {
+    
     //hinh icon skill
     public Sprite skill1;
     public Sprite skill2;
@@ -57,7 +58,11 @@ public class SkillFlexibleManager : MonoBehaviour
         buttonRemove.SetActive(false);
         slotIcon.color = Color.clear; // Ẩn icon ban đầu
     }
-        
+    private void OnDisable()
+    {
+        previewPanel.SetActive(false);
+        HideAllHighlights();
+    }
     public void ShowPreview(string iconID)
     {
         skillAudioSource.PlayOneShot(buttonClick);

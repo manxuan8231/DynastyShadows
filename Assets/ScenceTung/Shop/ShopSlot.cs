@@ -41,7 +41,7 @@ private void Start()
         {
             audioSource.PlayOneShot(buySound);
             playerStatus.gold -= price;
-            playerStatus.goldQuantityTxt.text = playerStatus.gold.ToString();
+            playerStatus.UpdateTextUIGold();
 
             inventoryManager.AddItem(
                 itermShopData.itemName,
@@ -70,7 +70,7 @@ private void Start()
             if (slot.itemName == itermShopData.itemName && slot.quantity > 0)
             {
                 playerStatus.gold += sellPrice;
-                playerStatus.goldQuantityTxt.text = playerStatus.gold.ToString();
+                playerStatus.UpdateTextUIGold();
 
                 slot.quantity--;
 

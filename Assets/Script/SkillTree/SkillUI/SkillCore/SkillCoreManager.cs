@@ -78,6 +78,13 @@ public class SkillCoreManager : MonoBehaviour
         }
         SimulateUnlockAllSkills(); //giả lập mở khóa tất cả kỹ năng
     }
+    private void OnDisable()
+    {
+        HideAllHighlights(); // Khi tắt panel thì ẩn tất cả hiệu ứng highlight
+        previewPanel.SetActive(false); // Ẩn panel preview khi tắt
+       
+    }
+
     public void ShowPreview(string iconID)
     {
         skillAudioSource.PlayOneShot(buttonClick);

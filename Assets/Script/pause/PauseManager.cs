@@ -22,36 +22,41 @@ public class PauseManager : MonoBehaviour
     public TextMeshProUGUI textInventory;
     public TextMeshProUGUI textSkillTree;
     public TextMeshProUGUI textSetting;
+
+    //tham chieu
+    private OpenSkillTree openSkillTree;
     void Start()
     {
+        openSkillTree =FindAnyObjectByType<OpenSkillTree>();
         canvasPause.SetActive(false);
     }
 
-    
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             bool isPaused = !canvasPause.activeSelf;
             canvasPause.SetActive(isPaused);
-            panelEquipment.SetActive(isPaused);
+           
             Time.timeScale = isPaused ? 0f : 1f;
 
             // Ẩn hoặc hiện chuột
             Cursor.visible = isPaused;
             Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
-
+            openSkillTree.textFlexible.color = Color.black;
             //img
-           
+            imageEquipment.enabled = isPaused;
             imageInventory.enabled = false;
             imageSetting.enabled = false;
             imageSkillTree.enabled = false;
             //text
-           
+            textEquipment.color = Color.black;
             textInventory.color = Color.white;
             textSkillTree.color = Color.white;
             textSetting.color = Color.white;
             //panel
+            panelEquipment.SetActive(isPaused);
             panelInventory.SetActive(false);
             panelSkillTree.SetActive(false);
             panelSetting.SetActive(false);
@@ -96,6 +101,7 @@ public class PauseManager : MonoBehaviour
     }
     public void ButtonSkillTree() 
     {
+       
         //img
         imageEquipment.enabled = false;
         imageInventory.enabled = false;

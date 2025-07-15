@@ -8,7 +8,7 @@ public class PlayerStatus : MonoBehaviour
     public int firstCritChance;
     //xử lý tăng vàng
     [SerializeField]
-    public TMP_Text goldQuantityTxt;
+    public TMP_Text[] goldQuantityTxt;
     public int gold = 0; // Số vàng hiện tại
     //xử lý stat
     public TMP_Text statHP;
@@ -137,7 +137,7 @@ public class PlayerStatus : MonoBehaviour
         effectStun.SetActive(false);
         effectLevelUp.SetActive(false);
         // gold
-        goldQuantityTxt.text = gold.ToString();
+        UpdateTextUIGold();
         UpdateUI();
         isReflectDamage = false;//khoi tao ban dau la false 
         isTakeHeal = true; //khởi tạo trạng thái cho phép mất máu
@@ -153,6 +153,13 @@ public class PlayerStatus : MonoBehaviour
         statCrit.text = criticalDamage.ToString() + "%";
         statCritChance.text = criticalChance.ToString() + "%";
 
+    }
+    public void UpdateTextUIGold()
+    {
+        for (int i = 0; i < goldQuantityTxt.Length; i++)
+        {
+            goldQuantityTxt[i].text = gold.ToString();
+        }
     }
     //preview stat item
     public void PreviewEquipmentItem(int hp, int mana,int dame,int crit,int critChance,Sprite itemImage,string itemName )
@@ -558,8 +565,10 @@ public class PlayerStatus : MonoBehaviour
     }
     public void IncreasedGold(int value)
     {
-         gold += value;
-         goldQuantityTxt.text = gold.ToString();
+        gold += value;
+        UpdateTextUIGold();
+
+
 
     }
 

@@ -59,7 +59,7 @@ public class AwardQuest : MonoBehaviour
         playerStatus.currentExp += 1000;
         playerStatus.expSlider.value = playerStatus.currentExp;
         playerStatus.gold += 100;
-        playerStatus.goldQuantityTxt.text = playerStatus.gold.ToString();
+        playerStatus.UpdateTextUIGold();
        InventoryManager.AddItem(itemQuests[0].itemPrefabsQuest.itemName,
             itemQuests[0].itemPrefabsQuest.quantity,
             itemQuests[0].itemPrefabsQuest.itemSprite,
@@ -86,7 +86,7 @@ public class AwardQuest : MonoBehaviour
         playerStatus.currentExp += 2000;
         playerStatus.expSlider.value = playerStatus.currentExp;
         playerStatus.gold += 200;
-        playerStatus.goldQuantityTxt.text = playerStatus.gold.ToString();
+        playerStatus.UpdateTextUIGold();
         InventoryManager.AddItem(itemQuests[1].itemPrefabsQuest.itemName,
              itemQuests[1].itemPrefabsQuest.quantity,
              itemQuests[1].itemPrefabsQuest.itemSprite,
@@ -111,7 +111,7 @@ public class AwardQuest : MonoBehaviour
         playerStatus.currentExp += 3000;
         playerStatus.expSlider.value = playerStatus.currentExp;
         playerStatus.gold += 300;
-        playerStatus.goldQuantityTxt.text = playerStatus.gold.ToString();
+        playerStatus.UpdateTextUIGold();
         InventoryManager.AddItem(itemQuests[2].itemPrefabsQuest.itemName,
              itemQuests[2].itemPrefabsQuest.quantity,
              itemQuests[2].itemPrefabsQuest.itemSprite,
@@ -137,7 +137,7 @@ public class AwardQuest : MonoBehaviour
         playerStatus.currentExp += 5000;
         playerStatus.expSlider.value = playerStatus.currentExp;
         playerStatus.gold += 500;
-        playerStatus.goldQuantityTxt.text = playerStatus.gold.ToString();
+        playerStatus.UpdateTextUIGold();
         InventoryManager.AddItem(itemQuests[3].itemPrefabsQuest.itemName,
              itemQuests[3].itemPrefabsQuest.quantity,
              itemQuests[3].itemPrefabsQuest.itemSprite,
