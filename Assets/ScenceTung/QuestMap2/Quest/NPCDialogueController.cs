@@ -283,6 +283,8 @@ public class NPCDialogueController : MonoBehaviour
         if(currentStage == QuestStage.Quest7Stage4)
         {
             canvasQuest.SetActive(false);
+            currentStage = QuestStage.Quest7Completed;
+            HandleQuestProgression();
             AwardQuest awardQuest = FindAnyObjectByType<AwardQuest>();
             awardQuest.AwardQuest2();
            
