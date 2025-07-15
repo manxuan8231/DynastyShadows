@@ -542,7 +542,7 @@ public class PlayerStatus : MonoBehaviour
         isHit = false; // Tắt trạng thái bị hit
       
         playerController.isController = false;// lại điều khiển nhân vật
-      // yield return new WaitForSeconds(0.3f);// thgian di chuyen dc
+      yield return new WaitForSeconds(0.3f);// thgian di chuyen dc
         playerController.isController = true; // Bật lại điều khiển nhân vật
         yield return new WaitForSeconds(time);
         isHit = true; // Bật lại trạng thái bị hit
