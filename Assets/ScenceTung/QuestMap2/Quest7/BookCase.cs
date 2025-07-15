@@ -36,7 +36,6 @@ public class BookCase : MonoBehaviour
     {
         if(npcDialogueController.currentStage == QuestStage.Quest7Stage2)
         {
-            back.SetActive(true);
 
             if (isCanOpen && !isActiveBtn)
             {
@@ -85,6 +84,8 @@ public class BookCase : MonoBehaviour
         canvasQuest.SetActive(false);
         canvasQuestGame.SetActive(true);
         questGameContent.text = "Mang về cho trưởng mục Lương ";
+        back.SetActive(true);
+
 
 
     }

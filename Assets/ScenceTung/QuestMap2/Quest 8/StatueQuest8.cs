@@ -6,8 +6,7 @@ public class StatueQuest8 : MonoBehaviour
     [Header("Laser Settings")]
     public float attackRange = 10f;
     public float damagePerSecond = 50f;
-    public float damageIncreasePerSecond = 10f;
-    public float maxDamage = 200f;
+  
 
     public LineRenderer laserLine;
     public Transform firePoint;
@@ -15,6 +14,7 @@ public class StatueQuest8 : MonoBehaviour
     private Transform currentTarget;
     private float currentDamage;
     private PlayerStatus playerStatus;
+    public float cooldownHit;
 
     void Start()
     {
@@ -73,15 +73,13 @@ public class StatueQuest8 : MonoBehaviour
         laserLine.SetPosition(0, firePoint.position);
         laserLine.SetPosition(1, currentTarget.position);
 
-        // Tăng damage theo thời gian
-        currentDamage += damageIncreasePerSecond * Time.deltaTime;
-        currentDamage = Mathf.Min(currentDamage, maxDamage);
-
+      
         // Gây damage
         if (playerStatus != null)
         {
             float actualDamage = currentDamage * Time.deltaTime;
-          //  playerStatus.TakeHealth(actualDamage,gameObject,"Hit");
+         playerStatus.TakeHealth(actualDamage,gameObject,"Hit", cooldownHit);
+            playerStatus.TakeHealShield(0.1f);
         }
     }
 
