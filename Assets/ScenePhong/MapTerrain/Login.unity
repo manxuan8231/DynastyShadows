@@ -6708,7 +6708,6 @@ GameObject:
   - component: {fileID: 1333751367}
   - component: {fileID: 1333751369}
   - component: {fileID: 1333751368}
-  - component: {fileID: 1333751370}
   m_Layer: 5
   m_Name: DangNhap
   m_TagString: Untagged
@@ -6727,8 +6726,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7024629, y: 0.63038886, z: 0.72574806}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1693014903}
+  m_Children: []
   m_Father: {fileID: 1641860108}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6774,21 +6772,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1333751366}
   m_CullTransparentMesh: 1
---- !u!114 &1333751370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1333751366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26a353a799f06174e82d1c4a87e82015, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myMixer: {fileID: 24100000, guid: e741c0b0a0ec86c469264a0b0eda9817, type: 2}
-  musicSlider: {fileID: 0}
-  sfxSlider: {fileID: 0}
 --- !u!1 &1426851773
 GameObject:
   m_ObjectHideFlags: 0
@@ -6870,9 +6853,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1333751367}
+  - {fileID: 669026711}
   - {fileID: 595513187}
   - {fileID: 2017441021}
-  - {fileID: 669026711}
+  - {fileID: 1693014903}
   m_Father: {fileID: 650846832}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -6905,16 +6889,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693014902}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.3301487, y: 4.3301487, z: 4.3301487}
+  m_LocalScale: {x: 3.0417688, y: 2.7296774, z: 3.1425972}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1333751367}
+  m_Father: {fileID: 1641860108}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.922, y: 416}
+  m_AnchoredPosition: {x: 2.9477892, y: 425}
   m_SizeDelta: {x: 236.272, y: 46.477}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1693014904
