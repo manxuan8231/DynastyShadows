@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class OpenSkillTree : MonoBehaviour
 {
     public GameObject panelSkillTree;
+    public GameObject pauseManager;
     // Các đối tượng Skill Tree
     // Flexible Skill
     public GameObject flexibleSkill;
@@ -25,8 +26,10 @@ public class OpenSkillTree : MonoBehaviour
     void Start()
     {
            panelSkillTree.SetActive(false);
-           flexibleSkill.SetActive(false);
-           coreTree.SetActive(false);    
+        buttonCoreBG.enabled = false;
+        // flexibleSkill.SetActive(false);
+
+        coreTree.SetActive(false);    
             audioSource = GetComponent<AudioSource>(); // Lấy AudioSource từ GameObject này
     }
 
@@ -38,6 +41,7 @@ public class OpenSkillTree : MonoBehaviour
             bool willOpen = !panelSkillTree.activeSelf; // Trạng thái sau khi nhấn
 
             panelSkillTree.SetActive(willOpen);
+            pauseManager.SetActive(willOpen);
             audioSource.PlayOneShot(openSkillTreeSound);
             Cursor.lockState = willOpen ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = willOpen;
