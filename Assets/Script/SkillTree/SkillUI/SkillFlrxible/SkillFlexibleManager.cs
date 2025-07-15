@@ -96,7 +96,7 @@ public class SkillFlexibleManager : MonoBehaviour
                 break;
 
             case "Shield":
-                if (itemQuestUnlock != null && itemQuestUnlock.showSkill4 && activeSkillUnlock == 3)
+                if (itemQuestUnlock != null && itemQuestUnlock.showSkill4 && activeSkillUnlock >= 3)
                 {
                     previewText.text = "Khiên Chắn";
                     contenSkill.text = "Khi dùng kỹ năng này thì player sẽ được lớp giáp ảo gồm 500 máu và kháng tất cả hiệu ứng.";

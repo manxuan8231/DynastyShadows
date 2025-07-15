@@ -1,11 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEngine;
 using UnityEngine.UI;
 
 public enum HealthState
 {
    Full,
    At30,
-   At70
+   At70,
+   isDead
 }
 public class StatueQuestHP : MonoBehaviour,IDamageable
 {
@@ -34,13 +36,16 @@ public class StatueQuestHP : MonoBehaviour,IDamageable
 
     public void TakeDamage(float damage)
     {
+        if (healthState == HealthState.isDead) return; 
+      
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         sliderHp.value = currentHealth;
         if (currentHealth <= 0)
         {
+            healthState = HealthState.isDead; // Cập nhật trạng thái khi máu về 0
             quest8.StartQuest2();
-            Destroy(gameObject,1); // Hủy đối tượng khi máu về 0
+            Destroy(gameObject); // Hủy đối tượng khi máu về 0
         }
         if (currentHealth <= maxHealth * 0.7f && healthState == HealthState.Full)
         {

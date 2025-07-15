@@ -9,7 +9,7 @@ public class ActiveQuest8 : MonoBehaviour
     public GameObject playerInGame; // Player gameplay
     public GameObject playerTimeLine; // Player trong cutscene
     public PlayableDirector playableDirector;
-   
+    public bool isTimeline1 = false;
     public GameObject model;
 
     //time line 2
@@ -29,7 +29,7 @@ public class ActiveQuest8 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(npc.currentStage == QuestStage.Quest7Completed)
+        if(npc.currentStage == QuestStage.Quest7Completed & !isTimeline1)
         {
             StartCoroutine(StartQuest());
            
@@ -37,6 +37,7 @@ public class ActiveQuest8 : MonoBehaviour
     }
     IEnumerator StartQuest()
     {
+        isTimeline1 = true; // Đánh dấu là đã kích hoạt timeline 1
         yield return new WaitForSeconds(8f);
         playerInGame.SetActive(false); // Ẩn player thật
         timeLine.SetActive(true); // Bật timeline
