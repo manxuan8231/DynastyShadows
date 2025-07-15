@@ -5,7 +5,7 @@ public class InventoryManager : MonoBehaviour
 {
     public GameObject inventoryMenu;
     public GameObject inventoryLogo;
-
+    public GameObject canvasPauser;
 
     public GameObject equipmentMenu;
     public bool isOpenInventory = true;
@@ -21,9 +21,9 @@ public class InventoryManager : MonoBehaviour
     void Update()
     {
         audioSource = GameObject.Find("Inventory").GetComponent<AudioSource>();
-        if (Input.GetButtonDown("Inventory") && isOpenInventory)
+        if (Input.GetButtonDown("Inventory") && isOpenInventory && !canvasPauser.activeSelf)
             Inventory();
-        if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory)
+        if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory && !canvasPauser.activeSelf)
             EquipmentMenu();
 
     }
