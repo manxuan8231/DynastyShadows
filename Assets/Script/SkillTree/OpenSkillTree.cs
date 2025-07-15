@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class OpenSkillTree : MonoBehaviour
 {
     public GameObject panelSkillTree;
-    public GameObject pauseManager;
+    public GameObject canvasManager;
     // Các đối tượng Skill Tree
     // Flexible Skill
     public GameObject flexibleSkill;
@@ -23,8 +23,12 @@ public class OpenSkillTree : MonoBehaviour
     public AudioSource audioSource; // Thêm biến AudioSource để phát âm thanh
     public AudioClip openSkillTreeSound; // Thêm biến AudioClip để chứa âm thanh mở Skill Tree
     public AudioClip clickButtonSound;
+
+    //tham chieu
+    public PauseManager pauseManager;
     void Start()
     {
+        pauseManager = FindAnyObjectByType<PauseManager>();
            panelSkillTree.SetActive(false);
         buttonCoreBG.enabled = false;
         // flexibleSkill.SetActive(false);
@@ -41,7 +45,7 @@ public class OpenSkillTree : MonoBehaviour
             bool willOpen = !panelSkillTree.activeSelf; // Trạng thái sau khi nhấn
 
             panelSkillTree.SetActive(willOpen);
-            pauseManager.SetActive(willOpen);
+            canvasManager.SetActive(willOpen);
             audioSource.PlayOneShot(openSkillTreeSound);
             Cursor.lockState = willOpen ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = willOpen;
@@ -60,6 +64,22 @@ public class OpenSkillTree : MonoBehaviour
             panelInven.SetActive(false);
             panelInvenEq.SetActive(false);
             buttonInven.SetActive(false);
+
+            //pause manager
+            //img
+            pauseManager.imageEquipment.enabled = false;
+            pauseManager.imageInventory.enabled = false;
+            pauseManager.imageSetting.enabled = false;
+            pauseManager.imageSkillTree.enabled = true;
+            //text
+            pauseManager.textEquipment.color = Color.white;
+            pauseManager.textInventory.color = Color.white;
+            pauseManager.textSkillTree.color = Color.black;
+            pauseManager.textSetting.color = Color.white;
+            //panel
+            pauseManager.panelInventory.SetActive(false);
+        
+            pauseManager.panelSetting.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Tab))
         {
