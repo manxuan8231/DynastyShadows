@@ -42,6 +42,16 @@ public class NPCController : MonoBehaviour
             dialoguePanel.SetActive(false);
 
         GetNewDestination();
+
+        // Đẩy ra nếu spawn đè NPC khác
+        Collider[] overlaps = Physics.OverlapSphere(transform.position, 0.5f);
+        foreach (var col in overlaps)
+        {
+            if (col.gameObject != this.gameObject && col.GetComponent<NPCController>())
+            {
+                transform.position += new Vector3(Random.Range(1f, 2f), 0, Random.Range(1f, 2f));
+            }
+        }
     }
 
     void Update()
@@ -61,29 +71,42 @@ public class NPCController : MonoBehaviour
             else
                 StartCoroutine(WaitAndMove());
         }
+
+        if (!aiPath.canMove)
+        {
+            Debug.Log($"{name} đang bị khóa di chuyển (canMove = false)");
+        }
+
+        if (destinationSetter.target == null && !isTalking && !isWaiting)
+        {
+            Debug.LogWarning($"{name} KHÔNG có target nào → có thể đang đứng yên?");
+        }
     }
 
     void GetNewDestination()
     {
-        if (moveCount >= movesBeforeTalking)
-        {
-            isSeekingConversation = true;
-            GoToClosestNPC();
-            return;
-        }
-
         Vector3 randomDirection = Random.insideUnitSphere * patrolRadius + transform.position;
         randomDirection.y = transform.position.y;
 
-        GraphNode node = AstarPath.active.GetNearest(randomDirection).node;
-        if (node != null && node.Walkable)
+        NNInfo nearest = AstarPath.active.GetNearest(randomDirection);
+        if (nearest.node != null && nearest.node.Walkable)
         {
-            currentTarget = new GameObject("PatrolTarget").transform;
-            currentTarget.position = (Vector3)node.position;
+            if (currentTarget != null)
+                Destroy(currentTarget.gameObject);
+
+            currentTarget = new GameObject($"{gameObject.name}_PatrolTarget").transform;
+            currentTarget.position = nearest.position;
+
             destinationSetter.target = currentTarget;
+            aiPath.SearchPath();
             moveCount++;
         }
+        else
+        {
+            Debug.LogWarning($"{name} không tìm được vị trí walkable gần {randomDirection}");
+        }
     }
+
 
     IEnumerator WaitAndMove()
     {
@@ -130,7 +153,10 @@ public class NPCController : MonoBehaviour
             GraphNode node = AstarPath.active.GetNearest(stopPosition).node;
             if (node != null && node.Walkable)
             {
-                currentTarget = new GameObject("TalkTarget").transform;
+                if (currentTarget != null)
+                    Destroy(currentTarget.gameObject);
+
+                currentTarget = new GameObject($"{gameObject.name}_TalkTarget").transform;
                 currentTarget.position = (Vector3)node.position;
                 destinationSetter.target = currentTarget;
             }
@@ -182,9 +208,12 @@ public class NPCController : MonoBehaviour
         isTalking = false;
         hasTalkedWith = false;
         aiPath.canMove = true;
-        Destroy(currentTarget?.gameObject);
-        GetNewDestination();
 
+        if (currentTarget != null)
+            Destroy(currentTarget.gameObject);
+        currentTarget = null;
+
+        GetNewDestination();
         other.EndConversation();
     }
 
@@ -207,8 +236,12 @@ public class NPCController : MonoBehaviour
         isTalking = false;
         hasTalkedWith = false;
         aiPath.canMove = true;
-        Destroy(currentTarget?.gameObject);
-        GetNewDestination();
+
+        if (currentTarget != null)
+            Destroy(currentTarget.gameObject);
+        currentTarget = null;
+
+        GetNewDestination(); 
     }
 
 

@@ -15,7 +15,7 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
     public bool isSelected;
     public Sprite emptySprite;
     public ItemType itemType;
-  
+    public Toggle selectionToggle;
     // Item Slot
     [SerializeField]
     public TMP_Text quantityText;
@@ -34,6 +34,7 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
 
     //gọi hàm
     private InventoryManager inventoryManager;
+    public bool isMarkedForDelete; 
 
     private void Start()
     {

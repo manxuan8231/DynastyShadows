@@ -17,6 +17,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
     public bool isSelected;
     public Sprite emptySprite;
     public ItemType itemType;
+    public bool isMarkedForDelete; 
 
 
     //equip slot
