@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class AssasinHp : MonoBehaviour,IDamageable
@@ -13,8 +14,12 @@ public class AssasinHp : MonoBehaviour,IDamageable
     public float scoreDodge = 0f;
     //tham chieu
     public ControllerStateAssa controllerStateAssa;
-  
 
+    [Header("TimeLine")]
+    public GameObject timeLine;
+    public GameObject playerInGame; // Player gameplay
+    public GameObject playerTimeLine; // Player trong cutscene
+    public PlayableDirector playableDirector;
     void Start()
     {
         curentHp = maxHp;
@@ -22,6 +27,7 @@ public class AssasinHp : MonoBehaviour,IDamageable
         sliderHp.value = curentHp;
         textHp.text =$"{curentHp}/{maxHp}";
         controllerStateAssa = FindAnyObjectByType<ControllerStateAssa>();
+        playerInGame = GameObject.FindGameObjectWithTag("Player");
     }
 
     
@@ -35,7 +41,11 @@ public class AssasinHp : MonoBehaviour,IDamageable
         curentHp -= (int)damage;
         curentHp = Mathf.Clamp(curentHp, 0, maxHp);
         UpdateUI();
-       
+
+        if (curentHp <= 0)
+        {
+           controllerStateAssa.animator.SetTrigger("Dead");
+        }
     }
     void UpdateUI()
     {
