@@ -31,19 +31,22 @@ public class AttackStateAssa : AssasinState
             if (enemy.stepAttack == 0)
             {
                 enemy.stepAttack++;
-                
+                enemy.StartCoroutine(enemy.PrepareThenAttack());// Chuẩn bị tấn công
                 enemy.animator.SetTrigger("Attack1");
                 enemy.StartCoroutine(WaitCanMove(1.5f));
+               
             }
             else if (enemy.stepAttack == 1)
             {
                 enemy.stepAttack++;
+                enemy.StartCoroutine(enemy.PrepareThenAttack());// Chuẩn bị tấn công
                 enemy.animator.SetTrigger("Attack2");
                 enemy.StartCoroutine(WaitCanMove(1.5f));
             }
             else if (enemy.stepAttack == 2)
             {
                 enemy.stepAttack = 0f;
+                enemy.StartCoroutine(enemy.PrepareThenAttack());// Chuẩn bị tấn công
                 enemy.animator.SetTrigger("Attack3");
                 enemy.StartCoroutine(WaitCanMove(1.5f));
             }
@@ -107,18 +110,9 @@ public class AttackStateAssa : AssasinState
         Vector3 targetPos = enemy.transform.position + chosenDir * moveDistance;
         enemy.aiPath.destination = targetPos;
     }
-
-    public IEnumerator WaitCanMove(float second)
-    {
-        enemy.aiPath.canMove = false;
-        yield return new WaitForSeconds(second);
-        enemy.aiPath.canMove = true;
-    }
-
-
     public void FlipToPlayer()
     {
-        Vector3 direction =enemy. player.transform.position - enemy.transform.position;
+        Vector3 direction = enemy.player.transform.position - enemy.transform.position;
 
         // Không xoay theo trục dọc
         direction.y = 0f;
@@ -128,7 +122,13 @@ public class AttackStateAssa : AssasinState
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         enemy.transform.rotation = lookRotation;
     }
-    
+    //ienume
+    public IEnumerator WaitCanMove(float second)
+    {
+        enemy.aiPath.canMove = false;
+        yield return new WaitForSeconds(second);
+        enemy.aiPath.canMove = true;
+    }
 
-
+  
 }

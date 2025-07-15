@@ -127,12 +127,14 @@ public class SkillKnifeStateAssa : AssasinState
             SetLayerRecursively(enemy.gameObject, layerDefauld);
            
             enemy.animator.SetTrigger("WaitDash");
+            enemy.StartCoroutine(enemy.PrepareThenAttack());// Chuẩn bị tấn công
             yield return new WaitForSeconds(0.3f);
            
             enemy.evenAnimatorAssa.StartShadow(); //  tạo ảo ảnh nếu chưa đủ
             Vector3 direction = (enemy.player.transform.position - enemy.transform.position).normalized;
             Vector3 final = enemy.transform.position + direction * 20f;
             enemy.StartCoroutine(DashCaculator(final, 0.2f));
+         
             enemy.animator.SetTrigger("Dash");
 
             yield return new WaitForSeconds(1f);//bat tang hinh lai
@@ -214,11 +216,13 @@ public class SkillKnifeStateAssa : AssasinState
             enemy.transform.position = shadow.transform.position;
             ShadowAssa shadowAssa = shadow.GetComponent<ShadowAssa>();
             if (shadowAssa != null) { shadowAssa.Disappear(); }//destroy
+            enemy.StartCoroutine(enemy.PrepareThenAttack());// Chuẩn bị tấn công thi goi pl de slow
             yield return new WaitForSeconds(0.1f);
 
             // Dash từ shadow tới player
             Vector3 direction = (enemy.player.transform.position - enemy.transform.position).normalized;
             Vector3 final = enemy.transform.position + direction * 40f;
+           
             enemy.animator.SetTrigger("Dash");
             yield return DashCaculator(final, 0.2f);
 
@@ -233,7 +237,7 @@ public class SkillKnifeStateAssa : AssasinState
         enemy.transform.position = finalPos;
         enemy.transform.rotation = Quaternion.LookRotation(enemy.player.transform.position - enemy.transform.position);
 
-       
+        enemy.StartCoroutine(enemy.PrepareThenAttack());// Chuẩn bị tấn công
         enemy.animator.SetTrigger("FinalAttackDash");
 
         // Chuyển sang trạng thái khác sau animation

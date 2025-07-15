@@ -7407,6 +7407,7 @@ MonoBehaviour:
   boxTakeDame: {fileID: 1768667871680468900}
   evenAnimatorAssa: {fileID: 1597135625031075781}
   assasinHp: {fileID: 0}
+  playerControllerState: {fileID: 0}
 --- !u!114 &1597135625031075781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11350,6 +11351,10 @@ PrefabInstance:
     - target: {fileID: 5813507390857119770, guid: 6e523a4d27abf8c42882070e046f4adf, type: 3}
       propertyPath: m_Name
       value: KnifeAssa
+      objectReference: {fileID: 0}
+    - target: {fileID: 9173998045070550255, guid: 6e523a4d27abf8c42882070e046f4adf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9207945912718678793, guid: 6e523a4d27abf8c42882070e046f4adf, type: 3}
       propertyPath: m_LocalPosition.x

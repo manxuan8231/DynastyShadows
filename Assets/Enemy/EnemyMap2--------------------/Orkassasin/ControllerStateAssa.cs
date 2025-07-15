@@ -32,12 +32,14 @@ public class ControllerStateAssa : MonoBehaviour,DodgeOnEnemyInterface
     public bool isRunSkillDashInHp = true;//biến để kiểm tra trạng thái chạy skill dash khi máu assasin dưới 80% 1 lan
     public bool isSkillDash = false;
 
+
     //tham chieu
     public AIPath aiPath;
     public Animator animator;
     public Collider boxTakeDame;
     public EvenAnimatorAssa evenAnimatorAssa;
     public AssasinHp assasinHp;
+    public PlayerControllerState playerControllerState;
     // Trạng thái hiện tại
     private AssasinState currentState;
     private void Start()
@@ -45,6 +47,7 @@ public class ControllerStateAssa : MonoBehaviour,DodgeOnEnemyInterface
         player = GameObject.FindWithTag("Player");
         evenAnimatorAssa = FindAnyObjectByType<EvenAnimatorAssa>();
         assasinHp = FindAnyObjectByType<AssasinHp>();
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
         aiPath = GetComponent<AIPath>();
         animator = GetComponent<Animator>();
       
@@ -78,6 +81,12 @@ public class ControllerStateAssa : MonoBehaviour,DodgeOnEnemyInterface
         }
     }
 
-    
 
+    public IEnumerator PrepareThenAttack()//goi khi enemy chuan bi tan cong
+    {
+        playerControllerState.isEnemyPreparingAttack = true;
+        yield return new WaitForSeconds(0.5f);
+        playerControllerState.isEnemyPreparingAttack = false;
+
+    }
 }

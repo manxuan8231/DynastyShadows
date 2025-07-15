@@ -40,6 +40,12 @@ public class EvenAnimator : MonoBehaviour
     public AudioClip slash2Audio;
     public AudioClip slash3Audio;
     public LayerMask layerEnemy;
+
+    //ao anh sau khi dash
+    [Header("Tao anh khi dash")]
+    public GameObject dashAfterImg;//prefab hình ảnh sau khi dash
+    public float afterImgDuration = 0.5f; // Thời gian tồn tại 
+
     //tham chieu 
     DameZone dameZone;
     ComboAttack comboAttack;
@@ -259,5 +265,13 @@ public class EvenAnimator : MonoBehaviour
         }
     }
 
-    
+    //tao hinh anh khi dash
+    public void CreateAsterImg()
+    {
+
+        GameObject afterImg = Instantiate(dashAfterImg, transform.position, transform.rotation);
+        Destroy(afterImg, afterImgDuration);
+
+
+    }
 }

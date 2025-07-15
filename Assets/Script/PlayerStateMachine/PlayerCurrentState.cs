@@ -143,7 +143,7 @@ public class PlayerCurrentState : PlayerState
         if (Input.GetKeyDown(KeyCode.LeftControl) && 
             player.isGrounded &&
             player.playerStatus.currentMana > 100 &&
-            Time.time >= player.rollColdownTime + 1f && player.isRollBack)
+            Time.time >= player.rollColdownTime + 1f && player.isRollBack && player.playerStatus.isHit)
         {
             
             player.playerStatus.TakeMana(100);
@@ -171,14 +171,19 @@ public class PlayerCurrentState : PlayerState
                         player.transform.rotation = targetRotation; // hoặc dùng Slerp nếu muốn mượt
                     }
                 }
+                //slowmotion
+                if (player.isEnemyPreparingAttack)
+                {
+                   player.StartCoroutine(SlowMotionDash());
+                }
+                else
+                {
+                    
+                    player.animator.SetTrigger("RollBack");
+                }
 
-                // Dash lùi về phía sau
-                Vector3 backward = -player.transform.forward * 5f;
-                Vector3 targetPosition = player.transform.position + backward;
-                targetPosition.y = player.transform.position.y;
 
-                player.StartCoroutine(DashCaculator(targetPosition, 0.2f));//dash ra sau 
-                player.animator.SetTrigger("RollBack");
+                   
             }
 
             player.rollColdownTime = Time.time;
@@ -232,6 +237,15 @@ public class PlayerCurrentState : PlayerState
     //slowmotion
     public IEnumerator SlowMotionDash()
     {
+        //tao bong
+        player.evenAnimator.CreateAsterImg();
+        // Dash lùi về phía sau
+        Vector3 backward = -player.transform.forward * 5f;
+        Vector3 targetPosition = player.transform.position + backward;
+        targetPosition.y = player.transform.position.y;
+
+        player.StartCoroutine(DashCaculator(targetPosition, 0.2f));//dash ra sau 
+        player.animator.SetTrigger("dashBack");
         Time.timeScale = 0.2f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale; // cần để FixedUpdate không bị bug
 

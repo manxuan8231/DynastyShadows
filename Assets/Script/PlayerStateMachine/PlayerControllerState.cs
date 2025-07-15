@@ -1,4 +1,5 @@
 ﻿
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
@@ -36,7 +37,7 @@ public class PlayerControllerState : MonoBehaviour
     //bien kiem tra 
     public bool isRunning = false;
     public bool isController = true;
-    
+    public bool isEnemyPreparingAttack = false; //bien kiem tra enemy chuan bi tan cong
     //cooldown roll
     public float rollColdownTime = -2f;
    
@@ -45,7 +46,7 @@ public class PlayerControllerState : MonoBehaviour
     public ComboAttack comboAttack;
     public CameraFollow thirdPersonOrbitCamera;
     public EvenAnimator evenAnimator;
-  
+    public ControllerStateAssa controllerStateAssa;
     //skill2 tham chieu
     public bool isRemoveClone = false;
     public bool isSkinSkill3Clone = false; //kiểm tra xem có sử dụng skin skill3 clone hay không
@@ -71,22 +72,24 @@ public class PlayerControllerState : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
-        animator.runtimeAnimatorController = animatorDefauld; // Gán bộ điều khiển hoạt hình mặc định
+        animator = GetComponent<Animator>();     
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         skill1Manager = FindAnyObjectByType<Skill1Manager>();
         skill2Manager = FindAnyObjectByType<Skill2Manager>();
         skill3Manager = FindAnyObjectByType<Skill3Manager>();
         skill4Manager = FindAnyObjectByType<Skill4Manager>();
-       
+        controllerStateAssa = FindAnyObjectByType<ControllerStateAssa>();
         thirdPersonOrbitCamera = FindAnyObjectByType<CameraFollow>();
         evenAnimator = FindAnyObjectByType<EvenAnimator>();
+
         weaponSword.SetActive(false);
         audioSource = GetComponent<AudioSource>();
         canvasLoad.SetActive(false);
         rigBuilder = GetComponent<RigBuilder>();
         rigBuilder.enabled = false;
+        animator.runtimeAnimatorController = animatorDefauld; // Gán bộ điều khiển hoạt hình mặc định
+       
         //vị trí checkpoint
         //if (PlayerPrefs.HasKey("CheckpointX"))
         //{
@@ -175,6 +178,4 @@ public class PlayerControllerState : MonoBehaviour
         return closest;
     }
 
-    
-   
 }

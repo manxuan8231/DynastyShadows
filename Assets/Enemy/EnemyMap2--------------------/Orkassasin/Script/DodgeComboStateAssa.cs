@@ -38,6 +38,7 @@ public class DodgeComboStateAssa : AssasinState
         attackFronPl.y = enemy.transform.position.y; // giữ nguyên độ cao
         enemy.transform.position = attackFronPl;
 
+        enemy.StartCoroutine(enemy.PrepareThenAttack());// Chuẩn bị tấn công
         enemy.animator.SetTrigger("attack11");
         yield return new WaitForSeconds(1f);
 
@@ -57,6 +58,7 @@ public class DodgeComboStateAssa : AssasinState
         Vector3 targetPosition = enemy.player.transform.position - rightOfPlayer;
         targetPosition.y = enemy.transform.position.y; // giữ nguyên độ cao
         enemy.transform.position = targetPosition;
+        enemy.StartCoroutine(enemy.PrepareThenAttack());// Chuẩn bị tấn công
         enemy.animator.SetTrigger("attack16");
         yield return new WaitForSeconds(1f);
 
