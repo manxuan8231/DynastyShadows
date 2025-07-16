@@ -83,7 +83,7 @@ public class EvenAnimatorAssa : MonoBehaviour
             // Bắn dao theo hướng đó
             rb.AddForce(direction * 50f, ForceMode.Impulse);
 
-           
+           Destroy(instan, 4f); // Hủy dao sau 2 giây
         }
     }
 

@@ -10299,7 +10299,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4424448862317110993
 Transform:
   m_ObjectHideFlags: 0
@@ -21720,6 +21720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d581b27b741b664085bfd91dc40cbfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   agent: {fileID: 5890275434495508831}
   aiPath: {fileID: -4451898098012513126}
   animator: {fileID: 256680334051184096}
@@ -21746,7 +21747,6 @@ MonoBehaviour:
   - {fileID: 6888735548785003645}
   - {fileID: 1368475727062025023}
   - {fileID: 4984782410142098037}
-  auraSlash: {fileID: 1132218323584822757}
   skillUseHandler: {fileID: 0}
 --- !u!114 &-5533079187246399814
 MonoBehaviour:
@@ -21781,6 +21781,11 @@ MonoBehaviour:
   slash1Audio: {fileID: 8300000, guid: 449b0cbc9fc552847acf59beaa5b82bf, type: 3}
   slash2Audio: {fileID: 8300000, guid: bf4924c22e8f87643b75b3dd7d802f72, type: 3}
   slash3Audio: {fileID: 8300000, guid: 2f52cb00a105ed94baf3d54fc271c763, type: 3}
+  layerEnemy:
+    serializedVersion: 2
+    m_Bits: 0
+  dashAfterImg: {fileID: 0}
+  afterImgDuration: 0.5
 --- !u!195 &5890275434495508831
 NavMeshAgent:
   m_ObjectHideFlags: 0
