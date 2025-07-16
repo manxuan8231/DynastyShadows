@@ -37,9 +37,13 @@ public class CraftingUI : MonoBehaviour
             if (recipe.output.Length > 0 && recipe.output[0].item != null)
             {
                 Image iconImage = slot.transform.Find("Image").GetComponent<Image>();
-
                 iconImage.sprite = recipe.output[0].item.itemSprite;
             }
+            else
+            {
+                Debug.LogWarning($"Recipe '{recipe.recipeName}' has no valid output item!");
+            }
+
 
             slot.GetComponent<Button>().onClick.AddListener(() => OnRecipeSelected(recipe));
         }
@@ -55,20 +59,19 @@ public class CraftingUI : MonoBehaviour
 
         for (int i = 0; i < inputImages.Length; i++)
         {
-            if (i < recipe.input.Length && recipe.input[i].item != null)
+            if (i < recipe.input.Length && recipe.input[i]?.item != null)
             {
-                inputImages[i].sprite = recipe.input[i].item.itemIcon;
+                var item = recipe.input[i].item;
+                inputImages[i].sprite = item.itemIcon;
                 inputImages[i].gameObject.SetActive(true);
 
-                // Gán text số lượng
                 if (inputAmountTexts != null && i < inputAmountTexts.Length)
                 {
-                    int playerAmount = inventory.GetItemCount(recipe.input[i].item.itemName);
+                    int playerAmount = inventory.GetItemCount(item.itemName);
                     string coloredText = playerAmount >= recipe.input[i].count
                         ? $"<color=white>{playerAmount}/{recipe.input[i].count}</color>"
                         : $"<color=red>{playerAmount}/{recipe.input[i].count}</color>";
-                    inputAmountTexts[i].text = $"{coloredText} {recipe.input[i].item.itemName}";
-
+                    inputAmountTexts[i].text = $"{coloredText} {item.itemName}";
                     inputAmountTexts[i].gameObject.SetActive(true);
                 }
             }
@@ -79,6 +82,7 @@ public class CraftingUI : MonoBehaviour
                     inputAmountTexts[i].gameObject.SetActive(false);
             }
         }
+
 
 
         for (int i = 0; i < outputImages.Length; i++)
