@@ -143,6 +143,9 @@ public class PlayerStatus : MonoBehaviour
         isTakeHeal = true; //khởi tạo trạng thái cho phép mất máu
         isShieldActive = false; //khởi tạo trạng thái máu ảo là không hoạt động
         shieldHealthObject.SetActive ( false);
+       
+        PlayerStatsHandler.LoadStats(out score, out currentLevel, out gold);//lưu
+
     }
     //update lại toàn bộ
     public void UpdateUI()
@@ -152,7 +155,14 @@ public class PlayerStatus : MonoBehaviour
         statDame.text = baseDamage.ToString();
         statCrit.text = criticalDamage.ToString() + "%";
         statCritChance.text = criticalChance.ToString() + "%";
-
+        for (int i = 0; i < scoreText.Length; i++)//cap nhap diem moon
+        {
+            scoreText[i].text = "" + score.ToString();
+        }
+        for (int i = 0; i < levelText.Length; i++)//level up text
+        {
+            levelText[i].text = currentLevel.ToString();
+        }
     }
     public void UpdateTextUIGold()
     {
@@ -186,9 +196,11 @@ public class PlayerStatus : MonoBehaviour
        
         UpdateUI(); // Cập nhật UI mỗi frame
         RegenerateMana();//hoi mana
-       
+        UpdateTextUIGold();
+
     }
 
+   
     //hp
     public void TakeHealth(float amount ,GameObject enemy, string animName,float timeHit)
     {
@@ -429,10 +441,7 @@ public class PlayerStatus : MonoBehaviour
     {
         score -= amount;
         score = Mathf.Clamp(score, 0, int.MaxValue);
-        for (int i = 0; i < scoreText.Length; i++)
-        {
-            scoreText[i].text = "" + score.ToString();
-        }
+       
 
     }
 

@@ -47,7 +47,8 @@ public class PlayerControllerState : MonoBehaviour
     public CameraFollow thirdPersonOrbitCamera;
     public EvenAnimator evenAnimator;
     public ControllerStateAssa controllerStateAssa;
-    //skill2 tham chieu
+   
+    //skill tham chieu
     public bool isRemoveClone = false;
     public bool isSkinSkill3Clone = false; //kiểm tra xem có sử dụng skin skill3 clone hay không
     public Skill2Manager skill2Manager;   
@@ -82,6 +83,8 @@ public class PlayerControllerState : MonoBehaviour
         controllerStateAssa = FindAnyObjectByType<ControllerStateAssa>();
         thirdPersonOrbitCamera = FindAnyObjectByType<CameraFollow>();
         evenAnimator = FindAnyObjectByType<EvenAnimator>();
+     
+
 
         weaponSword.SetActive(false);
         audioSource = GetComponent<AudioSource>();
@@ -89,22 +92,8 @@ public class PlayerControllerState : MonoBehaviour
         rigBuilder = GetComponent<RigBuilder>();
         rigBuilder.enabled = false;
         animator.runtimeAnimatorController = animatorDefauld; // Gán bộ điều khiển hoạt hình mặc định
-       
-        //vị trí checkpoint
-        //if (PlayerPrefs.HasKey("CheckpointX"))
-        //{
-        //    Debug.Log("luu vi tri khi spawnpoint trc");
-        //   float X = PlayerPrefs.GetFloat("CheckpointX");
-        //    float Y = PlayerPrefs.GetFloat("CheckpointY");
-        //   float Z = PlayerPrefs.GetFloat("CheckpointZ");
-        //    checkpointPosition = new Vector3(X, Y, Z);
-        //   transform.position = checkpointPosition; // Đặt vị trí của người chơi về vị trí checkpoint đã lưu
-        //}
-        //else
-        //{
-        //    Debug.Log("lay vi tri cu");
-        //    checkpointPosition = transform.position; // Nếu không có checkpoint, sử dụng vị trí hiện tại
-        //}
+
+       // CheckpointHandler.LoadCheckpoint(transform);
 
         // Gọi hàm ChangeState để chuyển sang trạng thái ban đầu
         ChangeState(new PlayerCurrentState(this));
@@ -129,17 +118,7 @@ public class PlayerControllerState : MonoBehaviour
         return isGrounded;
     }
 
-    // Gọi hàm này khi chạm checkpoint
-    public void SetCheckpoint(Vector3 position)
-    {
-        Debug.Log("da luu vi tri " + position);
-        checkpointPosition = position;
-        PlayerPrefs.SetFloat("CheckpointX", position.x);
-        PlayerPrefs.SetFloat("CheckpointY", position.y);
-        PlayerPrefs.SetFloat("CheckpointZ", position.z);
-        PlayerPrefs.Save();
-
-    }
+   
 
     //khi pl bi an thi chay
     void OnDisable()
@@ -178,4 +157,5 @@ public class PlayerControllerState : MonoBehaviour
         return closest;
     }
 
+   
 }

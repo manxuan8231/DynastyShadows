@@ -1,20 +1,19 @@
 ﻿using UnityEngine;
 
-public class Checkpoin : MonoBehaviour
+public class Checkpoint : MonoBehaviour
 {
-    public void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            PlayerControllerState player = other.GetComponent<PlayerControllerState>();
+            CharacterController player = other.GetComponent<CharacterController>();
             if (player != null)
             {
-                Debug.Log("đã lưu vị trí");
-                // Lưu vị trí checkpoint
-                player.SetCheckpoint(transform.position);
+                Debug.Log("Da luu diem checkpoint!");
                
+                CheckpointHandler.SaveCheckpoint(player.transform.position);
+
             }
         }
     }
 }
-
