@@ -72,7 +72,7 @@ public class Quest1 : MonoBehaviour
 
             // Cho phép NPC nhận nhiệm vụ
             turnInQuest.isContent = true;
-            turnInQuest.isButtonF = true;
+            //turnInQuest.isButtonF = true;
             tutorialManager.isTutorialInvenTab = true;//cho phep bat huong dan
         }
     }
