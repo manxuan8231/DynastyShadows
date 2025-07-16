@@ -16,10 +16,11 @@ public class InventoryManager : MonoBehaviour
     public ItemSO[] itemSOs;
     public AudioSource audioSource;
     public AudioClip selectedClip;
-
+   private PauseManager pausedManager;
   
     void Update()
     {
+        if (pausedManager == null) pausedManager = FindAnyObjectByType<PauseManager>();
         audioSource = GameObject.Find("Inventory").GetComponent<AudioSource>();
         if (Input.GetButtonDown("Inventory") && isOpenInventory && !canvasPauser.activeSelf)
             Inventory();
@@ -46,6 +47,9 @@ public class InventoryManager : MonoBehaviour
             inventoryMenu.SetActive(true);
             inventoryLogo.SetActive(true);
             equipmentMenu.SetActive(false);
+            pausedManager.ButtonInven();
+            pausedManager.canvasPause.SetActive(true);
+
         }
     }
 
@@ -68,6 +72,8 @@ public class InventoryManager : MonoBehaviour
             inventoryMenu.SetActive(false);
             inventoryLogo.SetActive(true);
             equipmentMenu.SetActive(true);
+            pausedManager.canvasPause.SetActive(true);
+            pausedManager.ButtonEquipment();
         }
     }
 

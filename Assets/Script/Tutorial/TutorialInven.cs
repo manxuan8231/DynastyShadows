@@ -129,8 +129,7 @@ public class TutorialInven : MonoBehaviour
             panelTutoInven.SetActive(false);
             textConten.text = "";
           tutorialManager.isCompleteInven=true;//danh dau hoan thanh tuto
-            Cursor.lockState = CursorLockMode.Locked; // Unlock the cursor
-            Cursor.visible = false; // Show the cursor
+           
         }
     }
     public void StartSkip() //skip qua

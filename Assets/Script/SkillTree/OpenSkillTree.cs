@@ -36,8 +36,8 @@ public class OpenSkillTree : MonoBehaviour
         coreTree.SetActive(false);    
             audioSource = GetComponent<AudioSource>(); // Lấy AudioSource từ GameObject này
     }
+    
 
-   
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T) && isOpenSkillTree) // Nhấn phím T để mở/đóng Skill Tree
@@ -81,12 +81,12 @@ public class OpenSkillTree : MonoBehaviour
         
             pauseManager.panelSetting.SetActive(false);
         }
-        else if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Tab))
+       /* else if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Tab))
         {
             panelSkillTree.SetActive(false);
             flexibleSkill.SetActive(false);
             coreTree.SetActive(false);
-        }
+        }*/
 
     }
     // Mở skill da dang  khi nhấn nút trên giao diện

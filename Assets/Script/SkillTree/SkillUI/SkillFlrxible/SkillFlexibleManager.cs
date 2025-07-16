@@ -62,6 +62,7 @@ public class SkillFlexibleManager : MonoBehaviour
     {
         previewPanel.SetActive(false);
         HideAllHighlights();
+
     }
     public void ShowPreview(string iconID)
     {

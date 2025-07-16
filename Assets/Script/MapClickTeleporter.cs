@@ -9,6 +9,7 @@ public class MapClickTeleporter : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log("click ok");
         RectTransform rectTransform = GetComponent<RectTransform>();
 
         // Chuyển tọa độ chuột sang tọa độ UV (0-1)

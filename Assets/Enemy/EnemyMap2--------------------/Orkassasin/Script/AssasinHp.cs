@@ -1,3 +1,4 @@
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -20,6 +21,7 @@ public class AssasinHp : MonoBehaviour,IDamageable
     public GameObject playerInGame; // Player gameplay
     public GameObject playerTimeLine; // Player trong cutscene
     public PlayableDirector playableDirector;
+    bool isTimeLine = false;
     void Start()
     {
         curentHp = maxHp;
@@ -42,14 +44,39 @@ public class AssasinHp : MonoBehaviour,IDamageable
         curentHp = Mathf.Clamp(curentHp, 0, maxHp);
         UpdateUI();
 
-        if (curentHp <= 0)
+        if (curentHp <= 0 && !isTimeLine)
         {
-           controllerStateAssa.animator.SetTrigger("Dead");
+            StartCoroutine(StartTimeLineEnd()); 
+            Destroy(gameObject,2f);
         }
+    }
+    private void OnTimelineFinished(PlayableDirector director)
+    {
+        // Cập nhật vị trí player thật từ player timeline
+        playerInGame.transform.position = playerTimeLine.transform.position;
+        playerInGame.transform.rotation = playerTimeLine.transform.rotation;
+        // Kết thúc cutscene, chơi tiếp
+        playerInGame.SetActive(true);
+        playerTimeLine.SetActive(false);
+       
+        timeLine.SetActive(false); // Ẩn đối tượng sau khi timeline kết thúc
+
     }
     void UpdateUI()
     {
         sliderHp.value = curentHp;
         textHp.text = $"{curentHp}/{maxHp}";
     }
+
+    IEnumerator StartTimeLineEnd()
+    {
+        isTimeLine = true; // Đánh dấu là đã kích hoạt timeline
+        yield return new WaitForSeconds(0.3f);
+        playerInGame.SetActive(false); // Ẩn player thật
+        timeLine.SetActive(true); // Bật timeline
+        playableDirector.Play(); // Chạy timeline
+        playableDirector.stopped += OnTimelineFinished; // Đăng ký sự kiện khi timeline kết thúc
+    }
 }
+
+

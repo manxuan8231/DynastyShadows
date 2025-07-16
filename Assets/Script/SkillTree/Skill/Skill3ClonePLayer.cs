@@ -23,8 +23,7 @@ public class Skill3ClonePLayer : MonoBehaviour
     private float lastAttackTime = -15f;
     //combostep skill fireball
     private int comboStep = 0;
-    //slash
-    public GameObject auraSlash;
+   
     //tham chieu
     Skill3Manager skill3Manager;
     PlayerStatus playerStatus;
@@ -53,7 +52,7 @@ public class Skill3ClonePLayer : MonoBehaviour
         animator = GetComponent<Animator>();
         agent.speed = speed;
         StartCoroutine(ReturnToPool());
-        auraSlash.SetActive (false); // ẩn hiệu ứng auraSlash ban đầu
+       
                                      // Kiểm tra có NavMesh ở vị trí hiện tại không
         NavMeshHit hit;
         if (NavMesh.SamplePosition(transform.position, out hit, 2f, NavMesh.AllAreas))
@@ -72,8 +71,7 @@ public class Skill3ClonePLayer : MonoBehaviour
        
         aiPath.maxSpeed = speed;
 
-        // Ẩn slash ban đầu
-        auraSlash.SetActive(false);
+      
 
         StartCoroutine(ReturnToPool());
     }
@@ -130,7 +128,7 @@ public class Skill3ClonePLayer : MonoBehaviour
         }
         if (!player.activeSelf)
         {
-            Destroy(gameObject);
+            ObjPoolingManager.Instance.ReturnToPool(skill3Manager.clonePLTag, gameObject);
         }
     }
     void FindNearestEnemy()
@@ -264,19 +262,19 @@ public class Skill3ClonePLayer : MonoBehaviour
         StartCoroutine(DashToTarget(finalTargetPos, 0.25f));
         if (comboStep == 0)
         {
-             StartCoroutine( WaitForAuraFire());
+             
             animator.SetTrigger("Slash");
             comboStep = 1;
         }
         else if (comboStep == 1)
         {
-            StartCoroutine(WaitForAuraFire());
+            
             animator.SetTrigger("Slash2");
             comboStep = 2;
         }
         else if (comboStep == 2)
         {
-            StartCoroutine(WaitForAuraFire());
+           
             animator.SetTrigger("Slash3");
             comboStep = 0;
         }
@@ -303,7 +301,7 @@ public class Skill3ClonePLayer : MonoBehaviour
         }
 
         transform.position = targetPosition;
-
+       
         // Bật lại di chuyển AI
         if (isUsingNavMesh)
             agent.enabled = true;
@@ -311,10 +309,5 @@ public class Skill3ClonePLayer : MonoBehaviour
             aiPath.enabled = true;
     }
 
-    public IEnumerator WaitForAuraFire()
-    {
-        auraSlash.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
-        auraSlash.SetActive(false);
-    }
+   
 }

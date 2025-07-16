@@ -525,7 +525,7 @@ public class SkillCoreManager : MonoBehaviour
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
                     //mo khoa de su dung
-                    skill1Manager.timeSkill1 = 10f;
+                    skill1Manager.timeSkill1 = 7f;
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
                 }
                 break;
