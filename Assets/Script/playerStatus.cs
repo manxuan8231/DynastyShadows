@@ -200,7 +200,11 @@ public class PlayerStatus : MonoBehaviour
 
     }
 
-   
+    public void OnDisable()
+    {
+        isTakeHeal = true;
+        isShieldActive = false;
+    }
     //hp
     public void TakeHealth(float amount ,GameObject enemy, string animName,float timeHit)
     {
@@ -211,15 +215,15 @@ public class PlayerStatus : MonoBehaviour
             sliderHp.value = currentHp;
             textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
            
-        if (isStun == true && isHit == true) //nếu bị hit r thi đợi 1 giay ms cho tiep
-        {
+            if (isStun == true && isHit == true) //nếu bị hit r thi đợi 1 giay ms cho tiep
+             {
                 playerController.animator.SetTrigger(animName);
                 StartCoroutine(WaitHit(timeHit)); //tgian cooldown bi hit lan tiep theo
                 audioSource.PlayOneShot(audioHit);
-        }
-        //tim enemy de phan dame
-        if (enemy != null && isReflectDamage == true) 
-        {          
+             }
+            //tim enemy de phan dame
+            if (enemy != null && isReflectDamage == true) 
+            {          
             // Tìm script EnemyHP 
             EnemyHP enemyHP = enemy.GetComponent<EnemyHP>();
            
@@ -310,14 +314,14 @@ public class PlayerStatus : MonoBehaviour
                 minotaurEnemy.TakeDamage(amount);
                 return;
             }
-        }
-        if(currentHp <= 0)
-        {
+            }
+            if(currentHp <= 0)
+            {
            
             audioSource.PlayOneShot(audioDie);
             playerController.ChangeState(new PlayerDieState(playerController));
           
-        }
+            }
         }
         
     }

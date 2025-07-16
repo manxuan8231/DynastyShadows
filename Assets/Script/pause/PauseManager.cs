@@ -44,7 +44,14 @@ public class PauseManager : MonoBehaviour
             // Ẩn hoặc hiện chuột
             Cursor.visible = isPaused;
             Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
+            //open skill tree
             openSkillTree.textFlexible.color = Color.black;
+            openSkillTree.buttonFlexibleBG.enabled = true;
+            openSkillTree .flexibleSkill.SetActive(true); // Hiển thị Flexible Skill khi mở Skill Tree
+            openSkillTree .coreTree.SetActive(false); // Ẩn Core Tree khi mở Flexible Skill
+            openSkillTree.textCore.color = Color.white;
+            openSkillTree.buttonCoreBG.enabled = false;
+
             //img
             imageEquipment.enabled = isPaused;
             imageInventory.enabled = false;
@@ -60,7 +67,9 @@ public class PauseManager : MonoBehaviour
             panelInventory.SetActive(false);
             panelSkillTree.SetActive(false);
             panelSetting.SetActive(false);
+            
         }
+      
         
     }
     public void ButtonEquipment()
