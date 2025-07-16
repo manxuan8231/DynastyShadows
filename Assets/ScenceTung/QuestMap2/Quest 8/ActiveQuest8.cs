@@ -73,8 +73,9 @@ public class ActiveQuest8 : MonoBehaviour
     public void StartQuest2()
     {
         activeTimeLine++;
-        if (activeTimeLine == 2)
+        if (activeTimeLine >= 2)
         {
+            model.SetActive(false); // Ẩn mô hình sau khi timeline 1 kết thúc
             playerInGame.SetActive(false); // Ẩn player thật
             timeLine2.SetActive(true); // Bật timeline
             playableDirector2.Play(); // Chạy timeline

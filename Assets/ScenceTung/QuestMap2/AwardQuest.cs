@@ -44,15 +44,7 @@ public class AwardQuest : MonoBehaviour
      playerStatus = FindAnyObjectByType<PlayerStatus>();
      InventoryManager = GameObject.Find("CanvasInventory").GetComponent<InventoryManager>();
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-
-            AwardQuest2();
-            AwardQuest6();
-        }
-    }
+  
     public void AwardQuest2()
     {
         StartCoroutine(CanvasQuest());
