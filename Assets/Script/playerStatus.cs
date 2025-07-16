@@ -197,7 +197,7 @@ public class PlayerStatus : MonoBehaviour
         UpdateUI(); // Cập nhật UI mỗi frame
         RegenerateMana();//hoi mana
         UpdateTextUIGold();
-
+        
     }
 
     public void OnDisable()
@@ -208,7 +208,7 @@ public class PlayerStatus : MonoBehaviour
     //hp
     public void TakeHealth(float amount ,GameObject enemy, string animName,float timeHit)
     {
-        if(currentHp > 0 && isTakeHeal == true && isShieldActive == false)
+        if( currentHp>0&& isTakeHeal == true && isShieldActive == false)
         {          
             currentHp -= amount;
             currentHp = Mathf.Clamp(currentHp, 0, maxHp);
@@ -221,6 +221,13 @@ public class PlayerStatus : MonoBehaviour
                 StartCoroutine(WaitHit(timeHit)); //tgian cooldown bi hit lan tiep theo
                 audioSource.PlayOneShot(audioHit);
              }
+            if (currentHp <= 0)
+            {
+                
+                audioSource.PlayOneShot(audioDie);
+                playerController.ChangeState(new PlayerDieState(playerController));
+
+            }
             //tim enemy de phan dame
             if (enemy != null && isReflectDamage == true) 
             {          
@@ -315,15 +322,9 @@ public class PlayerStatus : MonoBehaviour
                 return;
             }
             }
-            if(currentHp <= 0)
-            {
-           
-            audioSource.PlayOneShot(audioDie);
-            playerController.ChangeState(new PlayerDieState(playerController));
-          
-            }
+            
         }
-        
+      
     }
     public void TakeHealthStun(float amount)//bị stun lấy hp
     {
