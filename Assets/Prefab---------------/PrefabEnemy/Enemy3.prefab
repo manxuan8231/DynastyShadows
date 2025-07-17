@@ -2227,6 +2227,12 @@ MonoBehaviour:
     dropRate: 20
   - itemPrefabs: {fileID: 377432316260766231, guid: 39b0a3ee1fafb1245a9baec04558eed3, type: 3}
     dropRate: 20
+  - itemPrefabs: {fileID: 8467310245624772243, guid: af7ef6e421d70b84f8fa20e17f9b24e4, type: 3}
+    dropRate: 15
+  - itemPrefabs: {fileID: 5279896532497454443, guid: 820c625458b699b4ba6ecf6edf2ef68e, type: 3}
+    dropRate: 10
+  - itemPrefabs: {fileID: 377432316260766231, guid: 39b0a3ee1fafb1245a9baec04558eed3, type: 3}
+    dropRate: 20
   boxDame: {fileID: 8405635012370133318}
 --- !u!114 &6628073100637010743
 MonoBehaviour:
@@ -2240,13 +2246,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b204b078ce5da47aefa2239d82b11c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstPos: {x: 0, y: 0, z: 0}
-  hasFirstPos: 0
   currentState: 0
   agent: {fileID: 3135703809965122265}
   player: {fileID: 0}
   animator: {fileID: 1361526878552351645}
   currentTrigger: 
+  firstPos: {x: 0, y: 0, z: 0}
   radius: 40
   attackRange: 3
   attackCooldown: 5
