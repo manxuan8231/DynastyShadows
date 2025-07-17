@@ -13,7 +13,7 @@ public class OpenMap : MonoBehaviour
     public float scrollMapVertical;
     public float scrollMapHorizontal;
  
-    //-------------------------------- cái nut ở dưới phải false ms cho bật map
+    //--------------------------------  nut ở dưới phải false ms cho bật map
     public GameObject panelSkillTree;//panel skill tree
     public GameObject imageBGButtonInven;//image bg button inven
     public GameObject EquipMentMenu;

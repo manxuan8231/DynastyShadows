@@ -30,12 +30,12 @@ public class SkillCoreManager : MonoBehaviour
     public PlayerStatus playerStatus;
 
     [Header("TextureTutorial")]
+    public Camera[] cameras; // Mảng chứa các camera hướng dẫn
     public RawImage textureTutorial; // Hiển thị camera hướng dẫn
     public Texture spriteDongCung;
     public Texture spriteTheAnh;
     public Texture spriteQuanDoanBongToi;
     public Texture spritePhanNhan;
-    
 
     //nâng cấp theo trình tự
     public float turnInSkill1 = 0f;
@@ -90,6 +90,7 @@ public class SkillCoreManager : MonoBehaviour
         skillAudioSource.PlayOneShot(buttonClick);
         previewPanel.SetActive(true);
         HideAllHighlights(); // Tắt hết highlight trước
+        CameraPreview(); // Hiển thị camera hướng dẫn nếu có
         currentSkillID = iconID; // Lưu ID đang chọn để dùng trong unlockSkill
         buttonUnlock.SetActive(true);
         switch (iconID) 
@@ -98,8 +99,9 @@ public class SkillCoreManager : MonoBehaviour
             case "DongCung1":
                 if(playerStatus.currentLevel >= 5)
                 {
-                    textureTutorial.texture = spriteDongCung; // Hiển thị camera hướng dẫn
-                  
+                   cameras[0].gameObject.SetActive(true); // Hiển thị camera hướng dẫn cho kỹ năng Đông Cứng
+                    textureTutorial.texture = spriteDongCung;
+
                     panelSkill1.SetActive(false);//an panel neu du cap
                     previewText.text = "Đông cứng - Cấp 1";
                     contenSkill.text = "Khi dùng skill có khả năng đông cứng kẻ địch trong 5 giây không gây sát thương có thời gian hồi chiêu là 50 giây.";
@@ -121,7 +123,8 @@ public class SkillCoreManager : MonoBehaviour
             case "DongCung2":
             if(turnInSkill1 >= 1)//phải mở khóa skill1 cấp 1 mới có thể coi cấp 2
                 {
-                    
+                    cameras[0].gameObject.SetActive(true); // Hiển thị camera hướng dẫn cho kỹ năng Đông Cứng
+                    textureTutorial.texture = spriteDongCung;
                     previewText.text = "Đông cứng - Cấp 2";
                 contenSkill.text = "Giảm thời gian hồi chiêu còn 35 giây";
                 skillBGs[1].enabled = true;
@@ -141,7 +144,9 @@ public class SkillCoreManager : MonoBehaviour
             case "DongCung3":
                 if(turnInSkill1 >= 1)
                 {
-                previewText.text = "Đông cứng - Cấp 3";
+                    cameras[0].gameObject.SetActive(true); // Hiển thị camera hướng dẫn cho kỹ năng Đông Cứng
+                    textureTutorial.texture = spriteDongCung;
+                    previewText.text = "Đông cứng - Cấp 3";
                 contenSkill.text = "Tăng thời gian đông cứng kẻ địch trong 10 giây";
                 skillBGs[2].enabled = true;
                  scoreUpgradeText.text = "/2";//so diem can de nang cap
@@ -159,7 +164,9 @@ public class SkillCoreManager : MonoBehaviour
             case "DongCung4":
                 if(turnInSkill1 >= 3)
                 {
-                previewText.text = "Đông cứng - Cấp 4";
+                    cameras[0].gameObject.SetActive(true); // Hiển thị camera hướng dẫn cho kỹ năng Đông Cứng
+                    textureTutorial.texture = spriteDongCung;
+                    previewText.text = "Đông cứng - Cấp 4";
                 contenSkill.text = "Gây sát thương sau khi bị đông cứng, dựa vào sát thương bạo kích của player không cần tỷ lệ bạo.";
                 skillBGs[3].enabled = true;   
                 scoreUpgradeText.text = "/4";//so diem can de nang cap
@@ -179,6 +186,7 @@ public class SkillCoreManager : MonoBehaviour
                 if(playerStatus.currentLevel >= 10)
                 {
                     textureTutorial.texture = spriteTheAnh; // Hiển thị camera hướng dẫn
+                    cameras[1].gameObject.SetActive(true);
                     panelSkill2.SetActive(false);
                     previewText.text = "Thế ảnh - Cấp 1";
                     contenSkill.text = "Khi dùng Thế ảnh người chơi có thể tạo ra một bản thể ảo ảnh giúp đánh lạc hướng kẻ thù" +
@@ -201,6 +209,8 @@ public class SkillCoreManager : MonoBehaviour
             case "TheAnh2":
              if(turnInSkill2 >= 1)
                 {
+                    textureTutorial.texture = spriteTheAnh; // Hiển thị camera hướng dẫn
+                    cameras[1].gameObject.SetActive(true);
                     previewText.text = "Thế ảnh - Cấp 2";
                     contenSkill.text = "Giảm thời gian hồi chiêu còn 35 giây";
                     skillBGs[5].enabled = true;
@@ -218,6 +228,8 @@ public class SkillCoreManager : MonoBehaviour
             case "TheAnh3":
                 if(turnInSkill2 >= 2)
                 {
+                    textureTutorial.texture = spriteTheAnh; // Hiển thị camera hướng dẫn
+                    cameras[1].gameObject.SetActive(true);
                     previewText.text = "Thế ảnh - Cấp 3";
                     contenSkill.text = "Tăng thời gian trạng thái thế ảnh lên 15 giây";
                     skillBGs[6].enabled = true;
@@ -231,12 +243,16 @@ public class SkillCoreManager : MonoBehaviour
                 break;
 
             case "TheAnh4":
-            if(turnInSkill2 >= 3){
-                previewText.text = "Thế ảnh - Cấp 4";
+            if(turnInSkill2 >= 3)
+            {
+                    textureTutorial.texture = spriteTheAnh; // Hiển thị camera hướng dẫn
+                    cameras[1].gameObject.SetActive(true);
+                    previewText.text = "Thế ảnh - Cấp 4";
                 contenSkill.text = "Khi hết thời gian trạng thái thế ảnh, bản thể ảo sẽ phát nổ gây 1000 sát thương cho kẻ địch ở gần trước khi biến mất.";
                 skillBGs[7].enabled = true;
                 scoreUpgradeText.text = "/4";//so diem can de nang cap
-            }else{
+            }
+                else{
                 previewPanel.SetActive(false);
             }
                 if (skill2Manager.isExplosionSkill2 == true)
@@ -250,6 +266,7 @@ public class SkillCoreManager : MonoBehaviour
                 if(playerStatus.currentLevel >= 15)
                 {
                     textureTutorial.texture = spriteQuanDoanBongToi; // Hiển thị camera hướng dẫn
+                    cameras[2].gameObject.SetActive(true);
                     panelSkill3.SetActive(false);//an panel neu  du cap
                     previewText.text = "Quân đoàn bóng tối - Cấp 1";
                     contenSkill.text = "Khi dùng kỹ năng thì nguời chơi sẽ tạo ra 4 phân thân giúp hỗ trợ, " +
@@ -272,6 +289,8 @@ public class SkillCoreManager : MonoBehaviour
             case "QuanDoanBongToi2":
                 if(turnInSkill3 >= 1)
                 {
+                    textureTutorial.texture = spriteQuanDoanBongToi; // Hiển thị camera hướng dẫn
+                    cameras[2].gameObject.SetActive(true);
                     previewText.text = "Quân đoàn bóng tối - Cấp 2";
                     contenSkill.text = "Giảm thời gian hồi chiêu còn 70 giây";
                     skillBGs[9].enabled = true;
@@ -288,7 +307,9 @@ public class SkillCoreManager : MonoBehaviour
             case "QuanDoanBongToi3":
                 if(turnInSkill3 >= 1)
                 {
-                     previewText.text = "Quân đoàn bóng tối - Cấp 3";
+                    textureTutorial.texture = spriteQuanDoanBongToi; // Hiển thị camera hướng dẫn
+                    cameras[2].gameObject.SetActive(true);
+                    previewText.text = "Quân đoàn bóng tối - Cấp 3";
                     contenSkill.text = "Tăng thời gian tồn tại phân thân lên 40 giây.";
                     skillBGs[10].enabled = true;
                     scoreUpgradeText.text = "/2";//so diem can de nang cap
@@ -305,6 +326,8 @@ public class SkillCoreManager : MonoBehaviour
             case "QuanDoanBongToi4":
                 if(turnInSkill3 >= 3)
                 {
+                    textureTutorial.texture = spriteQuanDoanBongToi; // Hiển thị camera hướng dẫn
+                    cameras[2].gameObject.SetActive(true);
                     previewText.text = "Quân đoàn bóng tối - Cấp 4";
                     contenSkill.text = "Tăng sát thương của quân đoàn lên x2 so với player";
                     skillBGs[11].enabled = true;
@@ -320,6 +343,8 @@ public class SkillCoreManager : MonoBehaviour
             case "QuanDoanBongToi5":
                 if(turnInSkill3 >= 4)
                 {
+                    textureTutorial.texture = spriteQuanDoanBongToi; // Hiển thị camera hướng dẫn
+                    cameras[2].gameObject.SetActive(true);
                     previewText.text = "Quân đoàn bóng tối - Cấp 5";
                     contenSkill.text = "Tăng số lượng phân thân lên 6.";
                     skillBGs[12].enabled = true;
@@ -335,6 +360,8 @@ public class SkillCoreManager : MonoBehaviour
             case "QuanDoanBongToi6":
                 if(turnInSkill3 >= 4)
                 {
+                    textureTutorial.texture = spriteQuanDoanBongToi; // Hiển thị camera hướng dẫn
+                    cameras[2].gameObject.SetActive(true);
                     previewText.text = "Quân đoàn bóng tối - Cấp 6";
                     contenSkill.text = "Khi mở khóa cấp độ này thì khi người chơi dùng các kỹ năng liên quan đến 'Linh Hoạt' thì các phân thân sẽ bắt trước dùng theo.";
                     skillBGs[13].enabled = true;
@@ -348,8 +375,8 @@ public class SkillCoreManager : MonoBehaviour
             case "PhanNhan1":
                 if (playerStatus.currentLevel >= 20)
                 {
+                    cameras[3].gameObject.SetActive(true);
                     textureTutorial.texture = spritePhanNhan; // Hiển thị camera hướng dẫn
-                    
                     panelSkill4.SetActive(false);//an panel neu  du cap
                     previewText.text = "Phản nhãn - Cấp 1";
                     contenSkill.text = "Khi dùng kỹ năng thì player sẽ chuyển sang trạng thái phản nhãn trong vòng 25 giây, giúp hồi đầy máu, " +
@@ -371,6 +398,8 @@ public class SkillCoreManager : MonoBehaviour
             case "PhanNhan2":
                 if(turnInSkill4 >= 1)
                 {
+                    cameras[3].gameObject.SetActive(true);
+                    textureTutorial.texture = spritePhanNhan; // Hiển thị camera hướng dẫn
                     previewText.text = "Phản nhãn - Cấp 2";
                     contenSkill.text = "Giảm thời gian hồi chiêu còn 70 giây.";
                     skillBGs[15].enabled = true;
@@ -386,6 +415,8 @@ public class SkillCoreManager : MonoBehaviour
             case "PhanNhan3":
                 if(turnInSkill4 >= 1)
                 {
+                    cameras[3].gameObject.SetActive(true);
+                    textureTutorial.texture = spritePhanNhan; // Hiển thị camera hướng dẫn
                     previewText.text = "Phản nhãn - Cấp 3";
                     contenSkill.text = "Tăng thời gian trạng thái Phản Nhãn lên 35 giây.";
                     skillBGs[16].enabled = true;
@@ -401,6 +432,8 @@ public class SkillCoreManager : MonoBehaviour
             case "PhanNhan4":
                 if(turnInSkill4 >= 3)
                 {
+                    cameras[3].gameObject.SetActive(true);
+                    textureTutorial.texture = spritePhanNhan; // Hiển thị camera hướng dẫn
                     previewText.text = "Phản nhãn - Cấp 4";
                     contenSkill.text = "Khi trong trạng thái Phản Nhãn bị kẻ địch tấn công sẽ phản lại sát thương nhận vào cho kẻ địch.";
                     skillBGs[17].enabled = true;
@@ -416,6 +449,8 @@ public class SkillCoreManager : MonoBehaviour
             case "PhanNhan5":
                 if(turnInSkill4 >= 4)
                 {
+                    cameras[3].gameObject.SetActive(true);
+                    textureTutorial.texture = spritePhanNhan; // Hiển thị camera hướng dẫn
                     previewText.text = "Phản nhãn - Cấp 5";
                     contenSkill.text = "Trong trạng thái phản nhãn, tốc độ di chuyển tăng 10%.";
                     skillBGs[18].enabled = true;
@@ -431,6 +466,8 @@ public class SkillCoreManager : MonoBehaviour
             case "PhanNhan6":
                 if(turnInSkill4 >= 4)
                 {
+                    cameras[3].gameObject.SetActive(true);
+                    textureTutorial.texture = spritePhanNhan; // Hiển thị camera hướng dẫn
                     previewText.text = "Phản nhãn - Cấp 6";
                     contenSkill.text = "Trong trạng thái Phản Nhãn, miễn nhiễm tất cả hiệu ứng xấu.";
                     skillBGs[19].enabled = true;
@@ -446,6 +483,8 @@ public class SkillCoreManager : MonoBehaviour
             case "PhanNhan7":
                 if(turnInSkill4 >= 5)
                 {
+                    cameras[3].gameObject.SetActive(true);
+                    textureTutorial.texture = spritePhanNhan; // Hiển thị camera hướng dẫn
                     previewText.text = "Phản nhãn - Cấp 7";
                     contenSkill.text = "Khi trong đang trong trạng thái Phãn Nhãn giúp tăng tỷ lệ bạo kích lên 100% và bất tử.";
                     skillBGs[20].enabled = true;
@@ -916,7 +955,17 @@ public class SkillCoreManager : MonoBehaviour
                 bg.enabled = false;
         }
     }
-
+    //bat tat camera
+    private void CameraPreview()
+    {
+        foreach(Camera cam in cameras)
+        {
+            if (cam != null)
+            {
+                cam.gameObject.SetActive(false);
+            }
+        }
+    }
 
 
 

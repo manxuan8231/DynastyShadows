@@ -16,12 +16,13 @@ public class OpenMapTuto : MonoBehaviour
     public Texture iconCloseQuest;
 
     public int index = 0;
-
+   
     void Start()
     {
         panelTuto.SetActive(false);
         iconTuto.enabled = false;
         scrollRect.enabled = false;
+       
     }
 
     void Update()
