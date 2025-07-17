@@ -14,8 +14,9 @@ public class Skill3ClonePLayer : MonoBehaviour
     public float detectionRange = 50f; 
     public float attackRange = 4f; 
     public float attackCooldown = 15f;
-   //skin
-   public SkinnedMeshRenderer[] skinnedMeshRenderers;
+    
+                               //skin
+    public SkinnedMeshRenderer[] skinnedMeshRenderers;
     private bool isUsingNavMesh = true; // mặc định là NavMesh
 
     //bien luu tru enemy gan nhat
@@ -71,8 +72,8 @@ public class Skill3ClonePLayer : MonoBehaviour
        
         aiPath.maxSpeed = speed;
 
-      
 
+        
         StartCoroutine(ReturnToPool());
     }
 
@@ -204,7 +205,8 @@ public class Skill3ClonePLayer : MonoBehaviour
     // Trong Skill3ClonePLayer
     public void PlayFireBallAnim()
     {
-        if(comboStep == 0)
+        if (!skill3Manager. isLv6) return;
+        if (comboStep == 0)
         {
             animator.SetTrigger("FireBall1");
             comboStep = 1;
@@ -224,6 +226,7 @@ public class Skill3ClonePLayer : MonoBehaviour
     }
     public void PlayRainFireAnim()
     {
+        if (!skill3Manager.isLv6) return;
         StartCoroutine(WaitForGravity());
         animator.SetTrigger("RainFire");
 
@@ -246,6 +249,7 @@ public class Skill3ClonePLayer : MonoBehaviour
     //skill slash
     public void PlaySlashAnim()
     {
+        if (!skill3Manager.isLv6) return;
         FindNearestEnemy();
         Vector3 dashDir = transform.forward;
         float dashDistance = 30f; // độ dài lướt tối đa

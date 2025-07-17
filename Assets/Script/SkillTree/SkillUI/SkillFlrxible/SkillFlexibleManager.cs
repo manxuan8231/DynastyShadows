@@ -68,6 +68,10 @@ public class SkillFlexibleManager : MonoBehaviour
         buttonRemove.SetActive(false);
         slotIcon.color = Color.clear; // Ẩn icon ban đầu
     }
+    private void Update()
+    {
+        
+    }
     private void OnDisable()
     {
         previewPanel.SetActive(false);
@@ -112,6 +116,7 @@ public class SkillFlexibleManager : MonoBehaviour
                 break;
 
             case "Shield":
+               
                 if (itemQuestUnlock != null && itemQuestUnlock.showSkill4 && activeSkillUnlock >= 3)
                 {
                     textureTutorial.texture = spriteShield;
@@ -127,8 +132,9 @@ public class SkillFlexibleManager : MonoBehaviour
                     Debug.LogWarning("ItemQuestUnlock đang null hoặc chưa được mở khóa");
                 }
                 break;
+            
             case "Eye":
-                if(itemQuestUnlock2 != null && itemQuestUnlock2.showSkill5)
+                if (itemQuestUnlock2 != null && itemQuestUnlock2.showSkill5)
                 {
                     textureTutorial.texture = spriteEye;
                     cameras[4].gameObject.SetActive(true); // Kích hoạt camera cho Eye
@@ -226,7 +232,8 @@ public class SkillFlexibleManager : MonoBehaviour
                 break;
 
             case "Shield":
-                if ( playerStatus.score >= 4 && itemQuestUnlock.hasItemQuest)
+
+                if (playerStatus.score >= 4 && itemQuestUnlock.hasItemQuest)
                 {
                     isDongCung4Unlocked = true;
                     playerStatus.score -= 4;
@@ -246,6 +253,7 @@ public class SkillFlexibleManager : MonoBehaviour
                     buttonRemove.SetActive(false);
                     buttonUnlock.SetActive(false);
                 }
+               
                 break;
         }
     }
@@ -332,4 +340,5 @@ public class SkillFlexibleManager : MonoBehaviour
         return false;
     }
 
+    
 }

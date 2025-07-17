@@ -28,7 +28,7 @@ public class SkillCoreManager : MonoBehaviour
     public Skill3Manager skill3Manager;
     public Skill4Manager skill4Manager;
     public PlayerStatus playerStatus;
-
+   
     [Header("TextureTutorial and camera")]
     public Camera[] cameras; // Mảng chứa các camera hướng dẫn
     public RawImage textureTutorial; // Hiển thị camera hướng dẫn
@@ -54,6 +54,7 @@ public class SkillCoreManager : MonoBehaviour
         skill3Manager = FindAnyObjectByType<Skill3Manager>();
         skill4Manager = FindAnyObjectByType<Skill4Manager>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
+       
         previewPanel.SetActive(false);
         HideAllHighlights();//effect
         skillAudioSource = GetComponent<AudioSource>();
@@ -368,6 +369,10 @@ public class SkillCoreManager : MonoBehaviour
                     scoreUpgradeText.text = "/5";//so diem can de nang cap
                 }else{
                     previewPanel.SetActive(false);
+                }
+                if (skill3Manager.isLv6 == true)//sau khi unlock r ko cho unlock nữa
+                {
+                    buttonUnlock.SetActive(false);
                 }
                 break;
 
@@ -744,7 +749,7 @@ public class SkillCoreManager : MonoBehaviour
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
-                    //chx co
+                    skill3Manager.isLv6 = true;//mo khoa trang thai clone 6
                 }
 
                 break;

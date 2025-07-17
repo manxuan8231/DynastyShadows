@@ -12,6 +12,7 @@ public class Skill3Manager : MonoBehaviour
     public float timeSkill3 = 30f;//thoi gian skill 3 ton tai
     public float playerCount = 4;//player spawn 
     public bool isInputSkill3;
+    public bool isLv6 = false; // kiem tra level 6 chưa
     public Slider cooldownSlider;
     public TextMeshProUGUI textCoolDownSkill;
     //unlock skill trong UI thi moi cho dung skill
@@ -32,7 +33,8 @@ public class Skill3Manager : MonoBehaviour
         cooldownSlider.maxValue = cooldownSkill;
         cooldownSlider.value = cooldownSkill;
         cooldownSlider.enabled = false;
-        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
+          isLv6 = false; // kiem tra level 6 chưa
+    playerControllerState = FindAnyObjectByType<PlayerControllerState>();
     }
     void Update()
     {

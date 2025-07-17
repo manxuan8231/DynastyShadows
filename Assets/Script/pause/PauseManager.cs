@@ -1,6 +1,7 @@
 ﻿
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 
@@ -25,9 +26,12 @@ public class PauseManager : MonoBehaviour
 
     //tham chieu
     private OpenSkillTree openSkillTree;
+    public AudioSource audioSource; // Thêm biến AudioSource để phát âm thanh
+    public AudioClip clickButtonSound; // Thêm biến AudioClip để chứa âm thanh khi nhấn nút
     void Start()
     {
         openSkillTree =FindAnyObjectByType<OpenSkillTree>();
+        audioSource = GetComponent<AudioSource>();
         canvasPause.SetActive(false);
     }
 
@@ -77,6 +81,7 @@ public class PauseManager : MonoBehaviour
     }
     public void ButtonEquipment()
     {
+        audioSource.PlayOneShot(clickButtonSound); // Phát âm thanh khi nhấn nút
         //img
         imageEquipment.enabled = true;
         imageInventory.enabled = false;
@@ -95,6 +100,7 @@ public class PauseManager : MonoBehaviour
     }
     public void ButtonInven()
     {
+        audioSource.PlayOneShot(clickButtonSound); // Phát âm thanh khi nhấn nút
         //img
         imageEquipment.enabled = false;
         imageInventory.enabled = true;
@@ -113,7 +119,7 @@ public class PauseManager : MonoBehaviour
     }
     public void ButtonSkillTree() 
     {
-       
+        audioSource.PlayOneShot(clickButtonSound); // Phát âm thanh khi nhấn nút
         //img
         imageEquipment.enabled = false;
         imageInventory.enabled = false;
@@ -132,6 +138,7 @@ public class PauseManager : MonoBehaviour
     }
     public void ButtonSetting()
     {
+        audioSource.PlayOneShot(clickButtonSound); // Phát âm thanh khi nhấn nút
         //img
         imageEquipment.enabled = false;
         imageInventory.enabled = false;
