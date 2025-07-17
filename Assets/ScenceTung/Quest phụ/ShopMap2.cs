@@ -28,7 +28,7 @@ public class ShopMap2 : MonoBehaviour
     }
     IEnumerator StartQuest()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         playerInGame.SetActive(false); // Ẩn player thật
         timeLine.SetActive(true); // Bật timeline
         playableDirector.Play(); // Chạy timeline
