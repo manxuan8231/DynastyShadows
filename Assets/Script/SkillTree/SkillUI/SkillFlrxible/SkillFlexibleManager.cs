@@ -27,7 +27,17 @@ public class SkillFlexibleManager : MonoBehaviour
     public Image[] skillBGs;
     private string currentSkillID = "";
     private string equippedSkillID = "";
-   
+
+    //video preview
+    [Header("TextureTutorial and camera")]
+    public Camera[] cameras; // Mảng chứa các camera hướng dẫn
+    public RawImage textureTutorial; // Hiển thị camera hướng dẫn
+    public Texture spriteFireBall;
+    public Texture spriteFireRain;
+    public Texture spriteSlash;
+    public Texture spriteShield;
+    public Texture spriteEye;
+
     // Tham chiếu đến AudioSource và âm thanh
     public AudioSource skillAudioSource;
     public AudioClip buttonClick; 
@@ -71,11 +81,12 @@ public class SkillFlexibleManager : MonoBehaviour
         HideAllHighlights();
         currentSkillID = iconID;
         buttonUnlock.SetActive(true);
-
+        CameraPreview();
         switch (iconID)
         {
-            case "FireBall":   
-                
+            case "FireBall":
+                textureTutorial.texture = spriteFireBall;
+                cameras[0].gameObject.SetActive(true); // Kích hoạt camera cho FireBall
                 previewText.text = "Cầu lửa";
                 contenSkill.text = "Khi dùng kỹ năng này thì player sẽ bắn ra 3 cầu lửa nối tiếp combo có thời gian hồi chiêu 10 giây.";
                 skillBGs[0].enabled = true;
@@ -83,6 +94,8 @@ public class SkillFlexibleManager : MonoBehaviour
                 break;
 
             case "RainFire":
+                textureTutorial.texture = spriteFireRain;
+                cameras[1].gameObject.SetActive(true); // Kích hoạt camera cho RainFire
                 previewText.text = "Mưa lửa";
                 contenSkill.text = "Khi dùng kỹ năng thì người chơi sẽ bay lên thả các cầu lửa xuống gây sát thương vùng có thời gian hồi chiêu 10 giây.";
                 skillBGs[1].enabled = true;
@@ -90,6 +103,8 @@ public class SkillFlexibleManager : MonoBehaviour
                 break;
 
             case "Slash":
+                textureTutorial.texture = spriteSlash;
+                cameras[2].gameObject.SetActive(true); // Kích hoạt camera cho Slash
                 previewText.text = "Trảm kích";
                 contenSkill.text = "Khi dùng kỹ năng này thì player sẽ lao tới chém 3 lần nối tiếp có thời gian hồi chiêu 10 giây.";
                 skillBGs[2].enabled = true;
@@ -99,6 +114,8 @@ public class SkillFlexibleManager : MonoBehaviour
             case "Shield":
                 if (itemQuestUnlock != null && itemQuestUnlock.showSkill4 && activeSkillUnlock >= 3)
                 {
+                    textureTutorial.texture = spriteShield;
+                    cameras[3].gameObject.SetActive(true); // Kích hoạt camera cho Shield
                     previewText.text = "Khiên Chắn";
                     contenSkill.text = "Khi dùng kỹ năng này thì player sẽ được lớp giáp ảo gồm 500 máu và kháng tất cả hiệu ứng.";
                     skillBGs[3].enabled = true;
@@ -113,6 +130,8 @@ public class SkillFlexibleManager : MonoBehaviour
             case "Eye":
                 if(itemQuestUnlock2 != null && itemQuestUnlock2.showSkill5)
                 {
+                    textureTutorial.texture = spriteEye;
+                    cameras[4].gameObject.SetActive(true); // Kích hoạt camera cho Eye
                     previewText.text = "Thần Nhãn";
                     contenSkill.text = "Khi dùng kỹ năng này sẽ giúp truy tìm dấu vết mà mắt thường khó nhìn thấy được và làm chậm những sinh vật sống.";
                     skillBGs[4].enabled = true;
@@ -289,7 +308,16 @@ public class SkillFlexibleManager : MonoBehaviour
                 bg.enabled = false;
         }
     }
-
+    private void CameraPreview()
+    {
+        for (int i = 0; i < cameras.Length; i++)
+        {
+            if (cameras[i] != null)
+            {
+                cameras[i].gameObject.SetActive(false); //tắt cam để đổi camera
+            }
+        }
+    }
     //kiểm tra xem kỹ năng đã mở khóa hay chưa
     private bool IsSkillUnlocked(string id)
     {

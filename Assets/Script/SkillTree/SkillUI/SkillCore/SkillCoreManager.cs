@@ -29,7 +29,7 @@ public class SkillCoreManager : MonoBehaviour
     public Skill4Manager skill4Manager;
     public PlayerStatus playerStatus;
 
-    [Header("TextureTutorial")]
+    [Header("TextureTutorial and camera")]
     public Camera[] cameras; // Mảng chứa các camera hướng dẫn
     public RawImage textureTutorial; // Hiển thị camera hướng dẫn
     public Texture spriteDongCung;
