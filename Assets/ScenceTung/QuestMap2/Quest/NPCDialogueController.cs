@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿    using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -49,7 +49,7 @@ public class NPCDialogueController : MonoBehaviour
     public AudioCanvasState audioCanvasState;
     public QuestStage currentStage;
     [Header("-----------------Bool-----------------")]
-    bool isOpen;
+    public bool isOpen;
     bool isTyping;
     public bool isSkip;
     bool isWriteSkip;
@@ -67,10 +67,7 @@ public class NPCDialogueController : MonoBehaviour
 
     void Update()
     {
-        //if(Input.GetKeyDown(KeyCode.J))
-        //{
-        //    HandleQuestProgression();
-        //}
+      
 
         if (currentStage == QuestStage.NotStarted) return;
 
@@ -78,26 +75,28 @@ public class NPCDialogueController : MonoBehaviour
         {
             questionGameCanvas.SetActive(true);
             btnF.SetActive(true);
-
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                if (!hasPlayedTalkingAnim)
+           
+                if (Input.GetKeyDown(KeyCode.F))
                 {
-                    animator.SetTrigger("Talk");
-                    hasPlayedTalkingAnim = true;
-                }
+                    if (!hasPlayedTalkingAnim)
+                    {
+                        animator.SetTrigger("Talk");
+                        hasPlayedTalkingAnim = true;
+                    }
 
-                isActiveBtn = true;
-                isContent = false;
-                btnF.SetActive(false);
-                PanelContent.SetActive(true);
+                    isActiveBtn = true;
+                    isContent = false;
+                    btnF.SetActive(false);
+                    PanelContent.SetActive(true);
 
-                DialogueData currentDialogue = GetCurrentDialogueData();
-                if (currentDialogue != null)
-                {
-                    Coroutine = StartCoroutine(ReadContent(currentDialogue));
-                }
-            }
+                    DialogueData currentDialogue = GetCurrentDialogueData();
+                    if (currentDialogue != null)
+                    {
+                        Coroutine = StartCoroutine(ReadContent(currentDialogue));
+                    }
+                
+                 }
+           
         }
     }
     private DialogueData GetCurrentDialogueData()
