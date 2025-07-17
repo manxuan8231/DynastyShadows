@@ -7,13 +7,14 @@ public class ItemHealth : MonoBehaviour
     PlayerStatus playerStatus;
     public Transform player;
    public AIPath aiPath;
+    [SerializeField] private float timeDestroy;
     void Start()
     {
-        GameObject gameObject = GameObject.Find("Stats");
+       
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (gameObject != null)
         {
-            playerStatus = gameObject.GetComponent<PlayerStatus>();
+            playerStatus = GameObject.Find("Stats").GetComponent<PlayerStatus>();
         }
      
         if (playerObj != null)
@@ -21,6 +22,7 @@ public class ItemHealth : MonoBehaviour
             player = playerObj.transform;
         }
         aiPath = GetComponent<AIPath>();
+        Destroy(gameObject,timeDestroy); // Gọi hàm để hủy item sau một khoảng thời gian nhất định
 
     }
 

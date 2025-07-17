@@ -16,11 +16,11 @@ public class Item : MonoBehaviour
 
     public InventoryManager inventoryManager;
     public ItemType itemType;
-
-
+    private float timeToDestroy = 10;
     void Start()
     {
         inventoryManager = GameObject.Find("CanvasInventory").GetComponent<InventoryManager>();
+        Destroy(gameObject, timeToDestroy); // Destroy the item after a certain time
 
     }
   
