@@ -29,10 +29,11 @@ public class Item : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             int leftOverItems = inventoryManager.AddItem(itemName , quantity,itemSprite,itemDescription,itemType);
+            FindAnyObjectByType<ItemPickupNotifier>().ShowPickup(itemName, quantity);
 
-            if (leftOverItems <= 0)  
-                
-                Destroy(gameObject);
+            if (leftOverItems <= 0)
+
+            Destroy(gameObject);
             else
                 quantity = leftOverItems;
         }
