@@ -14,7 +14,16 @@ public class EvenAnimatorAssa : MonoBehaviour
     //phong dao
     public GameObject knifePrefab;
     public Transform knifeSpawnPoint;
+    [Header("Effect")]
+    public GameObject lastExplosionPrefab; // Prefab hiệu ứng nổ 
+
+    [Header("AudioClip")]
+    public AudioClip knifeThrowSound; // Âm thanh khi ném dao
+    public AudioClip dashSound; // Âm thanh khi luot qua
+    public AudioClip attackSound; // Âm thanh taans cong binh thuong
+    public AudioClip slashSound;// âm thanh khi chém
     [Header("Tham Chieu")]
+    public AudioSource audioSource; // Thêm biến AudioSource để phát âm thanh
     public DameZoneLeftAssa dameZoneLeftAssa;
     public DameZoneRightAssa dameZoneRightAssa;
     public ControllerStateAssa controllerStateAssa;
@@ -23,18 +32,16 @@ public class EvenAnimatorAssa : MonoBehaviour
         dameZoneLeftAssa = FindAnyObjectByType<DameZoneLeftAssa>();
         dameZoneRightAssa = FindAnyObjectByType <DameZoneRightAssa>();
         controllerStateAssa = FindAnyObjectByType<ControllerStateAssa>();
-
+        audioSource = FindAnyObjectByType<AudioSource>();
 
     }
 
     
-    void Update()
-    {
-        
-    }
+  
     //tay trai
     public void BeginDameLeft()
     {
+        PlayAttackSound();
         dameZoneLeftAssa.BeginDame();
     }
     public void EndDameLeft() 
@@ -44,6 +51,7 @@ public class EvenAnimatorAssa : MonoBehaviour
     //tay phai
     public void BeginDameRight()
     {
+        PlayAttackSound();
         dameZoneRightAssa.BeginDame();
     }
     public void EndDameRight()
@@ -52,6 +60,7 @@ public class EvenAnimatorAssa : MonoBehaviour
     }
     public void BeginDameBack()//hit back
     {
+        PlayAttackSound();
         dameZoneRightAssa.BeginDameBack();
     }
     public void EndDameBack()
@@ -97,4 +106,41 @@ public class EvenAnimatorAssa : MonoBehaviour
         
     }
 
+    //am thah----------------
+    public void PlayKnifeThrowSound()//am thanh khi phong dao
+    {
+        if (audioSource != null && knifeThrowSound != null)
+        {
+            audioSource.PlayOneShot(knifeThrowSound);
+        }
+    }
+    public void PlayDashSound()//am thanh khi dash
+    {
+        if (audioSource != null && dashSound != null)
+        {
+            audioSource.PlayOneShot(dashSound);
+        }
+    }
+    public void PlaySlashSound()
+    {
+        if (audioSource != null && slashSound != null)
+        {
+            audioSource.PlayOneShot(slashSound);
+        }
+    }
+    public void PlayAttackSound() //audio slash
+    {
+        if (audioSource != null && attackSound != null)
+        {
+            audioSource.PlayOneShot(attackSound);
+        }
+    }
+
+    //effect
+    public void PlayLastAttackExplosion()
+    {
+        // Tạo hiệu ứng nổ tại vị trí của enemy
+        GameObject explosionEffect = Instantiate(lastExplosionPrefab, transform.position, transform.rotation);
+        Destroy(explosionEffect, 1.5f); // Hủy hiệu ứng sau 2 giây
+    }
 }

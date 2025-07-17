@@ -30,6 +30,7 @@ public class DodgeComboStateAssa : AssasinState
 
         // Phóng dao
         enemy.animator.SetTrigger("knifeThrower");
+       
         yield return new WaitForSeconds(1f);
 
         //Dịch chuyển tới trước mặt player 
@@ -50,7 +51,7 @@ public class DodgeComboStateAssa : AssasinState
         yield return enemy.StartCoroutine(DashCaculator(dashRightPos, 0.2f));
 
         // Phóng dao 
-        enemy.animator.SetTrigger("knifeThrower");
+        enemy.animator.SetTrigger("knifeThrower");       
         yield return new WaitForSeconds(1f);
 
         //  tan cong ben phai pl      
@@ -68,7 +69,7 @@ public class DodgeComboStateAssa : AssasinState
         yield return enemy.StartCoroutine(DashCaculator(final, 0.2f));
 
         // Phóng dao 
-        enemy.animator.SetTrigger("knifeThrower");
+        enemy.animator.SetTrigger("knifeThrower");    
         yield return new WaitForSeconds(1f);
 
         // chuyển trạng thái
@@ -82,6 +83,7 @@ public class DodgeComboStateAssa : AssasinState
 
         enemy.aiPath.enabled = false;
         enemy.boxTakeDame.enabled = false;
+        enemy.evenAnimatorAssa.PlayDashSound();
 
         Vector3 dashDir = (targetPosition - startPos).normalized;
         float dashDistance = Vector3.Distance(startPos, targetPosition);

@@ -10,6 +10,8 @@ public class SkillKnifeStateAssa : AssasinState
 
     public override void Enter()
     {
+        Debug.Log("Chay skill dash ");
+        enemy.animator.SetBool("isWalkForward", false); 
         enemy.isSkillDash = true;//bien kiem tra dg trong trang thái skill dash
         enemy.StartCoroutine(WaitWalkBack());
     }
@@ -18,7 +20,7 @@ public class SkillKnifeStateAssa : AssasinState
     {
         enemy.animator.SetBool("isMoveLeft", false);
         enemy.animator.SetBool("isMoveRight", false);
-        enemy.animator.SetBool("isWalkForward", false);
+        enemy.animator.SetBool("isRunForward", false);
         enemy.animator.SetBool("isMoveBack", false);
         int layerDefaul = LayerMask.NameToLayer("Enemy");
         SetLayerRecursively(enemy.gameObject, layerDefaul);
@@ -54,13 +56,13 @@ public class SkillKnifeStateAssa : AssasinState
                 enemy.animator.SetBool("isMoveLeft", true);
                 enemy.animator.SetBool("isMoveRight", false);
                 enemy.animator.SetBool("isMoveBack", false);
-                enemy.animator.SetBool("isWalkForward", false);
+                enemy.animator.SetBool("isRunForward", false);
             }
             else if(enemy.randomMoveSkillDash == 1)
             {
                 chosenDir = right;
                 enemy.animator.SetBool("isMoveRight", true);
-                enemy.animator.SetBool("isWalkForward", false);
+                enemy.animator.SetBool("isRunForward", false);
                 enemy.animator.SetBool("isMoveBack", false);
                 enemy.animator.SetBool("isMoveLeft", false);
                
@@ -72,17 +74,17 @@ public class SkillKnifeStateAssa : AssasinState
         //nếu player xa quá 10m thi chay toi
         if (dis > 10) 
         {
-            enemy.animator.SetBool("isWalkForward", true);
+            enemy.animator.SetBool("isRunForward", true);
             enemy.animator.SetBool("isMoveRight", false);
             enemy.animator.SetBool("isMoveLeft", false);
             enemy.animator.SetBool("isMoveBack", false);
-            enemy.aiPath.maxSpeed = 20f;
+            enemy.aiPath.maxSpeed = 40f;
             enemy.aiPath.destination = enemy.player.transform.position;
         }
         else
         {
             enemy.aiPath.maxSpeed = 7f;
-            enemy.animator.SetBool("isWalkForward", false);
+            enemy.animator.SetBool("isRunForward", false);
         }
     }
     public void FlipToPlayer()
@@ -129,12 +131,12 @@ public class SkillKnifeStateAssa : AssasinState
             enemy.animator.SetTrigger("WaitDash");
             enemy.StartCoroutine(enemy.PrepareThenAttack());// Chuẩn bị tấn công
             yield return new WaitForSeconds(0.3f);
-           
+            
             enemy.evenAnimatorAssa.StartShadow(); //  tạo ảo ảnh nếu chưa đủ
             Vector3 direction = (enemy.player.transform.position - enemy.transform.position).normalized;
             Vector3 final = enemy.transform.position + direction * 20f;
             enemy.StartCoroutine(DashCaculator(final, 0.2f));
-         
+            enemy.evenAnimatorAssa.PlayDashSound();// phát âm thanh dash
             enemy.animator.SetTrigger("Dash");
 
             yield return new WaitForSeconds(1f);//bat tang hinh lai
@@ -222,7 +224,7 @@ public class SkillKnifeStateAssa : AssasinState
             // Dash từ shadow tới player
             Vector3 direction = (enemy.player.transform.position - enemy.transform.position).normalized;
             Vector3 final = enemy.transform.position + direction * 40f;
-           
+            enemy.evenAnimatorAssa.PlayDashSound();// phát âm thanh dash
             enemy.animator.SetTrigger("Dash");
             yield return DashCaculator(final, 0.2f);
 
@@ -255,6 +257,7 @@ public class SkillKnifeStateAssa : AssasinState
         enemy.aiPath.destination = final;
         
         yield return new WaitForSeconds(1.5f);
+        enemy.animator.SetBool("isMoveBack", false);
         enemy.aiPath.enableRotation = true;
         int layerNew = LayerMask.NameToLayer("InvisibleAssasin");
         SetLayerRecursively(enemy.gameObject, layerNew);

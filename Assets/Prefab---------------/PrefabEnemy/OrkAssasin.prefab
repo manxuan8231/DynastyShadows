@@ -2316,7 +2316,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.39, y: 0.33, z: 0.71}
+  m_Size: {x: 0.39, y: 0.33, z: 1.27}
   m_Center: {x: 0.09, y: 0, z: 0.35}
 --- !u!114 &1637160454370986992
 MonoBehaviour:
@@ -2707,7 +2707,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.39, y: 0.33, z: 0.71}
+  m_Size: {x: 0.39, y: 0.33, z: 1.16}
   m_Center: {x: 0.09, y: 0, z: 0.35}
 --- !u!114 &7933108052198108954
 MonoBehaviour:
@@ -5541,7 +5541,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3612130393105694039
 Transform:
   m_ObjectHideFlags: 0
@@ -5954,7 +5954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knife: {fileID: 4988783210434962915}
-  speed: 600
+  speed: 700
   knifePre: []
 --- !u!1 &5018060198977559347
 GameObject:
@@ -6178,7 +6178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knife: {fileID: 5071552115347961500}
-  speed: 600
+  speed: 700
   knifePre: []
 --- !u!1 &5232602314311799697
 GameObject:
@@ -7323,6 +7323,7 @@ GameObject:
   - component: {fileID: 1768667871680468900}
   - component: {fileID: 2200709615950255377}
   - component: {fileID: 8584610362545481285}
+  - component: {fileID: 575486994202325372}
   m_Layer: 10
   m_Name: OrkAssasin
   m_TagString: Assasin
@@ -7425,6 +7426,12 @@ MonoBehaviour:
   afterImgDuration: 0.3
   knifePrefab: {fileID: 5811440823405434003, guid: 3a1f9f19c3bf2ea41bd602ecc6fe4bfb, type: 3}
   knifeSpawnPoint: {fileID: 2175980124814703704}
+  lastExplosionPrefab: {fileID: 1612053637165511263, guid: ffa7e5a183f8a8941b33eb0b0f5a25c6, type: 3}
+  knifeThrowSound: {fileID: 8300000, guid: b81860b0e936829489a1e7e9e5f6f73d, type: 3}
+  dashSound: {fileID: 8300000, guid: 840f58c6004d57c4b8f88562149d94cf, type: 3}
+  attackSound: {fileID: 8300000, guid: 6c32a1228ec98c84a9e235b5cefd20fe, type: 3}
+  slashSound: {fileID: 8300000, guid: 914611e5687d45d43b7f8f521d45f1ff, type: 3}
+  audioSource: {fileID: 575486994202325372}
   dameZoneLeftAssa: {fileID: 0}
   dameZoneRightAssa: {fileID: 0}
   controllerStateAssa: {fileID: 0}
@@ -7570,6 +7577,103 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
+--- !u!82 &575486994202325372
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5686811050784615843}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.563
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5728948861042778841
 GameObject:
   m_ObjectHideFlags: 0
@@ -9180,7 +9284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knife: {fileID: 7173370783964846861}
-  speed: 600
+  speed: 700
   knifePre: []
 --- !u!1 &7216799612099733847
 GameObject:

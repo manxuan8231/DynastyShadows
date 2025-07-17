@@ -48,7 +48,7 @@ public class AttackStateAssa : AssasinState
                 enemy.stepAttack = 0f;
                 enemy.StartCoroutine(enemy.PrepareThenAttack());// Chuẩn bị tấn công
                 enemy.animator.SetTrigger("Attack3");
-                enemy.StartCoroutine(WaitCanMove(1.5f));
+                enemy.StartCoroutine(WaitCanMove(0.6f));
             }
             enemy.lastAttackTime = Time.time;
         }
