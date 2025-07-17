@@ -9,15 +9,14 @@ public class InventoryManager : MonoBehaviour
 
     public GameObject equipmentMenu;
     public bool isOpenInventory = true;
-    //gọi hàm
-    public ItemSlot[] itemSlot; // Array of item slots
-    public EquipmentSlot[] equipmentSlot; // Array of equipment slots
-    public EquippedSlot[] equippedSlot; // Array of equipped slots
+    public ItemSlot[] itemSlot;
+    public EquipmentSlot[] equipmentSlot;
+    public EquippedSlot[] equippedSlot;
     public ItemSO[] itemSOs;
     public AudioSource audioSource;
     public AudioClip selectedClip;
-   private PauseManager pausedManager;
-  
+    private PauseManager pausedManager;
+
     void Update()
     {
         if (pausedManager == null) pausedManager = FindAnyObjectByType<PauseManager>();
@@ -26,30 +25,29 @@ public class InventoryManager : MonoBehaviour
             Inventory();
         if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory && !canvasPauser.activeSelf)
             EquipmentMenu();
-
     }
+
     void Inventory()
     {
         if (inventoryMenu.activeSelf)
         {
-            Time.timeScale = 1f; // Resume the game
-            Cursor.lockState = CursorLockMode.Locked; // Lock the cursor
-            Cursor.visible = false; // Hide the cursor
+            Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             inventoryMenu.SetActive(false);
             inventoryLogo.SetActive(false);
             equipmentMenu.SetActive(false);
         }
         else
         {
-            Time.timeScale = 0f; // Pause the game
-            Cursor.lockState = CursorLockMode.None; // Unlock the cursor
-            Cursor.visible = true; // Show the cursor
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             inventoryMenu.SetActive(true);
             inventoryLogo.SetActive(true);
             equipmentMenu.SetActive(false);
             pausedManager.ButtonInven();
             pausedManager.canvasPause.SetActive(true);
-
         }
     }
 
@@ -57,18 +55,18 @@ public class InventoryManager : MonoBehaviour
     {
         if (equipmentMenu.activeSelf)
         {
-            Time.timeScale = 1f; // Resume the game
-            Cursor.lockState = CursorLockMode.Locked; // Lock the cursor
-            Cursor.visible = false; // Hide the cursor
+            Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             inventoryMenu.SetActive(false);
             inventoryLogo.SetActive(false);
             equipmentMenu.SetActive(false);
         }
         else
         {
-            Time.timeScale = 0f; // Pause the game
-            Cursor.lockState = CursorLockMode.None; // Unlock the cursor
-            Cursor.visible = true; // Show the cursor
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             inventoryMenu.SetActive(false);
             inventoryLogo.SetActive(true);
             equipmentMenu.SetActive(true);
@@ -81,14 +79,11 @@ public class InventoryManager : MonoBehaviour
     {
         if (itemType == ItemType.consumable || itemType == ItemType.crafting || itemType == ItemType.ItemQuest)
         {
-            // Implement your logic to add the item to the inventory
-            Debug.Log("Item added: " + itemName + ", Quantity: " + quantity + "Sprite" + itemSprite);
             for (int i = 0; i < itemSlot.Length; i++)
             {
-
-                if (itemSlot[i].isFull == false && (itemSlot[i].itemName == itemName || itemSlot[i].quantity == 0))
+                if (!itemSlot[i].isFull && (itemSlot[i].itemName == itemName || itemSlot[i].quantity == 0))
                 {
-                    int leftOverItems = itemSlot[i].AddItem(itemName, quantity, itemSprite, itemDescription,itemType);
+                    int leftOverItems = itemSlot[i].AddItem(itemName, quantity, itemSprite, itemDescription, itemType);
                     if (leftOverItems > 0)
                         leftOverItems = AddItem(itemName, leftOverItems, itemSprite, itemDescription, itemType);
                     return leftOverItems;
@@ -98,46 +93,51 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            // Implement your logic to add the item to the inventory
-            Debug.Log("Item added equipmentMenu: " + itemName + ", Quantity: " + quantity + "Sprite" + itemSprite);
             for (int i = 0; i < equipmentSlot.Length; i++)
             {
-
-                if (equipmentSlot[i].isFull == false && (equipmentSlot[i].itemName == itemName || equipmentSlot[i].quantity == 0))
+                if (!equipmentSlot[i].isFull && (equipmentSlot[i].itemName == itemName || equipmentSlot[i].quantity == 0))
                 {
                     int leftOverItems = equipmentSlot[i].AddItem(itemName, quantity, itemSprite, itemDescription, itemType);
                     if (leftOverItems > 0)
                         leftOverItems = AddItem(itemName, leftOverItems, itemSprite, itemDescription, itemType);
                     return leftOverItems;
-
                 }
             }
             return quantity;
         }
-
-
     }
 
     public bool HasItem(ItermShopData item, int amount)
     {
+        if (item == null || string.IsNullOrEmpty(item.itemName))
+        {
+            Debug.LogWarning("HasItem được gọi với item null hoặc itemName trống.");
+            return false;
+        }
+
         int total = 0;
 
-
-        foreach (var slot in itemSlot)
+        if (itemSlot != null)
         {
-            if (slot.itemName == item.itemName)
+            foreach (var slot in itemSlot)
             {
-                total += slot.quantity;
-                if (total >= amount) return true;
+                if (slot != null && slot.itemName == item.itemName)
+                {
+                    total += slot.quantity;
+                    if (total >= amount) return true;
+                }
             }
         }
 
-        foreach (var slot in equipmentSlot)
+        if (equipmentSlot != null)
         {
-            if (slot.itemName == item.itemName)
+            foreach (var slot in equipmentSlot)
             {
-                total += slot.quantity;
-                if (total >= amount) return true;
+                if (slot != null && slot.itemName == item.itemName)
+                {
+                    total += slot.quantity;
+                    if (total >= amount) return true;
+                }
             }
         }
 
@@ -147,53 +147,76 @@ public class InventoryManager : MonoBehaviour
 
     public void DeselectedAllSLot()
     {
-        for (int i = 0; i < itemSlot.Length;i++)
+        if (itemSlot != null)
         {
-           
-            itemSlot[i].selectedItem.SetActive(false);
-            itemSlot[i].isSelected = false;
-        }
-        for (int i = 0; i < equipmentSlot.Length; i++)
-        {
-            equipmentSlot[i].selectedItem.SetActive(false);
-            equipmentSlot[i].isSelected = false;
-            equipmentSlot[i].removeItemButton.SetActive(false);
-        }
-        for (int i = 0; i < equippedSlot.Length; i++)
-        {
-            equippedSlot[i].selectedItem.SetActive(false);
-            equippedSlot[i].isSelected = false;
-            
-        }
-
-    }
-    public void RemoveItemFromInventory(string itemName)
-    {
-        // Tìm item trong Equipment Slot
-        for (int i = 0; i < equipmentSlot.Length; i++)
-        {
-            if (equipmentSlot[i].itemName == itemName)
+            foreach (var slot in itemSlot)
             {
-                equipmentSlot[i].EmptySlot(); // Xóa item khỏi slot
-                return; // Item đã được xóa, không cần tiếp tục vòng lặp
+                if (slot != null)
+                {
+                    if (slot.selectedItem != null)
+                        slot.selectedItem.SetActive(false);
+
+                    slot.isSelected = false;
+                }
             }
         }
 
-        // Nếu item không tìm thấy trong Equipment Slot, tìm và xóa trong Item Slot
-        for (int i = 0; i < itemSlot.Length; i++)
+        if (equipmentSlot != null)
         {
-            if (itemSlot[i].itemName == itemName)
+            foreach (var slot in equipmentSlot)
             {
-                itemSlot[i].EmptySlot(); // Xóa item khỏi slot
+                if (slot != null)
+                {
+                    if (slot.selectedItem != null)
+                        slot.selectedItem.SetActive(false);
+
+                    slot.isSelected = false;
+
+                    if (slot.removeItemButton != null)
+                        slot.removeItemButton.SetActive(false);
+                }
+            }
+        }
+
+        if (equippedSlot != null)
+        {
+            foreach (var slot in equippedSlot)
+            {
+                if (slot != null)
+                {
+                    if (slot.selectedItem != null)
+                        slot.selectedItem.SetActive(false);
+
+                    slot.isSelected = false;
+                }
+            }
+        }
+    }
+
+
+    public void RemoveItemFromInventory(string itemName)
+    {
+        foreach (var slot in equipmentSlot)
+        {
+            if (slot.itemName == itemName)
+            {
+                slot.EmptySlot();
+                return;
+            }
+        }
+        foreach (var slot in itemSlot)
+        {
+            if (slot.itemName == itemName)
+            {
+                slot.EmptySlot();
                 return;
             }
         }
     }
+
     public void RemoveItem(ItermShopData item, int amount)
     {
         int remaining = amount;
-
-        // Trừ trong itemSlot
         foreach (var slot in itemSlot)
         {
             if (slot.itemName == item.itemName && remaining > 0)
@@ -205,8 +228,6 @@ public class InventoryManager : MonoBehaviour
                 remaining -= taken;
             }
         }
-
-        // Trừ trong equipmentSlot nếu chưa đủ
         foreach (var slot in equipmentSlot)
         {
             if (slot.itemName == item.itemName && remaining > 0)
@@ -218,58 +239,53 @@ public class InventoryManager : MonoBehaviour
                 remaining -= taken;
             }
         }
-
         Debug.Log($"Removed {amount} x {item.itemName}");
     }
+
     public int AddItem(EquipmentSO itemSO, int quantity, ItemType type)
     {
-        return AddItem(
-            itemSO.itemName,
-            quantity,
-            itemSO.itemSprite,
-            "Equipment",
-            type
-        );
+        return AddItem(itemSO.itemName, quantity, itemSO.itemSprite, "Equipment", type);
     }
-
-
-
 
     public bool UseItem(string itemName)
     {
-        for (int i = 0; i < itemSOs.Length; i++)
+        foreach (var itemSO in itemSOs)
         {
-            if (itemSOs[i].itemName == itemName)
+            if (itemSO.itemName == itemName)
             {
                 Debug.Log("Check đúng tên item");
-                bool usable = itemSOs[i].UseItem(); // UseItem của ItemSO
-                return usable;
+                return itemSO.UseItem();
             }
         }
         return false;
     }
+
     public int GetItemCount(string itemName)
     {
         int total = 0;
 
+        if (string.IsNullOrEmpty(itemName)) return 0;
+
         foreach (var slot in itemSlot)
         {
-            if (slot.itemName == itemName)
+            if (slot != null && slot.itemName == itemName)
+            {
                 total += slot.quantity;
+            }
         }
 
         foreach (var slot in equipmentSlot)
         {
-            if (slot.itemName == itemName)
+            if (slot != null && slot.itemName == itemName)
+            {
                 total += slot.quantity;
+            }
         }
 
         return total;
     }
 
 }
-
-
 
 public enum ItemType
 {
@@ -280,11 +296,9 @@ public enum ItemType
     legs,
     feet,
     weapon,
-    //trang sức
     Accessory1,
     Accessory2,
     Accessory3,
-    ItemQuest, // Thêm loại item cho nhiệm vụ
+    ItemQuest,
     none
-
 }

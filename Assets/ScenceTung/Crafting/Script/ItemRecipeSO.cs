@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewItemRecipe", menuName = "Crafting/Item Recipe", order = 1)]
 public class ItemRecipeSO : ScriptableObject
@@ -9,7 +8,6 @@ public class ItemRecipeSO : ScriptableObject
 
     public InputItemData[] input;
     public OutputItemData[] output;
-
 }
 
 [System.Serializable]
@@ -24,8 +22,5 @@ public class OutputItemData
 {
     public EquipmentSO item;
     public int count;
-    public ItemType type; // ✅ Dùng trực tiếp ItemType để chính xác (body, head, v.v.)
+    public ItemType type;
 }
-
-
-

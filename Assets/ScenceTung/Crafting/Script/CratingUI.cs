@@ -4,27 +4,27 @@ using UnityEngine.UI;
 
 public class CraftingUI : MonoBehaviour
 {
-    public GameObject recipeSlotPrefab; // Drag prefab ở inspector
-    public Transform recipeSlotParent;  // Content của ScrollView
+    public GameObject recipeSlotPrefab;
+    public Transform recipeSlotParent;
 
     public Image[] inputImages;
     public TMP_Text[] inputAmountTexts;
 
     public Image[] outputImages;
-    public TMP_Text recipeNameText;
     public TMP_Text[] outputAmountTexts;
+
+    public TMP_Text recipeNameText;
+    public TMP_Text coinCostText;
 
     public Button craftButton;
 
     private InventoryManager inventory;
     private ItemRecipeSO selectedRecipe;
-    public TMP_Text coinCostText;
 
     private void Start()
     {
         inventory = GameObject.Find("CanvasInventory").GetComponent<InventoryManager>();
         PopulateRecipes();
-
     }
 
     void PopulateRecipes()
@@ -33,22 +33,15 @@ public class CraftingUI : MonoBehaviour
         {
             GameObject slot = Instantiate(recipeSlotPrefab, recipeSlotParent);
 
-            // Lấy hình ảnh output để hiển thị trong recipe slot
             if (recipe.output.Length > 0 && recipe.output[0].item != null)
             {
                 Image iconImage = slot.transform.Find("Image").GetComponent<Image>();
                 iconImage.sprite = recipe.output[0].item.itemSprite;
             }
-            else
-            {
-                Debug.LogWarning($"Recipe '{recipe.recipeName}' has no valid output item!");
-            }
-
 
             slot.GetComponent<Button>().onClick.AddListener(() => OnRecipeSelected(recipe));
         }
     }
-
 
     public void OnRecipeSelected(ItemRecipeSO recipe)
     {
@@ -59,19 +52,20 @@ public class CraftingUI : MonoBehaviour
 
         for (int i = 0; i < inputImages.Length; i++)
         {
-            if (i < recipe.input.Length && recipe.input[i]?.item != null)
+            if (i < recipe.input.Length && recipe.input[i].item != null)
             {
-                var item = recipe.input[i].item;
-                inputImages[i].sprite = item.itemIcon;
+                inputImages[i].sprite = recipe.input[i].item.itemIcon;
                 inputImages[i].gameObject.SetActive(true);
 
                 if (inputAmountTexts != null && i < inputAmountTexts.Length)
                 {
-                    int playerAmount = inventory.GetItemCount(item.itemName);
-                    string coloredText = playerAmount >= recipe.input[i].count
-                        ? $"<color=white>{playerAmount}/{recipe.input[i].count}</color>"
-                        : $"<color=red>{playerAmount}/{recipe.input[i].count}</color>";
-                    inputAmountTexts[i].text = $"{coloredText} {item.itemName}";
+                    int playerAmount = inventory.GetItemCount(recipe.input[i].item.itemName);
+                    int required = recipe.input[i].count;
+
+                    inputAmountTexts[i].text = playerAmount >= required
+                        ? $"<color=white>{playerAmount}/{required}</color> {recipe.input[i].item.itemName}"
+                        : $"<color=red>{playerAmount}/{required}</color> {recipe.input[i].item.itemName}";
+
                     inputAmountTexts[i].gameObject.SetActive(true);
                 }
             }
@@ -83,16 +77,14 @@ public class CraftingUI : MonoBehaviour
             }
         }
 
-
-
         for (int i = 0; i < outputImages.Length; i++)
         {
             if (i < recipe.output.Length && recipe.output[i].item != null)
             {
                 outputImages[i].sprite = recipe.output[i].item.itemSprite;
+                Debug.Log("Gán ảnh output: " + recipe.output[i].item.itemSprite?.name);
                 outputImages[i].gameObject.SetActive(true);
 
-                // Gán text số lượng và tên
                 if (outputAmountTexts != null && i < outputAmountTexts.Length)
                 {
                     outputAmountTexts[i].text = $"{recipe.output[i].count}x {recipe.output[i].item.itemName}";
@@ -107,11 +99,7 @@ public class CraftingUI : MonoBehaviour
             }
         }
 
-
         craftButton.interactable = CraftingManager.Instance.CanCraft(recipe, inventory);
-
-
-
     }
 
     public void OnCraftButtonPressed()
@@ -119,7 +107,7 @@ public class CraftingUI : MonoBehaviour
         if (selectedRecipe != null)
         {
             CraftingManager.Instance.Craft(selectedRecipe, inventory);
-            OnRecipeSelected(selectedRecipe); // 🔄 cập nhật lại UI
+            OnRecipeSelected(selectedRecipe); // Cập nhật UI sau khi craft
         }
     }
 }

@@ -15,7 +15,6 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
     public bool isSelected;
     public Sprite emptySprite;
     public ItemType itemType;
-    public Toggle selectionToggle;
     // Item Slot
     [SerializeField]
     public TMP_Text quantityText;

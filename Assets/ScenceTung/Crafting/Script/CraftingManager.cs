@@ -18,14 +18,13 @@ public class CraftingManager : MonoBehaviour
         {
             if (input.item == null)
             {
-                Debug.LogError($"Input item in recipe '{recipe.recipeName}' is null.");
+                Debug.LogError($"[CanCraft] Input item in recipe '{recipe.recipeName}' is null.");
                 return false;
             }
 
             if (!inventory.HasItem(input.item, input.count))
                 return false;
         }
-
 
         return true;
     }
@@ -34,23 +33,27 @@ public class CraftingManager : MonoBehaviour
     {
         if (!CanCraft(recipe, inventory)) return;
 
-        // Trừ nguyên liệu từ input
         foreach (var input in recipe.input)
         {
             if (input.item == null)
             {
-                Debug.LogError($"Input item is NULL in recipe: {recipe.recipeName}");
+                Debug.LogError($"[Craft] Input item is NULL in recipe: {recipe.recipeName}");
                 continue;
             }
-            Debug.Log($"Trừ {input.count} x {input.item.itemName}");
+
             inventory.RemoveItem(input.item, input.count);
         }
 
         foreach (var output in recipe.output)
         {
-            inventory.AddItem(output.item, output.count, output.type); // type ở đây là ItemType
+            if (output.item != null)
+            {
+                inventory.AddItem(output.item, output.count, output.type);
+            }
+            else
+            {
+                Debug.LogError($"[Craft] Output item is NULL in recipe: {recipe.recipeName}");
+            }
         }
-
     }
-
 }
