@@ -47,10 +47,7 @@ public class Skill5Eye : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyUp(KeyCode.Alpha0))
-        {
-            isInputSkill = true;
-        }
+       
     }
 
 

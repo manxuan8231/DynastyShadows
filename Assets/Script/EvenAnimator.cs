@@ -71,6 +71,8 @@ public class EvenAnimator : MonoBehaviour
     public void StartEffectAttack1()
     {
         effectAttack1.SetActive(true);
+        EndEffectAttack3();
+        EndEffectAttackFly3();
     }
     public void EndEffectAttack1()
     {
@@ -89,6 +91,8 @@ public class EvenAnimator : MonoBehaviour
     public void StartEffectAttack3()
     {
         effectAttack3.SetActive(true);
+        EndEffectAttack1();
+        EndEffectAttackFly3();
     }
     public void EndEffectAttack3()
     {
@@ -98,6 +102,8 @@ public class EvenAnimator : MonoBehaviour
     public void StartEffectAttackFly3()
     {
         effectAttackFly3.SetActive(true);
+        EndEffectAttack1();
+        EndEffectAttack3();
     }
     public void EndEffectAttackFly3()
     {

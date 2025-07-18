@@ -8,6 +8,8 @@ public class ItemHealth : MonoBehaviour
     public Transform player;
    public AIPath aiPath;
     [SerializeField] private float timeDestroy;
+    //nav mesh
+    public NavMeshAgent navMeshAgent;
     void Start()
     {
        
@@ -22,6 +24,7 @@ public class ItemHealth : MonoBehaviour
             player = playerObj.transform;
         }
         aiPath = GetComponent<AIPath>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
         Destroy(gameObject,timeDestroy); // Gọi hàm để hủy item sau một khoảng thời gian nhất định
 
     }
@@ -29,10 +32,16 @@ public class ItemHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        aiPath.canSearch = true; // Bật tìm kiếm để AIPath có thể tìm đường đến player
-        aiPath.canMove = true; // Bật di chuyển để AIPath có thể di chuyển đến player
-        aiPath.destination = player.position; // Cập nhật vị trí đến player
+        if (aiPath != null && AstarPath.active != null) {
+            aiPath.canSearch = true; // Bật tìm kiếm để AIPath có thể tìm đường đến player
+            aiPath.canMove = true; // Bật di chuyển để AIPath có thể di chuyển đến player
+            aiPath.destination = player.position; // Cập nhật vị trí đến player
+        }
+        else if(navMeshAgent != null && navMeshAgent.isOnNavMesh)
+        {
+            navMeshAgent.SetDestination(player.position); // Cập nhật vị trí đến player
+            navMeshAgent.isStopped = false; 
+        }
     }
     public void OnTriggerEnter(Collider other)
     {

@@ -73,6 +73,13 @@ public class TutorialManager : MonoBehaviour
         isTutorialInvenConten = false;
         isCompleteInven = false;
         openSkillTree.isOpenSkillTree = false;
+
+        // Nếu đã hoàn thành thì không bật hướng dẫn
+        if (TutorialProgressHandler.IsTutorialDone())
+        {
+            gameObject.SetActive(false);
+            return;
+        }
     }
 
     void Update()
@@ -248,9 +255,13 @@ public class TutorialManager : MonoBehaviour
                 tutorialPanelV1.SetActive(false); // Ẩn panel trước khi hiển thị bước mới
                 break;
             case 9:
-                tutorialTextV1.text = "";
-                
+                tutorialTextV1.text = "";               
                 tutorialPanelV1.SetActive(false); // Ẩn panel trước khi hiển thị bước mới
+               
+                yield return new WaitForSeconds(1f);              
+                TutorialProgressHandler.MarkTutorialDone(); //  Lưu trạng thái hoàn thành tutorial
+
+                gameObject.SetActive(false); //  Ẩn object chứa TutorialManager
                 break;
         }
     }

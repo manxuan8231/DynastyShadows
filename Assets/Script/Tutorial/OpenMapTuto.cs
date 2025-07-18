@@ -16,17 +16,32 @@ public class OpenMapTuto : MonoBehaviour
     public Texture iconCloseQuest;
 
     public int index = 0;
-   
+  
+  
     void Start()
     {
+        
+        //   Load chỉ số đã lưu
+        index = MapTutoProgressHandler.LoadIndex();
+
+        // Nếu đã index == 5 thì tắt UI ngay
+        if (index >= 5)
+        {
+            panelTuto.SetActive(false);
+            iconTuto.enabled = false;
+            scrollRect.enabled = true;
+            return;                   
+        }
+
+        // Khởi tạo UI như cũ
         panelTuto.SetActive(false);
         iconTuto.enabled = false;
         scrollRect.enabled = false;
-       
     }
 
     void Update()
     {
+       
        if(index == 0)
        {
             panelTuto.SetActive(true);
@@ -59,7 +74,9 @@ public class OpenMapTuto : MonoBehaviour
             iconTuto.enabled = false;
             scrollRect.enabled = true;
             textContenTuto.text = $"";
+            MapTutoProgressHandler.SaveIndex(5);
         }
+       
     }
 
     public void ButtonSkipRight()
@@ -67,7 +84,8 @@ public class OpenMapTuto : MonoBehaviour
         index++;
         if (index > 5)
         {
-            index = 5; 
+            index = 5;
+          
         }
     }
     public void ButtonSkipLeft()
