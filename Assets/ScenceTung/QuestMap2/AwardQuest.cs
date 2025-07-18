@@ -128,7 +128,7 @@ public class AwardQuest : MonoBehaviour
         StartCoroutine(CanvasQuest7());
         playerStatus.currentExp += 5000;
         playerStatus.expSlider.value = playerStatus.currentExp;
-        playerStatus.gold += 500;
+        playerStatus.gold += 10000;
         playerStatus.UpdateTextUIGold();
         InventoryManager.AddItem(itemQuests[3].itemPrefabsQuest.itemName,
              itemQuests[3].itemPrefabsQuest.quantity,
