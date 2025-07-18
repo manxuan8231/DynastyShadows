@@ -1,44 +1,88 @@
+﻿using System.IO;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class LoginManager : MonoBehaviour
 {
+    [System.Serializable]
+    public class User
+    {
+        public string username;
+        public string password;
+    }
+
+    [System.Serializable]
+    public class UserDatabase
+    {
+        public User[] users;
+    }
+
     public TMP_InputField usernameInput;
     public TMP_InputField passwordInput;
+    public Button loginButton;
     public TMP_Text messageText;
-    public string nextScene = "TimelineMoDau";
+    public string nextScene = "MainGameScene"; // Đổi tên scene nếu cần
 
-    public void Login()
+    private string filePath;
+
+    void Awake()
+    {
+        filePath = Application.persistentDataPath + "/users.json";
+        loginButton.interactable = false;
+
+        usernameInput.onValueChanged.AddListener(delegate { ValidateInputs(); });
+        passwordInput.onValueChanged.AddListener(delegate { ValidateInputs(); });
+
+        // Tự động đăng nhập nếu đã lưu
+        if (PlayerPrefs.HasKey("LoggedInUser"))
+        {
+            Debug.Log("✅ Đã đăng nhập trước đó: " + PlayerPrefs.GetString("LoggedInUser"));
+            SceneManager.LoadScene(nextScene);
+        }
+    }
+
+    void ValidateInputs()
+    {
+        loginButton.interactable =
+            !string.IsNullOrWhiteSpace(usernameInput.text) &&
+            !string.IsNullOrWhiteSpace(passwordInput.text);
+    }
+
+    public void TryLogin()
     {
         string username = usernameInput.text;
         string password = passwordInput.text;
 
-        UserDatabase db = UserDataManager.Load();
+        if (!File.Exists(filePath))
+        {
+            messageText.text = "❌ Chưa có dữ liệu người dùng!";
+            return;
+        }
+
+        string json = File.ReadAllText(filePath);
+        UserDatabase db = JsonUtility.FromJson<UserDatabase>(json);
 
         foreach (var user in db.users)
         {
-            if (user.username == username)
+            if (user.username == username && user.password == password)
             {
-                if (user.password == password)
-                {
-                    messageText.text = "? dang nhap thanh cong";
-                    SceneManager.LoadScene(nextScene);
-                    return;
-                }
-                else
-                {
-                    messageText.text = "? Sai mat khau!";
-                    return;
-                }
+                PlayerPrefs.SetString("LoggedInUser", username);
+                PlayerPrefs.Save();
+
+                messageText.text = "✅ Đăng nhập thành công!";
+                SceneManager.LoadScene(nextScene);
+                return;
             }
         }
 
-        messageText.text = "? T�i khoan kh�ng ton tai!";
+        messageText.text = "❌ Sai tên đăng nhập hoặc mật khẩu!";
     }
 
-    public void GoToRegisterScene(string registerScene)
+    public void Logout()
     {
-        SceneManager.LoadScene(registerScene);
+        PlayerPrefs.DeleteKey("LoggedInUser");
+        PlayerPrefs.Save();
     }
 }
