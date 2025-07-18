@@ -6204,7 +6204,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1804499225}
         m_TargetAssemblyTypeName: LoginManager, Assembly-CSharp
-        m_MethodName: Login
+        m_MethodName: TryLogin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7233,6 +7233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usernameInput: {fileID: 317913174}
   passwordInput: {fileID: 442060145}
+  loginButton: {fileID: 678542984}
   messageText: {fileID: 2017441019}
   nextScene: TimelineMoDau
 --- !u!4 &1804499226
