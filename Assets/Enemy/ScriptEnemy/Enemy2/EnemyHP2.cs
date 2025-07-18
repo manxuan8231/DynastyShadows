@@ -1,5 +1,4 @@
-﻿using NUnit.Framework;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -73,6 +72,7 @@ public class EnemyHP2 : MonoBehaviour, IDamageable
         }
         else
         {
+            boxDame.enabled = false; // Tắt box dame khi chết
             enemy2.animator.enabled = true; // Bật animator để có thể chơi animation chết
             enemy2.enabled = true; // Bật lại Enemy2 để có thể chơi animation chết
             enemy2.agent.enabled = true; // Bật lại NavMeshAgent để có thể chơi animation chết
