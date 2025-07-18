@@ -15,7 +15,7 @@ public class Skill1NecState : INecState
     public override void Update()
     {
         float distance = Vector3.Distance(enemy.transform.position, enemy.player.transform.position);
-        if (enemy.necHp.curhp <= enemy.necHp.maxhp * 0.3f && !isTele  && enemy.isSkill1==false && distance <= 100f)
+        if (enemy.necHp.curhp <= enemy.necHp.maxhp * 0.7f && !isTele  && enemy.isSkill1==false && distance <= 100f)
         {
             enemy.audioManager.audioSource.PlayOneShot(enemy.audioManager.skill1Sound);
           
@@ -42,7 +42,7 @@ public class Skill1NecState : INecState
             enemy.necHp.sliderHp.maxValue = 10000f;
             enemy.StartCoroutine(HealAndSetMaxHp(10000f, 10f));
             enemy.StartCoroutine(Open());
-            if(enemy.checkEnemyCount <= 10)
+            if(enemy.checkEnemyCount <= 8)
             {
                 enemy.ChangState(new Skill2NecState(enemy));
             } 
@@ -81,7 +81,7 @@ public class Skill1NecState : INecState
             float currentHp = Mathf.Lerp(startHp, newMaxHp, t);
             float currentMax = Mathf.Lerp(startMax, newMaxHp, t);
 
-            enemy.necHp.curhp = currentHp;
+            enemy.necHp.curhp = (int)currentHp;
             enemy.necHp.sliderHp.maxValue = currentMax;
             enemy.necHp.sliderHp.value = currentHp;
             enemy.necHp.textHp.text = $"{(int)currentHp}/{(int)currentMax}";
@@ -89,7 +89,7 @@ public class Skill1NecState : INecState
             yield return null;
         }
 
-        enemy.necHp.curhp = newMaxHp;
+        enemy.necHp.curhp = (int)newMaxHp;
         enemy.necHp.sliderHp.maxValue = newMaxHp;
         enemy.necHp.sliderHp.value = newMaxHp;
         enemy.necHp.textHp.text = $"{(int)newMaxHp}/{(int)newMaxHp}";

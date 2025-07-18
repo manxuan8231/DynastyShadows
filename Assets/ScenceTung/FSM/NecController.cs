@@ -130,7 +130,7 @@ public class NecController : MonoBehaviour, IDamageable
     }
     public void TakeDamage(float damage)
     {
-        necHp.curhp -= damage;
+        necHp.curhp -= (int)damage;
 
         necHp.curhp = Mathf.Clamp(necHp.curhp, 0, necHp.maxhp);
         necHp.sliderHp.value = necHp.curhp;

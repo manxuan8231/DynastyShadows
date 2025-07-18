@@ -9,6 +9,7 @@ public class DontDestroyPrefabs : MonoBehaviour
     public bool isLoadScene = false;
     private void Start()
     {
+        playerPre = GameObject.FindGameObjectWithTag("Player");
         player = FindAnyObjectByType<PlayerControllerState>();
       
     }
