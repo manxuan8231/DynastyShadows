@@ -1,4 +1,5 @@
 using Pathfinding;
+using System.Collections;
 using UnityEngine;
 
 public class EnemyMap2_1 : MonoBehaviour
@@ -38,6 +39,7 @@ public class EnemyMap2_1 : MonoBehaviour
 
     //goi ham
     EnemyHP enemyHP;
+    PlayerControllerState playerControllerState;
     private void Awake()
     {
         ai = GetComponent<AIPath>();
@@ -46,6 +48,7 @@ public class EnemyMap2_1 : MonoBehaviour
         enemyHP = FindAnyObjectByType<EnemyHP>();
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
         DameZoneWeapon = FindAnyObjectByType<DameZoneWeapon>();
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
 
     }
     void Start()
@@ -167,7 +170,7 @@ public class EnemyMap2_1 : MonoBehaviour
                 ai.canSearch = true; // Tắt tìm kiếm khi ở trạng thái Idle
                 break;
             case EnemyState.Attack:
-              
+              StartCoroutine(PrepareThenAttack()); // Gọi coroutine để chuẩn bị tấn công
                 animator.SetTrigger("Attack");
                 currentTrigger = "Attack";
                 ai.canMove = false; // Dừng di chuyển khi ở trạng thái Idle
@@ -230,5 +233,12 @@ public class EnemyMap2_1 : MonoBehaviour
         }
 
         return closest;
+    }
+    public IEnumerator PrepareThenAttack()//goi khi enemy chuan bi tan cong
+    {
+        playerControllerState.isEnemyPreparingAttack = true;
+        yield return new WaitForSeconds(1f);
+        playerControllerState.isEnemyPreparingAttack = false;
+
     }
 }

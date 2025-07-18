@@ -13,6 +13,7 @@ public class EnemyHP2 : MonoBehaviour, IDamageable
     //gọi hàm
     Enemy2 enemy2;
     KnightD knightD;
+   
     public List<ItemDrop> itemDrops = new List<ItemDrop>();
     //box nhận dame                      
     public BoxCollider boxDame;
@@ -28,6 +29,7 @@ public class EnemyHP2 : MonoBehaviour, IDamageable
         enemy2 = GetComponent<Enemy2>(); // <- GÁN Ở ĐÂY
        knightD= FindAnyObjectByType<KnightD>();
         boxDame = GetComponent<BoxCollider>(); // Lấy BoxCollider để nhận damage
+        
     }
     
     void OnEnable()
@@ -133,5 +135,6 @@ public class EnemyHP2 : MonoBehaviour, IDamageable
         }
 
     }
+   
 }
 

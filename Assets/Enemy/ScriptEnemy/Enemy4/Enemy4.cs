@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy4 : MonoBehaviour
@@ -33,7 +34,7 @@ public class Enemy4 : MonoBehaviour
 
     //goi ham
     EnemyHP4 enemyHP4;
-
+    PlayerControllerState playerControllerState;
 
     //box dame
     public BoxCollider leftSpine;
@@ -46,6 +47,7 @@ public class Enemy4 : MonoBehaviour
         firstPos = transform.position;
         player = FindClosestPlayer();
         enemyHP4 = FindAnyObjectByType<EnemyHP4>();
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
     }
     void Start()
@@ -150,6 +152,7 @@ public class Enemy4 : MonoBehaviour
                 break;
             case EnemyState.Attack:
                 agent.isStopped = true; // Dừng lại khi tấn công
+                StartCoroutine(PrepareThenAttack()); // Gọi coroutine để chuẩn bị tấn công
                 animator.SetTrigger("Attack");
                 currentTrigger = "Attack";
                 break;
@@ -216,5 +219,12 @@ public class Enemy4 : MonoBehaviour
         }
 
         return closest;
+    }
+    public IEnumerator PrepareThenAttack()//goi khi enemy chuan bi tan cong
+    {
+        playerControllerState.isEnemyPreparingAttack = true;
+        yield return new WaitForSeconds(1f);
+        playerControllerState.isEnemyPreparingAttack = false;
+
     }
 }

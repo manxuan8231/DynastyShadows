@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy1 : MonoBehaviour
@@ -35,12 +36,14 @@ public class Enemy1 : MonoBehaviour
 
     //goi ham
     EnemyHP enemyHP;
+    PlayerControllerState playerControllerState;
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         player = FindClosestPlayer();
         enemyHP = FindAnyObjectByType<EnemyHP>();
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
 
     }
@@ -151,6 +154,7 @@ public class Enemy1 : MonoBehaviour
                 {
                     agent.isStopped = true; // Dừng lại khi tấn công 
                 }
+                StartCoroutine(PrepareThenAttack()); // Gọi coroutine để chuẩn bị tấn công
                 animator.SetTrigger("Attack");
                 currentTrigger = "Attack";
                 break;
@@ -201,5 +205,12 @@ public class Enemy1 : MonoBehaviour
 
         return closest;
     }
-   
+
+    public IEnumerator PrepareThenAttack()//goi khi enemy chuan bi tan cong
+    {
+        playerControllerState.isEnemyPreparingAttack = true;
+        yield return new WaitForSeconds(1f);
+        playerControllerState.isEnemyPreparingAttack = false;
+
+    }
 }

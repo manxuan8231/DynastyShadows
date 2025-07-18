@@ -38,6 +38,7 @@ public class EnemyCruTank : MonoBehaviour
 
     //goi ham
     EnemyCruTankHP enemyCruTankHP;
+    PlayerControllerState playerControllerState;
     private void Awake()
     {
         aiPath = GetComponent<AIPath>();
@@ -46,12 +47,13 @@ public class EnemyCruTank : MonoBehaviour
         enemyCruTankHP = FindAnyObjectByType<EnemyCruTankHP>();
         ChangeState(EnemyState.Idle); // Khởi tạo trạng thái ban đầu
         dameCruTank = FindAnyObjectByType<DameWeaponCruTank>();
-
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>(); // Lấy tham chiếu đến PlayerControllerState
     }
     void Start()
     {
         damageBox.enabled = false; // Tắt box dame khi bắt đầu   
         firstPos = transform.position;
+
     }
 
     // Update is called once per frame
@@ -113,6 +115,7 @@ public class EnemyCruTank : MonoBehaviour
         {
             // Thực hiện tấn công
             Debug.Log("Attack");
+           
             StartCoroutine(Waitingforflip());
             attackTimer = 0f; // Reset thời gian tấn công
             aiPath.isStopped = true; // Dừng lại khi tấn công
@@ -154,6 +157,7 @@ public class EnemyCruTank : MonoBehaviour
                 aiPath.isStopped = true; // Dừng lại khi tấn công 
                 aiPath.canMove = false; // Dừng di chuyển khi ở trạng thái Attack
                 aiPath.canSearch = false; // Dừng tìm kiếm khi ở trạng thái AttackAq
+                StartCoroutine(PrepareThenAttack());
                 animator.SetTrigger("Attack");
                 currentTrigger = "Attack";
                 break;        
@@ -183,6 +187,7 @@ public class EnemyCruTank : MonoBehaviour
     }
     public void BatDamageBox()
     {
+       
         dameCruTank.beginDame(); // Bật box dame khi tấn công
     }
     public void TatDamageBox()
@@ -212,6 +217,13 @@ public class EnemyCruTank : MonoBehaviour
         transform.LookAt(player);
         yield return new WaitForSeconds(0.02f);
         animator.SetTrigger("Attack");
+
+    }
+    public IEnumerator PrepareThenAttack()//goi khi enemy chuan bi tan cong
+    {
+        playerControllerState.isEnemyPreparingAttack = true;
+        yield return new WaitForSeconds(1f);
+        playerControllerState.isEnemyPreparingAttack = false;
 
     }
 }

@@ -40,6 +40,7 @@ public class MinotaurEnemy : MonoBehaviour, IDamageable
     private MinotaurEnemy minotaurEnemy;
     public SlowMotionDodgeEvent slowMotionDodgeEvent;
     public TutorialManager tutorialManager;
+    public PlayerControllerState playerControllerState;
     //cây hành vi
     private Node _rootNode;// Cây hành vi gốc
     public Animator _animator;
@@ -61,6 +62,7 @@ public class MinotaurEnemy : MonoBehaviour, IDamageable
         minotaurEnemy = GetComponent<MinotaurEnemy>();
         slowMotionDodgeEvent = FindAnyObjectByType<SlowMotionDodgeEvent>();
         tutorialManager = FindAnyObjectByType<TutorialManager>();
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
         startPosition = transform.position; // Lưu vị trí bắt đầu của MinotaurEnemy
     }
 
@@ -196,9 +198,11 @@ public class MinotaurEnemy : MonoBehaviour, IDamageable
         _agent.isStopped = true;
         transform.LookAt(targetPlayer);
         if (currentHealth > 50) {
+            StartCoroutine(PrepareThenAttack());// gọi hàm chuẩn bị tấn công
             _animator.SetTrigger("Attack");
         }
         else if(currentHealth <= 50 && currentHealth > 0) {
+            StartCoroutine(PrepareThenAttack());
             _animator.SetTrigger("Attack2");
         }
             Debug.Log(" tấn công");
@@ -350,6 +354,13 @@ public class MinotaurEnemy : MonoBehaviour, IDamageable
             slowMotionDodgeEvent.isDodgeWindowActive = true;
         }
       
+    }
+    public IEnumerator PrepareThenAttack()//goi khi enemy chuan bi tan cong
+    {
+        playerControllerState.isEnemyPreparingAttack = true;
+        yield return new WaitForSeconds(1f);
+        playerControllerState.isEnemyPreparingAttack = false;
+
     }
 
 }
