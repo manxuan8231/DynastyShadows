@@ -6,7 +6,10 @@ public class TimeLineBoss : MonoBehaviour
     public GameObject playerInGame;      // Player gameplay
     public GameObject playerTimeLine;    // Player chạy trong cutscene
     public PlayableDirector playableDirector;
-
+    private void Awake()
+    {
+        playerInGame = GameObject.FindGameObjectWithTag("Player");
+    }
     private void Start()
     {
         // Disable player thật để chỉ thấy player trong timeline

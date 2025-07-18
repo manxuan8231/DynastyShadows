@@ -42,7 +42,7 @@ public class Skill1NecState : INecState
             enemy.necHp.sliderHp.maxValue = 10000f;
             enemy.StartCoroutine(HealAndSetMaxHp(10000f, 10f));
             enemy.StartCoroutine(Open());
-            if(enemy.checkEnemyCount <= 8)
+            if(enemy.checkEnemyCount <= 10)
             {
                 enemy.ChangState(new Skill2NecState(enemy));
             } 
