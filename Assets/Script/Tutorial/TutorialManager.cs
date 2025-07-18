@@ -46,6 +46,16 @@ public class TutorialManager : MonoBehaviour
     private PlayerStatus playerStatus;
     private OpenMap openMap;
     OpenSkillTree openSkillTree;
+
+    private void Awake()
+    {
+        // Nếu đã hoàn thành thì không bật hướng dẫn
+        if (TutorialProgressHandler.IsTutorialDone())
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+    }
     void Start()
     {
         slowMotion = FindAnyObjectByType<SlowMotionDodgeEvent>();
@@ -74,12 +84,7 @@ public class TutorialManager : MonoBehaviour
         isCompleteInven = false;
         openSkillTree.isOpenSkillTree = false;
 
-        // Nếu đã hoàn thành thì không bật hướng dẫn
-        if (TutorialProgressHandler.IsTutorialDone())
-        {
-            gameObject.SetActive(false);
-            return;
-        }
+       
     }
 
     void Update()

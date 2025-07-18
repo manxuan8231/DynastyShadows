@@ -16,9 +16,9 @@ public class GameSaveData
     public int mapTutoIndex;
     public GameSaveData()//mặc định khi chx lưu
     {
-        score = 1110;
+        score = 10;
         currentLevel = 1;
-        gold = 110;
+        gold = 10;
         isTutorialDone = false;
         mapTutoIndex = 0;
     }

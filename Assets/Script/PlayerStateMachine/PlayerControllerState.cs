@@ -133,6 +133,9 @@ public class PlayerControllerState : MonoBehaviour
         //skill1                                                                                    
         rigBuilder.enabled = false; // Tắt RigBuilder sau khi hoàn thành
 
+        controller.enabled = true;
+        animator.enabled = true;
+
     }
    
     //tinh toan tim enemy gan nhat
