@@ -15,7 +15,7 @@ public class Skill1NecState : INecState
     public override void Update()
     {
         float distance = Vector3.Distance(enemy.transform.position, enemy.player.transform.position);
-        if (enemy.necHp.curhp <= 7000 && !isTele  && enemy.isSkill1==false && distance <= 100f)
+        if (enemy.necHp.curhp <= enemy.necHp.maxhp * 0.3f && !isTele  && enemy.isSkill1==false && distance <= 100f)
         {
             enemy.audioManager.audioSource.PlayOneShot(enemy.audioManager.skill1Sound);
           
