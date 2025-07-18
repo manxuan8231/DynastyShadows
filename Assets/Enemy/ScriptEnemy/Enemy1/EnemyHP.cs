@@ -53,11 +53,10 @@ public class EnemyHP : MonoBehaviour,IDamageable
         sliderHp.value = currentHealth;
         if (currentHealth <= 0)
         {
-
+            boxDame.enabled = false;
             enemy1.animator.enabled = true; // Bật animator để có thể chơi animation chết
             enemy1.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết
             enemy1.agent.isStopped = true; // Dừng lại khi chết
-            boxDame.enabled = false;
             DropItem(); // Gọi hàm rơi đồ
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
             if (quest3 != null)
