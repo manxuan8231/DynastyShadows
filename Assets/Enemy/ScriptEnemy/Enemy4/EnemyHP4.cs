@@ -68,6 +68,7 @@ public class EnemyHP4 : MonoBehaviour, IDamageable
         }
         else
         {
+            boxDame.enabled = false; // Tắt box dame khi chết
             enemy4.animator.enabled = true; // Bật animator để có thể chơi animation chết
             enemy4.enabled = true; // Bật lại Enemy2 để có thể chơi animation chết
             enemy4.agent.enabled = true; // Bật lại NavMeshAgent để có thể chơi animation chết

@@ -55,12 +55,10 @@ public class EnemyMap2_HP : MonoBehaviour, IDamageable
         sliderHp.value = currentHealth;
         if (currentHealth <= 0)
         {
+            boxDame.enabled = false;
             DropItem();
             enemyMap2_1.animator.enabled = true; // Bật animator để có thể chơi animation chết
-            enemyMap2_1.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết
-           
-                  
-            boxDame.enabled = false;
+            enemyMap2_1.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết              
             enemyMap2_1.ai.canSearch = false;
             enemyMap2_1.ai.canMove = false; // Tắt di chuyển khi chết
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
@@ -90,7 +88,6 @@ public class EnemyMap2_HP : MonoBehaviour, IDamageable
     {
         yield return new WaitForSeconds(5f); // Chờ 1.5 giây trước khi trả về pool
         ObjPoolingManager.Instance.ReturnToPool("EnemyMap2_1", gameObject);
-        enemyMap2_1.hasFirstPos = false; // Đặt lại hasFirstPos để có thể spawn lại
     }
     void BackToChase()
     {
