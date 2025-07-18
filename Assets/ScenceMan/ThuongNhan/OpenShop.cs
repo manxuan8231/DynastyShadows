@@ -32,6 +32,13 @@ public class OpenShop : MonoBehaviour
             Cursor.visible = isShopActive; // Hiện hoặc ẩn con trỏ chuột
             Cursor.lockState = isShopActive ? CursorLockMode.None : CursorLockMode.Locked; // Mở hoặc khóa con trỏ chuột
         }
+        else if(Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.M) || Input.GetKeyDown(KeyCode.T) || Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (shopPanel.activeSelf) // Nếu cửa hàng đang mở
+            {
+                shopPanel.SetActive(false); // Ẩn cửa hàng             
+            }
+        }
     }
 
     public void OnTriggerEnter(Collider other)

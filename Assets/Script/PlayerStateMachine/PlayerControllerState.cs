@@ -92,7 +92,7 @@ public class PlayerControllerState : MonoBehaviour
         rigBuilder.enabled = false;
         animator.runtimeAnimatorController = animatorDefauld; // Gán bộ điều khiển hoạt hình mặc định
 
-       // CheckpointHandler.LoadCheckpoint(transform);
+        CheckpointHandler.LoadCheckpoint(transform);
 
         // Gọi hàm ChangeState để chuyển sang trạng thái ban đầu
         ChangeState(new PlayerCurrentState(this));
