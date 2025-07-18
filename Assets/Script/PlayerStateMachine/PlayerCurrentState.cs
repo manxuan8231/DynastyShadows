@@ -143,7 +143,7 @@ public class PlayerCurrentState : PlayerState
         if (Input.GetKeyDown(KeyCode.LeftControl) && 
             player.isGrounded &&
             player.playerStatus.currentMana > 100 &&
-            Time.time >= player.rollColdownTime + 1f && player.isRollBack && player.playerStatus.isHit)
+            Time.time >= player.rollColdownTime + 1.5f && player.isRollBack && player.playerStatus.isHit)
         {
             
             player.playerStatus.TakeMana(100);

@@ -27,6 +27,7 @@ public class InteractNPC : MonoBehaviour
     {
         if (isInteract && isArrowTutoSkip && Input.GetKeyDown(KeyCode.F))
         {
+           
             isArrowTutoSkip = false; // Đặt biến isArrowTutoSkip thành false để không hiển thị mũi tên nữa
             interactNPCPanelArrowTuto.SetActive(true);         
         }
@@ -36,6 +37,7 @@ public class InteractNPC : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && isInteract == false)
         {
+           
             isInteract = true;
           
         }
@@ -54,6 +56,7 @@ public class InteractNPC : MonoBehaviour
 
     public void CloseBtSkipTuto()//button de thoat huong dan skip
     {
+       
         interactNPCPanelArrowTuto.SetActive(false);
     }
     public void CloseBtContenTuto()//button de thoat huong dan conten

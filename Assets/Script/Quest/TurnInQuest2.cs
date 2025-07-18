@@ -74,7 +74,7 @@ public class TurnInQuest2 : MonoBehaviour
             NPCPanel.SetActive(true);
             coroutine = StartCoroutine(ReadContent());
             buttonF.SetActive(false); // Ẩn nút F khi bắt đầu hội thoại
-          
+            isButtonF = false; // Đặt trạng thái hội thoại là false
         }
     }
     private void OnTriggerEnter(Collider other)

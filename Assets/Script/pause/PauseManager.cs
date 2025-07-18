@@ -28,9 +28,11 @@ public class PauseManager : MonoBehaviour
     private OpenSkillTree openSkillTree;
     public AudioSource audioSource; // Thêm biến AudioSource để phát âm thanh
     public AudioClip clickButtonSound; // Thêm biến AudioClip để chứa âm thanh khi nhấn nút
+    public InventoryManager inventoryManager; // Thêm biến InventoryManager để quản lý kho
     void Start()
     {
         openSkillTree =FindAnyObjectByType<OpenSkillTree>();
+        inventoryManager = FindAnyObjectByType<InventoryManager>();
         audioSource = GetComponent<AudioSource>();
         canvasPause.SetActive(false);
     }
@@ -38,7 +40,7 @@ public class PauseManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && inventoryManager.isOpenInventory)
         {
             bool isPaused = !canvasPause.activeSelf;
             canvasPause.SetActive(isPaused);

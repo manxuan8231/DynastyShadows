@@ -125,7 +125,7 @@ public class NPCScript : MonoBehaviour
         buttonSkip.SetActive(true);
         buttonF.SetActive(false);
         isButtonF = false;
-
+       
         coroutine = StartCoroutine(ReadContent());
     }
 
@@ -133,6 +133,8 @@ public class NPCScript : MonoBehaviour
     {
         for (int i = 0; i < content.Length; i++)
         {
+           
+            
             NPCContent.text = "";
             NPCName.text = names.Length > i ? names[i] : "???";
 
@@ -161,7 +163,7 @@ public class NPCScript : MonoBehaviour
 
             isWaitingForNext = false;
         }
-
+        
         EndDialogueAndStartQuest();
     }
 

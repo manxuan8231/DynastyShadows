@@ -137,6 +137,7 @@ public class TutorialInven : MonoBehaviour
         index++;
         if (index >= 15)
         {
+           
             index = 15;
         }
     }
