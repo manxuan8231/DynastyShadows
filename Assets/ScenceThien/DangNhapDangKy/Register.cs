@@ -12,8 +12,14 @@ public class RegisterManager : MonoBehaviour
 
     public void Register()
     {
-        string username = usernameInput.text;
-        string password = passwordInput.text;
+        string username = usernameInput.text.Trim();
+        string password = passwordInput.text.Trim();
+
+        if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+        {
+            messageText.text = "❌ Tên đăng nhập và mật khẩu không được để trống!";
+            return;
+        }
 
         UserDatabase db = UserDataManager.Load();
 
@@ -26,12 +32,17 @@ public class RegisterManager : MonoBehaviour
             }
         }
 
-        UserData newUser = new UserData { username = username, password = password };
+        UserData newUser = new UserData
+        {
+            username = username,
+            password = password
+        };
+
         db.users.Add(newUser);
         UserDataManager.Save(db);
 
         messageText.text = "✅ Đăng ký thành công!";
-        GoToLoginScene();
+        Invoke(nameof(GoToLoginScene), 1.5f); // Delay nhẹ để người dùng thấy thông báo
     }
 
     public void GoToLoginScene()
