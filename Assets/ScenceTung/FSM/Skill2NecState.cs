@@ -27,7 +27,7 @@ public class Skill2NecState : INecState
         
         }
 
-        if (enemy.checkEnemyCount >= 10)
+        if (enemy.checkEnemyCount >= 8)
         {
             enemy.isSkill2 = false;
             enemy.isSkill1 = true;
