@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class NecHp : MonoBehaviour
 {
-    public float curhp;
-    public float maxhp;
+    public int curhp;
+    public int maxhp;
     public Slider sliderHp;
     public TextMeshProUGUI textHp;
     public GameObject sliderHpBoss2;
