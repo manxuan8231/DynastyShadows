@@ -120,6 +120,7 @@ public class EnemyHP : MonoBehaviour,IDamageable
             enemy1.agent.enabled = true;
         }
 
+        enemy1.ChangeState(Enemy1.EnemyState.Idle); // Đặt lại trạng thái về Idle
     }
 
     void BackToChase()
