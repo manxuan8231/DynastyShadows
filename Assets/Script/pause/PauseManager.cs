@@ -1,7 +1,6 @@
 ﻿
 using TMPro;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
 
 
@@ -75,10 +74,7 @@ public class PauseManager : MonoBehaviour
             panelSetting.SetActive(false);
             
         }
-        else if(Input.GetKeyDown(KeyCode.Tab)|| Input.GetKeyDown(KeyCode.E))
-        {
-            canvasPause.SetActive(false);
-        }
+       
 
     }
     public void ButtonEquipment()

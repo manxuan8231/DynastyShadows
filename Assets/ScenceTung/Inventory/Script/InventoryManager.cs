@@ -4,7 +4,6 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
     public GameObject inventoryMenu;
-    public GameObject inventoryLogo;
     public GameObject canvasPauser;
 
     public GameObject equipmentMenu;
@@ -21,13 +20,13 @@ public class InventoryManager : MonoBehaviour
     {
         if (pausedManager == null) pausedManager = FindAnyObjectByType<PauseManager>();
         audioSource = GameObject.Find("Inventory").GetComponent<AudioSource>();
-        if (Input.GetButtonDown("Inventory") && isOpenInventory && !canvasPauser.activeSelf)
+        if (Input.GetButtonDown("Inventory") && isOpenInventory )
             Inventory();
-        if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory && !canvasPauser.activeSelf)
+        if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory )
             EquipmentMenu();
     }
 
-    void Inventory()
+    public  void Inventory()
     {
         if (inventoryMenu.activeSelf)
         {
@@ -35,8 +34,9 @@ public class InventoryManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             inventoryMenu.SetActive(false);
-            inventoryLogo.SetActive(false);
+            
             equipmentMenu.SetActive(false);
+            pausedManager.canvasPause.SetActive(false);
         }
         else
         {
@@ -44,14 +44,14 @@ public class InventoryManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             inventoryMenu.SetActive(true);
-            inventoryLogo.SetActive(true);
+           
             equipmentMenu.SetActive(false);
             pausedManager.ButtonInven();
             pausedManager.canvasPause.SetActive(true);
         }
     }
 
-    void EquipmentMenu()
+    public void EquipmentMenu()
     {
         if (equipmentMenu.activeSelf)
         {
@@ -59,7 +59,7 @@ public class InventoryManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             inventoryMenu.SetActive(false);
-            inventoryLogo.SetActive(false);
+            pausedManager.canvasPause.SetActive(false);
             equipmentMenu.SetActive(false);
         }
         else
@@ -68,7 +68,7 @@ public class InventoryManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             inventoryMenu.SetActive(false);
-            inventoryLogo.SetActive(true);
+           
             equipmentMenu.SetActive(true);
             pausedManager.canvasPause.SetActive(true);
             pausedManager.ButtonEquipment();
