@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,17 +21,23 @@ public class OpenSkillTree : MonoBehaviour
     public GameObject panelInvenEq;
     public GameObject buttonInven;
     public bool isOpenSkillTree = true;
+   
     public AudioSource audioSource; // Thêm biến AudioSource để phát âm thanh
     public AudioClip openSkillTreeSound; // Thêm biến AudioClip để chứa âm thanh mở Skill Tree
     public AudioClip clickButtonSound;
-
+    public TextMeshProUGUI enoughtSkill;// thong bao đủ điểm nâng cấp kỹ năng
     //tham chieu
     public PauseManager pauseManager;
+   
+    public PlayerStatus playerStatus;
     void Start()
     {
         pauseManager = FindAnyObjectByType<PauseManager>();
-           panelSkillTree.SetActive(false);
+      
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
+        panelSkillTree.SetActive(false);
         buttonCoreBG.enabled = false;
+        enoughtSkill.enabled = false;
         // flexibleSkill.SetActive(false);
 
         coreTree.SetActive(false);    
@@ -87,7 +94,8 @@ public class OpenSkillTree : MonoBehaviour
             flexibleSkill.SetActive(false);
             coreTree.SetActive(false);
         }*/
-
+      
+      
     }
     // Mở skill da dang  khi nhấn nút trên giao diện
     public void ButtonFlexibleSkill()
@@ -113,5 +121,12 @@ public class OpenSkillTree : MonoBehaviour
         coreTree.SetActive(true);
         flexibleSkill.SetActive(false); // Ẩn Flexible Skill khi mở Core Tree
     }
-   
+
+    //đủ level thì hiện thông báo
+    public IEnumerator WaitOffEnought()
+    {
+        enoughtSkill.enabled = true;    
+        yield return new WaitForSeconds(5f);
+        enoughtSkill.enabled = false;
+    }
 }

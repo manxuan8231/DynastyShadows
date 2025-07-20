@@ -96,8 +96,9 @@ public class PlayerStatus : MonoBehaviour
     //tham chieu ------------------------------------------
     private PlayerControllerState playerController; // Tham chiếu đến PlayerController
     private ComboAttack comboAttack; // Tham chiếu đến ComboAttack
-  
+    private OpenSkillTree openSkillTree;
     private Skill4Manager skill4Manager; // Tham chiếu đến Skill4Manager
+   
     void Start()
     {     
         //khởi tạo hp
@@ -132,7 +133,8 @@ public class PlayerStatus : MonoBehaviour
         playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         skill4Manager = FindAnyObjectByType<Skill4Manager>();
-      
+        openSkillTree = FindAnyObjectByType<OpenSkillTree>();
+       
         //tat hieu uung
         effectStun.SetActive(false);
         effectLevelUp.SetActive(false);
@@ -574,8 +576,33 @@ public class PlayerStatus : MonoBehaviour
         currentLevel++;
         expToNextLevel += expIncreasePerLevel; // Tăng EXP cần thiết cho cấp sau
         StartCoroutine(WaitLevelUp());//effect level up
+       
         score += scorePerLevel; // Cộng score cố định
         Debug.Log("Level Up! Now level " + currentLevel + " | Score: " + score);
+        if (currentLevel == 5)
+        {
+            openSkillTree.StartCoroutine(openSkillTree.WaitOffEnought());
+            openSkillTree.enoughtSkill.text = $"Đủ điều kiện nâng cấp kỹ năng Đông Cứng";
+
+        }
+        if (currentLevel == 10)
+        {
+            openSkillTree.StartCoroutine(openSkillTree.WaitOffEnought());
+            openSkillTree. enoughtSkill.text = $"Đủ điều kiện nâng cấp kỹ năng Thế Ảnh";
+
+        }
+        if (currentLevel == 15)
+        {
+            openSkillTree.StartCoroutine(openSkillTree.WaitOffEnought());
+            openSkillTree.enoughtSkill.text = $"Đủ điều kiện nâng cấp kỹ năng Quân Đoàn Bóng Tối";
+
+        }
+        if (currentLevel == 20)
+        {
+            openSkillTree.StartCoroutine(openSkillTree.WaitOffEnought());
+            openSkillTree.enoughtSkill.text = $"Đủ điều kiện nâng cấp kỹ năng Phản Nhãn";
+
+        }
     }
     public void IncreasedGold(int value)
     {

@@ -1,8 +1,7 @@
-﻿using System;
+﻿
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Video;
 
 public class SkillCoreManager : MonoBehaviour
 {
@@ -11,12 +10,14 @@ public class SkillCoreManager : MonoBehaviour
     public TextMeshProUGUI previewText;   // Tên kỹ năng
     public TextMeshProUGUI contenSkill;     // Mô tả kỹ năng
     public TextMeshProUGUI scoreUpgradeText;//so diem can de nang cap
+   
     public GameObject buttonUnlock;//nut mo khoa skill
 
     [Header("Skill Icon BG")]
     public Image[] buttonIconColor;//icon sau khi mo khoa skill 
     public Image[] skillBGs; // icon nền 
     private string currentSkillID = ""; // Lưu skill đang được chọn
+   
 
     public AudioSource skillAudioSource;
     public AudioClip buttonClick;
@@ -63,18 +64,22 @@ public class SkillCoreManager : MonoBehaviour
     {
         if(playerStatus.currentLevel >= 5)
         {
+            
             panelSkill1.SetActive(false);//an panel neu du cap
         }
         if (playerStatus.currentLevel >= 10)
         {
+          
             panelSkill2.SetActive(false);//an panel neu du cap
         }
         if (playerStatus.currentLevel >= 15)
         {
+        
             panelSkill3.SetActive(false);//an panel neu du cap
         }
         if (playerStatus.currentLevel >= 20)
         {
+          
             panelSkill4.SetActive(false);//an panel neu du cap
         }
         SimulateUnlockAllSkills(); //giả lập mở khóa tất cả kỹ năng
@@ -972,8 +977,8 @@ public class SkillCoreManager : MonoBehaviour
         }
     }
 
-
-
+   
+    //gia lap full skill
     private void SimulateUnlockAllSkills()
     {
         if (Input.GetKeyDown(KeyCode.LeftAlt))
@@ -1012,6 +1017,7 @@ public class SkillCoreManager : MonoBehaviour
             skill3Manager.timeSkill3 = 40f;
             skill3Manager.isDamaged = true;
             skill3Manager.playerCount = 6;
+            skill3Manager.isLv6 = true;
 
             // Phản Nhân
             turnInSkill4 = 7;
