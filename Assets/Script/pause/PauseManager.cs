@@ -153,4 +153,9 @@ public class PauseManager : MonoBehaviour
         panelInventory.SetActive(false);
         panelEquipment.SetActive(false);
     }
+
+    public void ExitToMainMenu()
+    {
+
+    }
 }

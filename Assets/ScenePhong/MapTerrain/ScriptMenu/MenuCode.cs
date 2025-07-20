@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuCode : MonoBehaviour
 {
+    public string exitToMainMenu = "MainMenu";
     public void Play()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -35,5 +36,9 @@ public class MenuCode : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("Player has quit the game");
+    }
+    public void ExitToMainMenu()
+    {
+        SceneManager.LoadScene(exitToMainMenu);
     }
 }
