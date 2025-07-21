@@ -12,7 +12,7 @@ public class PauseManager : MonoBehaviour
     public GameObject panelInventory;
     public GameObject panelSkillTree;
     public GameObject panelSetting;
-
+    public GameObject panelQuitGame;
     //imgButton cho dep
     public Image imageEquipment;
     public Image imageInventory;
@@ -35,6 +35,7 @@ public class PauseManager : MonoBehaviour
         inventoryManager = FindAnyObjectByType<InventoryManager>();
         audioSource = GetComponent<AudioSource>();
         canvasPause.SetActive(false);
+        panelQuitGame.SetActive(false);
     }
 
 
@@ -155,7 +156,15 @@ public class PauseManager : MonoBehaviour
         panelEquipment.SetActive(false);
     }
 
-    public void ExitToMainMenu()
+    public void PanelQuitGame()//bật cảnh báo hiện quitgame
+    {
+        panelQuitGame.SetActive(true);
+    }
+    public void QuitPanel()//tắt cảnh báo hiện quitgame
+    {
+        panelQuitGame.SetActive(false);
+    }
+    public void ExitToMainMenu()  // Quay về Main Menu
     {
         SceneManager.LoadScene("MainMenu");
     }
