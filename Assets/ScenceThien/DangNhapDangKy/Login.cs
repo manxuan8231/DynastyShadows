@@ -1,11 +1,17 @@
-﻿using System.IO;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class LoginManager : MonoBehaviour
 {
+    public TMP_InputField usernameInput;
+    public TMP_InputField passwordInput;
+    public TMP_Text messageText;
+    public string nextScene = "MainScene"; // Tên scene sẽ chuyển sau khi đăng nhập
+
+    private string filePath;
+
     [System.Serializable]
     public class User
     {
@@ -19,30 +25,9 @@ public class LoginManager : MonoBehaviour
         public User[] users;
     }
 
-    public TMP_InputField usernameInput;
-    public TMP_InputField passwordInput;
-    public Button loginButton;
-    public TMP_Text messageText;
-    public string nextScene = "MainGameScene"; // Đổi tên scene nếu cần
-
-    private string filePath;
-
     void Awake()
     {
         filePath = Application.persistentDataPath + "/users.json";
-        loginButton.interactable = false;
-
-        usernameInput.onValueChanged.AddListener(delegate { ValidateInputs(); });
-        passwordInput.onValueChanged.AddListener(delegate { ValidateInputs(); });
-
-
-    }
-
-    void ValidateInputs()
-    {
-        loginButton.interactable =
-            !string.IsNullOrWhiteSpace(usernameInput.text) &&
-            !string.IsNullOrWhiteSpace(passwordInput.text);
     }
 
     public void TryLogin()
@@ -52,7 +37,7 @@ public class LoginManager : MonoBehaviour
 
         if (!File.Exists(filePath))
         {
-            messageText.text = "Chưa có dữ liệu người dùng!";
+            messageText.text = "Không tìm thấy dữ liệu người dùng!";
             return;
         }
 
@@ -63,21 +48,12 @@ public class LoginManager : MonoBehaviour
         {
             if (user.username == username && user.password == password)
             {
-                PlayerPrefs.SetString("LoggedInUser", username);
-                PlayerPrefs.Save();
-
                 messageText.text = "Đăng nhập thành công!";
                 SceneManager.LoadScene(nextScene);
                 return;
             }
         }
 
-        messageText.text = "Sai tên đăng nhập hoặc mật khẩu!";
-    }
-
-    public void Logout()
-    {
-        PlayerPrefs.DeleteKey("LoggedInUser");
-        PlayerPrefs.Save();
+        messageText.text = "Sai tài khoản hoặc mật khẩu!";
     }
 }
