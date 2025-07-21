@@ -5,6 +5,7 @@ public class UserData
 {
     public string username;
     public string password;
+    public bool hasSeenTimeline;
 }
 [System.Serializable]
 public class UserDatabase

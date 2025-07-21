@@ -8,17 +8,18 @@ public static class SessionManager
     public static void SaveSession(string username)
     {
         SessionData session = new SessionData { loggedInUser = username };
-        string json = JsonUtility.ToJson(session, true);
-        File.WriteAllText(sessionFilePath, json);
+        string sessionJson = JsonUtility.ToJson(session, true);
+        File.WriteAllText(Application.persistentDataPath + "/session.json", sessionJson);
+
     }
 
     public static string LoadSession()
     {
         if (!File.Exists(sessionFilePath))
             return null;
-
-        string json = File.ReadAllText(sessionFilePath);
-        SessionData session = JsonUtility.FromJson<SessionData>(json);
+        string sessionJson = File.ReadAllText(Application.persistentDataPath + "/session.json");
+        SessionData session = JsonUtility.FromJson<SessionData>(sessionJson);
+        string currentUser = session.loggedInUser;
         return session.loggedInUser;
     }
 

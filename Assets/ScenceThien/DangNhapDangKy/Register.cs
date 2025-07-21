@@ -25,7 +25,7 @@ public class RegisterManager : MonoBehaviour
             }
         }
 
-        UserData newUser = new UserData { username = username, password = password };
+        UserData newUser = new UserData { username = username, password = password, hasSeenTimeline = false };
         db.users.Add(newUser);
         UserDataManager.Save(db);
 
