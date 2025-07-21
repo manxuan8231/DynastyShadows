@@ -25,7 +25,19 @@ public class TimeLineQuest3 : MonoBehaviour
         playerTimeLine.SetActive(false);
         playableDirector.stopped += OnTimelineFinished;
     }
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Cursor.lockState = CursorLockMode.None; // Mở khóa con trỏ chuột
+            Cursor.visible = true; // Hiển thị con trỏ chuột
+        }
+    }
+    public void Skip()
+    {
+        playableDirector.Stop(); // Dừng timeline nếu đang chạy
+        OnTimelineFinished(playableDirector); // Gọi hàm kết thúc timeline để cập nhật trạng thái
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (hasPlayed) return;
@@ -38,7 +50,9 @@ public class TimeLineQuest3 : MonoBehaviour
             trigger.SetActive(true);           // Tắt trigger để không chạy lại
             playerInGame.SetActive(false);      // Ẩn player thật
             playerTimeLine.SetActive(true);     // Bật player giả
+
             playableDirector.Play();            // Play Timeline
+            
         }
     }
 
@@ -47,6 +61,9 @@ public class TimeLineQuest3 : MonoBehaviour
         // Cập nhật vị trí player thật từ player timeline
         playerInGame.transform.position = playerTimeLine.transform.position;
         playerInGame.transform.rotation = playerTimeLine.transform.rotation;
+        // Đặt lại trạng thái con trỏ chuột
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false; // Ẩn con trỏ chuột khi trở lại gameplay
         // Kết thúc cutscene, chơi tiếp
         playerInGame.SetActive(true);
         playerTimeLine.SetActive(false);

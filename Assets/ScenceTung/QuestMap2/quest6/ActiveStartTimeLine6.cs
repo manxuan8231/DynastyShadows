@@ -29,6 +29,10 @@ public class ActiveStartTimeLine6 : MonoBehaviour
         
     }
 
+    public void Skip() {
+        playableDirector.Stop(); // Dừng timeline nếu đang chạy
+        OnTimelineFinished(playableDirector); // Gọi hàm kết thúc timeline để cập nhật trạng thái
+    }
     public void Count()
     {
         if(npcDialogueController.currentStage == QuestStage.Quest6InProgress)

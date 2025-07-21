@@ -33,6 +33,11 @@ public class RunTimeLineQuest4 : MonoBehaviour
 
         }
     }
+    public void Skip()
+    {
+        playableDirector.Stop(); // Dừng timeline nếu đang chạy
+        OnTimelineFinished(playableDirector); // Gọi hàm kết thúc timeline để cập nhật trạng thái
+    }
     private void OnTimelineFinished(PlayableDirector director)
     {
         // Cập nhật vị trí player thật từ player timeline

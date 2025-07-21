@@ -17,7 +17,8 @@ public class ActiveQuest8 : MonoBehaviour
     public GameObject playerTimeLine2;
     public PlayableDirector playableDirector2;
     public GameObject boss;
-    public int activeTimeLine = 0; // Biến để xác định timeline nào đang hoạt động
+    public int activeTimeLine = 0; // Biến để xác định timeline nào đang hoạt động\
+    public bool isTimeline2 = false;
 
     void Start()
     {
@@ -45,6 +46,7 @@ public class ActiveQuest8 : MonoBehaviour
         playableDirector.stopped += OnTimelineFinished; // Đăng ký sự kiện khi timeline kết thúc
 
     }
+    
     private void OnTimelineFinished(PlayableDirector director)
     {
         // Cập nhật vị trí player thật từ player timeline
@@ -75,11 +77,25 @@ public class ActiveQuest8 : MonoBehaviour
         activeTimeLine++;
         if (activeTimeLine >= 2)
         {
+            isTimeline2 = true; // Đánh dấu là đã kích hoạt timeline 2
             model.SetActive(false); // Ẩn mô hình sau khi timeline 1 kết thúc
             playerInGame.SetActive(false); // Ẩn player thật
             timeLine2.SetActive(true); // Bật timeline
             playableDirector2.Play(); // Chạy timeline
             playableDirector2.stopped += OnTimelineFinished2; // Đăng ký sự kiện khi timeline kết thúc
+        }
+    }
+    public void Skip()
+    {
+        if (isTimeline1)
+        {
+            playableDirector.Stop(); // Dừng timeline nếu đang chạy
+            OnTimelineFinished(playableDirector); // Gọi hàm kết thúc timeline để cập nhật trạng thái
+        }
+        else if(isTimeline2)
+        {
+            playableDirector2.Stop(); // Dừng timeline nếu đang chạy
+            OnTimelineFinished2(playableDirector2); // Gọi hàm kết thúc timeline để cập nhật trạng thái
         }
     }
 }
