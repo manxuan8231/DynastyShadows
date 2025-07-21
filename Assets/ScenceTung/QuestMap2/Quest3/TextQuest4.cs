@@ -24,31 +24,25 @@ public class TextQuest4 : MonoBehaviour
     [Header("Gameobject")]
     public GameObject destroy;
     public GameObject questpoint;
-
-    [Header("Collider")]
-    public BoxCollider boxCollider;
-    private void Start()
+    bool isTextQuest4 = false;
+        private void Start()
     {
-        boxCollider = GetComponent<BoxCollider>();
         questpoint.SetActive(false); // Đảm bảo questpoint không hiển thị ban đầu
     }
     private void Update()
     {
-        if(TimeLineQuest3.isQuest3Complete == true)
+        if(TimeLineQuest3.isQuest3Complete == true && !isTextQuest4)
         {
+            isTextQuest4 = true; // Đánh dấu là đã hiển thị text quest 4
+            StartCoroutine(TextHN());
             Destroy(destroy); // Hủy đối tượng destroy nếu cần thiết
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") && TimeLineQuest3.isQuest3Complete == true   )
-        {
-            StartCoroutine(TextHN());
-        }
-    }
+  
 
     IEnumerator TextHN()
     {
+        yield return new WaitForSeconds(1f); // Đợi một chút trước khi hiển thị canvas
         canvasTextQuest4.SetActive(true);
         contentText.text = "Tại sao mọi người lại truy đuổi mình ?";
         yield return new WaitForSeconds(2f);
@@ -70,7 +64,6 @@ public class TextQuest4 : MonoBehaviour
         stateCanvas.SetActive(false);
         TextQuest4 text = FindAnyObjectByType<TextQuest4>();
         text.enabled = false;
-        boxCollider.enabled = false; // Vô hiệu hóa collider sau khi hoàn thành nhiệm vụ
 
 
     }
