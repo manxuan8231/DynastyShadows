@@ -35,12 +35,7 @@ public class LoginManager : MonoBehaviour
         usernameInput.onValueChanged.AddListener(delegate { ValidateInputs(); });
         passwordInput.onValueChanged.AddListener(delegate { ValidateInputs(); });
 
-        // Tự động đăng nhập nếu đã lưu
-        if (PlayerPrefs.HasKey("LoggedInUser"))
-        {
-            Debug.Log("✅ Đã đăng nhập trước đó: " + PlayerPrefs.GetString("LoggedInUser"));
-            SceneManager.LoadScene(nextScene);
-        }
+
     }
 
     void ValidateInputs()
