@@ -88,10 +88,6 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
         {
             OnLeftClick();
         }
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            OnRightClick();
-        }
     }
     private void OnLeftClick()
     {
@@ -167,13 +163,4 @@ public class ItemSlot : MonoBehaviour,IPointerClickHandler
         selectedItem.SetActive(false);  // Tắt viền chọn (nếu có)
         isSelected = false;
     }
-
-    private void OnRightClick()
-    {
-        
-    }
-    
-
-   
-  
 }

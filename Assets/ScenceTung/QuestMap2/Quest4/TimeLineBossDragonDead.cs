@@ -58,7 +58,7 @@ public class TimeLineBossDragonDead : MonoBehaviour
     }
     public void Skip()
     {
-        playableDirector.Stop(); // Dừng timeline nếu đang chạy
+     timeLine.SetActive(false); // Tắt timeline nếu người chơi muốn bỏ qua
         OnTimelineFinished(playableDirector); // Gọi hàm kết thúc timeline để cập nhật trạng thái
         
         
