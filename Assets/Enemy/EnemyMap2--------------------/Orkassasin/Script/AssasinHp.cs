@@ -35,7 +35,7 @@ public class AssasinHp : MonoBehaviour,IDamageable
     
     void Update()
     {
-       
+      
 
     }
     public void TakeDamage(float damage)

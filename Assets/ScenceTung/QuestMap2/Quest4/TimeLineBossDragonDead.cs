@@ -56,6 +56,13 @@ public class TimeLineBossDragonDead : MonoBehaviour
         Destroy(objDestroy); // Xóa đối tượng không cần thiết
         StartCoroutine(ChangedWeather()); // Thay đổi thời tiết sau khi timeline kết thúc
     }
+    public void Skip()
+    {
+        playableDirector.Stop(); // Dừng timeline nếu đang chạy
+        OnTimelineFinished(playableDirector); // Gọi hàm kết thúc timeline để cập nhật trạng thái
+        
+        
+    }
     IEnumerator ChangedWeather()
     {
         yield return new WaitForSeconds(0.5f); // Thay đổi màu sắc ánh sáng sau 1 giây
