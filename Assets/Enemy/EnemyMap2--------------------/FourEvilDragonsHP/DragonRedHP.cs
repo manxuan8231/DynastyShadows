@@ -28,6 +28,7 @@ public class DragonRedHP : MonoBehaviour,IDamageable
     private DragonRedFly dragonRedFly; // Tham chiếu đến script DragonRedFly
     
     public TimeLineBossDragonDead timeLine;
+    bool isTimeLine = false;
     void Start()
     {
         dragonRed = FindAnyObjectByType<DragonRed>(); // Tìm đối tượng DragonRed trong cảnh
@@ -78,7 +79,12 @@ public class DragonRedHP : MonoBehaviour,IDamageable
 
         if (currentHp <= 0)
         {
-            timeLine.Run();
+            if(!isTimeLine)
+            {
+                isTimeLine = true;
+                timeLine.Run();
+            }
+            
         }
     }
 
