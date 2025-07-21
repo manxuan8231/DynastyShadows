@@ -17,7 +17,7 @@ public class EquipmentSO : ScriptableObject
     [SerializeField]
     public Sprite itemSprite;
     private bool hasGeneratedStats = false;
-
+    public Rarity rarity;
 
     // Biến lưu chỉ số sau khi random
     [HideInInspector] public int attack;
@@ -85,4 +85,13 @@ public class EquipmentSO : ScriptableObject
         critDame = 0;
         critChance = 0;
     }
+}
+public enum Rarity
+{
+    Common,
+    Rare,
+    Epic,
+    Legendary,
+    Special
+
 }
