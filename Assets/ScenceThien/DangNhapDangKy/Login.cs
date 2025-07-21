@@ -57,7 +57,7 @@ public class LoginManager : MonoBehaviour
 
         if (!File.Exists(filePath))
         {
-            messageText.text = "❌ Chưa có dữ liệu người dùng!";
+            messageText.text = "Chưa có dữ liệu người dùng!";
             return;
         }
 
@@ -71,13 +71,13 @@ public class LoginManager : MonoBehaviour
                 PlayerPrefs.SetString("LoggedInUser", username);
                 PlayerPrefs.Save();
 
-                messageText.text = "✅ Đăng nhập thành công!";
+                messageText.text = "Đăng nhập thành công!";
                 SceneManager.LoadScene(nextScene);
                 return;
             }
         }
 
-        messageText.text = "❌ Sai tên đăng nhập hoặc mật khẩu!";
+        messageText.text = "Sai tên đăng nhập hoặc mật khẩu!";
     }
 
     public void Logout()
