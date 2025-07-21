@@ -1723,7 +1723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f43f299dba545694a80d1974e4505480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPre: {fileID: 5045261744282924543}
+  playerPre: {fileID: 0}
   isLoadScene: 1
 --- !u!1 &1719534558
 GameObject:
@@ -2371,12 +2371,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2122571346}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &5045261744282924543 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5045261743069803646, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
-  m_PrefabInstance: {fileID: 6380296535051148672}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &6380296535051148672
+--- !u!1001 &2145256464599876144
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -2384,17 +2379,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 524148648710998072, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 524148648710998072, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2937809427178033764, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4147767676504852487, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 52.56401
+      value: 54.507572
       objectReference: {fileID: 0}
     - target: {fileID: 4147767676504852487, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.9999995
+      value: 2.9999998
       objectReference: {fileID: 0}
     - target: {fileID: 4147767676504852487, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 120.4
+      value: 116.93065
       objectReference: {fileID: 0}
     - target: {fileID: 4147767676504852487, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2424,9 +2431,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4384863602413114586, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384863602413114586, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5045261743069803646, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
       propertyPath: m_Name
       value: SK_DeathKnight
+      objectReference: {fileID: 0}
+    - target: {fileID: 7009818405344195939, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8414915293218750663, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      propertyPath: m_Name
+      value: BtnShowQuitGame
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2446,4 +2469,4 @@ SceneRoots:
   - {fileID: 228329411}
   - {fileID: 26094311}
   - {fileID: 1122743867}
-  - {fileID: 6380296535051148672}
+  - {fileID: 2145256464599876144}

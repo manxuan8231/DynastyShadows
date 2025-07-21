@@ -1,5 +1,7 @@
 ﻿
 
+using UnityEngine.SceneManagement;
+
 [System.Serializable]
 public class GameSaveData
 {
@@ -10,7 +12,7 @@ public class GameSaveData
 
     //luu checkpoint
     public CheckpointData checkpointData;
-
+  
     // lưu hoàn thành hướng dẫn
     public bool isTutorialDone;
     public int mapTutoIndex;
@@ -21,5 +23,6 @@ public class GameSaveData
         gold = 10;
         isTutorialDone = false;
         mapTutoIndex = 0;
+      
     }
 }

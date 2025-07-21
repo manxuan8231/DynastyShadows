@@ -1,6 +1,7 @@
 ﻿
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -156,6 +157,6 @@ public class PauseManager : MonoBehaviour
 
     public void ExitToMainMenu()
     {
-
+        SceneManager.LoadScene("MainMenu");
     }
 }
