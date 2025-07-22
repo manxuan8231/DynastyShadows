@@ -166,6 +166,37 @@ public class PauseManager : MonoBehaviour
     }
     public void ExitToMainMenu()  // Quay về Main Menu
     {
+       
+        canvasPause.SetActive(false);
+
+        Time.timeScale =   1f;
+
+        // Ẩn hoặc hiện chuột
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        //open skill tree
+        openSkillTree.textFlexible.color = Color.black;
+        openSkillTree.buttonFlexibleBG.enabled = true;
+        openSkillTree.flexibleSkill.SetActive(true); // Hiển thị Flexible Skill khi mở Skill Tree
+        openSkillTree.coreTree.SetActive(false); // Ẩn Core Tree khi mở Flexible Skill
+        openSkillTree.textCore.color = Color.white;
+        openSkillTree.buttonCoreBG.enabled = false;
+
+        //img
+        imageEquipment.enabled = false;
+        imageInventory.enabled = false;
+        imageSetting.enabled = false;
+        imageSkillTree.enabled = false;
+        //text
+        textEquipment.color = Color.black;
+        textInventory.color = Color.white;
+        textSkillTree.color = Color.white;
+        textSetting.color = Color.white;
+        //panel
+        panelEquipment.SetActive(false);
+        panelInventory.SetActive(false);
+        panelSkillTree.SetActive(false);
+        panelSetting.SetActive(false);
         SceneManager.LoadScene("MainMenu");
     }
 }
