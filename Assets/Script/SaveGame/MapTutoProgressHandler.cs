@@ -1,18 +1,22 @@
-﻿public static class MapTutoProgressHandler
+﻿using UnityEngine;
+
+public static class MapTutoProgressHandler
 {
-    /// Ghi chỉ số bước map‑tutorial
-    public static void SaveIndex(int idx)
+    private const string MapTutoKey = "MapTutoIndex";
+
+    public static void SaveIndex(int index)
     {
-        GameSaveData data = SaveManagerMan.LoadGame();
-        data.mapTutoIndex = idx;
-        SaveManagerMan.SaveGame(data);
-       
+        PlayerPrefs.SetInt(MapTutoKey, index);
+        PlayerPrefs.Save();
     }
 
-    /// Đọc chỉ số đã lưu (trả về 0 nếu chưa có)
     public static int LoadIndex()
     {
-        GameSaveData data = SaveManagerMan.LoadGame();
-        return data.mapTutoIndex;
+        return PlayerPrefs.GetInt(MapTutoKey, 0); // Mặc định là 0 nếu chưa từng lưu
+    }
+
+    public static void ResetIndex()
+    {
+        PlayerPrefs.DeleteKey(MapTutoKey);
     }
 }

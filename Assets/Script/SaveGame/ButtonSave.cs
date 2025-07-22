@@ -1,22 +1,37 @@
 ﻿using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class ButtonSave : MonoBehaviour
 {
-    //tham chieu
+    // Tham chiếu tới player
     public PlayerStatus playerStatus;
     public PlayerControllerState playerControllerState;
-    //lưu
+
     private void Start()
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
     }
-  
+
     public void SaveGame()
     {
-        PlayerStatsHandler.SaveStats(playerStatus.score, playerStatus.currentLevel, playerStatus.gold);//luu stats
-        CheckpointHandler.SaveCheckpoint(playerControllerState.transform.position);//luu vi tri
-    }
+        // Tạo dữ liệu mới
+        GameSaveData data = new GameSaveData();
 
+        // Lưu chỉ số
+        data.score = playerStatus.score;
+        data.currentLevel = playerStatus.currentLevel;
+        data.gold = playerStatus.gold;
+
+        // Lưu vị trí player
+        data.checkpointData = new CheckpointData(playerControllerState.transform.position);
+
+        // Lưu tên scene hiện tại
+        data.savedSceneName = SceneManager.GetActiveScene().name;
+
+        // Gọi hàm lưu
+        SaveManagerMan.SaveGame(data);
+
+        Debug.Log("Game Saved at " + data.savedSceneName);
+    }
 }

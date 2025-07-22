@@ -36,14 +36,38 @@ public class LoginManager : MonoBehaviour
         {
             if (user.username == username && user.password == password)
             {
-                // Ghi lại tên người dùng đang đăng nhập
+                // Ghi tên user đang đăng nhập
                 File.WriteAllText(Application.persistentDataPath + "/current_user.txt", username);
 
-                // Kiểm tra trạng thái đã xem timeline chưa
-                if (user.hasSeenTimeline)
-                    SceneManager.LoadScene("Map1");
-                else
+                // Nếu chưa xem Timeline → vào Timeline trước
+                if (!user.hasSeenTimeline)
+                {
                     SceneManager.LoadScene("TimelineMoDau");
+                }
+                else
+                {
+                    // Nếu đã xem timeline → load scene đã lưu
+                    string savePath = Application.persistentDataPath + "/saveData.json";
+
+                    if (File.Exists(savePath))
+                    {
+                        string savedJson = File.ReadAllText(savePath);
+                        GameSaveData saveData = JsonUtility.FromJson<GameSaveData>(savedJson);
+
+                        if (!string.IsNullOrEmpty(saveData.savedSceneName))
+                        {
+                            SceneManager.LoadScene(saveData.savedSceneName);
+                        }
+                        else
+                        {
+                            SceneManager.LoadScene("Map1"); // fallback nếu chưa có tên scene
+                        }
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene("Map1"); // fallback nếu chưa từng lưu
+                    }
+                }
                 return;
             }
         }

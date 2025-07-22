@@ -1,5 +1,4 @@
 ﻿
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -94,6 +93,6 @@ public class OpenMapTuto : MonoBehaviour
         if (index < 0)
         {
             index = 0;
-        }
+        } 
     }
 }

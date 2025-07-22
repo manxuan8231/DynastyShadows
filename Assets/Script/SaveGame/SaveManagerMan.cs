@@ -11,7 +11,7 @@ public class SaveManagerMan : MonoBehaviour
         string path = GetSavePath();
 
         File.WriteAllText(path, json);
-        Debug.Log($"Game saved to: {path}");
+        Debug.Log($"Trò chơi đã được lưu vào: {path}");
     }
 
     public static GameSaveData LoadGame()
@@ -27,7 +27,7 @@ public class SaveManagerMan : MonoBehaviour
         }
         else
         {
-            Debug.Log("No save file found, returning new save data.");
+            Debug.Log("Không tìm thấy tệp lưu, trả về dữ liệu lưu mới.");
             return new GameSaveData();
         }
     }

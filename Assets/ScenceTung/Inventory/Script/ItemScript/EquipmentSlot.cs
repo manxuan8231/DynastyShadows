@@ -117,38 +117,22 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
        if(itemType == ItemType.head)
         {
             headSlot.EquipGear(itemSprite, itemName, itemDescription);
-            for (int i = 0; i < equipmentSOLibrary.EquipmentSOs.Length; i++)
-            {
-                if (equipmentSOLibrary.EquipmentSOs[i].itemName == this.itemName)
-                    SkinManager.Instance.ApplySkin(itemType,equipmentSOLibrary.EquipmentSOs[i].rarity);
-            }
+           
         }
         if(itemType == ItemType.body)
         {
             bodySlot.EquipGear( itemSprite, itemName, itemDescription);
-            for (int i = 0; i < equipmentSOLibrary.EquipmentSOs.Length; i++)
-            {
-                if (equipmentSOLibrary.EquipmentSOs[i].itemName == this.itemName)
-                    SkinManager.Instance.ApplySkin(itemType,equipmentSOLibrary.EquipmentSOs[i].rarity);
-            }
+           
         }
         if(itemType == ItemType.legs)
         {
             legsSlot.EquipGear(itemSprite, itemName, itemDescription);
-            for (int i = 0; i < equipmentSOLibrary.EquipmentSOs.Length; i++)
-            {
-                if (equipmentSOLibrary.EquipmentSOs[i].itemName == this.itemName)
-                    SkinManager.Instance.ApplySkin(itemType, equipmentSOLibrary.EquipmentSOs[i].rarity);
-            }
+           
         }
         if (itemType == ItemType.feet)
         {
             feetSlot.EquipGear(itemSprite, itemName, itemDescription);
-            for (int i = 0; i < equipmentSOLibrary.EquipmentSOs.Length; i++)
-            {
-                if (equipmentSOLibrary.EquipmentSOs[i].itemName == this.itemName)
-                    SkinManager.Instance.ApplySkin(itemType, equipmentSOLibrary.EquipmentSOs[i].rarity);
-            }
+           
         }
         if (itemType == ItemType.weapon)
         {
