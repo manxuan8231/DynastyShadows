@@ -36,6 +36,11 @@ public class PauseManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         canvasPause.SetActive(false);
         panelQuitGame.SetActive(false);
+
+        // Khi mới load scene game, tắt chuột, cho game chạy bình thường
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1f;
     }
 
 

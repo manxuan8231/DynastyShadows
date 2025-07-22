@@ -56,6 +56,7 @@ public class LoginManager : MonoBehaviour
 
                         if (!string.IsNullOrEmpty(saveData.savedSceneName))
                         {
+                           
                             SceneManager.LoadScene(saveData.savedSceneName);
                         }
                         else
@@ -67,6 +68,8 @@ public class LoginManager : MonoBehaviour
                     {
                         SceneManager.LoadScene("Map1"); // fallback nếu chưa từng lưu
                     }
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
                 }
                 return;
             }
