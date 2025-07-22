@@ -41,9 +41,23 @@ public class Skill4Manager : MonoBehaviour
         prohibitedIcon.SetActive(false); // Ẩn biểu tượng cấm sử dụng skill 4 ban đầu
         sliderCoolDown.enabled = false; // Tắt slider ban đầu
         ToggleSkill4(false); // Tắt skill 4 ban đầu
+
+        //save
+        SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+        isUnlockSkill4 = skillData.isUnlockSkill4;
+        coolDownTime = skillData.cooldownSkill4;
+        timeSkill4 = skillData.timeSkill4;
+        isReflectDamage = skillData.isReflectDamageSkill4;
+        isUpSpeed = skillData.isUpSpeedSkill4;
+        isStun = skillData.isStunSkill4;
+        isImmotal = skillData.isImmotalSkill4;
+        if (isUnlockSkill4)
+        {
+            iconSkill4.SetActive(true); // Hiển thị biểu tượng kỹ năng 4 nếu đã mở khóa
+        }
     }
 
-   
+
     void Update()
     {
 

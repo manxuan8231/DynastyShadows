@@ -10,9 +10,14 @@ public class GameSaveData
     //luu checkpoint
     public CheckpointData checkpointData;
     public string savedSceneName;
+
     // lưu hoàn thành hướng dẫn
     public bool isTutorialDone;
     public int mapTutoIndex;
+
+    // lưu skill tree
+    public SkillTreeData skillTreeData;
+
     public GameSaveData()//mặc định khi chx lưu
     {
         score = 10;

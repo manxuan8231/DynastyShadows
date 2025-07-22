@@ -41,6 +41,20 @@ public class Skill2Manager : MonoBehaviour
         isHibitedIcon = false;
         textCoolDownSkill.enabled= false;
         prohibitedIcon.SetActive(false); // Ẩn biểu tượng cấm sử dụng skill 2 ban đầu
+
+        //save
+        SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+
+        isUnlockSkill2 = skillData.isUnlockSkill2;
+        skillCooldown = skillData.cooldownSkill2;
+        timeSkill2 = skillData.timeSkill2;
+        isExplosionSkill2 = skillData.isExplosionSkill2;
+
+        if (isUnlockSkill2)
+        {
+            iconSkill2.SetActive(true); // Hiển thị biểu tượng kỹ năng 2 nếu đã mở khóa
+        }
+       
     }
 
     void Update()

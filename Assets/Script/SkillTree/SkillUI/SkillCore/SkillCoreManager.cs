@@ -48,6 +48,8 @@ public class SkillCoreManager : MonoBehaviour
     public GameObject panelSkill2;
     public GameObject panelSkill3;
     public GameObject panelSkill4;
+
+   
     void Start()
     {
         skill1Manager = FindAnyObjectByType<Skill1Manager>();
@@ -55,10 +57,31 @@ public class SkillCoreManager : MonoBehaviour
         skill3Manager = FindAnyObjectByType<Skill3Manager>();
         skill4Manager = FindAnyObjectByType<Skill4Manager>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
-       
+
         previewPanel.SetActive(false);
         HideAllHighlights();//effect
         skillAudioSource = GetComponent<AudioSource>();
+        //luu skill
+        SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+
+        // Skill 1 - Đông Cung
+        turnInSkill1 = skillData.turnInSkill1;
+        //skill2 - Thế Ảnh
+        turnInSkill2 = skillData.turnInSkill2;
+        //skill3 - Quân Đoàn Bóng Tối
+        turnInSkill3 = skillData.turnInSkill3;
+        //skill4 - Phản Nhãn
+        turnInSkill4 = skillData.turnInSkill4;
+        //dổi màu các icon sau khi mở khóa
+        for (int i = 0; i < buttonIconColor.Length && i < skillData.unlockedSkillIcons.Length; i++)
+        {
+            if (skillData.unlockedSkillIcons[i] && buttonIconColor[i] != null)
+            {
+                buttonIconColor[i].color = Color.white;
+            }
+        }
+
+
     }
     private void Update()
     {
@@ -88,7 +111,8 @@ public class SkillCoreManager : MonoBehaviour
     {
         HideAllHighlights(); // Khi tắt panel thì ẩn tất cả hiệu ứng highlight
         previewPanel.SetActive(false); // Ẩn panel preview khi tắt
-       
+
+        
     }
 
     public void ShowPreview(string iconID)
@@ -161,7 +185,7 @@ public class SkillCoreManager : MonoBehaviour
                 {
                     previewPanel.SetActive(false);
                 }    
-                if(skill1Manager.timeSkill1 == 10f)
+                if(skill1Manager.timeSkill1 == 7f)
                 {
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
                 }
@@ -541,8 +565,16 @@ public class SkillCoreManager : MonoBehaviour
                     skill1Manager.iconSkill1.SetActive(true);
                     turnInSkill1 += 1;//nang cap theo trinh tu
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+
+                    //save game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+
+                    skillData.isUnlockSkill1 = skill1Manager.isUnlockSkill1;
+                    skillData.turnInSkill1 = turnInSkill1;
+                    SkillTreeHandler.SaveSkillTree(skillData);
+
                 }
-                
+
                 break;
             case "DongCung2":
                 if(turnInSkill1 >= 1 && playerStatus.score >= 2)
@@ -560,6 +592,11 @@ public class SkillCoreManager : MonoBehaviour
                         playerStatus.scoreText[i].text = playerStatus.score.ToString();
                     }
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+                     //save game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.cooldownSkill1 = skill1Manager.cooldownSkill;
+                    skillData.turnInSkill1 = turnInSkill1;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
                 break;
             case "DongCung3":
@@ -576,6 +613,12 @@ public class SkillCoreManager : MonoBehaviour
                     //mo khoa de su dung
                     skill1Manager.timeSkill1 = 7f;
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+
+                    //save game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.turnInSkill1 = turnInSkill1;
+                    skillData.timeSkill1 = skill1Manager.timeSkill1;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
                 break;
             case "DongCung4":
@@ -586,10 +629,16 @@ public class SkillCoreManager : MonoBehaviour
                     playerStatus.score -= 4;
                     for(int i = 0; i < playerStatus.scoreText.Length; i++){
                     playerStatus.scoreText[i].text = playerStatus.score.ToString();
-                }
+                        }
                     //mo khoa de su dung
                     skill1Manager.isDamaged = true;
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+
+                    //save game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.turnInSkill1 = turnInSkill1;
+                        skillData.isDamagedSkill1 = skill1Manager.isDamaged;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
                 break;
 
@@ -609,6 +658,12 @@ public class SkillCoreManager : MonoBehaviour
                     skill2Manager.isUnlockSkill2 = true;
                     skill2Manager.iconSkill2.SetActive(true);
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+
+                    //luu game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.isUnlockSkill2 = skill2Manager.isUnlockSkill2;
+                    skillData.turnInSkill2 = turnInSkill2;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
                 break;
             case "TheAnh2":
@@ -626,9 +681,14 @@ public class SkillCoreManager : MonoBehaviour
                   
                     skill2Manager.skillCooldown = 35;
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+                    //luu game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.cooldownSkill2 = skill2Manager.skillCooldown;
+                    skillData.turnInSkill2 = turnInSkill2;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
-              
-               
+
+
                 break;
             case "TheAnh3":
                 if (turnInSkill2 >= 2 && playerStatus.score >= 3)
@@ -643,6 +703,12 @@ public class SkillCoreManager : MonoBehaviour
                     }
                     skill2Manager.timeSkill2 = 15;
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+
+                    //luu game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.turnInSkill2 = turnInSkill2;
+                    skillData.timeSkill2 = skill2Manager.timeSkill2;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
 
 
@@ -660,6 +726,12 @@ public class SkillCoreManager : MonoBehaviour
                     }
                   skill2Manager.isExplosionSkill2 = true;
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+
+                    //luu game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.turnInSkill2 = turnInSkill2;
+                    skillData.isExplosionSkill2 = skill2Manager.isExplosionSkill2;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
 
                 break;
@@ -680,6 +752,12 @@ public class SkillCoreManager : MonoBehaviour
                     skill3Manager.isUnlockSkill3 = true;
                     skill3Manager.iconSkill3.SetActive(true);
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+
+                    //save game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.isUnlockSkill3 = skill3Manager.isUnlockSkill3;
+                    skillData.turnInSkill3 = turnInSkill3;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
                 break;
             case "QuanDoanBongToi2":
@@ -695,8 +773,14 @@ public class SkillCoreManager : MonoBehaviour
                    
                     skill3Manager.cooldownSkill = 70;//giam cooldown con 70
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+
+                    //save game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.cooldownSkill3 = skill3Manager.cooldownSkill;
+                    skillData.turnInSkill3 = turnInSkill3;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
-              
+
                 break;
             case "QuanDoanBongToi3":
                 if(turnInSkill3 >= 1 && playerStatus.score >= 2)
@@ -710,8 +794,14 @@ public class SkillCoreManager : MonoBehaviour
                     }
                     skill3Manager.timeSkill3 = 40; //tang thoi gian ton tai clone len 40
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+
+                    //save game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.turnInSkill3 = turnInSkill3;
+                    skillData.timeSkill3 = skill3Manager.timeSkill3;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
-              
+
                 break;
             case "QuanDoanBongToi4":
                 if(turnInSkill3 >= 3 && playerStatus.score >= 4)
@@ -725,6 +815,11 @@ public class SkillCoreManager : MonoBehaviour
                     }
                     skill3Manager.isDamaged = true;//tang dame len x2
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+                    //save game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.turnInSkill3 = turnInSkill3;
+                    skillData.isDamagedSkill3 = skill3Manager.isDamaged;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
 
                 break;
@@ -740,6 +835,12 @@ public class SkillCoreManager : MonoBehaviour
                     }
                     skill3Manager.playerCount = 6;
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+
+                    //save game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.turnInSkill3 = turnInSkill3;
+                    skillData.playerCountSkill3 = skill3Manager.playerCount;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
 
                 break;
@@ -755,6 +856,11 @@ public class SkillCoreManager : MonoBehaviour
                     }
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
                     skill3Manager.isLv6 = true;//mo khoa trang thai clone 6
+                    //save game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.turnInSkill3 = turnInSkill3;
+                    skillData.isLv6Skill3 = skill3Manager.isLv6;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
 
                 break;
@@ -775,6 +881,11 @@ public class SkillCoreManager : MonoBehaviour
                     skill4Manager.isUnlockSkill4 = true;
                     skill4Manager.iconSkill4.SetActive(true);
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+                    //luu game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.isUnlockSkill4 = skill4Manager.isUnlockSkill4;
+                    skillData.turnInSkill4 = turnInSkill4;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
                 break;
             case "PhanNhan2":
@@ -789,6 +900,11 @@ public class SkillCoreManager : MonoBehaviour
                     }
                     skill4Manager.coolDownTime = 70f;//giam thoi gian cooldown con 70
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+                    //luu game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.cooldownSkill4 = skill4Manager.coolDownTime;
+                    skillData.turnInSkill4 = turnInSkill4;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
 
                 break;
@@ -804,6 +920,11 @@ public class SkillCoreManager : MonoBehaviour
                     }
                     skill4Manager.timeSkill4 = 35;//tang thoi gian len 35 giay
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+                    //luu game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.turnInSkill4 = turnInSkill4;
+                    skillData.timeSkill4 = skill4Manager.timeSkill4;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
 
                 break;
@@ -819,6 +940,11 @@ public class SkillCoreManager : MonoBehaviour
                     }
                     skill4Manager.isReflectDamage = true;//bat trang thai phan dame
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+                    //luu game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.turnInSkill4 = turnInSkill4;
+                    skillData.isReflectDamageSkill4 = skill4Manager.isReflectDamage;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
 
                 break;
@@ -834,6 +960,11 @@ public class SkillCoreManager : MonoBehaviour
                     }
                     skill4Manager.isUpSpeed = true;//tang toc do di chuyen khi mo khoa
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+                    //luu game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.turnInSkill4 = turnInSkill4;
+                    skillData.isUpSpeedSkill4 = skill4Manager.isUpSpeed;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
 
                 break;
@@ -849,6 +980,11 @@ public class SkillCoreManager : MonoBehaviour
                     }
                     skill4Manager.isStun = true;//mo khoa trang thai khang stun 
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+                    //luu game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.turnInSkill4 = turnInSkill4;
+                    skillData.isStunSkill4 = skill4Manager.isStun;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
 
                 break;
@@ -864,8 +1000,13 @@ public class SkillCoreManager : MonoBehaviour
                     }
                     skill4Manager.isImmotal = true;//mo khoa trang thai bat tu
                     buttonUnlock.SetActive(false);//ẩn nút unlock nếu đã mở khóa
+                    //luu game
+                    SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+                    skillData.turnInSkill4 = turnInSkill4;
+                    skillData.isImmotalSkill4 = skill4Manager.isImmotal;
+                    SkillTreeHandler.SaveSkillTree(skillData);
                 }
-                
+
                 break;
 
         }
@@ -953,6 +1094,10 @@ public class SkillCoreManager : MonoBehaviour
         if (index >= 0 && index < buttonIconColor.Length && buttonIconColor[index] != null)
         {
             buttonIconColor[index].color = Color.white;
+            SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+            skillData.unlockedSkillIcons[index] = true;
+            SkillTreeHandler.SaveSkillTree(skillData);
+
         }
     }
 

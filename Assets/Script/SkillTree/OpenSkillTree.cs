@@ -1,8 +1,8 @@
 ﻿using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class OpenSkillTree : MonoBehaviour
 {
     public GameObject panelSkillTree;
@@ -30,6 +30,8 @@ public class OpenSkillTree : MonoBehaviour
     public PauseManager pauseManager;
    
     public PlayerStatus playerStatus;
+
+   
     void Start()
     {
         pauseManager = FindAnyObjectByType<PauseManager>();
@@ -42,6 +44,10 @@ public class OpenSkillTree : MonoBehaviour
 
         coreTree.SetActive(false);    
             audioSource = GetComponent<AudioSource>(); // Lấy AudioSource từ GameObject này
+
+       
+          
+        
     }
     
 

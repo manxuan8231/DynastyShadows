@@ -55,3 +55,28 @@ public static class PlayerStatsHandler
     }
 }
 
+//class skilltree
+public class SkillTreeHandler
+{
+    public static void SaveSkillTree(SkillTreeData skillTreeData)
+    {
+        GameSaveData data = SaveManagerMan.LoadGame();
+        data.skillTreeData = skillTreeData;
+        SaveManagerMan.SaveGame(data);
+        Debug.Log("Skill tree saved.");
+    }
+    public static SkillTreeData LoadSkillTree()
+    {
+        GameSaveData data = SaveManagerMan.LoadGame();
+        if (data.skillTreeData != null)
+        {
+            Debug.Log("Skill tree loaded.");
+            return data.skillTreeData;
+        }
+        else
+        {
+            Debug.Log("No skill tree found, returning default.");
+            return new SkillTreeData(); // Trả về dữ liệu mặc định nếu không có
+        }
+    }
+}

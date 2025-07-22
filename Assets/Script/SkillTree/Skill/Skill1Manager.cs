@@ -35,6 +35,16 @@ public class Skill1Manager : MonoBehaviour
         playerController = FindAnyObjectByType<PlayerControllerState>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
 
+        //luu skill
+        SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+
+        // Skill 1 - Đông Cung      
+       isUnlockSkill1 = skillData.isUnlockSkill1;
+        cooldownSkill = skillData.cooldownSkill1;
+        timeSkill1 = skillData.timeSkill1;
+         isDamaged = skillData.isDamagedSkill1;
+        if (isUnlockSkill1)
+            iconSkill1.SetActive(true);
     }
     private void Update()
     {

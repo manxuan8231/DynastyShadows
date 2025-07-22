@@ -34,7 +34,19 @@ public class Skill3Manager : MonoBehaviour
         cooldownSlider.value = cooldownSkill;
         cooldownSlider.enabled = false;
           isLv6 = false; // kiem tra level 6 chưa
-    playerControllerState = FindAnyObjectByType<PlayerControllerState>();
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
+
+        //save
+        SkillTreeData skillData = SkillTreeHandler.LoadSkillTree();
+        isUnlockSkill3 = skillData.isUnlockSkill3;
+        cooldownSkill = skillData.cooldownSkill3;
+        timeSkill3 = skillData.timeSkill3;
+        playerCount = skillData.playerCountSkill3;
+        isDamaged = skillData.isDamagedSkill3;
+        if (isUnlockSkill3)
+        {
+            iconSkill3.SetActive(true); // Hiển thị biểu tượng kỹ năng 3 nếu đã mở khóa
+        }
     }
     void Update()
     {
