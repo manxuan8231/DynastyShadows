@@ -28,15 +28,19 @@ public class ButtonSave : MonoBehaviour
 
         // ✅ Lưu item
         data.inventoryItems.Clear();
+        data.inventoryItemSos.Clear();
         foreach (var slot in inventoryManager.itemSlot)
         {
             if (!string.IsNullOrEmpty(slot.itemName) && slot.quantity > 0)
             {
-                data.inventoryItems.Add(new SavedItemData
+                data.inventoryItemSos.Add(new SaveItemSO
                 {
                     itemName = slot.itemName,
                     quantity = slot.quantity,
-                    itemType = slot.itemType.ToString()
+                    itemType = slot.itemType.ToString(),
+                    itemSprite = slot.itemSprite,
+                    itemDescription = slot.itemDescription
+
                 });
             }
         }
@@ -57,6 +61,7 @@ public class ButtonSave : MonoBehaviour
         // ✅ Cuối cùng, lưu lại
         SaveManagerMan.SaveGame(data);
         Debug.Log("Saved with " + data.inventoryItems.Count + " items");
+        Debug.Log("Saved with " + data.inventoryItemSos.Count + " itemSOs");
     }
 
 
