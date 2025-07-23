@@ -77,8 +77,9 @@ public class SkillFlexibleManager : MonoBehaviour
         isDongCung4Unlocked = skillTreeData.isDongCung4Unlocked;
         isDongCung5Unlocked = skillTreeData.isDongCung5Unlocked;
         currentSkillID = skillTreeData.currentSkillID; // Lấy ID kỹ năng hiện tại
+        RestoreEquippedIcon();//luu icon
 
-       
+
     }
     public void RestoreEquippedIcon()//luu icon
     {

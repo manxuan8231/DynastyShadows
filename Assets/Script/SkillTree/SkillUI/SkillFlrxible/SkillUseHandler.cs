@@ -74,7 +74,7 @@ public class SkillUseHandler : MonoBehaviour
                 break;
             default:
                 slotIcon.texture = null;
-                
+                slotIcon.color = new Color(1, 1, 1, 0); // ẩn icon nếu không có kỹ năng
                 break;
         }
     }
