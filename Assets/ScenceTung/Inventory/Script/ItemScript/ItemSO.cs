@@ -120,12 +120,21 @@ public class ItemSO : ScriptableObject
             cloned.hasItemQuest = true;
              SkillFlexibleManager manager = Resources.FindObjectsOfTypeAll<SkillFlexibleManager>()
                 .FirstOrDefault(x => x.gameObject.name == " Panel(Flexible Skill)");
-
+            manager.showSkill4 = cloned.showSkill4;
+            manager.hasItemQuest = cloned.hasItemQuest; // Cập nhật biến hasItemQuest
+          
             if (manager != null)
             {
-                manager.itemQuestUnlock = cloned;
+               // manager.itemQuestUnlock = cloned;
                 manager.activeSkillUnlock ++; // Cập nhật biến activeSkillUnlock
                 Debug.Log("Gán clone ItemSO vào SkillFlexibleManager OK");
+                //save
+                SkillTreeData skillTreeData = SkillTreeHandler.LoadSkillTree();
+                skillTreeData.showSkill4 = manager.showSkill4; // Cập nhật biến showSkill4 trong SkillTreeData
+                skillTreeData.hasItemQuest = manager.hasItemQuest; // Cập nhật biến hasItemQuest trong SkillTreeData
+                skillTreeData.activeSkillUnlock = manager.activeSkillUnlock; // Cập nhật biến activeSkillUnlock trong SkillTreeData
+                SkillTreeHandler.SaveSkillTree(skillTreeData); // Lưu SkillTreeData
+
             }
             else
             {
@@ -145,9 +154,16 @@ public class ItemSO : ScriptableObject
             cloned2.showSkill5 = true;
             SkillFlexibleManager manager = Resources.FindObjectsOfTypeAll<SkillFlexibleManager>()
                 .FirstOrDefault(x => x.gameObject.name == " Panel(Flexible Skill)");
+            manager.showSkill5 = cloned2.showSkill5;
+            manager.hasItemQuest2 = cloned2.hasItemQuest2; // Cập nhật biến hasItemQuest2
+            //save
+            SkillTreeData skillTreeData = SkillTreeHandler.LoadSkillTree();
+            skillTreeData.showSkill5 = manager.showSkill5; // Cập nhật biến showSkill5 trong SkillTreeData
+            skillTreeData.hasItemQuest2 = manager.hasItemQuest2; // Cập nhật biến hasItemQuest2 trong SkillTreeData
+            SkillTreeHandler.SaveSkillTree(skillTreeData); // Lưu SkillTreeData
             if (manager != null)
             {
-                manager.itemQuestUnlock2 = cloned2;
+               // manager.itemQuestUnlock2 = cloned2;
                 Debug.Log("Gán clone ItemSO vào SkillFlexibleManager OK");
             }
             else
