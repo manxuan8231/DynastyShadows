@@ -92,7 +92,7 @@ public class ActiveQuest8 : MonoBehaviour
             timeLine.SetActive(false); // Ẩn timeline 1
             OnTimelineFinished(playableDirector); // Gọi hàm kết thúc timeline để cập nhật trạng thái
         }
-        else if(isTimeline2)
+         if(isTimeline2)
         {
             timeLine2.SetActive(false); // Ẩn timeline 2
             OnTimelineFinished2(playableDirector2); // Gọi hàm kết thúc timeline để cập nhật trạng thái
