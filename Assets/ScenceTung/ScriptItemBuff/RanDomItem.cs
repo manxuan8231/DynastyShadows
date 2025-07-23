@@ -26,10 +26,13 @@ public class RanDomItem : MonoBehaviour
     public KeyCase key;
     public bool isStayInRadius = false;
     public GameObject _BtnF;
+    [Header("Animation")]
+    public Animator animator;
     private void Start()
     {
         inventoryManager = FindAnyObjectByType<InventoryManager>();
         key = GameObject.FindWithTag("Player").GetComponent<KeyCase>();
+        animator = GetComponent<Animator>();
     }
     private void Update()
     {
@@ -65,6 +68,8 @@ public class RanDomItem : MonoBehaviour
     private IEnumerator DisplayDropSequence()
     {
         _BtnF.SetActive(false); // Ẩn nút F khi bắt đầu mở rương
+        animator.SetTrigger("isOpen"); // Kích hoạt animation mở rương
+        yield return new WaitForSeconds(1.5f); // Đợi animation mở rương hoàn thành
         List<Item> itemPool = GenerateItemPool();
         Shuffle(itemPool);
 
@@ -133,6 +138,7 @@ public class RanDomItem : MonoBehaviour
     }
     private void ShowItemResult(Item item)
     {
+        animator.SetTrigger("isClosed"); // Kích hoạt animation đóng rương
         resultPanel.SetActive(true);
         resultText.text = $" Bạn đã nhận được: <b>{item.itemName}</b>";
 
