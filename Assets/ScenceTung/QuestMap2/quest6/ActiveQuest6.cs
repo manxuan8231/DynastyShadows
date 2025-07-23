@@ -20,7 +20,7 @@ public class ActiveQuest6 : MonoBehaviour
         comboAttack = FindAnyObjectByType<ComboAttack>(); // Tìm đối tượng ComboAttack trong scene
         if (player == null)
         {
-            GameObject playerObj = GameObject.Find("SK_DeathKnight");
+            GameObject playerObj = GameObject.Find("SK_DeathKnight(Clone)");
             if (playerObj != null)
                 player = playerObj.transform;
         }
