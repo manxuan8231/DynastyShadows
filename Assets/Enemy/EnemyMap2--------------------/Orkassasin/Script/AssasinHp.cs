@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class AssasinHp : MonoBehaviour,IDamageable
 {
@@ -22,6 +23,8 @@ public class AssasinHp : MonoBehaviour,IDamageable
     public GameObject playerTimeLine; // Player trong cutscene
     public PlayableDirector playableDirector;
     bool isTimeLine = false;
+    [Header("Video")]
+    public GameObject mainCameraEnd;
     void Start()
     {
         curentHp = maxHp;
@@ -30,6 +33,7 @@ public class AssasinHp : MonoBehaviour,IDamageable
         textHp.text =$"{curentHp}/{maxHp}";
         controllerStateAssa = FindAnyObjectByType<ControllerStateAssa>();
         playerInGame = GameObject.FindGameObjectWithTag("Player");
+        mainCameraEnd.SetActive ( false); // Tắt camera chính khi bắt đầu timeline
     }
 
     
@@ -52,6 +56,7 @@ public class AssasinHp : MonoBehaviour,IDamageable
     }
     private void OnTimelineFinished(PlayableDirector director)
     {
+     
         // Cập nhật vị trí player thật từ player timeline
         playerInGame.transform.position = playerTimeLine.transform.position;
         playerInGame.transform.rotation = playerTimeLine.transform.rotation;
@@ -60,7 +65,7 @@ public class AssasinHp : MonoBehaviour,IDamageable
         playerTimeLine.SetActive(false);
        
         timeLine.SetActive(false); // Ẩn đối tượng sau khi timeline kết thúc
-
+        mainCameraEnd.SetActive(true);
     }
     void UpdateUI()
     {
