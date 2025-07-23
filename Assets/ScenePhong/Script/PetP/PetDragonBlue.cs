@@ -17,8 +17,8 @@ public class PetDragonBlue : MonoBehaviour
 
     [Header("Buff Settings")]
     public BuffManager buffManager;
-    private float buffCooldown = 180f; // 3 phút
-    private float buffTimer;
+    public float buffInterval = 1f; // Buff mỗi 1 giây
+    private float buffTimer = 0f;
 
     [Header("Floating Animation")]
     public float floatAmplitude = 0.25f;
@@ -34,7 +34,6 @@ public class PetDragonBlue : MonoBehaviour
 
     private Animator anim;
 
-    // AI Components
     private NavMeshAgent navMeshAgent;
     private AIPath aiPath;
     private AIDestinationSetter destinationSetter;
@@ -60,15 +59,14 @@ public class PetDragonBlue : MonoBehaviour
     void Update()
     {
         AvoidOtherPets();
-
         AnimateFloating();
         FollowPlayer();
 
         buffTimer += Time.deltaTime;
-        if (buffTimer >= buffCooldown)
+        if (buffTimer >= buffInterval)
         {
             buffTimer = 0f;
-            TryBuffMana();
+            BuffManaUnconditionally();
         }
     }
 
@@ -88,7 +86,6 @@ public class PetDragonBlue : MonoBehaviour
         if (pathfindingType == PathfindingType.NavMesh && navMeshAgent != null && navMeshAgent.isOnNavMesh)
         {
             navMeshAgent.speed = speed;
-
             if (distance > followDistance)
             {
                 navMeshAgent.SetDestination(player.position);
@@ -99,14 +96,12 @@ public class PetDragonBlue : MonoBehaviour
                 navMeshAgent.ResetPath();
                 anim?.SetBool("isFollowing", false);
             }
-
             return;
         }
 
         if (pathfindingType == PathfindingType.AStar && aiPath != null && destinationSetter != null && aiPath.enabled)
         {
             aiPath.maxSpeed = speed;
-
             if (distance > followDistance)
             {
                 destinationSetter.target = player;
@@ -117,7 +112,6 @@ public class PetDragonBlue : MonoBehaviour
                 destinationSetter.target = null;
                 anim?.SetBool("isFollowing", false);
             }
-
             return;
         }
 
@@ -126,7 +120,6 @@ public class PetDragonBlue : MonoBehaviour
             Vector3 direction = (player.position - transform.position).normalized;
             Vector3 targetPos = player.position - direction * followDistance;
             targetPos.y = floatHeight;
-
             transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
             transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
             anim?.SetBool("isFollowing", true);
@@ -137,38 +130,28 @@ public class PetDragonBlue : MonoBehaviour
         }
     }
 
-    void TryBuffMana()
+    void BuffManaUnconditionally()
     {
-        if (buffManager == null) return;
+        if (playerStats == null || buffManager == null) return;
 
-        float manaPercent = buffManager.GetPlayerManaPercent();
-        Debug.Log("⚡ Mana Percent: " + manaPercent);
+        Debug.Log("💧 Pet buff mana mỗi giây không điều kiện.");
 
-        if (manaPercent < 0.1f) // đúng là dưới 10%
+        buffManager.Buffmana();
+        anim?.SetTrigger("doBuff");
+
+        if (audioSource != null && manaSound != null)
+            audioSource.PlayOneShot(manaSound);
+
+        if (manaEffectPrefab != null && player != null)
         {
-            Debug.Log("🐉 Rồng Xanh Dương buff mana cho người chơi!");
-            buffManager.BuffMana();
-
-            anim?.SetTrigger("doBuff");
-
-            if (audioSource != null && manaSound != null)
-                audioSource.PlayOneShot(manaSound);
-
-            if (manaEffectPrefab != null && player != null)
-            {
-                GameObject vfx = Instantiate(manaEffectPrefab, player.position + Vector3.up * 0f, Quaternion.identity);
-                Destroy(vfx, 3f);
-            }
-        }
-        else
-        {
-            Debug.Log("🔋 Mana chưa dưới 10%, chưa cần buff.");
+            GameObject vfx = Instantiate(manaEffectPrefab, player.position, Quaternion.identity);
+            Destroy(vfx, 3f);
         }
     }
 
     void AvoidOtherPets()
     {
-        float minPetDistance = 2f; // Khoảng cách tối thiểu giữa các pet
+        float minPetDistance = 2f;
         GameObject[] pets = GameObject.FindGameObjectsWithTag("Pet");
 
         foreach (GameObject pet in pets)
@@ -184,5 +167,4 @@ public class PetDragonBlue : MonoBehaviour
             }
         }
     }
-
 }
