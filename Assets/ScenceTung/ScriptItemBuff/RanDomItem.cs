@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,15 +21,30 @@ public class RanDomItem : MonoBehaviour
     public GameObject resultPanel;
     public TMP_Text resultText;
     public Image resultImage; // optional
+
+    [Header("key")]
+    public KeyCase key;
     private void Start()
     {
         inventoryManager = FindAnyObjectByType<InventoryManager>();
+        key = GameObject.FindWithTag("Player").GetComponent<KeyCase>();
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F)) // Press 'O' to open the chest
+        if(Input.GetKeyDown(KeyCode.F) && key.hasKey && key.keyCount > 0 && !key.isKeyOpen)
         {
+            key.keyCount--;
+            key.isKeyOpen = true;
             StartOpenChest();
+        }
+        else if(Input.GetKeyDown(KeyCode.F)  && key.keyCount <= 0)
+        {
+            key.hasKey = false;
+            Debug.Log("Bạn cần có chìa khóa để mở rương này!");
+        }
+        else
+        {
+            Debug.Log("Cần chìa khóa để mở rương");
         }
     }
     public void StartOpenChest()
@@ -123,6 +139,7 @@ public class RanDomItem : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         resultPanel.SetActive(false);
+        key.isKeyOpen = false; // Reset key state after opening chest
     }
 }
 [System.Serializable]
