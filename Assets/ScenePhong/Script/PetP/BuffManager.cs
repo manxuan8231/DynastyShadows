@@ -16,7 +16,7 @@ public class BuffManager : MonoBehaviour
     public void BuffDamage()
     {
         Debug.Log("Pet buff dame!");
-        playerStats.BuffDamage(20, 5f); // +20 damage trong 5 giây
+        playerStats.BuffDamage(50, 5f); // +20 damage trong 5 giây
     }
 
     public void BuffArmor()
@@ -32,15 +32,10 @@ public class BuffManager : MonoBehaviour
         playerStats.BuffHealth(300f);
     }
 
-    public void BuffMana() // ✅ Hàm mới để buff mana
+    public void Buffmana()
     {
         Debug.Log("Pet hồi mana!");
-        playerStats.BuffMana(500f); // Hồi 100 mana (tuỳ chỉnh theo game)
-    }
-    public float GetPlayerManaPercent()
-    {
-        if (playerStats == null) return 1f; // mặc định đủ mana
-        return playerStats.currentMana / playerStats.maxMana;
+        playerStats.BuffMana(500f);
     }
 
     private IEnumerator RemoveTempArmor(float value, float duration)

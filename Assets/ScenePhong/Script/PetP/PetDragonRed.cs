@@ -2,7 +2,7 @@
 using UnityEngine.AI;
 using Pathfinding;
 
-public class PetDragonBlue : MonoBehaviour
+public class PetDragonRed : MonoBehaviour
 {
     public enum PathfindingType { None, NavMesh, AStar }
     public PathfindingType pathfindingType = PathfindingType.None;
@@ -17,8 +17,8 @@ public class PetDragonBlue : MonoBehaviour
 
     [Header("Buff Settings")]
     public BuffManager buffManager;
-    public float buffInterval = 1f; // Buff mỗi 1 giây
-    private float buffTimer = 0f;
+    private float buffCooldown = 5f; // 3 phút
+    private float buffTimer;
 
     [Header("Floating Animation")]
     public float floatAmplitude = 0.25f;
@@ -26,11 +26,11 @@ public class PetDragonBlue : MonoBehaviour
     private Vector3 startPos;
 
     [Header("Audio")]
-    public AudioClip manaSound;
+    public AudioClip damageBuffSound;
     private AudioSource audioSource;
 
-    [Header("Mana Buff VFX")]
-    public GameObject manaEffectPrefab;
+    [Header("VFX")]
+    public GameObject damageBuffEffectPrefab;
 
     private Animator anim;
 
@@ -63,10 +63,10 @@ public class PetDragonBlue : MonoBehaviour
         FollowPlayer();
 
         buffTimer += Time.deltaTime;
-        if (buffTimer >= buffInterval)
+        if (buffTimer >= buffCooldown)
         {
             buffTimer = 0f;
-            BuffManaUnconditionally();
+            BuffDamageToPlayer();
         }
     }
 
@@ -86,6 +86,7 @@ public class PetDragonBlue : MonoBehaviour
         if (pathfindingType == PathfindingType.NavMesh && navMeshAgent != null && navMeshAgent.isOnNavMesh)
         {
             navMeshAgent.speed = speed;
+
             if (distance > followDistance)
             {
                 navMeshAgent.SetDestination(player.position);
@@ -96,12 +97,14 @@ public class PetDragonBlue : MonoBehaviour
                 navMeshAgent.ResetPath();
                 anim?.SetBool("isFollowing", false);
             }
+
             return;
         }
 
         if (pathfindingType == PathfindingType.AStar && aiPath != null && destinationSetter != null && aiPath.enabled)
         {
             aiPath.maxSpeed = speed;
+
             if (distance > followDistance)
             {
                 destinationSetter.target = player;
@@ -112,6 +115,7 @@ public class PetDragonBlue : MonoBehaviour
                 destinationSetter.target = null;
                 anim?.SetBool("isFollowing", false);
             }
+
             return;
         }
 
@@ -120,6 +124,7 @@ public class PetDragonBlue : MonoBehaviour
             Vector3 direction = (player.position - transform.position).normalized;
             Vector3 targetPos = player.position - direction * followDistance;
             targetPos.y = floatHeight;
+
             transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
             transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
             anim?.SetBool("isFollowing", true);
@@ -130,21 +135,21 @@ public class PetDragonBlue : MonoBehaviour
         }
     }
 
-    void BuffManaUnconditionally()
+    void BuffDamageToPlayer()
     {
         if (playerStats == null || buffManager == null) return;
 
-        Debug.Log("💧 Pet buff mana mỗi giây không điều kiện.");
+        Debug.Log("🔥 Rồng Đỏ buff sát thương tạm thời cho người chơi!");
+        buffManager.BuffDamage();
 
-        buffManager.Buffmana();
         anim?.SetTrigger("doBuff");
 
-        if (audioSource != null && manaSound != null)
-            audioSource.PlayOneShot(manaSound);
+        if (audioSource != null && damageBuffSound != null)
+            audioSource.PlayOneShot(damageBuffSound);
 
-        if (manaEffectPrefab != null && player != null)
+        if (damageBuffEffectPrefab != null && player != null)
         {
-            GameObject vfx = Instantiate(manaEffectPrefab, player.position, Quaternion.identity);
+            GameObject vfx = Instantiate(damageBuffEffectPrefab, player.position + Vector3.up * 0f, Quaternion.identity);
             Destroy(vfx, 3f);
         }
     }
