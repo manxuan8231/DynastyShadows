@@ -30,6 +30,7 @@ public class InventoryManager : MonoBehaviour
         // Load game data khi bắt đầu
         GameSaveData data = SaveManagerMan.LoadGame();
         LoadInventoryFromSave(data);
+        LoadItemSOFromSave(data);
     }
 
     public void Inventory()
@@ -299,13 +300,6 @@ public void LoadInventoryFromSave(GameSaveData data)
         Debug.LogWarning("Không có dữ liệu inventory để load.");
         return;
     }
-
-    // Xóa inventory cũ
-    foreach (var slot in itemSlot)
-    {
-        slot?.EmptySlot();
-    }
-
     foreach (var slot in equipmentSlot)
     {
         slot?.EmptySlot();
@@ -339,6 +333,45 @@ public void LoadInventoryFromSave(GameSaveData data)
     }
 }
 
+    public void LoadItemSOFromSave(GameSaveData data)
+    {
+        if (data == null || data.inventoryItemSos == null)
+        {
+            Debug.LogWarning("Không có dữ liệu inventory để load.");
+            return;
+        }
+        foreach (var slot in itemSlot)
+        {
+            slot?.EmptySlot();
+        }
+
+        foreach (var savedItem in data.inventoryItemSos)
+        {
+            if (System.Enum.TryParse(savedItem.itemType, out ItemType type))
+            {
+                ItemSO equipment = null;
+                if (equipmentDatabase != null)
+                {
+                    equipment = equipmentDatabase.GetItemByName(savedItem.itemName);
+                }
+
+                if (equipment != null)
+                {
+                    AddItem(savedItem.itemName, savedItem.quantity, savedItem.itemSprite, savedItem.itemDescription, type);
+                }
+                else
+                {
+                    Debug.LogWarning($"Không tìm thấy equipment '{savedItem.itemName}' hoặc database chưa gán.");
+                    // Có thể gọi AddItem với sprite và mô tả null nếu muốn
+                    AddItem(savedItem.itemName, savedItem.quantity, null, "", type);
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"Không parse được ItemType: {savedItem.itemType}");
+            }
+        }
+    }
 }
 
 public enum ItemType

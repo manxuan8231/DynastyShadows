@@ -66,6 +66,7 @@ public class PetDragonRed : MonoBehaviour
 
         if (navMeshAgent != null)
             navMeshAgent.baseOffset = floatHeight;
+        buffManager = GameObject.Find("BuffManager").GetComponent<BuffManager>();
     }
 
     void Update()
