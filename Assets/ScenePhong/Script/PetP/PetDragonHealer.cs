@@ -12,7 +12,7 @@ public class PetDragonHealer : MonoBehaviour
     public float followDistance = 2.5f;
     public float moveSpeed = 3f;
     public float speedChangeDistance = 5f;
-    public float floatHeight = 1.5f; // ⚡ Độ cao mặc định
+    public float floatHeight = 1.5f;
     private PlayerStatus playerStats;
 
     [Header("Buff Settings")]
@@ -29,6 +29,9 @@ public class PetDragonHealer : MonoBehaviour
     public AudioClip healSound;
     private AudioSource audioSource;
 
+    [Header("Heal VFX")]
+    public GameObject healEffectPrefab;
+
     private Animator anim;
 
     // AI Components
@@ -43,7 +46,7 @@ public class PetDragonHealer : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         playerStats = FindAnyObjectByType<PlayerStatus>();
 
-        // 🔁 Tự động gán player nếu chưa có
+        // Tự động gán player nếu null
         if (player == null && GameObject.FindGameObjectWithTag("Player") != null)
             player = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -51,13 +54,14 @@ public class PetDragonHealer : MonoBehaviour
         aiPath = GetComponent<AIPath>();
         destinationSetter = GetComponent<AIDestinationSetter>();
 
-        // Nếu dùng NavMesh, đảm bảo agent không bị lệch độ cao
+        // Set độ cao cho NavMesh
         if (navMeshAgent != null)
             navMeshAgent.baseOffset = floatHeight;
     }
 
     void Update()
     {
+        AvoidOtherPets();
         AnimateFloating();
         FollowPlayer();
 
@@ -82,7 +86,7 @@ public class PetDragonHealer : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.position);
         float speed = (distance > speedChangeDistance) ? moveSpeed * 1.5f : moveSpeed * 0.5f;
 
-        // AI: NavMesh
+        // NavMesh
         if (pathfindingType == PathfindingType.NavMesh && navMeshAgent != null && navMeshAgent.isOnNavMesh)
         {
             navMeshAgent.speed = speed;
@@ -90,18 +94,18 @@ public class PetDragonHealer : MonoBehaviour
             if (distance > followDistance)
             {
                 navMeshAgent.SetDestination(player.position);
-                if (anim != null) anim.SetBool("isFollowing", true);
+                anim?.SetBool("isFollowing", true);
             }
             else
             {
                 navMeshAgent.ResetPath();
-                if (anim != null) anim.SetBool("isFollowing", false);
+                anim?.SetBool("isFollowing", false);
             }
 
             return;
         }
 
-        // AI: A*
+        // A* Pathfinding
         if (pathfindingType == PathfindingType.AStar && aiPath != null && destinationSetter != null && aiPath.enabled)
         {
             aiPath.maxSpeed = speed;
@@ -109,31 +113,31 @@ public class PetDragonHealer : MonoBehaviour
             if (distance > followDistance)
             {
                 destinationSetter.target = player;
-                if (anim != null) anim.SetBool("isFollowing", true);
+                anim?.SetBool("isFollowing", true);
             }
             else
             {
                 destinationSetter.target = null;
-                if (anim != null) anim.SetBool("isFollowing", false);
+                anim?.SetBool("isFollowing", false);
             }
 
             return;
         }
 
-        // Manual Move (Không dùng AI)
-        Vector3 direction = (player.position - transform.position).normalized;
+        // Manual Move
         if (distance > followDistance)
         {
+            Vector3 direction = (player.position - transform.position).normalized;
             Vector3 targetPos = player.position - direction * followDistance;
-            targetPos.y = floatHeight; // 🔁 Đảm bảo cao đúng tầm
+            targetPos.y = floatHeight;
 
             transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
             transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
-            if (anim != null) anim.SetBool("isFollowing", true);
+            anim?.SetBool("isFollowing", true);
         }
         else
         {
-            if (anim != null) anim.SetBool("isFollowing", false);
+            anim?.SetBool("isFollowing", false);
         }
     }
 
@@ -148,15 +152,40 @@ public class PetDragonHealer : MonoBehaviour
             Debug.Log("🐉 Rồng Xanh hồi máu cho người chơi!");
             buffManager.BuffHP();
 
-            if (anim != null)
-                anim.SetTrigger("doBuff");
+            anim?.SetTrigger("doBuff");
 
             if (audioSource != null && healSound != null)
                 audioSource.PlayOneShot(healSound);
+
+            // ✨ Spawn heal VFX trên Player
+            if (healEffectPrefab != null && player != null)
+            {
+                GameObject healVFX = Instantiate(healEffectPrefab, player.position + Vector3.up * 0f, Quaternion.identity);
+                Destroy(healVFX, 3f);
+            }
         }
         else
         {
             Debug.Log("🧘 Máu chưa đủ thấp để buff.");
         }
     }
+    void AvoidOtherPets()
+    {
+        float minPetDistance = 2f; // Khoảng cách tối thiểu giữa các pet
+        GameObject[] pets = GameObject.FindGameObjectsWithTag("Pet");
+
+        foreach (GameObject pet in pets)
+        {
+            if (pet != this.gameObject)
+            {
+                float dist = Vector3.Distance(transform.position, pet.transform.position);
+                if (dist < minPetDistance)
+                {
+                    Vector3 pushDir = (transform.position - pet.transform.position).normalized;
+                    transform.position += pushDir * (minPetDistance - dist) * Time.deltaTime;
+                }
+            }
+        }
+    }
+
 }
