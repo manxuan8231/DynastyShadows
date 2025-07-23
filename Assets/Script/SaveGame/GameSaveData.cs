@@ -1,4 +1,7 @@
 ﻿
+using System.Collections.Generic;
+using UnityEngine;
+
 [System.Serializable]
 public class GameSaveData
 {
@@ -10,7 +13,7 @@ public class GameSaveData
     //luu checkpoint
     public CheckpointData checkpointData;
     public string savedSceneName;
-
+    public List<SavedItemData> inventoryItems = new List<SavedItemData>();
     // lưu hoàn thành hướng dẫn
     public bool isTutorialDone;
     public int mapTutoIndex;
@@ -27,4 +30,11 @@ public class GameSaveData
         mapTutoIndex = 0;
         
     }
+}
+[System.Serializable]
+public class SavedItemData
+{
+    public string itemName;
+    public int quantity;
+    public string itemType;
 }

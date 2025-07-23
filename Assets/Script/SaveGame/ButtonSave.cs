@@ -7,36 +7,56 @@ public class ButtonSave : MonoBehaviour
     // Tham chiếu tới player
     public PlayerStatus playerStatus;
     public PlayerControllerState playerControllerState;
+    public InventoryManager inventoryManager;
+
     private void Start()
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
-       
+        inventoryManager = FindAnyObjectByType<InventoryManager>();
     }
 
     public void SaveGame()
     {
-        // Tạo dữ liệu mới
-        //GameSaveData data = new GameSaveData();
         GameSaveData data = SaveManagerMan.LoadGame();
-     
-        // Lưu chỉ số
+
         data.score = playerStatus.score;
         data.currentLevel = playerStatus.currentLevel;
         data.gold = playerStatus.gold;
-
-        // Lưu vị trí player
         data.checkpointData = new CheckpointData(playerControllerState.transform.position);
-
-        // Lưu tên scene hiện tại
         data.savedSceneName = SceneManager.GetActiveScene().name;
 
-       
+        // ✅ Lưu item
+        data.inventoryItems.Clear();
+        foreach (var slot in inventoryManager.itemSlot)
+        {
+            if (!string.IsNullOrEmpty(slot.itemName) && slot.quantity > 0)
+            {
+                data.inventoryItems.Add(new SavedItemData
+                {
+                    itemName = slot.itemName,
+                    quantity = slot.quantity,
+                    itemType = slot.itemType.ToString()
+                });
+            }
+        }
 
-        // Gọi hàm lưu
+        foreach (var slot in inventoryManager.equipmentSlot)
+        {
+            if (!string.IsNullOrEmpty(slot.itemName) && slot.quantity > 0)
+            {
+                data.inventoryItems.Add(new SavedItemData
+                {
+                    itemName = slot.itemName,
+                    quantity = slot.quantity,
+                    itemType = slot.itemType.ToString()
+                });
+            }
+        }
+
+        // ✅ Cuối cùng, lưu lại
         SaveManagerMan.SaveGame(data);
-
-        Debug.Log("Game Saved at " + data.savedSceneName);
+        Debug.Log("Saved with " + data.inventoryItems.Count + " items");
     }
 
 

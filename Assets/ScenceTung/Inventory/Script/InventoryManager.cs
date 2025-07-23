@@ -5,7 +5,7 @@ public class InventoryManager : MonoBehaviour
 {
     public GameObject inventoryMenu;
     public GameObject canvasPauser;
-
+    public EquipmentDatabase equipmentDatabase;
     public GameObject equipmentMenu;
     public bool isOpenInventory = true;
     public ItemSlot[] itemSlot;
@@ -15,7 +15,7 @@ public class InventoryManager : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip selectedClip;
     private PauseManager pausedManager;
-
+    public ButtonSave buttonSave;
     void Update()
     {
         if (pausedManager == null) pausedManager = FindAnyObjectByType<PauseManager>();
@@ -25,8 +25,14 @@ public class InventoryManager : MonoBehaviour
         if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory )
             EquipmentMenu();
     }
+    void Start()
+    {
+        // Load game data khi bắt đầu
+        GameSaveData data = SaveManagerMan.LoadGame();
+        LoadInventoryFromSave(data);
+    }
 
-    public  void Inventory()
+    public void Inventory()
     {
         if (inventoryMenu.activeSelf)
         {
@@ -286,6 +292,52 @@ public class InventoryManager : MonoBehaviour
 
         return total;
     }
+public void LoadInventoryFromSave(GameSaveData data)
+{
+    if (data == null || data.inventoryItems == null)
+    {
+        Debug.LogWarning("Không có dữ liệu inventory để load.");
+        return;
+    }
+
+    // Xóa inventory cũ
+    foreach (var slot in itemSlot)
+    {
+        slot?.EmptySlot();
+    }
+
+    foreach (var slot in equipmentSlot)
+    {
+        slot?.EmptySlot();
+    }
+
+    foreach (var savedItem in data.inventoryItems)
+    {
+        if (System.Enum.TryParse(savedItem.itemType, out ItemType type))
+        {
+            EquipmentSO equipment = null;
+            if (equipmentDatabase != null)
+            {
+                equipment = equipmentDatabase.GetEquipmentByName(savedItem.itemName);
+            }
+
+            if (equipment != null)
+            {
+                AddItem(savedItem.itemName, savedItem.quantity, equipment.itemSprite, equipment.itemDescription, type);
+            }
+            else
+            {
+                Debug.LogWarning($"Không tìm thấy equipment '{savedItem.itemName}' hoặc database chưa gán.");
+                // Có thể gọi AddItem với sprite và mô tả null nếu muốn
+                AddItem(savedItem.itemName, savedItem.quantity, null, "", type);
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Không parse được ItemType: {savedItem.itemType}");
+        }
+    }
+}
 
 }
 

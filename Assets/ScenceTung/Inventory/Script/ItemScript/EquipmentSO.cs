@@ -13,7 +13,8 @@ public class EquipmentSO : ScriptableObject
     public Vector2Int manaRange;
     public Vector2Int critDameRange;
     public Vector2Int critChanceRange;
-
+    [TextArea]
+    public string itemDescription;
     [SerializeField]
     public Sprite itemSprite;
     private bool hasGeneratedStats = false;
