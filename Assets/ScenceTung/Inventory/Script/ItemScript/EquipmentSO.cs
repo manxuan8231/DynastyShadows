@@ -92,6 +92,9 @@ public enum Rarity
     Rare,
     Epic,
     Legendary,
-    Special
+    Special,
+    Mythical,
+    Unique
+   
 
 }

@@ -6,9 +6,9 @@ public class EquipmentSOGeneratorSmart
     [MenuItem("Tools/Generate Equipment Items By Type")]
     public static void GenerateItems()
     {
-        string[] types = { "Accessory1" ,"Accessory2", "Accessory3" };
-        string[] rarities = { "Common", "Rare", "Epic", "Legendary", "Special" };
-        string path = "Assets/ScenceTung/Inventory/Script/DataEquipItem/";
+        string[] types = { "Head" ,"Body","Legs","Feet", "Accessory1" ,"Accessory2", "Accessory3" };
+        string[] rarities = { "Unique", "Mythical" };
+        string path = "Assets/ScenceTung/Inventory/Script/DataEquipMent VIp/";
 
         foreach (string type in types)
         {
@@ -18,7 +18,7 @@ public class EquipmentSOGeneratorSmart
                 newSO.itemName = $"{type}{rarity}";
             
 
-                SetStatsByTypeAndRarity(newSO, type, rarity);
+                //SetStatsByTypeAndRarity(newSO, type, rarity);
 
                 string assetPath = $"{path}{type}{rarity}.asset";
                 AssetDatabase.CreateAsset(newSO, assetPath);
