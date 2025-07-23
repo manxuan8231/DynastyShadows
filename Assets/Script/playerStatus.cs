@@ -349,7 +349,7 @@ public class PlayerStatus : MonoBehaviour
     {
         if(isShieldActive == true)
         {
-            audioSource.PlayOneShot(shieldSound);
+           // audioSource.PlayOneShot(shieldSound);
             shieldHealth -= amount;
             healthShielSlider.value = shieldHealth;
           

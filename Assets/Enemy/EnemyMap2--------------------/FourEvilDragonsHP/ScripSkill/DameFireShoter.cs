@@ -40,7 +40,7 @@ public class DameFireShoter : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-        else if (other.gameObject.layer == LayerMask.NameToLayer("Ground") || other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+        else if (other.gameObject.layer == LayerMask.NameToLayer("Ground") /*|| other.gameObject.layer == LayerMask.NameToLayer("Obstacle")*/)
         {
             // Hiển thị hiệu ứng lửa khi chạm đất
             if (fireEffect != null)
