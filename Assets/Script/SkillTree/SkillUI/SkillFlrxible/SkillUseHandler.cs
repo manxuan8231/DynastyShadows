@@ -23,22 +23,66 @@ public class SkillUseHandler : MonoBehaviour
     public GameObject shieldPrefab; // prefab của shield
     //sounds
     public AudioClip eyeSound;
+
+    //hinh icon skill
+    public RawImage slotIcon; // Slot HUD                          
+    public Sprite skill1;
+    public Sprite skill2;
+    public Sprite skill3;
+    public Sprite skill4;
+    public Sprite skill5;
+
     // Tham chiếu 
     public PlayerStatus playerStatus;
     public PlayerControllerState playerControllerState;
     public Skill5Eye skill5Eye;
+    public SkillFlexibleManager skillFlexibleManager;
+
     private void Start()
     {
+      
+      
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
         skill5Eye = FindAnyObjectByType<Skill5Eye>();
         auraSlash.SetActive(false);
-       
+
+        // Gán lại kỹ năng đang được trang bị
+        SkillTreeData savedSkill = SkillTreeHandler.LoadSkillTree();
+        EquippedSkillData.equippedSkillID = savedSkill.currentSkillID;
+        switch (EquippedSkillData.equippedSkillID)
+        {
+            case "FireBall":
+                slotIcon.texture = skill1.texture;
+              
+                break;
+            case "RainFire":
+                slotIcon.texture = skill2.texture;
+              
+                break;
+            case "Slash":
+                slotIcon.texture = skill3.texture;
+              
+                break;
+            case "Shield":
+                slotIcon.texture = skill4.texture;
+              
+                break;
+            case "Eye":
+                slotIcon.texture = skill5.texture;
+              
+                break;
+            default:
+                slotIcon.texture = null;
+                
+                break;
+        }
     }
 
     void Update()
     {
-        string skillID = playerStatus.equipSkillID;
+        string skillID = EquippedSkillData.equippedSkillID;
+
 
         // Kiểm tra combo timeout
         if (comboStep > 0 && Time.time > comboTimer)
@@ -246,8 +290,7 @@ public class SkillUseHandler : MonoBehaviour
         playerControllerState.controller.detectCollisions = true;
         playerControllerState.controller.enabled = true;
     }
-
-
+    
    
 
     public GameObject FindEnemy()

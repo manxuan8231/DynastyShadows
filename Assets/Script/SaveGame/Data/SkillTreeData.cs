@@ -31,4 +31,5 @@ public class SkillTreeData
     public bool isDongCung4Unlocked = false;
     public bool isDongCung5Unlocked = false;
 
+    public string currentSkillID;
 }

@@ -21,7 +21,6 @@ public class ItemSO : ScriptableObject
     public bool hasItemQuest2 = false;
     public bool showSkill5 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 5 hay không
 
-   
 
     public bool UseItem()
     {
@@ -119,7 +118,7 @@ public class ItemSO : ScriptableObject
             ItemSO cloned = Instantiate(this);
             cloned.showSkill4 = true;
             cloned.hasItemQuest = true;
-    SkillFlexibleManager manager = Resources.FindObjectsOfTypeAll<SkillFlexibleManager>()
+             SkillFlexibleManager manager = Resources.FindObjectsOfTypeAll<SkillFlexibleManager>()
                 .FirstOrDefault(x => x.gameObject.name == " Panel(Flexible Skill)");
 
             if (manager != null)

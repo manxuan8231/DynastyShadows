@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SkillFlexibleManager : MonoBehaviour
 {
-    
+   
     //hinh icon skill
     public Sprite skill1;
     public Sprite skill2;
@@ -57,6 +57,7 @@ public class SkillFlexibleManager : MonoBehaviour
     public int activeSkillUnlock = 0;
 
     public ItemSO itemQuestUnlock2; // Biến để kiểm tra xem có hiển thị kỹ năng 5hay không
+  
     void Start()
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
@@ -67,17 +68,58 @@ public class SkillFlexibleManager : MonoBehaviour
         buttonEquip.SetActive(false);
         buttonRemove.SetActive(false);
         slotIcon.color = Color.clear; // Ẩn icon ban đầu
+
+        // Lấy dữ liệu kỹ năng từ SkillTreeData
+        SkillTreeData skillTreeData = SkillTreeHandler.LoadSkillTree();
+        isDongCung1Unlocked = skillTreeData.isDongCung1Unlocked;
+        isDongCung2Unlocked = skillTreeData.isDongCung2Unlocked;
+        isDongCung3Unlocked = skillTreeData.isDongCung3Unlocked;
+        isDongCung4Unlocked = skillTreeData.isDongCung4Unlocked;
+        isDongCung5Unlocked = skillTreeData.isDongCung5Unlocked;
+        currentSkillID = skillTreeData.currentSkillID; // Lấy ID kỹ năng hiện tại
+
+       
     }
-    private void Update()
+    public void RestoreEquippedIcon()//luu icon
     {
-        
+        equippedSkillID = currentSkillID;
+        playerStatus.equipSkillID = currentSkillID;
+
+        switch (equippedSkillID)
+        {
+            case "FireBall":
+                slotIcon.texture = skill1.texture;
+                slotIcon.color = Color.white;
+                break;
+            case "RainFire":
+                slotIcon.texture = skill2.texture;
+                slotIcon.color = Color.white;
+                break;
+            case "Slash":
+                slotIcon.texture = skill3.texture;
+                slotIcon.color = Color.white;
+                break;
+            case "Shield":
+                slotIcon.texture = skill4.texture;
+                slotIcon.color = Color.white;
+                break;
+            case "Eye":
+                slotIcon.texture = skill5.texture;
+                slotIcon.color = Color.white;
+                break;
+            default:
+                slotIcon.texture = null;
+                slotIcon.color = Color.clear;
+                break;
+        }
     }
     private void OnDisable()
     {
         previewPanel.SetActive(false);
         HideAllHighlights();
-
+        
     }
+  
     public void ShowPreview(string iconID)
     {
         skillAudioSource.PlayOneShot(buttonClick);
@@ -280,6 +322,11 @@ public class SkillFlexibleManager : MonoBehaviour
 
     public void EquipSkill()
     {
+        SkillTreeData saveId = SkillTreeHandler.LoadSkillTree();
+        saveId.currentSkillID = currentSkillID;
+        SkillTreeHandler.SaveSkillTree(saveId);
+
+        // Gán icon lên HUD
         switch (currentSkillID)
         {
             case "FireBall":
@@ -301,11 +348,16 @@ public class SkillFlexibleManager : MonoBehaviour
 
         slotIcon.color = Color.white;
         equippedSkillID = currentSkillID;
-        playerStatus.equipSkillID = currentSkillID; // Gán vào PlayerStatus
+
+        playerStatus.equipSkillID = currentSkillID;
+
+        // Gán cho static class để dùng lại khi vào game
+        EquippedSkillData.equippedSkillID = currentSkillID;
 
         buttonEquip.SetActive(false);
         buttonRemove.SetActive(true);
     }
+
 
 
 
@@ -314,11 +366,18 @@ public class SkillFlexibleManager : MonoBehaviour
         slotIcon.texture = null;
         slotIcon.color = Color.clear;
         equippedSkillID = "";
+        playerStatus.equipSkillID = "";
+
+        SkillTreeData saveData = SkillTreeHandler.LoadSkillTree();
+        saveData.currentSkillID = "";
+        SkillTreeHandler.SaveSkillTree(saveData);
+
         buttonEquip.SetActive(true);
         buttonRemove.SetActive(false);
     }
 
-   
+
+
 
     private void UpdateScoreText()
     {
