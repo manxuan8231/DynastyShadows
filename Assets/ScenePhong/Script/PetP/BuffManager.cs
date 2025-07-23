@@ -13,6 +13,10 @@ public class BuffManager : MonoBehaviour
 {
     public PlayerStatus playerStats;
 
+    private void Start()
+    {
+        playerStats = GameObject.Find("Stats").GetComponent<PlayerStatus>();
+    }
     public void BuffDamage()
     {
         Debug.Log("Pet buff dame!");

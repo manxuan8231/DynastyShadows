@@ -5,6 +5,7 @@ using UnityEngine;
 public class EquipmentDatabase : ScriptableObject
 {
     public List<EquipmentSO> equipmentList;
+    public List<ItemSO> itemList;
 
     public EquipmentSO GetEquipmentByName(string name)
     {
@@ -12,6 +13,15 @@ public class EquipmentDatabase : ScriptableObject
         {
             if (equipment.itemName == name) // ho?c dùng ToLowerInvariant() ?? an toàn h?n
                 return equipment;
+        }
+        return null;
+    }
+    public ItemSO GetItemByName(string name)
+    {
+        foreach (var item in itemList)
+        {
+            if (item.itemName == name) // ho?c dùng ToLowerInvariant() ?? an toàn h?n
+                return item;
         }
         return null;
     }

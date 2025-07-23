@@ -14,6 +14,7 @@ public class GameSaveData
     public CheckpointData checkpointData;
     public string savedSceneName;
     public List<SavedItemData> inventoryItems = new List<SavedItemData>();
+    public List<SaveItemSO> inventoryItemSos = new List<SaveItemSO>();
     // lưu hoàn thành hướng dẫn
     public bool isTutorialDone;
     public int mapTutoIndex;
@@ -37,4 +38,15 @@ public class SavedItemData
     public string itemName;
     public int quantity;
     public string itemType;
+}
+[System.Serializable]
+public class SaveItemSO
+{
+    public string itemName;
+    public string itemType;
+    public Sprite itemSprite;
+    public string itemDescription;
+    public int quantity;
+   
+   
 }
