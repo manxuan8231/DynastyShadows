@@ -836,7 +836,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5045261743069803646, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1872920769}
   m_SourcePrefab: {fileID: 100100000, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
 --- !u!1 &699280121
 GameObject:
@@ -1950,6 +1953,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452947894}
   m_CullTransparentMesh: 1
+--- !u!1 &1872920759 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5045261743069803646, guid: 1c0261e86859fc54dac76524b174ddb5, type: 3}
+  m_PrefabInstance: {fileID: 577913214}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1872920769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872920759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda81c50cbbe10643b844c2ce1fb39e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasKey: 1
+  keyCount: 10
+  isKeyOpen: 0
 --- !u!1 &2021286688
 GameObject:
   m_ObjectHideFlags: 0
@@ -2532,6 +2555,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 74680229800469636, guid: fae024bb26945d54b911a9602b063296, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750932774887414047, guid: fae024bb26945d54b911a9602b063296, type: 3}
+      propertyPath: m_Size.x
+      value: 2.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750932774887414047, guid: fae024bb26945d54b911a9602b063296, type: 3}
+      propertyPath: m_Size.z
+      value: 2.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750932774887414047, guid: fae024bb26945d54b911a9602b063296, type: 3}
+      propertyPath: m_Center.y
+      value: 1.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750932774887414047, guid: fae024bb26945d54b911a9602b063296, type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5995201497592488168, guid: fae024bb26945d54b911a9602b063296, type: 3}
