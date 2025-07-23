@@ -43,6 +43,7 @@ public class Skill3Manager : MonoBehaviour
         timeSkill3 = skillData.timeSkill3;
         playerCount = skillData.playerCountSkill3;
         isDamaged = skillData.isDamagedSkill3;
+        isLv6 = skillData.isLv6Skill3; // kiem tra level 6 chưa
         if (isUnlockSkill3)
         {
             iconSkill3.SetActive(true); // Hiển thị biểu tượng kỹ năng 3 nếu đã mở khóa
