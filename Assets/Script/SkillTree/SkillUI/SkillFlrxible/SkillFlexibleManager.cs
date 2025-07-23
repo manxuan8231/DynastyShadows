@@ -202,7 +202,10 @@ public class SkillFlexibleManager : MonoBehaviour
                     buttonEquip.SetActive(true);
                     buttonRemove.SetActive(false);
                     buttonUnlock.SetActive(false); // Ẩn nút sau khi mở
-
+                    //save
+                    SkillTreeData skillTreeData = SkillTreeHandler.LoadSkillTree();
+                    skillTreeData.isDongCung1Unlocked = isDongCung1Unlocked;
+                    SkillTreeHandler.SaveSkillTree(skillTreeData);
                 }
 
                 break;
@@ -216,6 +219,11 @@ public class SkillFlexibleManager : MonoBehaviour
                     buttonEquip.SetActive(true);
                     buttonRemove.SetActive(false);
                     buttonUnlock.SetActive(false);
+                    
+                    //save
+                    SkillTreeData skillTreeData = SkillTreeHandler.LoadSkillTree();
+                    skillTreeData.isDongCung2Unlocked = isDongCung2Unlocked;
+                    SkillTreeHandler.SaveSkillTree(skillTreeData);
                 }
                 break;
 
@@ -228,6 +236,10 @@ public class SkillFlexibleManager : MonoBehaviour
                     buttonEquip.SetActive(true);
                     buttonRemove.SetActive(false);
                     buttonUnlock.SetActive(false);
+                    //save
+                    SkillTreeData skillTreeData = SkillTreeHandler.LoadSkillTree();
+                    skillTreeData.isDongCung3Unlocked = isDongCung3Unlocked;
+                    SkillTreeHandler.SaveSkillTree(skillTreeData);
                 }
                 break;
 
@@ -241,6 +253,10 @@ public class SkillFlexibleManager : MonoBehaviour
                     buttonEquip.SetActive(true);
                     buttonRemove.SetActive(false);
                     buttonUnlock.SetActive(false);
+                    //save
+                    SkillTreeData skillTreeData = SkillTreeHandler.LoadSkillTree();
+                    skillTreeData.isDongCung4Unlocked = isDongCung4Unlocked;
+                    SkillTreeHandler.SaveSkillTree(skillTreeData);
                 }
                 break;
             case "Eye":
@@ -252,6 +268,10 @@ public class SkillFlexibleManager : MonoBehaviour
                     buttonEquip.SetActive(true);
                     buttonRemove.SetActive(false);
                     buttonUnlock.SetActive(false);
+                    //save
+                    SkillTreeData skillTreeData = SkillTreeHandler.LoadSkillTree();
+                    skillTreeData.isDongCung5Unlocked = isDongCung5Unlocked;
+                    SkillTreeHandler.SaveSkillTree(skillTreeData);
                 }
                
                 break;

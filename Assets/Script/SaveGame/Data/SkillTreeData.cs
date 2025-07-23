@@ -1,6 +1,7 @@
 ﻿[System.Serializable]
 public class SkillTreeData
 {
+    //skill core----------
     public float turnInSkill1, turnInSkill2, turnInSkill3, turnInSkill4;
 
     public bool isUnlockSkill1, isUnlockSkill2, isUnlockSkill3, isUnlockSkill4;
@@ -21,5 +22,13 @@ public class SkillTreeData
 
 
     public bool[] unlockedSkillIcons = new bool[21]; // 21 kỹ năng để đổi màu white icon
+
+
+    //skill expilision------------                
+    public bool isDongCung1Unlocked = false;
+    public bool isDongCung2Unlocked = false;
+    public bool isDongCung3Unlocked = false;
+    public bool isDongCung4Unlocked = false;
+    public bool isDongCung5Unlocked = false;
 
 }
