@@ -86,6 +86,7 @@ public class SkillFlexibleManager : MonoBehaviour
         showSkill5 = skillTreeData.showSkill5; // Lấy trạng thái hiển thị kỹ năng 5
         hasItemQuest = skillTreeData.hasItemQuest; // Lấy trạng thái item quest mở khóa kỹ năng 4
         hasItemQuest2 = skillTreeData.hasItemQuest2; // Lấy trạng thái item quest mở khóa kỹ năng 5
+        activeSkillUnlock = skillTreeData.activeSkillUnlock; // Lấy số lần nâng cấp kỹ năng
         RestoreEquippedIcon();//luu icon
 
 
