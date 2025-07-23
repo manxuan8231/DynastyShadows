@@ -24,6 +24,8 @@ public class RanDomItem : MonoBehaviour
 
     [Header("key")]
     public KeyCase key;
+    public bool isStayInRadius = false;
+    public GameObject _BtnF;
     private void Start()
     {
         inventoryManager = FindAnyObjectByType<InventoryManager>();
@@ -31,21 +33,29 @@ public class RanDomItem : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F) && key.hasKey && key.keyCount > 0 && !key.isKeyOpen)
+        if(!isStayInRadius)
         {
-            key.keyCount--;
-            key.isKeyOpen = true;
-            StartOpenChest();
+            return; // Không làm gì nếu không ở trong vùng
         }
-        else if(Input.GetKeyDown(KeyCode.F)  && key.keyCount <= 0)
+        if (isStayInRadius)
         {
-            key.hasKey = false;
-            Debug.Log("Bạn cần có chìa khóa để mở rương này!");
+            if (Input.GetKeyDown(KeyCode.F) && key.hasKey && key.keyCount > 0 && !key.isKeyOpen && isStayInRadius)
+            {
+                key.keyCount--;
+                key.isKeyOpen = true;
+                StartOpenChest();
+            }
+            else if (Input.GetKeyDown(KeyCode.F) && key.keyCount <= 0)
+            {
+                key.hasKey = false;
+                Debug.Log("Bạn cần có chìa khóa để mở rương này!");
+            }
+            else
+            {
+                Debug.Log("Cần chìa khóa để mở rương");
+            }
         }
-        else
-        {
-            Debug.Log("Cần chìa khóa để mở rương");
-        }
+       
     }
     public void StartOpenChest()
     {
@@ -54,6 +64,7 @@ public class RanDomItem : MonoBehaviour
 
     private IEnumerator DisplayDropSequence()
     {
+        _BtnF.SetActive(false); // Ẩn nút F khi bắt đầu mở rương
         List<Item> itemPool = GenerateItemPool();
         Shuffle(itemPool);
 
@@ -133,6 +144,7 @@ public class RanDomItem : MonoBehaviour
 
         // Tự tắt sau vài giây
         StartCoroutine(HideResultPanelAfterDelay(3f));
+       
     }
 
     private IEnumerator HideResultPanelAfterDelay(float delay)
@@ -140,7 +152,36 @@ public class RanDomItem : MonoBehaviour
         yield return new WaitForSeconds(delay);
         resultPanel.SetActive(false);
         key.isKeyOpen = false; // Reset key state after opening chest
+        if (key.keyCount > 0 && isStayInRadius)
+        {
+            _BtnF.SetActive(true);
+        }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isStayInRadius = true;
+            if(key.isKeyOpen)
+            {
+                _BtnF.SetActive(false); // Ẩn nút F nếu rương đang mở
+            }
+            else
+                _BtnF.SetActive(true); // Hiển thị nút F khi người chơi vào vùng
+
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isStayInRadius = false;
+            _BtnF.SetActive(false); // Ẩn nút F khi người chơi ra khỏi vùng
+        }
+    }
+
+
 }
 [System.Serializable]
 public class ItemBuffDrop
