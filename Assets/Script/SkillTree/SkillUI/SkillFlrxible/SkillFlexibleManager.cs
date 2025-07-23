@@ -50,14 +50,19 @@ public class SkillFlexibleManager : MonoBehaviour
     private bool isDongCung4Unlocked = false;
     private bool isDongCung5Unlocked = false;
 
+    //dk để show skill
+    public bool showSkill4 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 4 hay không
+    public bool showSkill5 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 5 hay không
+    public bool hasItemQuest = false; // Biến để kiểm tra xem có item quest mở khóa kỹ năng 4 hay không
+    public bool hasItemQuest2 = false; // Biến để kiểm tra xem có item quest mở khóa kỹ năng 5 hay không
+
     //biến số để theo dõi số lần nâng cấp kỹ năng
     public float turnInSkill1 = 0f;
 
-    public ItemSO itemQuestUnlock;
+   // public ItemSO itemQuestUnlock;
     public int activeSkillUnlock = 0;
-
-    public ItemSO itemQuestUnlock2; // Biến để kiểm tra xem có hiển thị kỹ năng 5hay không
-  
+   // public ItemSO itemQuestUnlock2; // Biến để kiểm tra xem có hiển thị kỹ năng 5hay không
+    
     void Start()
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
@@ -77,6 +82,10 @@ public class SkillFlexibleManager : MonoBehaviour
         isDongCung4Unlocked = skillTreeData.isDongCung4Unlocked;
         isDongCung5Unlocked = skillTreeData.isDongCung5Unlocked;
         currentSkillID = skillTreeData.currentSkillID; // Lấy ID kỹ năng hiện tại
+        showSkill4 = skillTreeData.showSkill4; // Lấy trạng thái hiển thị kỹ năng 4
+        showSkill5 = skillTreeData.showSkill5; // Lấy trạng thái hiển thị kỹ năng 5
+        hasItemQuest = skillTreeData.hasItemQuest; // Lấy trạng thái item quest mở khóa kỹ năng 4
+        hasItemQuest2 = skillTreeData.hasItemQuest2; // Lấy trạng thái item quest mở khóa kỹ năng 5
         RestoreEquippedIcon();//luu icon
 
 
@@ -160,7 +169,7 @@ public class SkillFlexibleManager : MonoBehaviour
 
             case "Shield":
                
-                if (itemQuestUnlock != null && itemQuestUnlock.showSkill4 && activeSkillUnlock >= 3)
+                if (showSkill4 && activeSkillUnlock >= 3)
                 {
                     textureTutorial.texture = spriteShield;
                     cameras[3].gameObject.SetActive(true); // Kích hoạt camera cho Shield
@@ -177,7 +186,7 @@ public class SkillFlexibleManager : MonoBehaviour
                 break;
             
             case "Eye":
-                if (itemQuestUnlock2 != null && itemQuestUnlock2.showSkill5)
+                if ( showSkill5)
                 {
                     textureTutorial.texture = spriteEye;
                     cameras[4].gameObject.SetActive(true); // Kích hoạt camera cho Eye
@@ -288,7 +297,7 @@ public class SkillFlexibleManager : MonoBehaviour
 
             case "Shield":
 
-                if (playerStatus.score >= 4 && itemQuestUnlock.hasItemQuest)
+                if (playerStatus.score >= 4)
                 {
                     isDongCung4Unlocked = true;
                     playerStatus.score -= 4;
