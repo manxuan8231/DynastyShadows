@@ -43,10 +43,22 @@ public class PetDragonBlue : MonoBehaviour
         startPos = transform.position;
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-        playerStats = FindAnyObjectByType<PlayerStatus>();
 
+        // 🔄 Tự động gán player nếu null
         if (player == null && GameObject.FindGameObjectWithTag("Player") != null)
             player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        // 🔄 Gán playerStats từ player nếu có
+        if (player != null)
+            playerStats = player.GetComponent<PlayerStatus>();
+
+        // 🔄 Nếu vẫn chưa có, tìm bất kỳ PlayerStatus nào trong scene
+        if (playerStats == null)
+            playerStats = FindAnyObjectByType<PlayerStatus>();
+
+        // 🔄 Gán buffManager nếu chưa gán
+        if (buffManager == null)
+            buffManager = FindAnyObjectByType<BuffManager>();
 
         navMeshAgent = GetComponent<NavMeshAgent>();
         aiPath = GetComponent<AIPath>();
@@ -135,7 +147,6 @@ public class PetDragonBlue : MonoBehaviour
         if (playerStats == null || buffManager == null) return;
 
         Debug.Log("💧 Pet buff mana mỗi giây không điều kiện.");
-
         buffManager.Buffmana();
         anim?.SetTrigger("doBuff");
 

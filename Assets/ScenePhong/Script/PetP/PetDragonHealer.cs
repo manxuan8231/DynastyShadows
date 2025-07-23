@@ -44,11 +44,20 @@ public class PetDragonHealer : MonoBehaviour
         startPos = transform.position;
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-        playerStats = FindAnyObjectByType<PlayerStatus>();
 
         // Tự động gán player nếu null
         if (player == null && GameObject.FindGameObjectWithTag("Player") != null)
             player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        // Gán playerStats từ player (nếu có)
+        if (player != null)
+            playerStats = player.GetComponent<PlayerStatus>();
+        else
+            playerStats = FindAnyObjectByType<PlayerStatus>();
+
+        // Tự động gán buffManager nếu null
+        if (buffManager == null)
+            buffManager = FindAnyObjectByType<BuffManager>();
 
         navMeshAgent = GetComponent<NavMeshAgent>();
         aiPath = GetComponent<AIPath>();
@@ -169,6 +178,7 @@ public class PetDragonHealer : MonoBehaviour
             Debug.Log("🧘 Máu chưa đủ thấp để buff.");
         }
     }
+
     void AvoidOtherPets()
     {
         float minPetDistance = 2f; // Khoảng cách tối thiểu giữa các pet
@@ -187,5 +197,4 @@ public class PetDragonHealer : MonoBehaviour
             }
         }
     }
-
 }

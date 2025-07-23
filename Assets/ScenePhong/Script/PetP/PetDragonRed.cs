@@ -17,7 +17,7 @@ public class PetDragonRed : MonoBehaviour
 
     [Header("Buff Settings")]
     public BuffManager buffManager;
-    private float buffCooldown = 5f; // 3 phút
+    private float buffCooldown = 180f; // 3 phút
     private float buffTimer;
 
     [Header("Floating Animation")]
@@ -43,10 +43,22 @@ public class PetDragonRed : MonoBehaviour
         startPos = transform.position;
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-        playerStats = FindAnyObjectByType<PlayerStatus>();
 
+        // 🔄 Tự động gán Player nếu chưa có
         if (player == null && GameObject.FindGameObjectWithTag("Player") != null)
             player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        // 🔄 Gán playerStats từ Player nếu có
+        if (player != null)
+            playerStats = player.GetComponent<PlayerStatus>();
+
+        // 🔄 Nếu vẫn chưa có, tìm bất kỳ PlayerStatus nào trong scene
+        if (playerStats == null)
+            playerStats = FindAnyObjectByType<PlayerStatus>();
+
+        // 🔄 Gán BuffManager nếu chưa gán
+        if (buffManager == null)
+            buffManager = FindAnyObjectByType<BuffManager>();
 
         navMeshAgent = GetComponent<NavMeshAgent>();
         aiPath = GetComponent<AIPath>();
