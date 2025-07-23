@@ -51,6 +51,7 @@ MonoBehaviour:
     ch\xED m\u1EA1ng trong v\xF2ng 8 gi\xE2y(chu\u1ED9t tr\xE1i \u0111\u1EC3 s\u1EED
     d\u1EE5ng)\n\u0110\u1EC1 xu\u1EA5t: K\u1EBFt h\u1EE3p v\u1EDBi b\xECnh H\u1EE7y
     di\u1EC7t"
+  inventoryManager: {fileID: 0}
   itemType: 0
 --- !u!1 &459472559055183851
 GameObject:
@@ -188,6 +189,7 @@ MonoBehaviour:
   itemDescription: "Sau khi s\u1EED d\u1EE5ng t\u1EC9 l\u1EC7 ch\xED m\u1EA1ng \u0111\u01B0\u1EE3c
     t\u0103ng l\xEAn 100% nh\u01B0ng s\xE1t th\u01B0\u01A1ng b\u1ECB gi\u1EA3m 20%(duy
     tr\xEC trong 5 gi\xE2y)"
+  inventoryManager: {fileID: 0}
   itemType: 0
 --- !u!1 &850655854801045676
 GameObject:
@@ -9898,6 +9900,7 @@ MonoBehaviour:
     \u0111\xF4i s\xE1t th\u01B0\u01A1ng  v\xE0 50% s\xE1t th\u01B0\u01A1ng ch\xED
     m\u1EA1ng nh\u01B0ng t\u1EC9 l\u1EC7 ch\xED m\u1EA1ng gi\u1EA3m c\xF2n 1 ( duy
     tr\xEC 10 gi\xE2y)"
+  inventoryManager: {fileID: 0}
   itemType: 0
 --- !u!1 &1720232565310694278
 GameObject:
@@ -9949,6 +9952,7 @@ MonoBehaviour:
   itemDescription: "Sau khi s\u1EED d\u1EE5ng \u0111\u01B0\u1EE3c t\u0103ng 200%
     s\xE1t th\u01B0\u01A1ng nh\u01B0ng s\u1EBD b\u1ECB m\u1EA5t 30% m\xE1u ngay l\u1EADp
     t\u1EE9c(duy tr\xEC 50% s\xE1t th\u01B0\u01A1ng trong v\xF2ng 5 gi\xE2y)"
+  inventoryManager: {fileID: 0}
   itemType: 0
 --- !u!1 &1733275700128892483
 GameObject:
@@ -10087,6 +10091,7 @@ MonoBehaviour:
     ch\xED m\u1EA1ng trong v\xF2ng 8 gi\xE2y (chu\u1ED9t tr\xE1i \u0111\u1EC3 s\u1EED
     d\u1EE5ng)\n\u0110\u1EC1 xu\u1EA5t: K\u1EBFt h\u1EE3p v\u1EDBi B\xECnh T\u1EADp
     Trung"
+  inventoryManager: {fileID: 0}
   itemType: 0
 --- !u!1 &2623019755744505161
 GameObject:
@@ -15659,6 +15664,7 @@ MonoBehaviour:
   itemDescription: "Sau khi s\u1EED d\u1EE5ng b\u1EA1n s\u1EBD t\u0103ng 300% s\xE1t
     th\u01B0\u01A1ng ch\xED m\u1EA1ng nh\u01B0ng t\u1EC9 l\u1EC7 ch\xED m\u1EA1ng
     gi\u1EA3m c\xF2n 1%(Duy tr\xEC trong 10s)"
+  inventoryManager: {fileID: 0}
   itemType: 0
 --- !u!1 &5783200173637197948
 GameObject:
@@ -15882,6 +15888,7 @@ MonoBehaviour:
   itemDescription: "Sau khi s\u1EED d\u1EE5ng b\u1EA1n s\u1EBD \u0111\u01B0\u1EE3c
     t\u0103ng t\u1EA5t c\u1EA3 ch\u1EC9 s\u1ED1 trong v\xF2ng 10 gi\xE2y(chu\u1ED9t
     tr\xE1i \u0111\u1EC3 s\u1EED d\u1EE5ng) \n\n"
+  inventoryManager: {fileID: 0}
   itemType: 0
 --- !u!1 &5995201497592488168
 GameObject:
@@ -16076,22 +16083,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDrops:
-  - itemPrefabs: {fileID: 1006130040860351134}
-    dropRate: 20
-  - itemPrefabs: {fileID: 2347657351644590665}
-    dropRate: 10
-  - itemPrefabs: {fileID: 112200356596973911}
+  - itemPrefabs: {fileID: 3632092566646138298, guid: 478e8e51442922c4a8d147ae204bac5f, type: 3}
+    dropRate: 25
+  - itemPrefabs: {fileID: 1008782105793446548, guid: b965ad0bb5974214f8313b177d6447d9, type: 3}
     dropRate: 15
-  - itemPrefabs: {fileID: 1284323749453648955}
+  - itemPrefabs: {fileID: 5874704132675118933, guid: 975dc045e3bdc7848bc07edaf89f89ac, type: 3}
+    dropRate: 10
+  - itemPrefabs: {fileID: 4588284016290766912, guid: 4916dd9e4cdfd22439dde080f0d7bc03, type: 3}
     dropRate: 5
-  - itemPrefabs: {fileID: 3955703681850984507}
+  - itemPrefabs: {fileID: 7036399732418475503, guid: 4a8dbb863bafa7d4db30a737d189559c, type: 3}
+    dropRate: 3
+  - itemPrefabs: {fileID: 5331806792186563856, guid: af7ef6e421d70b84f8fa20e17f9b24e4, type: 3}
+    dropRate: 25
+  - itemPrefabs: {fileID: 2781126482326531005, guid: 820c625458b699b4ba6ecf6edf2ef68e, type: 3}
     dropRate: 15
-  - itemPrefabs: {fileID: 3783987417114677892}
+  - itemPrefabs: {fileID: 1397926500619518917, guid: 138e182e643303f43b2c913a7bf6ef6e, type: 3}
     dropRate: 10
-  - itemPrefabs: {fileID: 8815431651183616284}
-    dropRate: 10
-  - itemPrefabs: {fileID: 4509601322592369154}
-    dropRate: 15
+  - itemPrefabs: {fileID: 8387899434568698185, guid: 20483afd60fc65b42bbca7f2d109ac1b, type: 3}
+    dropRate: 5
+  - itemPrefabs: {fileID: 7046746753107773018, guid: 7ece60961f62fa64d9c75b6b7521612b, type: 3}
+    dropRate: 3
   animator: {fileID: 0}
   destroyBox: {fileID: 7150873134385632397}
   boxOrg: {fileID: 5409995546605650752}
@@ -16629,6 +16640,7 @@ MonoBehaviour:
   itemDescription: "sau khi s\u1EED d\u1EE5ng s\u1EBD t\u0103ng 37% s\xE1t th\u01B0\u01A1ng
     cho nh\xE2n v\u1EADt trong v\xF2ng 10 gi\xE2y(chu\u1ED9t tr\xE1i \u0111\u1EC3
     s\u1EED d\u1EE5ng)\n"
+  inventoryManager: {fileID: 0}
   itemType: 0
 --- !u!1 &8220715637241910553
 GameObject:
