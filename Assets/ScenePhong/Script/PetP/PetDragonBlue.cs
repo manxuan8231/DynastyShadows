@@ -46,13 +46,19 @@ public class PetDragonBlue : MonoBehaviour
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
-        if (player == null && GameObject.FindGameObjectWithTag("Player") != null)
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+        // Tự tìm Player nếu chưa gán
+        if (player == null)
+        {
+            GameObject foundPlayer = GameObject.FindGameObjectWithTag("Player");
+            if (foundPlayer != null) player = foundPlayer.transform;
+        }
 
         if (player != null)
             playerStats = player.GetComponent<PlayerStatus>();
         if (playerStats == null)
             playerStats = FindAnyObjectByType<PlayerStatus>();
+
+        // Tự tìm BuffManager nếu chưa gán
         if (buffManager == null)
             buffManager = FindAnyObjectByType<BuffManager>();
 
@@ -65,6 +71,7 @@ public class PetDragonBlue : MonoBehaviour
             navMeshAgent.baseOffset = hoverOffset;
         }
 
+        // Gắn sự kiện cho nút
         if (buffButton != null)
             buffButton.onClick.AddListener(ManualBuffMana);
     }
@@ -77,7 +84,7 @@ public class PetDragonBlue : MonoBehaviour
         AnimateFloating();
         FollowPlayer();
 
-        // Auto buff
+        // Tự buff mana định kỳ
         buffTimer += Time.deltaTime;
         if (buffTimer >= buffInterval)
         {
@@ -85,7 +92,7 @@ public class PetDragonBlue : MonoBehaviour
             BuffManaUnconditionally();
         }
 
-        // Manual buff cooldown
+        // Cooldown nút buff tay
         if (!canManualBuff)
         {
             manualBuffTimer -= Time.deltaTime;
@@ -100,9 +107,9 @@ public class PetDragonBlue : MonoBehaviour
     void AnimateFloating()
     {
         float newY = Mathf.Sin(Time.time * floatFrequency) * floatAmplitude;
-        Vector3 basePos = transform.position;
-        basePos.y = player.position.y + hoverOffset + newY;
-        transform.position = basePos;
+        Vector3 pos = transform.position;
+        pos.y = player.position.y + hoverOffset + newY;
+        transform.position = pos;
     }
 
     void FollowPlayer()
@@ -142,6 +149,7 @@ public class PetDragonBlue : MonoBehaviour
             return;
         }
 
+        // Di chuyển đơn giản nếu không dùng AI
         if (distance > followDistance)
         {
             Vector3 dir = (player.position - transform.position).normalized;
@@ -162,7 +170,7 @@ public class PetDragonBlue : MonoBehaviour
     {
         if (playerStats == null || buffManager == null) return;
 
-        Debug.Log("💧 Buff mana tự động.");
+        Debug.Log("💧 Pet buff mana tự động.");
         buffManager.Buffmana();
         PlayBuffEffects();
     }
