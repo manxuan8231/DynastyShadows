@@ -14,8 +14,10 @@ public class MinotaurEnemy : MonoBehaviour, IDamageable
     public float detectionRange = 10f;//phát hiện người chơi
     public float attackRange = 2f;// khoảng cách tấn công người chơi
     public Slider sliderHp;
+    public Slider easeSliderHp;
     public float currentHealth = 100f;// máu hiện tại 
     public float maxHealth = 100f;// máu tối đa
+    public float lerpSpeed = 0.05f; // tốc độ lerp thanh máu
     public bool isDead = false;// trạng thái chết của kẻ thù
 
     //hit
@@ -56,6 +58,7 @@ public class MinotaurEnemy : MonoBehaviour, IDamageable
         currentHealth = maxHealth; // Khởi tạo máu hiện tại bằng máu tối đa
         sliderHp.maxValue = currentHealth; // Thiết lập giá trị tối đa của thanh máu
         sliderHp.value = currentHealth; // Thiết lập giá trị hiện tại của thanh máu
+        easeSliderHp.maxValue = currentHealth; // Thiết lập giá trị tối đa của thanh máu dễ dàng
         box = GetComponent<CapsuleCollider>();
         damezone = FindAnyObjectByType<DameZoneMinotaur>(); // Lấy tham chiếu đến DrakonitDameZone trong con của MinotaurEnemy
         playerStatus = FindAnyObjectByType<PlayerStatus>();
@@ -67,12 +70,18 @@ public class MinotaurEnemy : MonoBehaviour, IDamageable
     }
 
     void Update()
-    {
+    { // Cập nhật thanh máu
+        if (sliderHp.value != easeSliderHp.value)
+        {
+
+            easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHealth, lerpSpeed); // Lerp thanh máu
+        }
         if (isDead) return; // Nếu đã chết, không thực hiện hành động nào khác    
         targetPlayer = FindClosestPlayer(); // Cập nhật người chơi gần nhất mỗi khung hình
         _rootNode?.Evaluate();
+       
     }
-   
+
     private void SetupBehaviorTree()
     {
         //xu ly die-------------------

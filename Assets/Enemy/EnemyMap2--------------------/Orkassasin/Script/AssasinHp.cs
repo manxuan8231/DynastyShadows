@@ -9,9 +9,11 @@ public class AssasinHp : MonoBehaviour,IDamageable
 {
     [Header("Hp")]
     public Slider sliderHp;
+    public Slider eaSliderHp;
     public TextMeshProUGUI textHp;
     public int curentHp;
     public int maxHp = 10000;
+    public float lerpSpeed = 0.05f; // Tốc độ lerp cho thanh máu
     [Header("tranh ne ")]
     public float scoreDodge = 0f;
     //tham chieu
@@ -28,8 +30,10 @@ public class AssasinHp : MonoBehaviour,IDamageable
     void Start()
     {
         curentHp = maxHp;
-        sliderHp.maxValue = maxHp;
+        sliderHp.maxValue = curentHp;
         sliderHp.value = curentHp;
+        eaSliderHp.maxValue = curentHp;
+        eaSliderHp.value = curentHp;
         textHp.text =$"{curentHp}/{maxHp}";
         controllerStateAssa = FindAnyObjectByType<ControllerStateAssa>();
         playerInGame = GameObject.FindGameObjectWithTag("Player");
@@ -39,7 +43,9 @@ public class AssasinHp : MonoBehaviour,IDamageable
     
     void Update()
     {
-      
+        if (sliderHp.value != eaSliderHp.value) { 
+            eaSliderHp.value = Mathf.Lerp(eaSliderHp.value, curentHp, lerpSpeed);
+        }
 
     }
     public void TakeDamage(float damage)

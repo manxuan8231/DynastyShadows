@@ -40,6 +40,7 @@ public class DameZoneKnife : MonoBehaviour
             // Gây sát thương và trừ giáp
             status.TakeHealth(dame, gameObject, "HitBack", 0.5f);
             status.TakeHealShield(dame);
+            Destroy(gameObject,1f);
         }
     }
 

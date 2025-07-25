@@ -40,6 +40,8 @@ public class DragonRedHP : MonoBehaviour,IDamageable
         currentHp = maxHp;
         sliderHp.maxValue = maxHp;
         sliderHp.value = currentHp;
+        easeSliderHp.maxValue = maxHp; // Đặt giá trị tối đa cho thanh máu mượt mà
+        easeSliderHp.value = currentHp; // Đặt giá trị ban đầu cho thanh máu mượt mà
         textHp.text = $"{currentHp}/{maxHp}";
         // Cập nhật thanh giáp
         currentArmor = maxArmor;

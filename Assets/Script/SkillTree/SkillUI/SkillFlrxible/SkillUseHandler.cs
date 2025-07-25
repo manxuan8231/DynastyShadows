@@ -330,9 +330,9 @@ public class SkillUseHandler : MonoBehaviour
 
     public IEnumerator WaitMove()
     {
-        playerControllerState.enabled = false;
+        playerControllerState.controller.enabled = false;
         yield return new WaitForSeconds(0.8f);
-        playerControllerState.enabled = true;
+        playerControllerState.controller.enabled = true;
     }
     public IEnumerator WaitForGraity()
     {
