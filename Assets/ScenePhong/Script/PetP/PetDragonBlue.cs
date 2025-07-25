@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using Pathfinding;
 
 public class PetDragonBlue : MonoBehaviour
@@ -12,51 +13,46 @@ public class PetDragonBlue : MonoBehaviour
     public float followDistance = 2.5f;
     public float moveSpeed = 3f;
     public float speedChangeDistance = 5f;
-    public float floatHeight = 1.5f;
+    public float hoverOffset = 3f;
     private PlayerStatus playerStats;
 
     [Header("Buff Settings")]
     public BuffManager buffManager;
-    public float buffInterval = 1f; // Buff mỗi 1 giây
+    public float buffInterval = 1f;
     private float buffTimer = 0f;
+
+    [Header("Manual Buff")]
+    public Button buffButton;
+    public float manualBuffCooldown = 180f;
+    private float manualBuffTimer = 0f;
+    private bool canManualBuff = true;
 
     [Header("Floating Animation")]
     public float floatAmplitude = 0.25f;
     public float floatFrequency = 1f;
-    private Vector3 startPos;
 
-    [Header("Audio")]
+    [Header("Audio & VFX")]
     public AudioClip manaSound;
+    public GameObject manaEffectPrefab;
     private AudioSource audioSource;
 
-    [Header("Mana Buff VFX")]
-    public GameObject manaEffectPrefab;
-
     private Animator anim;
-
     private NavMeshAgent navMeshAgent;
     private AIPath aiPath;
     private AIDestinationSetter destinationSetter;
 
     void Start()
     {
-        startPos = transform.position;
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
-        // 🔄 Tự động gán player nếu null
         if (player == null && GameObject.FindGameObjectWithTag("Player") != null)
             player = GameObject.FindGameObjectWithTag("Player").transform;
 
-        // 🔄 Gán playerStats từ player nếu có
         if (player != null)
             playerStats = player.GetComponent<PlayerStatus>();
-
-        // 🔄 Nếu vẫn chưa có, tìm bất kỳ PlayerStatus nào trong scene
         if (playerStats == null)
             playerStats = FindAnyObjectByType<PlayerStatus>();
-
-        // 🔄 Gán buffManager nếu chưa gán
         if (buffManager == null)
             buffManager = FindAnyObjectByType<BuffManager>();
 
@@ -65,33 +61,52 @@ public class PetDragonBlue : MonoBehaviour
         destinationSetter = GetComponent<AIDestinationSetter>();
 
         if (navMeshAgent != null)
-            navMeshAgent.baseOffset = floatHeight;
+        {
+            navMeshAgent.baseOffset = hoverOffset;
+        }
+
+        if (buffButton != null)
+            buffButton.onClick.AddListener(ManualBuffMana);
     }
 
     void Update()
     {
+        if (player == null) return;
+
         AvoidOtherPets();
         AnimateFloating();
         FollowPlayer();
 
+        // Auto buff
         buffTimer += Time.deltaTime;
         if (buffTimer >= buffInterval)
         {
             buffTimer = 0f;
             BuffManaUnconditionally();
         }
+
+        // Manual buff cooldown
+        if (!canManualBuff)
+        {
+            manualBuffTimer -= Time.deltaTime;
+            if (manualBuffTimer <= 0f)
+            {
+                canManualBuff = true;
+                if (buffButton != null) buffButton.interactable = true;
+            }
+        }
     }
 
     void AnimateFloating()
     {
         float newY = Mathf.Sin(Time.time * floatFrequency) * floatAmplitude;
-        transform.position = new Vector3(transform.position.x, floatHeight + newY, transform.position.z);
+        Vector3 basePos = transform.position;
+        basePos.y = player.position.y + hoverOffset + newY;
+        transform.position = basePos;
     }
 
     void FollowPlayer()
     {
-        if (player == null) return;
-
         float distance = Vector3.Distance(transform.position, player.position);
         float speed = (distance > speedChangeDistance) ? moveSpeed * 1.5f : moveSpeed * 0.5f;
 
@@ -129,9 +144,10 @@ public class PetDragonBlue : MonoBehaviour
 
         if (distance > followDistance)
         {
-            Vector3 direction = (player.position - transform.position).normalized;
-            Vector3 targetPos = player.position - direction * followDistance;
-            targetPos.y = floatHeight;
+            Vector3 dir = (player.position - transform.position).normalized;
+            Vector3 targetPos = player.position - dir * followDistance;
+            targetPos.y = player.position.y + hoverOffset;
+
             transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
             transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
             anim?.SetBool("isFollowing", true);
@@ -146,8 +162,26 @@ public class PetDragonBlue : MonoBehaviour
     {
         if (playerStats == null || buffManager == null) return;
 
-        Debug.Log("💧 Pet buff mana mỗi giây không điều kiện.");
+        Debug.Log("💧 Buff mana tự động.");
         buffManager.Buffmana();
+        PlayBuffEffects();
+    }
+
+    public void ManualBuffMana()
+    {
+        if (!canManualBuff || playerStats == null || buffManager == null) return;
+
+        Debug.Log("🖱️ Buff mana thủ công bằng nút.");
+        buffManager.Buffmana();
+        PlayBuffEffects();
+
+        canManualBuff = false;
+        manualBuffTimer = manualBuffCooldown;
+        if (buffButton != null) buffButton.interactable = false;
+    }
+
+    void PlayBuffEffects()
+    {
         anim?.SetTrigger("doBuff");
 
         if (audioSource != null && manaSound != null)
@@ -155,7 +189,7 @@ public class PetDragonBlue : MonoBehaviour
 
         if (manaEffectPrefab != null && player != null)
         {
-            GameObject vfx = Instantiate(manaEffectPrefab, player.position, Quaternion.identity);
+            GameObject vfx = Instantiate(manaEffectPrefab, player.position + Vector3.up * 0.5f, Quaternion.identity);
             Destroy(vfx, 3f);
         }
     }
@@ -169,11 +203,15 @@ public class PetDragonBlue : MonoBehaviour
         {
             if (pet != this.gameObject)
             {
-                float dist = Vector3.Distance(transform.position, pet.transform.position);
-                if (dist < minPetDistance)
+                Vector3 offset = transform.position - pet.transform.position;
+                offset.y = 0f;
+                float dist = offset.magnitude;
+
+                if (dist < minPetDistance && dist > 0.01f)
                 {
-                    Vector3 pushDir = (transform.position - pet.transform.position).normalized;
-                    transform.position += pushDir * (minPetDistance - dist) * Time.deltaTime;
+                    Vector3 pushDir = offset.normalized;
+                    float pushStrength = (minPetDistance - dist) * 0.5f;
+                    transform.position += pushDir * pushStrength * Time.deltaTime;
                 }
             }
         }
