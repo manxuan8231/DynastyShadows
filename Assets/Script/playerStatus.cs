@@ -28,8 +28,10 @@ public class PlayerStatus : MonoBehaviour
     public  TMP_Text itemName;
     //xử lý máu------------------------------------------
     public Slider sliderHp;
+    public Slider easeSliderHp; // Thanh máu với hiệu ứng trượt mượt mà
     public float currentHp ;
     public float maxHp ;
+    public float easeSpeed = 0.05f; // Tốc độ trượt của thanh máu
     public TextMeshProUGUI textHealth;
     public bool isHit = true; 
     public bool isStun = true; //kiểm tra stun hay không
@@ -199,7 +201,9 @@ public class PlayerStatus : MonoBehaviour
         UpdateUI(); // Cập nhật UI mỗi frame
         RegenerateMana();//hoi mana
         UpdateTextUIGold();
-        
+        if (sliderHp.value != easeSliderHp.value) { 
+            easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHp, easeSpeed); // Trượt thanh máu
+        }
     }
 
     public void OnDisable()

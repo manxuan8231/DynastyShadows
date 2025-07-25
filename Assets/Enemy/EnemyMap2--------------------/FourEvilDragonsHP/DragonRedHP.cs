@@ -7,9 +7,11 @@ public class DragonRedHP : MonoBehaviour,IDamageable
 {
     //hp
     public Slider sliderHp;//máu
+    public Slider easeSliderHp;
     public TextMeshProUGUI textHp;
     public float currentHp;
     public float maxHp = 10000f;
+    public float lerpSpeed = 0.05f; // Tốc độ lerp cho slider mượt mà
     //giáp ảo
     public Slider sliderArmor; //giáp
     public float currentArmor;
@@ -58,7 +60,12 @@ public class DragonRedHP : MonoBehaviour,IDamageable
         Stun(); //stun sau khi bi  het giap
         ManaFly();
         
-
+        if(sliderHp.value != easeSliderHp.value)
+        {
+          
+            easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHp, lerpSpeed);
+            
+        }
     }
     //ham lay hp----------------------------
     public void TakeDamage(float amount)
