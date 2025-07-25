@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
-using Pathfinding; // A* Pathfinding Project
+using Pathfinding;
 
 public class PetDragonHealer : MonoBehaviour
 {
@@ -12,7 +12,6 @@ public class PetDragonHealer : MonoBehaviour
     public float followDistance = 2.5f;
     public float moveSpeed = 3f;
     public float speedChangeDistance = 5f;
-    public float floatHeight = 1.5f;
     private PlayerStatus playerStats;
 
     [Header("Buff Settings")]
@@ -23,7 +22,7 @@ public class PetDragonHealer : MonoBehaviour
     [Header("Floating Animation")]
     public float floatAmplitude = 0.25f;
     public float floatFrequency = 1f;
-    private Vector3 startPos;
+    public float hoverOffset = 3f;
 
     [Header("Audio")]
     public AudioClip healSound;
@@ -34,28 +33,24 @@ public class PetDragonHealer : MonoBehaviour
 
     private Animator anim;
 
-    // AI Components
     private NavMeshAgent navMeshAgent;
     private AIPath aiPath;
     private AIDestinationSetter destinationSetter;
 
     void Start()
     {
-        startPos = transform.position;
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
-        // Tự động gán player nếu null
         if (player == null && GameObject.FindGameObjectWithTag("Player") != null)
             player = GameObject.FindGameObjectWithTag("Player").transform;
 
-        // Gán playerStats từ player (nếu có)
         if (player != null)
             playerStats = player.GetComponent<PlayerStatus>();
-        else
+
+        if (playerStats == null)
             playerStats = FindAnyObjectByType<PlayerStatus>();
 
-        // Tự động gán buffManager nếu null
         if (buffManager == null)
             buffManager = FindAnyObjectByType<BuffManager>();
 
@@ -63,13 +58,14 @@ public class PetDragonHealer : MonoBehaviour
         aiPath = GetComponent<AIPath>();
         destinationSetter = GetComponent<AIDestinationSetter>();
 
-        // Set độ cao cho NavMesh
         if (navMeshAgent != null)
-            navMeshAgent.baseOffset = floatHeight;
+            navMeshAgent.baseOffset = 0f;
     }
 
     void Update()
     {
+        if (player == null) return;
+
         AvoidOtherPets();
         AnimateFloating();
         FollowPlayer();
@@ -85,17 +81,16 @@ public class PetDragonHealer : MonoBehaviour
     void AnimateFloating()
     {
         float newY = Mathf.Sin(Time.time * floatFrequency) * floatAmplitude;
-        transform.position = new Vector3(transform.position.x, floatHeight + newY, transform.position.z);
+        Vector3 pos = transform.position;
+        pos.y = player.position.y + hoverOffset + newY;
+        transform.position = pos;
     }
 
     void FollowPlayer()
     {
-        if (player == null) return;
-
         float distance = Vector3.Distance(transform.position, player.position);
         float speed = (distance > speedChangeDistance) ? moveSpeed * 1.5f : moveSpeed * 0.5f;
 
-        // NavMesh
         if (pathfindingType == PathfindingType.NavMesh && navMeshAgent != null && navMeshAgent.isOnNavMesh)
         {
             navMeshAgent.speed = speed;
@@ -114,7 +109,6 @@ public class PetDragonHealer : MonoBehaviour
             return;
         }
 
-        // A* Pathfinding
         if (pathfindingType == PathfindingType.AStar && aiPath != null && destinationSetter != null && aiPath.enabled)
         {
             aiPath.maxSpeed = speed;
@@ -133,12 +127,11 @@ public class PetDragonHealer : MonoBehaviour
             return;
         }
 
-        // Manual Move
         if (distance > followDistance)
         {
             Vector3 direction = (player.position - transform.position).normalized;
             Vector3 targetPos = player.position - direction * followDistance;
-            targetPos.y = floatHeight;
+            targetPos.y = player.position.y + hoverOffset;
 
             transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
             transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
@@ -154,45 +147,43 @@ public class PetDragonHealer : MonoBehaviour
     {
         if (playerStats == null || buffManager == null) return;
 
-        float healthPercent = (float)playerStats.currentHp / playerStats.maxHp;
+        float healthPercent = (float)playerStats.currentHp / Mathf.Max(1, playerStats.maxHp);
 
         if (healthPercent < 0.6f)
         {
-            Debug.Log("🐉 Rồng Xanh hồi máu cho người chơi!");
             buffManager.BuffHP();
-
             anim?.SetTrigger("doBuff");
 
             if (audioSource != null && healSound != null)
                 audioSource.PlayOneShot(healSound);
 
-            // ✨ Spawn heal VFX trên Player
-            if (healEffectPrefab != null && player != null)
+            if (healEffectPrefab != null)
             {
-                GameObject healVFX = Instantiate(healEffectPrefab, player.position + Vector3.up * 0f, Quaternion.identity);
+                GameObject healVFX = Instantiate(healEffectPrefab, player.position + Vector3.up * 0.5f, Quaternion.identity);
                 Destroy(healVFX, 3f);
             }
-        }
-        else
-        {
-            Debug.Log("🧘 Máu chưa đủ thấp để buff.");
         }
     }
 
     void AvoidOtherPets()
     {
-        float minPetDistance = 2f; // Khoảng cách tối thiểu giữa các pet
+        float minPetDistance = 2f;
         GameObject[] pets = GameObject.FindGameObjectsWithTag("Pet");
 
         foreach (GameObject pet in pets)
         {
             if (pet != this.gameObject)
             {
-                float dist = Vector3.Distance(transform.position, pet.transform.position);
-                if (dist < minPetDistance)
+                Vector3 offset = transform.position - pet.transform.position;
+                offset.y = 0f; // chỉ đẩy theo mặt phẳng XZ
+
+                float dist = offset.magnitude;
+                if (dist < minPetDistance && dist > 0.01f)
                 {
-                    Vector3 pushDir = (transform.position - pet.transform.position).normalized;
-                    transform.position += pushDir * (minPetDistance - dist) * Time.deltaTime;
+                    Vector3 pushDir = offset.normalized;
+                    float pushForce = (minPetDistance - dist) * 0.5f;
+
+                    transform.position += pushDir * pushForce * Time.deltaTime;
                 }
             }
         }

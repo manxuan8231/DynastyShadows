@@ -12,18 +12,17 @@ public class PetDragonRed : MonoBehaviour
     public float followDistance = 2.5f;
     public float moveSpeed = 3f;
     public float speedChangeDistance = 5f;
-    public float floatHeight = 1.5f;
     private PlayerStatus playerStats;
 
     [Header("Buff Settings")]
     public BuffManager buffManager;
-    private float buffCooldown = 180f; // 3 phút
+    private float buffCooldown = 60f;
     private float buffTimer;
 
     [Header("Floating Animation")]
     public float floatAmplitude = 0.25f;
     public float floatFrequency = 1f;
-    private Vector3 startPos;
+    public float hoverOffset = 3f;
 
     [Header("Audio")]
     public AudioClip damageBuffSound;
@@ -40,23 +39,18 @@ public class PetDragonRed : MonoBehaviour
 
     void Start()
     {
-        startPos = transform.position;
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
-        // 🔄 Tự động gán Player nếu chưa có
         if (player == null && GameObject.FindGameObjectWithTag("Player") != null)
             player = GameObject.FindGameObjectWithTag("Player").transform;
 
-        // 🔄 Gán playerStats từ Player nếu có
         if (player != null)
             playerStats = player.GetComponent<PlayerStatus>();
 
-        // 🔄 Nếu vẫn chưa có, tìm bất kỳ PlayerStatus nào trong scene
         if (playerStats == null)
             playerStats = FindAnyObjectByType<PlayerStatus>();
 
-        // 🔄 Gán BuffManager nếu chưa gán
         if (buffManager == null)
             buffManager = FindAnyObjectByType<BuffManager>();
 
@@ -65,8 +59,10 @@ public class PetDragonRed : MonoBehaviour
         destinationSetter = GetComponent<AIDestinationSetter>();
 
         if (navMeshAgent != null)
-            navMeshAgent.baseOffset = floatHeight;
-        buffManager = GameObject.Find("BuffManager").GetComponent<BuffManager>();
+            navMeshAgent.baseOffset = 0f;
+
+        if (buffManager == null)
+            buffManager = GameObject.Find("BuffManager").GetComponent<BuffManager>();
     }
 
     void Update()
@@ -85,8 +81,12 @@ public class PetDragonRed : MonoBehaviour
 
     void AnimateFloating()
     {
+        if (player == null) return;
+
         float newY = Mathf.Sin(Time.time * floatFrequency) * floatAmplitude;
-        transform.position = new Vector3(transform.position.x, floatHeight + newY, transform.position.z);
+        Vector3 pos = transform.position;
+        pos.y = player.position.y + hoverOffset + newY;
+        transform.position = pos;
     }
 
     void FollowPlayer()
@@ -136,7 +136,7 @@ public class PetDragonRed : MonoBehaviour
         {
             Vector3 direction = (player.position - transform.position).normalized;
             Vector3 targetPos = player.position - direction * followDistance;
-            targetPos.y = floatHeight;
+            targetPos.y = player.position.y + hoverOffset;
 
             transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
             transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
@@ -176,11 +176,16 @@ public class PetDragonRed : MonoBehaviour
         {
             if (pet != this.gameObject)
             {
-                float dist = Vector3.Distance(transform.position, pet.transform.position);
-                if (dist < minPetDistance)
+                Vector3 offset = transform.position - pet.transform.position;
+                offset.y = 0f; // chỉ đẩy trên mặt phẳng XZ
+
+                float dist = offset.magnitude;
+                if (dist < minPetDistance && dist > 0.01f)
                 {
-                    Vector3 pushDir = (transform.position - pet.transform.position).normalized;
-                    transform.position += pushDir * (minPetDistance - dist) * Time.deltaTime;
+                    Vector3 pushDir = offset.normalized;
+                    float pushForce = (minPetDistance - dist) * 0.5f;
+
+                    transform.position += pushDir * pushForce * Time.deltaTime;
                 }
             }
         }

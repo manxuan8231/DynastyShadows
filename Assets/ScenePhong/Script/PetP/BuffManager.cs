@@ -32,7 +32,7 @@ public class BuffManager : MonoBehaviour
     {
         if (playerStats == null) return;
         Debug.Log("Pet buff dame!");
-        playerStats.BuffDamage(50, 5f); // +50 damage trong 5 giây
+        playerStats.BuffDamage(100, 30f); // +50 damage trong 5 giây
     }
 
     public void BuffArmor()
