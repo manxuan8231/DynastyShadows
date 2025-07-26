@@ -53,9 +53,11 @@ public class DrakonitController : MonoBehaviour,IDamageable
     //vùng chặn lại khi thấy pllayer 
     public GameObject blockZone; 
     // thanh máu
-    public Slider sliderHp; // Thanh máu
+    public Slider sliderHp;  
+    public Slider easeSliderHp; // Thanh máu
     public float maxHp = 1000; // Máu tối đa
     public float currentHp; // Máu hiện tại
+    public float easeSpeed = 0.05f; // Tốc độ thay đổi thanh máu
     public TextMeshProUGUI textHp; // Text hiển thị máu
     public Collider colliderBox; // Collider của enemy
     public GameObject slider; // GameObject chứa thanh máu
@@ -84,6 +86,8 @@ public class DrakonitController : MonoBehaviour,IDamageable
         sliderHp.maxValue = currentHp; // Đặt giá trị tối đa cho thanh máu
         sliderHp.value = currentHp; // Đặt giá trị hiện tại cho thanh máu
         textHp.text = $"{currentHp}/{maxHp}"; // Cập nhật text hiển thị máu
+        easeSliderHp.maxValue = currentHp; // Đặt giá trị tối đa cho thanh máu easing
+        easeSliderHp.value = currentHp; // Khởi tạo giá trị easing
         slider.SetActive(false); // Ẩn thanh máu
         //effect skill
         auraSkill1.SetActive(false); // Tắt hiệu ứng kỹ năng 1
@@ -104,7 +108,10 @@ public class DrakonitController : MonoBehaviour,IDamageable
         player = FindClosestPlayer(); // Tìm player gần nhất
         // Gọi hàm Updat của trạng thái hiện tại 
         currentState?.Update();
-       
+       if(sliderHp.value != easeSliderHp.value)
+        {
+            easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHp, easeSpeed);
+        }
     }
 
     // Hàm chuyển trạng thái

@@ -8,9 +8,12 @@ public class DemonAlienHp : MonoBehaviour, IDamageable
     //hp
 
     public Slider hpSlider;
+    public Slider easeHpSlider;
+
     public TextMeshProUGUI textHp;
     public float currentHp = 0f;
     public float maxHp = 1000f;
+    public float easeTime = 0.05f; // Thời gian easing
     //armor
     public Slider armorSlider;
     public float currentArmor = 0f;
@@ -36,6 +39,8 @@ public class DemonAlienHp : MonoBehaviour, IDamageable
         hpSlider.maxValue = maxHp;
         hpSlider.value = currentHp;
         textHp.text = $"{currentHp}/{maxHp}";
+        easeHpSlider.maxValue = maxHp;
+        easeHpSlider.value = currentHp; // Khởi tạo giá trị easing
         //mana
         currentMana = maxMana;
         manaSlider.maxValue = maxMana;
@@ -59,6 +64,10 @@ public class DemonAlienHp : MonoBehaviour, IDamageable
         }
         ManaRecover();
         TurnOnController();
+        if(hpSlider.value != easeHpSlider.value)
+        {
+            easeHpSlider.value = Mathf.Lerp(easeHpSlider.value, currentHp, easeTime);
+        }
     }
     public void TakeDamage(float damage)
     {

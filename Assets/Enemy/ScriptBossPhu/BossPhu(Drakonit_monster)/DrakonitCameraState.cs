@@ -67,7 +67,7 @@ public class DrakonitCameraState : DrakonitState
         //qua camera 2   
         enemy.cutScene1.Priority = 0;
         enemy.cutScene2.Priority = 20;
-        enemy.textConten.text = "Cúc khỏi đây!";
+        enemy.textConten.text = "Rời khỏi đây nhanh!";
         yield return new WaitForSeconds(seconds);
         //qua camera 3
         enemy.imgBietDanh.SetActive(true);// hiện text biêt danh

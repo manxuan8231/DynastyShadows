@@ -6,7 +6,9 @@ public class NecHp : MonoBehaviour
 {
     public int curhp;
     public int maxhp;
+    public float lerpSpeed = 0.05f; // Tốc độ lerp cho thanh máu
     public Slider sliderHp;
+    public Slider easeSliderHp;
     public TextMeshProUGUI textHp;
     public GameObject sliderHpBoss2;
     private NecController controller;
@@ -28,9 +30,17 @@ public class NecHp : MonoBehaviour
         curhp = maxhp;
         sliderHp.maxValue = curhp; // Đặt giá trị tối đa cho thanh máu
         sliderHp.value = curhp; // Đặt giá trị hiện tại cho thanh máu
+        easeSliderHp.maxValue = curhp; // Đặt giá trị tối đa cho thanh máu với hiệu ứng lerp
+        easeSliderHp.value = curhp; // Đặt giá trị hiện tại cho thanh máu với hiệu ứng lerp
         textHp.text = $"{curhp}/{maxhp}"; // Cập nhật text hiển thị máu
     }
-   
+
+    private void Update()
+    {
+        if (sliderHp.value != easeSliderHp.value) { 
+            easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, curhp, lerpSpeed); // Lerp giá trị thanh máu
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player"  )

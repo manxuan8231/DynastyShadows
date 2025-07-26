@@ -7,8 +7,10 @@ public class EnemyCruTankHP : MonoBehaviour,IDamageable
 {
     //xử lý máu
     [SerializeField] public Slider sliderHp;
+    [SerializeField] public Slider easeSliderHp;
     [SerializeField] public float currentHealth;
     [SerializeField] public float maxHealth = 2000f;
+    public float easeTime = 0.05f; // Thời gian easing
     public bool isTakedame;
     //drop exp
     [SerializeField] public GameObject expPrefab;
@@ -35,6 +37,8 @@ public class EnemyCruTankHP : MonoBehaviour,IDamageable
         currentHealth = maxHealth;
         sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
+        easeSliderHp.maxValue = currentHealth;
+        easeSliderHp.value = currentHealth; // Khởi tạo giá trị easing
         enemyCruTank = GetComponent<EnemyCruTank>();
         isTakedame = true;
     }
@@ -43,7 +47,10 @@ public class EnemyCruTankHP : MonoBehaviour,IDamageable
     // Update is called once per frame
     void Update()
     {
-
+        if(sliderHp.value != easeSliderHp.value)
+        {
+            easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHealth, easeTime);
+        }
     }
     public void DropItem()
     {
