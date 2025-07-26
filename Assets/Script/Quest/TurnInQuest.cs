@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -12,6 +11,7 @@ public class TurnInQuest : MonoBehaviour
     public GameObject niceQuestUI;
     public GameObject questThuongNhan;//làm xong nhiệm vụ của bác lâm thì mới suất hiện thuognw nhân
     public GameObject questPointer; // Chỉ dẫn tới nhận nhiệm vụ đánh cá
+   
     //trang thai
     public enum QuestToStart { None, BacLam, LinhCanh }
     public QuestToStart questToStart = QuestToStart.None;
@@ -33,9 +33,9 @@ public class TurnInQuest : MonoBehaviour
     PlayerControllerState playerController; // Tham chiếu đến PlayerController
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack
     Quest1 quest1; // Tham chiếu đến QuestManager
-    Quest2 quest2; // Tham chiếu đến QuestManager
+   
     PlayerStatus playerStatus; // Tham chiếu đến PlayerStatus
-
+    NPCScript npcScript; // Tham chiếu đến NPCScript
     AudioSource audioSource; // Tham chiếu đến AudioSource
     public AudioClip audioSkip; // Âm thanh khi bấm skip
     void Start()
@@ -43,9 +43,12 @@ public class TurnInQuest : MonoBehaviour
         // Lấy tham chiếu đến PlayerController và ComboAttack
         playerStatus = FindAnyObjectByType<PlayerStatus>(); // Lấy tham chiếu đến PlayerStatus
         quest1 = FindAnyObjectByType<Quest1>();
-        quest2 = FindAnyObjectByType<Quest2>();
         playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
+        if(npcScript == null)
+        {
+            npcScript = FindAnyObjectByType<NPCScript>(); // Lấy tham chiếu đến NPCScript
+        }
         audioSource = GetComponent<AudioSource>();
         // Ẩn panel và nút F khi bắt đầu
         NPCPanel.SetActive(false);
@@ -55,6 +58,7 @@ public class TurnInQuest : MonoBehaviour
         niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp khi bắt đầu
         NPCName.text = "";
         NPCContent.text = "";
+
     }
     private void Update()
     {
@@ -72,6 +76,8 @@ public class TurnInQuest : MonoBehaviour
             buttonF.SetActive(false); // Ẩn nút F khi bắt đầu hội thoại
             isButtonF = false; // Đặt trạng thái hội thoại là false
             isContent = false; // Đặt lại trạng thái hội thoại
+            npcScript.player.SetActive(false); // Ẩn nhân vật người chơi khi hội thoại bắt đầu
+            npcScript.cam.SetActive(true); // Đặt priority của camera NPC cao hơn camera người chơi
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -143,9 +149,14 @@ public class TurnInQuest : MonoBehaviour
         comboAttack.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        if (npcScript.player != null)
+        {
+            npcScript. player.SetActive(true);
 
+            npcScript.cam.SetActive(false);
+        }
         //
-        switch(questToStart)
+        switch (questToStart)
         {
             case QuestToStart.BacLam:
                 questPointer.SetActive(true); // Ẩn chỉ dẫn nhiệm vụ

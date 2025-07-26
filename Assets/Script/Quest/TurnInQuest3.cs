@@ -34,7 +34,7 @@ public class TurnInQuest3 : MonoBehaviour
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack
     Quest3 quest3;
     PlayerStatus playerStatus;
-
+    NPCScript npcScript; // Tham chiếu đến NPCScript
     AudioSource audioSource; // Tham chiếu đến AudioSource
     public AudioClip audioSkip; // Âm thanh khi bấm skip
     void Start()
@@ -45,6 +45,7 @@ public class TurnInQuest3 : MonoBehaviour
         playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
+         npcScript = FindAnyObjectByType<NPCScript>(); // Lấy tham chiếu đến NPCScript
         // Ẩn panel và nút F khi bắt đầu
         NPCPanel.SetActive(false);
         buttonSkip.SetActive(false);
@@ -71,6 +72,8 @@ public class TurnInQuest3 : MonoBehaviour
             buttonF.SetActive(false); // Ẩn nút F khi bắt đầu hội thoại
             isButtonF = false; // Đặt trạng thái hội thoại là false
             isContent = false; // Đặt lại trạng thái hội thoại
+            npcScript.player.SetActive(false);
+            npcScript.cam.SetActive(true); // Đặt camera ưu tiên cao hơn để theo dõi NPC
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -142,7 +145,12 @@ public class TurnInQuest3 : MonoBehaviour
         comboAttack.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
+        if(npcScript != null)
+        {
+            npcScript.player.SetActive(true);
+            npcScript.cam.SetActive(false); // Đặt camera ưu tiên cao hơn để theo dõi NPC
+        }
+       
         //
         switch (questToStart)
         {

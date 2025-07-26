@@ -4,6 +4,8 @@ using System.Linq;
 
 public class KnightD : MonoBehaviour
 {
+    public GameObject weaponBack; // Vũ khí của KnightD
+    public GameObject weaponHand; // Vũ khí của KnightD
     public float detectionRange = 15f; // Khoảng cách thấy enemy
     public float attackRange = 2f;     // Khoảng cách tấn công
     public float attackCooldown = 1.5f;
@@ -31,6 +33,16 @@ public class KnightD : MonoBehaviour
 
     void Update()
     {
+        if (killEnemy >= 5 && isKill == true)
+        {
+
+            turnInQuest2.isButtonF = true; // Đặt trạng thái hội thoại là true
+            turnInQuest2.isContent = true; // Đặt trạng thái hội thoại là true
+            isKill = false; // Đặt lại trạng thái skill
+            weaponBack.SetActive(true); // Tắt vũ khí khi đã giết đủ enemy
+            weaponHand.SetActive(false); // Hiện vũ khí khi đã giết đủ enemy
+        }
+        if (killEnemy >= 5) return;
         FindClosestEnemy();
 
         if (targetEnemy != null)
@@ -52,13 +64,7 @@ public class KnightD : MonoBehaviour
             StopMoving();
         }
 
-        if (killEnemy >= 4 && isKill == true) 
-        {
-          
-            turnInQuest2.isButtonF = true; // Đặt trạng thái hội thoại là true
-            turnInQuest2.isContent = true; // Đặt trạng thái hội thoại là true
-            isKill = false; // Đặt lại trạng thái skill
-        }
+        
     }
 
     // Tìm enemy gần nhất trong khoảng detectionRange

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -9,7 +8,9 @@ public class TurnInQuest2 : MonoBehaviour
     public TextMeshProUGUI NPCName; // Tên của NPC
     public TextMeshProUGUI NPCContent; // Nội dung hội thoại
     public GameObject iconMap; // Icon hiển thị trên bản đồ
-    
+    public GameObject player;
+    public GameObject cam;
+
     public GameObject linhCanh;
     public GameObject thuongNhan;
     public GameObject niceQuestUI;
@@ -29,9 +30,9 @@ public class TurnInQuest2 : MonoBehaviour
     //tham chieu
     PlayerControllerState playerController; // Tham chiếu đến PlayerController
     ComboAttack comboAttack; // Tham chiếu đến ComboAttack
-   
     Quest2 quest2; // Tham chiếu đến QuestManager
     PlayerStatus playerStatus; // Tham chiếu đến PlayerStatus
+    KnightD knightD; // Tham chiếu đến KnightD
 
     public AudioSource audioSource; // Tham chiếu đến AudioSource
     public AudioClip audioSkip; // Âm thanh khi bấm skip
@@ -51,6 +52,11 @@ public class TurnInQuest2 : MonoBehaviour
         playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
+        knightD = FindAnyObjectByType<KnightD>(); // Lấy tham chiếu đến KnightD
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
         // Ẩn panel và nút F khi bắt đầu
         NPCPanel.SetActive(false);
         buttonSkip.SetActive(false);
@@ -75,6 +81,9 @@ public class TurnInQuest2 : MonoBehaviour
             coroutine = StartCoroutine(ReadContent());
             buttonF.SetActive(false); // Ẩn nút F khi bắt đầu hội thoại
             isButtonF = false; // Đặt trạng thái hội thoại là false
+            player.SetActive(false); // Ẩn người chơi khi bắt đầu hội thoại
+            cam.SetActive(true); // Đặt camera ưu tiên cao hơn để theo dõi NPC
+            knightD. animator.SetBool("Talking", true); // Bật trạng thái Talking của animator
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -146,7 +155,13 @@ public class TurnInQuest2 : MonoBehaviour
         comboAttack.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
+        if(player != null)
+        {
+            player.SetActive(true); // Ẩn người chơi khi bắt đầu hội thoại
+            cam.SetActive(false); // Đặt camera ưu tiên cao hơn để theo dõi NPC
+            knightD.animator.SetBool("Talking", false); // Bật trạng thái Talking của animator
+        }
+            
         //phan thuong
         quest2.questPanel.SetActive(false);// Ẩn icon quest trên bản đồ làm nhiệm vụ;
         quest2.iconQuest.SetActive(false); //ần panel quest text la cai ben trai man hinh 

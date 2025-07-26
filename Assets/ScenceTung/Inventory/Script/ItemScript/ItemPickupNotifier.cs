@@ -88,5 +88,22 @@ public class ItemPickupNotifier : MonoBehaviour
         popupPanel.SetActive(false);
         popupText.text = "";
     }
-
+    private void OnDisable()
+    {
+        if (resetCoroutine != null)
+        {
+            StopCoroutine(resetCoroutine);
+            resetCoroutine = null;
+        }
+        if (quickTextCoroutine != null)
+        {
+            StopCoroutine(quickTextCoroutine);
+            quickTextCoroutine = null;
+        }
+        popupPanel.SetActive(false);
+        normalPickupText.text = "";
+        popupText.text = "";
+        pickupDict.Clear();
+        pickupCount = 0;
+    }
 }

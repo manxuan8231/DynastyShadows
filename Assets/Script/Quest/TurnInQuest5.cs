@@ -26,12 +26,12 @@ public class TurnInQuest5 : MonoBehaviour
 
     private float lastSkipTime = 0f;
     private float skipCooldown = 0.2f;
-
+    //tham chieu
     PlayerControllerState playerController;
     ComboAttack comboAttack;
     public QuestDesert5 questDesert5;
     PlayerStatus playerStatus;
-
+    NPCScript npcScript;
     public AudioSource audioSource;
     public AudioClip audioSkip;
 
@@ -42,7 +42,7 @@ public class TurnInQuest5 : MonoBehaviour
         playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
-
+        npcScript = FindAnyObjectByType<NPCScript>();
         NPCPanel.SetActive(false);
         buttonSkip.SetActive(false);
         buttonF.SetActive(false);
@@ -72,6 +72,8 @@ public class TurnInQuest5 : MonoBehaviour
             buttonF.SetActive(false);
             isButtonF = false;
             isContent = false;
+            npcScript.player.SetActive(false); // Ẩn nhân vật người chơi khi hội thoại bắt đầu
+            npcScript.cam.SetActive(true); // Hiện camera NPC khi hội thoại bắt đầu
         }
     }
 
@@ -154,10 +156,12 @@ public class TurnInQuest5 : MonoBehaviour
         questDesert5.questPanel.SetActive(false);
         arrowIcon.SetActive(false);
         icon3D.SetActive(false);
-        playerStatus.IncreasedGold(50);
+        playerStatus.IncreasedGold(500); playerStatus.AddExp(500);
         StartCoroutine(WaitQuestUI());
         questBoss.SetActive(true);
         coroutine = null;
+        npcScript.player.SetActive(true); // Ẩn nhân vật người chơi khi hội thoại bắt đầu
+        npcScript.cam.SetActive(false); // Hiện camera NPC khi hội thoại bắt đầu
     }
 
     public void OnSkipButtonPressed()

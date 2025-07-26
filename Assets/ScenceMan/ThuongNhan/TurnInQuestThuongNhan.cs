@@ -9,6 +9,9 @@ public class TurnInQuestThuongNhan : MonoBehaviour
     public TextMeshProUGUI NPCName; // Tên của NPC
     public TextMeshProUGUI NPCContent; // Nội dung hội thoại
     public GameObject niceQuestUI;
+    public GameObject playerNpc;
+    public GameObject player; // Tham chiếu đến đối tượng người chơi
+    public GameObject cam; 
     //
     public string[] names; // Danh sách tên 
     public string[] content; // Nội dung hội thoại
@@ -39,6 +42,10 @@ public class TurnInQuestThuongNhan : MonoBehaviour
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
         openShop = FindAnyObjectByType<OpenShop>();
+        if(player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
         // Ẩn panel và nút F khi bắt đầu
         NPCPanel.SetActive(false);
         buttonSkip.SetActive(false);
@@ -64,6 +71,10 @@ public class TurnInQuestThuongNhan : MonoBehaviour
             buttonF.SetActive(false); // Ẩn nút F khi bắt đầu hội thoại
             isButtonF = false; // Đặt trạng thái hội thoại là false
             isContent = false; // Đặt lại trạng thái hội thoại
+            playerNpc.SetActive(true); // Hiện NPC người chơi
+            player.SetActive(false); // Ẩn nhân vật người chơi khi hội thoại bắt đầu
+            cam.SetActive(true); // Đặt priority của camera NPC cao hơn camera người chơi
+
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -137,9 +148,16 @@ public class TurnInQuestThuongNhan : MonoBehaviour
         Cursor.visible = false;
         openShop.enabled = true; // Kích hoạt OpenShop
         isOpenShop = true; // Đặt trạng thái OpenShop là true
+        if (player != null)
+        {
+            player.SetActive(true); // Hiện lại nhân vật người chơi
+            playerNpc.SetActive(false); // Ẩn NPC người chơi
+            cam.SetActive(false); // Đặt camera ưu tiên thấp hơn camera người chơi
+        }
         //phan thuong
         playerStatus.IncreasedGold(300); ; // Thưởng kinh nghiệm
         StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
+
       
     }
 

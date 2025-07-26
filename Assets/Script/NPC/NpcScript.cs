@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class NPCScript : MonoBehaviour
@@ -10,6 +11,8 @@ public class NPCScript : MonoBehaviour
     public TextMeshProUGUI NPCContent;
     public GameObject buttonF;
     public GameObject buttonSkip;
+    public GameObject player;
+    public GameObject cam;
 
     [Header("Audio")]
     public AudioSource audioSource;
@@ -41,7 +44,8 @@ public class NPCScript : MonoBehaviour
     private Quest2 quest2;
     private Quest3 quest3;
     private QuestMainBacLam questMainBacLam;
-   
+    private Animator animator;
+
     void Start()
     {
         playerController = FindAnyObjectByType<PlayerControllerState>();
@@ -60,7 +64,9 @@ public class NPCScript : MonoBehaviour
        
         NPCName.text = "";
         NPCContent.text = "";
-       
+        
+        player = FindAnyObjectByType<PlayerControllerState>().gameObject;
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -125,7 +131,12 @@ public class NPCScript : MonoBehaviour
         buttonSkip.SetActive(true);
         buttonF.SetActive(false);
         isButtonF = false;
-       
+        if(player != null)
+        {
+            player.SetActive(false);
+            animator.SetBool("Talking", true);
+            cam.SetActive (true);
+        }
         coroutine = StartCoroutine(ReadContent());
     }
 
@@ -181,8 +192,13 @@ public class NPCScript : MonoBehaviour
         isContent = false;
         isButtonF = false;
         coroutine = null;
-       
-        
+        if (player != null)
+        {
+            player.SetActive(true);
+            animator.SetBool("Talking", false);
+            cam.SetActive(false);
+        }
+
         switch (questToStart)
         {
             case QuestToStart.BacLam:
