@@ -172,15 +172,19 @@ public class PetDragonBlue : MonoBehaviour
 
         if (manaEffectPrefab != null && player != null)
         {
-            GameObject vfx = Instantiate(
-                manaEffectPrefab,
-                player.position + Vector3.up * manaEffectHeightOffset,
-                Quaternion.identity
-            );
+            // Hiệu ứng sẽ xuất hiện tại vị trí player + offset chiều cao
+            Vector3 spawnPos = player.position + Vector3.up * manaEffectHeightOffset;
 
+            GameObject vfx = Instantiate(manaEffectPrefab, spawnPos, Quaternion.identity);
+
+            // Gắn hiệu ứng vào player để follow theo chuyển động
             vfx.transform.SetParent(player, worldPositionStays: true);
+
+            // Không xoay theo player
             vfx.transform.localRotation = Quaternion.identity;
-            Destroy(vfx, 1f);
+
+            // Giữ nguyên scale từ prefab
+            Destroy(vfx, 1f); // nên để 3f để khớp các pet khác
         }
     }
 
