@@ -85,7 +85,7 @@ public class EnemyHP : MonoBehaviour,IDamageable
     IEnumerator WaitDeath()
     {
         enemy1.animator.SetTrigger("Death"); // Chơi animation chết
-
+        enemy1.ChangeState(Enemy1.EnemyState.Death); // Đặt trạng thái là Death
         yield return new WaitForSeconds(5f); // Thời gian chờ trước khi trả về pool
         ObjPoolingManager.Instance.ReturnToPool("Enemy1", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
     }
@@ -104,7 +104,7 @@ public class EnemyHP : MonoBehaviour,IDamageable
     void ResetEnemy()
     {
         currentHealth = maxHealth;
-        sliderHp.maxValue = currentHealth;
+        sliderHp.maxValue = maxHealth;
         sliderHp.value = currentHealth;
 
         boxDame.enabled = true;
