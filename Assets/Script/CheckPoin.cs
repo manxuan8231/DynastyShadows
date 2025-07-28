@@ -7,21 +7,18 @@ public class Checkpoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            GameSaveData data = SaveManagerMan.LoadGame();
+            data.savedSceneName = SceneManager.GetActiveScene().name;
+            SaveManagerMan.SaveGame(data);
             CharacterController player = other.GetComponent<CharacterController>();
             if (player != null)
             {
                 Debug.Log("Da luu diem checkpoint!");
                 CheckpointHandler.SaveCheckpoint(player.transform.position);
 
-                GameSaveData data = SaveManagerMan.LoadGame();
-             
+              
+                Debug.Log("luu scene!");
 
-                data.savedSceneName = SceneManager.GetActiveScene().name;
-
-
-
-                // ✅ Cuối cùng, lưu lại
-                SaveManagerMan.SaveGame(data);
             }
         }
     }
