@@ -103,12 +103,11 @@ public class EnemyHP : MonoBehaviour,IDamageable
     }
     void ResetEnemy()
     {
+        boxDame.enabled = true;
         currentHealth = maxHealth;
-        sliderHp.maxValue = maxHealth;
+        sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
         enemy1.ChangeState(Enemy1.EnemyState.Idle); // Đặt lại trạng thái về Idle
-
-        boxDame.enabled = true;
         if (enemy1.animator != null)
         {
             enemy1.animator.Rebind();        // Khôi phục tất cả trạng thái mặc định ban đầu
