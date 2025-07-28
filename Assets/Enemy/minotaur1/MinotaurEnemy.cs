@@ -312,7 +312,9 @@ public class MinotaurEnemy : MonoBehaviour, IDamageable
          //spawn exp
         for (int i = 0; i < expPrefab.Length; i++)
         {
-            GameObject exp = Instantiate(expPrefab[i], transform.position, Quaternion.identity);
+            // Tăng chiều cao vị trí spawn
+            Vector3 spawnPosition = transform.position + Vector3.up * 1;
+            GameObject exp = Instantiate(expPrefab[i], spawnPosition, Quaternion.identity);
             Destroy(exp, 5f);
         }
         currentHealth = maxHealth; // Đặt lại máu về tối đa
