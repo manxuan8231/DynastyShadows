@@ -194,7 +194,7 @@ public class NPCDialogueController : MonoBehaviour
     {
         var player = FindFirstObjectByType<PlayerControllerState>();
         player.enabled = false;
-        player.animator.enabled = false;
+        player.animator.SetTrigger("isTalk");
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
