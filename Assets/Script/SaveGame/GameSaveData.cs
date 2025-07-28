@@ -21,6 +21,8 @@ public class GameSaveData
 
     // lưu skill tree
     public SkillTreeData skillTreeData;
+    // lưu quest data
+    public DataQuest dataQuest;
 
     public GameSaveData()//mặc định khi chx lưu
     {

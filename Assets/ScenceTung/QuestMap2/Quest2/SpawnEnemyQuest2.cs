@@ -8,14 +8,18 @@ public class SpawnEnemyQuest2 : MonoBehaviour
     public string enemyTag; // Tag của enemy dùng để gọi từ pool
     public bool hasSpawned = false;
     public NPCDeathQuest NPCDeathQuest;
+    SuccesQuest2 succesQuest2;
     private void Start()
     {
         NPCDeathQuest = FindFirstObjectByType<NPCDeathQuest>();
+        succesQuest2 = FindFirstObjectByType<SuccesQuest2>();
     }
 
 
     private void Update()
     {
+        if(succesQuest2.isQuest2Complete) return; // Nếu quest 2 đã hoàn thành thì không spawn nữa
+
         if (NPCDeathQuest.isQuest1 == true)
         {
             if (hasSpawned) return;

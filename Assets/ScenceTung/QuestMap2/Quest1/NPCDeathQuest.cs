@@ -114,6 +114,6 @@ public class NPCDeathQuest : MonoBehaviour
         canvasQuest1.SetActive(true); // Show the quest canvas
         contentQuest.text = "Nhiệm vụ: Tìm kiếm sự sống xung quanh thị trấn.";
         isQuest1 = true; // Set the quest flag to true
-        transformQuest.SetActive(true); // Activate the transform quest object
+        transformQuest.SetActive(true); // Activate the transform quest object 
     }
 }

@@ -26,7 +26,7 @@ public class TriggerQuest2 : MonoBehaviour
     {
         playerControllerState = FindFirstObjectByType<PlayerControllerState>();
         audioSource = GetComponent<AudioSource>();
-
+        
     }
     private void OnTriggerEnter(Collider other)
     {

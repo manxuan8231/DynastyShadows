@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Diagnostics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -25,8 +26,10 @@ public class AssasinHp : MonoBehaviour,IDamageable
     public GameObject playerTimeLine; // Player trong cutscene
     public PlayableDirector playableDirector;
     bool isTimeLine = false;
+    public bool isQuestDone = false;
     [Header("Video")]
     public GameObject mainCameraEnd;
+
     void Start()
     {
         curentHp = maxHp;
@@ -69,9 +72,13 @@ public class AssasinHp : MonoBehaviour,IDamageable
         // Kết thúc cutscene, chơi tiếp
         playerInGame.SetActive(true);
         playerTimeLine.SetActive(false);
-       
+        isQuestDone = true; // Đánh dấu nhiệm vụ đã hoàn thành
         timeLine.SetActive(false); // Ẩn đối tượng sau khi timeline kết thúc
         mainCameraEnd.SetActive(true);
+        GameSaveData data = SaveManagerMan.LoadGame();
+        data.dataQuest.isQuestMap2 = isQuestDone; // Cập nhật trạng thái nhiệm vụ
+        DataQuestSingleTon.isQuestMap2 = isQuestDone; // Cập nhật trạng thái nhiệm vụ trong singleton
+        SaveManagerMan.SaveGame(data); // Lưu dữ liệu nhiệm vụ
     }
     void UpdateUI()
     {
