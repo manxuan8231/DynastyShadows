@@ -55,10 +55,7 @@ public class TurnInQuest2 : MonoBehaviour
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
         knightD = FindAnyObjectByType<KnightD>(); // Lấy tham chiếu đến KnightD
-        if (player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player");
-        }
+        
         // Ẩn panel và nút F khi bắt đầu
         NPCPanel.SetActive(false);
         buttonSkip.SetActive(false);
@@ -67,6 +64,9 @@ public class TurnInQuest2 : MonoBehaviour
         niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp khi bắt đầu
         NPCName.text = "";
         NPCContent.text = "";
+
+        player = FindAnyObjectByType<PlayerControllerState>().gameObject;
+
     }
     private void Update()
     {
@@ -179,7 +179,7 @@ public class TurnInQuest2 : MonoBehaviour
         }
         playerStatus.IncreasedGold(200); // Thêm kinh nghiệm cho người chơi
         StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
-        danLang.SetActive(false); // Ẩn dân làng
+       Destroy(danLang, 3f); // Ẩn danLang sau khi hoàn thành nhiệm vụ
         Debug.Log("Phần thưởng đã nhận");
         
     }

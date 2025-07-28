@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class TurnInQuestThuongNhan : MonoBehaviour
@@ -11,7 +12,8 @@ public class TurnInQuestThuongNhan : MonoBehaviour
     public GameObject niceQuestUI;
     public GameObject playerNpc;
     public GameObject player; // Tham chiếu đến đối tượng người chơi
-    public GameObject cam; 
+    public GameObject cam;
+    public CinemachineCamera camcine;
     //
     public string[] names; // Danh sách tên 
     public string[] content; // Nội dung hội thoại
@@ -74,7 +76,8 @@ public class TurnInQuestThuongNhan : MonoBehaviour
             playerNpc.SetActive(true); // Hiện NPC người chơi
             player.SetActive(false); // Ẩn nhân vật người chơi khi hội thoại bắt đầu
             cam.SetActive(true); // Đặt priority của camera NPC cao hơn camera người chơi
-
+            camcine.enabled = true; // Kích hoạt Cinemachine camera
+            camcine.Priority = 50; // Đặt priority của camera NPC cao hơn camera người chơi
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -153,6 +156,8 @@ public class TurnInQuestThuongNhan : MonoBehaviour
             player.SetActive(true); // Hiện lại nhân vật người chơi
             playerNpc.SetActive(false); // Ẩn NPC người chơi
             cam.SetActive(false); // Đặt camera ưu tiên thấp hơn camera người chơi
+            camcine.Priority = 0;
+            camcine.enabled = false;
         }
         //phan thuong
         playerStatus.IncreasedGold(300); ; // Thưởng kinh nghiệm

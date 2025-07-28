@@ -49,7 +49,7 @@ public class ThuongNhan : MonoBehaviour
         {
             audioSource.enabled = false;
             turnInQuestThuongNhan.isContent = true; // Đặt trạng thái hội thoại là true
-            turnInQuestThuongNhan.isButtonF = true; // Hiển thị nút F để tương tác với NPC
+            //turnInQuestThuongNhan.isButtonF = true; // Hiển thị nút F để tương tác với NPC
             animator.SetBool("Idle", true); 
         }
     }

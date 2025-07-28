@@ -37,9 +37,9 @@ public class PlayerControllerState : MonoBehaviour
     public bool isRunning = false;
     public bool isController = true;
     public bool isEnemyPreparingAttack = false; //bien kiem tra enemy chuan bi tan cong
-    //cooldown roll
+    //cooldown roll and jump
     public float rollColdownTime = -2f;
-   
+    public float jumpColdownTime = -2f; // Thời gian hồi chiêu của nhảy
     //goi ham tham chieu
     public PlayerStatus playerStatus;
     public ComboAttack comboAttack;

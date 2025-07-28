@@ -71,8 +71,13 @@ public class TurnInQuest3 : MonoBehaviour
             buttonF.SetActive(false); // Ẩn nút F khi bắt đầu hội thoại
             isButtonF = false; // Đặt trạng thái hội thoại là false
             isContent = false; // Đặt lại trạng thái hội thoại
-            npcScript.player.SetActive(false);
-            npcScript.cam.SetActive(true); // Đặt camera ưu tiên cao hơn để theo dõi NPC
+            if (npcScript != null)
+            {
+                npcScript.player.SetActive(false);
+                npcScript.cam.SetActive(true); // Đặt camera ưu tiên cao hơn để theo dõi NPC
+                Debug.Log("bat cam");
+            }
+           
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -144,11 +149,7 @@ public class TurnInQuest3 : MonoBehaviour
         comboAttack.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        if(npcScript != null)
-        {
-            npcScript.player.SetActive(true);
-            npcScript.cam.SetActive(false); // Đặt camera ưu tiên cao hơn để theo dõi NPC
-        }
+       
        
         //
         switch (questToStart)
@@ -166,6 +167,11 @@ public class TurnInQuest3 : MonoBehaviour
                 bacLamQuestMain.SetActive(true); // Hiện Bac Lam NPC sau khi hoàn thành nhiệm vụ
                 questDesert5.SetActive(true); // Hiện questDesert5
                 StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
+                if (npcScript != null)
+                {
+                    npcScript.player.SetActive(true);
+                    npcScript.cam.SetActive(false); // Đặt camera ưu tiên cao hơn để theo dõi NPC
+                }
                 Debug.Log("Phần thưởng đã nhận");
                 break;
         }
