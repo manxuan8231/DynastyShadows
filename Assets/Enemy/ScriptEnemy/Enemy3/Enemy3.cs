@@ -185,7 +185,6 @@ public class Enemy3 : MonoBehaviour
         if (currentState == EnemyState.Death) // Không tắt box dame khi đã chết
         {
            damageBox.enabled = false; // Tắt box dame khi không tấn công
-            return;
         }
         damageBox.enabled = false; // Tắt box dame khi không tấn công
     }

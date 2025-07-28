@@ -191,7 +191,6 @@ public class Enemy4 : MonoBehaviour
         if (currentState == EnemyState.Death) // Chỉ tắt box dame khi đang tấn công
         {
            leftSpine.enabled = false;
-            return;
         }
         leftSpine.enabled = false;
         
