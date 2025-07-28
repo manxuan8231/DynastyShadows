@@ -45,7 +45,7 @@ public class EnemyHP : MonoBehaviour,IDamageable
    
     public void TakeDamage(float damage)
     {
-        if (enemy1.currentState == Enemy1.EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
+       // if (enemy1.currentState == Enemy1.EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
 
         currentHealth -= damage;
       
@@ -58,7 +58,7 @@ public class EnemyHP : MonoBehaviour,IDamageable
             // Sau một thời gian nhỏ thì quay lại Run/Attack
             Invoke(nameof(BackToChase), 0.2f);
         }
-        else
+        else if (currentHealth <= 0)
         {
             enemy1.ChangeState(Enemy1.EnemyState.Death); // Đặt trạng thái là Death
             boxDame.enabled = false;

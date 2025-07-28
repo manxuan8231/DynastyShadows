@@ -168,7 +168,7 @@ public class TurnInQuest : MonoBehaviour
                 questThuongNhan.SetActive(true); // Hiện NPC ThuongNhan sau khi hoàn thành nhiệm vụ
                 StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 2 giây
                 quest1.questPointer2.SetActive(false); // Ẩn chỉ dẫn nhiệm vụ
-                quest1BacLam.SetActive(false); // Ẩn quest1BacLam sau khi hoàn thành nhiệm vụ
+                Destroy(quest1BacLam, 3f); // Ẩn quest1BacLam sau khi hoàn thành nhiệm vụ
                 Debug.Log("Phần thưởng đã nhận");
 
                 break;

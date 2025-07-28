@@ -54,7 +54,7 @@ public class EnemyHP4 : MonoBehaviour, IDamageable
     }
     public void TakeDamage(float damage)
     {
-        if (enemy4.currentState == Enemy4.EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
+        //if (enemy4.currentState == Enemy4.EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
 
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
@@ -66,7 +66,7 @@ public class EnemyHP4 : MonoBehaviour, IDamageable
             // Sau một thời gian nhỏ thì quay lại Run/Attack
             Invoke(nameof(BackToChase), 0.2f);
         }
-        else
+        else if(currentHealth <= 0)
         {
             boxDame.enabled = false; // Tắt box dame khi chết
             enemy4.animator.enabled = true; // Bật animator để có thể chơi animation chết

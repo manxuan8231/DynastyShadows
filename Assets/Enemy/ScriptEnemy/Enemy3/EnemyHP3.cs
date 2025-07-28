@@ -55,7 +55,7 @@ public class EnemyHP3 : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
-        if (enemy3.currentState == Enemy3.EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
+       // if (enemy3.currentState == Enemy3.EnemyState.Death) return; // Nếu chết rồi thì bỏ qua
 
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
@@ -67,7 +67,7 @@ public class EnemyHP3 : MonoBehaviour, IDamageable
             // Sau một thời gian nhỏ thì quay lại Run/Attack
                     Invoke(nameof(BackToChase), 0.2f);
         }
-        else
+        else if (currentHealth <= 0)
         {
             boxDame.enabled = false; // Tắt box dame khi chết
             enemy3.animator.enabled = true; // Bật animator để có thể chơi animation chết
@@ -81,7 +81,7 @@ public class EnemyHP3 : MonoBehaviour, IDamageable
             
             // Gọi hàm cập nhật quest khi quái chết
             if (questManager != null) 
-                questManager.UpdateQuestBacLam(1);
+                questManager.UpdateQuestBacLam();
             if (thuongNhan != null)
                 thuongNhan.UpdateKillEnemy(1); //  Cập nhật số lượng kẻ thù đã tiêu diệt trong quest thuong nhan      
             if (activeStartTimeLine6 != null)

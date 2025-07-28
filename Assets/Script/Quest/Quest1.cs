@@ -54,11 +54,11 @@ public class Quest1 : MonoBehaviour
     }
 
     // Gọi khi tiêu diệt quái
-    public void UpdateQuestBacLam(int amount)
+    public void UpdateQuestBacLam()
     {
         if (!questBacLamStarted || questBacLamCompleted) return;
 
-        questBacLamKillCount += amount;
+        questBacLamKillCount ++ ;
         questBacLamKillCount = Mathf.Clamp(questBacLamKillCount, 0, 5);
         questNameText.text = $"Tiêu diệt hết quái ở bãi gỗ của Bác Lâm {questBacLamKillCount}/5";
 
