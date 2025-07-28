@@ -137,7 +137,7 @@ public class NPCQuest : MonoBehaviour
     {
         PlayerControllerState playerControllerState = FindFirstObjectByType<PlayerControllerState>();
         playerControllerState.enabled = false; // Vô hiệu hóa điều khiển người chơi
-        playerControllerState.animator.enabled = false; // Vô hiệu hóa animator của người chơi
+        playerControllerState.animator.SetTrigger("isTalk"); // Vô hiệu hóa animator của người chơi
         Cursor.lockState = CursorLockMode.None; // Mở khóa con trỏ chuột
         Cursor.visible = true; // Hiển thị con trỏ chuột
         for (int i = 0; i < contentTextQuest.Length; i++)
@@ -187,7 +187,7 @@ public class NPCQuest : MonoBehaviour
     {
         PlayerControllerState playerControllerState = FindFirstObjectByType<PlayerControllerState>();
         playerControllerState.enabled = true; // Bật lại điều khiển người chơi
-        playerControllerState.animator.enabled = true; // Bật lại animator của người chơi
+        playerControllerState.animator.SetTrigger("Idle"); // Bật lại animator của người chơi
         Cursor.lockState = CursorLockMode.Locked; // Khóa con trỏ chuột
         Cursor.visible = false; // Ẩn con trỏ chuột
         questionGameCanvas.SetActive(false);

@@ -141,7 +141,7 @@ public class ActiveQuest4 : MonoBehaviour
     {
         PlayerControllerState playerControllerState = FindFirstObjectByType<PlayerControllerState>();
         playerControllerState.enabled = true; // Bật lại điều khiển người chơi
-        playerControllerState.animator.enabled = true; // Bật lại animator của người chơi
+        playerControllerState.animator.SetTrigger("Idle"); // Bật lại animator của người chơi
         Cursor.lockState = CursorLockMode.Locked; // Khóa con trỏ chuột
         Cursor.visible = false; // Ẩn con trỏ chuột
         questionGameCanvas.SetActive(false);

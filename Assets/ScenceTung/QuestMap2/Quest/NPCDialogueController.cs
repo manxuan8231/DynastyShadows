@@ -241,7 +241,7 @@ public class NPCDialogueController : MonoBehaviour
     {
         var player = FindFirstObjectByType<PlayerControllerState>();
         player.enabled = true;
-        player.animator.enabled = true;
+        player.animator.SetTrigger("Idle"); // Trở về trạng thái Idle sau khi kết thúc hội thoại
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         questionGameCanvas.SetActive(false);
