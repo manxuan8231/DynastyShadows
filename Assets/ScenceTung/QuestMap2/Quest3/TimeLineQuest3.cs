@@ -68,7 +68,7 @@ public class TimeLineQuest3 : MonoBehaviour
         playerInGame.SetActive(true);
         playerTimeLine.SetActive(false);
         gameObject.SetActive(false); // Ẩn đối tượng sau khi timeline kết thúc
-        isQuest3Complete = true; // Đánh dấu quest hoàn thành
+        isQuest3Complete = true; // Đánh dấu quest hoàn thành      
         Destroy(destroy); // Hủy đối tượng destroy nếu cần thiết
     }
 
