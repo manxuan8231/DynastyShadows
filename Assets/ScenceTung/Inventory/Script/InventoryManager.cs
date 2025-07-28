@@ -84,7 +84,7 @@ public class InventoryManager : MonoBehaviour
 
     public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription, ItemType itemType)
     {
-        if (itemType == ItemType.consumable || itemType == ItemType.crafting || itemType == ItemType.ItemQuest && itemType == ItemType.Pet)
+        if (itemType == ItemType.consumable || itemType == ItemType.crafting || itemType == ItemType.ItemQuest || itemType == ItemType.Pet)
         {
             for (int i = 0; i < itemSlot.Length; i++)
             {
