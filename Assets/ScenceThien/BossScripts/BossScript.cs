@@ -1,3 +1,4 @@
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,7 +19,7 @@ public class BossScript : MonoBehaviour
     public PhaseChangeState phase2State;
     public IdleCombatState idleCombatState;
     public BossAnimationData animationData;
-    public GameObject attackCollider; 
+    public List<GameObject> attackCollider; 
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -51,5 +52,6 @@ public class BossScript : MonoBehaviour
         currentState = newState;
         currentState?.EnterState();
     }
-    
+
+
 }
