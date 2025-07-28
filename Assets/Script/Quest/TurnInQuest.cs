@@ -11,7 +11,8 @@ public class TurnInQuest : MonoBehaviour
     public GameObject niceQuestUI;
     public GameObject questThuongNhan;//làm xong nhiệm vụ của bác lâm thì mới suất hiện thuognw nhân
     public GameObject questPointer; // Chỉ dẫn tới nhận nhiệm vụ đánh cá
-   
+    public GameObject quest1BacLam;//an sau khi hoan thanh
+
     //trang thai
     public enum QuestToStart { None, BacLam, LinhCanh }
     public QuestToStart questToStart = QuestToStart.None;
@@ -167,6 +168,7 @@ public class TurnInQuest : MonoBehaviour
                 questThuongNhan.SetActive(true); // Hiện NPC ThuongNhan sau khi hoàn thành nhiệm vụ
                 StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 2 giây
                 quest1.questPointer2.SetActive(false); // Ẩn chỉ dẫn nhiệm vụ
+                quest1BacLam.SetActive(false); // Ẩn quest1BacLam sau khi hoàn thành nhiệm vụ
                 Debug.Log("Phần thưởng đã nhận");
 
                 break;

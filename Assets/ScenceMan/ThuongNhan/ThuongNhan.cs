@@ -21,7 +21,7 @@ public class ThuongNhan : MonoBehaviour
     PlayerControllerState characterController;
     void Start()
     {
-        scene1.Priority = 0;
+        scene1.enabled = false; // Tắt scene ban đầu
         playerTransform = GameObject.FindWithTag("Player").transform; // Lấy Transform của người chơi
         textHelp.gameObject.SetActive(false);// Hiển thị text
         turnInQuestThuongNhan =FindAnyObjectByType<TurnInQuestThuongNhan>(); // Lấy tham chiếu đến TurnInQuestThuongNhan
@@ -37,6 +37,7 @@ public class ThuongNhan : MonoBehaviour
         if(dis <= distance && isSceneActive == true)
         {
             isSceneActive = false;
+            scene1.enabled = true;
             StartCoroutine(WaitScene(waitTimeScene));// Nếu khoảng cách nhỏ hơn hoặc bằng distance, bắt đầu coroutine
         }
     }
@@ -73,7 +74,8 @@ public class ThuongNhan : MonoBehaviour
         
         yield return new WaitForSeconds(amount);// Chờ 2 giây
         scene1.Priority = 0;// Trả về priority ban đầu
-        
+        scene1.enabled = false;
+
         textHelp.gameObject.SetActive(false);// Hiển thị text
         characterController.enabled = true;
         characterController.animator.enabled = true;

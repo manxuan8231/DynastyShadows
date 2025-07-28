@@ -174,6 +174,7 @@ public class PlayerCurrentState : PlayerState
                 //slowmotion
                 if (player.isEnemyPreparingAttack)
                 {
+                    player.isEnemyPreparingAttack = false;
                    player.StartCoroutine(SlowMotionDash());
                 }
                 else

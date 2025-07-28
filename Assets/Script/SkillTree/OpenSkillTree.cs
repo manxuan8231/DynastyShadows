@@ -94,14 +94,12 @@ public class OpenSkillTree : MonoBehaviour
         
             pauseManager.panelSetting.SetActive(false);
         }
-       /* else if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.T) || Input.GetKeyDown(KeyCode.Escape))
         {
-            panelSkillTree.SetActive(false);
-            flexibleSkill.SetActive(false);
-            coreTree.SetActive(false);
-        }*/
-      
-      
+            enoughtSkill.enabled = false;
+        }
+
+
     }
     // Mở skill da dang  khi nhấn nút trên giao diện
     public void ButtonFlexibleSkill()
@@ -132,7 +130,7 @@ public class OpenSkillTree : MonoBehaviour
     public IEnumerator WaitOffEnought()
     {
         enoughtSkill.enabled = true;    
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
         enoughtSkill.enabled = false;
     }
 }

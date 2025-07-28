@@ -10,6 +10,8 @@ public class TurnInQuest2 : MonoBehaviour
     public GameObject iconMap; // Icon hiển thị trên bản đồ
     public GameObject player;
     public GameObject cam;
+    public GameObject danLang;
+
 
     public GameObject linhCanh;
     public GameObject thuongNhan;
@@ -177,6 +179,7 @@ public class TurnInQuest2 : MonoBehaviour
         }
         playerStatus.IncreasedGold(200); // Thêm kinh nghiệm cho người chơi
         StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
+        danLang.SetActive(false); // Ẩn dân làng
         Debug.Log("Phần thưởng đã nhận");
         
     }
