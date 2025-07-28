@@ -115,7 +115,7 @@ public class EnemyHP3 : MonoBehaviour, IDamageable
     void ResetEnemy()
     {
         currentHealth = maxHealth;
-        sliderHp.maxValue = maxHealth;
+        sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
 
         boxDame.enabled = true;

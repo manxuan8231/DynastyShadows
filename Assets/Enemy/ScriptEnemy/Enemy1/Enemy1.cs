@@ -167,7 +167,6 @@ public class Enemy1 : MonoBehaviour
             case EnemyState.Death:
                 animator.SetTrigger("Death");
                 currentTrigger = "Death";
-                agent.isStopped = true;
                 break;
         }
     }

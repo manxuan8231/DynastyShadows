@@ -59,15 +59,19 @@ public class EnemyHP : MonoBehaviour,IDamageable
             enemy1.agent.isStopped = true; // Dừng lại khi chết
             DropItem(); // Gọi hàm rơi đồ
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
-            StartCoroutine(WaitDeath()); // Chờ 5 giây trước khi trả về pool
             if (quest3 != null)
             {
                 quest3.UpdateKillEnemy(1);
             }
-            if (Necboss != null)
+            if(Necboss != null)
             {
                 Necboss.EnemyCount();
             }
+
+            StartCoroutine(WaitDeath()); // Chờ 5 giây trước khi trả về pool
+
+
+
         }
         if (currentHealth > 0)
         {
@@ -81,7 +85,7 @@ public class EnemyHP : MonoBehaviour,IDamageable
     IEnumerator WaitDeath()
     {
         enemy1.animator.SetTrigger("Death"); // Chơi animation chết
-        enemy1.currentState = Enemy1.EnemyState.Death; // Đặt trạng thái là Death
+
         yield return new WaitForSeconds(5f); // Thời gian chờ trước khi trả về pool
         ObjPoolingManager.Instance.ReturnToPool("Enemy1", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
     }
@@ -100,7 +104,7 @@ public class EnemyHP : MonoBehaviour,IDamageable
     void ResetEnemy()
     {
         currentHealth = maxHealth;
-        sliderHp.maxValue = maxHealth;
+        sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
 
         boxDame.enabled = true;
