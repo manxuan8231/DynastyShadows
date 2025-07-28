@@ -51,33 +51,29 @@ public class EnemyHP : MonoBehaviour,IDamageable
       
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         sliderHp.value = currentHealth;
-        if (currentHealth <= 0)
+       
+        if (currentHealth > 0)
         {
+            enemy1.ChangeState(Enemy1.EnemyState.GetHit);
+            // Sau một thời gian nhỏ thì quay lại Run/Attack
+            Invoke(nameof(BackToChase), 0.2f);
+        }
+        else
+        {
+            enemy1.ChangeState(Enemy1.EnemyState.Death); // Đặt trạng thái là Death
             boxDame.enabled = false;
-            enemy1.animator.enabled = true; // Bật animator để có thể chơi animation chết
-            enemy1.enabled = true; // Bật lại Enemy1 để có thể chơi animation chết
-            enemy1.agent.isStopped = true; // Dừng lại khi chết
             DropItem(); // Gọi hàm rơi đồ
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
             if (quest3 != null)
             {
                 quest3.UpdateKillEnemy(1);
             }
-            if(Necboss != null)
+            if (Necboss != null)
             {
                 Necboss.EnemyCount();
             }
 
             StartCoroutine(WaitDeath()); // Chờ 5 giây trước khi trả về pool
-
-
-
-        }
-        if (currentHealth > 0)
-        {
-            enemy1.ChangeState(Enemy1.EnemyState.GetHit);
-            // Sau một thời gian nhỏ thì quay lại Run/Attack
-            Invoke(nameof(BackToChase), 0.2f);
         }
         
    
@@ -85,7 +81,6 @@ public class EnemyHP : MonoBehaviour,IDamageable
     IEnumerator WaitDeath()
     {
         enemy1.animator.SetTrigger("Death"); // Chơi animation chết
-        enemy1.ChangeState(Enemy1.EnemyState.Death); // Đặt trạng thái là Death
         yield return new WaitForSeconds(5f); // Thời gian chờ trước khi trả về pool
         ObjPoolingManager.Instance.ReturnToPool("Enemy1", gameObject); // Trả về pool thay vì Destroy để tái sử dụng
     }
