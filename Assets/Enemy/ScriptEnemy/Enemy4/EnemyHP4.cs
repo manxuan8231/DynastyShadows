@@ -29,7 +29,7 @@ public class EnemyHP4 : MonoBehaviour, IDamageable
     public void Start()
     {
         currentHealth = maxHealth;
-        sliderHp.maxValue = currentHealth;
+        sliderHp.maxValue = maxHealth;
         sliderHp.value = currentHealth;
         enemy4 = GetComponent<Enemy4>(); // <- GÁN Ở ĐÂY
         questDesert5 = FindAnyObjectByType<QuestDesert5>();
@@ -108,8 +108,8 @@ public class EnemyHP4 : MonoBehaviour, IDamageable
     void ResetEnemy()
     {
         currentHealth = maxHealth;
-        sliderHp.maxValue = currentHealth;
-        sliderHp.value = currentHealth;
+        sliderHp.maxValue = maxHealth;
+        sliderHp.value = maxHealth;
         enemy4.firstPos = transform.position; // Reset vị trí ban đầu
 
         boxDame.enabled = true;
