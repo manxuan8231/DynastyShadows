@@ -106,6 +106,7 @@ public class EnemyHP : MonoBehaviour,IDamageable
         currentHealth = maxHealth;
         sliderHp.maxValue = maxHealth;
         sliderHp.value = currentHealth;
+        enemy1.ChangeState(Enemy1.EnemyState.Idle); // Đặt lại trạng thái về Idle
 
         boxDame.enabled = true;
         if (enemy1.animator != null)
@@ -120,7 +121,6 @@ public class EnemyHP : MonoBehaviour,IDamageable
             enemy1.agent.enabled = true;
         }
 
-        enemy1.ChangeState(Enemy1.EnemyState.Idle); // Đặt lại trạng thái về Idle
     }
 
     void BackToChase()
