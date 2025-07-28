@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerStatus : MonoBehaviour
@@ -196,14 +197,16 @@ public class PlayerStatus : MonoBehaviour
         selectedItemStats.SetActive(false);
     }
     void Update()
-    {      
-       
+    {
+
         UpdateUI(); // Cập nhật UI mỗi frame
         RegenerateMana();//hoi mana
         UpdateTextUIGold();
-        if (sliderHp.value != easeSliderHp.value) { 
+        if (sliderHp.value != easeSliderHp.value)
+        {
             easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHp, easeSpeed); // Trượt thanh máu
         }
+
     }
 
     public void OnDisable()
@@ -581,7 +584,8 @@ public class PlayerStatus : MonoBehaviour
         expToNextLevel += expIncreasePerLevel; // Tăng EXP cần thiết cho cấp sau
         StartCoroutine(WaitLevelUp());//effect level up
        
-        score += scorePerLevel; // Cộng score cố định
+        score += scorePerLevel; // Cộng score 
+        SavePlayerStats();//save
         Debug.Log("Level Up! Now level " + currentLevel + " | Score: " + score);
         if (currentLevel == 5)
         {
@@ -612,7 +616,7 @@ public class PlayerStatus : MonoBehaviour
     {
         gold += value;
         UpdateTextUIGold();
-
+        SavePlayerStats();
 
 
     }
@@ -638,5 +642,18 @@ public class PlayerStatus : MonoBehaviour
       
         yield return new WaitForSeconds(4f);
         effectLevelUp.SetActive(false);
+    }
+
+    //save status
+    public void SavePlayerStats()
+    {
+        GameSaveData data = SaveManagerMan.LoadGame();
+
+        data.score = score;
+        data.currentLevel = currentLevel;
+        data.gold = gold;
+
+        // Cuối cùng, lưu lại
+        SaveManagerMan.SaveGame(data);
     }
 }

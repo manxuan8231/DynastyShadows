@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Item : MonoBehaviour
 {
@@ -31,6 +31,43 @@ public class Item : MonoBehaviour
         {
             int leftOverItems = inventoryManager.AddItem(itemName , quantity,itemSprite,itemDescription,itemType);
             FindAnyObjectByType<ItemPickupNotifier>().ShowPickup(itemName, quantity);
+            // ✅ Lưu item
+            GameSaveData data = SaveManagerMan.LoadGame();
+            data.inventoryItems.Clear();
+            data.inventoryItemSos.Clear();
+            foreach (var slot in inventoryManager.itemSlot)
+            {
+                if (!string.IsNullOrEmpty(slot.itemName) && slot.quantity > 0)
+                {
+                    data.inventoryItemSos.Add(new SaveItemSO
+                    {
+                        itemName = slot.itemName,
+                        quantity = slot.quantity,
+                        itemType = slot.itemType.ToString(),
+                        itemSprite = slot.itemSprite,
+                        itemDescription = slot.itemDescription
+
+                    });
+                }
+            }
+
+            foreach (var slot in inventoryManager.equipmentSlot)
+            {
+                if (!string.IsNullOrEmpty(slot.itemName) && slot.quantity > 0)
+                {
+                    data.inventoryItems.Add(new SavedItemData
+                    {
+                        itemName = slot.itemName,
+                        quantity = slot.quantity,
+                        itemType = slot.itemType.ToString()
+                    });
+                }
+            }
+
+            // ✅ Cuối cùng, lưu lại
+            SaveManagerMan.SaveGame(data);
+            Debug.Log("Saved with " + data.inventoryItems.Count + " items");
+            Debug.Log("Saved with " + data.inventoryItemSos.Count + " itemSOs");
 
             if (leftOverItems <= 0)
 

@@ -8,8 +8,8 @@ public class PetSO : ScriptableObject
     public Sprite itemSprite;
 
 
-    public bool UsePet()
-    {
+    /*  public bool UsePet()
+      {
 
-    }
+      }*/
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Checkpoint : MonoBehaviour
 {
@@ -10,9 +11,17 @@ public class Checkpoint : MonoBehaviour
             if (player != null)
             {
                 Debug.Log("Da luu diem checkpoint!");
-               
                 CheckpointHandler.SaveCheckpoint(player.transform.position);
 
+                GameSaveData data = SaveManagerMan.LoadGame();
+             
+
+                data.savedSceneName = SceneManager.GetActiveScene().name;
+
+
+
+                // ✅ Cuối cùng, lưu lại
+                SaveManagerMan.SaveGame(data);
             }
         }
     }

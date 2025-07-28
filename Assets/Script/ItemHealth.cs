@@ -1,53 +1,50 @@
-﻿using Pathfinding;
-using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine;
 
 public class ItemHealth : MonoBehaviour
 {
-    PlayerStatus playerStatus;
     public Transform player;
-   public AIPath aiPath;
+    public float speed = 5f; // Tốc độ di chuyển về phía người chơi
+    public float desiredHeight = 1.5f; // Độ cao mong muốn của item
+
     [SerializeField] private float timeDestroy;
-    //nav mesh
-    public NavMeshAgent navMeshAgent;
+
+    private PlayerStatus playerStatus;
+    public Rigidbody rb;
+
     void Start()
     {
-       
+        rb = GetComponent<Rigidbody>();
+
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (gameObject != null)
-        {
-            playerStatus = GameObject.Find("Stats").GetComponent<PlayerStatus>();
-        }
-     
         if (playerObj != null)
         {
             player = playerObj.transform;
         }
-        aiPath = GetComponent<AIPath>();
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        Destroy(gameObject,timeDestroy); // Gọi hàm để hủy item sau một khoảng thời gian nhất định
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (aiPath != null && AstarPath.active != null) {
-            aiPath.canSearch = true; // Bật tìm kiếm để AIPath có thể tìm đường đến player
-            aiPath.canMove = true; // Bật di chuyển để AIPath có thể di chuyển đến player
-            aiPath.destination = player.position; // Cập nhật vị trí đến player
-        }
-        else if(navMeshAgent != null && navMeshAgent.isOnNavMesh)
+        GameObject statsObj = GameObject.Find("Stats");
+        if (statsObj != null)
         {
-            navMeshAgent.SetDestination(player.position); // Cập nhật vị trí đến player
-            navMeshAgent.isStopped = false; 
+            playerStatus = statsObj.GetComponent<PlayerStatus>();
+        }
+
+        Destroy(gameObject, timeDestroy);
+    }
+
+    void FixedUpdate()
+    {
+        // Di chuyển item về phía người chơi
+        if (player != null)
+        {
+            Vector3 targetPosition = new Vector3(player.position.x, desiredHeight, player.position.z);
+            Vector3 direction = (targetPosition - transform.position).normalized;
+            rb.MovePosition(transform.position + direction * speed * Time.fixedDeltaTime);
         }
     }
-    public void OnTriggerEnter(Collider other)
+
+    void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            
             if (playerStatus != null)
             {
                 playerStatus.AddExp(50); // Tăng exp cho người chơi
