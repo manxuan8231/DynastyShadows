@@ -16,8 +16,8 @@ public class PetDragonRed : MonoBehaviour
 
     [Header("Buff Settings")]
     public BuffManager buffManager;
-    private float buffCooldown = 60f;
-    private float buffTimer;
+    private float buffCooldown = 5f;
+    private float buffTimer = 0f;
 
     [Header("Floating Animation")]
     public float floatAmplitude = 0.25f;
@@ -60,9 +60,6 @@ public class PetDragonRed : MonoBehaviour
 
         if (navMeshAgent != null)
             navMeshAgent.baseOffset = 0f;
-
-        if (buffManager == null)
-            buffManager = GameObject.Find("BuffManager").GetComponent<BuffManager>();
     }
 
     void Update()
@@ -162,8 +159,16 @@ public class PetDragonRed : MonoBehaviour
 
         if (damageBuffEffectPrefab != null && player != null)
         {
-            GameObject vfx = Instantiate(damageBuffEffectPrefab, player.position + Vector3.up * 0f, Quaternion.identity);
-            Destroy(vfx, 3f);
+            // Instantiate effect at player position, no rotation
+            GameObject vfx = Instantiate(damageBuffEffectPrefab, player.position, Quaternion.identity);
+
+            // Make it follow player but not inherit rotation or scale
+            vfx.transform.SetParent(player, worldPositionStays: true);
+
+            // Optional: ensure localRotation and localScale are untouched
+            vfx.transform.localRotation = Quaternion.identity;
+
+            Destroy(vfx, 1f);
         }
     }
 
