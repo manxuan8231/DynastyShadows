@@ -159,11 +159,11 @@ public class PetDragonHealer : MonoBehaviour
 
             if (healEffectPrefab != null && player != null)
             {
-                GameObject healVFX = Instantiate(healEffectPrefab, player.position + Vector3.up * 0.5f, Quaternion.identity);
+                GameObject healVFX = Instantiate(healEffectPrefab, player.position + Vector3.up * 0f, Quaternion.identity);
                 healVFX.transform.SetParent(player, worldPositionStays: true);
                 healVFX.transform.localRotation = Quaternion.identity;
 
-                Destroy(healVFX, 3f);
+                Destroy(healVFX, 1f);
             }
         }
     }

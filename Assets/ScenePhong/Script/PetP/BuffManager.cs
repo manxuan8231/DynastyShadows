@@ -35,19 +35,19 @@ public class BuffManager : MonoBehaviour
         playerStats.BuffDamage(100, 30f); // +50 damage trong 5 giây
     }
 
-    public void BuffArmor()
+/*    public void BuffArmor()
     {
         if (playerStats == null) return;
         Debug.Log("Pet buff giáp!");
         playerStats.UpMaxHealth(30f);
         StartCoroutine(RemoveTempArmor(30f, 5f));
-    }
+    }*/
 
     public void BuffHP()
     {
         if (playerStats == null) return;
         Debug.Log("Pet hồi máu!");
-        playerStats.BuffHealth(300f);
+        playerStats.BuffHealth(350f);
     }
 
     public void Buffmana()
@@ -57,7 +57,7 @@ public class BuffManager : MonoBehaviour
         playerStats.BuffMana(500f);
     }
 
-    private IEnumerator RemoveTempArmor(float value, float duration)
+/*    private IEnumerator RemoveTempArmor(float value, float duration)
     {
         yield return new WaitForSeconds(duration);
         if (playerStats == null) yield break;
@@ -68,5 +68,5 @@ public class BuffManager : MonoBehaviour
         playerStats.sliderHp.value = playerStats.currentHp;
         playerStats.textHealth.text = ((int)playerStats.currentHp).ToString() + " / " + ((int)playerStats.maxHp).ToString();
         Debug.Log("Giáp buff đã hết hạn.");
-    }
+    }*/
 }

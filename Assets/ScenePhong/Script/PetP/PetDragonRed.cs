@@ -16,7 +16,7 @@ public class PetDragonRed : MonoBehaviour
 
     [Header("Buff Settings")]
     public BuffManager buffManager;
-    private float buffCooldown = 5f;
+    private float buffCooldown = 60f;
     private float buffTimer = 0f;
 
     [Header("Floating Animation")]
