@@ -35,7 +35,7 @@ public class ItemHealth : MonoBehaviour
         // Di chuyển item về phía người chơi
         if (player != null)
         {
-            Vector3 targetPosition = new Vector3(player.position.x, desiredHeight, player.position.z);
+            Vector3 targetPosition = new Vector3(player.position.x, player.position.y + desiredHeight, player.position.z);
             Vector3 direction = (targetPosition - transform.position).normalized;
             rb.MovePosition(transform.position + direction * speed * Time.fixedDeltaTime);
         }

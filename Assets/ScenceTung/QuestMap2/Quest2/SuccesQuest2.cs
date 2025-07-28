@@ -28,12 +28,10 @@ public class SuccesQuest2 : MonoBehaviour
     [Header("Tham chiếu ")]
     public AwardQuest awardQuest;
     private void Start()
-    {
+    {   
         nPCQuest = FindFirstObjectByType<NPCQuest>();
         awardQuest = FindFirstObjectByType<AwardQuest>();
     }
-       
-    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !isQuest2Complete)
@@ -52,3 +50,4 @@ public class SuccesQuest2 : MonoBehaviour
     }
   
 }
+

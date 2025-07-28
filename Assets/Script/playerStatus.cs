@@ -108,6 +108,7 @@ public class PlayerStatus : MonoBehaviour
         currentHp = maxHp;
         sliderHp.maxValue = currentHp;
         textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
+       
 
         //level and score
         expSlider.maxValue = expToNextLevel;
@@ -202,6 +203,8 @@ public class PlayerStatus : MonoBehaviour
         UpdateUI(); // Cập nhật UI mỗi frame
         RegenerateMana();//hoi mana
         UpdateTextUIGold();
+        easeSliderHp.maxValue = maxHp;
+      
         if (sliderHp.value != easeSliderHp.value)
         {
             easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHp, easeSpeed); // Trượt thanh máu
