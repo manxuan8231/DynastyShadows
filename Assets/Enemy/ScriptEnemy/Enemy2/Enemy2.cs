@@ -164,28 +164,46 @@ public class Enemy2 : MonoBehaviour
 
     public void OnLeftHand()
     {
+        if (currentState == EnemyState.Death) return;
         LeftHand.enabled = true;
 
     }
     public void OnRightHand()
     {
+
+        if (currentState == EnemyState.Death) return;
         RightHand.enabled = true;
     }
     public void OnTail()
     {
+        if (currentState == EnemyState.Death) return;
+
         tailBox.enabled = true;
     }
     public void OffLeftHand()
     {
+        if (currentState == EnemyState.Death)
+        {
+            LeftHand.enabled = false;
+        }
         LeftHand.enabled = false;
     }
 
     public void OffRightHand()
     {
+        if (currentState == EnemyState.Death)
+        {
+            RightHand.enabled = false;
+           
+        }
         RightHand.enabled = false;
     }
     public void OffTail()
     {
+        if (currentState == EnemyState.Death)
+        {
+            tailBox.enabled = false;
+        }
         tailBox.enabled = false;
     }
 
