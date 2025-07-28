@@ -174,10 +174,19 @@ public class Enemy3 : MonoBehaviour
 
     public void EnableDamageBox()
     {
+        if (currentState == EnemyState.Death) // Chỉ bật box dame khi đang tấn công
+        {
+            return;
+        }
         damageBox.enabled = true; // Bật box dame khi tấn công
     }
     public void DisableDamageBox()
     {
+        if (currentState == EnemyState.Death) // Không tắt box dame khi đã chết
+        {
+           damageBox.enabled = false; // Tắt box dame khi không tấn công
+            return;
+        }
         damageBox.enabled = false; // Tắt box dame khi không tấn công
     }
     Transform FindClosestPlayer()

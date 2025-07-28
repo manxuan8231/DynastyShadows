@@ -180,26 +180,53 @@ public class Enemy4 : MonoBehaviour
 
     public void OnLeft()
     {
+        if (currentState == EnemyState.Death) // Chỉ bật box dame khi đang tấn công
+        {
+            return;
+        }
         leftSpine.enabled = true;
     }
     public void OffLeft()
     {
+        if (currentState == EnemyState.Death) // Chỉ tắt box dame khi đang tấn công
+        {
+           leftSpine.enabled = false;
+            return;
+        }
         leftSpine.enabled = false;
+        
     }
     public void OnRight()
     {
+        if (currentState == EnemyState.Death) // Chỉ bật box dame khi đang tấn công
+        {
+            return;
+        }
         rightSpine.enabled = true;
     }
     public void OffRight()
     {
+
+        if (currentState == EnemyState.Death) // Chỉ tắt box dame khi đang tấn công
+        {
+            rightSpine.enabled = false ;
+        }
         rightSpine.enabled = false;
     }
     public void OnRightHand()
     {
+        if (currentState == EnemyState.Death) // Chỉ bật box dame khi đang tấn công
+        {
+            return;
+        }
         RightHand.enabled = true;
     }
     public void OffRightHand()
     {
+        if (currentState == EnemyState.Death) // Chỉ tắt box dame khi đang tấn công
+        {
+            RightHand.enabled = false;
+        }
         RightHand.enabled = false;
     }
     Transform FindClosestPlayer()
