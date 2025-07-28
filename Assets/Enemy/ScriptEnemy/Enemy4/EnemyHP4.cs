@@ -29,7 +29,7 @@ public class EnemyHP4 : MonoBehaviour, IDamageable
     public void Start()
     {
         currentHealth = maxHealth;
-        sliderHp.maxValue = maxHealth;
+        sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
         enemy4 = GetComponent<Enemy4>(); // <- GÁN Ở ĐÂY
         questDesert5 = FindAnyObjectByType<QuestDesert5>();
