@@ -17,7 +17,7 @@ public class EnemyHP : MonoBehaviour,IDamageable
     //gọi hàm
     Enemy1 enemy1;
     Quest3 quest3;
-    NecController Necboss;
+    public NecController Necboss;
     //box nhận dame
     public BoxCollider boxDame;
     public List<ItemDrop> itemDrops = new List<ItemDrop>();
@@ -64,14 +64,15 @@ public class EnemyHP : MonoBehaviour,IDamageable
             boxDame.enabled = false;
             DropItem(); // Gọi hàm rơi đồ
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
-            if (quest3 != null)
-            {
-                quest3.UpdateKillEnemy(1);
-            }
             if (Necboss != null)
             {
                 Necboss.EnemyCount();
             }
+            if (quest3 != null)
+            {
+                quest3.UpdateKillEnemy(1);
+            }
+          
 
             StartCoroutine(WaitDeath()); // Chờ 5 giây trước khi trả về pool
         }

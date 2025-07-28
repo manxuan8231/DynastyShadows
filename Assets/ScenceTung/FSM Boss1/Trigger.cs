@@ -18,6 +18,7 @@ public class Trigger : MonoBehaviour
     bool isChangedModel = false;
     public BoxCollider boxTrigger;
     public GameObject sliderBoss;
+  
      void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -53,6 +54,7 @@ public class Trigger : MonoBehaviour
         canvasText.SetActive(true);
         CharacterController characterController = FindAnyObjectByType<CharacterController>();
         characterController.enabled = false;
+        player.gameObject.SetActive(false); // Tắt người chơi khi bắt đầu sự kiện
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         textContent.text = "Là cậu ư?....";
@@ -73,6 +75,7 @@ public class Trigger : MonoBehaviour
         effect.SetActive(false);
         yield return new WaitForSeconds(0.3f) ;
         modelBoss.SetActive(true);
+        player.gameObject.SetActive(true); // Kích hoạt lại người chơi
         yield return new WaitForSeconds(2);
         sliderBoss.SetActive(true);
         cam1.Priority = 0;
