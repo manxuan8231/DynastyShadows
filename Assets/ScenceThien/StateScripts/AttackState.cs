@@ -38,22 +38,9 @@ public class AttackState : BaseState
             boss.anim.SetTrigger(attackAnim);
             AudioBossManager.instance?.PlaySFX("Attack");
 
-            // Bật collider đúng frame impact
-            boss.StartCoroutine(EnableColliderForHit(0.4f, 0.2f)); // ví dụ bật sau 0.4s, tắt sau 0.2s
-
             attackTimer = 0f;
         }
     }
 
-    private IEnumerator EnableColliderForHit(float delay, float duration)
-    {
-        yield return new WaitForSeconds(delay);
-
-        boss.attackCollider.SetActive(true);  // bật
-
-        yield return new WaitForSeconds(duration);
-
-        boss.attackCollider.SetActive(false); // tắt
-    }
 
 }
