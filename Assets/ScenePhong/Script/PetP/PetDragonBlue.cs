@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 using Pathfinding;
 
 public class PetDragonBlue : MonoBehaviour
@@ -18,12 +17,9 @@ public class PetDragonBlue : MonoBehaviour
 
     [Header("Buff Settings")]
     public BuffManager buffManager;
-    public float buffInterval = 1f;
-    private float buffTimer = 0f;
 
     [Header("Manual Buff")]
-    public Button buffButton;
-    public float manualBuffCooldown = 180f;
+    public float manualBuffCooldown = 60f;
     private float manualBuffTimer = 0f;
     private bool canManualBuff = true;
 
@@ -34,8 +30,9 @@ public class PetDragonBlue : MonoBehaviour
     [Header("Audio & VFX")]
     public AudioClip manaSound;
     public GameObject manaEffectPrefab;
-    private AudioSource audioSource;
+    public float manaEffectHeightOffset = 0.5f;
 
+    private AudioSource audioSource;
     private Animator anim;
     private NavMeshAgent navMeshAgent;
     private AIPath aiPath;
@@ -46,7 +43,6 @@ public class PetDragonBlue : MonoBehaviour
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
-        // Tự tìm Player nếu chưa gán
         if (player == null)
         {
             GameObject foundPlayer = GameObject.FindGameObjectWithTag("Player");
@@ -58,7 +54,6 @@ public class PetDragonBlue : MonoBehaviour
         if (playerStats == null)
             playerStats = FindAnyObjectByType<PlayerStatus>();
 
-        // Tự tìm BuffManager nếu chưa gán
         if (buffManager == null)
             buffManager = FindAnyObjectByType<BuffManager>();
 
@@ -67,13 +62,7 @@ public class PetDragonBlue : MonoBehaviour
         destinationSetter = GetComponent<AIDestinationSetter>();
 
         if (navMeshAgent != null)
-        {
             navMeshAgent.baseOffset = hoverOffset;
-        }
-
-        // Gắn sự kiện cho nút
-        if (buffButton != null)
-            buffButton.onClick.AddListener(ManualBuffMana);
     }
 
     void Update()
@@ -84,22 +73,19 @@ public class PetDragonBlue : MonoBehaviour
         AnimateFloating();
         FollowPlayer();
 
-        // Tự buff mana định kỳ
-        buffTimer += Time.deltaTime;
-        if (buffTimer >= buffInterval)
+        // Buff thủ công bằng phím Z
+        if (canManualBuff && Input.GetKeyDown(KeyCode.Z))
         {
-            buffTimer = 0f;
-            BuffManaUnconditionally();
+            ManualBuffMana();
         }
 
-        // Cooldown nút buff tay
+        // Cooldown buff thủ công
         if (!canManualBuff)
         {
             manualBuffTimer -= Time.deltaTime;
             if (manualBuffTimer <= 0f)
             {
                 canManualBuff = true;
-                if (buffButton != null) buffButton.interactable = true;
             }
         }
     }
@@ -149,7 +135,6 @@ public class PetDragonBlue : MonoBehaviour
             return;
         }
 
-        // Di chuyển đơn giản nếu không dùng AI
         if (distance > followDistance)
         {
             Vector3 dir = (player.position - transform.position).normalized;
@@ -166,26 +151,16 @@ public class PetDragonBlue : MonoBehaviour
         }
     }
 
-    void BuffManaUnconditionally()
-    {
-        if (playerStats == null || buffManager == null) return;
-
-        Debug.Log("💧 Pet buff mana tự động.");
-        buffManager.Buffmana();
-        PlayBuffEffects();
-    }
-
     public void ManualBuffMana()
     {
         if (!canManualBuff || playerStats == null || buffManager == null) return;
 
-        Debug.Log("🖱️ Buff mana thủ công bằng nút.");
+        Debug.Log("💧 Buff mana thủ công bằng phím Z.");
         buffManager.Buffmana();
         PlayBuffEffects();
 
         canManualBuff = false;
         manualBuffTimer = manualBuffCooldown;
-        if (buffButton != null) buffButton.interactable = false;
     }
 
     void PlayBuffEffects()
@@ -197,8 +172,15 @@ public class PetDragonBlue : MonoBehaviour
 
         if (manaEffectPrefab != null && player != null)
         {
-            GameObject vfx = Instantiate(manaEffectPrefab, player.position + Vector3.up * 0.5f, Quaternion.identity);
-            Destroy(vfx, 3f);
+            GameObject vfx = Instantiate(
+                manaEffectPrefab,
+                player.position + Vector3.up * manaEffectHeightOffset,
+                Quaternion.identity
+            );
+
+            vfx.transform.SetParent(player, worldPositionStays: true);
+            vfx.transform.localRotation = Quaternion.identity;
+            Destroy(vfx, 1f);
         }
     }
 

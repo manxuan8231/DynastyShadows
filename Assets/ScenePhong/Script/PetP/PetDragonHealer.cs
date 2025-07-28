@@ -17,7 +17,7 @@ public class PetDragonHealer : MonoBehaviour
     [Header("Buff Settings")]
     public BuffManager buffManager;
     private float buffCooldown = 5f;
-    private float buffTimer;
+    private float buffTimer = 0f;
 
     [Header("Floating Animation")]
     public float floatAmplitude = 0.25f;
@@ -157,9 +157,12 @@ public class PetDragonHealer : MonoBehaviour
             if (audioSource != null && healSound != null)
                 audioSource.PlayOneShot(healSound);
 
-            if (healEffectPrefab != null)
+            if (healEffectPrefab != null && player != null)
             {
                 GameObject healVFX = Instantiate(healEffectPrefab, player.position + Vector3.up * 0.5f, Quaternion.identity);
+                healVFX.transform.SetParent(player, worldPositionStays: true);
+                healVFX.transform.localRotation = Quaternion.identity;
+
                 Destroy(healVFX, 3f);
             }
         }
