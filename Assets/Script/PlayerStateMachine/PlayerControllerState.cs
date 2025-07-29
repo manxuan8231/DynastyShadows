@@ -135,7 +135,9 @@ public class PlayerControllerState : MonoBehaviour
 
         controller.enabled = true;
         animator.enabled = true;
-
+        isRollBack = true;
+        isJump = true;
+        playerStatus.isHit = true; // Đặt trạng thái isHit về true khi nhân vật bị ẩn
     }
    
     //tinh toan tim enemy gan nhat
