@@ -29,10 +29,13 @@ public class CraftingManager : MonoBehaviour
         return true;
     }
 
+    public int craftAmount = 1; 
+
     public void Craft(ItemRecipeSO recipe, InventoryManager inventory)
     {
         if (!CanCraft(recipe, inventory)) return;
 
+        // Trừ nguyên liệu theo số lượng muốn craft
         foreach (var input in recipe.input)
         {
             if (input.item == null)
@@ -41,14 +44,16 @@ public class CraftingManager : MonoBehaviour
                 continue;
             }
 
-            inventory.RemoveItem(input.item, input.count);
+            int totalToRemove = input.count * craftAmount;
+            inventory.RemoveItem(input.item, totalToRemove); // ✅ Đã sửa cú pháp
         }
 
+        // Thêm item output vào inventory
         foreach (var output in recipe.output)
         {
             if (output.item != null)
             {
-                inventory.AddItem(output.item, output.count, output.type);
+                inventory.AddItem(output.item, output.count * craftAmount, output.type); // ✅ Nhân số lượng output theo craftAmount
             }
             else
             {
@@ -56,4 +61,5 @@ public class CraftingManager : MonoBehaviour
             }
         }
     }
+
 }
