@@ -58,7 +58,7 @@ public class TeleBackToTown : MonoBehaviour
         comboAttack.enabled = false; // Tắt ComboAttack
         playerController.animator.SetBool("isWalking", false);
         playerController.animator.SetBool("isRunning", false);
-
+        playerController.animator.enabled = false; // Tắt Animator để tránh lỗi khi dịch chuyển
         // Đợi 5 giây
         yield return new WaitForSeconds(5f);
         playerController.enabled = true; // Bật lại PlayerController
@@ -76,6 +76,7 @@ public class TeleBackToTown : MonoBehaviour
         if (loadingPanel != null)
             loadingPanel.SetActive(false);
         yield return new WaitForSeconds(1f);
+        playerController.animator.enabled = true; // Bật lại Animator
         isTeleDone = true; // Đặt cờ để biết nhiệm vụ đã hoàn thành
         gameObject.SetActive(false); // Ẩn đối tượng này sau khi hoàn thành nhiệm vụ
     }
