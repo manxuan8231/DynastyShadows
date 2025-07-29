@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyHP2 : MonoBehaviour, IDamageable
 {
     //xử lý máu
-    public Slider sliderHp;
+    public Slider sliderHp; 
+    public Slider easeSliderHp;
     public float currentHealth;
     public float maxHealth = 2000f;
+    public float lerpSpeed = 0.04f; // Tốc độ lerp cho thanh máu
     public GameObject textDame;
     //gọi hàm
     Enemy2 enemy2;
@@ -26,12 +29,14 @@ public class EnemyHP2 : MonoBehaviour, IDamageable
         currentHealth = maxHealth;
         sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
+        easeSliderHp.maxValue = currentHealth;
+        easeSliderHp.value = currentHealth;
         enemy2 = GetComponent<Enemy2>(); // <- GÁN Ở ĐÂY
        knightD= FindAnyObjectByType<KnightD>();
         boxDame = GetComponent<BoxCollider>(); // Lấy BoxCollider để nhận damage
         
     }
-    
+   
     void OnEnable()
     {
         ResetEnemy(); // Mỗi lần lấy từ pool ra thì reset lại
@@ -48,10 +53,12 @@ public class EnemyHP2 : MonoBehaviour, IDamageable
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-       
+       if(sliderHp.value !=  easeSliderHp.value)
+        {
+            easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHealth, lerpSpeed);
+        }
     }
 
     public void TakeDamage(float damage)

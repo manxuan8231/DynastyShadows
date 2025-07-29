@@ -7,8 +7,10 @@ public class EnemyMap2_HP : MonoBehaviour, IDamageable
 {
     //xử lý máu
     [SerializeField] public Slider sliderHp;
+    [SerializeField] public Slider easeSliderHp;
     [SerializeField] public float currentHealth;
     [SerializeField] public float maxHealth = 2000f;
+    [SerializeField] private float lerpSpeed = 0.04f;
     //drop exp
     [SerializeField] public GameObject expPrefab;
     EnemyMap2_1 enemyMap2_1;
@@ -34,6 +36,8 @@ public class EnemyMap2_HP : MonoBehaviour, IDamageable
         currentHealth = maxHealth;
         sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
+        easeSliderHp.maxValue = currentHealth;
+        easeSliderHp.value = currentHealth;
         enemyMap2_1 = GetComponent<EnemyMap2_1>();
 
     }
@@ -42,7 +46,10 @@ public class EnemyMap2_HP : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-
+        if (sliderHp.value != easeSliderHp.value)
+        {
+            easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHealth, lerpSpeed);
+        }
     }
 
     public void TakeDamage(float damage)

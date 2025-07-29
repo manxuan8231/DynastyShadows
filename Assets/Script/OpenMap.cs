@@ -20,8 +20,9 @@ public class OpenMap : MonoBehaviour
     public GameObject[] loadPanel;
     //tham chieu
     private PlayerStatus playerStatus;
+    public PlayerControllerState playerControllerState;
     void Start()
-{
+    {
     mapUIBG.SetActive(false);
     mapUIConten.SetActive(false);
     mapAudio = GetComponent<AudioSource>();
@@ -31,15 +32,16 @@ public class OpenMap : MonoBehaviour
     Cursor.lockState = CursorLockMode.Locked;
 
     playerStatus = FindAnyObjectByType<PlayerStatus>();
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
 
-   
-}
+
+    }
 
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.M) && playerStatus.currentHp > 0 && panelSkillTree.activeSelf == false 
-        && imageBGButtonInven.activeSelf == false && EquipMentMenu.activeSelf == false && isOpenMap)
+        && imageBGButtonInven.activeSelf == false && EquipMentMenu.activeSelf == false && isOpenMap && playerControllerState.animator.enabled)
         {
             if (mapUIConten.activeSelf)
             {

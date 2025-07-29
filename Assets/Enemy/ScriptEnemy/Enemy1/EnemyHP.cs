@@ -9,8 +9,10 @@ public class EnemyHP : MonoBehaviour,IDamageable
 {
     //xử lý máu
     [SerializeField] public Slider sliderHp;
+    [SerializeField] private Slider easeSliderHp;
    [SerializeField] public float currentHealth;
     [SerializeField]  public float maxHealth = 2000f;
+    [SerializeField] private float lerpSpeed = 0.04f;
     //drop exp
     [SerializeField] public GameObject expPrefab;
     
@@ -34,15 +36,28 @@ public class EnemyHP : MonoBehaviour,IDamageable
         currentHealth = maxHealth;
         sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
+        easeSliderHp.maxValue = currentHealth;
+        easeSliderHp.value = currentHealth;
         enemy1 = GetComponent<Enemy1>(); // <- GÁN Ở ĐÂY
         quest3 = FindAnyObjectByType<Quest3>();
         Necboss = FindAnyObjectByType<NecController>();
         
     }
-    
+    public void Update()
+    {
+        if (sliderHp.value != easeSliderHp.value)
+        {
+            easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHealth, lerpSpeed);
+        }
+        if(currentHealth <= 0)
+        {
+            enemy1.animator.enabled = true;
+            enemy1.enabled = true;
+        }
+    }
 
- 
-   
+
+
     public void TakeDamage(float damage)
     {
        // if (enemy1.currentState == Enemy1.EnemyState.Death) return; // Nếu chết rồi thì bỏ qua

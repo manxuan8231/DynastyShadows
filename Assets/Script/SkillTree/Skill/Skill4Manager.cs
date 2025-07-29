@@ -70,7 +70,7 @@ public class Skill4Manager : MonoBehaviour
         textCoolDownSkill.enabled = false;
         }
         if (Input.GetKeyDown(KeyCode.Alpha4) && Time.time >= lastCoolDown + coolDownTime && isUnlockSkill4 == true && isInputSkill4 == true && 
-            playerControllerState.isController) 
+            playerControllerState.isController && playerControllerState.animator.enabled) 
         {
             sliderCoolDown.enabled = true; // Bật slider khi nhấn phím 4
             textCoolDownSkill.enabled = true;

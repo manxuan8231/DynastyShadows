@@ -66,11 +66,11 @@ public class Tele : MonoBehaviour
         comboAttack.enabled = false; // Tắt ComboAttack
         playerController. animator.SetBool("isWalking", false);
         playerController.animator.SetBool("isRunning", false);
-
+        playerController.animator.enabled = false; // Tắt Animator để tránh lỗi khi dịch chuyển
         // Đợi 5 giây
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         playerController.enabled = true; // Bật lại PlayerController
-        
+        playerController.animator.enabled = true; // Bật lại Animator
         comboAttack.enabled = true; // Bật lại ComboAttack
        
         // Dịch chuyển nhân vật

@@ -7,9 +7,10 @@ public class EnemyHP4 : MonoBehaviour, IDamageable
 {
     //xử lý máu
     public Slider sliderHp;
+    public Slider easeSliderHp;
     public float currentHealth;
     public float maxHealth = 2000f;
-
+    public float lerpSpeed = 0.04f;
     //box nhận dame
     public BoxCollider boxDame;
 
@@ -31,6 +32,8 @@ public class EnemyHP4 : MonoBehaviour, IDamageable
         currentHealth = maxHealth;
         sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
+        easeSliderHp.maxValue = currentHealth;
+        easeSliderHp.value = currentHealth;
         enemy4 = GetComponent<Enemy4>(); // <- GÁN Ở ĐÂY
         questDesert5 = FindAnyObjectByType<QuestDesert5>();
         boxDame = GetComponent<BoxCollider>(); // Lấy BoxCollider để nhận damage
@@ -39,7 +42,11 @@ public class EnemyHP4 : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-       
+       if(sliderHp.value != easeSliderHp.value)
+        {
+            easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHealth, lerpSpeed);
+        }
+        
     }
     public void DropItem()
     {

@@ -119,7 +119,7 @@ public class PlayerCurrentState : PlayerState
         if (player.isGrounded && player.velocity.y < 0)
             player.velocity.y = -2f;
         //
-        if (Input.GetKeyDown(KeyCode.Space) && player.isGrounded && player.playerStatus.currentMana > 50 && player.isJump && Time.time >= player.jumpColdownTime + 0.5f)
+        if (Input.GetKeyDown(KeyCode.Space) && player.isGrounded && player.playerStatus.currentMana > 50 && player.isJump && Time.time >= player.jumpColdownTime + 1f)
         {
            player.playerStatus.TakeMana(50);
            player.velocity.y = Mathf.Sqrt(player.jumpHeight * -2f * player.gravity);

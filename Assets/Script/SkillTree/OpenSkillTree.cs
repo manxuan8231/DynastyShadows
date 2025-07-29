@@ -28,14 +28,14 @@ public class OpenSkillTree : MonoBehaviour
     public TextMeshProUGUI enoughtSkill;// thong bao đủ điểm nâng cấp kỹ năng
     //tham chieu
     public PauseManager pauseManager;
-   
+    public PlayerControllerState playerControllerState; // Tham chiếu đến PlayerControllerState
     public PlayerStatus playerStatus;
 
    
     void Start()
     {
         pauseManager = FindAnyObjectByType<PauseManager>();
-      
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         panelSkillTree.SetActive(false);
         buttonCoreBG.enabled = false;
@@ -53,7 +53,7 @@ public class OpenSkillTree : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T) && isOpenSkillTree) // Nhấn phím T để mở/đóng Skill Tree
+        if (Input.GetKeyDown(KeyCode.T) && isOpenSkillTree &&playerControllerState.animator.enabled) // Nhấn phím T để mở/đóng Skill Tree
         {
             bool willOpen = !panelSkillTree.activeSelf; // Trạng thái sau khi nhấn
 

@@ -44,7 +44,7 @@ public class TurnInQuest3 : MonoBehaviour
         playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
-         npcScript = FindAnyObjectByType<NPCScript>(); // Lấy tham chiếu đến NPCScript
+         npcScript = GetComponent<NPCScript>(); // Lấy tham chiếu đến NPCScript
         // Ẩn panel và nút F khi bắt đầu
         NPCPanel.SetActive(false);
         buttonSkip.SetActive(false);

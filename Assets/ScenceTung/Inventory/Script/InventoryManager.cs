@@ -16,13 +16,14 @@ public class InventoryManager : MonoBehaviour
     public AudioClip selectedClip;
     private PauseManager pausedManager;
     public ButtonSave buttonSave;
+    public PlayerControllerState pl;
     void Update()
     {
         if (pausedManager == null) pausedManager = FindAnyObjectByType<PauseManager>();
         audioSource = GameObject.Find("Inventory").GetComponent<AudioSource>();
-        if (Input.GetButtonDown("Inventory") && isOpenInventory )
+        if (Input.GetButtonDown("Inventory") && isOpenInventory && pl.animator.enabled)
             Inventory();
-        if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory )
+        if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory && pl.animator.enabled)
             EquipmentMenu();
     }
     void Start()
@@ -31,6 +32,7 @@ public class InventoryManager : MonoBehaviour
         GameSaveData data = SaveManagerMan.LoadGame();
         LoadInventoryFromSave(data);
         LoadItemSOFromSave(data);
+        pl = FindAnyObjectByType<PlayerControllerState>();
     }
 
     public void Inventory()

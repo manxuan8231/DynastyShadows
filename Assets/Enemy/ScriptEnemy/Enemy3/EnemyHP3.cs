@@ -7,8 +7,10 @@ public class EnemyHP3 : MonoBehaviour, IDamageable
 {
     //xử lý máu
     public Slider sliderHp;
+    public Slider easeDliderHp;
     public float currentHealth;
     public float maxHealth = 2000f;
+    public float lerpSpeed = 0.04f; // Tốc độ lerp cho thanh máu
     public GameObject textDame;
     public List<ItemDrop> itemDrops = new List<ItemDrop>();
     //gọi hàm
@@ -32,6 +34,8 @@ public class EnemyHP3 : MonoBehaviour, IDamageable
         currentHealth = maxHealth;
         sliderHp.maxValue = currentHealth;
         sliderHp.value = currentHealth;
+        easeDliderHp.maxValue = currentHealth;
+        easeDliderHp.value = currentHealth;
         enemy3 = GetComponent<Enemy3>(); // <- GÁN Ở ĐÂY
         questManager = FindAnyObjectByType<Quest1>(); // Lấy tham chiếu đến QuestManager
         thuongNhan = FindAnyObjectByType<ThuongNhan>(); // Lấy tham chiếu đến ThuongNhan
@@ -50,6 +54,10 @@ public class EnemyHP3 : MonoBehaviour, IDamageable
     }
     void Update()
     {
+      if(sliderHp.value != easeDliderHp.value)
+        {
+            easeDliderHp.value = Mathf.Lerp(easeDliderHp.value, currentHealth, lerpSpeed);
+        }
       
     }
 

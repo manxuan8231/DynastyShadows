@@ -5,9 +5,10 @@ using UnityEngine.UI;
 public class BossHP : MonoBehaviour, IDamageable
 {
     public Slider sliderHp;
+    public Slider easeSliderHp;
     public float currentHealth;
     public float maxHealth = 10000f;
-    
+    public float lerpSpeed = 0.03f; // Tốc độ 
     private BossScript bossScript;
     private bool isDead = false;
     private bool hasEnteredPhase2 = false;
@@ -22,6 +23,8 @@ public class BossHP : MonoBehaviour, IDamageable
         {
             sliderHp.maxValue = maxHealth;
             sliderHp.value = currentHealth;
+            easeSliderHp.maxValue = maxHealth;
+            easeSliderHp.value = currentHealth;
         }
 
         bossScript = GetComponent<BossScript>();
@@ -31,7 +34,13 @@ public class BossHP : MonoBehaviour, IDamageable
 
     void Update()
     {
-
+        if(sliderHp != null && easeSliderHp != null)
+        {
+            if (sliderHp.value != easeSliderHp.value)
+            {
+                easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHealth, lerpSpeed);
+            }
+        }
     }
 
     public void TakeDamage(float damage)
