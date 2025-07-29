@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
-
+    public bool isQuest2Map2Complete = false;
     public GameObject quest1;
     public GameObject quest2;
     public GameObject quest3;
@@ -15,12 +15,13 @@ public class QuestManager : MonoBehaviour
     private void Start()
     {
         DataQuest dataQuest = SaveManagerMan.LoadGame().dataQuest; // Lấy dữ liệu nhiệm vụ từ SaveManager
-        DataQuestSingleTon.isQuestMap2 = dataQuest.isQuestMap2; // Cập nhật trạng thái nhiệm vụ trong singleton
+        isQuest2Map2Complete = dataQuest.isQuestMap2; // Cập nhật trạng thái nhiệm vụ từ dữ liệu lưu
     }
     private void Update()
     {
-        if(DataQuestSingleTon.isQuestMap2)
+      if (isQuest2Map2Complete)
         {
+            
             quest1.SetActive(false);
             quest2.SetActive(false);
             quest3.SetActive(false);
@@ -28,7 +29,9 @@ public class QuestManager : MonoBehaviour
             quest5.SetActive(false);
             quest6.SetActive(false);
             quest7.SetActive(false);
-            quest8.SetActive(false); // Kích hoạt nhiệm vụ 8 khi nhiệm vụ 2 hoàn thành
+            quest8.SetActive(false);
+
         }
-      }
+    }
 }
+

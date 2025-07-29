@@ -89,11 +89,14 @@ public class ActiveQuest8 : MonoBehaviour
     {
         if (isTimeline1)
         {
+            playableDirector.stopped -= OnTimelineFinished; // Gỡ callback=
             timeLine.SetActive(false); // Ẩn timeline 1
             OnTimelineFinished(playableDirector); // Gọi hàm kết thúc timeline để cập nhật trạng thái
         }
          if(isTimeline2)
         {
+            playableDirector2.stopped -= OnTimelineFinished2; // Gỡ callback
+            model.SetActive(false); // Ẩn mô hình sau khi timeline 2 kết thúc
             timeLine2.SetActive(false); // Ẩn timeline 2
             OnTimelineFinished2(playableDirector2); // Gọi hàm kết thúc timeline để cập nhật trạng thái
         }

@@ -19,6 +19,7 @@ public class AssasinHp : MonoBehaviour,IDamageable
     public float scoreDodge = 0f;
     //tham chieu
     public ControllerStateAssa controllerStateAssa;
+    public QuestManager questManager; // Quản lý nhiệm vụ
 
     [Header("TimeLine")]
     public GameObject timeLine;
@@ -26,7 +27,7 @@ public class AssasinHp : MonoBehaviour,IDamageable
     public GameObject playerTimeLine; // Player trong cutscene
     public PlayableDirector playableDirector;
     bool isTimeLine = false;
-    public bool isQuestDone = false;
+
     [Header("Video")]
     public GameObject mainCameraEnd;
 
@@ -41,6 +42,7 @@ public class AssasinHp : MonoBehaviour,IDamageable
         controllerStateAssa = FindAnyObjectByType<ControllerStateAssa>();
         playerInGame = GameObject.FindGameObjectWithTag("Player");
         mainCameraEnd.SetActive ( false); // Tắt camera chính khi bắt đầu timeline
+        questManager = FindAnyObjectByType<QuestManager>(); // Lấy tham chiếu đến QuestManager
     }
 
     
@@ -60,10 +62,10 @@ public class AssasinHp : MonoBehaviour,IDamageable
         if (curentHp <= 0 && !isTimeLine)
         {
             StartCoroutine(StartTimeLineEnd()); 
-            Destroy(gameObject,2f);
+          
         }
     }
-    private void OnTimelineFinished(PlayableDirector director)
+    private void OnTimelineFinishedEnd(PlayableDirector director)
     {
      
         // Cập nhật vị trí player thật từ player timeline
@@ -72,12 +74,11 @@ public class AssasinHp : MonoBehaviour,IDamageable
         // Kết thúc cutscene, chơi tiếp
         playerInGame.SetActive(true);
         playerTimeLine.SetActive(false);
-        isQuestDone = true; // Đánh dấu nhiệm vụ đã hoàn thành
+        questManager.isQuest2Map2Complete = true;
         timeLine.SetActive(false); // Ẩn đối tượng sau khi timeline kết thúc
         mainCameraEnd.SetActive(true);
         GameSaveData data = SaveManagerMan.LoadGame();
-        data.dataQuest.isQuestMap2 = isQuestDone; // Cập nhật trạng thái nhiệm vụ
-        DataQuestSingleTon.isQuestMap2 = isQuestDone; // Cập nhật trạng thái nhiệm vụ trong singleton
+        data.dataQuest.isQuestMap2 = questManager.isQuest2Map2Complete; // Cập nhật trạng thái nhiệm vụ
         SaveManagerMan.SaveGame(data); // Lưu dữ liệu nhiệm vụ
     }
     void UpdateUI()
@@ -93,7 +94,9 @@ public class AssasinHp : MonoBehaviour,IDamageable
         playerInGame.SetActive(false); // Ẩn player thật
         timeLine.SetActive(true); // Bật timeline
         playableDirector.Play(); // Chạy timeline
-        playableDirector.stopped += OnTimelineFinished; // Đăng ký sự kiện khi timeline kết thúc
+        playableDirector.stopped += OnTimelineFinishedEnd; // Đăng ký sự kiện khi timeline kết thúc
+        gameObject.SetActive(false); // Tắt đối tượng khi máu về 0
+
     }
 }
 
