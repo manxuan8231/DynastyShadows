@@ -12,7 +12,7 @@ public class ItemPickupNotifier : MonoBehaviour
     private Dictionary<string, int> pickupDict = new Dictionary<string, int>();
     private int pickupCount = 0;
     private int pickupThreshold = 5;
-    private float pickupInterval = 3f;
+    private float pickupInterval = 5f;
 
     private Coroutine resetCoroutine;
     private Coroutine quickTextCoroutine;
@@ -53,7 +53,7 @@ public class ItemPickupNotifier : MonoBehaviour
     IEnumerator ShowQuickText(string message)
     {
         normalPickupText.text = message;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(3f);
         normalPickupText.text = "";
         quickTextCoroutine = null;
     }
