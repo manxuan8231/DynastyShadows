@@ -19,7 +19,9 @@ public class BossScript : MonoBehaviour
     public PhaseChangeState phase2State;
     public IdleCombatState idleCombatState;
     public BossAnimationData animationData;
-    public List<GameObject> attackCollider; 
+    public List<GameObject> attackCollider;
+    public BoxCollider leftDame;
+    public BoxCollider rightDame;
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -52,6 +54,21 @@ public class BossScript : MonoBehaviour
         currentState = newState;
         currentState?.EnterState();
     }
-
+    public void OnBoxDameLeft()
+    {
+        leftDame.enabled = true;
+    }
+    public void OffBoxDameLeft()
+    {
+        leftDame.enabled = false;
+    }
+    public void OnBoxDameRight()
+    {
+        rightDame.enabled = true;
+    }
+    public void OffBoxDameRight()
+    {
+        rightDame.enabled = false;
+    }
 
 }
