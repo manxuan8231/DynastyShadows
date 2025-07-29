@@ -79,6 +79,8 @@ public class EnemyHP : MonoBehaviour,IDamageable
             boxDame.enabled = false;
             DropItem(); // Gọi hàm rơi đồ
             GameObject exp = Instantiate(expPrefab, transform.position, Quaternion.identity);
+            StartCoroutine(WaitDeath()); // Chờ 5 giây trước khi trả về pool
+
             if (Necboss != null)
             {
                 Necboss.EnemyCount();
@@ -89,7 +91,6 @@ public class EnemyHP : MonoBehaviour,IDamageable
             }
           
 
-            StartCoroutine(WaitDeath()); // Chờ 5 giây trước khi trả về pool
         }
         
    
