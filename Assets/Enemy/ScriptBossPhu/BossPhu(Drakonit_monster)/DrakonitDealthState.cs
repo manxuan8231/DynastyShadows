@@ -46,7 +46,7 @@ public class DrakonitDeathState : DrakonitState
         enemy.animator.SetBool("Attack2", false); // Dừng animation tấn công
         enemy.animator.SetBool("Attack1", false); // Dừng animation tấn công
         enemy.animator.SetBool("Attack3", false); // Dừng animation tấn công
-        enemy.colliderBox.enabled = false; // Vô hiệu hóa collider
+        enemy.drakonitHp1.colliderBox.enabled = false; // Vô hiệu hóa collider
         enemy.agent.isStopped = true; // Dừng di chuyển
 
     }
@@ -75,7 +75,7 @@ public class DrakonitDeathState : DrakonitState
         enemy.textConten.enabled = true;
         enemy.textConten.text = "Ah...";
         enemy.animator.SetTrigger("Hit");
-        enemy.colliderBox.enabled = false; // Vô hiệu hóa collider
+        enemy.drakonitHp1.colliderBox.enabled = false; // Vô hiệu hóa collider
         yield return new WaitForSeconds(4f);
 
         // 2. Câu thứ hai

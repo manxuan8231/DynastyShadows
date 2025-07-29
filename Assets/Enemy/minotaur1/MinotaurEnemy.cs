@@ -355,6 +355,12 @@ public class MinotaurEnemy : MonoBehaviour, IDamageable
     }
     public void TriggerDodge()
     {
+        if (slowMotionDodgeEvent == null)
+        {
+            // Không làm gì cả hoặc log nhẹ cho dev
+            Debug.LogWarning("slowMotionDodgeEvent chua dc chi dinh?");
+            return;
+        }
         if (slowMotionDodgeEvent.isOneSlow == false)
         {
             Debug.Log("da gay dame");

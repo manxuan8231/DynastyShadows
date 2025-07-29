@@ -17,7 +17,7 @@ public class DrakonitChaseState : DrakonitState
     {
         enemy.animator.SetBool("Walking", true);  // Phát animation chạy
         enemy.agent.isStopped = false;   // Cho phép agent di chuyển
-        enemy.slider.SetActive(true); // bat thanh máu
+        enemy.drakonitHp1.slider.SetActive(true); // bat thanh máu
         Debug.Log("trang thai ruot duoii");
     }
 

@@ -280,8 +280,7 @@ public class PlayerStatus : MonoBehaviour
                 return;
             }
             //boss drakonit
-            DrakonitController drakonitController = enemy.GetComponent<DrakonitController>();
-            if (drakonitController != null)
+            if (enemy.TryGetComponent<DrakonitHp1>(out var drakonitController))
             {
                 audioSource.PlayOneShot(skill4Manager.soundReflectDame); // Phát âm thanh phản dame
                 ShowTextDame(amount);

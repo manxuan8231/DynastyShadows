@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 
 // Script điều khiển hành vi của enemy Drakonit bằng State Machine
-public class DrakonitController : MonoBehaviour,IDamageable
+public class DrakonitController : MonoBehaviour
 {
     // Các biến điều chỉnh trong Inspector
     public float chaseRange = 100f;   //khoan cach thay player
@@ -52,15 +52,7 @@ public class DrakonitController : MonoBehaviour,IDamageable
 
     //vùng chặn lại khi thấy pllayer 
     public GameObject blockZone; 
-    // thanh máu
-    public Slider sliderHp;  
-    public Slider easeSliderHp; // Thanh máu
-    public float maxHp = 1000; // Máu tối đa
-    public float currentHp; // Máu hiện tại
-    public float easeSpeed = 0.05f; // Tốc độ thay đổi thanh máu
-    public TextMeshProUGUI textHp; // Text hiển thị máu
-    public Collider colliderBox; // Collider của enemy
-    public GameObject slider; // GameObject chứa thanh máu
+   
     //text
     public TextMeshProUGUI textConten; // Text hoi thoai
     public GameObject imgBietDanh; // GameObject chứa text
@@ -68,7 +60,7 @@ public class DrakonitController : MonoBehaviour,IDamageable
     public DrakonitDameZone dameZone;
     private DrakonitController enemy; // Biến tham chiếu đến DrakonitController
     public QuestMainBacLam questMainBacLam;
-
+    public DrakonitHp1 drakonitHp1; // Biến tham chiếu đến DrakonitHp
     // Trạng thái hiện tại
     private DrakonitState currentState; 
     void Start()
@@ -81,14 +73,7 @@ public class DrakonitController : MonoBehaviour,IDamageable
         player = FindClosestPlayer(); 
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
-        //mau
-        currentHp = maxHp; // Khởi tạo máu hiện tại
-        sliderHp.maxValue = currentHp; // Đặt giá trị tối đa cho thanh máu
-        sliderHp.value = currentHp; // Đặt giá trị hiện tại cho thanh máu
-        textHp.text = $"{currentHp}/{maxHp}"; // Cập nhật text hiển thị máu
-        easeSliderHp.maxValue = currentHp; // Đặt giá trị tối đa cho thanh máu easing
-        easeSliderHp.value = currentHp; // Khởi tạo giá trị easing
-        slider.SetActive(false); // Ẩn thanh máu
+        drakonitHp1 = GetComponent<DrakonitHp1>();
         //effect skill
         auraSkill1.SetActive(false); // Tắt hiệu ứng kỹ năng 1
         auraSkill2.SetActive(false); // Tắt hiệu ứng kỹ năng 2
@@ -108,10 +93,7 @@ public class DrakonitController : MonoBehaviour,IDamageable
         player = FindClosestPlayer(); // Tìm player gần nhất
         // Gọi hàm Updat của trạng thái hiện tại 
         currentState?.Update();
-        if(sliderHp.value != easeSliderHp.value)
-        {
-            easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHp, easeSpeed);
-        }
+       
     }
 
     // Hàm chuyển trạng thái
@@ -122,31 +104,7 @@ public class DrakonitController : MonoBehaviour,IDamageable
         currentState.Enter();     // Kích hoạt trạng thái mới
     }
 
-    public void TakeDamage(float amount)
-    {
-        currentHp -= amount; // Giảm máu hiện tại
-        sliderHp.value = currentHp; // Cập nhật thanh máu
-        textHp.text = $"{currentHp}/{maxHp}"; // Cập nhật text hiển thị máu
-        currentHp = Mathf.Clamp(currentHp, 0, maxHp); // Đảm bảo máu không âm và không vượt quá tối đa
-       
-        if (currentHp <= 0)
-        {
-
-            Destroy(gameObject);
-            enemy.blockZone.SetActive(false); // voo hiệu hóa vùng chặn
-            animator.enabled = true; // Bật animator để có thể chơi animation chết
-            enemy.enabled = true; // Bật lại DrakonitController để có thể chơi animation chết
-            colliderBox.enabled = false;
-            slider.SetActive(false); // Ẩn thanh máu
-                                     // Gọi hàm chết ở đây
-             if (questMainBacLam != null) { 
-            questMainBacLam.UpdateKillEnemy(1);// cập nhật số lượng kẻ thù đã giết
-            }
-             animator.SetTrigger("Death");
-            // ChangeState(new DrakonitDeathState(this));
-        }
-        
-    }
+   
     
 
 

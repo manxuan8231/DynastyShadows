@@ -525,6 +525,7 @@ GameObject:
   - component: {fileID: 4916188092799871935}
   - component: {fileID: 5523954637970055876}
   - component: {fileID: 858677523310723236}
+  - component: {fileID: 7621348115773411056}
   m_Layer: 10
   m_Name: Drakonit(BossPhu)
   m_TagString: Enemy
@@ -615,18 +616,11 @@ MonoBehaviour:
   cutScene2: {fileID: 4404510432677078078}
   cutScene3: {fileID: 4231517638857645180}
   blockZone: {fileID: 0}
-  sliderHp: {fileID: 5896819072507681874}
-  easeSliderHp: {fileID: 8728426927697478586}
-  maxHp: 20000
-  currentHp: 0
-  easeSpeed: 0.05
-  textHp: {fileID: 7451106255917199517}
-  colliderBox: {fileID: 1784993311203814701}
-  slider: {fileID: 5335419908787426845}
   textConten: {fileID: 6819550091704329320}
   imgBietDanh: {fileID: 42939767375410884}
   dameZone: {fileID: 6141756004423523054}
   questMainBacLam: {fileID: 0}
+  drakonitHp1: {fileID: 0}
 --- !u!114 &1419340425941807650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -727,7 +721,7 @@ AudioSource:
   m_GameObject: {fileID: 1081597413212163973}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 26639405778714515, guid: e741c0b0a0ec86c469264a0b0eda9817, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -912,6 +906,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7621348115773411056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081597413212163973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1895937bf5b97fb43ab8f9f5d7651c1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sliderHp: {fileID: 5896819072507681874}
+  easeSliderHp: {fileID: 8728426927697478586}
+  maxHp: 7000
+  currentHp: 0
+  easeSpeed: 0.05
+  textHp: {fileID: 7451106255917199517}
+  colliderBox: {fileID: 1784993311203814701}
+  slider: {fileID: 5335419908787426845}
+  enemy: {fileID: 383837749568101787}
 --- !u!1 &1085552686170213013
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,7 +28,7 @@ public class AutoEnvironmentMusic : MonoBehaviour
             if (audio == myAudio) continue;
 
             // Nếu AudioSource khác đang phát và là nhạc (loop hoặc clip dài)
-            if (audio.isPlaying && audio.clip != null && audio.clip.length > 10f)
+            if (audio.isPlaying && audio.clip != null && audio.clip.length >= 8f)
             {
                 otherMusicPlaying = true;
                 break;
