@@ -70,5 +70,17 @@ public class BossScript : MonoBehaviour
     {
         rightDame.enabled = false;
     }
+    // Gọi từ animation event hoặc FSM
+    public void EnableAttackColliders()
+    {
+        foreach (var col in attackCollider)
+            col.SetActive(true);
+    }
+
+    public void DisableAttackColliders()
+    {
+        foreach (var col in attackCollider)
+            col.SetActive(false);
+    }
 
 }

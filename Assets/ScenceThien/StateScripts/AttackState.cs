@@ -37,10 +37,16 @@ public class AttackState : BaseState
 
             boss.anim.SetTrigger(attackAnim);
             AudioBossManager.instance?.PlaySFX("Attack");
-
+            boss.StartCoroutine(EnableAttackCollidersForSeconds(0.4f, 0.2f));
             attackTimer = 0f;
         }
     }
-
+    private IEnumerator EnableAttackCollidersForSeconds(float delay, float duration)
+    {
+        yield return new WaitForSeconds(delay);
+        boss.EnableAttackColliders();
+        yield return new WaitForSeconds(duration);
+        boss.DisableAttackColliders();
+    }
 
 }
