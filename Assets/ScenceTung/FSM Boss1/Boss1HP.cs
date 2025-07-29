@@ -9,18 +9,24 @@ public class Boss1HP : MonoBehaviour
     public TMP_Text textHP;
     public Slider sliderHP;
     public Slider easeSliderHp;
-
+    public Boss1Controller boss1Controller; // Tham chiếu đến controller của boss
     private void Start()
     {
         currHp = maxHp;
         UpdateUI();
-
+        boss1Controller = FindAnyObjectByType<Boss1Controller>(); // Tìm kiếm đối tượng Boss1Controller trong scene
     }
     private void Update()
     {
         if (sliderHP.value != easeSliderHp.value)
         {
             easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currHp, lerpSpeed); // Lerp giá trị thanh máu
+        }
+        if(currHp <= 0)
+        {
+            boss1Controller.enabled = true;
+            boss1Controller.anmt.enabled = true;
+           
         }
     }
     public void UpdateUI()

@@ -8,9 +8,12 @@ public class FireBall : MonoBehaviour
     public GameObject effectHit;          
 
     public float damage = 100f;
+
+    //tham chieu
+    PlayerStatus playerStatus;
     void Start()
     {
-        
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
     }
 
    
@@ -26,8 +29,8 @@ public class FireBall : MonoBehaviour
         if (hitObj.layer == LayerMask.NameToLayer("Enemy") || hitObj.layer == LayerMask.NameToLayer("Ground") || hitObj.layer == LayerMask.NameToLayer("Obstacle"))
         {
             Debug.Log("enemy da cham");
-            float finalDamage = damage;
-           IDamageable idam = other.GetComponent<IDamageable>();
+            float finalDamage = damage *= playerStatus.baseDamage;//nhan len 5 lan;
+            IDamageable idam = other.GetComponent<IDamageable>();
             if (idam != null) { 
                 ShowTextDame(finalDamage);
                 idam.TakeDamage(finalDamage);

@@ -108,7 +108,7 @@ public class DrakonitController : MonoBehaviour,IDamageable
         player = FindClosestPlayer(); // Tìm player gần nhất
         // Gọi hàm Updat của trạng thái hiện tại 
         currentState?.Update();
-       if(sliderHp.value != easeSliderHp.value)
+        if(sliderHp.value != easeSliderHp.value)
         {
             easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHp, easeSpeed);
         }
@@ -128,6 +128,7 @@ public class DrakonitController : MonoBehaviour,IDamageable
         sliderHp.value = currentHp; // Cập nhật thanh máu
         textHp.text = $"{currentHp}/{maxHp}"; // Cập nhật text hiển thị máu
         currentHp = Mathf.Clamp(currentHp, 0, maxHp); // Đảm bảo máu không âm và không vượt quá tối đa
+       
         if (currentHp <= 0)
         {
 
@@ -141,9 +142,10 @@ public class DrakonitController : MonoBehaviour,IDamageable
              if (questMainBacLam != null) { 
             questMainBacLam.UpdateKillEnemy(1);// cập nhật số lượng kẻ thù đã giết
             }
-             animator.SetTrigger("Death");            
-           // ChangeState(new DrakonitDeathState(this));
+             animator.SetTrigger("Death");
+            // ChangeState(new DrakonitDeathState(this));
         }
+        
     }
     
 

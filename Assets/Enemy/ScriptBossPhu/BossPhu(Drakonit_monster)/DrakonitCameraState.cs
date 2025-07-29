@@ -84,10 +84,7 @@ public class DrakonitCameraState : DrakonitState
         yield return new WaitForSeconds(seconds);
         //
         enemy.ChangeState(new DrakonitIdleState(enemy)); // chuyển sang trạng thái chase
-        if (brain != null)// chuyển cam lại thành easeinout
-        {
-            brain.DefaultBlend.Style = CinemachineBlendDefinition.Styles.EaseInOut;
-        }
+       
         enemy.cutScene3.Priority = 0;
         enemy.imgBietDanh.SetActive(false);// ẩn text biêt danh
         characterController.enabled = true; // Bật lại CharacterController
