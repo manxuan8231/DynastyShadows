@@ -24,7 +24,7 @@ public class TimeLineBossDragonDead : MonoBehaviour
     public Image iconState;
     public Sprite spirteState;
     [Header("gameobject")]
-    public GameObject back;
+    public bool ifSaveDataAndLeft = false;
     public bool isCompleteQuest4 = false;
     [SerializeField] private ActiveQuest4 quest4Active;
     void Start()
@@ -39,6 +39,11 @@ public class TimeLineBossDragonDead : MonoBehaviour
     {
         if (isCompleteQuest4) { 
             quest4Active.enabled = false;
+            if (!ifSaveDataAndLeft)
+            {
+                ifSaveDataAndLeft = true; // Đánh dấu đã lưu dữ liệu và rời khỏi
+                npc.currentStage = QuestStage.Quest5InProgress;
+            }
         }
 
     }
@@ -88,7 +93,6 @@ public class TimeLineBossDragonDead : MonoBehaviour
         stateCanvas.SetActive(false); // Ẩn canvas trạng thái
         awardQuest.AwardQuest2(); // Gọi hàm để thưởng nhiệm vụ 4
         yield return new WaitForSeconds(1f); // Chờ 1 giây trước khi ẩn canvas nhiệm vụ
-        back.SetActive(true); // Kích hoạt nút quay lại
         isCompleteQuest4 = true;
         GameSaveData data = SaveManagerMan.LoadGame();
         data.dataQuest.isQuest4Map2 = isCompleteQuest4;
