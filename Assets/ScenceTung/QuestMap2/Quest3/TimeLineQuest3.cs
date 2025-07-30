@@ -13,9 +13,11 @@ public class TimeLineQuest3 : MonoBehaviour
     public bool isQuest3Complete = false; // Biến này có thể dùng để kiểm tra trạng thái quest
 
     private bool hasPlayed = false; // Ngăn cho trigger chạy nhiều lần
+  
 
     private void Start()
     {
+        if (isQuest3Complete) return;
         if (playerInGame == null)
             playerInGame = GameObject.FindWithTag("Player"); // tìm theo tag cho dễ quản lý
 
@@ -40,6 +42,7 @@ public class TimeLineQuest3 : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (isQuest3Complete) return;
         if (hasPlayed) return;
 
         if (other.CompareTag("Player"))
@@ -69,6 +72,9 @@ public class TimeLineQuest3 : MonoBehaviour
         playerTimeLine.SetActive(false);
         gameObject.SetActive(false); // Ẩn đối tượng sau khi timeline kết thúc
         isQuest3Complete = true; // Đánh dấu quest hoàn thành      
+        GameSaveData data = SaveManagerMan.LoadGame(); // Lấy dữ liệu game đã lưu
+        data.dataQuest.isQuest3Map2 = isQuest3Complete; // Cập nhật trạng thái quest
+        SaveManagerMan.SaveGame(data); // Lưu lại dữ liệu game
         Destroy(destroy); // Hủy đối tượng destroy nếu cần thiết
     }
 

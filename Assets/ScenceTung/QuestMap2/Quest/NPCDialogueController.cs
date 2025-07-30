@@ -1,6 +1,5 @@
 ﻿    using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 public enum QuestStage
@@ -67,7 +66,7 @@ public class NPCDialogueController : MonoBehaviour
 
     void Update()
     {
-      
+        
 
         if (currentStage == QuestStage.NotStarted) return;
 
@@ -99,6 +98,7 @@ public class NPCDialogueController : MonoBehaviour
            
         }
     }
+
     private DialogueData GetCurrentDialogueData()
     {
         switch (currentStage)

@@ -73,8 +73,8 @@ public class TeleToSafeZone : MonoBehaviour
         // Tắt loading panel
         if (loadingPanel != null)
             loadingPanel.SetActive(false);
-        yield return new WaitForSeconds(1f);
         playerController.animator.enabled = true; // Bật lại Animator
+        yield return new WaitForSeconds(1f);
         isTeleDone = true; // Đặt cờ để biết nhiệm vụ đã hoàn thành
         gameObject.SetActive(false); // Ẩn đối tượng này sau khi hoàn thành nhiệm vụ
     }

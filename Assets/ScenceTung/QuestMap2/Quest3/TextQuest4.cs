@@ -22,20 +22,20 @@ public class TextQuest4 : MonoBehaviour
     public AudioCanvasState audioCanvasState;
 
     [Header("Gameobject")]
-    public GameObject destroy;
     public GameObject questpoint;
     bool isTextQuest4 = false;
+    [SerializeField] private TimeLineBossDragonDead quest4;
         private void Start()
     {
         questpoint.SetActive(false); // Đảm bảo questpoint không hiển thị ban đầu
     }
     private void Update()
     {
+        if (quest4.isCompleteQuest4) return;
         if(TimeLineQuest3.isQuest3Complete == true && !isTextQuest4)
         {
             isTextQuest4 = true; // Đánh dấu là đã hiển thị text quest 4
             StartCoroutine(TextHN());
-            Destroy(destroy); // Hủy đối tượng destroy nếu cần thiết
         }
     }
   

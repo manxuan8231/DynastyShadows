@@ -88,6 +88,11 @@ public class NPCDeathQuest : MonoBehaviour
 
     IEnumerator ShowQuestCanvas()
     {
+        PlayerControllerState playerControllerState = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControllerState>();
+        playerControllerState.animator.SetTrigger("Idle"); // Set the player's animator to idle state 
+        playerControllerState.animator.SetBool("isWalking", false); // Set the player's animator walk state to false
+        playerControllerState.animator.enabled = false; // Disable the player's animator to prevent movement
+        playerControllerState.enabled = false;
         canvasText.SetActive(true); // Show the canvas text
         contentText.text = "Chuyện này thật tệ, mình cần xem xung quanh khu này còn ai không!?";
         yield return new WaitForSeconds(2f);
@@ -114,6 +119,11 @@ public class NPCDeathQuest : MonoBehaviour
         canvasQuest1.SetActive(true); // Show the quest canvas
         contentQuest.text = "Nhiệm vụ: Tìm kiếm sự sống xung quanh thị trấn.";
         isQuest1 = true; // Set the quest flag to true
+        GameSaveData data = SaveManagerMan.LoadGame(); // Load the saved game data
+        data.dataQuest.isQuest1Map2 = isQuest1;// Update the quest status in the saved data
+        SaveManagerMan.SaveGame(data); // Save the updated game data
+        playerControllerState.animator.enabled = true; // Re-enable the player's animator
+        playerControllerState.enabled = true; // Re-enable the player's controller state    
         transformQuest.SetActive(true); // Activate the transform quest object 
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using TMPro;
 using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,10 +21,14 @@ public class TriggerQuest2 : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip backGround;
     public AudioClip dangerClip;
+    SuccesQuest2 SuccesQuest2;
+    public GameObject tranformQuest;
     private void Start()
     {
+        SuccesQuest2 = FindFirstObjectByType<SuccesQuest2>(); // Find the SuccesQuest2 in the scene
         playerControllerState = FindFirstObjectByType<PlayerControllerState>();
         audioSource = GetComponent<AudioSource>();
+        if (SuccesQuest2.isQuest2Complete) tranformQuest.SetActive(false);
         
     }
     private void OnTriggerEnter(Collider other)
@@ -40,6 +43,10 @@ public class TriggerQuest2 : MonoBehaviour
 
     IEnumerator Show()
     {
+        if (SuccesQuest2.isQuest2Complete) {
+            yield break;
+                }
+        tranformQuest.SetActive(false);
         boxCollider.enabled = false; // Disable the box collider to prevent re-triggering   
         cam1.Priority = 11; // Set the camera priority to 11
         playerControllerState.animator.enabled = false; // Disable player animations
