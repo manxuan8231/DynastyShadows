@@ -9,6 +9,12 @@ public class RegisterManager : MonoBehaviour
     public TMP_Text messageText;
     public string loginScene = "Login";
 
+    void Start()
+    {
+        passwordInput.contentType = TMP_InputField.ContentType.Password;
+        passwordInput.ForceLabelUpdate();
+    }
+
     public void Register()
     {
         string username = usernameInput.text;
