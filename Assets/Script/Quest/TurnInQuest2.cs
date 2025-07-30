@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using TMPro;
+using UnityEditor.Overlays;
 using UnityEngine;
 
 public class TurnInQuest2 : MonoBehaviour
@@ -179,9 +180,13 @@ public class TurnInQuest2 : MonoBehaviour
         }
         playerStatus.IncreasedGold(200); // Thêm kinh nghiệm cho người chơi
         StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
-       Destroy(danLang, 3f); // Ẩn danLang sau khi hoàn thành nhiệm vụ
+     
         Debug.Log("Phần thưởng đã nhận");
-        
+        //save
+        GameSaveData data = SaveManagerMan.LoadGame();
+        data.dataQuest.isQuest2Map1 = true; // Đánh dấu nhiệm vụ đã hoàn thành
+        SaveManagerMan.SaveGame(data); // Lưu dữ liệu game
+        Destroy(danLang, 3f); // Ẩn danLang sau khi hoàn thành nhiệm vụ
     }
    
 

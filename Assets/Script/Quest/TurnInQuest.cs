@@ -79,6 +79,7 @@ public class TurnInQuest : MonoBehaviour
             isContent = false; // Đặt lại trạng thái hội thoại
             npcScript.player.SetActive(false); // Ẩn nhân vật người chơi khi hội thoại bắt đầu
             npcScript.cam.SetActive(true); // Đặt priority của camera NPC cao hơn camera người chơi
+            
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -170,7 +171,10 @@ public class TurnInQuest : MonoBehaviour
                 quest1.questPointer2.SetActive(false); // Ẩn chỉ dẫn nhiệm vụ
                 Destroy(quest1BacLam, 3f); // Ẩn quest1BacLam sau khi hoàn thành nhiệm vụ
                 Debug.Log("Phần thưởng đã nhận");
-
+                //save
+                GameSaveData data = SaveManagerMan.LoadGame();
+                data.dataQuest.isQuest1Map1 = true; // Lưu trạng thái nhiệm vụ
+                SaveManagerMan.SaveGame(data); // Lưu dữ liệu trò chơi
                 break;
             case QuestToStart.LinhCanh:
                

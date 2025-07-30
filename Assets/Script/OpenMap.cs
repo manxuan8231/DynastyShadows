@@ -24,8 +24,8 @@ public class OpenMap : MonoBehaviour
     public PlayerControllerState playerControllerState;
     void Start()
     {
-    mapUIBG.SetActive(false);
-    mapUIConten.SetActive(false);
+        mapUIBG.SetActive(false);
+        mapUIConten.SetActive(false);
         isTurnOffMap =false;
         mapAudio = GetComponent<AudioSource>();
 
@@ -74,6 +74,10 @@ public class OpenMap : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.M)){
              scrollMap.verticalNormalizedPosition = scrollMapVertical; // Top
              scrollMap.horizontalNormalizedPosition = scrollMapHorizontal; // Left (nếu dùng cuộn ngang)
+        }
+        if (!mapUIBG.activeSelf)
+        {
+            isTurnOffMap = false; // Đặt lại biến khi map không hiển thị
         }
     }
 }
