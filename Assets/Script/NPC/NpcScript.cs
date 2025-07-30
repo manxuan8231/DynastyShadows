@@ -194,9 +194,10 @@ public class NPCScript : MonoBehaviour
         coroutine = null;
         if (player != null)
         {
-            player.SetActive(true); cam.SetActive(false);
+            player.SetActive(true); 
+         
             animator.SetBool("Talking", false);
-           
+            cam.SetActive(false);
         }
 
         switch (questToStart)

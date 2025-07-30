@@ -1,31 +1,38 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class OpenShop : MonoBehaviour
 {
     public GameObject shopPanel; // Panel hiển thị cửa hàng
     public GameObject buttonF; // Nút F để mở cửa hàng
-
+    public TextMeshProUGUI textGold;
+    public float gold;
     public bool isButtonF;
 
-    //
+    //tham chieu
     TurnInQuestThuongNhan turnInQuestThuongNhan; // Tham chiếu đến TurnInQuestThuongNhan
+
     void Start()
     {
         shopPanel.SetActive(false); // Ẩn cửa hàng khi bắt đầu
         buttonF.SetActive(false); // Ẩn nút F khi bắt đầu
         turnInQuestThuongNhan = FindAnyObjectByType<TurnInQuestThuongNhan>(); // Lấy tham chiếu đến TurnInQuestThuongNhan
-       
+        textGold.text = $"{gold}";
     }
 
 
     void Update()
     {
+        gold = TurnOffOnUI.gold;
+        textGold.text = $"{gold}";
+        if (TurnOffOnUI.pause) return;//khi ui khac dg bat thi ko cho mo shop
         if (Input.GetKeyDown(KeyCode.F) && isButtonF == true)
         {
             // Đảo trạng thái cửa hàng
             bool isShopActive = !shopPanel.activeSelf;
             shopPanel.SetActive(isShopActive);
 
+            buttonF.SetActive(isShopActive);
             // Dừng hoặc tiếp tục thời gian tùy theo trạng thái cửa hàng
             Time.timeScale = isShopActive ? 0f : 1f;
 
@@ -36,9 +43,12 @@ public class OpenShop : MonoBehaviour
         {
             if (shopPanel.activeSelf) // Nếu cửa hàng đang mở
             {
-                shopPanel.SetActive(false); // Ẩn cửa hàng             
+                shopPanel.SetActive(false); // Ẩn cửa hàng
+                buttonF.SetActive(true );
             }
         }
+       
+       
     }
 
     public void OnTriggerEnter(Collider other)

@@ -30,13 +30,14 @@ public class OpenSkillTree : MonoBehaviour
     public PauseManager pauseManager;
     public PlayerControllerState playerControllerState; // Tham chiếu đến PlayerControllerState
     public PlayerStatus playerStatus;
+    public OpenMap openMap; // Tham chiếu đến OpenMap để kiểm tra trạng thái mở bản đồ
 
-   
     void Start()
     {
         pauseManager = FindAnyObjectByType<PauseManager>();
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
         playerStatus = FindAnyObjectByType<PlayerStatus>();
+        openMap = FindAnyObjectByType<OpenMap>();
         panelSkillTree.SetActive(false);
         buttonCoreBG.enabled = false;
         enoughtSkill.enabled = false;
@@ -53,7 +54,7 @@ public class OpenSkillTree : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T) && isOpenSkillTree &&playerControllerState.animator.enabled) // Nhấn phím T để mở/đóng Skill Tree
+        if (Input.GetKeyDown(KeyCode.T) && isOpenSkillTree &&playerControllerState.animator.enabled && !openMap.isTurnOffMap) // Nhấn phím T để mở/đóng Skill Tree
         {
             bool willOpen = !panelSkillTree.activeSelf; // Trạng thái sau khi nhấn
 
@@ -63,7 +64,7 @@ public class OpenSkillTree : MonoBehaviour
             Cursor.lockState = willOpen ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = willOpen;
             Time.timeScale = willOpen ? 0.0f : 1.0f;//
-            
+            TurnOffOnUI.pause = willOpen;
             // Mặc định mở Flexible Tree
             flexibleSkill.SetActive(true);
             buttonFlexibleBG.enabled = true;

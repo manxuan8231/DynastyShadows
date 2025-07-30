@@ -138,6 +138,7 @@ public class PlayerControllerState : MonoBehaviour
         isRollBack = true;
         isJump = true;
         playerStatus.isHit = true; // Đặt trạng thái isHit về true khi nhân vật bị ẩn
+        playerStatus.isTakeHeal = true; // Đặt trạng thái isTakeHeal về true khi nhân vật bị ẩn
     }
    
     //tinh toan tim enemy gan nhat

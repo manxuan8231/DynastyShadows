@@ -151,7 +151,7 @@ public class PlayerStatus : MonoBehaviour
         shieldHealthObject.SetActive ( false);
        
         PlayerStatsHandler.LoadStats(out score, out currentLevel, out gold);//lưu
-
+        TurnOffOnUI.gold = gold;
     }
     //update lại toàn bộ
     public void UpdateUI()
@@ -209,7 +209,7 @@ public class PlayerStatus : MonoBehaviour
         {
             easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHp, easeSpeed); // Trượt thanh máu
         }
-
+        TurnOffOnUI.gold = gold;
     }
 
     public void OnDisable()
@@ -350,9 +350,21 @@ public class PlayerStatus : MonoBehaviour
                 StartCoroutine(WaitStun(4f)); // gọi hàm WaitHit với thời gian 0.5 giây
                 audioSource.PlayOneShot(audioHit);
             }
+            if (currentHp <= 0)
+            {
+                comboAttack.isAttack = true; // Bật lại tấn công
+                playerController.isController = true; // Bật lại điều khiển nhân vật
+                playerController.animator.SetBool("Stun", false);
+                effectStun.SetActive(false);
+                playerController.animator.SetTrigger("Die");
+                audioSource.PlayOneShot(audioDie);
+                playerController.ChangeState(new PlayerDieState(playerController));
+
+            }
         }
-         
        
+
+
     }
     public void TakeHealShield(float amount)//máu ảo shield
     {
@@ -614,12 +626,14 @@ public class PlayerStatus : MonoBehaviour
 
         }
     }
+
+    //nhan vang
     public void IncreasedGold(int value)
     {
         gold += value;
         UpdateTextUIGold();
         SavePlayerStats();
-
+        TurnOffOnUI.gold = gold;
 
     }
 

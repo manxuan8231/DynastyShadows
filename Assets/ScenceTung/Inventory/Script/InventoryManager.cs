@@ -17,13 +17,14 @@ public class InventoryManager : MonoBehaviour
     private PauseManager pausedManager;
     public ButtonSave buttonSave;
     public PlayerControllerState pl;
+    public OpenMap openMap;
     void Update()
     {
         if (pausedManager == null) pausedManager = FindAnyObjectByType<PauseManager>();
         audioSource = GameObject.Find("Inventory").GetComponent<AudioSource>();
-        if (Input.GetButtonDown("Inventory") && isOpenInventory && pl.animator.enabled)
+        if (Input.GetButtonDown("Inventory") && isOpenInventory && pl.animator.enabled && !openMap.isTurnOffMap)
             Inventory();
-        if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory && pl.animator.enabled)
+        if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory && pl.animator.enabled && !openMap.isTurnOffMap)
             EquipmentMenu();
     }
     void Start()
@@ -33,6 +34,7 @@ public class InventoryManager : MonoBehaviour
         LoadInventoryFromSave(data);
         LoadItemSOFromSave(data);
         pl = FindAnyObjectByType<PlayerControllerState>();
+        openMap = FindAnyObjectByType<OpenMap>();
     }
 
     public void Inventory()
@@ -43,7 +45,7 @@ public class InventoryManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             inventoryMenu.SetActive(false);
-            
+            TurnOffOnUI.pause = false;
             equipmentMenu.SetActive(false);
             pausedManager.canvasPause.SetActive(false);
         }
@@ -53,7 +55,7 @@ public class InventoryManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             inventoryMenu.SetActive(true);
-           
+            TurnOffOnUI.pause = true;
             equipmentMenu.SetActive(false);
             pausedManager.ButtonInven();
             pausedManager.canvasPause.SetActive(true);
@@ -70,6 +72,7 @@ public class InventoryManager : MonoBehaviour
             inventoryMenu.SetActive(false);
             pausedManager.canvasPause.SetActive(false);
             equipmentMenu.SetActive(false);
+            TurnOffOnUI.pause = false;
         }
         else
         {
@@ -81,6 +84,7 @@ public class InventoryManager : MonoBehaviour
             equipmentMenu.SetActive(true);
             pausedManager.canvasPause.SetActive(true);
             pausedManager.ButtonEquipment();
+            TurnOffOnUI.pause = true;
         }
     }
 

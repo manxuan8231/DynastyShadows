@@ -30,11 +30,13 @@ public class PauseManager : MonoBehaviour
     public AudioClip clickButtonSound; // Thêm biến AudioClip để chứa âm thanh khi nhấn nút
     public InventoryManager inventoryManager; // Thêm biến InventoryManager để quản lý kho
     public PlayerControllerState playerController; // Tham chiếu đến PlayerController
+    public OpenMap openMap; // Tham chiếu đến OpenMap để kiểm tra trạng thái mở bản đồ
     void Start()
     {
         playerController = FindAnyObjectByType<PlayerControllerState>();
         openSkillTree =FindAnyObjectByType<OpenSkillTree>();
         inventoryManager = FindAnyObjectByType<InventoryManager>();
+        openMap = FindAnyObjectByType<OpenMap>();
         audioSource = GetComponent<AudioSource>();
         canvasPause.SetActive(false);
         panelQuitGame.SetActive(false);
@@ -48,13 +50,13 @@ public class PauseManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && inventoryManager.isOpenInventory && playerController.animator.enabled)
+        if (Input.GetKeyDown(KeyCode.Escape) && inventoryManager.isOpenInventory && playerController.animator.enabled && !openMap.isTurnOffMap)
         {
             bool isPaused = !canvasPause.activeSelf;
             canvasPause.SetActive(isPaused);
-           
+            TurnOffOnUI.pause = isPaused;
             Time.timeScale = isPaused ? 0f : 1f;
-
+            panelQuitGame.SetActive(false);
             // Ẩn hoặc hiện chuột
             Cursor.visible = isPaused;
             Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
