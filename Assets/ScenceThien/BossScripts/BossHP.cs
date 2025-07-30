@@ -9,6 +9,7 @@ public class BossHP : MonoBehaviour, IDamageable
     public float currentHealth;
     public float maxHealth = 10000f;
     public float lerpSpeed = 0.03f; // Tốc độ 
+    public float showHpDistance = 50f; // khoảng cách tối đa để hiển thị thanh máu
     private BossScript bossScript;
     private bool isDead = false;
     private bool hasEnteredPhase2 = false;
@@ -34,11 +35,22 @@ public class BossHP : MonoBehaviour, IDamageable
 
     void Update()
     {
-        if(sliderHp != null && easeSliderHp != null)
+        if (sliderHp != null && easeSliderHp != null)
         {
+            // Làm mượt thanh máu
             if (sliderHp.value != easeSliderHp.value)
             {
                 easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHealth, lerpSpeed);
+            }
+
+            // Ẩn/hiện thanh máu theo khoảng cách
+            if (bossScript != null && bossScript.player != null)
+            {
+                float distance = Vector3.Distance(transform.position, bossScript.player.position);
+                bool show = distance <= showHpDistance;
+
+                sliderHp.gameObject.SetActive(show);
+                easeSliderHp.gameObject.SetActive(show);
             }
         }
     }
