@@ -7,6 +7,7 @@ public class TheEnd : MonoBehaviour
     public GameObject btnTurnOff; // Nút ẩn đối tượng sau khi thực hiện hành động
     public float time = 15f; // Thời gian đợi trước khi thực hiện hành động
     public GameObject playerInGame;
+    public GameObject mainCamera;
     void Start()
     {
         playerInGame = GameObject.FindGameObjectWithTag("Player");
@@ -20,7 +21,7 @@ public class TheEnd : MonoBehaviour
     public IEnumerator WaitTheEnd(float time)
     {
         playerInGame.SetActive(false); // Ẩn đối tượng player trong game
-
+        mainCamera.SetActive(false);
         yield return new WaitForSeconds(time);
 
        btnQuit.SetActive(true); // Hiển thị nút thoát game sau thời gian chờ
