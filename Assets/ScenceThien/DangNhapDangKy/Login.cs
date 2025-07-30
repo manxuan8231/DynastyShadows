@@ -15,6 +15,11 @@ public class LoginManager : MonoBehaviour
     {
         filePath = Application.persistentDataPath + "/users.json";
     }
+    void Start()
+    {
+        passwordInput.contentType = TMP_InputField.ContentType.Password;
+        passwordInput.ForceLabelUpdate();
+    }
 
     public void TryLogin()
     {
