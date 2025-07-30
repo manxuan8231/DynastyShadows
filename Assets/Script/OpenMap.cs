@@ -8,6 +8,7 @@ public class OpenMap : MonoBehaviour
     public AudioSource mapAudio;
     public AudioClip mapClip;
     public bool isOpenMap;
+    public bool isTurnOffMap = false; // Biến để kiểm tra xem có tắt map hay không
     //scroll map
     public ScrollRect scrollMap;
     public float scrollMapVertical;
@@ -25,7 +26,8 @@ public class OpenMap : MonoBehaviour
     {
     mapUIBG.SetActive(false);
     mapUIConten.SetActive(false);
-    mapAudio = GetComponent<AudioSource>();
+        isTurnOffMap =false;
+        mapAudio = GetComponent<AudioSource>();
 
     // Ẩn chuột lúc bắt đầu nếu cần
     Cursor.visible = false;
@@ -45,6 +47,7 @@ public class OpenMap : MonoBehaviour
         {
             if (mapUIConten.activeSelf)
             {
+                isTurnOffMap = false;
                 mapAudio.PlayOneShot(mapClip);
                 mapUIConten.SetActive(false);
                 mapUIBG.SetActive(false);
@@ -56,6 +59,7 @@ public class OpenMap : MonoBehaviour
             }
             else
             {
+                isTurnOffMap = true;
                 mapAudio.PlayOneShot(mapClip);
                 mapUIConten.SetActive(true);
                 mapUIBG.SetActive(true);
@@ -66,13 +70,7 @@ public class OpenMap : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
             }
         }
-        if(Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.T) || Input.GetKeyDown(KeyCode.E))
-        {
-                
-                mapUIConten.SetActive(false);
-                mapUIBG.SetActive(false);
-               
-        }
+       
         if(Input.GetKeyDown(KeyCode.M)){
              scrollMap.verticalNormalizedPosition = scrollMapVertical; // Top
              scrollMap.horizontalNormalizedPosition = scrollMapHorizontal; // Left (nếu dùng cuộn ngang)

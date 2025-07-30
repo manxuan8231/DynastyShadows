@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
-using UnityEngine.UIElements;
+
 
 public class DrakonitCameraState : DrakonitState
 {
@@ -90,10 +89,12 @@ public class DrakonitCameraState : DrakonitState
         characterController.enabled = true; // Bật lại CharacterController
         comboAttack.enabled = true; // Kích hoạt lại ComboAttack cua player
         characterController.animator.enabled = true; // Vô hiệu hóa Animator của player
+        enemy.isCamera = true; // Đặt trạng thái isCamera về true
         // khoa Hiện chuột
         UnityEngine.Cursor.visible = false;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         enemy.isAttack = true; // bật trạng thái tấn công
         enemy.isSkill = true;
+
     }
 }

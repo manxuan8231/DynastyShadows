@@ -350,9 +350,21 @@ public class PlayerStatus : MonoBehaviour
                 StartCoroutine(WaitStun(4f)); // gọi hàm WaitHit với thời gian 0.5 giây
                 audioSource.PlayOneShot(audioHit);
             }
+            if (currentHp <= 0)
+            {
+                comboAttack.isAttack = true; // Bật lại tấn công
+                playerController.isController = true; // Bật lại điều khiển nhân vật
+                playerController.animator.SetBool("Stun", false);
+                effectStun.SetActive(false);
+                playerController.animator.SetTrigger("Die");
+                audioSource.PlayOneShot(audioDie);
+                playerController.ChangeState(new PlayerDieState(playerController));
+
+            }
         }
-         
        
+
+
     }
     public void TakeHealShield(float amount)//máu ảo shield
     {

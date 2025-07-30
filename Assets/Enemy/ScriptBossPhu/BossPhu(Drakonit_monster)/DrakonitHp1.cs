@@ -27,13 +27,24 @@ public class DrakonitHp1 : MonoBehaviour, IDamageable
         slider.SetActive(false); // Ẩn thanh máu
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (sliderHp.value != easeSliderHp.value)
         {
             easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHp, easeSpeed);
         }
+
+        if (!enemy.isCamera) return;
+        float dis = Vector3.Distance(enemy.transform.position, enemy.player.transform.position);     
+        if (dis > 50f )
+        {
+            slider.SetActive(false); // Ẩn thanh máu nếu khoảng cách lớn hơn 50
+        }
+        else
+        {
+            slider.SetActive(true); // Hiện thanh máu nếu khoảng cách nhỏ hơn hoặc bằng 50
+        }
+       
     }
     public void TakeDamage(float amount)
     {
