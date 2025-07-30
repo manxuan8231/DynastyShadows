@@ -74,12 +74,11 @@ public class AssasinHp : MonoBehaviour,IDamageable
         // Kết thúc cutscene, chơi tiếp
         playerInGame.SetActive(true);
         playerTimeLine.SetActive(false);
-        questManager.isQuest2Map2Complete = true;
         timeLine.SetActive(false); // Ẩn đối tượng sau khi timeline kết thúc
         mainCameraEnd.SetActive(true);
-        GameSaveData data = SaveManagerMan.LoadGame();
-        data.dataQuest.isQuestMap2 = questManager.isQuest2Map2Complete; // Cập nhật trạng thái nhiệm vụ
-        SaveManagerMan.SaveGame(data); // Lưu dữ liệu nhiệm vụ
+ /*       GameSaveData data = SaveManagerMan.LoadGame();
+        data.dataQuest.isQuestMap2 = questManager.isQuest2Map2Complete; // Cập nhật trạng thái nhiệm vụ */
+       /* SaveManagerMan.SaveGame(data); // Lưu dữ liệu nhiệm vụ*/
     }
     void UpdateUI()
     {

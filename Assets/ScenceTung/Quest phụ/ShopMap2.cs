@@ -11,7 +11,7 @@ public class ShopMap2 : MonoBehaviour
     public PlayableDirector playableDirector; 
     public GameObject ThuongNhan;
     NPCDialogueController npc;
-
+    public bool isTimelineOpen = false;
     private void Start()
     {
         if (playerInGame == null)
@@ -21,8 +21,9 @@ public class ShopMap2 : MonoBehaviour
 
     private void Update()
     {
-        if (npc.currentStage == QuestStage.Quest5Completed )
+        if (npc.currentStage == QuestStage.Quest5Completed && !isTimelineOpen)
         {
+            isTimelineOpen = true; // Đánh dấu là đã mở timeline
             StartCoroutine(StartQuest());
         }
     }

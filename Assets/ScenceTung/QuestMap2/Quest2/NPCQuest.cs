@@ -1,6 +1,7 @@
 ﻿using Pathfinding;
 using System.Collections;
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,8 +29,7 @@ public class NPCQuest : MonoBehaviour
     public bool isActiveBtn = false;
    public bool hasFinishedDialogue = false; // THÊM BIẾN NÀY
     bool hasPlayedTalkingAnim = false;
-
-
+    public CinemachineCamera camNoiChuyen;
     public GameObject trigger;
     Coroutine Coroutine;
     public bool isSitUp = false;
@@ -62,6 +62,10 @@ public class NPCQuest : MonoBehaviour
 
     void Update()
     {
+        if (succesQuest2.isQuest2Complete)
+        {
+            Destroy(gameObject);
+        }
         enemyMap2_1 = FindFirstObjectByType<EnemyMap2_1>();
         if (killEnemy >= 6 && !isSitUp)
         {
@@ -135,9 +139,8 @@ public class NPCQuest : MonoBehaviour
     }
     private IEnumerator ReadContent()
     {
-        PlayerControllerState playerControllerState = FindFirstObjectByType<PlayerControllerState>();
-        playerControllerState.enabled = false; // Vô hiệu hóa điều khiển người chơi
-        playerControllerState.animator.SetTrigger("isTalk"); // Vô hiệu hóa animator của người chơi
+        player.gameObject.SetActive(false);
+        camNoiChuyen.Priority = 11; // Đặt camera priority để hiển thị hội thoại
         Cursor.lockState = CursorLockMode.None; // Mở khóa con trỏ chuột
         Cursor.visible = true; // Hiển thị con trỏ chuột
         for (int i = 0; i < contentTextQuest.Length; i++)
@@ -185,9 +188,8 @@ public class NPCQuest : MonoBehaviour
     }
     public void EndContent()
     {
-        PlayerControllerState playerControllerState = FindFirstObjectByType<PlayerControllerState>();
-        playerControllerState.enabled = true; // Bật lại điều khiển người chơi
-        playerControllerState.animator.SetTrigger("Idle"); // Bật lại animator của người chơi
+        player.gameObject.SetActive(true); // Kích hoạt lại người chơ
+        camNoiChuyen.Priority = 0; // Trả lại priority cho camera chính
         Cursor.lockState = CursorLockMode.Locked; // Khóa con trỏ chuột
         Cursor.visible = false; // Ẩn con trỏ chuột
         questionGameCanvas.SetActive(false);

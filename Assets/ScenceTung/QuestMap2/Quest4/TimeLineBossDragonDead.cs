@@ -25,6 +25,8 @@ public class TimeLineBossDragonDead : MonoBehaviour
     public Sprite spirteState;
     [Header("gameobject")]
     public GameObject back;
+    public bool isCompleteQuest4 = false;
+    [SerializeField] private ActiveQuest4 quest4Active;
     void Start()
     {
         if (playerInGame == null)
@@ -33,7 +35,13 @@ public class TimeLineBossDragonDead : MonoBehaviour
         _light = GameObject.Find("Directional Light(None)").GetComponent<Light>(); // Tìm kiếm ánh sáng trong scene
         npc = FindAnyObjectByType<NPCDialogueController>(); // Tìm kiếm NPCDialogueController trong scene
     }
-   
+    private void FixedUpdate()
+    {
+        if (isCompleteQuest4) { 
+            quest4Active.enabled = false;
+        }
+
+    }
     public void Run()
     {
              boss.SetActive(false); // Kích hoạt boss sau khi timeline kết thúc
@@ -53,6 +61,7 @@ public class TimeLineBossDragonDead : MonoBehaviour
         // Kết thúc cutscene, chơi tiếp
         playerInGame.SetActive(true);
         playerTimeLine.SetActive(false);
+        // Lưu trạng thái nhiệm vụ đã hoàn thành
         Destroy(objDestroy); // Xóa đối tượng không cần thiết
         StartCoroutine(ChangedWeather()); // Thay đổi thời tiết sau khi timeline kết thúc
     }
@@ -80,7 +89,11 @@ public class TimeLineBossDragonDead : MonoBehaviour
         awardQuest.AwardQuest2(); // Gọi hàm để thưởng nhiệm vụ 4
         yield return new WaitForSeconds(1f); // Chờ 1 giây trước khi ẩn canvas nhiệm vụ
         back.SetActive(true); // Kích hoạt nút quay lại
+        isCompleteQuest4 = true;
+        GameSaveData data = SaveManagerMan.LoadGame();
+        data.dataQuest.isQuest4Map2 = isCompleteQuest4;
         npc.currentStage = QuestStage.Quest5InProgress;
+        SaveManagerMan.SaveGame(data);
         gameObject.SetActive(false); // Ẩn đối tượng sau khi timeline kết thúc
 
     }
