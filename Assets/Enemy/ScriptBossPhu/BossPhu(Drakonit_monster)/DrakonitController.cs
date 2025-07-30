@@ -4,7 +4,6 @@ using Unity.Cinemachine;
 
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
 
 // Script điều khiển hành vi của enemy Drakonit bằng State Machine
@@ -21,7 +20,7 @@ public class DrakonitController : MonoBehaviour
     public bool isWalking = true; // Kiểm tra trạng thái đi bộ khi ở gần player
     public bool isWalkLeft = false;//dng để cập nhập vị trí liên tục
     public bool isWalkRight = false;//dng để cập nhập vị trí liên tục
- 
+    public bool isCamera = false; // Kiểm tra trạng thái camera
     //EffectSkill
     public GameObject skillEffect1; // Hiệu ứng kỹ năng 1
    
@@ -84,6 +83,7 @@ public class DrakonitController : MonoBehaviour
         //text
         textConten.enabled = false; // ẩn text hoi thoai
         imgBietDanh.SetActive(false); // ẩn text biêt danh
+        isCamera = false; // Bắt đầu không ở trạng thái camera
         // Bắt đầu với trạng thái camera
         ChangeState(new DrakonitCameraState(this));
     }

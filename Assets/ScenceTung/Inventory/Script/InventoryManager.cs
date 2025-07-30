@@ -17,13 +17,14 @@ public class InventoryManager : MonoBehaviour
     private PauseManager pausedManager;
     public ButtonSave buttonSave;
     public PlayerControllerState pl;
+    public OpenMap openMap;
     void Update()
     {
         if (pausedManager == null) pausedManager = FindAnyObjectByType<PauseManager>();
         audioSource = GameObject.Find("Inventory").GetComponent<AudioSource>();
-        if (Input.GetButtonDown("Inventory") && isOpenInventory && pl.animator.enabled)
+        if (Input.GetButtonDown("Inventory") && isOpenInventory && pl.animator.enabled && !openMap.isTurnOffMap)
             Inventory();
-        if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory && pl.animator.enabled)
+        if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory && pl.animator.enabled && !openMap.isTurnOffMap)
             EquipmentMenu();
     }
     void Start()
@@ -33,6 +34,7 @@ public class InventoryManager : MonoBehaviour
         LoadInventoryFromSave(data);
         LoadItemSOFromSave(data);
         pl = FindAnyObjectByType<PlayerControllerState>();
+        openMap = FindAnyObjectByType<OpenMap>();
     }
 
     public void Inventory()
