@@ -144,7 +144,7 @@ public class PlayerCurrentState : PlayerState
         if (Input.GetKeyDown(KeyCode.LeftControl) && 
             player.isGrounded &&
             player.playerStatus.currentMana > 100 &&
-            Time.time >= player.rollColdownTime + 1.5f && player.isRollBack && player.playerStatus.isHit)
+            Time.time >= player.rollColdownTime + 1.5f && player.isRollBack && player.isController)
         {
             
             player.playerStatus.TakeMana(100);
@@ -171,21 +171,27 @@ public class PlayerCurrentState : PlayerState
                         Quaternion targetRotation = Quaternion.LookRotation(direction);
                         player.transform.rotation = targetRotation; // hoặc dùng Slerp nếu muốn mượt
                     }
-                }
-                //slowmotion
-                if (player.isEnemyPreparingAttack)
-                {
-                    player.isEnemyPreparingAttack = false;
-                   player.StartCoroutine(SlowMotionDash());
+
+                    //slowmotion
+                    float distanceToEnemy = Vector3.Distance(player.transform.position, enemy.position);
+                    if (player.isEnemyPreparingAttack && distanceToEnemy < 5f)
+                    {
+                        player.isEnemyPreparingAttack = false;
+                        player.StartCoroutine(SlowMotionDash());
+                    }
+                    else
+                    {
+
+                        player.animator.SetTrigger("RollBack");
+                    }
                 }
                 else
                 {
-                    
+                    // Không có enemy → vẫn RollBack
                     player.animator.SetTrigger("RollBack");
                 }
 
 
-                   
             }
 
             player.rollColdownTime = Time.time;

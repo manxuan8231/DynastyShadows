@@ -220,7 +220,7 @@ public class PlayerStatus : MonoBehaviour
     //hp
     public void TakeHealth(float amount ,GameObject enemy, string animName,float timeHit)
     {
-        if( currentHp>0&& isTakeHeal == true && isShieldActive == false)
+        if( currentHp > 0 && isTakeHeal == true && isShieldActive == false)
         {          
             currentHp -= amount;
             currentHp = Mathf.Clamp(currentHp, 0, maxHp);
@@ -228,11 +228,11 @@ public class PlayerStatus : MonoBehaviour
             textHealth.text = ((int)currentHp).ToString() + " / " + ((int)maxHp).ToString();
            
             if (isStun == true && isHit == true) //nếu bị hit r thi đợi 1 giay ms cho tiep
-             {
+            {
                 playerController.animator.SetTrigger(animName);
                 StartCoroutine(WaitHit(timeHit)); //tgian cooldown bi hit lan tiep theo
                 audioSource.PlayOneShot(audioHit);
-             }
+            }
             if (currentHp <= 0)
             {
                 
@@ -574,9 +574,9 @@ public class PlayerStatus : MonoBehaviour
         isHit = false; // Tắt trạng thái bị hit
       
         playerController.isController = false;// lại điều khiển nhân vật
-      yield return new WaitForSeconds(0.3f);// thgian di chuyen dc
+        yield return new WaitForSeconds(0.2f);// thgian di chuyen dc
         playerController.isController = true; // Bật lại điều khiển nhân vật
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(time);//thgian cooldown bi hit
         isHit = true; // Bật lại trạng thái bị hit
     }
     void LevelUp()
