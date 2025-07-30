@@ -151,7 +151,7 @@ public class PlayerStatus : MonoBehaviour
         shieldHealthObject.SetActive ( false);
        
         PlayerStatsHandler.LoadStats(out score, out currentLevel, out gold);//lưu
-
+        TurnOffOnUI.gold = gold;
     }
     //update lại toàn bộ
     public void UpdateUI()
@@ -209,7 +209,7 @@ public class PlayerStatus : MonoBehaviour
         {
             easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, currentHp, easeSpeed); // Trượt thanh máu
         }
-
+        TurnOffOnUI.gold = gold;
     }
 
     public void OnDisable()
@@ -626,12 +626,14 @@ public class PlayerStatus : MonoBehaviour
 
         }
     }
+
+    //nhan vang
     public void IncreasedGold(int value)
     {
         gold += value;
         UpdateTextUIGold();
         SavePlayerStats();
-
+        TurnOffOnUI.gold = gold;
 
     }
 

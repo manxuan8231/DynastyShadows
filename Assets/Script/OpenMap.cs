@@ -52,7 +52,7 @@ public class OpenMap : MonoBehaviour
                 mapUIConten.SetActive(false);
                 mapUIBG.SetActive(false);
                 Time.timeScale = 1f;
-
+                TurnOffOnUI.pause = false;
                 // Ẩn chuột khi tắt map
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
@@ -63,7 +63,7 @@ public class OpenMap : MonoBehaviour
                 mapAudio.PlayOneShot(mapClip);
                 mapUIConten.SetActive(true);
                 mapUIBG.SetActive(true);
-
+                TurnOffOnUI.pause = true;
                 Time.timeScale = 0f;
                 // Hiện chuột khi mở map
                 Cursor.visible = true;

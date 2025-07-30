@@ -54,7 +54,7 @@ public class PauseManager : MonoBehaviour
         {
             bool isPaused = !canvasPause.activeSelf;
             canvasPause.SetActive(isPaused);
-           
+            TurnOffOnUI.pause = isPaused;
             Time.timeScale = isPaused ? 0f : 1f;
             panelQuitGame.SetActive(false);
             // Ẩn hoặc hiện chuột

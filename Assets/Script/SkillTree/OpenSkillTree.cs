@@ -64,7 +64,7 @@ public class OpenSkillTree : MonoBehaviour
             Cursor.lockState = willOpen ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = willOpen;
             Time.timeScale = willOpen ? 0.0f : 1.0f;//
-            
+            TurnOffOnUI.pause = willOpen;
             // Mặc định mở Flexible Tree
             flexibleSkill.SetActive(true);
             buttonFlexibleBG.enabled = true;

@@ -45,7 +45,7 @@ public class InventoryManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             inventoryMenu.SetActive(false);
-            
+            TurnOffOnUI.pause = false;
             equipmentMenu.SetActive(false);
             pausedManager.canvasPause.SetActive(false);
         }
@@ -55,7 +55,7 @@ public class InventoryManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             inventoryMenu.SetActive(true);
-           
+            TurnOffOnUI.pause = true;
             equipmentMenu.SetActive(false);
             pausedManager.ButtonInven();
             pausedManager.canvasPause.SetActive(true);
@@ -72,6 +72,7 @@ public class InventoryManager : MonoBehaviour
             inventoryMenu.SetActive(false);
             pausedManager.canvasPause.SetActive(false);
             equipmentMenu.SetActive(false);
+            TurnOffOnUI.pause = false;
         }
         else
         {
@@ -83,6 +84,7 @@ public class InventoryManager : MonoBehaviour
             equipmentMenu.SetActive(true);
             pausedManager.canvasPause.SetActive(true);
             pausedManager.ButtonEquipment();
+            TurnOffOnUI.pause = true;
         }
     }
 

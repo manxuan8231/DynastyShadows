@@ -42,7 +42,7 @@ public class TurnInQuest5 : MonoBehaviour
         playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
-        npcScript = FindAnyObjectByType<NPCScript>();
+        npcScript = GetComponent<NPCScript>();
         NPCPanel.SetActive(false);
         buttonSkip.SetActive(false);
         buttonF.SetActive(false);
