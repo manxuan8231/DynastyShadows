@@ -47,6 +47,11 @@ public class ActiveQuest6 : MonoBehaviour
             Point.SetActive(false); // Hiện điểm quest nếu nhiệm vụ chưa bắt đầu
             return;
         }
+        if (npcDialogueController.currentStage != QuestStage.Quest6InProgress)
+        {
+            Point.SetActive(false); // Hiện điểm quest nếu nhiệm vụ chưa bắt đầu
+            return;
+        }
         if (npcDialogueController.currentStage == QuestStage.Quest6InProgress)
         {
             Point.SetActive(true); 

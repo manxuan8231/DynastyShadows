@@ -12,6 +12,7 @@ public class ShopMap2 : MonoBehaviour
     public GameObject ThuongNhan;
     NPCDialogueController npc;
     public bool isTimelineOpen = false;
+    public GameObject quest6;
     private void Start()
     {
         if (playerInGame == null)
@@ -27,9 +28,10 @@ public class ShopMap2 : MonoBehaviour
             StartCoroutine(StartQuest());
         }
     }
-    IEnumerator StartQuest()
+    public IEnumerator StartQuest()
     {
         yield return new WaitForSeconds(3f);
+        quest6.SetActive(false);
         playerInGame.SetActive(false); // Ẩn player thật
         timeLine.SetActive(true); // Bật timeline
         playableDirector.Play(); // Chạy timeline
@@ -44,6 +46,7 @@ public class ShopMap2 : MonoBehaviour
         playerInGame.SetActive(true);
         playerTimeLine.SetActive(false);
         ThuongNhan.SetActive(true); // Kích hoạt mô hình sau khi timeline kết thúc
+        quest6.SetActive(true);
         timeLine.SetActive(false); // Ẩn đối tượng sau khi timeline kết thúc
 
     }
