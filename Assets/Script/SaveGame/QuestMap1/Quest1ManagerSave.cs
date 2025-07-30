@@ -6,8 +6,10 @@ public class Quest1ManagerSave : MonoBehaviour
     public GameObject quest2;
     public GameObject quest3;
     public GameObject questShop;
+
     void Start()
     {
+       
         DataQuest dataQuest = SaveManagerMan.LoadGame().dataQuest;
         // nếu quest1 bằng true thì tắt quest1 bật quest2
         if (dataQuest.isQuest1Map1 == true)
@@ -30,11 +32,9 @@ public class Quest1ManagerSave : MonoBehaviour
         {
             quest2.SetActive(true);
         }
-
+       
+       
     }
 
-    void Update()
-    {
-        
-    }
+
 }

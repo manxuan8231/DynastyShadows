@@ -192,6 +192,7 @@ public class TutorialManager : MonoBehaviour
                 }
                 if (isCompleteInven)//hoan thanh nv
                 {
+
                     stepCompleted[8] = true;
                     StartCoroutine(WaitShowStep(9));
                 }
@@ -262,7 +263,8 @@ public class TutorialManager : MonoBehaviour
             case 9:
                 tutorialTextV1.text = "";               
                 tutorialPanelV1.SetActive(false); // Ẩn panel trước khi hiển thị bước mới
-               
+                Cursor.lockState = CursorLockMode.Locked; // Unlock the cursor
+                Cursor.visible = false; // Show the cursor
                 yield return new WaitForSeconds(1f);              
                 TutorialProgressHandler.MarkTutorialDone(); //  Lưu trạng thái hoàn thành tutorial
 

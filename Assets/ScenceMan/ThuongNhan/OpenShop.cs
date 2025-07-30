@@ -31,7 +31,7 @@ public class OpenShop : MonoBehaviour
             // Đảo trạng thái cửa hàng
             bool isShopActive = !shopPanel.activeSelf;
             shopPanel.SetActive(isShopActive);
-
+            TurnOffOnUI.openShop = isShopActive; // Cập nhật trạng thái cửa hàng trong TurnOffOnUI
             buttonF.SetActive(isShopActive);
             // Dừng hoặc tiếp tục thời gian tùy theo trạng thái cửa hàng
             Time.timeScale = isShopActive ? 0f : 1f;
@@ -39,14 +39,7 @@ public class OpenShop : MonoBehaviour
             Cursor.visible = isShopActive; // Hiện hoặc ẩn con trỏ chuột
             Cursor.lockState = isShopActive ? CursorLockMode.None : CursorLockMode.Locked; // Mở hoặc khóa con trỏ chuột
         }
-        else if(Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.M) || Input.GetKeyDown(KeyCode.T) || Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (shopPanel.activeSelf) // Nếu cửa hàng đang mở
-            {
-                shopPanel.SetActive(false); // Ẩn cửa hàng
-                buttonF.SetActive(true );
-            }
-        }
+       
        
        
     }

@@ -54,7 +54,9 @@ public class OpenSkillTree : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T) && isOpenSkillTree &&playerControllerState.animator.enabled && !openMap.isTurnOffMap) // Nhấn phím T để mở/đóng Skill Tree
+       
+        if (Input.GetKeyDown(KeyCode.T) && isOpenSkillTree &&playerControllerState.animator.enabled 
+            && !openMap.isTurnOffMap && TurnOffOnUI.openShop == false) // Nhấn phím T để mở/đóng Skill Tree
         {
             bool willOpen = !panelSkillTree.activeSelf; // Trạng thái sau khi nhấn
 

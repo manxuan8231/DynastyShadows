@@ -38,6 +38,9 @@ public class TurnInQuestThuongNhan : MonoBehaviour
     public AudioClip audioSkip; // Âm thanh khi bấm skip
     void Start()
     {
+        
+        
+            
         playerStatus = FindAnyObjectByType<PlayerStatus>();
   
         playerController = FindAnyObjectByType<PlayerControllerState>();
@@ -52,7 +55,7 @@ public class TurnInQuestThuongNhan : MonoBehaviour
         NPCPanel.SetActive(false);
         buttonSkip.SetActive(false);
         buttonF.SetActive(false); // Ẩn nút F khi bắt đầu
-        openShop.enabled = false; // Vô hiệu hóa OpenShop nếu không cần thiết
+      //  openShop.enabled = false; // Vô hiệu hóa OpenShop nếu không cần thiết
         niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp khi bắt đầu
         NPCName.text = "";
         NPCContent.text = "";
@@ -162,8 +165,11 @@ public class TurnInQuestThuongNhan : MonoBehaviour
         //phan thuong
         playerStatus.IncreasedGold(300); ; // Thưởng kinh nghiệm
         StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
+        //save
+        GameSaveData data = SaveManagerMan.LoadGame();
+        data.dataQuest.isQuestShopMap1 = true; // Đánh dấu nhiệm vụ đã hoàn thành
+        SaveManagerMan.SaveGame(data); // Lưu trạng thái nhiệm vụ
 
-      
     }
 
 

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using TMPro;
-using UnityEditor.Overlays;
 using UnityEngine;
 
 public class TurnInQuest2 : MonoBehaviour
@@ -40,10 +39,7 @@ public class TurnInQuest2 : MonoBehaviour
     public AudioSource audioSource; // Tham chiếu đến AudioSource
     public AudioClip audioSkip; // Âm thanh khi bấm skip
 
-    //
-    public Transform[] spawnPoints; // Vị trí spawn sẵn
-    public int enemySpawnCount; // Số enemy muốn spawn
-    public string enemyTag; // Tag của enemy dùng để gọi từ pool
+   
 
     void Start()
     {
@@ -173,11 +169,7 @@ public class TurnInQuest2 : MonoBehaviour
         isContent = false; // Đặt lại trạng thái hội thoại
         linhCanh.SetActive(true); // Hiện linh canh
         thuongNhan.SetActive(true); // Hiện thuong nhan
-        if(thuongNhan != null && thuongNhan.activeSelf)
-        {
-            SpawnEnemies(); // Gọi hàm để spawn kẻ thù ngay lập tức
-          
-        }
+       
         playerStatus.IncreasedGold(200); // Thêm kinh nghiệm cho người chơi
         StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
      
@@ -222,20 +214,5 @@ public class TurnInQuest2 : MonoBehaviour
         niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp sau 2 giây
     }
 
-    void SpawnEnemies()
-    {
-        int count = Mathf.Min(enemySpawnCount, spawnPoints.Length);
-
-        for (int i = 0; i < count; i++)
-        {
-            Vector3 spawnPos = spawnPoints[i].position;
-
-            GameObject enemy = ObjPoolingManager.Instance.GetEnemyFromPool(enemyTag, spawnPos);
-
-            if (enemy == null)
-            {
-                Debug.LogWarning("Enemy không đủ trong pool!");
-            }
-        }
-    }
+  
 }

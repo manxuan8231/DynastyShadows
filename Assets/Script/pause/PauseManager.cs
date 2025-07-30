@@ -50,7 +50,9 @@ public class PauseManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && inventoryManager.isOpenInventory && playerController.animator.enabled && !openMap.isTurnOffMap)
+       
+        if (Input.GetKeyDown(KeyCode.Escape) && inventoryManager.isOpenInventory && playerController.animator.enabled
+            && !openMap.isTurnOffMap && TurnOffOnUI.openShop == false)
         {
             bool isPaused = !canvasPause.activeSelf;
             canvasPause.SetActive(isPaused);

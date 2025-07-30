@@ -8,7 +8,7 @@ public class ThuongNhan : MonoBehaviour
     public float waitTimeScene = 2f; 
     public float distance = 20f;// Khoảng cách tối đa để tương tác với NPC
     private bool isSceneActive = true; // Biến để kiểm tra xem scene đã được kích hoạt hay chưa
-   
+    public GameObject enemyPrefab;
     public Transform playerTransform;// Tham chiếu đến Transform của người chơi
     public TextMeshProUGUI textHelp;
     public CinemachineCamera scene1;//
@@ -19,6 +19,8 @@ public class ThuongNhan : MonoBehaviour
     // Tham chiếu
     TurnInQuestThuongNhan turnInQuestThuongNhan; // Tham chiếu đến TurnInQuestThuongNhan
     PlayerControllerState characterController;
+    public OpenShop openShop;
+    public TurnInQuestThuongNhan turnInQuestThuongNhan2;
     void Start()
     {
         scene1.enabled = false; // Tắt scene ban đầu
@@ -28,6 +30,20 @@ public class ThuongNhan : MonoBehaviour
         animator = GetComponent<Animator>(); // Lấy tham chiếu đến Animator của NPC
         audioSource = GetComponent<AudioSource>(); // Lấy tham chiếu đến AudioSource của NPC
         characterController = FindAnyObjectByType<PlayerControllerState>();
+        openShop = GetComponent<OpenShop>(); // Lấy tham chiếu đến OpenShop
+        turnInQuestThuongNhan2 = GetComponent<TurnInQuestThuongNhan>(); // Lấy tham chiếu đến TurnInQuestThuongNhan
+        DataQuest dataQuest = SaveManagerMan.LoadGame().dataQuest;
+        if (dataQuest.isQuestShopMap1)
+        {
+           
+            openShop.enabled = true; // Kích hoạt OpenShop
+            turnInQuestThuongNhan2. isOpenShop = true; // Đặt trạng thái OpenShop là true
+            audioSource.enabled = false;
+            animator.SetBool("Idle", true);
+            enemyPrefab.SetActive(false); // Ẩn prefab kẻ thù
+            scene1.enabled = false;
+            isSceneActive = false;
+        }
     }
 
    

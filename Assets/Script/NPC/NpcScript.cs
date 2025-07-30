@@ -76,10 +76,7 @@ public class NPCScript : MonoBehaviour
             StartDialogue();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            HandleSkip();
-        }
+       
     }
 
     private void OnTriggerEnter(Collider other)

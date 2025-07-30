@@ -43,7 +43,8 @@ public class OpenMap : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.M) && playerStatus.currentHp > 0 && panelSkillTree.activeSelf == false 
-        && imageBGButtonInven.activeSelf == false && EquipMentMenu.activeSelf == false && isOpenMap && playerControllerState.animator.enabled)
+        && imageBGButtonInven.activeSelf == false && EquipMentMenu.activeSelf == false
+        && isOpenMap && playerControllerState.animator.enabled &&   TurnOffOnUI.openShop == false)
         {
             if (mapUIConten.activeSelf)
             {
