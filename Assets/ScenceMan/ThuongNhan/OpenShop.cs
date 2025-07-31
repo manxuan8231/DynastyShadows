@@ -16,7 +16,7 @@ public class OpenShop : MonoBehaviour
     {
         shopPanel.SetActive(false); // Ẩn cửa hàng khi bắt đầu
         buttonF.SetActive(false); // Ẩn nút F khi bắt đầu
-        turnInQuestThuongNhan = FindAnyObjectByType<TurnInQuestThuongNhan>(); // Lấy tham chiếu đến TurnInQuestThuongNhan
+        turnInQuestThuongNhan = GetComponent<TurnInQuestThuongNhan>(); // Lấy tham chiếu đến TurnInQuestThuongNhan
         textGold.text = $"{gold}";
     }
 

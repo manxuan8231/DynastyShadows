@@ -48,7 +48,7 @@ public class TurnInQuest : MonoBehaviour
         comboAttack = FindAnyObjectByType<ComboAttack>();
         if(npcScript == null)
         {
-            npcScript = FindAnyObjectByType<NPCScript>(); // Lấy tham chiếu đến NPCScript
+            npcScript = GetComponent<NPCScript>(); // Lấy tham chiếu đến NPCScript
         }
         audioSource = GetComponent<AudioSource>();
         // Ẩn panel và nút F khi bắt đầu

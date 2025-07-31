@@ -13,6 +13,7 @@ public class Quest1ManagerSave : MonoBehaviour
     {
        
         DataQuest dataQuest = SaveManagerMan.LoadGame().dataQuest;
+        if (dataQuest == null) return;
         // nếu quest1 bằng true thì tắt quest1 bật quest2
         if (dataQuest.isQuest1Map1 == true)
         {
@@ -41,10 +42,7 @@ public class Quest1ManagerSave : MonoBehaviour
             questBacLamAndLinhB.SetActive(true);
             questDesert5.SetActive(true);
         }
-        else
-        {
-            quest3.SetActive(true);
-        }
+       
         //kiem tra hoan thanh nhiem vu sa mac bat quest boss
       
         if (dataQuest.isQuestBossMap1)

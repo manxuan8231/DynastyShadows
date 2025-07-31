@@ -63,7 +63,7 @@ public class QuestDesert5 : MonoBehaviour
             turnInQuest5.isContent = true; // Đặt trạng thái nhiệm vụ là true
             turnInQuest5.StartTurnInQuest5();
             RenderSettings.fogDensity = 0; //giam độ mờ của sương mù
-            directionalLight.color = Color.black; // Đặt màu sắc của ánh sáng
+            directionalLight.color = Color.grey; // Đặt màu sắc của ánh sáng
             StartCoroutine(WaitNiceQuest());
             Debug.Log("Hoàn thành nv");
         } 

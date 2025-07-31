@@ -123,7 +123,7 @@ public class ComboAttack : MonoBehaviour
     
    public IEnumerator WaitResetAttack()
     {
-        yield return new WaitForSeconds(3f); // Thời gian chờ trước khi reset
+        yield return new WaitForSeconds(1.5f); // Thời gian chờ trước khi reset
         comboStep = 0; // Reset comboStep về 0
         playerController.animator.ResetTrigger("Attack1");
         playerController.animator.ResetTrigger("Attack2");
