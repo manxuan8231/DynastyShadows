@@ -177,7 +177,7 @@ public class SkillCoreManager : MonoBehaviour
                     cameras[0].gameObject.SetActive(true); // Hiển thị camera hướng dẫn cho kỹ năng Đông Cứng
                     textureTutorial.texture = spriteDongCung;
                     previewText.text = "Đông cứng - Cấp 3";
-                contenSkill.text = "Tăng thời gian đông cứng kẻ địch trong 10 giây";
+                contenSkill.text = "Tăng thời gian đông cứng kẻ địch trong 7 giây";
                 skillBGs[2].enabled = true;
                  scoreUpgradeText.text = "/2";//so diem can de nang cap
                 }
@@ -220,7 +220,7 @@ public class SkillCoreManager : MonoBehaviour
                     panelSkill2.SetActive(false);
                     previewText.text = "Thế ảnh - Cấp 1";
                     contenSkill.text = "Khi dùng Thế ảnh người chơi có thể tạo ra một bản thể ảo ảnh giúp đánh lạc hướng kẻ thù" +
-                        " và chuyển sang trạng thái thế ảnh trong 10 giây, " +
+                        " và chuyển sang trạng thái thế ảnh giúp kháng choáng trong 10 giây, " +
                         "khi nhấn tấn công thì player sẽ lao tới kẻ địch gần nhất chém 1 nhát chém và hủy trạng thái, có thời gian hồi chiêu là 50 giây.";
                     skillBGs[4].enabled = true;
                     scoreUpgradeText.text = "/2";//so diem can de nang cap
@@ -393,7 +393,7 @@ public class SkillCoreManager : MonoBehaviour
                     textureTutorial.texture = spriteQuanDoanBongToi; // Hiển thị camera hướng dẫn
                     cameras[2].gameObject.SetActive(true);
                     previewText.text = "Quân đoàn bóng tối - Cấp 6";
-                    contenSkill.text = "Khi mở khóa cấp độ này thì khi người chơi dùng các kỹ năng liên quan đến 'Linh Hoạt' thì các phân thân sẽ bắt trước dùng theo.";
+                    contenSkill.text = "Khi mở khóa cấp độ này thì khi người chơi dùng các kỹ năng 'Bắn Lửa' và 'Mưa Lửa' thì các phân thân sẽ bắt trước dùng theo.";
                     skillBGs[13].enabled = true;
                     scoreUpgradeText.text = "/5";//so diem can de nang cap
                 }else{

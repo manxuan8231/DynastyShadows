@@ -146,10 +146,7 @@ public class SkillUseHandler : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.R) && playerControllerState.isController && Time.time >= nextComboAllowedTime)
                 {
                     if (Time.time < lastColldown + cooldownTime) return;
-                    foreach (Skill3ClonePLayer clone in Object.FindObjectsByType<Skill3ClonePLayer>(FindObjectsSortMode.None))
-                    {
-                        clone.PlaySlashAnim();
-                    }
+                    
                     StartCoroutine(WaitMove());
                     FindEnemy();
 

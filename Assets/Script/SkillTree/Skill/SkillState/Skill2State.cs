@@ -21,8 +21,8 @@ public class Skill2State : PlayerState
         player.skill2Manager.isHibitedIcon = true; // cấm sử dụng skill con lại icon
         player.StartCoroutine(WaitForMove()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
         player.StartCoroutine(WaitForSkill2()); // Bắt đầu đợi thời gian chờ trước khi chuyển về trạng thái hiện tại
+        player.playerStatus.isStun = false; //tat  stun
 
-       
     }
 
     public override void Update()
@@ -83,6 +83,7 @@ public class Skill2State : PlayerState
         player.animator.runtimeAnimatorController = player.animatorDefauld; // Quay về bộ điều khiển hoạt hình mặc định
         player.skill2Manager.effectRun.SetActive(false);
         isChangeState = false;
+        player.playerStatus.isStun = false; //bat  stun lai
     }
 
     public void Move()
