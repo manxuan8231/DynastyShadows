@@ -75,6 +75,7 @@ public class Skill3ClonePLayer : MonoBehaviour
 
         
         StartCoroutine(ReturnToPool());
+        animator.SetTrigger("Fish");
     }
 
     void Update()

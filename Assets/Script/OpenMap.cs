@@ -9,6 +9,7 @@ public class OpenMap : MonoBehaviour
     public AudioClip mapClip;
     public bool isOpenMap;
     public bool isTurnOffMap = false; // Biến để kiểm tra xem có tắt map hay không
+    public bool isTurnOffMapTuto = false; // Biến này để kiểm soát việc tắt bản đồ tuto
     //scroll map
     public ScrollRect scrollMap;
     public float scrollMapVertical;
@@ -28,12 +29,13 @@ public class OpenMap : MonoBehaviour
         mapUIConten.SetActive(false);
         isTurnOffMap =false;
         mapAudio = GetComponent<AudioSource>();
+        
 
-    // Ẩn chuột lúc bắt đầu nếu cần
-    Cursor.visible = false;
-    Cursor.lockState = CursorLockMode.Locked;
+        // Ẩn chuột lúc bắt đầu nếu cần
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
-    playerStatus = FindAnyObjectByType<PlayerStatus>();
+        playerStatus = FindAnyObjectByType<PlayerStatus>();
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
 
 
@@ -44,7 +46,7 @@ public class OpenMap : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.M) && playerStatus.currentHp > 0 && panelSkillTree.activeSelf == false 
         && imageBGButtonInven.activeSelf == false && EquipMentMenu.activeSelf == false
-        && isOpenMap && playerControllerState.animator.enabled &&   TurnOffOnUI.openShop == false)
+        && isOpenMap && playerControllerState.animator.enabled &&   TurnOffOnUI.openShop == false && !isTurnOffMapTuto && !TurnOffOnUI.isTutorialInven)
         {
             if (mapUIConten.activeSelf)
             {

@@ -54,6 +54,8 @@ public class TurnInQuest5 : MonoBehaviour
 
         NPCName.text = "";
         NPCContent.text = "";
+       
+        
     }
 
     void Update()
@@ -162,6 +164,9 @@ public class TurnInQuest5 : MonoBehaviour
         coroutine = null;
         npcScript.player.SetActive(true); // Ẩn nhân vật người chơi khi hội thoại bắt đầu
         npcScript.cam.SetActive(false); // Hiện camera NPC khi hội thoại bắt đầu
+        GameSaveData data = SaveManagerMan.LoadGame();
+        data.dataQuest.isQuestBossMap1 = true; // Đánh dấu nhiệm vụ đã hoàn thành
+        SaveManagerMan.SaveGame(data);
     }
 
     public void OnSkipButtonPressed()

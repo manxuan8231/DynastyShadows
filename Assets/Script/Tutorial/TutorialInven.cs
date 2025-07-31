@@ -29,11 +29,13 @@ public class TutorialInven : MonoBehaviour
     TutorialManager tutorialManager;
     InventoryManager inventoryManager;
     OpenSkillTree openSkillTree;
+    private PauseManager pauseManager;
     void Start()
     {
         tutorialManager = FindAnyObjectByType<TutorialManager>();
         inventoryManager = FindAnyObjectByType<InventoryManager>();
-        openSkillTree = FindAnyObjectByType<OpenSkillTree>();
+        openSkillTree = FindAnyObjectByType<OpenSkillTree>(); 
+        pauseManager = FindAnyObjectByType<PauseManager>();
         panelTutoInven.SetActive(false);
        
         textConten.text = "";
@@ -58,6 +60,8 @@ public class TutorialInven : MonoBehaviour
             textConten.text = "Click chuột trái dô đây để mở kho chứa các vật phẩm có thể uống được.";
             Cursor.lockState = CursorLockMode.None; // Unlock the cursor
             Cursor.visible = true; // Show the cursor
+            Time.timeScale = 0f; // Pause the game
+            TurnOffOnUI.isTutorialInven = true; // Set pause state to true
         }
         if (panelTutoInven.activeSelf && index == 2)
         {
@@ -137,9 +141,13 @@ public class TutorialInven : MonoBehaviour
         index++;
         if (index >= 15)
         {
-           
+
             index = 15;
+           
+            TurnOffOnUI.isTutorialInven = false; // Set pause state to false
+            pauseManager.TurnOnPause(); // Mở kho chứa khi hoàn thành hướng dẫn
         }
+       
     }
     public void BackSkip()
     {
@@ -147,6 +155,8 @@ public class TutorialInven : MonoBehaviour
         if (index <= 1)
         {
             index = 1;
+           
         }
     }
+
 }

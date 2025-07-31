@@ -235,5 +235,8 @@ public class NPCScript : MonoBehaviour
         }
     }
 
-  
+   public void IsContent()
+    {
+        isContent = false;
+    }
 }

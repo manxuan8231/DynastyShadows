@@ -50,9 +50,12 @@ public class PauseManager : MonoBehaviour
 
     void Update()
     {
-       
+        TurnOnOffPause();
+    }
+    public void TurnOnOffPause()//tat bat pause
+    {
         if (Input.GetKeyDown(KeyCode.Escape) && inventoryManager.isOpenInventory && playerController.animator.enabled
-            && !openMap.isTurnOffMap && TurnOffOnUI.openShop == false)
+            && !openMap.isTurnOffMap && TurnOffOnUI.openShop == false && !TurnOffOnUI.isTutorialInven)
         {
             bool isPaused = !canvasPause.activeSelf;
             canvasPause.SetActive(isPaused);
@@ -65,8 +68,8 @@ public class PauseManager : MonoBehaviour
             //open skill tree
             openSkillTree.textFlexible.color = Color.black;
             openSkillTree.buttonFlexibleBG.enabled = true;
-            openSkillTree .flexibleSkill.SetActive(true); // Hiển thị Flexible Skill khi mở Skill Tree
-            openSkillTree .coreTree.SetActive(false); // Ẩn Core Tree khi mở Flexible Skill
+            openSkillTree.flexibleSkill.SetActive(true); // Hiển thị Flexible Skill khi mở Skill Tree
+            openSkillTree.coreTree.SetActive(false); // Ẩn Core Tree khi mở Flexible Skill
             openSkillTree.textCore.color = Color.white;
             openSkillTree.buttonCoreBG.enabled = false;
 
@@ -85,12 +88,45 @@ public class PauseManager : MonoBehaviour
             panelInventory.SetActive(false);
             panelSkillTree.SetActive(false);
             panelSetting.SetActive(false);
-            
-        }
-       
 
+        }
     }
-    public void ButtonEquipment()
+    public void TurnOnPause()//bat pause
+    {
+       
+        canvasPause.SetActive(true);
+        TurnOffOnUI.pause = true;
+        Time.timeScale = 0f;
+        panelQuitGame.SetActive(false);
+        // Ẩn hoặc hiện chuột
+        Cursor.visible = true;
+        Cursor.lockState =  CursorLockMode.None;
+        //open skill tree
+        openSkillTree.textFlexible.color = Color.black;
+        openSkillTree.buttonFlexibleBG.enabled = true;
+        openSkillTree.flexibleSkill.SetActive(true); // Hiển thị Flexible Skill khi mở Skill Tree
+        openSkillTree.coreTree.SetActive(false); // Ẩn Core Tree khi mở Flexible Skill
+        openSkillTree.textCore.color = Color.white;
+        openSkillTree.buttonCoreBG.enabled = false;
+
+        //img
+        imageEquipment.enabled = true;
+        imageInventory.enabled = false;
+        imageSetting.enabled = false;
+        imageSkillTree.enabled = false;
+        //text
+        textEquipment.color = Color.black;
+        textInventory.color = Color.white;
+        textSkillTree.color = Color.white;
+        textSetting.color = Color.white;
+        //panel
+        panelEquipment.SetActive(true);
+        panelInventory.SetActive(false);
+        panelSkillTree.SetActive(false);
+        panelSetting.SetActive(false);
+    }
+
+    public void ButtonEquipment()//bat trang bi
     {
         audioSource.PlayOneShot(clickButtonSound); // Phát âm thanh khi nhấn nút
         //img
@@ -109,7 +145,7 @@ public class PauseManager : MonoBehaviour
         panelSkillTree.SetActive(false);
         panelSetting.SetActive(false);
     }
-    public void ButtonInven()
+    public void ButtonInven() //bat inven
     {
         audioSource.PlayOneShot(clickButtonSound); // Phát âm thanh khi nhấn nút
         //img
@@ -128,7 +164,7 @@ public class PauseManager : MonoBehaviour
         panelSkillTree.SetActive(false);
         panelSetting.SetActive(false);
     }
-    public void ButtonSkillTree() 
+    public void ButtonSkillTree()//bat skill tree 
     {
         audioSource.PlayOneShot(clickButtonSound); // Phát âm thanh khi nhấn nút
         //img
@@ -147,7 +183,7 @@ public class PauseManager : MonoBehaviour
         panelInventory.SetActive(false);
         panelSetting.SetActive(false);
     }
-    public void ButtonSetting()
+    public void ButtonSetting()//bat setting
     {
         audioSource.PlayOneShot(clickButtonSound); // Phát âm thanh khi nhấn nút
         //img

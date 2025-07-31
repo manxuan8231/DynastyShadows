@@ -173,6 +173,10 @@ public class TurnInQuest3 : MonoBehaviour
                     npcScript.cam.SetActive(false); // Đặt camera ưu tiên cao hơn để theo dõi NPC
                 }
                 Debug.Log("Phần thưởng đã nhận");
+                //save
+                GameSaveData data = SaveManagerMan.LoadGame();
+                data.dataQuest.isQuest3Map1 = true; // Lưu trạng thái nhiệm vụ 3
+                SaveManagerMan.SaveGame(data); // Lưu dữ liệu
                 break;
         }
 

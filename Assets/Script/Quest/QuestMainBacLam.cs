@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using TMPro;
+using UnityEditor.Overlays;
 using UnityEngine;
 
 public class QuestMainBacLam : MonoBehaviour
@@ -25,7 +26,7 @@ public class QuestMainBacLam : MonoBehaviour
     public NPCScript linhCanhB;
     public BoxCollider boxCollider;
     private PlayerStatus playerStatus;
-
+    public Collider bacLamCollider;
     void Start()
     {
         playerStatus = FindAnyObjectByType<PlayerStatus>();
@@ -40,6 +41,36 @@ public class QuestMainBacLam : MonoBehaviour
         niceQuest.SetActive(false);
         linhCanhB.enabled = false;
         boxCollider.enabled = false;
+        DataQuest dataQuest = SaveManagerMan.LoadGame().dataQuest;
+        //kiem tra neu noi chuyen voi bac lam xong thi toi noi chuyen vs linh b
+        if (dataQuest.isBacLam)
+        {
+
+            StartQuestMainBacLam();
+            bacLamCollider.enabled = false; // Tắt collider của Bác Lâm sau khi bắt đầu nhiệm vụ chính
+        }
+        //hoan thanh nhiem vu linh canh b tieu diet drakonit
+        if (dataQuest.isLinhCanhB)
+        {
+
+            linhCanhB.IsContent();//tat
+            linhCanhB.enabled = false; // Tắt NPC Lính Canh B nếu nhiệm vụ đã hoàn thành
+            questCompleted = true;
+            enemyCount = 0;
+
+            pointerEnemy.SetActive(false);
+            QuestDesert.SetActive(true);
+            iconQuest2.SetActive(false);
+            questPanel.SetActive(false);
+            questNameText.text = "";
+
+            subQuestStarted = true;
+
+           
+            iconQuest.SetActive(false);
+            pointerLinhCanhB.SetActive(false);
+           
+        }
     }
 
     void Update()
@@ -69,6 +100,10 @@ public class QuestMainBacLam : MonoBehaviour
         iconQuestMainBacLam.SetActive(false);
         questPointer.SetActive(false);
         questNameText.text = "Đến chỗ Lính Canh B";
+        //save
+        GameSaveData data = SaveManagerMan.LoadGame();
+        data.dataQuest.isBacLam = true; // Đánh dấu nhiệm vụ Bác Lâm đã bắt đầu
+        SaveManagerMan.SaveGame(data);
     }
 
     /// <summary>
@@ -112,6 +147,9 @@ public class QuestMainBacLam : MonoBehaviour
 
         playerStatus.IncreasedGold(1000);
         StartCoroutine(WaitNiceQuest());
+        GameSaveData data = SaveManagerMan.LoadGame();
+        data.dataQuest.isLinhCanhB = true; // Đánh dấu nhiệm vụ chính Bác Lâm va linhb đã hoàn thành tieu diet drakonit
+        SaveManagerMan.SaveGame(data);
     }
 
     /// <summary>

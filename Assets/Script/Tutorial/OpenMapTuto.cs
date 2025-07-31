@@ -15,8 +15,9 @@ public class OpenMapTuto : MonoBehaviour
     public Texture iconCloseQuest;
 
     public int index = 0;
-  
-  
+    //tham chieu
+    OpenMap openMap;
+
     void Start()
     {
         
@@ -36,6 +37,7 @@ public class OpenMapTuto : MonoBehaviour
         panelTuto.SetActive(false);
         iconTuto.enabled = false;
         scrollRect.enabled = false;
+        openMap = FindAnyObjectByType<OpenMap>();
     }
 
     void Update()
@@ -43,6 +45,7 @@ public class OpenMapTuto : MonoBehaviour
        
        if(index == 0)
        {
+            openMap. isTurnOffMapTuto = true;
             panelTuto.SetActive(true);
             iconTuto.enabled = true;
             textContenTuto.text = $"Đây là bản đồ. Nó sẽ giúp bạn xem vị trí hiện tại và các khu vực cần khám phá."; 
@@ -72,7 +75,12 @@ public class OpenMapTuto : MonoBehaviour
             panelTuto.SetActive(false);
             iconTuto.enabled = false;
             scrollRect.enabled = true;
+            if(openMap != null)
+            {
+                openMap.isTurnOffMapTuto = false;
+            }
             textContenTuto.text = $"";
+
             MapTutoProgressHandler.SaveIndex(5);
         }
        
