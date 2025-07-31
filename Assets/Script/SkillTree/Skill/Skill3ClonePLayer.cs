@@ -141,6 +141,8 @@ public class Skill3ClonePLayer : MonoBehaviour
 
         foreach (Collider collider in hitColliders)
         {
+
+            if (!collider.enabled) continue;
             float distance = Vector3.Distance(transform.position, collider.transform.position);
             if (distance < closestDistance)
             {

@@ -23,9 +23,9 @@ public class InventoryManager : MonoBehaviour
         if (pausedManager == null) pausedManager = FindAnyObjectByType<PauseManager>();
         audioSource = GameObject.Find("Inventory").GetComponent<AudioSource>();
 
-        if (Input.GetButtonDown("Inventory") && isOpenInventory && pl.animator.enabled && !openMap.isTurnOffMap && TurnOffOnUI.openShop == false && !TurnOffOnUI.isTutorialInven)
+        if (Input.GetButtonDown("Inventory") && isOpenInventory && pl.animator.enabled && !openMap.isTurnOffMap && !TurnOffOnUI.openShop && !TurnOffOnUI.isTutorialInven)
             Inventory();
-        if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory && pl.animator.enabled && !openMap.isTurnOffMap && TurnOffOnUI.openShop == false && !TurnOffOnUI.isTutorialInven)
+        if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory && pl.animator.enabled && !openMap.isTurnOffMap && !TurnOffOnUI.openShop && !TurnOffOnUI.isTutorialInven)
             EquipmentMenu();
     }
     void Start()
