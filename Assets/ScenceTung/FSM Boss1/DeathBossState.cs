@@ -7,7 +7,6 @@ public class DeathBossState : Boss1State
     public DeathBossState(Boss1Controller enemy) : base(enemy)
     {
     }
-
     public override void Enter()
     {
 
@@ -23,13 +22,12 @@ public class DeathBossState : Boss1State
         if (enemy.hp.currHp <= 0)
         {
             enemy.enabled = false;
-            enemy.agent.isStopped = true;
-            enemy.agent.enabled = false;     
-            enemy.StartCoroutine(dontDestroy(5));
 
+             enemy.StartCoroutine(DontDestroy(1));
+            
         }
     }
-    IEnumerator dontDestroy(float duration)
+    IEnumerator DontDestroy(float duration)
     {
         enemy.boxCollider.enabled = false;
         enemy.anmt.SetTrigger("Death");

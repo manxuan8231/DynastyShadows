@@ -83,7 +83,7 @@ public class Skill2State : PlayerState
         player.animator.runtimeAnimatorController = player.animatorDefauld; // Quay về bộ điều khiển hoạt hình mặc định
         player.skill2Manager.effectRun.SetActive(false);
         isChangeState = false;
-        player.playerStatus.isStun = false; //bat  stun lai
+        player.playerStatus.isStun = true; //bat  stun lai
     }
 
     public void Move()

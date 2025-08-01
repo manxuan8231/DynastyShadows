@@ -156,7 +156,7 @@ public class SkillUseHandler : MonoBehaviour
                     // Raycast kiểm tra vật cản phía trước
                     RaycastHit hit;
                     Vector3 finalTargetPos = player.transform.position + dashDir * dashDistance;
-                    Vector3 y = player.transform.position + Vector3.up * 2f;               
+                    Vector3 y = player.transform.position + Vector3.up * 1f;               
                     LayerMask mask = LayerMask.GetMask("Ground") | LayerMask.GetMask("Obstacle") | LayerMask.GetMask("Wall");
                     if (Physics.Raycast(y, dashDir, out hit, dashDistance, mask))
                     {
