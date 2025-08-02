@@ -17,8 +17,7 @@ public class CameraFollow : MonoBehaviour
     private float currentY = 10f;
     private bool cursorVisible = false;
 
-   
-
+    
 
     void Start()
     {
@@ -31,6 +30,7 @@ public class CameraFollow : MonoBehaviour
 
     void LateUpdate()
     {
+        // Toggle chuột
         if (Input.GetKeyDown(KeyCode.L))
         {
             cursorVisible = !cursorVisible;
@@ -38,6 +38,7 @@ public class CameraFollow : MonoBehaviour
             Cursor.lockState = cursorVisible ? CursorLockMode.None : CursorLockMode.Locked;
         }
 
+        // Điều khiển góc xoay camera khi đang lock chuột
         if (Cursor.lockState == CursorLockMode.Locked)
         {
             currentX += Input.GetAxis("Mouse X") * sensitivityX;
@@ -46,20 +47,25 @@ public class CameraFollow : MonoBehaviour
         }
 
         Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
-
         Vector3 desiredCameraPos = target.position + rotation * defaultOffset;
-        Vector3 direction = desiredCameraPos - target.position;
+
+        // Raycast từ target về vị trí camera
+        RaycastHit hit;
+        Vector3 direction = (desiredCameraPos - target.position).normalized;
         float maxDistance = defaultOffset.magnitude;
+        LayerMask groundLayerMask = LayerMask.GetMask("Ground") | LayerMask.GetMask("Wall") | LayerMask.GetMask("Obstacle"); // Lấy layer đất từ Inspector
+        if (Physics.Raycast(target.position, direction, out hit, maxDistance, groundLayerMask))
+        {
+            // Nếu trúng tường/đất → lùi camera gần lại tới ngay trước va chạm
+            transform.position = target.position + direction * (hit.distance - 0.1f);
+        }
+        else
+        {
+            // Không trúng → đặt camera đúng offset ban đầu
+            transform.position = desiredCameraPos;
+        }
 
-       
-
-        transform.position = target.position + rotation * currentOffset;
+        // Luôn nhìn vào nhân vật
         transform.LookAt(target.position + Vector3.up * 1.5f);
-
-        
-       
     }
-
-   
-
 }
