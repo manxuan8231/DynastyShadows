@@ -23,7 +23,7 @@ public class CraftingNPC : MonoBehaviour
         {
             OpenCraftingMenu();
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             craftingMenu.SetActive(false);
             Time.timeScale = 1f;
