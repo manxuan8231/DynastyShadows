@@ -22,12 +22,10 @@ public class InventoryManager : MonoBehaviour
     {
         if (pausedManager == null) pausedManager = FindAnyObjectByType<PauseManager>();
         audioSource = GameObject.Find("Inventory").GetComponent<AudioSource>();
-
-        if (Input.GetButtonDown("Inventory") && isOpenInventory && pl.animator.enabled && !openMap.isTurnOffMap 
-            && !TurnOffOnUI.openShop && !TurnOffOnUI.isTutorialInven)
+      
+        if (Input.GetButtonDown("Inventory") && IsInventoryOpen())
             Inventory();
-        if (Input.GetButtonDown("EquipmentMenu") && isOpenInventory && pl.animator.enabled && !openMap.isTurnOffMap 
-            && !TurnOffOnUI.openShop && !TurnOffOnUI.isTutorialInven)
+        if (Input.GetButtonDown("EquipmentMenu") && IsInventoryOpen())
             EquipmentMenu();
     }
     void Start()
@@ -46,6 +44,11 @@ public class InventoryManager : MonoBehaviour
            
     }
 
+    public bool IsInventoryOpen()
+    {
+        return isOpenInventory && pl.animator.enabled && !openMap.isTurnOffMap
+            && !TurnOffOnUI.openShop && !TurnOffOnUI.isTutorialInven;
+    }
     public void Inventory()
     {
         if (inventoryMenu.activeSelf)
@@ -308,7 +311,7 @@ public class InventoryManager : MonoBehaviour
 
         return total;
     }
-public void LoadInventoryFromSave(GameSaveData data)
+    public void LoadInventoryFromSave(GameSaveData data)
 {
     if (data == null || data.inventoryItems == null)
     {

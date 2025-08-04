@@ -19,6 +19,7 @@ public class OpenMap : MonoBehaviour
     public GameObject panelSkillTree;//panel skill tree
     public GameObject imageBGButtonInven;//image bg button inven
     public GameObject EquipMentMenu;
+    public GameObject canvasPause;
     public GameObject[] loadPanel;
     //tham chieu
     private PlayerStatus playerStatus;
@@ -46,7 +47,8 @@ public class OpenMap : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.M) && playerStatus.currentHp > 0 && panelSkillTree.activeSelf == false 
         && imageBGButtonInven.activeSelf == false && EquipMentMenu.activeSelf == false
-        && isOpenMap && playerControllerState.animator.enabled &&   TurnOffOnUI.openShop == false && !isTurnOffMapTuto && !TurnOffOnUI.isTutorialInven)
+        && isOpenMap && playerControllerState.animator.enabled &&   TurnOffOnUI.openShop == false && !isTurnOffMapTuto 
+        && !TurnOffOnUI.isTutorialInven && !canvasPause.activeSelf)
         {
             if (mapUIConten.activeSelf)
             {

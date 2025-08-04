@@ -90,6 +90,7 @@ public class PauseManager : MonoBehaviour
             panelSetting.SetActive(false);
 
         }
+        
     }
     public void TurnOnPause()//bat pause
     {
