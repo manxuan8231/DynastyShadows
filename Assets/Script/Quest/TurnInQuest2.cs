@@ -169,13 +169,14 @@ public class TurnInQuest2 : MonoBehaviour
         isContent = false; // Đặt lại trạng thái hội thoại
         linhCanh.SetActive(true); // Hiện linh canh
         thuongNhan.SetActive(true); // Hiện thuong nhan
-       
+       playerStatus.showSkill2 = true; // Hiện skill 2
         playerStatus.IncreasedGold(200); // Thêm kinh nghiệm cho người chơi
         StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
      
         Debug.Log("Phần thưởng đã nhận");
         //save
         GameSaveData data = SaveManagerMan.LoadGame();
+        data.skillTreeData.showSkill2 = playerStatus.showSkill2;
         data.dataQuest.isQuest2Map1 = true; // Đánh dấu nhiệm vụ đã hoàn thành
         SaveManagerMan.SaveGame(data); // Lưu dữ liệu game
         Destroy(danLang, 3f); // Ẩn danLang sau khi hoàn thành nhiệm vụ

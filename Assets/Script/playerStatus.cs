@@ -45,6 +45,10 @@ public class PlayerStatus : MonoBehaviour
     public bool isShieldActive = false; // Kiểm tra trạng thái máu ảo có đang hoạt động hay không
     public AudioClip shieldSound;
 
+    //skillflexible------------------------------------------show
+    public bool showSkill1 = false;//fire ball
+    public bool showSkill2 = false;//rain fire
+    public bool showSkill3 = false;//slash
 
     //hien dame effect
     public GameObject textDame;

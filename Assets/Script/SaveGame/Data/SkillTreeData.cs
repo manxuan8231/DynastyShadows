@@ -32,7 +32,11 @@ public class SkillTreeData
     public bool isDongCung5Unlocked = false;
 
     public string currentSkillID;
+
     //dkien để show skill
+    public bool showSkill1 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 1 hay không
+    public bool showSkill2 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 2 hay không
+    public bool showSkill3 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 3 hay không
     public bool showSkill4 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 4 hay không
     public bool showSkill5 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 5 hay không
     public bool hasItemQuest = false; // Biến để kiểm tra xem có item quest mở khóa kỹ năng 4 hay không

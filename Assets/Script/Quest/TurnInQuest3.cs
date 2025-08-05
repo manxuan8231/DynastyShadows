@@ -164,6 +164,7 @@ public class TurnInQuest3 : MonoBehaviour
                 quest3.pointerLinhCanh.SetActive(false);
                 icon3D.SetActive(false); // Ẩn icon 3D của NPC
                 playerStatus.IncreasedGold(500); // Thêm kinh nghiệm cho người chơi
+                playerStatus.showSkill3 = true;
                 bacLamQuestMain.SetActive(true); // Hiện Bac Lam NPC sau khi hoàn thành nhiệm vụ
                 questDesert5.SetActive(true); // Hiện questDesert5
                 StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
@@ -175,6 +176,7 @@ public class TurnInQuest3 : MonoBehaviour
                 Debug.Log("Phần thưởng đã nhận");
                 //save
                 GameSaveData data = SaveManagerMan.LoadGame();
+                data.skillTreeData.showSkill3 = playerStatus.showSkill3; // Hiển thị skill 2
                 data.dataQuest.isQuest3Map1 = true; // Lưu trạng thái nhiệm vụ 3
                 SaveManagerMan.SaveGame(data); // Lưu dữ liệu
                 break;

@@ -46,7 +46,8 @@ public class TurnInQuest : MonoBehaviour
         quest1 = FindAnyObjectByType<Quest1>();
         playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
-        if(npcScript == null)
+      
+        if (npcScript == null)
         {
             npcScript = GetComponent<NPCScript>(); // Lấy tham chiếu đến NPCScript
         }
@@ -169,11 +170,13 @@ public class TurnInQuest : MonoBehaviour
                 questThuongNhan.SetActive(true); // Hiện NPC ThuongNhan sau khi hoàn thành nhiệm vụ
                 StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 2 giây
                 quest1.questPointer2.SetActive(false); // Ẩn chỉ dẫn nhiệm vụ
+                playerStatus.showSkill1 = true;//unlock skill 1 fireball
                 Destroy(quest1BacLam, 3f); // Ẩn quest1BacLam sau khi hoàn thành nhiệm vụ
                 Debug.Log("Phần thưởng đã nhận");
                 //save
                 GameSaveData data = SaveManagerMan.LoadGame();
                 data.dataQuest.isQuest1Map1 = true; // Lưu trạng thái nhiệm vụ
+                data.skillTreeData.showSkill1 = playerStatus.showSkill1;// Hiển thị skill 1 fireball
                 SaveManagerMan.SaveGame(data); // Lưu dữ liệu trò chơi
                 break;
             case QuestToStart.LinhCanh:

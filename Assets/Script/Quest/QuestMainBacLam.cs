@@ -143,10 +143,11 @@ public class QuestMainBacLam : MonoBehaviour
         iconQuest2.SetActive(false);
         questPanel.SetActive(false);
         questNameText.text = "";
-
+      
         playerStatus.IncreasedGold(1000);
         StartCoroutine(WaitNiceQuest());
         GameSaveData data = SaveManagerMan.LoadGame();
+       
         data.dataQuest.isLinhCanhB = true; // Đánh dấu nhiệm vụ chính Bác Lâm va linhb đã hoàn thành tieu diet drakonit
         SaveManagerMan.SaveGame(data);
     }

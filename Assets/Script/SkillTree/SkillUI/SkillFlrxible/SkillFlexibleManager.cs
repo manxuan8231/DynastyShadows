@@ -21,6 +21,11 @@ public class SkillFlexibleManager : MonoBehaviour
     public GameObject buttonUnlock;
     public GameObject buttonEquip;
     public GameObject buttonRemove;
+    public GameObject coverBG1;//BG che skill khi chua unlock
+    public GameObject coverBG2;//BG che skill khi chua unlock
+    public GameObject coverBG3;//BG che skill khi chua unlock
+    public GameObject coverBG4;//BG che skill khi chua unlock
+    public GameObject coverBG5;
     // Slot icon và màu sắc nút
     public RawImage slotIcon; // Slot HUD
     public Image[] buttonIconColor;
@@ -51,17 +56,20 @@ public class SkillFlexibleManager : MonoBehaviour
     private bool isDongCung5Unlocked = false;
 
     //dk để show skill
-    public bool showSkill4 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 4 hay không
-    public bool showSkill5 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 5 hay không
+   
+    public bool showSkill4 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 4(khien) hay không
+    public bool showSkill5 = false; // Biến để kiểm tra xem có hiển thị kỹ năng 5(eye) hay không
     public bool hasItemQuest = false; // Biến để kiểm tra xem có item quest mở khóa kỹ năng 4 hay không
     public bool hasItemQuest2 = false; // Biến để kiểm tra xem có item quest mở khóa kỹ năng 5 hay không
 
     //biến số để theo dõi số lần nâng cấp kỹ năng
     public float turnInSkill1 = 0f;
 
+
    // public ItemSO itemQuestUnlock;
-    public int activeSkillUnlock = 0;
+    public int activeSkillUnlock = 0;//skill khien
    // public ItemSO itemQuestUnlock2; // Biến để kiểm tra xem có hiển thị kỹ năng 5hay không
+    
     
     void Start()
     {
@@ -82,14 +90,22 @@ public class SkillFlexibleManager : MonoBehaviour
         isDongCung4Unlocked = skillTreeData.isDongCung4Unlocked;
         isDongCung5Unlocked = skillTreeData.isDongCung5Unlocked;
         currentSkillID = skillTreeData.currentSkillID; // Lấy ID kỹ năng hiện tại
+        playerStatus. showSkill1 = skillTreeData.showSkill1; // Lấy trạng thái hiển thị kỹ năng 1
+        playerStatus. showSkill2 = skillTreeData.showSkill2; // Lấy trạng thái hiển thị kỹ năng 2
+        playerStatus. showSkill3 = skillTreeData.showSkill3; // Lấy trạng thái hiển thị kỹ năng 3
         showSkill4 = skillTreeData.showSkill4; // Lấy trạng thái hiển thị kỹ năng 4
         showSkill5 = skillTreeData.showSkill5; // Lấy trạng thái hiển thị kỹ năng 5
         hasItemQuest = skillTreeData.hasItemQuest; // Lấy trạng thái item quest mở khóa kỹ năng 4
         hasItemQuest2 = skillTreeData.hasItemQuest2; // Lấy trạng thái item quest mở khóa kỹ năng 5
         activeSkillUnlock = skillTreeData.activeSkillUnlock; // Lấy số lần nâng cấp kỹ năng
         RestoreEquippedIcon();//luu icon
+        //show cover
 
-
+       
+    }
+    private void Update()
+    {
+        CoverBG();
     }
     public void RestoreEquippedIcon()//luu icon
     {
@@ -142,30 +158,54 @@ public class SkillFlexibleManager : MonoBehaviour
         switch (iconID)
         {
             case "FireBall":
-                textureTutorial.texture = spriteFireBall;
-                cameras[0].gameObject.SetActive(true); // Kích hoạt camera cho FireBall
-                previewText.text = "Cầu lửa";
-                contenSkill.text = "Khi dùng kỹ năng này thì player sẽ bắn ra 3 cầu lửa nối tiếp combo có thời gian hồi chiêu 10 giây.";
-                skillBGs[0].enabled = true;
-                scoreUpgradeText.text = "/5";
-                break;
+                if (playerStatus.showSkill1)
+                {
+                    textureTutorial.texture = spriteFireBall;
+                    cameras[0].gameObject.SetActive(true); // Kích hoạt camera cho FireBall
+                    previewText.text = "Cầu lửa";
+                    contenSkill.text = "Khi dùng kỹ năng này thì player sẽ bắn ra 3 cầu lửa nối tiếp combo có thời gian hồi chiêu 10 giây.";
+                    skillBGs[0].enabled = true;
+                    scoreUpgradeText.text = "/5";
+                }
+                else
+                {
+                    previewPanel.SetActive(false); // Ẩn nếu chưa unlock
+                    Debug.LogWarning("ItemQuestUnlock đang null hoặc chưa được mở khóa");
+                    return;
+                }
+                    break;
 
             case "RainFire":
-                textureTutorial.texture = spriteFireRain;
-                cameras[1].gameObject.SetActive(true); // Kích hoạt camera cho RainFire
-                previewText.text = "Mưa lửa";
-                contenSkill.text = "Khi dùng kỹ năng thì người chơi sẽ bay lên thả các cầu lửa xuống gây sát thương vùng có thời gian hồi chiêu 10 giây.";
-                skillBGs[1].enabled = true;
-                scoreUpgradeText.text = "/7";
-                break;
+                if (playerStatus.showSkill2)
+                {
+                    textureTutorial.texture = spriteFireRain;
+                    cameras[1].gameObject.SetActive(true); // Kích hoạt camera cho RainFire
+                    previewText.text = "Mưa lửa";
+                    contenSkill.text = "Khi dùng kỹ năng thì người chơi sẽ bay lên thả các cầu lửa xuống gây sát thương vùng có thời gian hồi chiêu 10 giây.";
+                    skillBGs[1].enabled = true;
+                    scoreUpgradeText.text = "/7";
+                }
+                else
+                {
+                    previewPanel.SetActive(false);
+                }
+
+                    break;
 
             case "Slash":
-                textureTutorial.texture = spriteSlash;
-                cameras[2].gameObject.SetActive(true); // Kích hoạt camera cho Slash
-                previewText.text = "Trảm kích";
-                contenSkill.text = "Khi dùng kỹ năng này thì player sẽ lao tới chém 3 lần nối tiếp có thời gian hồi chiêu 10 giây.";
-                skillBGs[2].enabled = true;
-                scoreUpgradeText.text = "/7";
+                if (playerStatus.showSkill3)
+                {
+                    textureTutorial.texture = spriteSlash;
+                    cameras[2].gameObject.SetActive(true); // Kích hoạt camera cho Slash
+                    previewText.text = "Trảm kích";
+                    contenSkill.text = "Khi dùng kỹ năng này thì player sẽ lao tới chém 3 lần nối tiếp có thời gian hồi chiêu 10 giây.";
+                    skillBGs[2].enabled = true;
+                    scoreUpgradeText.text = "/7";
+                }
+                else
+                {
+                    previewPanel.SetActive(false);
+                }
                 break;
 
             case "Shield":
@@ -388,7 +428,54 @@ public class SkillFlexibleManager : MonoBehaviour
     }
 
 
+    public void CoverBG()//an skill khi chua unlock
+    {
+        Debug.Log("showBGcover");
+        if (!playerStatus.showSkill1)
+        {
+            coverBG1.SetActive(true);
+        }
+        else
+        {
+            coverBG1.SetActive(false);
+        }
 
+        if (!playerStatus.showSkill2)
+        {
+            coverBG2.SetActive(true);
+        }
+        else
+        {
+            coverBG2.SetActive(false);
+        }
+
+        if (!playerStatus.showSkill3)
+        {
+            coverBG3.SetActive(true);
+        }
+        else
+        {
+            coverBG3.SetActive(false);
+        }
+
+        if (!showSkill4)
+        {
+            coverBG4.SetActive(true);
+        }
+        else
+        {
+            coverBG4.SetActive(false);
+        }
+
+        if (!showSkill5)
+        {
+            coverBG5.SetActive(true);
+        }
+        else
+        {
+            coverBG5.SetActive(false);
+        }
+    }
 
     private void UpdateScoreText()
     {

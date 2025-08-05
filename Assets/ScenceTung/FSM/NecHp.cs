@@ -37,6 +37,8 @@ public class NecHp : MonoBehaviour
 
     private void Update()
     {
+
+        TurnOnOffSlider();
         if (sliderHp.value != easeSliderHp.value) { 
             easeSliderHp.value = Mathf.Lerp(easeSliderHp.value, curhp, lerpSpeed); // Lerp giá trị thanh máu
         }
@@ -47,7 +49,7 @@ public class NecHp : MonoBehaviour
         {
             if (!isAudioBgr) audioManager.audioSource.PlayOneShot(audioManager.audopBackgroud); isAudioBgr = true;
 
-            sliderHpBoss2.SetActive(true);
+          
             triggerBox.enabled = false;
             
         }
@@ -71,5 +73,18 @@ public class NecHp : MonoBehaviour
             
         }
        
+    }
+
+    public void TurnOnOffSlider()//bat tat slider thanh máu boss 2
+    {
+        float distance = Vector3.Distance(controller.transform.position, controller.player.position);
+        if(distance <= controller.radius)
+        {
+            sliderHpBoss2.SetActive(true); // Hiển thị thanh máu khi ở gần
+        }
+        else
+        {
+            sliderHpBoss2.SetActive(false); // Ẩn thanh máu khi xa
+        }
     }
 }
