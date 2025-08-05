@@ -10,14 +10,15 @@ public class Skill3ClonePLayer : MonoBehaviour
     public AIPath aiPath;
     public Animator animator;
     public LayerMask enemyLayer;
+   
     public float speed = 5f;
     public float detectionRange = 50f; 
     public float attackRange = 4f; 
     public float attackCooldown = 15f;
-    
-                               //skin
+
+    //skin                         
     public SkinnedMeshRenderer[] skinnedMeshRenderers;
-    private bool isUsingNavMesh = true; // mặc định là NavMesh
+   // private bool isUsingNavMesh = true; // mặc định là NavMesh
 
     //bien luu tru enemy gan nhat
     private Transform nearestEnemy;
@@ -52,30 +53,10 @@ public class Skill3ClonePLayer : MonoBehaviour
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
         animator = GetComponent<Animator>();
         agent.speed = speed;
-        StartCoroutine(ReturnToPool());
-       
-                                     // Kiểm tra có NavMesh ở vị trí hiện tại không
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(transform.position, out hit, 2f, NavMesh.AllAreas))
-        {
-            isUsingNavMesh = true;
-            agent.enabled = true;
-            aiPath.enabled = false;
-        }
-        else
-        {
-            isUsingNavMesh = false;
-            agent.enabled = false;
-            aiPath.enabled = true;
-        }
-
-       
-        aiPath.maxSpeed = speed;
-
-
-        
+        aiPath.maxSpeed = speed;   
         StartCoroutine(ReturnToPool());
         animator.SetTrigger("Fish");
+        InitMovementSystem();
     }
 
     void Update()
@@ -87,27 +68,42 @@ public class Skill3ClonePLayer : MonoBehaviour
         {
             float distanceToEnemy = Vector3.Distance(transform.position, nearestEnemy.position);
 
-            if (distanceToEnemy <= attackRange)
+            if (distanceToEnemy >= attackRange && distanceToEnemy <= detectionRange)
             {
+                
+                MoveToEnemy();
 
+
+            }
+            else if(distanceToEnemy <= attackRange)
+            {
+              
+                
+                animator.SetBool("Run", false);
+              
                 if (Time.time >= lastAttackTime + attackCooldown)
                 {
                     AttackEnemy();
                     lastAttackTime = Time.time;
                 }
-
+             
+            }
+        }
+        else// nếu không có kẻ thù gần thi tìm người chơi
+        {
+            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+            if (distanceToPlayer >= attackRange)
+            {
+                MoveToPlayer();
             }
             else
             {
-
-                MoveToEnemy();
+                // Dừng di chuyển
+               
+                   
+                animator.SetBool("Run", false);
             }
-        }
-        else
-        {
-            agent.enabled = false;
-            aiPath.enabled = false;           
-            animator.SetBool("Run", false);
+           
         }
         if (playerStatus.currentHp <= 0)
         {
@@ -154,20 +150,50 @@ public class Skill3ClonePLayer : MonoBehaviour
 
     public void MoveToEnemy()
     {
-        float dis = Vector3.Distance(transform.position, nearestEnemy.position);
-        if (nearestEnemy != null && dis <= 70)
+        if (nearestEnemy == null) return;
+
+        animator.SetBool("Run", true);
+
+        // Nếu AIPath đang hoạt động → dùng AIPath
+        if (aiPath != null && aiPath.isActiveAndEnabled)
         {
-            animator.SetBool("Run", true);
-            agent.enabled = true;
+            if (agent != null) agent.enabled = false;
             aiPath.enabled = true;
-            if (isUsingNavMesh && agent.enabled)
-            {
-                agent.SetDestination(nearestEnemy.position);
-            }
-            else if (!isUsingNavMesh && aiPath.enabled)
-            {
-                aiPath.destination = nearestEnemy.position;
-            }
+
+            aiPath.destination = nearestEnemy.position; // ✅ dùng nearestEnemy
+        }
+        else if (agent != null && agent.isActiveAndEnabled)
+        {
+            if (aiPath != null) aiPath.enabled = false;
+            agent.enabled = true;
+
+            agent.SetDestination(nearestEnemy.position); // ✅ dùng nearestEnemy
+        }
+        else
+        {
+            animator.SetBool("Run", false);
+        }
+    }
+
+    public void MoveToPlayer()
+    {
+        if (player == null) return;
+
+        animator.SetBool("Run", true);
+
+        if (aiPath != null && aiPath.isActiveAndEnabled)
+        {
+            if (agent != null) agent.enabled = false;
+            aiPath.enabled = true;
+
+            aiPath.destination = player.transform.position;
+        }
+        else if (agent != null && agent.isActiveAndEnabled)
+        {
+            if (aiPath != null) aiPath.enabled = false;
+            agent.enabled = true;
+
+            agent.SetDestination(player.transform.position);
         }
         else
         {
@@ -195,6 +221,23 @@ public class Skill3ClonePLayer : MonoBehaviour
         yield return new WaitForSeconds(skill3Manager.timeSkill3);
         ObjPoolingManager.Instance.ReturnToPool(skill3Manager.clonePLTag,gameObject);
     }
+    void InitMovementSystem()
+    {
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(transform.position, out hit, 2f, NavMesh.AllAreas))
+        {
+            // Có NavMesh → dùng agent
+            agent.enabled = true;
+            aiPath.enabled = false;
+        }
+        else
+        {
+            // Không có NavMesh → dùng aiPath
+            agent.enabled = false;
+            aiPath.enabled = true;
+        }
+    }
+
     public void StartDameZone()
     {
        
@@ -236,16 +279,16 @@ public class Skill3ClonePLayer : MonoBehaviour
     }
     public IEnumerator WaitForGravity()
     {
-        if (isUsingNavMesh)
+       
             agent.enabled = false;
-        else
+        
             aiPath.enabled = false;
 
         yield return new WaitForSeconds(3f);
 
-        if (isUsingNavMesh)
+   
             agent.enabled = true;
-        else
+        
             aiPath.enabled = true;
     }
 

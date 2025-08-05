@@ -49,6 +49,7 @@ public class EvenAnimator : MonoBehaviour
     //tham chieu 
     DameZone dameZone;
     ComboAttack comboAttack;
+  
     private AudioSource audioSource; //audio
     void Start()
     {
@@ -59,7 +60,7 @@ public class EvenAnimator : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         dameZone = FindAnyObjectByType<DameZone>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
-
+       
     }
     //movemen
     //sound even 
