@@ -3,7 +3,7 @@ using Unity.Cinemachine;
 
 public class CameraShake : MonoBehaviour
 {
-    public float shakeDuration = 0.3f;
+   // public float shakeDuration = 0.3f;
     public float shakeAmplitude = 2f;
     public float shakeFrequency = 2f;
 
@@ -31,7 +31,7 @@ public class CameraShake : MonoBehaviour
        
     }
 
-    public void Shake()
+    public void Shake(float shakeDuration)
     {
         if (noise == null) return;
 

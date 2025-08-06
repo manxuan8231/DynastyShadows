@@ -15,11 +15,12 @@ public class DameZone : MonoBehaviour
 
     //ke thua
     PlayerStatus playerStatus;
-   
+    CameraShake cameraShake;
     private void Start()
     {
         
         playerStatus = FindAnyObjectByType<PlayerStatus>();
+        cameraShake =FindAnyObjectByType<CameraShake>();   
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -47,13 +48,9 @@ public class DameZone : MonoBehaviour
             listDame.Add(other);
             ShowTextDame(finalDamage);
             damageable.TakeDamage(finalDamage);
+            cameraShake.Shake(0.1f);
         }
-        //cua phong 
-        if (!other.CompareTag("EnemyHorseMan")) return;     
-        if (other.TryGetComponent<EnemyMap2_horseman>(out var enemy))
-        {           
-            enemy.TryDodge(); // Gọi hành vi né đòn
-        }
+      
     }
 
     public void ShowTextDame(float damage)

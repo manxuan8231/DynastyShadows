@@ -59,7 +59,7 @@ public class Skill3Manager : MonoBehaviour
             textCoolDownSkill.enabled = false;//neu be hon 0 thi tat text
         }
         if (Input.GetKeyDown(KeyCode.Alpha3) && Time.time >= lastTime + cooldownSkill && isInputSkill3 == true && isUnlockSkill3 == true
-            && playerControllerState.isController && playerControllerState.animator.enabled)
+            && playerControllerState.isController && playerControllerState.animator.enabled && playerControllerState.IsGrounded())
         {
             textCoolDownSkill.enabled = true;
            

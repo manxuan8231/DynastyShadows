@@ -49,7 +49,7 @@ public class EvenAnimator : MonoBehaviour
     //tham chieu 
     DameZone dameZone;
     ComboAttack comboAttack;
-  
+    PlayerControllerState playerControllerState;
     private AudioSource audioSource; //audio
     void Start()
     {
@@ -60,7 +60,7 @@ public class EvenAnimator : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         dameZone = FindAnyObjectByType<DameZone>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
-       
+        playerControllerState = FindAnyObjectByType<PlayerControllerState>();
     }
     //movemen
     //sound even 
@@ -133,10 +133,12 @@ public class EvenAnimator : MonoBehaviour
     public void StartDameZone()
     {
         dameZone.beginDame();
+       
     }
     public void EndDameZone()
     {
         dameZone.endDame();
+       
     }
     public void StartDameZoneHit()
     {
@@ -281,4 +283,7 @@ public class EvenAnimator : MonoBehaviour
 
 
     }
+
+   
+
 }

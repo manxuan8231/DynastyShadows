@@ -26,10 +26,13 @@ public class PlayerCurrentState : PlayerState
         player.animator.SetBool("jumpLand", player.isGrounded && !player.wasGroundedLastFrame == true);//để đây đụng đất thì true liên tục
         if (player.isController == true)
         {
-            Move();
-            Jump();
-            Roll();
+           
+                Move();
+                Jump();
+                Roll();
+
             
+
             player.comboAttack.InputAttack();
             //skill2
             if (player.skill2Manager.isChangeSkill2)//để chuyển sang trạng thái skill2 animator

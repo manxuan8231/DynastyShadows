@@ -36,7 +36,7 @@ public class DameFireShoter : MonoBehaviour
                     GameObject effectInstance = Instantiate(fireEffect, transform.position, Quaternion.identity);
                     Destroy(effectInstance, 2f); // Hủy hiệu ứng sau 2 giây
                 }
-                cameraShake.Shake();
+                cameraShake.Shake(0.3f);
                 Destroy(gameObject);
             }
         }
@@ -48,7 +48,7 @@ public class DameFireShoter : MonoBehaviour
                 GameObject effectInstance = Instantiate(fireEffect, transform.position, Quaternion.identity);
                 Destroy(effectInstance, 2f); // Hủy hiệu ứng sau 2 giây
             }
-            cameraShake.Shake();
+            cameraShake.Shake(0.3f);
             Destroy(gameObject); // Hủy đối tượng này sau khi chạm đất
         }
 

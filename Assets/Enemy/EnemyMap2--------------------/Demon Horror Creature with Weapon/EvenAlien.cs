@@ -76,7 +76,7 @@ public class EvenAlien : MonoBehaviour
     //rung camera
     public void ShakeCamera()
     {
-        cameraShake.Shake();
+        cameraShake.Shake(0.3f);
     }
     //ban dan
     public void ShootBullet()

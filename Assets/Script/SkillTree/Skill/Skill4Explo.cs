@@ -16,7 +16,7 @@ public class Skill4Explo : MonoBehaviour
 
     void Update()
     {
-        cameraShake.Shake(); // Gọi hàm Shake từ CameraShake để tạo hiệu ứng rung camera
+        cameraShake.Shake(0.2f); // Gọi hàm Shake từ CameraShake để tạo hiệu ứng rung camera
     }
     public void OnTriggerEnter(Collider other)
     {

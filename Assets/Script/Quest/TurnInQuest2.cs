@@ -51,7 +51,7 @@ public class TurnInQuest2 : MonoBehaviour
         playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
-        knightD = FindAnyObjectByType<KnightD>(); // Lấy tham chiếu đến KnightD
+        knightD = GetComponent<KnightD>(); // Lấy tham chiếu đến KnightD
         
         // Ẩn panel và nút F khi bắt đầu
         NPCPanel.SetActive(false);

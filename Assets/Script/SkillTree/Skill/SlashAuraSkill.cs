@@ -19,7 +19,7 @@ public class SlashAuraSkill : MonoBehaviour
 
     void Update()
     {
-        cameraShake.Shake(); // Gọi hàm Shake từ CameraShake để thực hiện rung camera
+        cameraShake.Shake(0.3f); // Gọi hàm Shake từ CameraShake để thực hiện rung camera
     }
     public void OnTriggerEnter(Collider other)
     {
