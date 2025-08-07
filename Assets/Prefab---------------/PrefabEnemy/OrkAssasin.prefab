@@ -5759,6 +5759,7 @@ GameObject:
   - component: {fileID: 1037988115033879668}
   - component: {fileID: 1493349829955192216}
   - component: {fileID: 3357969896973077812}
+  - component: {fileID: 8971519077243084237}
   m_Layer: 0
   m_Name: Knife
   m_TagString: Untagged
@@ -5818,6 +5819,25 @@ MonoBehaviour:
   knife: {fileID: 4988783210434962915}
   speed: 700
   knifePre: []
+--- !u!114 &8971519077243084237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4988783210434962915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6072cbee4356fa4f85248beec18e4c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusPl: {fileID: 0}
+  boxDame: {fileID: 1493349829955192216}
+  dame: 15
+  tagPlayer: Player
+  listDame: []
+  enemy: {fileID: 5686811050784615843}
+  hitAnimationTrigger: HitBack
 --- !u!1 &5018060198977559347
 GameObject:
   m_ObjectHideFlags: 0
@@ -7311,10 +7331,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sliderHp: {fileID: 9220046899104010394}
   eaSliderHp: {fileID: 291154749001933081}
+  sliderArmor: {fileID: 919272423368145525}
   textHp: {fileID: 824763193300836148}
   curentHp: 0
   maxHp: 10000
   lerpSpeed: 0.05
+  currentArmor: 0
   scoreDodge: 0
   controllerStateAssa: {fileID: 0}
   questManager: {fileID: 0}
@@ -9093,6 +9115,7 @@ GameObject:
   - component: {fileID: 1012442759575460752}
   - component: {fileID: 735819998799321534}
   - component: {fileID: 1889672944610680625}
+  - component: {fileID: 5251528834469805472}
   m_Layer: 0
   m_Name: Knife (1)
   m_TagString: Untagged
@@ -9152,6 +9175,25 @@ MonoBehaviour:
   knife: {fileID: 7173370783964846861}
   speed: 700
   knifePre: []
+--- !u!114 &5251528834469805472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7173370783964846861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6072cbee4356fa4f85248beec18e4c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusPl: {fileID: 0}
+  boxDame: {fileID: 735819998799321534}
+  dame: 50
+  tagPlayer: Player
+  listDame: []
+  enemy: {fileID: 5686811050784615843}
+  hitAnimationTrigger: HitBack
 --- !u!1 &7229845195891643363
 GameObject:
   m_ObjectHideFlags: 0

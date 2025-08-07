@@ -11,10 +11,12 @@ public class AssasinHp : MonoBehaviour,IDamageable
     [Header("Hp")]
     public Slider sliderHp;
     public Slider eaSliderHp;
+    public Slider sliderArmor; // Giáp ảo
     public TextMeshProUGUI textHp;
     public int curentHp;
     public int maxHp = 10000;
     public float lerpSpeed = 0.05f; // Tốc độ lerp cho thanh máu
+    public float currentArmor;
     [Header("tranh ne ")]
     public float scoreDodge = 0f;
     //tham chieu
@@ -34,10 +36,13 @@ public class AssasinHp : MonoBehaviour,IDamageable
     void Start()
     {
         curentHp = maxHp;
+        currentArmor = 1000;
         sliderHp.maxValue = curentHp;
         sliderHp.value = curentHp;
         eaSliderHp.maxValue = curentHp;
         eaSliderHp.value = curentHp;
+        sliderArmor.maxValue = currentArmor; // Giáp ảo ban đầu
+        sliderArmor.value = currentArmor; // Giáp ảo ban đầu
         textHp.text =$"{curentHp}/{maxHp}";
         controllerStateAssa = FindAnyObjectByType<ControllerStateAssa>();
         playerInGame = GameObject.FindGameObjectWithTag("Player");
@@ -55,8 +60,19 @@ public class AssasinHp : MonoBehaviour,IDamageable
     }
     public void TakeDamage(float damage)
     {
-        curentHp -= (int)damage;
-        curentHp = Mathf.Clamp(curentHp, 0, maxHp);
+        if(currentArmor > 0)
+        {
+            // Nếu còn giáp, giảm giáp trước
+            currentArmor -= damage;
+           
+            currentArmor = Mathf.Clamp(currentArmor, 0, 1000);
+        }
+        else
+        {
+            curentHp -= (int)damage;
+            curentHp = Mathf.Clamp(curentHp, 0, maxHp);
+          
+        }
         UpdateUI();
 
         if (curentHp <= 0 && !isTimeLine)
@@ -82,6 +98,7 @@ public class AssasinHp : MonoBehaviour,IDamageable
     }
     void UpdateUI()
     {
+        sliderArmor.value = currentArmor;
         sliderHp.value = curentHp;
         textHp.text = $"{curentHp}/{maxHp}";
     }

@@ -106,6 +106,7 @@ public class SkillFlexibleManager : MonoBehaviour
     private void Update()
     {
         CoverBG();
+        SimulatorUnlockSkill();
     }
     public void RestoreEquippedIcon()//luu icon
     {
@@ -517,5 +518,25 @@ public class SkillFlexibleManager : MonoBehaviour
         return false;
     }
 
-    
+    private void SimulatorUnlockSkill()
+    {
+        if(Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            // Giả lập mở khóa kỹ năng
+            isDongCung1Unlocked = true;
+            isDongCung2Unlocked = true;
+            isDongCung3Unlocked = true;
+            isDongCung4Unlocked = true;
+            isDongCung5Unlocked = true;
+
+            playerStatus.showSkill1 = true;
+            playerStatus.showSkill2 = true; // Giả lập kỹ năng 2 đã mở khóa
+            playerStatus.showSkill3 = true; // Giả lập kỹ năng 3 đã mở khóa
+            showSkill4 = true; // Giả lập kỹ năng 4 đã mở khóa
+            showSkill5 = true; // Giả lập kỹ năng 5 đã mở khóa
+            activeSkillUnlock = 3;
+        }
+       
+
+    }
 }

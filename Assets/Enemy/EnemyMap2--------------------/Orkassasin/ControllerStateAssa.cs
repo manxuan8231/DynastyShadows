@@ -71,7 +71,7 @@ public class ControllerStateAssa : MonoBehaviour,DodgeOnEnemyInterface
 
     public void TryDodgeAttack()//ne tranh đòn tấn công của pl và chuyển trạng thái sang dodge
     {
-        if (!aiPath.canMove || isSkillDash) return;
+        if (!aiPath.canMove || isSkillDash || !animator.enabled) return;
 
         float chanceToDodge = 0.6f;
         if (Random.value <= chanceToDodge)

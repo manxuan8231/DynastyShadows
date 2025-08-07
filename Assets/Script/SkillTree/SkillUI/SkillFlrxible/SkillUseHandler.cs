@@ -93,7 +93,7 @@ public class SkillUseHandler : MonoBehaviour
         switch (skillID)
         {
             case "FireBall":
-                if (Input.GetKeyDown(KeyCode.R) && playerControllerState.isController && Time.time >= nextComboAllowedTime)
+                if (Input.GetKeyDown(KeyCode.R) && playerControllerState.isController && Time.time >= nextComboAllowedTime && playerControllerState.IsGrounded())
                 {
                     if (Time.time < lastColldown + cooldownTime) return;
 
@@ -128,7 +128,7 @@ public class SkillUseHandler : MonoBehaviour
                 }
                 break;
             case "RainFire":
-                if (Input.GetKeyDown(KeyCode.R) && playerControllerState.isController && Time.time >= nextComboAllowedTime)
+                if (Input.GetKeyDown(KeyCode.R) && playerControllerState.isController && Time.time >= nextComboAllowedTime && playerControllerState.IsGrounded())
                 {
                     if (Time.time < lastColldown + cooldownTime) return;
                     StartCoroutine(WaitMove());
