@@ -9,8 +9,8 @@ public class DragonRedHP : MonoBehaviour,IDamageable
     public Slider sliderHp;//máu
     public Slider easeSliderHp;
     public TextMeshProUGUI textHp;
-    public float currentHp;
-    public float maxHp = 10000f;
+    public int currentHp;
+    public int maxHp = 10000;
     public float lerpSpeed = 0.05f; // Tốc độ lerp cho slider mượt mà
     //giáp ảo
     public Slider sliderArmor; //giáp
@@ -80,7 +80,7 @@ public class DragonRedHP : MonoBehaviour,IDamageable
         }
         else
         {
-            currentHp -= amount;
+            currentHp -= (int)amount;
             currentHp = Mathf.Clamp(currentHp, 0, maxHp); // Đảm bảo máu không vượt quá giới hạn
         }
 

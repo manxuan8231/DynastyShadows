@@ -6,8 +6,8 @@ public class BossHP : MonoBehaviour, IDamageable
 {
     public Slider sliderHp;
     public Slider easeSliderHp;
-    public float currentHealth;
-    public float maxHealth = 10000f;
+    public int currentHealth;
+    public int maxHealth = 10000;
     public float lerpSpeed = 0.03f; // Tốc độ 
     public float showHpDistance = 50f; // khoảng cách tối đa để hiển thị thanh máu
     private BossScript bossScript;
@@ -60,7 +60,7 @@ public class BossHP : MonoBehaviour, IDamageable
         if (isDead || bossScript == null || bossScript.isDead)
             return;
 
-        currentHealth -= damage;
+        currentHealth -= (int)damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         if (sliderHp != null)

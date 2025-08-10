@@ -97,7 +97,7 @@ public class SkillUseHandler : MonoBehaviour
                 {
                     if (Time.time < lastColldown + cooldownTime) return;
 
-                    StartCoroutine(WaitMove());
+                    StartCoroutine(WaitMove(0.5f));
 
                     GameObject enemy = FindEnemy();
 
@@ -128,11 +128,11 @@ public class SkillUseHandler : MonoBehaviour
                 }
                 break;
             case "RainFire":
-                if (Input.GetKeyDown(KeyCode.R) && playerControllerState.isController && Time.time >= nextComboAllowedTime && playerControllerState.IsGrounded())
+                if (Input.GetKeyDown(KeyCode.R) && playerControllerState.isController && Time.time >= nextComboAllowedTime)
                 {
                     if (Time.time < lastColldown + cooldownTime) return;
-                    StartCoroutine(WaitMove());
-                    StartCoroutine(WaitForGraity());
+                   
+                   // StartCoroutine(WaitForGraity());
                     foreach (Skill3ClonePLayer clone in Object.FindObjectsByType<Skill3ClonePLayer>(FindObjectsSortMode.None))
                     {
                         clone.PlayRainFireAnim();
@@ -147,7 +147,7 @@ public class SkillUseHandler : MonoBehaviour
                 {
                     if (Time.time < lastColldown + cooldownTime) return;
                     
-                    StartCoroutine(WaitMove());
+                    StartCoroutine(WaitMove(1));
                     FindEnemy();
 
                     Vector3 dashDir = player.transform.forward;
@@ -325,12 +325,12 @@ public class SkillUseHandler : MonoBehaviour
     }
     
 
-    public IEnumerator WaitMove()
+    public IEnumerator WaitMove(float time)
     {
         playerControllerState.controller.enabled = false;
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(time);
         playerControllerState.controller.enabled = true;
-    }
+    } 
     public IEnumerator WaitForGraity()
     {
         playerControllerState.gravity = 0f;

@@ -7,8 +7,8 @@ public class DrakonitHp1 : MonoBehaviour, IDamageable
     // thanh máu
     public Slider sliderHp;
     public Slider easeSliderHp; // Thanh máu
-    public float maxHp = 1000; // Máu tối đa
-    public float currentHp; // Máu hiện tại
+    public int maxHp = 1000; // Máu tối đa
+    public int currentHp; // Máu hiện tại
     public float easeSpeed = 0.05f; // Tốc độ thay đổi thanh máu
     public TextMeshProUGUI textHp; // Text hiển thị máu
     public Collider colliderBox; // Collider của enemy
@@ -48,7 +48,7 @@ public class DrakonitHp1 : MonoBehaviour, IDamageable
     }
     public void TakeDamage(float amount)
     {
-        currentHp -= amount; // Giảm máu hiện tại
+        currentHp -= (int)amount; // Giảm máu hiện tại
         sliderHp.value = currentHp; // Cập nhật thanh máu
         textHp.text = $"{currentHp}/{maxHp}"; // Cập nhật text hiển thị máu
         currentHp = Mathf.Clamp(currentHp, 0, maxHp); // Đảm bảo máu không âm và không vượt quá tối đa
