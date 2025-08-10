@@ -15,7 +15,6 @@ public class Enemy2 : MonoBehaviour
     public EnemyState currentState;
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public Transform player;
-    public Vector3 firstPos;
     public Animator animator;
     public string currentTrigger;
 
@@ -40,7 +39,6 @@ public class Enemy2 : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        firstPos = transform.position;
         enemyHP2 = FindAnyObjectByType<EnemyHP2>();
         player = FindClosestPlayer(); // Tìm player gần nhất
         playerControllerState = FindAnyObjectByType<PlayerControllerState>();
@@ -92,16 +90,11 @@ public class Enemy2 : MonoBehaviour
         {
             agent.SetDestination(player.position); // Đuổi theo player
         }
-        else
+        else if(distToPlayer >= radius)
         {
-            // Nếu player ra khỏi phạm vi, quay lại chỗ cũ
-            float backDist = Vector3.Distance(transform.position, firstPos);
-            agent.SetDestination(firstPos);
+            agent.isStopped = true; // Dừng lại nếu player ra ngoài phạm vi
+            ChangeState(EnemyState.Idle); // Trở về trạng thái Idle nếu player ra ngoài phạm vi
 
-            if (backDist < 0.2f)
-            {
-                ChangeState(EnemyState.Idle); // Về tới nơi thì Idle lại
-            }
         }
     }
 

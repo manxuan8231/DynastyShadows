@@ -19,7 +19,6 @@ public class Enemy1 : MonoBehaviour
     [SerializeField] public Transform player;
     [SerializeField] public Animator animator;
     [SerializeField] public string currentTrigger;
-    public Vector3 firstPos;
     //khoảng cách
     public float radius = 20f;
     public float attackRange = 2f;
@@ -50,7 +49,6 @@ public class Enemy1 : MonoBehaviour
     void Start()
     {
         damageBox.enabled = false; // Tắt box dame khi bắt đầu   
-        firstPos = transform.position; 
     }
 
     // Update is called once per frame
@@ -96,17 +94,12 @@ public class Enemy1 : MonoBehaviour
           
             agent.SetDestination(player.position); // Đuổi theo player
         }
-        else
+        else if(distToPlayer >= radius)
         {
-            // Nếu player ra khỏi phạm vi, quay lại chỗ cũ
-            float backDist = Vector3.Distance(transform.position, firstPos);
-            agent.SetDestination(firstPos);
-
-            if (backDist < 0.2f)
-            {
-                ChangeState(EnemyState.Idle); // Về tới nơi thì Idle lại
-            }
+            agent.isStopped = true; // Dừng lại nếu player ra ngoài phạm vi
+            ChangeState(EnemyState.Idle); // Trở về trạng thái Idle
         }
+      
     }
 
    public void Attack()
