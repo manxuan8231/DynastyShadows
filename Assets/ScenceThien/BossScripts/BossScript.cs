@@ -39,6 +39,7 @@ public class BossScript : MonoBehaviour
     void Start()
     {
         TransitionToState(idleState);
+        DisableAttackColliders();
     }
 
     void Update()
