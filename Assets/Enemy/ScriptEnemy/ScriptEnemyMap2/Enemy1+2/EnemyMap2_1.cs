@@ -17,11 +17,9 @@ public class EnemyMap2_1 : MonoBehaviour
 
     public AIPath ai;
     [SerializeField] public Transform player;
-    [SerializeField] public Vector3 firstPos;
     [SerializeField] public Animator animator;
     [SerializeField] public string currentTrigger;
     [SerializeField] float endDistance = 0.2f;
-    public bool hasFirstPos = false;
     //khoảng cách
     public float radius = 20f;
     public float attackRange = 2f;
@@ -54,18 +52,13 @@ public class EnemyMap2_1 : MonoBehaviour
     void Start()
     {
         damageBox.enabled = false; // Tắt box dame khi bắt đầu   
-        firstPos = transform.position; 
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (!hasFirstPos && gameObject.activeSelf)
-        {
-            firstPos = transform.position; // Lưu vị trí ban đầu
-            hasFirstPos = true; // Đánh dấu đã lưu vị trí ban đầu
-        }
+        
         player = FindClosestPlayer(); // Tìm player gần nhất
         switch (currentState)
         {
@@ -107,20 +100,13 @@ public class EnemyMap2_1 : MonoBehaviour
             ChangeState(EnemyState.Run);
            
         }
-        else
+        else if(distToPlayer >= radius)
         {
-            // Nếu player ra khỏi phạm vi, quay lại chỗ cũ
-            float backDist = Vector3.Distance(transform.position, firstPos);
-            ai.canMove = true; // Bật di chuyển
-            ai.canSearch = true;
-            ai.destination = firstPos;
-            ai.endReachedDistance = endDistance; // Khoảng cách kết thúc
+            // Nếu player ra ngoài phạm vi, trở về trạng thái Idle
+            ai.canMove = false; // Dừng di chuyển
+            ai.canSearch = false; // Tắt tìm kiếm
+            ChangeState(EnemyState.Idle);
 
-            if (backDist < 0.2f)
-            {
-              
-                ChangeState(EnemyState.Idle); // Về tới nơi thì Idle lại
-            }
         }
     }
 
