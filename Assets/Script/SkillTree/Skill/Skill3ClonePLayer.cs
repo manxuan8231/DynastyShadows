@@ -15,7 +15,7 @@ public class Skill3ClonePLayer : MonoBehaviour
     public float detectionRange = 50f; 
     public float attackRange = 4f; 
     public float attackCooldown = 15f;
-
+    private bool isUsingNavMesh; // nhớ hệ thống đang dùng
     //skin                         
     public SkinnedMeshRenderer[] skinnedMeshRenderers;
    // private bool isUsingNavMesh = true; // mặc định là NavMesh
@@ -160,14 +160,14 @@ public class Skill3ClonePLayer : MonoBehaviour
             if (agent != null) agent.enabled = false;
             aiPath.enabled = true;
 
-            aiPath.destination = nearestEnemy.position; // ✅ dùng nearestEnemy
+            aiPath.destination = nearestEnemy.position; 
         }
         else if (agent != null && agent.isActiveAndEnabled)
         {
             if (aiPath != null) aiPath.enabled = false;
             agent.enabled = true;
 
-            agent.SetDestination(nearestEnemy.position); // ✅ dùng nearestEnemy
+            agent.SetDestination(nearestEnemy.position); 
         }
         else
         {
@@ -227,12 +227,14 @@ public class Skill3ClonePLayer : MonoBehaviour
         if (NavMesh.SamplePosition(transform.position, out hit, 2f, NavMesh.AllAreas))
         {
             // Có NavMesh → dùng agent
+            isUsingNavMesh = true;
             agent.enabled = true;
             aiPath.enabled = false;
         }
         else
         {
             // Không có NavMesh → dùng aiPath
+            isUsingNavMesh = false;
             agent.enabled = false;
             aiPath.enabled = true;
         }
@@ -279,18 +281,23 @@ public class Skill3ClonePLayer : MonoBehaviour
     }
     public IEnumerator WaitForGravity()
     {
-       
-            agent.enabled = false;
-        
-            aiPath.enabled = false;
+        // Tắt di chuyển
+        if (agent != null) agent.enabled = false;
+        if (aiPath != null) aiPath.enabled = false;
 
         yield return new WaitForSeconds(3f);
 
-   
-            agent.enabled = true;
-        
-            aiPath.enabled = true;
+        // Bật lại đúng hệ thống ban đầu
+        if (isUsingNavMesh)
+        {
+            if (agent != null) agent.enabled = true;
+        }
+        else
+        {
+            if (AstarPath.active != null && aiPath != null)
+                aiPath.enabled = true;
+        }
     }
 
-   
+
 }

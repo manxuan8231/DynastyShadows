@@ -8,9 +8,17 @@ public class OpenShopMap2 : MonoBehaviour
     public GameObject btnF;
     public TMP_Text textBtnf;
     bool isCanOpen = false;
-
+    public TextMeshProUGUI textGold;
+    public float gold;
+    private void Start()
+    {
+        textGold.text = $"{gold}";
+    }
     void Update()
     {
+        gold = TurnOffOnUI.gold;
+        textGold.text = $"{gold}";
+        if (TurnOffOnUI.pause) return;//khi ui khac dg bat thi ko cho mo shop
         if (isCanOpen)
         {
             if (canvasShop.activeSelf)
@@ -29,6 +37,7 @@ public class OpenShopMap2 : MonoBehaviour
             {
                 bool isShopOpen = canvasShop.activeSelf;
                 canvasShop.SetActive(!isShopOpen);
+                TurnOffOnUI.openShop = !isShopOpen; // Cập nhật trạng thái cửa hàng trong TurnOffOnUI
                 btnF.SetActive(false);
                 textBtnf.text = "F:Mở Shop";
             }

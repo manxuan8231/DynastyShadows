@@ -132,7 +132,8 @@ public class SkillUseHandler : MonoBehaviour
                 {
                     if (Time.time < lastColldown + cooldownTime) return;
                    
-                   // StartCoroutine(WaitForGraity());
+                    StartCoroutine(WaitForGraity());
+                    StartCoroutine(WaitMove(1f));
                     foreach (Skill3ClonePLayer clone in Object.FindObjectsByType<Skill3ClonePLayer>(FindObjectsSortMode.None))
                     {
                         clone.PlayRainFireAnim();
@@ -328,15 +329,17 @@ public class SkillUseHandler : MonoBehaviour
     public IEnumerator WaitMove(float time)
     {
         playerControllerState.controller.enabled = false;
+       
         yield return new WaitForSeconds(time);
+       
         playerControllerState.controller.enabled = true;
     } 
     public IEnumerator WaitForGraity()
     {
         playerControllerState.gravity = 0f;
-        playerControllerState.controller.enabled = false;
+       playerControllerState.enabled = false;
         yield return new WaitForSeconds(3f);
-        playerControllerState.controller.enabled = true;
+       playerControllerState.enabled = true;
         playerControllerState.gravity = -9.81f;
     }
 
