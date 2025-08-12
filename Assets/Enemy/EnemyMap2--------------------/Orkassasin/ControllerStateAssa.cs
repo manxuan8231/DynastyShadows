@@ -26,7 +26,8 @@ public class ControllerStateAssa : MonoBehaviour,DodgeOnEnemyInterface
     public float cooldownSkillDash = 4f;
     public float lastTimeSkillDash = -4f;
     public float randomMoveSkillDash;
-    
+    public float dodgeRate = 0.4f;
+
     //bien kiem tra
     public bool isWaitMoveBack = false; // Biến để kiểm tra trạng thái di chuyển lùi cuar skill invi khi false thi ms cho chay skill
     public bool isRunSkillDashInHp = true;//biến để kiểm tra trạng thái chạy skill dash khi máu assasin dưới 80% 1 lan
@@ -73,7 +74,7 @@ public class ControllerStateAssa : MonoBehaviour,DodgeOnEnemyInterface
     {
         if (!aiPath.canMove || isSkillDash || !animator.enabled) return;
 
-        float chanceToDodge = 0.6f;
+        float chanceToDodge = dodgeRate;
         if (Random.value <= chanceToDodge)
         {
             animator.SetTrigger("dodge");

@@ -46,7 +46,7 @@ public class CurrentStateAssa : AssasinState
             enemy.animator.SetBool("isWalkForward", false);
         }
         RunSkillDashInHp();
-
+        DodgeRate();
     }
     public void RunSkillDashInHp()//khi mau assasin be hon 80 thì chạy skill dash
     {
@@ -54,6 +54,13 @@ public class CurrentStateAssa : AssasinState
         {
             enemy.isRunSkillDashInHp = false;
             enemy.ChangeState(new SkillKnifeStateAssa(enemy));//trang thai skill dash    
+        }
+    }
+    public void DodgeRate()//khi mau assasin be hon 80 thì chạy skill dash
+    {
+        if (enemy.assasinHp.curentHp <= enemy.assasinHp.maxHp * 0.3)
+        {
+            enemy.dodgeRate = 0.8f;
         }
     }
     public void SkillKnife()

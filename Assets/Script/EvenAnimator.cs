@@ -260,7 +260,7 @@ public class EvenAnimator : MonoBehaviour
     }
 
     //tránh né của enemy khi player chuẩn bị đánh
-    void OnAttackStart()
+    public  void OnAttackStart()
     {
        
         Collider[] enemies = Physics.OverlapSphere(transform.position, 6f, layerEnemy);
