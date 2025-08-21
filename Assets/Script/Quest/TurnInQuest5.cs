@@ -11,6 +11,7 @@ public class TurnInQuest5 : MonoBehaviour
     public GameObject niceQuestUI;
     public GameObject arrowIcon;
     public GameObject questBoss;
+
     public string[] names;
     public string[] content;
 
@@ -20,6 +21,8 @@ public class TurnInQuest5 : MonoBehaviour
     public bool isButtonF = false;
 
     public GameObject buttonSkip;
+    public GameObject buttonSkipAll; // Nút Skip All
+
     private bool isTyping = false;
     private bool skipPressed = false;
     private bool isWaitingForNext = false;
@@ -112,7 +115,7 @@ public class TurnInQuest5 : MonoBehaviour
     private IEnumerator ReadContent()
     {
         buttonSkip.SetActive(true);
-
+        buttonSkipAll.SetActive(true);
         for (int i = 0; i < content.Length; i++)
         {
             NPCContent.text = "";
@@ -147,25 +150,38 @@ public class TurnInQuest5 : MonoBehaviour
         }
 
         // Kết thúc hội thoại
-        Debug.Log("Kết thúc hội thoại");
+      
+        EndDialogueAndQuest();
+    }
+    private void EndDialogueAndQuest()
+    {
+        Debug.Log("Kết thúc hội thoại (Skip All hoặc hết hội thoại)");
         buttonSkip.SetActive(false);
+        buttonSkipAll.SetActive(false);
         NPCPanel.SetActive(false);
+
         playerController.isController = true;
         comboAttack.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
         questDesert5.questNameText.enabled = false;
         questDesert5.questPanel.SetActive(false);
         arrowIcon.SetActive(false);
         icon3D.SetActive(false);
-        playerStatus.IncreasedGold(500); playerStatus.AddExp(500);
+
+        playerStatus.IncreasedGold(500);
+        playerStatus.AddExp(500);
         StartCoroutine(WaitQuestUI());
+
         questBoss.SetActive(true);
         coroutine = null;
-        npcScript.player.SetActive(true); // Ẩn nhân vật người chơi khi hội thoại bắt đầu
-        npcScript.cam.SetActive(false); // Hiện camera NPC khi hội thoại bắt đầu
+
+        npcScript.player.SetActive(true);
+        npcScript.cam.SetActive(false);
+
         GameSaveData data = SaveManagerMan.LoadGame();
-        data.dataQuest.isQuestBossMap1 = true; // Đánh dấu nhiệm vụ đã hoàn thành
+        data.dataQuest.isQuestBossMap1 = true;
         SaveManagerMan.SaveGame(data);
     }
 
@@ -180,6 +196,18 @@ public class TurnInQuest5 : MonoBehaviour
         {
             skipPressed = true;
         }
+    }
+    public void OnSkipAllButtonPressed()
+    {
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+
+        audioSource?.PlayOneShot(audioSkip);
+
+        EndDialogueAndQuest();
     }
 
     public void EndContent()

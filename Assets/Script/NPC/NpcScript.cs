@@ -11,6 +11,7 @@ public class NPCScript : MonoBehaviour
     public TextMeshProUGUI NPCContent;
     public GameObject buttonF;
     public GameObject buttonSkip;
+    public GameObject buttonSkipAll; // thêm nút Skip All
     public GameObject player;
     public GameObject cam;
 
@@ -123,7 +124,7 @@ public class NPCScript : MonoBehaviour
         playerController.isController = false;
         playerController.animator.SetBool("isWalking", false);
         playerController.animator.SetBool("isRunning", false);
-
+        buttonSkipAll.SetActive(true);
         NPCPanel.SetActive(true);
         buttonSkip.SetActive(true);
         buttonF.SetActive(false);
@@ -185,7 +186,7 @@ public class NPCScript : MonoBehaviour
 
         comboAttack.enabled = true;
         playerController.isController = true;
-
+        buttonSkipAll.SetActive(false);
         isContent = false;
         isButtonF = false;
         coroutine = null;
@@ -224,6 +225,20 @@ public class NPCScript : MonoBehaviour
 
        
         HandleSkip();
+    }
+    public void OnSkipAllButtonPressed()
+    {
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine); // dừng toàn bộ dialogue
+            coroutine = null;
+        }
+
+        // Play âm thanh skip (tuỳ chọn)
+        audioSource?.PlayOneShot(audioSkip);
+
+        // Gọi kết thúc luôn
+        EndDialogueAndStartQuest();
     }
 
     private void HandleSkip()

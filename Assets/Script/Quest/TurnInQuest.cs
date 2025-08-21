@@ -29,6 +29,7 @@ public class TurnInQuest : MonoBehaviour
     private bool isTyping = false; // Đang chạy từng chữ
     private bool skipPressed = false; // Người chơi đã bấm skip
     private bool isWaitingForNext = false; // Đang chờ người chơi bấm Skip để qua câu tiếp theo
+    public GameObject buttonSkipAll; // Nút Skip All
 
     //tham chieu
     PlayerControllerState playerController; // Tham chiếu đến PlayerController
@@ -80,7 +81,7 @@ public class TurnInQuest : MonoBehaviour
             isContent = false; // Đặt lại trạng thái hội thoại
             npcScript.player.SetActive(false); // Ẩn nhân vật người chơi khi hội thoại bắt đầu
             npcScript.cam.SetActive(true); // Đặt priority của camera NPC cao hơn camera người chơi
-            
+            buttonSkipAll.SetActive(true);
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -145,45 +146,8 @@ public class TurnInQuest : MonoBehaviour
             isWaitingForNext = false;
         }
 
-        // Kết thúc + nhiem vu
-        buttonSkip.SetActive(false);
-        NPCPanel.SetActive(false);
-        playerController.isController = true;
-        comboAttack.enabled = true;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        if (npcScript.player != null)
-        {
-            npcScript. player.SetActive(true);
+        EndDialogueAndQuest();
 
-            npcScript.cam.SetActive(false);
-        }
-        //
-        switch (questToStart)
-        {
-            case QuestToStart.BacLam:
-                questPointer.SetActive(true); // Ẩn chỉ dẫn nhiệm vụ
-                quest1.questPanel.SetActive(false);// Ẩn icon quest trên bản đồ làm nhiệm vụ;
-                quest1.iconQuest.SetActive(false); //ần panel quest text la cai ben trai man hinh 
-                iconMap.SetActive(false); // Ẩn icon quest trên bản đồ
-                playerStatus.IncreasedGold(100); // Thêm kinh nghiệm cho người chơi
-                questThuongNhan.SetActive(true); // Hiện NPC ThuongNhan sau khi hoàn thành nhiệm vụ
-                StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 2 giây
-                quest1.questPointer2.SetActive(false); // Ẩn chỉ dẫn nhiệm vụ
-                playerStatus.showSkill1 = true;//unlock skill 1 fireball
-                Destroy(quest1BacLam, 3f); // Ẩn quest1BacLam sau khi hoàn thành nhiệm vụ
-                Debug.Log("Phần thưởng đã nhận");
-                //save
-                GameSaveData data = SaveManagerMan.LoadGame();
-                data.dataQuest.isQuest1Map1 = true; // Lưu trạng thái nhiệm vụ
-                data.skillTreeData.showSkill1 = playerStatus.showSkill1;// Hiển thị skill 1 fireball
-                SaveManagerMan.SaveGame(data); // Lưu dữ liệu trò chơi
-                break;
-            case QuestToStart.LinhCanh:
-               
-                break;
-        }
-       
     }
 
 
@@ -199,6 +163,63 @@ public class TurnInQuest : MonoBehaviour
         {
             // Bấm Skip lần 2 → chuyển sang câu tiếp theo
             skipPressed = true;
+        }
+    }
+    public void OnSkipAllButtonPressed()
+    {
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine); // Dừng toàn bộ đọc hội thoại
+            coroutine = null;
+        }
+
+        audioSource?.PlayOneShot(audioSkip); // Âm thanh skip (nếu có)
+
+        // Gọi thẳng đến kết thúc hội thoại và nhiệm vụ
+        EndDialogueAndQuest();
+    }
+    private void EndDialogueAndQuest()
+    {
+        buttonSkip.SetActive(false);
+        buttonSkipAll.SetActive(false);
+        NPCPanel.SetActive(false);
+
+        playerController.isController = true;
+        comboAttack.enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        if (npcScript.player != null)
+        {
+            npcScript.player.SetActive(true);
+            npcScript.cam.SetActive(false);
+        }
+
+        switch (questToStart)
+        {
+            case QuestToStart.BacLam:
+                questPointer.SetActive(true);
+                quest1.questPanel.SetActive(false);
+                quest1.iconQuest.SetActive(false);
+                iconMap.SetActive(false);
+                playerStatus.IncreasedGold(100);
+                questThuongNhan.SetActive(true);
+                StartCoroutine(WaitQuestUI());
+                quest1.questPointer2.SetActive(false);
+                playerStatus.showSkill1 = true;
+                Destroy(quest1BacLam, 3f);
+
+                Debug.Log("Phần thưởng đã nhận");
+                // Save game
+                GameSaveData data = SaveManagerMan.LoadGame();
+                data.dataQuest.isQuest1Map1 = true;
+                data.skillTreeData.showSkill1 = playerStatus.showSkill1;
+                SaveManagerMan.SaveGame(data);
+                break;
+
+            case QuestToStart.LinhCanh:
+                // TODO: thêm logic
+                break;
         }
     }
 

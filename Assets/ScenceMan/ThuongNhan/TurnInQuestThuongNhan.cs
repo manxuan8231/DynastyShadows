@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -24,9 +23,12 @@ public class TurnInQuestThuongNhan : MonoBehaviour
     public bool isButtonF = false; // Kiểm tra trạng thái của nút F
     //nut skip
     public GameObject buttonSkip; // Nút Skip
+    public GameObject buttonSkipAll; // ✅ Nút Skip All
     private bool isTyping = false; // Đang chạy từng chữ
     private bool skipPressed = false; // Người chơi đã bấm skip
     private bool isWaitingForNext = false; // Đang chờ người chơi bấm Skip để qua câu tiếp theo
+    private bool skipAll = false; // ✅ Người chơi bấm Skip All
+
     public bool isOpenShop = false; // Kiểm tra trạng thái của OpenShop
     //tham chieu
     PlayerControllerState playerController; // Tham chiếu đến PlayerController
@@ -38,57 +40,58 @@ public class TurnInQuestThuongNhan : MonoBehaviour
     public AudioClip audioSkip; // Âm thanh khi bấm skip
     void Start()
     {
-        
-        
-            
         playerStatus = FindAnyObjectByType<PlayerStatus>();
-  
         playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
         openShop = FindAnyObjectByType<OpenShop>();
-        if(player == null)
+
+        if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player");
         }
+
         // Ẩn panel và nút F khi bắt đầu
         NPCPanel.SetActive(false);
         buttonSkip.SetActive(false);
-        buttonF.SetActive(false); // Ẩn nút F khi bắt đầu
-      //  openShop.enabled = false; // Vô hiệu hóa OpenShop nếu không cần thiết
-        niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp khi bắt đầu
+        buttonSkipAll.SetActive(false); // ✅ Ẩn Skip All khi bắt đầu
+        buttonF.SetActive(false);
+        niceQuestUI.SetActive(false);
         NPCName.text = "";
         NPCContent.text = "";
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F) && isButtonF)
         {
-            Cursor.lockState = CursorLockMode.None; // mở chuột
-            Cursor.visible = true; // hiện chuột
-            comboAttack.enabled = false; // Vô hiệu hóa ComboAttack
-            playerController.isController = false; // Vô hiệu hóa PlayerController
-            playerController.animator.SetBool("isWalking", false); // Dừng hoạt động của nhân vật
-            playerController.animator.SetBool("isRunning", false); // Dừng hoạt động của nhân vật
-            //
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            comboAttack.enabled = false;
+            playerController.isController = false;
+            playerController.animator.SetBool("isWalking", false);
+            playerController.animator.SetBool("isRunning", false);
+
             NPCPanel.SetActive(true);
             coroutine = StartCoroutine(ReadContent());
-            buttonF.SetActive(false); // Ẩn nút F khi bắt đầu hội thoại
-            isButtonF = false; // Đặt trạng thái hội thoại là false
-            isContent = false; // Đặt lại trạng thái hội thoại
-            playerNpc.SetActive(true); // Hiện NPC người chơi
-            player.SetActive(false); // Ẩn nhân vật người chơi khi hội thoại bắt đầu
-            cam.SetActive(true); // Đặt priority của camera NPC cao hơn camera người chơi
-            camcine.enabled = true; // Kích hoạt Cinemachine camera
-            camcine.Priority = 50; // Đặt priority của camera NPC cao hơn camera người chơi
+            buttonF.SetActive(false);
+            isButtonF = false;
+            isContent = false;
+
+            playerNpc.SetActive(true);
+            player.SetActive(false);
+            cam.SetActive(true);
+            camcine.enabled = true;
+            camcine.Priority = 50;
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player") && isContent)
         {
-            buttonF.SetActive(true); // Hiện nút F khi vào vùng tương tác
-            isButtonF = true; // Đặt trạng thái hội thoại là true
+            buttonF.SetActive(true);
+            isButtonF = true;
         }
     }
 
@@ -96,9 +99,8 @@ public class TurnInQuestThuongNhan : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            buttonF.SetActive(false); // Ẩn nút F khi ra khỏi vùng tương tác
-
-            isButtonF = false; // Đặt trạng thái hội thoại là false
+            buttonF.SetActive(false);
+            isButtonF = false;
             NPCPanel.SetActive(false);
             if (coroutine != null)
             {
@@ -109,10 +111,13 @@ public class TurnInQuestThuongNhan : MonoBehaviour
 
     private IEnumerator ReadContent()
     {
-        buttonSkip.SetActive(true); // Hiện nút Skip
+        buttonSkip.SetActive(true);
+        buttonSkipAll.SetActive(true); // ✅ Hiện Skip All
 
         for (int i = 0; i < content.Length; i++)
         {
+            if (skipAll) break; // ✅ Nếu bấm Skip All thì thoát vòng lặp
+
             NPCContent.text = "";
             NPCName.text = names.Length > i ? names[i] : "Unknown";
 
@@ -122,9 +127,9 @@ public class TurnInQuestThuongNhan : MonoBehaviour
 
             foreach (var letter in content[i])
             {
-                if (skipPressed)
+                if (skipPressed || skipAll)
                 {
-                    NPCContent.text = content[i]; // Hiện toàn bộ nội dung
+                    NPCContent.text = content[i];
                     break;
                 }
 
@@ -136,8 +141,7 @@ public class TurnInQuestThuongNhan : MonoBehaviour
             skipPressed = false;
             isWaitingForNext = true;
 
-            // Đợi người chơi bấm Skip để qua câu tiếp theo
-            while (!skipPressed)
+            while (!skipPressed && !skipAll)
             {
                 yield return null;
             }
@@ -145,50 +149,59 @@ public class TurnInQuestThuongNhan : MonoBehaviour
             isWaitingForNext = false;
         }
 
-        // Kết thúc + nhiem vu
+        EndDialogue(); // ✅ Kết thúc hội thoại
+    }
+
+    private void EndDialogue()
+    {
         buttonSkip.SetActive(false);
+        buttonSkipAll.SetActive(false);
         NPCPanel.SetActive(false);
+
         playerController.isController = true;
         comboAttack.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        openShop.enabled = true; // Kích hoạt OpenShop
-        isOpenShop = true; // Đặt trạng thái OpenShop là true
+        openShop.enabled = true;
+        isOpenShop = true;
+
         if (player != null)
         {
-            player.SetActive(true); // Hiện lại nhân vật người chơi
-            playerNpc.SetActive(false); // Ẩn NPC người chơi
-            cam.SetActive(false); // Đặt camera ưu tiên thấp hơn camera người chơi
+            player.SetActive(true);
+            playerNpc.SetActive(false);
+            cam.SetActive(false);
             camcine.Priority = 0;
             camcine.enabled = false;
         }
-        //phan thuong
-        playerStatus.IncreasedGold(300); ; // Thưởng kinh nghiệm
-        StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
-        //save
+
+        // phần thưởng
+        playerStatus.IncreasedGold(300);
+        StartCoroutine(WaitQuestUI());
+
+        // save
         GameSaveData data = SaveManagerMan.LoadGame();
-        data.dataQuest.isQuestShopMap1 = true; // Đánh dấu nhiệm vụ đã hoàn thành
-        SaveManagerMan.SaveGame(data); // Lưu trạng thái nhiệm vụ
+        data.dataQuest.isQuestShopMap1 = true;
+        SaveManagerMan.SaveGame(data);
 
+        skipAll = false; // ✅ Reset
     }
-
 
     public void OnSkipButtonPressed()
     {
-        audioSource.PlayOneShot(audioSkip); // Phát âm thanh khi bấm skip
-        if (isTyping)
+        audioSource.PlayOneShot(audioSkip);
+        if (isTyping || isWaitingForNext)
         {
-            // Bấm Skip trong lúc chữ đang chạy → hiện toàn bộ câu
-            skipPressed = true;
-        }
-        else if (isWaitingForNext)
-        {
-            // Bấm Skip lần 2 → chuyển sang câu tiếp theo
             skipPressed = true;
         }
     }
 
-    public void EndContent()// Kết thúc hội thoại
+    public void OnSkipAllButtonPressed() // ✅ Hàm Skip All
+    {
+        audioSource.PlayOneShot(audioSkip);
+        skipAll = true;
+    }
+
+    public void EndContent()
     {
         NPCPanel.SetActive(false);
 
@@ -200,8 +213,8 @@ public class TurnInQuestThuongNhan : MonoBehaviour
 
     private IEnumerator WaitQuestUI()
     {
-        niceQuestUI.SetActive(true); // Hiện UI nhiệm vụ đẹp
+        niceQuestUI.SetActive(true);
         yield return new WaitForSeconds(5f);
-        niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp sau 2 giây
+        niceQuestUI.SetActive(false);
     }
 }

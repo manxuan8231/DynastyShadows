@@ -25,6 +25,8 @@ public class TurnInQuest2 : MonoBehaviour
     public bool isButtonF = false; // Kiểm tra trạng thái của nút F
     //nut skip
     public GameObject buttonSkip; // Nút Skip
+    public GameObject buttonSkipAll; // Nút Skip All
+
     private bool isTyping = false; // Đang chạy từng chữ
     private bool skipPressed = false; // Người chơi đã bấm skip
     private bool isWaitingForNext = false; // Đang chờ người chơi bấm Skip để qua câu tiếp theo
@@ -54,6 +56,7 @@ public class TurnInQuest2 : MonoBehaviour
         knightD = GetComponent<KnightD>(); // Lấy tham chiếu đến KnightD
         
         // Ẩn panel và nút F khi bắt đầu
+
         NPCPanel.SetActive(false);
         buttonSkip.SetActive(false);
         buttonF.SetActive(false); // Ẩn nút F khi bắt đầu
@@ -83,6 +86,7 @@ public class TurnInQuest2 : MonoBehaviour
             player.SetActive(false); // Ẩn người chơi khi bắt đầu hội thoại
             cam.SetActive(true); // Đặt camera ưu tiên cao hơn để theo dõi NPC
             knightD. animator.SetBool("Talking", true); // Bật trạng thái Talking của animator
+            buttonSkipAll.SetActive(true);
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -148,40 +152,50 @@ public class TurnInQuest2 : MonoBehaviour
         }
 
         // Kết thúc + nhiem vu
+       
+        EndDialogueAndQuest();
+    }
+
+    private void EndDialogueAndQuest()
+    {
         buttonSkip.SetActive(false);
+        buttonSkipAll.SetActive(false);
         NPCPanel.SetActive(false);
+
         playerController.isController = true;
         comboAttack.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        if(player != null)
+
+        if (player != null)
         {
-            player.SetActive(true); // Ẩn người chơi khi bắt đầu hội thoại
-            cam.SetActive(false); // Đặt camera ưu tiên cao hơn để theo dõi NPC
-            knightD.animator.SetBool("Talking", false); // Bật trạng thái Talking của animator
+            player.SetActive(true);
+            cam.SetActive(false);
+            knightD.animator.SetBool("Talking", false);
         }
-            
-        //phan thuong
-        quest2.questPanel.SetActive(false);// Ẩn icon quest trên bản đồ làm nhiệm vụ;
-        quest2.iconQuest.SetActive(false); //ần panel quest text la cai ben trai man hinh 
-        iconMap.SetActive(false); // Ẩn icon quest trên bản đồ
-        isButtonF = false; // Đặt trạng thái hội thoại là false
-        isContent = false; // Đặt lại trạng thái hội thoại
-        linhCanh.SetActive(true); // Hiện linh canh
-        thuongNhan.SetActive(true); // Hiện thuong nhan
-       playerStatus.showSkill2 = true; // Hiện skill 2
-        playerStatus.IncreasedGold(200); // Thêm kinh nghiệm cho người chơi
-        StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
-     
+
+        // phần thưởng
+        quest2.questPanel.SetActive(false);
+        quest2.iconQuest.SetActive(false);
+        iconMap.SetActive(false);
+        isButtonF = false;
+        isContent = false;
+        linhCanh.SetActive(true);
+        thuongNhan.SetActive(true);
+        playerStatus.showSkill2 = true;
+        playerStatus.IncreasedGold(200);
+        StartCoroutine(WaitQuestUI());
+
         Debug.Log("Phần thưởng đã nhận");
-        //save
+
+        // save
         GameSaveData data = SaveManagerMan.LoadGame();
         data.skillTreeData.showSkill2 = playerStatus.showSkill2;
-        data.dataQuest.isQuest2Map1 = true; // Đánh dấu nhiệm vụ đã hoàn thành
-        SaveManagerMan.SaveGame(data); // Lưu dữ liệu game
-        Destroy(danLang, 3f); // Ẩn danLang sau khi hoàn thành nhiệm vụ
+        data.dataQuest.isQuest2Map1 = true;
+        SaveManagerMan.SaveGame(data);
+
+        Destroy(danLang, 1f);
     }
-   
 
     public void OnSkipButtonPressed()
     {
@@ -215,5 +229,17 @@ public class TurnInQuest2 : MonoBehaviour
         niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp sau 2 giây
     }
 
-  
+    public void OnSkipAllButtonPressed()
+    {
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+
+        audioSource?.PlayOneShot(audioSkip);
+
+        EndDialogueAndQuest();
+    }
+
 }

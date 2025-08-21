@@ -8,84 +8,89 @@ public class TurnInQuest3 : MonoBehaviour
     public TextMeshProUGUI NPCName; // Tên của NPC
     public TextMeshProUGUI NPCContent; // Nội dung hội thoại
     public GameObject icon3D; // Icon 3D của NPC
-    public GameObject bacLamQuestMain; // Bac Lam NPC nhiem vu sau khi lam xong nhiem vu tieu diet ork
-    public GameObject questDesert5; //quest boss
+    public GameObject bacLamQuestMain;
+    public GameObject questDesert5;
     public GameObject niceQuestUI;
-    //trang thai
+
+    // trạng thái
     public enum QuestToStart { None, BacLam, LinhCanh }
     public QuestToStart questToStart = QuestToStart.None;
-    //
-    public string[] names; // Danh sách tên 
-    public string[] content; // Nội dung hội thoại
-    //
-    private Coroutine coroutine; //tieep tục hội thoại
-    public GameObject buttonF; // Nút F để tương tác với NPC
-    public bool isContent = false;
-    public bool isButtonF = false; // Kiểm tra trạng thái của nút F
-    //nut skip
-    public GameObject buttonSkip; // Nút Skip
-    private bool isTyping = false; // Đang chạy từng chữ
-    private bool skipPressed = false; // Người chơi đã bấm skip
-    private bool isWaitingForNext = false; // Đang chờ người chơi bấm Skip để qua câu tiếp theo
 
-    //tham chieu
-    PlayerControllerState playerController; // Tham chiếu đến PlayerController
-    ComboAttack comboAttack; // Tham chiếu đến ComboAttack
+    public string[] names;
+    public string[] content;
+
+    private Coroutine coroutine;
+    public GameObject buttonF;
+    public bool isContent = false;
+    public bool isButtonF = false;
+
+    // skip
+    public GameObject buttonSkip;
+    public GameObject buttonSkipAll; // NEW
+    private bool isTyping = false;
+    private bool skipPressed = false;
+    private bool isWaitingForNext = false;
+    private bool skipAll = false; // NEW
+
+    // tham chiếu
+    PlayerControllerState playerController;
+    ComboAttack comboAttack;
     Quest3 quest3;
     PlayerStatus playerStatus;
-    NPCScript npcScript; // Tham chiếu đến NPCScript
-    AudioSource audioSource; // Tham chiếu đến AudioSource
-    public AudioClip audioSkip; // Âm thanh khi bấm skip
+    NPCScript npcScript;
+    AudioSource audioSource;
+    public AudioClip audioSkip;
+
     void Start()
     {
-
         playerStatus = FindAnyObjectByType<PlayerStatus>();
         quest3 = FindAnyObjectByType<Quest3>();
         playerController = FindAnyObjectByType<PlayerControllerState>();
         comboAttack = FindAnyObjectByType<ComboAttack>();
         audioSource = GetComponent<AudioSource>();
-         npcScript = GetComponent<NPCScript>(); // Lấy tham chiếu đến NPCScript
-        // Ẩn panel và nút F khi bắt đầu
+        npcScript = GetComponent<NPCScript>();
+
         NPCPanel.SetActive(false);
         buttonSkip.SetActive(false);
-        buttonF.SetActive(false); // Ẩn nút F khi bắt đầu
-        bacLamQuestMain.SetActive(false); // Ẩn Bac Lam NPC khi bắt đầu
-        questDesert5.SetActive(false); // Ẩn questDesert5
-        niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp khi bắt đầu
+        buttonSkipAll.SetActive(false); // Ẩn Skip All lúc đầu
+        buttonF.SetActive(false);
+        bacLamQuestMain.SetActive(false);
+        questDesert5.SetActive(false);
+        niceQuestUI.SetActive(false);
         NPCName.text = "";
         NPCContent.text = "";
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F) && isButtonF == true)
         {
-            Cursor.lockState = CursorLockMode.None; // mở chuột
-            Cursor.visible = true; // hiện chuột
-            comboAttack.enabled = false; // Vô hiệu hóa ComboAttack
-            playerController.isController = false; // Vô hiệu hóa PlayerController
-            playerController.animator.SetBool("isWalking", false); // Dừng hoạt động của nhân vật
-            playerController.animator.SetBool("isRunning", false); // Dừng hoạt động của nhân vật
-            //
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            comboAttack.enabled = false;
+            playerController.isController = false;
+            playerController.animator.SetBool("isWalking", false);
+            playerController.animator.SetBool("isRunning", false);
+
             NPCPanel.SetActive(true);
             coroutine = StartCoroutine(ReadContent());
-            buttonF.SetActive(false); // Ẩn nút F khi bắt đầu hội thoại
-            isButtonF = false; // Đặt trạng thái hội thoại là false
-            isContent = false; // Đặt lại trạng thái hội thoại
+            buttonF.SetActive(false);
+            isButtonF = false;
+            isContent = false;
             if (npcScript != null)
             {
                 npcScript.player.SetActive(false);
-                npcScript.cam.SetActive(true); // Đặt camera ưu tiên cao hơn để theo dõi NPC
-                Debug.Log("bat cam");
+                npcScript.cam.SetActive(true);
             }
-           
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player") && isContent)
         {
-            buttonF.SetActive(true); // Hiện nút F khi vào vùng tương tác
-            isButtonF = true; // Đặt trạng thái hội thoại là true
+            buttonF.SetActive(true);
+            isButtonF = true;
         }
     }
 
@@ -93,9 +98,8 @@ public class TurnInQuest3 : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            buttonF.SetActive(false); // Ẩn nút F khi ra khỏi vùng tương tác
-
-            isButtonF = false; // Đặt trạng thái hội thoại là false
+            buttonF.SetActive(false);
+            isButtonF = false;
             NPCPanel.SetActive(false);
             if (coroutine != null)
             {
@@ -106,10 +110,13 @@ public class TurnInQuest3 : MonoBehaviour
 
     private IEnumerator ReadContent()
     {
-        buttonSkip.SetActive(true); // Hiện nút Skip
+        buttonSkip.SetActive(true);
+        buttonSkipAll.SetActive(true); // Bật Skip All
 
         for (int i = 0; i < content.Length; i++)
         {
+            if (skipAll) break; // Nếu bấm Skip All → thoát luôn
+
             NPCContent.text = "";
             NPCName.text = names.Length > i ? names[i] : "Unknown";
 
@@ -119,9 +126,9 @@ public class TurnInQuest3 : MonoBehaviour
 
             foreach (var letter in content[i])
             {
-                if (skipPressed)
+                if (skipPressed || skipAll)
                 {
-                    NPCContent.text = content[i]; // Hiện toàn bộ nội dung
+                    NPCContent.text = content[i];
                     break;
                 }
 
@@ -133,8 +140,7 @@ public class TurnInQuest3 : MonoBehaviour
             skipPressed = false;
             isWaitingForNext = true;
 
-            // Đợi người chơi bấm Skip để qua câu tiếp theo
-            while (!skipPressed)
+            while (!skipPressed && !skipAll)
             {
                 yield return null;
             }
@@ -142,68 +148,75 @@ public class TurnInQuest3 : MonoBehaviour
             isWaitingForNext = false;
         }
 
-        // Kết thúc + nhiem vu
+        EndDialogue(); // NEW: gom phần kết thúc
+    }
+
+    private void EndDialogue()
+    {
         buttonSkip.SetActive(false);
+        buttonSkipAll.SetActive(false); // Tắt Skip All
         NPCPanel.SetActive(false);
         playerController.isController = true;
         comboAttack.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-       
-       
-        //
+
         switch (questToStart)
         {
             case QuestToStart.BacLam:
-              
                 Debug.Log("Phần thưởng đã nhận");
                 break;
             case QuestToStart.LinhCanh:
-                quest3.questPanel.SetActive(false);// Ẩn icon quest trên bản đồ làm nhiệm vụ;
-                quest3.iconQuest.SetActive(false); //ần panel quest text la cai ben trai man hinh 
+                quest3.questPanel.SetActive(false);
+                quest3.iconQuest.SetActive(false);
                 quest3.pointerLinhCanh.SetActive(false);
-                icon3D.SetActive(false); // Ẩn icon 3D của NPC
-                playerStatus.IncreasedGold(500); // Thêm kinh nghiệm cho người chơi
+                icon3D.SetActive(false);
+                playerStatus.IncreasedGold(500);
                 playerStatus.showSkill3 = true;
-                bacLamQuestMain.SetActive(true); // Hiện Bac Lam NPC sau khi hoàn thành nhiệm vụ
-                questDesert5.SetActive(true); // Hiện questDesert5
-                StartCoroutine(WaitQuestUI()); // Hiện UI nhiệm vụ đẹp trong 5 giây
+                bacLamQuestMain.SetActive(true);
+                questDesert5.SetActive(true);
+                StartCoroutine(WaitQuestUI());
                 if (npcScript != null)
                 {
                     npcScript.player.SetActive(true);
-                    npcScript.cam.SetActive(false); // Đặt camera ưu tiên cao hơn để theo dõi NPC
+                    npcScript.cam.SetActive(false);
                 }
                 Debug.Log("Phần thưởng đã nhận");
-                //save
                 GameSaveData data = SaveManagerMan.LoadGame();
-                data.skillTreeData.showSkill3 = playerStatus.showSkill3; // Hiển thị skill 2
-                data.dataQuest.isQuest3Map1 = true; // Lưu trạng thái nhiệm vụ 3
-                SaveManagerMan.SaveGame(data); // Lưu dữ liệu
+                data.skillTreeData.showSkill3 = playerStatus.showSkill3;
+                data.dataQuest.isQuest3Map1 = true;
+                SaveManagerMan.SaveGame(data);
                 break;
         }
-
     }
-
 
     public void OnSkipButtonPressed()
     {
-        audioSource.PlayOneShot(audioSkip); // Phát âm thanh khi bấm skip
+        audioSource.PlayOneShot(audioSkip);
         if (isTyping)
         {
-            // Bấm Skip trong lúc chữ đang chạy → hiện toàn bộ câu
             skipPressed = true;
         }
         else if (isWaitingForNext)
         {
-            // Bấm Skip lần 2 → chuyển sang câu tiếp theo
             skipPressed = true;
         }
     }
 
-    public void EndContent()// Kết thúc hội thoại
+    public void OnSkipAllButtonPressed() // NEW
+    {
+        audioSource.PlayOneShot(audioSkip);
+        skipAll = true;
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+        }
+        EndDialogue();
+    }
+
+    public void EndContent()
     {
         NPCPanel.SetActive(false);
-
         if (coroutine != null)
         {
             StopCoroutine(coroutine);
@@ -212,8 +225,8 @@ public class TurnInQuest3 : MonoBehaviour
 
     private IEnumerator WaitQuestUI()
     {
-        niceQuestUI.SetActive(true); // Hiện UI nhiệm vụ đẹp
+        niceQuestUI.SetActive(true);
         yield return new WaitForSeconds(5f);
-        niceQuestUI.SetActive(false); // Ẩn UI nhiệm vụ đẹp sau 2 giây
+        niceQuestUI.SetActive(false);
     }
 }
