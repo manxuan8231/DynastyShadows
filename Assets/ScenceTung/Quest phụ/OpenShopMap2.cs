@@ -18,7 +18,7 @@ public class OpenShopMap2 : MonoBehaviour
     {
         gold = TurnOffOnUI.gold;
         textGold.text = $"{gold}";
-        if (TurnOffOnUI.pause) return;//khi ui khac dg bat thi ko cho mo shop
+      
         if (isCanOpen)
         {
             if (canvasShop.activeSelf)
