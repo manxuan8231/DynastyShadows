@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using NSubstitute.ReceivedExtensions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class ShopSlot : MonoBehaviour
@@ -41,7 +42,7 @@ private void Start()
             audioSource.PlayOneShot(buySound);
             playerStatus.gold -= price;
             playerStatus.UpdateTextUIGold();
-
+            
             inventoryManager.AddItem(
                 itermShopData.itemName,
                 1,
@@ -49,6 +50,7 @@ private void Start()
                  itermShopData.itemDescription,
                 itermShopData.itemType
             );
+            FindAnyObjectByType<ItemPickupNotifier>().ShowPickup(itermShopData.itemName, 1);
             GameSaveData data = SaveManagerMan.LoadGame();
             data.inventoryItems.Clear();
             data.inventoryItemSos.Clear();
@@ -105,7 +107,7 @@ private void Start()
             {
                 playerStatus.gold += sellPrice;
                 playerStatus.UpdateTextUIGold();
-
+                FindAnyObjectByType<ItemPickupNotifier>().ShowPickup("Vàng", sellPrice);
                 slot.quantity--;
 
                 if (slot.quantity <= 0)

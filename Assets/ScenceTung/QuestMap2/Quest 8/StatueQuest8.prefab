@@ -10442,7 +10442,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 69f1f5ca269442b4295ff5bb1e55f0e6, type: 2}
+  - {fileID: 2100000, guid: 41b2f17198c79274a9d0f0f7509aa563, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10515,7 +10515,7 @@ LineRenderer:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
-    numCapVertices: 0
+    numCapVertices: 66
     alignment: 0
     textureMode: 0
     textureScale: {x: 1, y: 1}
@@ -10539,8 +10539,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 30
   damagePerSecond: 10
-  damageIncreasePerSecond: 10
-  maxDamage: 30
   laserLine: {fileID: 5316093616794477158}
   firePoint: {fileID: 6518341102520683040}
   cooldownHit: 15
@@ -10615,6 +10613,7 @@ MonoBehaviour:
   - {fileID: 2834760466574362161}
   enemySpawnCount: 5
   enemyTag: EnemyMap2_1
+  quest8: {fileID: 0}
 --- !u!1 &8111720413964203115
 GameObject:
   m_ObjectHideFlags: 0

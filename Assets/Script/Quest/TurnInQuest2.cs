@@ -194,7 +194,7 @@ public class TurnInQuest2 : MonoBehaviour
         data.dataQuest.isQuest2Map1 = true;
         SaveManagerMan.SaveGame(data);
 
-        Destroy(danLang, 1f);
+        Destroy(danLang, 3f);
     }
 
     public void OnSkipButtonPressed()
