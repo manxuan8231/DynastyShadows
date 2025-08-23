@@ -50,7 +50,13 @@ private void Start()
                  itermShopData.itemDescription,
                 itermShopData.itemType
             );
-            FindAnyObjectByType<ItemPickupNotifier>().ShowPickup(itermShopData.itemName, 1);
+           // FindAnyObjectByType<ItemPickupNotifier>().ShowPickup(itermShopData.itemName, 1);
+           FindAnyObjectByType<ShopTransactionNotifier>().ShowTransaction(
+                itermShopData.itemName,
+                1,
+                itermShopData.itemIcon,
+                true
+            );
             GameSaveData data = SaveManagerMan.LoadGame();
             data.inventoryItems.Clear();
             data.inventoryItemSos.Clear();
@@ -107,7 +113,13 @@ private void Start()
             {
                 playerStatus.gold += sellPrice;
                 playerStatus.UpdateTextUIGold();
-                FindAnyObjectByType<ItemPickupNotifier>().ShowPickup("Vàng", sellPrice);
+                // FindAnyObjectByType<ItemPickupNotifier>().ShowPickup("Vàng", sellPrice);
+                FindAnyObjectByType<ShopTransactionNotifier>().ShowTransaction(
+                itermShopData.itemName,
+                1,
+                itermShopData.itemIcon,
+                false
+            );
                 slot.quantity--;
 
                 if (slot.quantity <= 0)

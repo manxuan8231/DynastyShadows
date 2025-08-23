@@ -38,6 +38,7 @@ public class OpenShopMap2 : MonoBehaviour
                 bool isShopOpen = canvasShop.activeSelf;
                 canvasShop.SetActive(!isShopOpen);
                 TurnOffOnUI.openShop = !isShopOpen; // Cập nhật trạng thái cửa hàng trong TurnOffOnUI
+                Time.timeScale = isShopOpen ? 1f : 0f; // Dừng thời gian khi mở shop
                 btnF.SetActive(false);
                 textBtnf.text = "F:Mở Shop";
             }
