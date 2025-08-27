@@ -1194,7 +1194,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1231325820
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1524,7 +1524,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1449979687
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3988,6 +3988,10 @@ PrefabInstance:
     - target: {fileID: 2527462522078932777, guid: 36846cc3dc169ed4e8b268ba772e5910, type: 3}
       propertyPath: showHpDistance
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2606065328521839707, guid: 36846cc3dc169ed4e8b268ba772e5910, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3693579453617523578, guid: 36846cc3dc169ed4e8b268ba772e5910, type: 3}
       propertyPath: m_LocalPosition.x

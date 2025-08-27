@@ -1,8 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class CraftingNPC : MonoBehaviour
 {
     public GameObject craftingMenu;
+    public GameObject interactUI; // UI hiện chữ "Nhấn F"
     public float interactionDistance = 3f;
     private GameObject player;
     private bool isPlayerInRange = false;
@@ -10,6 +12,8 @@ public class CraftingNPC : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        if (interactUI != null)
+            interactUI.SetActive(false); // tắt UI lúc đầu
     }
 
     private void Update()
@@ -19,10 +23,17 @@ public class CraftingNPC : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.transform.position);
         isPlayerInRange = distance <= interactionDistance;
 
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.C))
+        // Hiện UI khi ở trong tầm
+        if (interactUI != null)
+            interactUI.SetActive(isPlayerInRange && !craftingMenu.activeSelf);
+
+        // Nếu trong tầm và nhấn F -> mở menu
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.F))
         {
             OpenCraftingMenu();
         }
+
+        // Nhấn X để đóng menu
         if (Input.GetKeyDown(KeyCode.X))
         {
             craftingMenu.SetActive(false);
@@ -40,6 +51,9 @@ public class CraftingNPC : MonoBehaviour
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            if (interactUI != null)
+                interactUI.SetActive(false); // tắt UI khi đã mở menu
         }
     }
 }
