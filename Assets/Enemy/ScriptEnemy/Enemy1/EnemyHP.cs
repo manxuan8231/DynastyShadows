@@ -86,7 +86,7 @@ public class EnemyHP : MonoBehaviour,IDamageable
             }
             if (Necboss != null)
             {
-                Necboss.EnemyCount();
+                Necboss.EnemyCount(4);
             }
           
           

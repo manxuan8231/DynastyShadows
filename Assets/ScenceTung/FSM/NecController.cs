@@ -89,9 +89,9 @@ public class NecController : MonoBehaviour, IDamageable
     }
 
     //check số lượng
-    public void EnemyCount()
+    public void EnemyCount(int amount)
     {
-        checkEnemyCount++;
+        checkEnemyCount += amount;
     }
 
     public void SpawnSKill2()
